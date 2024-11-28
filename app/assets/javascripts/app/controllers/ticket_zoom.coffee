@@ -1317,7 +1317,7 @@ class TicketZoomRouter extends App.ControllerPermanent
 
     App.Ajax.request(
       type:  'POST'
-      url:   "#{@apiPath}/tickets/search"
+      url:   "#{@apiPath}/tickets/search?full=true"
       processData: true
       data: JSON.stringify(
         condition: {
@@ -1329,8 +1329,8 @@ class TicketZoomRouter extends App.ControllerPermanent
         limit: 1
       )
       success: (data, status, xhr) =>
-        return @byTicketId(params) if _.isEmpty(data.tickets)
-        @navigate("ticket/zoom/#{data.tickets[0]}")
+        return @byTicketId(params) if _.isEmpty(data.record_ids)
+        @navigate("ticket/zoom/#{data.record_ids[0]}")
       error: =>
         @byTicketId(params)
     )

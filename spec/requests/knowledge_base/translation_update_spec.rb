@@ -14,7 +14,7 @@ RSpec.describe 'KnowledgeBase translation update', authenticated_as: :current_us
         {
           title:       new_title,
           footer_note: 'new footer',
-          id:          knowledge_base.kb_locales.first.id
+          id:          knowledge_base.translations.first.id
         }
       ]
     }

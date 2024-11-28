@@ -28,7 +28,7 @@ class SearchKnowledgeBaseBackend
       @granular_permissions_handler = KnowledgeBase::InternalAssets.new(user)
     end
 
-    raw_results = raw_results(query, user, pagination: pagination)
+    raw_results = raw_results(query, pagination: pagination)
 
     filtered = filter_results raw_results, user
 
@@ -41,16 +41,15 @@ class SearchKnowledgeBaseBackend
     filtered
   end
 
-  def search_fallback(query, indexes, options)
-    indexes
-      .map { |index| search_fallback_for_index(query, index, options) }
-      .flatten
+  def search_fallback(query, indexes)
+    indexes.flat_map { |index| search_fallback_for_index(query, index) }
   end
 
-  def search_fallback_for_index(query, index, options)
+  def search_fallback_for_index(query, index)
     index
       .constantize
-      .search_fallback("%#{query}%", @cached_scope_ids, options: options)
+      .search_sql_text_fallback("%#{query}%")
+      .apply_kb_scope(@cached_scope_ids)
       .where(kb_locale: kb_locales)
       .reorder(**search_fallback_order)
       .pluck(:id)
@@ -61,8 +60,8 @@ class SearchKnowledgeBaseBackend
     @params[:order_by].presence || { updated_at: :desc }
   end
 
-  def raw_results(query, user, pagination: nil)
-    return search_fallback(query, indexes, { user: user }) if !SearchIndexBackend.enabled?
+  def raw_results(query, pagination: nil)
+    return search_fallback(query, indexes) if !SearchIndexBackend.enabled?
 
     SearchIndexBackend
       .search(query, indexes, options(pagination: pagination))

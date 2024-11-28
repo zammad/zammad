@@ -3148,11 +3148,11 @@ wait untill text in selector disabppears
     if data[:email]
       search_query =  data[:email]
       search_target = data[:email]
-      search_css =    '.content.active .user-list .js-tableBody td:first-child'
+      search_css =    '.content.active .js-tableBody td:first-child'
     else
       search_query =  data[:phone]
       search_target = data[:firstname]
-      search_css =    '.content.active .user-list .js-tableBody td:nth-child(2)'
+      search_css =    '.content.active .js-tableBody td:nth-child(2)'
     end
 
     60.times do |i|
@@ -3209,7 +3209,7 @@ wait untill text in selector disabppears
       css:      '.content.active a[href="#manage/users"]',
       mute_log: true,
     )
-    instance.find_elements(css: '.content.active .user-list td:first-child').each do |element|
+    instance.find_elements(css: '.content.active td:first-child').each do |element|
       next if element.text.strip != data[:login]
 
       element.click

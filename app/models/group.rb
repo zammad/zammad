@@ -11,6 +11,8 @@ class Group < ApplicationModel
   include HasObjectManagerAttributes
   include HasCollectionUpdate
   include HasSearchIndexBackend
+  include CanSelector
+  include CanSearch
 
   include Group::Assets
 

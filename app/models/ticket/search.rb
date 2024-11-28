@@ -3,6 +3,23 @@
 module Ticket::Search
   extend ActiveSupport::Concern
 
+  include CanSearch
+
+  included do
+    scope :search_sql_query_extension, lambda { |params|
+      return if params[:query].blank?
+
+      fields = %w[title number]
+      fields << Ticket::Article.arel_table[:body]
+      fields << Ticket::Article.arel_table[:from]
+      fields << Ticket::Article.arel_table[:to]
+      fields << Ticket::Article.arel_table[:subject]
+
+      where_or_cis(fields, "%#{SqlHelper.quote_like(params[:query])}%")
+        .joins(:articles)
+    }
+  end
+
   # methods defined here are going to extend the class, not the instance of it
   class_methods do
 
@@ -34,190 +51,58 @@ returns if user has no permissions to search
       }
     end
 
-=begin
+    def search_params_pre(params)
+      params[:scope] ||= TicketPolicy::ReadScope
+    end
 
-search tickets via search index
-
-  result = Ticket.search(
-    current_user: User.find(123),
-    query:        'search something',
-    scope:        TicketPolicy::ReadScope, # defaults to ReadScope
-    limit:        15,
-    offset:       100,
-  )
-
-returns
-
-  result = [ticket_model1, ticket_model2]
-
-search tickets via search index
-
-  result = Ticket.search(
-    current_user: User.find(123),
-    query:        'search something',
-    limit:        15,
-    offset:       100,
-    full:         false,
-  )
-
-returns
-
-  result = [1,3,5,6,7]
-
-search tickets via database
-
-  result = Ticket.search(
-    current_user: User.find(123),
-    query: 'some query', # query or condition is required
-    scope: TicketPolicy::ReadScope, # defaults to ReadScope
-    condition: {
-      'tickets.owner_id' => {
-        operator: 'is',
-        value: user.id,
-      },
-      'tickets.state_id' => {
-        operator: 'is',
-        value: Ticket::State.where(
-          state_type_id: Ticket::StateType.where(
-            name: [
-              'pending reminder',
-              'pending action',
-            ],
-          ).map(&:id),
-        ),
-      },
-    },
-    limit: 15,
-    offset: 100,
-
-    # sort single column
-    sort_by: 'created_at',
-    order_by: 'asc',
-
-    # sort multiple columns
-    sort_by: [ 'created_at', 'updated_at' ],
-    order_by: [ 'asc', 'desc' ],
-
-    full: false,
-  )
-
-returns
-
-  result = [1,3,5,6,7]
-
-=end
-
-    def search(params)
-
-      # get params
-      query        = params[:query]
-      condition    = params[:condition]
-      scope        = params[:scope] || TicketPolicy::ReadScope
-      limit        = params[:limit] || 12
-      offset       = params[:offset] || 0
-      current_user = params[:current_user]
-      full         = false
-      if params[:full] == true || params[:full] == 'true' || !params.key?(:full)
-        full = true
-      end
-
-      sql_helper = ::SqlHelper.new(object: self)
-
-      # check sort
-      sort_by = sql_helper.get_sort_by(params, 'updated_at')
-
-      # check order
-      order_by = sql_helper.get_order_by(params, 'desc')
-
-      # try search index backend
-      if condition.blank? && SearchIndexBackend.enabled?
-
-        query_or = []
-        if current_user.permissions?('ticket.agent')
-          group_ids = current_user.group_ids_access(scope.const_get(:ACCESS_TYPE))
-          if group_ids.present?
-            access_condition = {
-              'query_string' => { 'default_field' => 'group_id', 'query' => "\"#{group_ids.join('" OR "')}\"" }
-            }
-            query_or.push(access_condition)
-          end
-        end
-        if current_user.permissions?('ticket.customer')
-          organizations_query = current_user.all_organizations.where(shared: true).map { |o| "organization_id:#{o.id}" }.join(' OR ')
-          access_condition    = if organizations_query.present?
-                                  {
-                                    'query_string' => { 'query' => "customer_id:#{current_user.id} OR #{organizations_query}" }
-                                  }
-                                else
-                                  {
-                                    'query_string' => { 'default_field' => 'customer_id', 'query' => current_user.id }
-                                  }
-                                end
+    def search_query_extension(params)
+      query_or = []
+      if params[:current_user].permissions?('ticket.agent')
+        group_ids = params[:current_user].group_ids_access(params[:scope].const_get(:ACCESS_TYPE))
+        if group_ids.present?
+          access_condition = {
+            'query_string' => { 'default_field' => 'group_id', 'query' => "\"#{group_ids.join('" OR "')}\"" }
+          }
           query_or.push(access_condition)
         end
+      end
+      if params[:current_user].permissions?('ticket.customer')
+        organizations_query = params[:current_user].all_organizations.where(shared: true).map { |row| "organization_id:#{row.id}" }.join(' OR ')
+        access_condition    = if organizations_query.present?
+                                {
+                                  'query_string' => { 'query' => "customer_id:#{params[:current_user].id} OR #{organizations_query}" }
+                                }
+                              else
+                                {
+                                  'query_string' => { 'default_field' => 'customer_id', 'query' => params[:current_user].id }
+                                }
+                              end
+        query_or.push(access_condition)
+      end
 
-        return [] if query_or.blank?
-
-        query_extension = {
+      if query_or.blank?
+        return {
           bool: {
             must: [
               {
-                bool: {
-                  should: query_or,
-                },
+                'query_string' => { 'query' => 'id:0' }
               },
             ],
           }
         }
-
-        items = SearchIndexBackend.search(query, 'Ticket', limit:           limit,
-                                                           query_extension: query_extension,
-                                                           from:            offset,
-                                                           sort_by:         sort_by,
-                                                           order_by:        order_by)
-        if !full
-          return items.pluck(:id)
-        end
-
-        tickets = []
-        items.each do |item|
-          ticket = Ticket.lookup(id: item[:id])
-          next if !ticket
-
-          tickets.push ticket
-        end
-        return tickets
       end
 
-      order_sql   = sql_helper.get_order(sort_by, order_by, 'tickets.updated_at DESC')
-      tickets_all = scope.new(current_user).resolve
-                                           .reorder(Arel.sql(order_sql))
-                                           .offset(offset)
-                                           .limit(limit)
-
-      ticket_ids = if query
-                     tickets_all.joins(:articles)
-                                .where(<<~SQL.squish, query: "%#{SqlHelper.quote_like(query.delete('*'))}%")
-                                  tickets.title              LIKE :query
-                                  OR tickets.number          LIKE :query
-                                  OR ticket_articles.body    LIKE :query
-                                  OR ticket_articles.from    LIKE :query
-                                  OR ticket_articles.to      LIKE :query
-                                  OR ticket_articles.subject LIKE :query
-                                SQL
-                   else
-                     query_condition, bind_condition, tables = selector2sql(condition)
-
-                     tickets_all.joins(tables)
-                                .where(query_condition, *bind_condition)
-                   end.group(:id).pluck(:id)
-
-      if full
-        ticket_ids.map { |id| Ticket.lookup(id: id) }
-      else
-        ticket_ids
-      end
+      {
+        bool: {
+          must: [
+            {
+              bool: {
+                should: query_or,
+              },
+            },
+          ],
+        }
+      }
     end
   end
-
 end

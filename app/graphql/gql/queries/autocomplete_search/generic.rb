@@ -16,17 +16,14 @@ module Gql::Queries
 
       return [] if query.blank?
 
-      objects = Service::Search.new(current_user: context.current_user).execute(
-        term:    query,
-        objects: input[:only_in] || Gql::Types::SearchResultType.searchable_models,
-        options: { limit: limit }
-      )
-
-      post_process(objects, input:)
-    end
-
-    def post_process(results, input:)
-      results.map { |object| coerce_to_result(object) }
+      Service::Search
+        .new(current_user: context.current_user,
+             query:        query,
+             objects:      input[:only_in] || Gql::Types::SearchResultType.searchable_models,
+             options:      { limit: limit })
+        .execute
+        .flattened
+        .map { |object| coerce_to_result(object) }
     end
 
     def coerce_to_result(object)

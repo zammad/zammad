@@ -10,7 +10,6 @@ class App.Overview extends App.Model
     { name: 'organization_shared', display: __('Only available for users with shared organizations'), tag: 'select', options: { true: 'yes', false: 'no' }, translate: true, default: false, null: true },
     { name: 'out_of_office', display: __('Only available for users which are absence replacements for other users.'), tag: 'select', options: { true: 'yes', false: 'no' }, translate: true, default: false, null: true },
     { name: 'condition',  display: __('Conditions for shown tickets'), tag: 'ticket_selector', null: false, out_of_office: true },
-    { name: 'prio',       display: __('Prio'),                readonly: 1 },
     {
       name:    'view::s'
       display: __('Attributes')
@@ -65,6 +64,7 @@ class App.Overview extends App.Model
         DESC:  __('descending')
     },
     { name: 'active',         display: __('Active'),      tag: 'active', default: true },
+    { name: 'prio', display: __('Position'), tag: 'integer', type: 'number', limit: 100, null: true },
     { name: 'created_by_id',  display: __('Created by'),  relation: 'User', readonly: 1 },
     { name: 'created_at',     display: __('Created'),     tag: 'datetime', readonly: 1 },
     { name: 'updated_by_id',  display: __('Updated by'),  relation: 'User', readonly: 1 },
@@ -76,6 +76,7 @@ class App.Overview extends App.Model
     'name',
     'link',
     'role_ids',
+    'prio',
   ]
 
   @description = __('''

@@ -6,6 +6,7 @@ class User < ApplicationModel
   include ChecksClientNotification
   include HasHistory
   include HasSearchIndexBackend
+  include CanSelector
   include CanCsvImport
   include ChecksHtmlSanitized
   include HasGroups
@@ -139,11 +140,17 @@ returns
 
 =end
 
-  def fullname(email_fallback: true)
+  def fullname(email_fallback: true, recipient_line: false)
     name = "#{firstname} #{lastname}".strip
 
     if name.blank? && email.present? && email_fallback
       return email
+    elsif recipient_line
+      begin
+        return Channel::EmailBuild.recipient_line(name, email)
+      rescue
+        return email
+      end
     end
 
     return name if name.present?

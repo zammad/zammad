@@ -6,6 +6,9 @@ class TextModule < ApplicationModel
   include ChecksClientNotification
   include ChecksHtmlSanitized
   include CanCsvImport
+  include HasSearchIndexBackend
+  include CanSelector
+  include CanSearch
 
   validates :name,    presence: true
   validates :content, presence: true

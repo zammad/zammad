@@ -144,6 +144,10 @@ curl http://localhost/api/v1/overviews -v -u #{login}:#{password} -H "Content-Ty
     model_update_render(Overview, params)
   end
 
+  def search
+    model_search_render(Overview, params)
+  end
+
 =begin
 
 Resource:

@@ -22,6 +22,7 @@ class ManageRouter extends App.ControllerPermanent
 App.Config.set('manage', ManageRouter, 'Routes')
 App.Config.set('manage/:target', ManageRouter, 'Routes')
 App.Config.set('manage/:target/:page', ManageRouter, 'Routes')
+App.Config.set('manage/:target/:page/:search_query', ManageRouter, 'Routes')
 App.Config.set('settings/:target', ManageRouter, 'Routes')
 App.Config.set('channels/:target', ManageRouter, 'Routes')
 App.Config.set('channels/:target/error/:error_code', ManageRouter, 'Routes')

@@ -29,6 +29,7 @@ QUnit.test('table new - initial list', assert => {
     objects:            App.TicketPriority.search({sortBy:'name', order: 'ASC'}),
     checkbox:           false,
     radio:              false,
+    clone:              false,
   })
   //equal(el.find('table').length, 0, 'row count')
   //table.render()
@@ -349,6 +350,7 @@ QUnit.test('table new - initial list', assert => {
     checkbox:           false,
     radio:              false,
     groupBy:            'note',
+    clone:              false,
   })
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
@@ -565,6 +567,7 @@ QUnit.test('table new - initial list', assert => {
     objects:            App.TicketPriority.all(),
     checkbox:           false,
     radio:              false,
+    clone:              false,
     ttt: true
   })
 
@@ -795,6 +798,7 @@ QUnit.test('table new - initial list', assert => {
     objects:            App.TicketPriority.search({sortBy:'name', order: 'ASC'}),
     checkbox:           false,
     radio:              false,
+    clone:              false,
   })
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
@@ -1073,6 +1077,7 @@ QUnit.test('table new - initial list', assert => {
     objects:            App.TicketPriority.all(),
     checkbox:           false,
     radio:              false,
+    clone:              false,
     ttt: true
   })
 
@@ -1095,10 +1100,10 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('tbody > tr').length, 150)
   assert.equal(el.find('tbody > tr:nth-child(151) > td').length, 0)
 
-  assert.equal(el.find('.js-pager').first().find('.js-page').length, 2)
-  assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').length, 1)
-  assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').text(), '1')
-  el.find('.js-pager').first().find('.js-page:nth-child(2)').trigger('click')
+  assert.equal(el.find('.js-pager').first().find('.js-page').length, 4)
+  assert.equal(el.find('.js-pager').first().find('.js-page.btn--active').length, 1)
+  assert.equal(el.find('.js-pager').first().find('.js-page.btn--active').text(), '1')
+  el.find('.js-pager').first().find('.js-page[data-page=1]').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
@@ -1209,10 +1214,10 @@ QUnit.test('table new - initial list', assert => {
   result = table.update({sync: true, objects: objects})
   assert.equal(result[0], 'fullRender.contentRemoved')
 
-  assert.equal(el.find('.js-pager').first().find('.js-page').length, 2)
-  assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').length, 1)
-  assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').text(), '1')
-  el.find('.js-pager').first().find('.js-page:nth-child(2)').trigger('click')
+  assert.equal(el.find('.js-pager').first().find('.js-page').length, 4)
+  assert.equal(el.find('.js-pager').first().find('.js-page.btn--active').length, 1)
+  assert.equal(el.find('.js-pager').first().find('.js-page.btn--active').text(), '1')
+  el.find('.js-pager').first().find('.js-page[data-page=1]').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
@@ -1229,10 +1234,10 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('tbody > tr').length, 2)
   assert.equal(el.find('tbody > tr:nth-child(3) > td').length, 0)
 
-  assert.equal(el.find('.js-pager').first().find('.js-page').length, 2)
-  assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').length, 1)
-  assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').text(), '2')
-  el.find('.js-pager').first().find('.js-page:nth-child(1)').trigger('click')
+  assert.equal(el.find('.js-pager').first().find('.js-page').length, 4)
+  assert.equal(el.find('.js-pager').first().find('.js-page.btn--active').length, 1)
+  assert.equal(el.find('.js-pager').first().find('.js-page.btn--active').text(), '2')
+  el.find('.js-pager').first().find('.js-page[data-page=0]').trigger('click')
 
   assert.equal(el.find('table > thead > tr').length, 1, 'row count')
   assert.equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
@@ -1253,9 +1258,9 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('tbody > tr').length, 150)
   assert.equal(el.find('tbody > tr:nth-child(151) > td').length, 0)
 
-  assert.equal(el.find('.js-pager').first().find('.js-page').length, 2)
-  assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').length, 1)
-  assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').text(), '1')
+  assert.equal(el.find('.js-pager').first().find('.js-page').length, 4)
+  assert.equal(el.find('.js-pager').first().find('.js-page.btn--active').length, 1)
+  assert.equal(el.find('.js-pager').first().find('.js-page.btn--active').text(), '1')
 
   objects.splice(2,2)
 
@@ -1317,9 +1322,9 @@ QUnit.test('table new - initial list', assert => {
   assert.equal(el.find('tbody > tr').length, 150)
   assert.equal(el.find('tbody > tr:nth-child(151) > td').length, 0)
 
-  assert.equal(el.find('.js-pager').first().find('.js-page').length, 2)
-  assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').length, 1)
-  assert.equal(el.find('.js-pager').first().find('.js-page.is-selected').text(), '1')
+  assert.equal(el.find('.js-pager').first().find('.js-page').length, 4)
+  assert.equal(el.find('.js-pager').first().find('.js-page.btn--active').length, 1)
+  assert.equal(el.find('.js-pager').first().find('.js-page.btn--active').text(), '1')
 
   $('#qunit').append('<hr><h1>table with data 7</h1><div id="table-new7"></div>')
   var el = $('#table-new7')
@@ -1355,6 +1360,7 @@ QUnit.test('table new - initial list', assert => {
     objects:            App.TicketPriority.search({sortBy:'name', order: 'ASC'}),
     checkbox:           false,
     radio:              false,
+    clone:              false,
   })
   //equal(el.find('table').length, 0, 'row count')
   //table.render()
@@ -1454,6 +1460,7 @@ QUnit.test('table new - initial list', assert => {
     objects:            App.TicketPriority.all(),
     checkbox:           false,
     radio:              false,
+    clone:              false,
     orderBy:            'not_existing',
     orderDirection:     'DESC',
   })
@@ -1521,6 +1528,7 @@ QUnit.test('table new - initial list', assert => {
     objects:            App.TicketPriority.all(),
     checkbox:           false,
     radio:              false,
+    clone:              false,
     orderBy:            'external',
     orderDirection:     'DESC',
   })
@@ -1605,6 +1613,7 @@ QUnit.test('table new - initial list', assert => {
     objects:            App.TicketPriority.all(),
     checkbox:           false,
     radio:              false,
+    clone:              false,
     orderBy:            'external',
     orderDirection:     'ASC',
   })
@@ -1673,6 +1682,7 @@ QUnit.test('table new - initial list', assert => {
     objects:                   App.TicketPriority.search({sortBy:'name', order: 'ASC'}),
     checkbox:                  false,
     radio:                     false,
+    clone:                     false,
     frontendTimeUpdateExecute: false,
   })
   //equal(el.find('table').length, 0, 'row count')
@@ -1733,12 +1743,13 @@ QUnit.test('table new - initial list', assert => {
     objects:            App.TicketPriority.all(),
     checkbox:           false,
     radio:              false,
+    clone:              false,
     pagerItemsPerPage:  10,
     ttt: true
   })
 
   assert.equal(el.find('tbody > tr').length, 10)
-  assert.equal(el.find('.js-pager:first-child .js-page').length, 4)
+  assert.equal(el.find('.js-pager:first-child .js-page').length, 6)
 
   $('#qunit').append('<hr><h1>table with large data and pager disabled</h1><div id="table-new13"></div>')
   var el = $('#table-new13')
@@ -1768,6 +1779,7 @@ QUnit.test('table new - initial list', assert => {
     objects:            App.TicketPriority.all(),
     checkbox:           false,
     radio:              false,
+    clone:              false,
     pagerEnabled:       false,
     ttt: true
   })

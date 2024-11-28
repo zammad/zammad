@@ -20,8 +20,66 @@ RSpec.describe SearchIndexBackend do
     end
   end
 
-  describe '.search', searchindex: true do
+  describe '.search', searchindex: false do
+    before do
+      allow(described_class).to receive(:search_by_index) { |_query, index, _options| ["response:#{index}"] }
+    end
 
+    let(:query)   { Faker::Lorem.word }
+    let(:options) { { opt1: true } }
+
+    it 'calls search_by_index if single index given' do
+      described_class.search(query, 'Index A', options)
+
+      expect(described_class)
+        .to have_received(:search_by_index)
+        .with(query, 'Index A', options)
+        .once
+    end
+
+    it 'calls search_by_index for each given index given', aggregate_failures: true do
+      described_class.search(query, %w[indexA indexB], options)
+
+      expect(described_class)
+        .to have_received(:search_by_index)
+        .with(query, 'indexA', options)
+        .once
+
+      expect(described_class)
+        .to have_received(:search_by_index)
+        .with(query, 'indexB', options)
+        .once
+    end
+
+    it 'flattens results if multiple indexes are queries' do
+      expect(described_class.search(query, %w[indexA indexB], options))
+        .to eq %w[response:indexA response:indexB]
+    end
+
+    context 'when one of the indexes return nil' do
+      before do
+        allow(described_class).to receive(:search_by_index)
+          .with(anything, 'empty', anything).and_return(nil)
+      end
+
+      it 'does not include nil in flattened return' do
+        expect(described_class.search(query, %w[indexA empty indexB], options))
+          .to eq %w[response:indexA response:indexB]
+      end
+
+      it 'returns nil if single index was queried' do
+        expect(described_class.search(query, 'empty', options))
+          .to be_nil
+      end
+    end
+
+    it 'raises an error if with_total_count option is passed' do
+      expect { described_class.search(query, %w[indexA indexB], { with_total_count: true }) }
+        .to raise_error(include('with_total_count'))
+    end
+  end
+
+  describe '.search_by_index', searchindex: true do
     context 'query finds results' do
 
       let(:record_type) { 'Ticket'.freeze }
@@ -33,8 +91,16 @@ RSpec.describe SearchIndexBackend do
       end
 
       it 'finds added records' do
-        result = described_class.search(record.number, record_type, sort_by: ['updated_at'], order_by: ['desc'])
+        result = described_class.search_by_index(record.number, record_type, sort_by: ['updated_at'], order_by: ['desc'])
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
+      end
+
+      it 'returns count and id when with_total_count option is given' do
+        result = described_class.search_by_index(record.number, record_type, with_total_count: true)
+        expect(result).to include(
+          total_count:     1,
+          object_metadata: include(include(id: record.id.to_s))
+        )
       end
     end
 
@@ -48,26 +114,27 @@ RSpec.describe SearchIndexBackend do
       end
 
       it 'finds user record' do
-        result = described_class.search('AnFirst ASplit Lastname', record_type, sort_by: ['updated_at'], order_by: ['desc'])
+        result = described_class.search_by_index('AnFirst ASplit Lastname', record_type, sort_by: ['updated_at'], order_by: ['desc'])
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
     end
 
     context 'for query with no results' do
-      subject(:search) { described_class.search(query, index, limit: 3000) }
+      subject(:search) { described_class.search_by_index(query, index, limit: 3000, with_total_count:) }
 
       let(:query) { 'preferences.notification_sound.enabled:*' }
+      let(:with_total_count) { false }
 
       context 'on a single index' do
         let(:index) { 'User' }
 
         it { is_expected.to be_an(Array).and be_empty }
-      end
 
-      context 'on multiple indices' do
-        let(:index) { %w[User Organization] }
+        context 'when with_total_count is given' do
+          let(:with_total_count) { true }
 
-        it { is_expected.to be_an(Array).and not_include(nil).and be_empty }
+          it { is_expected.to include(total_count: 0, object_metadata: be_empty) }
+        end
       end
 
       context 'when user has a signature detection' do
@@ -81,7 +148,7 @@ RSpec.describe SearchIndexBackend do
         end
 
         it 'does not find the ticket record' do
-          result = described_class.search('Hamburg', record_type, sort_by: ['updated_at'], order_by: ['desc'])
+          result = described_class.search_by_index('Hamburg', record_type, sort_by: ['updated_at'], order_by: ['desc'])
           expect(result).to eq([])
         end
       end
@@ -99,19 +166,19 @@ RSpec.describe SearchIndexBackend do
 
       it 'finds record in a given timezone with a range' do
         Setting.set('timezone_default', 'UTC')
-        result = described_class.search('created_at: [2019-01-01 TO 2019-01-01]', record_type)
+        result = described_class.search_by_index('created_at: [2019-01-01 TO 2019-01-01]', record_type)
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
 
       it 'finds record in a far away timezone with a date' do
         Setting.set('timezone_default', 'Europe/Vilnius')
-        result = described_class.search('created_at: 2019-01-02', record_type)
+        result = described_class.search_by_index('created_at: 2019-01-02', record_type)
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
 
       it 'finds record in UTC with date' do
         Setting.set('timezone_default', 'UTC')
-        result = described_class.search('created_at: 2019-01-01', record_type)
+        result = described_class.search_by_index('created_at: 2019-01-01', record_type)
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
     end
@@ -132,17 +199,17 @@ RSpec.describe SearchIndexBackend do
       end
 
       it 'finds added records by integer part' do
-        result = described_class.search('102105', record_type, sort_by: ['updated_at'], order_by: ['desc'])
+        result = described_class.search_by_index('102105', record_type, sort_by: ['updated_at'], order_by: ['desc'])
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
 
       it 'finds added records by integer' do
-        result = described_class.search('1021052349', record_type, sort_by: ['updated_at'], order_by: ['desc'])
+        result = described_class.search_by_index('1021052349', record_type, sort_by: ['updated_at'], order_by: ['desc'])
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
 
       it 'finds added records by quoted integer' do
-        result = described_class.search('"1021052349"', record_type, sort_by: ['updated_at'], order_by: ['desc'])
+        result = described_class.search_by_index('"1021052349"', record_type, sort_by: ['updated_at'], order_by: ['desc'])
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
     end
@@ -160,7 +227,7 @@ RSpec.describe SearchIndexBackend do
       end
 
       it 'finds added records' do
-        result = described_class.search(record.number, record_type, sort_by: [field_name], order_by: ['desc'])
+        result = described_class.search_by_index(record.number, record_type, sort_by: [field_name], order_by: ['desc'])
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
     end

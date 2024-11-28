@@ -6,30 +6,18 @@ module ApplicationController::HasResponseExtentions
   private
 
   def response_expand?
-    return true if params[:expand] == true
-    return true if params[:expand] == 'true'
-    return true if params[:expand] == 1
-    return true if params[:expand] == '1'
-
-    false
+    ActiveModel::Type::Boolean.new.cast params[:expand]
   end
 
   def response_full?
-    return true if params[:full] == true
-    return true if params[:full] == 'true'
-    return true if params[:full] == 1
-    return true if params[:full] == '1'
-
-    false
+    ActiveModel::Type::Boolean.new.cast params[:full]
   end
 
   def response_all?
-    return true if params[:all] == true
-    return true if params[:all] == 'true'
-    return true if params[:all] == 1
-    return true if params[:all] == '1'
-
-    false
+    ActiveModel::Type::Boolean.new.cast params[:all]
   end
 
+  def response_only_total_count?
+    ActiveModel::Type::Boolean.new.cast params[:only_total_count]
+  end
 end

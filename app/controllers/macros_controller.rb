@@ -136,6 +136,10 @@ curl http://localhost/api/v1/macros.json -v -u #{login}:#{password} -H "Content-
     model_update_render(Macro, params)
   end
 
+  def search
+    model_search_render(Macro, params)
+  end
+
 =begin
 
 Resource:

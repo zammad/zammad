@@ -135,6 +135,10 @@ curl http://localhost/api/v1/groups -v -u #{login}:#{password} -H "Content-Type:
     model_update_render(Group, params)
   end
 
+  def search
+    model_search_render(Group, params)
+  end
+
 =begin
 
 Resource:

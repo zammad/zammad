@@ -5,6 +5,9 @@ class Macro < ApplicationModel
   include ChecksHtmlSanitized
   include CanSeed
   include HasCollectionUpdate
+  include HasSearchIndexBackend
+  include CanSelector
+  include CanSearch
   include Macro::TriggersSubscriptions
 
   store     :perform

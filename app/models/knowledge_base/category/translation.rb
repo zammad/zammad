@@ -3,7 +3,6 @@
 class KnowledgeBase::Category::Translation < ApplicationModel
   include HasAgentAllowedParams
   include HasSearchIndexBackend
-  include KnowledgeBase::Search
   include KnowledgeBase::HasUniqueTitle
 
   AGENT_ALLOWED_ATTRIBUTES = %i[title kb_locale_id].freeze
@@ -37,19 +36,14 @@ class KnowledgeBase::Category::Translation < ApplicationModel
     attrs
   end
 
-  class << self
-    def search_fallback(query, scope = nil, options: {})
-      fields = %w[title]
+  scope :search_sql_text_fallback, lambda { |query|
+    where_or_cis(%w[title], query)
+  }
 
-      output = where_or_cis(fields, query)
-
-      if scope.present?
-        output = output
-                 .joins(:category)
-                 .where(knowledge_base_categories: { parent_id: scope })
-      end
-
-      output
+  scope :apply_kb_scope, lambda { |scope|
+    if scope.present?
+      joins(:category)
+        .where(knowledge_base_categories: { parent_id: scope })
     end
-  end
+  }
 end

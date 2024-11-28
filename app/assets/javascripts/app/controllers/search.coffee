@@ -11,13 +11,17 @@ class App.Search extends App.Controller
     'keyup .js-search': 'listNavigate'
     'click .js-tab': 'showTab'
     'input .js-search': 'updateFilledClass'
+    'click .js-page': 'paginate'
+    'click .js-sort': 'sortByColumn'
 
   @include App.ValidUsersForTicketSelectionMethods
 
   constructor: ->
     super
 
-    @savedOrderBy = {}
+    @savedOrderBy    = {}
+    @resultPaginated = {}
+    @result          = {}
 
     current = App.TaskManager.get(@taskKey).state
     if current && current.query
@@ -125,6 +129,8 @@ class App.Search extends App.Controller
       @search(500, true)
 
   listNavigate: (e) =>
+    @resultPaginated = {}
+
     if e.keyCode is 27 # close on esc
       @empty()
       return
@@ -160,25 +166,50 @@ class App.Search extends App.Controller
     @globalSearch.search(
       delay: delay
       query: @query
-      force: force
     )
 
-  renderResult: (result = []) =>
+  buildResultCacheKey: (offset, direction, column, object) -> {
+    "#{object}-#{offset}-#{direction}-#{column}"
+  }
+
+  renderResult: (result = {}, params = undefined) =>
+    if !_.isUndefined(params?.offset)
+
+      for klassName, metadata of result
+        @resultPaginated[klassName] ||= {}
+
+        cacheKey = @buildResultCacheKey(params?.offset, params?.orderDirection, params?.orderBy, klassName)
+        @resultPaginated[klassName][cacheKey] = metadata.items
+
+        if @model is klassName
+          @renderTab(klassName, metadata.items || [])
+
+      return
+
     @result = result
     for tab in @tabs
-      count = 0
-      if result[tab.model]
-        count = result[tab.model].length
-      if @model is tab.model
-        @renderTab(tab.model, result[tab.model] || [])
+      count = result[tab.model]?.total_count || 0
       @$(".js-tab#{tab.model} .js-counter").text(count)
+
+      if @model is tab.model
+        @renderTab(tab.model, result[tab.model]?.items || [])
 
   showTab: (e) =>
     tabs = $(e.currentTarget).closest('.tabs')
     tabModel = $(e.currentTarget).data('tab-content')
     tabs.find('.js-tab').removeClass('active')
     $(e.currentTarget).addClass('active')
-    @renderTab(tabModel, @result?[tabModel] || [])
+
+
+    savedOrder = @savedOrderBy[tabModel]
+
+    items = if !savedOrder
+              @result[tabModel]?.items
+            else
+              cacheKey = @buildResultCacheKey(savedOrder.page * 50, savedOrder.orderDirection, savedOrder.orderBy, tabModel)
+              @resultPaginated?[tabModel]?[cacheKey]
+
+    @renderTab(tabModel, items || [])
 
   renderTab: (model, localList) =>
 
@@ -322,6 +353,72 @@ class App.Search extends App.Controller
             'click': openObject
         sortClickCallback: @saveOrderBy
       )
+
+    @renderPagination()
+
+  renderPagination: =>
+    (@table.table || @table).pagerEnabled = false
+    (@table.table || @table).orderEnabled = false
+
+    object = @el.find('.js-tab.active').data('tab-content')
+    page   = @getSavedOrderBy()?.page || 0
+    count  = @result[object]?.total_count || 0
+    pages  = Math.ceil(count / 50) - 1
+
+    if !pages
+      @$('.js-pager').html('')
+      return
+
+    pager = App.view('generic/table_pager')(
+      page:  page
+      pages: pages
+    )
+
+    @$('.js-pager').html(pager)
+
+  paginate: (e) =>
+    @preventDefaultAndStopPropagation(e)
+
+    page   = parseInt($(e.currentTarget).attr('data-page'))
+    object = @el.find('.js-tab.active').data('tab-content')
+
+    ordering = @savedOrderBy[@model] || {}
+    ordering.page = page
+
+    @savedOrderBy[@model] = ordering
+
+    @goToPaginated(object, page)
+
+  sortByColumn: (e) =>
+    @preventDefaultAndStopPropagation(e)
+
+    newColumn = $(e.currentTarget).closest('[data-column-key]').attr('data-column-key')
+
+    config = _.find App[@model].configure_attributes, (elem) -> elem.name == newColumn
+
+    # There's no reliable way to sort to-many relations. Sorry.
+    return if config.multiple && config.relation
+
+    current = @getSavedOrderBy()
+
+    newOrderDirection = if current?.orderBy == newColumn && current?.orderDirection == 'ASC'
+                          'DESC'
+                        else
+                          'ASC'
+
+    @savedOrderBy[@model] = { orderBy: newColumn, orderDirection: newOrderDirection }
+    @goToPaginated(@model, 0)
+
+  goToPaginated: (object, page) =>
+    savedOrder = @savedOrderBy[object]
+
+    @globalSearch.search(
+      query: @query
+      object:object
+      offset: page * 50
+      orderBy: savedOrder?.orderBy
+      orderDirection: savedOrder?.orderDirection
+    )
 
   updateTask: =>
     current = App.TaskManager.get(@taskKey).state

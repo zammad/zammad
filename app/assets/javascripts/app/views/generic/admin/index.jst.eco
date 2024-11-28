@@ -27,6 +27,25 @@
 </div>
 
 <div class="page-content">
+<% if @searchBar: %>
+  <div class="searchfield">
+    <input class="js-search form-control" name="search" value="<%= @searchQuery %>" placeholder="<%- @Ti('Search for %s', @objects) %>" type="search">
+    <%- @Icon('magnifier') %>
+  </div>
+<% end %>
+<% if @filterMenu: %>
+<% for filter in @filterMenu: %>
+  <div class="userSearch horizontal">
+    <div class="userSearch-label"><%- @T(filter.name) %>:</div>
+    <div class="tabs tabs-wide">
+      <% for filter in filter.data: %>
+        <div class="tab" data-id="<%= filter.id %>"><%- @Ti(filter.name) %></div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<% end %>
+
   <div class="table-overview"></div>
 </div>
 

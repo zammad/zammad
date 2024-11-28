@@ -5,6 +5,7 @@ Zammad::Application.routes.draw do
 
   # templates
   match api_path + '/templates',              to: 'templates#index',   via: :get
+  match api_path + '/templates/search',       to: 'templates#search',  via: %i[get post]
   match api_path + '/templates/:id',          to: 'templates#show',    via: :get
   match api_path + '/templates',              to: 'templates#create',  via: :post
   match api_path + '/templates/:id',          to: 'templates#update',  via: :put

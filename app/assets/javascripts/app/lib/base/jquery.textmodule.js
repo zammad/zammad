@@ -759,7 +759,7 @@
           textmodule.emptyResultsContainer()
 
           activeSet = false
-          $.each(data.user_ids, function(index, user_id) {
+          $.each(data.record_ids, function(index, user_id) {
             user = App.User.find(user_id)
             if (!user) return true
             if (!user.active) return true

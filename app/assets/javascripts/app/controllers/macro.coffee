@@ -9,6 +9,8 @@ class Macro extends App.ControllerSubContent
       id: @id
       genericObject: 'Macro'
       defaultSortBy: 'name'
+      searchBar: true
+      searchQuery: @search_query
       pageData:
         home: 'macros'
         object: __('Macro')
@@ -16,7 +18,7 @@ class Macro extends App.ControllerSubContent
         pagerAjax: true
         pagerBaseUrl: '#manage/macros/'
         pagerSelected: ( @page || 1 )
-        pagerPerPage: 150
+        pagerPerPage: 50
         navupdate: '#macros'
         buttons: [
           { name: __('New Macro'), 'data-type': 'new', class: 'btn--success' }
@@ -29,6 +31,6 @@ class Macro extends App.ControllerSubContent
       if key isnt 'el' && key isnt 'shown' && key isnt 'match'
         @[key] = value
 
-    @genericController.paginate( @page || 1 )
+    @genericController.paginate(@page || 1, params)
 
 App.Config.set('Macros', { prio: 2310, name: __('Macros'), parent: '#manage', target: '#manage/macros', controller: Macro, permission: ['admin.macro'] }, 'NavBarAdmin')

@@ -2,6 +2,9 @@
 
 class Template < ApplicationModel
   include ChecksClientNotification
+  include HasSearchIndexBackend
+  include CanSelector
+  include CanSearch
   include Template::Assets
   include Template::TriggersSubscriptions
 

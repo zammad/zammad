@@ -131,6 +131,10 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
     model_update_render(TextModule, params)
   end
 
+  def search
+    model_search_render(TextModule, params)
+  end
+
 =begin
 
 Resource:

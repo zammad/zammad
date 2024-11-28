@@ -172,7 +172,7 @@ class Navigation extends App.Controller
         type:      'personal'
       )
 
-  renderResult: (result = []) =>
+  renderResult: (result = {}) =>
     @removePopovers()
 
     # remove result if not result exists

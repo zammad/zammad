@@ -466,49 +466,7 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/tickets/search
   def search
-
-    # permit nested conditions
-    if params[:condition]
-      params.require(:condition).permit!
-    end
-
-    paginate_with(max: 200, default: 50)
-
-    query = params[:query]
-    if query.respond_to?(:permit!)
-      query = query.permit!.to_h
-    end
-
-    # build result list
-    tickets = Ticket.search(
-      query:        query,
-      condition:    params[:condition].to_h,
-      limit:        pagination.limit,
-      offset:       pagination.offset,
-      order_by:     params[:order_by],
-      sort_by:      params[:sort_by],
-      current_user: current_user,
-    )
-
-    if response_expand?
-      list = tickets.map(&:attributes_with_association_names)
-      render json: list, status: :ok
-      return
-    end
-
-    assets = {}
-    ticket_result = []
-    tickets.each do |ticket|
-      ticket_result.push ticket.id
-      assets = ticket.assets(assets)
-    end
-
-    # return result
-    render json: {
-      tickets:       ticket_result,
-      tickets_count: tickets.count,
-      assets:        assets,
-    }
+    model_search_render(Ticket, params)
   end
 
   # GET /api/v1/ticket_stats

@@ -1,63 +1,63 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Search < Service::BaseWithCurrentUser
-  def execute(term:, objects:, options: { limit: 10 })
-    options[:limit] = 10 if options[:limit].blank?
-
-    perform_search(term: term, objects: objects, options: options)
-  end
-
-  def perform_search(term:, objects:, options:)
-    if SearchIndexBackend.enabled?
-      # Performance optimization: some models may allow combining their Elasticsearch queries into one.
-      result_by_model = combined_backend_search(term: term, objects: objects, options: options)
-
-      # Other models require dedicated handling, e.g. for permission checks.
-      result_by_model.merge!(models(objects: objects, direct_search_index: false).index_with do |model|
-        model_search(model: model, term: term, options: options)
-      end)
-
-      # Finally, sort by object priority.
-      models(objects: objects).map do |model|
-        result_by_model[model]
-      end.flatten.compact
-    else
-      models(objects: objects).map do |model|
-        model_search(model: model, term: term, options: options)
-      end.flatten.compact
+  Result = Struct.new(:result, :sorting) do
+    def flattened
+      result
+        .in_order_of(:first, sorting)
+        .flat_map { |elem| elem.last[:objects] }
     end
   end
 
-  # Perform a direct, cross-module Elasticsearch query and map the results by class.
-  def combined_backend_search(term:, objects:, options:)
-    result_by_model = {}
-    models_with_direct_search_index = models(objects: objects, direct_search_index: true).map(&:to_s)
-    if models_with_direct_search_index
-      SearchIndexBackend.search(term, models_with_direct_search_index, options).each do |item|
-        klass = "::#{item[:type]}".constantize
-        record = klass.lookup(id: item[:id])
-        (result_by_model[klass] ||= []).push(record) if record
+  attr_reader :query, :objects, :options
+
+  # @param current_user [User] which runs the search
+  # @param query [String] to search for
+  # @param objects [Array<ActiveRecord::Base>] searchable classes with search_preferences method present
+  # @param options [Hash] options to forward to CanSearch and SearchIndexBackend. E.g. offset and limit.
+  def initialize(current_user:, query:, objects:, options: {})
+    super(current_user:)
+
+    @query   = query
+    @objects = objects
+    @options = options
+      .compact_blank
+      .with_defaults(limit: 10) # limit can be overriden
+      .merge!(with_total_count: true, full: true) # those options are mandatory
+  end
+
+  def execute
+    result = models_sorted
+      .index_with { |elem| search_single_model(elem) }
+      .compact
+
+    Result.new(result, models_sorted)
+  end
+
+  private
+
+  def models
+    @models ||= objects
+      .index_with { |elem| elem.search_preferences(current_user) }
+      .compact_blank
+  end
+
+  def models_sorted
+    @models_sorted ||= models.keys.sort_by { |elem| models.dig(elem, :prio) }.reverse
+  end
+
+  def search_single_model(model)
+    if !SearchIndexBackend.enabled? || !models.dig(model, :direct_search_index)
+      return model.search(query:, current_user:, **options)
+    end
+
+    SearchIndexBackend
+      .search_by_index(query, model.name, options)
+      .tap do |result|
+        next if result.blank?
+
+        result[:objects] = result[:object_metadata]
+          .map { |elem| model.lookup(id: elem[:id]) }
       end
-    end
-    result_by_model
-  end
-
-  # Call the model specific search, which will query Elasticsearch if available,
-  #   or the Database otherwise.
-  def model_search(model:, term:, options:)
-    model.search({ query: term, current_user: current_user, limit: options[:limit], ids: options[:ids] })
-  end
-
-  # Get a prioritized list of searchable models
-  def models(objects:, direct_search_index: nil)
-    objects.select do |model|
-      prefs = model.search_preferences(current_user)
-      next false if !prefs
-      next false if !direct_search_index.nil? && prefs[:direct_search_index] != direct_search_index
-
-      true
-    end.sort_by do |model|
-      model.search_preferences(current_user)[:prio]
-    end.reverse
   end
 end

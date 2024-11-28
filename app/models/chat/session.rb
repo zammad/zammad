@@ -2,6 +2,7 @@
 
 class Chat::Session < ApplicationModel
   include HasSearchIndexBackend
+  include CanSelector
   include HasTags
 
   include Chat::Session::Search

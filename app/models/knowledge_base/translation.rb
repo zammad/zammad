@@ -3,7 +3,6 @@
 class KnowledgeBase::Translation < ApplicationModel
   include HasAgentAllowedParams
   include HasSearchIndexBackend
-  include KnowledgeBase::Search
 
   AGENT_ALLOWED_ATTRIBUTES = %i[title footer_note kb_locale_id].freeze
 
@@ -28,17 +27,11 @@ class KnowledgeBase::Translation < ApplicationModel
     attrs
   end
 
-  class << self
-    def search_fallback(query, scope = nil, options: {})
-      fields = %w[title]
+  scope :search_sql_text_fallback, lambda { |query|
+    where_or_cis(%w[title], query)
+  }
 
-      output = where_or_cis(fields, query)
-
-      if scope.present?
-        output = output.where(id: 0) # KB cannot be in any scope
-      end
-
-      output
-    end
-  end
+  scope :apply_kb_scope, lambda { |scope|
+    none if scope.present?
+  }
 end
