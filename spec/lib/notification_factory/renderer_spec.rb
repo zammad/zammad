@@ -174,6 +174,24 @@ RSpec.describe NotificationFactory::Renderer do
           it "renders an #{tag} body with quote" do
             expect(renderer.render).to eq "&gt; #{body}<br>"
           end
+
+          context 'with links' do
+            context 'with &amp;' do
+              let(:body) { "This is an example\nhttps://example.com/?query=foo&amp;query2=bar" }
+
+              it "renders an #{tag} body with working links" do
+                expect(renderer.render).to eq '&gt; This is an example<br>&gt; https://example.com/?query=foo&amp;query2=bar<br>'
+              end
+            end
+
+            context 'with &' do
+              let(:body) { "This is an example\nhttps://example.com/?query=foo&query2=bar" }
+
+              it "renders an #{tag} body with working links" do
+                expect(renderer.render).to eq '&gt; This is an example<br>&gt; https://example.com/?query=foo&amp;query2=bar<br>'
+              end
+            end
+          end
         end
       end
     end
@@ -200,7 +218,7 @@ RSpec.describe NotificationFactory::Renderer do
         let(:create_object_manager_attribute) do
           create(:object_manager_attribute_select, name: 'select')
         end
-        let(:ticket) { create(:ticket, customer: @user, select: 'key_1') }
+        let(:ticket)          { create(:ticket, customer: @user, select: 'key_1') }
         let(:template)        { '#{ticket.select} _SEPERATOR_ #{ticket.select.value}' }
         let(:expected_render) { 'key_1 _SEPERATOR_ value_1' }
 

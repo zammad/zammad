@@ -320,6 +320,7 @@ class String
   def text2html
     text = CGI.escapeHTML(self)
     text.gsub!(%r{\n}, '<br>')
+    text.gsub!('&amp;amp;', '&amp;')
     text.chomp
   end
 
