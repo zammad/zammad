@@ -665,7 +665,7 @@ GEM
       sprockets (>= 3.0.0)
     stringio (3.1.2)
     systemu (2.6.5)
-    tcr (0.4.0)
+    tcr (0.4.1)
     telegram-bot-ruby (2.1.0)
       dry-struct (~> 1.6)
       faraday (~> 2.0)
