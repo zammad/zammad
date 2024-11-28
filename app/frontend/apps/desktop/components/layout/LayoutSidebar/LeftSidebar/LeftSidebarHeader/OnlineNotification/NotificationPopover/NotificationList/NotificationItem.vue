@@ -79,7 +79,7 @@ const handleLinkClick = (notification: OnlineNotification) => {
         :aria-description="$t('Remove Notification')"
         class="opacity-0 focus-visible:opacity-100 group-hover:opacity-100"
         icon="x-lg"
-        variant="danger"
+        variant="remove"
         @click="$emit('remove', notification)"
       />
     </div>

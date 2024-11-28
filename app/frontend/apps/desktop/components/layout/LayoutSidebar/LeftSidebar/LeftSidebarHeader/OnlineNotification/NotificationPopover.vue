@@ -36,7 +36,9 @@ const emit = defineEmits<{
 
 const sectionElement = useTemplateRef('section')
 
-const { reachedTop } = useElementScroll(sectionElement as Ref<HTMLElement>)
+const { reachedTop, isScrollable } = useElementScroll(
+  sectionElement as Ref<HTMLElement>,
+)
 
 const { seenNotification, markAllRead, deleteNotification } =
   useOnlineNotificationActions()
@@ -46,7 +48,7 @@ const runSeenNotification = async (notification: OnlineNotification) => {
 
   emit('close')
 
-  return seenNotification(notification.id).then(() => {
+  return seenNotification(notification.metaObject?.id as string).then(() => {
     mutationTriggered = false
   })
 }
@@ -66,8 +68,7 @@ const runMarkAllRead = async () => {
 </script>
 
 <template>
-  <!-- min height is required to prevent scrollbar to show on initial load -->
-  <section ref="section" class="max-h-full w-[400px]">
+  <section ref="section" class="scroll max-h-full w-[400px] overflow-y-auto">
     <NotificationHeader
       class="sticky top-0 z-10 mb-2 bg-neutral-50 px-3 py-3 dark:bg-gray-500"
       :class="{
@@ -78,6 +79,7 @@ const runMarkAllRead = async () => {
     />
     <CommonLoader :loading="isLoading">
       <NotificationList
+        :class="{ 'ltr:pr-5 rtl:pl-5': isScrollable }"
         :list="notificationList"
         @seen="runSeenNotification"
         @remove="removeNotification"

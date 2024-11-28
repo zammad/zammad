@@ -46,7 +46,9 @@ export const useElementScroll = (
   )
 
   const isScrollable = computed(
-    () => scrollNode.value?.scrollHeight > scrollNode.value?.clientHeight,
+    () =>
+      scrollNode.value?.scrollHeight > scrollNode.value?.clientHeight ||
+      y.value > 0,
   )
 
   const hasReachedThreshold = computed(

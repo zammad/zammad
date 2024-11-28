@@ -133,7 +133,7 @@ describe('Ticket detail: sidebar - online notifications', () => {
     const calls = await waitForOnlineNotificationSeenMutationCalls()
 
     expect(calls.at(-1)?.variables).toEqual({
-      objectId: convertToGraphQLId('OnlineNotification', 1),
+      objectId: convertToGraphQLId('Ticket', 1),
     })
 
     vi.useRealTimers()
