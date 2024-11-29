@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :setting do
     title       { 'ABC API Token' }
-    name        { Faker::Name.unique.name }
+    name        { Faker::Color.unique.color_name }
     area        { 'Integration::ABC' }
     description { 'API Token for ABC to access ABC.' }
     frontend    { false }
