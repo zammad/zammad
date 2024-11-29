@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-25 22:00+0000\n"
+"PO-Revision-Date: 2024-11-29 09:01+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
@@ -8543,16 +8543,12 @@ msgstr ""
 "Denna åtgärd kommer att göra tidigare återställningskoder ogiltiga."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:12
-#, fuzzy
-#| msgid ""
-#| "If you want to move already stored attachments from one backend to "
-#| "another, you need to execute the following via console."
 msgid ""
 "If you want to move already stored attachments from one backend to another, "
 "you need to execute the following rails/rake task."
 msgstr ""
 "Om du vill flytta redan lagrade bilagor från en backend till en annan måste "
-"du utföra följande via konsolen."
+"du utföra följande via rails/rake uppgift."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:162
 msgid ""

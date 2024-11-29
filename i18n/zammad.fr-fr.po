@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-20 22:00+0000\n"
+"PO-Revision-Date: 2024-11-29 09:00+0000\n"
 "Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
@@ -3952,7 +3952,7 @@ msgstr "Copier le lien permanent de l'article"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:356
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
-"Copier le numéro de l'objet actuel (par exemple le numéro de ticket) dans le "
+"Copier le numéro de l'objet actuel (p. ex. le numéro de ticket) dans le "
 "presse-papiers"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue:66
@@ -4697,7 +4697,7 @@ msgid ""
 "executives)."
 msgstr ""
 "Définit une exception à \"l'affectation automatique\" pour certains "
-"utilisateurs (les responsables par exemple)."
+"utilisateurs (p. ex. les responsables)."
 
 #: db/seeds/settings.rb:3572
 msgid "Define max. attachment size for Elasticsearch."
@@ -6927,7 +6927,7 @@ msgstr "Saisir le titre…"
 msgid ""
 "Enter a domain name that will be associated with this key, e.g. example.com."
 msgstr ""
-"Saisir un nom de domaine qui sera associée à cette clé, comme exemple.com."
+"Saisir un nom de domaine qui sera associée à cette clé, p. ex. example.com."
 
 #: app/assets/javascripts/app/views/generic/input.jst.eco:2
 msgid "Enter a valid email address."
@@ -7078,8 +7078,8 @@ msgstr "Saisir votre nom d'utilisateur ou votre adresse email"
 #: app/models/system_report/plugin/entities/counts.rb:4
 msgid "Entity counts of database objects (e.g. ticket count, user count, etc.)"
 msgstr ""
-"Nombre d'objets d'entités en base de données (par exemple, nombre de "
-"tickets, nombre d'utilisateurs, etc.)"
+"Nombre d'objets d'entités en base de données (p. ex. nombre de tickets, "
+"nombre d'utilisateurs, etc.)"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:6
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:165
@@ -7554,7 +7554,7 @@ msgstr "Rechercher une suggestion de traduction"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco:6
 msgid "Find what you're looking for, e.g. \"search phrase\""
-msgstr "Trouver ce que vous cherchez, par exemple \"texte recherché\""
+msgstr "Trouver ce que vous cherchez, p. ex. \"texte recherché\""
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:16
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:13
@@ -7777,7 +7777,7 @@ msgstr "Formater en |gras|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:576
 msgid "Format as ||italic||"
-msgstr "Formater en ||italic||"
+msgstr "Formater en ||italique||"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:96
 msgid "Forward"
@@ -8248,7 +8248,7 @@ msgstr "Gérer les tâches liées à la confidentialité des données."
 
 #: app/models/system_report/plugin/hardware.rb:4
 msgid "Hardware (e.g. CPU cores, memory, disk space)"
-msgstr "Matériel (par exemple, cœurs de processeur, mémoire, espace disque)"
+msgstr "Matériel (p. ex. cœurs de processeur, mémoire, espace disque)"
 
 #: app/assets/javascripts/app/models/job.coffee:18
 msgid "Has processed"
@@ -8375,9 +8375,9 @@ msgid ""
 msgstr ""
 "Ici, vous pouvez effectuer une recherche sur des clients, organisations ou "
 "tickets. Utiliser l'astérisque §*§ pour correspondre à n'importe quelle "
-"suite de lettres : §sou*§ ou §ressen*r§. Vous pouvez également utiliser les "
-"||guillemets|| pour effectuer une recherche sur une phrase : §\"une "
-"phrase\"§."
+"suite de lettres, p. ex. §smi*§ ou §rosent*l§. Vous pouvez également "
+"utiliser les ||guillemets|| pour effectuer une recherche sur une phrase : §"
+"\"une phrase\"§."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:23
 msgid ""
@@ -8705,16 +8705,12 @@ msgstr ""
 "précédents."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:12
-#, fuzzy
-#| msgid ""
-#| "If you want to move already stored attachments from one backend to "
-#| "another, you need to execute the following via console."
 msgid ""
 "If you want to move already stored attachments from one backend to another, "
 "you need to execute the following rails/rake task."
 msgstr ""
-"Si vous voulez déplacer des fichiers déjà stockés d'un service tiers à un "
-"autre, vous devez exécuter la commande suivante dans la console."
+"Si vous souhaitez déplacer des pièces jointes déjà stockées d'un service "
+"tiers à un autre, vous devez exécuter la tâche rails/rake suivante."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:162
 msgid ""
@@ -9679,8 +9675,8 @@ msgstr "Dernier contact (client)"
 msgid ""
 "Last created at of database objects (e.g. when was the last trigger created)"
 msgstr ""
-"Dernière création des objets de base de données (par exemple, quand le "
-"dernier déclencheur a-t-il été créé)"
+"Dernière création des objets de base de données (p. ex. quand le dernier "
+"déclencheur a-t-il été créé)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:224
 msgid "Last login"
@@ -9850,8 +9846,8 @@ msgid ""
 "Lists active channels (e.g. 1 Telegram channel, 2 Microsoft channels and 1 "
 "Google channel)"
 msgstr ""
-"Liste des canaux actifs (ex. 1 canal Telegram, 2 canaux Microsoft et 1 canal "
-"Google)"
+"Liste des canaux actifs (p. ex. 1 canal Telegram, 2 canaux Microsoft et 1 "
+"canal Google)"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:38
 msgid "Load"
@@ -10748,7 +10744,7 @@ msgstr "Descendre"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:341
 msgid "Move left and right"
-msgstr "Déplace à gauche et à droite"
+msgstr "Se déplacer à gauche et à droit"
 
 #: app/frontend/shared/form/i18n/locales.ts:50
 msgid "Move up"
@@ -10756,7 +10752,7 @@ msgstr "Monter"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:337
 msgid "Move up and down"
-msgstr "Déplacer en haut et en bas"
+msgstr "Se déplacer en haut et en bas"
 
 #: app/models/report.rb:59
 msgid "Moved in"
@@ -11986,7 +11982,7 @@ msgstr "Ouvrir la sélection de macro"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:462
 msgid "Open note box"
-msgstr "Ouvrir la section commentaire"
+msgstr "Ouvrir la zone des notes"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:77
 msgid "Open the hours overlay"
@@ -12478,11 +12474,11 @@ msgstr "Coller la clé privée"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:588
 msgid "Paste from clipboard"
-msgstr "Coller depuis le presse-papier"
+msgstr "Coller depuis le presse-papiers"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:595
 msgid "Paste from clipboard (plain text)"
-msgstr "Coller depuis le presse-papier (plein texte)"
+msgstr "Coller depuis le presse-papiers (texte brut)"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:25
 msgid "Paste in CSV data"
@@ -14341,7 +14337,7 @@ msgstr "Sélectionner le type de ticket par défaut"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:345
 msgid "Select item"
-msgstr "Sélectionner un élément"
+msgstr "Sélectionner l'élément"
 
 #: app/assets/javascripts/app/lib/app_post/multi_locales_row.coffee:38
 msgid "Select locale…"
@@ -14570,7 +14566,7 @@ msgstr "Définir la limite d'agent"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:492
 msgid "Set article to internal/public"
-msgstr "Définir l'article en interne/publique"
+msgstr "Rendre l'article interne/public"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:81
 msgid "Set as Default"
@@ -15794,7 +15790,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:5
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:122
 msgid "Thanks for joining. Email sent to \"%s\"."
-msgstr "Merci de nous rejoindre. Email envoyé à \"%s\"."
+msgstr "Merci de nous rejoindre. E-mail envoyé à \"%s\"."
 
 #: lib/secure_mailing/pgp/tool/exec/agent.rb:13
 msgid "The 'gpg-agent' process could not be stopped."
@@ -16053,7 +16049,7 @@ msgstr "Le certificat de vérification n'a pas pu être trouvé."
 
 #: app/models/setting/validation/saml/security.rb:64
 msgid "The certificate is not usable (e.g. expired)."
-msgstr "Le certificat n'est pas utilisable (par exemple, il a expiré)."
+msgstr "Le certificat n'est pas utilisable (p. ex. expiré)."
 
 #: app/models/setting/validation/saml/security.rb:63
 msgid "The certificate is not usable due to being a CA certificate."
@@ -16088,7 +16084,7 @@ msgid ""
 "period or the extensions."
 msgstr ""
 "Le certificat n'est pas valide pour l'utilisation de SSL. Veuillez vérifier "
-"par ex. la durée de validité ou les extensions."
+"p. ex. la durée de validité ou les extensions."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:10
 msgid ""
@@ -16193,10 +16189,10 @@ msgid ""
 "g., \"/support\", \"example.com\", or \"example.com/support\"). Then, follow "
 "the directions under \"Web Server Configuration\" to complete the process."
 msgstr ""
-"L'URL par défaut de votre base de connaissances est, par exemple, example."
-"com ou example.com/help. Pour utiliser une URL personnalisée, saisissez la "
-"destination ci-dessous (par exemple, \"/support\", \"example.com\" ou "
-"\"example.com/support\"). Puis suiviez les instructions de la partie "
+"L'URL par défaut de votre base de connaissances est, par exemple, "
+"example.com ou example.com/help. Pour utiliser une URL personnalisée, "
+"saisissez la destination ci-dessous (p. ex. \"/support\", \"example.com\" ou "
+"\"example.com/support\"). Puis suivez les instructions de la partie "
 "\"Configuration du serveur web\" pour terminer le processus."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:118
@@ -16209,8 +16205,7 @@ msgstr "L'appareil n'a pas pu être supprimé."
 
 #: db/seeds/settings.rb:2195
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
-msgstr ""
-"Le séparateur entre TicketHook et le numéro de ticket. Par exemple. ' : '."
+msgstr "Le séparateur entre TicketHook et le numéro de ticket, p. ex. ' : '."
 
 #: lib/email_address_validation.rb:34
 msgid "The email address is invalid."
@@ -16968,15 +16963,14 @@ msgstr "Testé avec succès."
 #: db/seeds/settings.rb:3097
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
-msgstr "Le texte qui préfixe le sujet d'un email transféré, par ex : TR."
+msgstr "Le texte qui préfixe le sujet d'un e-mail transféré, p. ex. TR."
 
 #: db/seeds/settings.rb:3075
 msgid ""
 "The text at the beginning of the subject in an email reply, e.g. RE, AW, or "
 "AS."
 msgstr ""
-"Le texte qui préfixe le sujet d'une réponse à un email, par exemple RE, AW "
-"ou AS."
+"Le texte qui préfixe le sujet d'une réponse à un e-mail, p. ex. RE, AW ou AS."
 
 #: app/services/service/ticket/update/validator/checklist_completed.rb:16
 msgid "The ticket checklist is incomplete."
@@ -18455,15 +18449,15 @@ msgstr "Aujourd'hui"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:85
 msgid "Toggle AM/PM mode"
-msgstr "Basculer en mode AM/PM"
+msgstr "Activer/désactiver le mode AM/PM"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:164
 msgid "Toggle Group"
-msgstr "Basculer le groupe"
+msgstr "Activer/désactiver le groupe"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:443
 msgid "Toggle dark mode"
-msgstr "Basculer en mode sombre"
+msgstr "Activer/désactiver le mode sombre"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:197
 msgid "Toggle header cell"
@@ -18475,11 +18469,11 @@ msgstr "Activer/désactiver la colonne d'entête"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:179
 msgid "Toggle header row"
-msgstr "Changer de ligne d'entête"
+msgstr "Activer/désactiver la ligne d'entête"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 msgid "Toggle the overlay"
-msgstr "Basculer le recouvrement"
+msgstr "Activer/désactiver le recouvrement"
 
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
@@ -18600,8 +18594,8 @@ msgid ""
 msgstr ""
 "Les déclencheurs activés par des actions sont exécutés à chaque fois qu'un "
 "ticket est créé ou mis à jour, tandis que les déclencheurs activés par des "
-"événements temporels sont exécutés quand un temps spécifique est atteint "
-"(par exemple un temps d'attente ou une escalade)."
+"événements temporels sont exécutés quand un temps spécifique est atteint (p. "
+"ex. un temps d'attente ou une escalade)."
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco:2
 #: app/frontend/shared/composables/authentication/useLoginTwoFactor.ts:109
@@ -18991,7 +18985,7 @@ msgstr "Temps écoulé"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:512
 msgid "Update as closed"
-msgstr "Mettre à jour comme clôturé"
+msgstr "Mettre à jour comme clos"
 
 #: db/seeds/schedulers.rb:259
 msgid "Update exchange oauth 2 token."
@@ -19321,31 +19315,31 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:141
 msgid "Used anywhere"
-msgstr "Utilisé partout"
+msgstr "Utilisables de partout"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:418
 msgid "Used anywhere (admin only)"
-msgstr "Utilisé partout (administrateur uniquement)"
+msgstr "Utilisables de partout (administrateur uniquement)"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:333
 msgid "Used in lists (views and results)"
-msgstr "Utilisé dans les listes (vues et résultats)"
+msgstr "Utilisables dans les listes (vues et résultats)"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:350
 msgid "Used in object views"
-msgstr "Utilisé dans les vues d'objets"
+msgstr "Utilisables dans les vues d'objets"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:529
 msgid "Used when composing a Ticket article"
-msgstr "Utilisé lors de la rédaction d'article dans un ticket"
+msgstr "Utilisables lors de la rédaction d'article dans un ticket"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:559
 msgid "Used when composing a text"
-msgstr "Utilisé lors de la composition d'un texte"
+msgstr "Utilisables lors de la rédaction d'un texte"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:456
 msgid "Used when viewing a Ticket"
-msgstr "Utilisé lors de l'affichage d'un ticket"
+msgstr "Utilisables lors de l'affichage d'un ticket"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:413
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
@@ -19948,7 +19942,7 @@ msgid ""
 "like \"%s\" (e. g. %s)."
 msgstr ""
 "Avec la somme de contrôle, le compteur sera modifié pour inclure la somme de "
-"contrôle. Le format sera du type \"%s\" (par exemple %s)."
+"contrôle. Le format sera du type \"%s\" (p. ex. %s)."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:35
 #: app/assets/javascripts/app/models/checklist_template.coffee:23
@@ -20011,7 +20005,7 @@ msgid ""
 msgstr ""
 "Avec |Date|, la numérotation des tickets sera générée avec la date du jour, "
 "l'IDSystème et le compteur. Le format sera \"Année.Mois.Jour.IDSystème."
-"Compteur\" (par exemple 201707101010138, 201707101010139)."
+"Compteur\" (p. ex. 201206231010138, 201206231010139)."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee:35
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:47
@@ -20680,7 +20674,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:217
 msgid "absolute - e. g. \"Monday 09:30\" or \"Tuesday 23. Feb 14:20\""
-msgstr "absolue - par exemple \"Lundi 09:30\" ou \"Mardi 23 févr. 14:20\""
+msgstr "absolue - p. ex. \"Lundi 09:30\" ou \"Mardi 23 févr. 14:20\""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:4
 msgid "active"
@@ -21052,15 +21046,15 @@ msgstr "déposer ici pour annuler"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:140
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:124
 msgid "e. g. user@example.com"
-msgstr "par ex : utilisateur@exemple.com"
+msgstr "p. ex. utilisateur@example.com"
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:14
 msgid "e.g."
-msgstr "par ex."
+msgstr "p. ex."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:47
 msgid "e.g. Easter holiday"
-msgstr "ex. vacances de Pâques"
+msgstr "p. ex. vacances de Pâques"
 
 #: app/assets/javascripts/app/views/generic/drox.jst.eco:7
 msgid "edit"
@@ -21568,7 +21562,7 @@ msgstr "ne doit pas se terminer par un slash (\"/\")"
 
 #: app/models/knowledge_base.rb:217
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
-msgstr "ne doit pas inclure un protocole (comme \"http://\" ou \"https://\")"
+msgstr "ne doit pas inclure un protocole (p. ex. \"http://\" ou \"https://\")"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:44
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:60
@@ -21760,8 +21754,8 @@ msgstr "relatif"
 #: db/seeds/settings.rb:216
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
 msgstr ""
-"valeur relative - par exemple \"il y a deux heures\" ou \"il y a deux jours "
-"et 15 minutes\""
+"valeur relative - p. ex. \"il y a deux heures\" ou \"il y a deux jours et 15 "
+"minutes\""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:17
@@ -21987,7 +21981,7 @@ msgstr "jusqu'au (valeur relative)"
 
 #: db/seeds/settings.rb:218
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
-msgstr "heure exacte - par exemple \"2018-08-30 14:30\""
+msgstr "heure exacte - p. ex. \"2018-08-30 14:30\""
 
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
@@ -22129,7 +22123,7 @@ msgid ""
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgstr ""
 "|Incrément| incrémente le numéro du ticket. Le IDSystème et le compteur sont "
-"utilisés au format \"IDSystème.Compteur\" (par ex : 1010138, 1010139)."
+"utilisés au format \"IDSystème.Compteur\" (p. ex. 1010138, 1010139)."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:6
 msgid "|Left| means |[Ticket#12345] Some Subject|"
