@@ -7,6 +7,7 @@ import { useOnlineNotificationMarkAllAsSeenMutation } from '#shared/entities/onl
 import { useOnlineNotificationSeenMutation } from '#shared/entities/online-notification/graphql/mutations/seen.api.ts'
 import { OnlineNotificationsDocument } from '#shared/entities/online-notification/graphql/queries/onlineNotifications.api.ts'
 import type {
+  OnlineNotification,
   OnlineNotificationsQuery,
   Scalars,
 } from '#shared/graphql/types.ts'
@@ -91,6 +92,38 @@ export const useOnlineNotificationActions = () => {
     }
   }
 
+  const updateSeenNotificationCache = (id: Scalars['ID']['output']) => {
+    const data = getCacheData()
+
+    if (!data) return
+
+    const { queryOptions, oldQueryCache, existingQueryCache } = data
+
+    const clonedQueryCache = cloneDeep(existingQueryCache)
+
+    clonedQueryCache.onlineNotifications.edges.forEach(({ node }) => {
+      if ((node.metaObject as OnlineNotification['metaObject'])?.id === id) {
+        node.seen = true
+      }
+    })
+
+    cache.writeQuery({
+      ...queryOptions,
+      data: {
+        onlineNotifications: {
+          ...clonedQueryCache.onlineNotifications,
+        },
+      },
+    })
+
+    return () => {
+      cache.writeQuery({
+        ...queryOptions,
+        data: oldQueryCache,
+      })
+    }
+  }
+
   const seenNotificationMutation = new MutationHandler(
     useOnlineNotificationSeenMutation(),
     {
@@ -100,8 +133,13 @@ export const useOnlineNotificationActions = () => {
     },
   )
 
-  const seenNotification = async (id: Scalars['ID']['output']) =>
-    seenNotificationMutation.send({ objectId: id })
+  const seenNotification = async (id: Scalars['ID']['output']) => {
+    const revertCache = updateSeenNotificationCache(id)
+
+    return seenNotificationMutation
+      .send({ objectId: id })
+      .catch(() => revertCache)
+  }
 
   const markAllSeenMutation = new MutationHandler(
     useOnlineNotificationMarkAllAsSeenMutation(),

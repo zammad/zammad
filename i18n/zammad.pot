@@ -1253,8 +1253,8 @@ msgstr ""
 msgid "Agent idle timeout"
 msgstr ""
 
-#: app/models/role.rb:154
-#: app/models/user.rb:704
+#: app/models/role.rb:156
+#: app/models/user.rb:705
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -1740,7 +1740,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:607
+#: app/models/user.rb:608
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -1752,8 +1752,8 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr ""
 
-#: app/models/role.rb:126
-#: app/models/user.rb:678
+#: app/models/role.rb:128
+#: app/models/user.rb:679
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2468,7 +2468,7 @@ msgstr ""
 msgid "Cannot process external data source %s. %s"
 msgstr ""
 
-#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:109
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:147
 msgid "Cannot set online notifications as seen"
 msgstr ""
 
@@ -5499,7 +5499,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:617
+#: app/models/user.rb:618
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -7378,7 +7378,7 @@ msgstr ""
 msgid "Ignore Escalation/SLA Information"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:45
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:48
 msgid "Ignore Message"
 msgstr ""
 
@@ -7841,7 +7841,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:562
+#: app/models/user.rb:563
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -9317,7 +9317,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:630
+#: app/models/user.rb:631
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -9897,7 +9897,7 @@ msgstr ""
 msgid "No content to show"
 msgstr ""
 
-#: app/models/group.rb:34
+#: app/models/group.rb:36
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr ""
 
@@ -12570,7 +12570,7 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:624
+#: app/models/user.rb:625
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
@@ -14630,7 +14630,7 @@ msgstr ""
 msgid "The object could not be updated."
 msgstr ""
 
-#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:98
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:131
 msgid "The online notification could not be marked as seen."
 msgstr ""
 
@@ -14895,7 +14895,7 @@ msgstr ""
 msgid "The required parameter 'link_type' is missing."
 msgstr ""
 
-#: app/models/text_module.rb:29
+#: app/models/text_module.rb:31
 msgid "The required parameter 'locale' is missing."
 msgstr ""
 
@@ -15520,7 +15520,7 @@ msgstr ""
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
 
-#: app/models/group.rb:81
+#: app/models/group.rb:83
 msgid "This group or its children exceed the allowed nesting depth."
 msgstr ""
 
@@ -18870,7 +18870,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:828
+#: app/models/user.rb:829
 msgid "is too long"
 msgstr ""
 
