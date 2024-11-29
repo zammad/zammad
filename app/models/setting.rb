@@ -44,7 +44,8 @@ set config setting
 
     setting.state_current = { value: value }
     setting.save!
-    logger.info "Setting.set('#{name}', #{value.inspect})"
+
+    logger.info "Setting.set('#{name}', #{filter_param(name, value).inspect})"
     true
   end
 
@@ -80,7 +81,8 @@ reset config setting to default
 
     setting.state_current = setting.state_initial
     setting.save!
-    logger.info "Setting.reset('#{name}', #{setting.state_current.inspect})"
+
+    logger.info "Setting.reset('#{name}', #{filter_param(name, setting.state_current).inspect})"
     true
   end
 
@@ -112,6 +114,12 @@ reload config settings
     end
 
     false
+  end
+
+  # Used to mask values of sensitive settings such as passwords, tokens etc.
+  def self.filter_param(key, value)
+    @@parameter_filter ||= ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)
+    @@parameter_filter.filter_param(key, value)
   end
 
   private

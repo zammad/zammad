@@ -32,6 +32,22 @@ RSpec.describe Setting, type: :model do
         expect { described_class.set(setting.name, 'foo') }
           .to change { setting.reload.state_current }.to({ 'value' => 'foo' })
       end
+
+      it 'logs the value' do
+        allow(described_class.logger).to receive(:info)
+        described_class.set(setting.name, 'foo')
+        expect(described_class.logger).to have_received(:info).with("Setting.set('#{setting.name}', \"foo\")")
+      end
+    end
+
+    context 'when given a sensitive Setting#name' do
+      subject(:setting) { create(:setting, name: 'my_token') }
+
+      it 'masks the value' do
+        allow(described_class.logger).to receive(:info)
+        described_class.set(setting.name, 'foo')
+        expect(described_class.logger).to have_received(:info).with("Setting.set('#{setting.name}', \"[FILTERED]\")")
+      end
     end
 
     context 'when #preferences hash includes a :cache key' do
@@ -55,7 +71,26 @@ RSpec.describe Setting, type: :model do
         expect { described_class.reset(setting.name) }
           .to change { setting.reload.state_current }.to({ value: 'foo' })
       end
+
+      it 'logs the value' do
+        setting.update(state_initial: { value: 'foo' })
+        allow(described_class.logger).to receive(:info)
+        described_class.reset(setting.name)
+        expect(described_class.logger).to have_received(:info).with("Setting.reset('#{setting.name}', {\"value\"=>\"foo\"})")
+      end
     end
+
+    context 'when given a sensitive Setting#name' do
+      subject(:setting) { create(:setting, name: 'my_token') }
+
+      it 'masks the value' do
+        setting.update(state_initial: { value: 'foo' })
+        allow(described_class.logger).to receive(:info)
+        described_class.reset(setting.name)
+        expect(described_class.logger).to have_received(:info).with("Setting.reset('#{setting.name}', \"[FILTERED]\")")
+      end
+    end
+
   end
 
   describe '.cache_valid?' do
