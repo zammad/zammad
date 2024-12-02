@@ -572,7 +572,7 @@ msgid "%s of my tickets escalated"
 msgstr "%s of my tickets escalated"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
-#: app/graphql/gql/queries/autocomplete_search/generic.rb:64
+#: app/graphql/gql/queries/autocomplete_search/generic.rb:61
 msgid "%s people"
 msgstr "%s people"
 
@@ -1086,7 +1086,7 @@ msgstr ""
 msgid "Accounts"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:718
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:721
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:115
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:82
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:109
@@ -1161,7 +1161,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ldap_source.coffee:7
 #: app/assets/javascripts/app/models/macro.coffee:15
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:9
-#: app/assets/javascripts/app/models/overview.coffee:67
+#: app/assets/javascripts/app/models/overview.coffee:66
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:13
 #: app/assets/javascripts/app/models/report_profile.js.coffee:9
 #: app/assets/javascripts/app/models/role.coffee:11
@@ -1590,7 +1590,7 @@ msgstr ""
 msgid "Agent idle timeout"
 msgstr ""
 
-#: app/models/role.rb:153 app/models/user.rb:698
+#: app/models/role.rb:156 app/models/user.rb:705
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -1947,11 +1947,11 @@ msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:693
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:696
 msgid "Are you sure you want to set \"%s\" as default?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:709
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:712
 msgid "Are you sure you want to unset \"%s\" as default?"
 msgstr ""
 
@@ -2111,7 +2111,7 @@ msgid ""
 "will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:601
+#: app/models/user.rb:608
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2125,7 +2125,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr ""
 
-#: app/models/role.rb:125 app/models/user.rb:672
+#: app/models/role.rb:128 app/models/user.rb:679
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2216,7 +2216,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
-#: app/assets/javascripts/app/models/overview.coffee:16
+#: app/assets/javascripts/app/models/overview.coffee:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:88
 msgid "Attributes"
 msgstr ""
@@ -2865,7 +2865,7 @@ msgstr ""
 msgid "Cannot process external data source %s. %s"
 msgstr ""
 
-#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:109
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:147
 msgid "Cannot set online notifications as seen"
 msgstr ""
 
@@ -3005,7 +3005,7 @@ msgstr ""
 msgid "Channel Distribution"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/manage.coffee:35
+#: app/assets/javascripts/app/controllers/manage.coffee:36
 msgid "Channels"
 msgstr ""
 
@@ -3061,7 +3061,7 @@ msgstr ""
 msgid "Check item"
 msgstr ""
 
-#: lib/search_index_backend.rb:410
+#: lib/search_index_backend.rb:437
 msgid "Check the response and payload for detailed information:"
 msgstr ""
 
@@ -3237,7 +3237,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:679
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:153
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:333
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:382
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
@@ -3294,7 +3294,7 @@ msgstr ""
 msgid "Clients"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:650
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:653
 msgid "Clone"
 msgstr ""
 
@@ -5233,12 +5233,12 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:677
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:177
+#: app/assets/javascripts/app/controllers/user.coffee:99
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:88
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:153
@@ -5980,7 +5980,7 @@ msgstr ""
 msgid "Elasticsearch Total Payload Size"
 msgstr ""
 
-#: lib/search_index_backend.rb:406
+#: lib/search_index_backend.rb:433
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -6093,7 +6093,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:611
+#: app/models/user.rb:618
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -6799,7 +6799,7 @@ msgstr ""
 msgid "Expires at"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/search.coffee:50
+#: app/assets/javascripts/app/controllers/search.coffee:54
 msgid "Extended Search"
 msgstr ""
 
@@ -6807,7 +6807,7 @@ msgstr ""
 msgid "External data source field"
 msgstr ""
 
-#: lib/search_index_backend.rb:674
+#: lib/search_index_backend.rb:709
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
 
@@ -7607,12 +7607,12 @@ msgid "Group selection for ticket creation"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:60
-#: app/assets/javascripts/app/models/overview.coffee:43
+#: app/assets/javascripts/app/models/overview.coffee:42
 msgid "Grouping by"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:70
-#: app/assets/javascripts/app/models/overview.coffee:58
+#: app/assets/javascripts/app/models/overview.coffee:57
 msgid "Grouping order"
 msgstr ""
 
@@ -7629,7 +7629,7 @@ msgstr ""
 msgid "Groups"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/group.coffee:22
+#: app/assets/javascripts/app/controllers/group.coffee:24
 msgid "Groups are …"
 msgstr ""
 
@@ -8108,7 +8108,7 @@ msgstr ""
 msgid "Ignore Escalation/SLA Information"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:45
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:48
 msgid "Ignore Message"
 msgstr ""
 
@@ -8152,9 +8152,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee:25
 #: app/assets/javascripts/app/controllers/import_otrs.coffee:20
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee:26
-#: app/assets/javascripts/app/controllers/organization.coffee:27
-#: app/assets/javascripts/app/controllers/text_module.coffee:31
-#: app/assets/javascripts/app/controllers/user.coffee:32
+#: app/assets/javascripts/app/controllers/organization.coffee:29
+#: app/assets/javascripts/app/controllers/text_module.coffee:33
+#: app/assets/javascripts/app/controllers/user.coffee:52
 #: app/assets/javascripts/app/controllers/widget/import.coffee:4
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee:6
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:6
@@ -8590,7 +8590,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:556
+#: app/models/user.rb:563
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -9281,7 +9281,7 @@ msgstr "Loading failed."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee:151
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
-#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:40
+#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:63
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:512
 #: app/frontend/shared/form/i18n/locales.ts:58
 #: app/views/init/spinner-loading.html.erb:260
@@ -9468,7 +9468,7 @@ msgstr ""
 msgid "Manage Twitter channel of your system."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:162
+#: app/assets/javascripts/app/controllers/user.coffee:84
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr ""
@@ -10123,7 +10123,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:624
+#: app/models/user.rb:631
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -10343,7 +10343,7 @@ msgstr ""
 msgid "Need session_id."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:477
+#: app/controllers/tickets_controller.rb:438
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
@@ -10411,7 +10411,7 @@ msgstr ""
 msgid "New Deletion Task"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/group.coffee:25
+#: app/assets/javascripts/app/controllers/group.coffee:27
 msgid "New Group"
 msgstr ""
 
@@ -10419,15 +10419,15 @@ msgstr ""
 msgid "New Keyboard Shortcuts"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/macro.coffee:22
+#: app/assets/javascripts/app/controllers/macro.coffee:24
 msgid "New Macro"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/organization.coffee:28
+#: app/assets/javascripts/app/controllers/organization.coffee:30
 msgid "New Organization"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/overview.coffee:24
+#: app/assets/javascripts/app/controllers/overview.coffee:30
 msgid "New Overview"
 msgstr ""
 
@@ -10448,7 +10448,7 @@ msgstr ""
 msgid "New Public Link"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/role.coffee:28
+#: app/assets/javascripts/app/controllers/role.coffee:30
 msgid "New Role"
 msgstr ""
 
@@ -10469,7 +10469,7 @@ msgstr ""
 msgid "New Tags"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/template.coffee:22
+#: app/assets/javascripts/app/controllers/template.coffee:24
 msgid "New Template"
 msgstr ""
 
@@ -10503,7 +10503,7 @@ msgstr ""
 msgid "New Trigger"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:33
+#: app/assets/javascripts/app/controllers/user.coffee:53
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:89
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:54
 msgid "New User"
@@ -10538,7 +10538,7 @@ msgstr ""
 msgid "New tab"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:32
+#: app/assets/javascripts/app/controllers/text_module.coffee:34
 msgid "New text module"
 msgstr ""
 
@@ -10610,6 +10610,10 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:88
 msgid "Next month"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+msgid "Next page"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:90
@@ -10727,7 +10731,7 @@ msgstr ""
 msgid "No content to show"
 msgstr ""
 
-#: app/models/group.rb:34
+#: app/models/group.rb:36
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr ""
 
@@ -10735,7 +10739,7 @@ msgstr ""
 msgid "No drafts"
 msgstr ""
 
-#: app/controllers/users_controller.rb:347
+#: app/controllers/users_controller.rb:275
 msgid "No email!"
 msgstr ""
 
@@ -10844,11 +10848,11 @@ msgstr ""
 msgid "No shared drafts yet"
 msgstr ""
 
-#: app/controllers/organizations_controller.rb:160
-#: app/controllers/text_modules_controller.rb:71
+#: app/controllers/organizations_controller.rb:107
+#: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:609
-#: app/controllers/users_controller.rb:650
+#: app/controllers/tickets_controller.rb:570
+#: app/controllers/users_controller.rb:578
 msgid "No source data submitted!"
 msgstr ""
 
@@ -10860,7 +10864,7 @@ msgstr ""
 msgid "No template created yet."
 msgstr ""
 
-#: app/controllers/users_controller.rb:326
+#: app/controllers/users_controller.rb:254
 msgid "No token!"
 msgstr ""
 
@@ -11188,7 +11192,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:330
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:53
 #: db/seeds/permissions.rb:233
 msgid "Objects"
 msgstr ""
@@ -11709,6 +11713,10 @@ msgstr ""
 msgid "Packages"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:3
+msgid "Page %s"
+msgstr ""
+
 #: app/views/knowledge_base/public/not_found.html.erb:4
 msgid "Page not found"
 msgstr ""
@@ -11716,6 +11724,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco:4
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:20
 msgid "Pages"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:1
+msgid "Pagination links"
 msgstr ""
 
 #: app/controllers/integration/smime_controller.rb:77
@@ -12063,13 +12075,13 @@ msgstr ""
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 
-#: app/controllers/users_controller.rb:458
+#: app/controllers/users_controller.rb:386
 msgid "Please provide your current password."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
-#: app/controllers/users_controller.rb:463
+#: app/controllers/users_controller.rb:391
 msgid "Please provide your new password."
 msgstr ""
 
@@ -12133,6 +12145,7 @@ msgid "Port"
 msgstr ""
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:12
+#: app/assets/javascripts/app/models/overview.coffee:67
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:58
 msgid "Position"
 msgstr ""
@@ -12246,6 +12259,10 @@ msgstr ""
 msgid "Previous month"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:2
+msgid "Previous page"
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:91
 msgid "Previous year"
 msgstr ""
@@ -12262,7 +12279,6 @@ msgstr ""
 msgid "Print Codes"
 msgstr ""
 
-#: app/assets/javascripts/app/models/overview.coffee:13
 #: app/assets/javascripts/app/models/public_link.coffee:11
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:8
 msgid "Prio"
@@ -13040,7 +13056,7 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/role.coffee:25
+#: app/assets/javascripts/app/controllers/role.coffee:27
 msgid "Roles are …"
 msgstr ""
 
@@ -13380,6 +13396,10 @@ msgstr ""
 msgid "Search URL is missing."
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/admin/index.jst.eco:32
+msgid "Search for %s"
+msgstr ""
+
 #: app/assets/javascripts/app/views/user.jst.eco:15
 msgid "Search for users"
 msgstr ""
@@ -13480,7 +13500,7 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:618
+#: app/models/user.rb:625
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -13856,7 +13876,7 @@ msgstr ""
 msgid "Set as Default"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:687
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:690
 #: app/assets/javascripts/app/views/profile/password.jst.eco:62
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:169
 msgid "Set as default"
@@ -13952,7 +13972,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:26
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
 #: app/assets/javascripts/app/controllers/chat.coffee:869
-#: app/assets/javascripts/app/controllers/manage.coffee:36
+#: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
 #: app/assets/javascripts/app/views/channel/form.jst.eco:13
@@ -14101,7 +14121,7 @@ msgstr ""
 msgid "Show next tab"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:18
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:24
 msgid "Show notifications"
 msgstr ""
 
@@ -14415,12 +14435,12 @@ msgid "Sorry, there is currently no CTI backend enabled."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:40
-#: app/assets/javascripts/app/models/overview.coffee:24
+#: app/assets/javascripts/app/models/overview.coffee:23
 msgid "Sorting by"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:49
-#: app/assets/javascripts/app/models/overview.coffee:32
+#: app/assets/javascripts/app/models/overview.coffee:31
 msgid "Sorting order"
 msgstr ""
 
@@ -14768,7 +14788,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:3
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: app/assets/javascripts/app/controllers/manage.coffee:37
+#: app/assets/javascripts/app/controllers/manage.coffee:38
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:32
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
@@ -14993,7 +15013,7 @@ msgstr ""
 msgid "Text modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:28
+#: app/assets/javascripts/app/controllers/text_module.coffee:30
 msgid "Text modules are …"
 msgstr ""
 
@@ -15182,7 +15202,7 @@ msgstr ""
 msgid "The admin password auth email could not be sent."
 msgstr ""
 
-#: app/frontend/apps/desktop/stores/theme.ts:42
+#: app/frontend/apps/desktop/stores/theme.ts:43
 msgid "The appearance could not be updated."
 msgstr ""
 
@@ -15369,7 +15389,7 @@ msgid "The connection was refused."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
-#: app/controllers/users_controller.rb:477
+#: app/controllers/users_controller.rb:405
 #: app/graphql/gql/mutations/user/current/change_password.rb:30
 msgid "The current password you provided is incorrect."
 msgstr ""
@@ -15560,7 +15580,7 @@ msgid ""
 "arbitrary code will be executed in the context of the Zammad application."
 msgstr ""
 
-#: lib/search_index_backend.rb:408
+#: lib/search_index_backend.rb:435
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -15645,7 +15665,7 @@ msgstr ""
 msgid "The object could not be updated."
 msgstr ""
 
-#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:98
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:131
 msgid "The online notification could not be marked as seen."
 msgstr ""
 
@@ -15805,7 +15825,7 @@ msgstr ""
 msgid "The required PGP passphrase is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:749
+#: app/controllers/users_controller.rb:677
 #: app/services/service/user/add_first_admin.rb:12
 msgid "The required attribute 'email' is missing."
 msgstr ""
@@ -15903,11 +15923,11 @@ msgstr ""
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:592
+#: app/controllers/users_controller.rb:520
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:597
+#: lib/search_index_backend.rb:632
 msgid "The required parameter 'key' is missing."
 msgstr ""
 
@@ -15915,7 +15935,7 @@ msgstr ""
 msgid "The required parameter 'link_type' is missing."
 msgstr ""
 
-#: app/models/text_module.rb:28
+#: app/models/text_module.rb:31
 msgid "The required parameter 'locale' is missing."
 msgstr ""
 
@@ -15939,7 +15959,7 @@ msgstr ""
 msgid "The required parameter 'params' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:485
+#: app/controllers/users_controller.rb:413
 msgid "The required parameter 'password' is missing."
 msgstr ""
 
@@ -15959,7 +15979,7 @@ msgstr ""
 msgid "The required parameter 'request_token' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:742
+#: app/controllers/users_controller.rb:670
 msgid "The required parameter 'signup' is missing."
 msgstr ""
 
@@ -15971,7 +15991,7 @@ msgstr ""
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:598
+#: lib/search_index_backend.rb:633
 msgid "The required parameter 'value' is missing."
 msgstr ""
 
@@ -16583,7 +16603,7 @@ msgstr ""
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
 
-#: app/models/group.rb:81
+#: app/models/group.rb:83
 msgid "This group or its children exceed the allowed nesting depth."
 msgstr ""
 
@@ -16760,7 +16780,7 @@ msgstr ""
 msgid "This user has no access and will not receive notifications."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:120
+#: app/assets/javascripts/app/controllers/user.coffee:15
 msgid ""
 "This user is currently blocked because of too many failed login attempts."
 msgstr ""
@@ -17195,7 +17215,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:602
+#: app/controllers/tickets_controller.rb:563
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 
@@ -17426,7 +17446,7 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:49
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:50
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:109
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
@@ -17892,7 +17912,7 @@ msgstr ""
 msgid "Unlink object"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:185
+#: app/assets/javascripts/app/controllers/user.coffee:107
 msgid "Unlock"
 msgstr ""
 
@@ -17912,7 +17932,7 @@ msgstr ""
 msgid "Unsaved Changes"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:29
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:35
 msgid "Unseen notifications count"
 msgstr ""
 
@@ -17922,7 +17942,7 @@ msgstr ""
 msgid "Unselect Option"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:703
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:706
 msgid "Unset default"
 msgstr ""
 
@@ -18413,7 +18433,7 @@ msgstr ""
 msgid "User menu"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:199
+#: app/assets/javascripts/app/controllers/user.coffee:121
 msgid "User successfully unlocked!"
 msgstr ""
 
@@ -18599,7 +18619,7 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:140
+#: app/assets/javascripts/app/controllers/user.coffee:62
 msgid "View from user's perspective"
 msgstr ""
 
@@ -19578,7 +19598,7 @@ msgid "archived"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:55
-#: app/assets/javascripts/app/models/overview.coffee:38
+#: app/assets/javascripts/app/models/overview.coffee:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:37
 msgid "ascending"
 msgstr ""
@@ -19595,7 +19615,7 @@ msgstr ""
 msgid "at least one letter is required"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1054
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1058
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
 msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
@@ -19816,7 +19836,7 @@ msgid "delivered to the customer"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
-#: app/assets/javascripts/app/models/overview.coffee:39
+#: app/assets/javascripts/app/models/overview.coffee:38
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:38
 msgid "descending"
 msgstr ""
@@ -20131,7 +20151,7 @@ msgid "in process"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1429
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1433
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -20242,7 +20262,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:822
+#: app/models/user.rb:829
 msgid "is too long"
 msgstr ""
 

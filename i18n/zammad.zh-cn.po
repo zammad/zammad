@@ -565,7 +565,7 @@ msgid "%s of my tickets escalated"
 msgstr "我的 %s 工单升级了"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
-#: app/graphql/gql/queries/autocomplete_search/generic.rb:64
+#: app/graphql/gql/queries/autocomplete_search/generic.rb:61
 msgid "%s people"
 msgstr "％s 人"
 
@@ -1111,7 +1111,7 @@ msgstr "佔用時間"
 msgid "Accounts"
 msgstr "帐号"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:718
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:721
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:115
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:82
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:109
@@ -1186,7 +1186,7 @@ msgstr "为用户激活丢失密码功能。只有在启用密码登录时，此
 #: app/assets/javascripts/app/models/ldap_source.coffee:7
 #: app/assets/javascripts/app/models/macro.coffee:15
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:9
-#: app/assets/javascripts/app/models/overview.coffee:67
+#: app/assets/javascripts/app/models/overview.coffee:66
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:13
 #: app/assets/javascripts/app/models/report_profile.js.coffee:9
 #: app/assets/javascripts/app/models/role.coffee:11
@@ -1654,7 +1654,7 @@ msgstr "客服对话"
 msgid "Agent idle timeout"
 msgstr "客服空闲超时"
 
-#: app/models/role.rb:153 app/models/user.rb:698
+#: app/models/role.rb:156 app/models/user.rb:705
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "已超出客服限制，请检查您的帐户设置。"
 
@@ -2032,11 +2032,11 @@ msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr "请确认是否需要重新加载？没有保存的改动会丢失"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:693
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:696
 msgid "Are you sure you want to set \"%s\" as default?"
 msgstr "您确定要将“%s”设置为默认值吗？"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:709
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:712
 msgid "Are you sure you want to unset \"%s\" as default?"
 msgstr "您确定要取消将“%s”设置为默认值吗？"
 
@@ -2198,7 +2198,7 @@ msgid ""
 "will be shown as unassigend."
 msgstr "如果客服坐席不在工作岗位上，分配会很快超时，工单将显示为未分配。"
 
-#: app/models/user.rb:601
+#: app/models/user.rb:608
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2212,7 +2212,7 @@ msgstr "至少需要一条匹配规则，但你目前没有提供。"
 msgid "At least one object must be selected."
 msgstr "至少必须选择一个对象。"
 
-#: app/models/role.rb:125 app/models/user.rb:672
+#: app/models/role.rb:128 app/models/user.rb:679
 msgid "At least one user needs to have admin permissions."
 msgstr "至少有一个用户需要拥有admin权限。"
 
@@ -2303,7 +2303,7 @@ msgid ""
 msgstr "唯一标识用户的属性。如果未设置，将使用IDP返回的名称标识符。"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
-#: app/assets/javascripts/app/models/overview.coffee:16
+#: app/assets/javascripts/app/models/overview.coffee:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:88
 msgid "Attributes"
 msgstr "属性"
@@ -2960,7 +2960,7 @@ msgstr "不能同时具有响应时间和更新时间。"
 msgid "Cannot process external data source %s. %s"
 msgstr "无法处理外部数据源%s. %s"
 
-#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:109
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:147
 msgid "Cannot set online notifications as seen"
 msgstr "无法设置在线通知，如图所示"
 
@@ -3100,7 +3100,7 @@ msgstr "渠道"
 msgid "Channel Distribution"
 msgstr "渠道分布"
 
-#: app/assets/javascripts/app/controllers/manage.coffee:35
+#: app/assets/javascripts/app/controllers/manage.coffee:36
 msgid "Channels"
 msgstr "渠道"
 
@@ -3158,7 +3158,7 @@ msgstr "检查渠道。"
 msgid "Check item"
 msgstr "校验码"
 
-#: lib/search_index_backend.rb:410
+#: lib/search_index_backend.rb:437
 msgid "Check the response and payload for detailed information:"
 msgstr "检查响应和负载以获取详细信息："
 
@@ -3350,7 +3350,7 @@ msgstr "清除搜索"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:679
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:153
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:333
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:382
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
@@ -3409,7 +3409,7 @@ msgstr "客户密码"
 msgid "Clients"
 msgstr "客戶"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:650
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:653
 msgid "Clone"
 msgstr "克隆"
 
@@ -5422,12 +5422,12 @@ msgid ""
 msgstr "定义哪些用户角色将在匹配机票的情况下会收到警告。"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:677
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:177
+#: app/assets/javascripts/app/controllers/user.coffee:99
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:88
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:153
@@ -6202,7 +6202,7 @@ msgstr "Elasticsearch SSL验证"
 msgid "Elasticsearch Total Payload Size"
 msgstr "Elasticsearch总有效载荷大小"
 
-#: lib/search_index_backend.rb:406
+#: lib/search_index_backend.rb:433
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -6317,7 +6317,7 @@ msgstr "邮件确认"
 msgid "Email address"
 msgstr "电子邮件"
 
-#: app/models/user.rb:611
+#: app/models/user.rb:618
 msgid "Email address '%{email}' is already used for another user."
 msgstr "电子邮件地址“％{email}”已经用于另一个用户。"
 
@@ -7082,7 +7082,7 @@ msgstr "过期"
 msgid "Expires at"
 msgstr "到期日"
 
-#: app/assets/javascripts/app/controllers/search.coffee:50
+#: app/assets/javascripts/app/controllers/search.coffee:54
 msgid "Extended Search"
 msgstr "擴展搜尋"
 
@@ -7090,7 +7090,7 @@ msgstr "擴展搜尋"
 msgid "External data source field"
 msgstr "外部数据源字段"
 
-#: lib/search_index_backend.rb:674
+#: lib/search_index_backend.rb:709
 msgid "Extract zammad-attachment information from arrays"
 msgstr "从阵列中提取Zammad-Attachment信息"
 
@@ -7913,12 +7913,12 @@ msgid "Group selection for ticket creation"
 msgstr "创建工单的群组选择"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:60
-#: app/assets/javascripts/app/models/overview.coffee:43
+#: app/assets/javascripts/app/models/overview.coffee:42
 msgid "Grouping by"
 msgstr "分组依据"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:70
-#: app/assets/javascripts/app/models/overview.coffee:58
+#: app/assets/javascripts/app/models/overview.coffee:57
 msgid "Grouping order"
 msgstr "分组顺序"
 
@@ -7935,7 +7935,7 @@ msgstr "分组顺序"
 msgid "Groups"
 msgstr "组"
 
-#: app/assets/javascripts/app/controllers/group.coffee:22
+#: app/assets/javascripts/app/controllers/group.coffee:24
 msgid "Groups are …"
 msgstr "组是 …"
 
@@ -8434,7 +8434,7 @@ msgstr "忽略升级"
 msgid "Ignore Escalation/SLA Information"
 msgstr "忽略 層級提升/ 服務級別協議SLA 信息"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:45
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:48
 msgid "Ignore Message"
 msgstr "忽略消息"
 
@@ -8478,9 +8478,9 @@ msgstr "图片预览"
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee:25
 #: app/assets/javascripts/app/controllers/import_otrs.coffee:20
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee:26
-#: app/assets/javascripts/app/controllers/organization.coffee:27
-#: app/assets/javascripts/app/controllers/text_module.coffee:31
-#: app/assets/javascripts/app/controllers/user.coffee:32
+#: app/assets/javascripts/app/controllers/organization.coffee:29
+#: app/assets/javascripts/app/controllers/text_module.coffee:33
+#: app/assets/javascripts/app/controllers/user.coffee:52
 #: app/assets/javascripts/app/controllers/widget/import.coffee:4
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee:6
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:6
@@ -8930,7 +8930,7 @@ msgstr "无效的client_id在接收循环中！"
 msgid "Invalid client_id received!"
 msgstr "接收到无效的client_id！"
 
-#: app/models/user.rb:556
+#: app/models/user.rb:563
 msgid "Invalid email '%{email}'"
 msgstr "无效的电子邮件'％{email}'"
 
@@ -9666,7 +9666,7 @@ msgstr "加载失败。"
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee:151
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
-#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:40
+#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:63
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:512
 #: app/frontend/shared/form/i18n/locales.ts:58
 #: app/views/init/spinner-loading.html.erb:260
@@ -9869,7 +9869,7 @@ msgstr "輸入您的 ％s 系統的網址 URL"
 msgid "Manage Twitter channel of your system."
 msgstr "輸入您的 ％s 系統的網址 URL"
 
-#: app/assets/javascripts/app/controllers/user.coffee:162
+#: app/assets/javascripts/app/controllers/user.coffee:84
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr "管理双因素身份验证"
@@ -10620,7 +10620,7 @@ msgstr "状态"
 msgid "More information can be found here."
 msgstr "更多信息可以在这里找到。"
 
-#: app/models/user.rb:624
+#: app/models/user.rb:631
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "不允许有250多个二级组织。"
 
@@ -10856,7 +10856,7 @@ msgstr "需要“收件人”字段中的收件人。"
 msgid "Need session_id."
 msgstr "需要session_id。"
 
-#: app/controllers/tickets_controller.rb:477
+#: app/controllers/tickets_controller.rb:438
 msgid "Need user_id or organization_id as param"
 msgstr "需要user_id或agrishital_id作为param"
 
@@ -10934,7 +10934,7 @@ msgstr "模板"
 msgid "New Deletion Task"
 msgstr "新删除任务"
 
-#: app/assets/javascripts/app/controllers/group.coffee:25
+#: app/assets/javascripts/app/controllers/group.coffee:27
 msgid "New Group"
 msgstr "新建组"
 
@@ -10944,15 +10944,15 @@ msgstr "新建组"
 msgid "New Keyboard Shortcuts"
 msgstr "键盘快捷键"
 
-#: app/assets/javascripts/app/controllers/macro.coffee:22
+#: app/assets/javascripts/app/controllers/macro.coffee:24
 msgid "New Macro"
 msgstr "增加宏处理"
 
-#: app/assets/javascripts/app/controllers/organization.coffee:28
+#: app/assets/javascripts/app/controllers/organization.coffee:30
 msgid "New Organization"
 msgstr "新增客户公司"
 
-#: app/assets/javascripts/app/controllers/overview.coffee:24
+#: app/assets/javascripts/app/controllers/overview.coffee:30
 msgid "New Overview"
 msgstr "新增工单概览"
 
@@ -10979,7 +10979,7 @@ msgstr "新配置"
 msgid "New Public Link"
 msgstr "公開選單"
 
-#: app/assets/javascripts/app/controllers/role.coffee:28
+#: app/assets/javascripts/app/controllers/role.coffee:30
 msgid "New Role"
 msgstr "新增角色"
 
@@ -11002,7 +11002,7 @@ msgstr "原文"
 msgid "New Tags"
 msgstr "新增标签"
 
-#: app/assets/javascripts/app/controllers/template.coffee:22
+#: app/assets/javascripts/app/controllers/template.coffee:24
 #, fuzzy
 #| msgid "Templates"
 msgid "New Template"
@@ -11044,7 +11044,7 @@ msgstr "语言"
 msgid "New Trigger"
 msgstr "新建触发器"
 
-#: app/assets/javascripts/app/controllers/user.coffee:33
+#: app/assets/javascripts/app/controllers/user.coffee:53
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:89
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:54
 msgid "New User"
@@ -11079,7 +11079,7 @@ msgstr "新密码"
 msgid "New tab"
 msgstr "新标签"
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:32
+#: app/assets/javascripts/app/controllers/text_module.coffee:34
 msgid "New text module"
 msgstr "新增引用"
 
@@ -11215,6 +11215,12 @@ msgstr "回到工单概览"
 msgid "Next month"
 msgstr "状态"
 
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#, fuzzy
+#| msgid "State"
+msgid "Next page"
+msgstr "状态"
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:90
 #, fuzzy
 #| msgid "State"
@@ -11348,7 +11354,7 @@ msgstr "保存配置"
 msgid "No content to show"
 msgstr "没有内容可以显示"
 
-#: app/models/group.rb:34
+#: app/models/group.rb:36
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr "不允许使用双冒号 (::)，保留分隔符"
 
@@ -11358,7 +11364,7 @@ msgstr "不允许使用双冒号 (::)，保留分隔符"
 msgid "No drafts"
 msgstr "草稿"
 
-#: app/controllers/users_controller.rb:347
+#: app/controllers/users_controller.rb:275
 msgid "No email!"
 msgstr "没有电子邮件！"
 
@@ -11493,11 +11499,11 @@ msgstr "没有区域“仪表板:: stats”定义的设置"
 msgid "No shared drafts yet"
 msgstr "已分享"
 
-#: app/controllers/organizations_controller.rb:160
-#: app/controllers/text_modules_controller.rb:71
+#: app/controllers/organizations_controller.rb:107
+#: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:609
-#: app/controllers/users_controller.rb:650
+#: app/controllers/tickets_controller.rb:570
+#: app/controllers/users_controller.rb:578
 msgid "No source data submitted!"
 msgstr "没有提交的源数据！"
 
@@ -11511,7 +11517,7 @@ msgstr "暂时还没有模板."
 msgid "No template created yet."
 msgstr "暂时还没有模板."
 
-#: app/controllers/users_controller.rb:326
+#: app/controllers/users_controller.rb:254
 msgid "No token!"
 msgstr "不象征！"
 
@@ -11892,7 +11898,7 @@ msgid ""
 msgstr "找不到指定ID的票。尝试检查URL是否有错误。"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:330
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:53
 #: db/seeds/permissions.rb:233
 msgid "Objects"
 msgstr "对象"
@@ -12463,6 +12469,12 @@ msgstr "套件"
 msgid "Packages"
 msgstr "插件"
 
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:3
+#, fuzzy
+#| msgid "Pages"
+msgid "Page %s"
+msgstr "页面"
+
 #: app/views/knowledge_base/public/not_found.html.erb:4
 msgid "Page not found"
 msgstr "找不到网页"
@@ -12471,6 +12483,12 @@ msgstr "找不到网页"
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:20
 msgid "Pages"
 msgstr "页面"
+
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:1
+#, fuzzy
+#| msgid "Organization tickets"
+msgid "Pagination links"
+msgstr "所在组织的工单"
 
 #: app/controllers/integration/smime_controller.rb:77
 msgid "Parameter 'data' or 'file' required."
@@ -12831,13 +12849,13 @@ msgstr ""
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "请在“TO”或“CC”中提供收件人。"
 
-#: app/controllers/users_controller.rb:458
+#: app/controllers/users_controller.rb:386
 msgid "Please provide your current password."
 msgstr "请提供您当前的密码。"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
-#: app/controllers/users_controller.rb:463
+#: app/controllers/users_controller.rb:391
 msgid "Please provide your new password."
 msgstr "请提供您的新密码。"
 
@@ -12905,6 +12923,7 @@ msgid "Port"
 msgstr "端口"
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:12
+#: app/assets/javascripts/app/models/overview.coffee:67
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:58
 msgid "Position"
 msgstr "位置"
@@ -13026,6 +13045,12 @@ msgstr "前一个工单"
 msgid "Previous month"
 msgstr "上一步"
 
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:2
+#, fuzzy
+#| msgid "Previous"
+msgid "Previous page"
+msgstr "上一步"
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:91
 #, fuzzy
 #| msgid "Previous"
@@ -13046,7 +13071,6 @@ msgstr "打印"
 msgid "Print Codes"
 msgstr "安全"
 
-#: app/assets/javascripts/app/models/overview.coffee:13
 #: app/assets/javascripts/app/models/public_link.coffee:11
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:8
 msgid "Prio"
@@ -13907,7 +13931,7 @@ msgstr "角色 %s 与角色 %s 冲突，您想继续吗？"
 msgid "Roles"
 msgstr "角色"
 
-#: app/assets/javascripts/app/controllers/role.coffee:25
+#: app/assets/javascripts/app/controllers/role.coffee:27
 msgid "Roles are …"
 msgstr "角色是…"
 
@@ -14257,6 +14281,12 @@ msgstr "搜索URL无效。"
 msgid "Search URL is missing."
 msgstr "搜索URL缺少。"
 
+#: app/assets/javascripts/app/views/generic/admin/index.jst.eco:32
+#, fuzzy
+#| msgid "Search for users"
+msgid "Search for %s"
+msgstr "用户搜索"
+
 #: app/assets/javascripts/app/views/user.jst.eco:15
 msgid "Search for users"
 msgstr "用户搜索"
@@ -14357,7 +14387,7 @@ msgstr "搜索…"
 msgid "Secondary organizations"
 msgstr "二级组织"
 
-#: app/models/user.rb:618
+#: app/models/user.rb:625
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -14749,7 +14779,7 @@ msgstr "设置内容为内部/外部可见"
 msgid "Set as Default"
 msgstr "设为默认"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:687
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:690
 #: app/assets/javascripts/app/views/profile/password.jst.eco:62
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:169
 msgid "Set as default"
@@ -14855,7 +14885,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:26
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
 #: app/assets/javascripts/app/controllers/chat.coffee:869
-#: app/assets/javascripts/app/controllers/manage.coffee:36
+#: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
 #: app/assets/javascripts/app/views/channel/form.jst.eco:13
@@ -15014,7 +15044,7 @@ msgstr "显示元数据"
 msgid "Show next tab"
 msgstr "显示下一个选项卡"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:18
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:24
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Show notifications"
@@ -15341,12 +15371,12 @@ msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "抱歉，目前没有启用 CTI 后端。"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:40
-#: app/assets/javascripts/app/models/overview.coffee:24
+#: app/assets/javascripts/app/models/overview.coffee:23
 msgid "Sorting by"
 msgstr "排序依据"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:49
-#: app/assets/javascripts/app/models/overview.coffee:32
+#: app/assets/javascripts/app/models/overview.coffee:31
 msgid "Sorting order"
 msgstr "排序顺序"
 
@@ -15708,7 +15738,7 @@ msgstr "与计算机同步"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:3
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: app/assets/javascripts/app/controllers/manage.coffee:37
+#: app/assets/javascripts/app/controllers/manage.coffee:38
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:32
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
@@ -15947,7 +15977,7 @@ msgstr "文本模块"
 msgid "Text modules"
 msgstr "引用"
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:28
+#: app/assets/javascripts/app/controllers/text_module.coffee:30
 msgid "Text modules are …"
 msgstr "文本模块是…"
 
@@ -16142,7 +16172,7 @@ msgstr "管理员同意请求已发送给您的管理员。"
 msgid "The admin password auth email could not be sent."
 msgstr "无法发送管理员密码验证电子邮件。"
 
-#: app/frontend/apps/desktop/stores/theme.ts:42
+#: app/frontend/apps/desktop/stores/theme.ts:43
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The appearance could not be updated."
@@ -16338,7 +16368,7 @@ msgid "The connection was refused."
 msgstr "连接被拒绝。"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
-#: app/controllers/users_controller.rb:477
+#: app/controllers/users_controller.rb:405
 #: app/graphql/gql/mutations/user/current/change_password.rb:30
 msgid "The current password you provided is incorrect."
 msgstr "您提供的当前密码不正确。"
@@ -16552,7 +16582,7 @@ msgstr ""
 "软件包的安装会带来安全隐患，因为任意代码都将在 Zammad 应用程序的上下文中执"
 "行。"
 
-#: lib/search_index_backend.rb:408
+#: lib/search_index_backend.rb:435
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -16650,7 +16680,7 @@ msgstr "无法找到该对象。"
 msgid "The object could not be updated."
 msgstr "无法更新该对象。"
 
-#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:98
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:131
 msgid "The online notification could not be marked as seen."
 msgstr "在线通知无法标记为已查看。"
 
@@ -16818,7 +16848,7 @@ msgstr "找不到所需的“外部判据”“ Twitter”。"
 msgid "The required PGP passphrase is missing."
 msgstr "缺少所需的PGP密码。"
 
-#: app/controllers/users_controller.rb:749
+#: app/controllers/users_controller.rb:677
 #: app/services/service/user/add_first_admin.rb:12
 msgid "The required attribute 'email' is missing."
 msgstr "缺少所需的属性“电子邮件”。"
@@ -16916,11 +16946,11 @@ msgstr "所需的参数“ group_id”无效。"
 msgid "The required parameter 'group_id' is missing."
 msgstr "缺少所需的参数“ group_id”。"
 
-#: app/controllers/users_controller.rb:592
+#: app/controllers/users_controller.rb:520
 msgid "The required parameter 'id' is missing."
 msgstr "缺少所需的参数“ ID”。"
 
-#: lib/search_index_backend.rb:597
+#: lib/search_index_backend.rb:632
 msgid "The required parameter 'key' is missing."
 msgstr "所需的参数“键”丢失。"
 
@@ -16928,7 +16958,7 @@ msgstr "所需的参数“键”丢失。"
 msgid "The required parameter 'link_type' is missing."
 msgstr "所需的参数“ link_type”丢失。"
 
-#: app/models/text_module.rb:28
+#: app/models/text_module.rb:31
 msgid "The required parameter 'locale' is missing."
 msgstr "缺少所需的参数“语言环境”。"
 
@@ -16952,7 +16982,7 @@ msgstr "所需的参数“ options.Adapter”缺少。"
 msgid "The required parameter 'params' is missing."
 msgstr "缺少所需的参数“参数”。"
 
-#: app/controllers/users_controller.rb:485
+#: app/controllers/users_controller.rb:413
 msgid "The required parameter 'password' is missing."
 msgstr "缺少所需的参数“密码”。"
 
@@ -16972,7 +17002,7 @@ msgstr "缺少所需的参数“权限”。"
 msgid "The required parameter 'request_token' is missing."
 msgstr "所需的参数“ request_token”丢失。"
 
-#: app/controllers/users_controller.rb:742
+#: app/controllers/users_controller.rb:670
 msgid "The required parameter 'signup' is missing."
 msgstr "缺少所需的参数“注册”。"
 
@@ -16984,7 +17014,7 @@ msgstr "缺少所需的参数“ ticket_number”。"
 msgid "The required parameter 'user_id' is missing."
 msgstr "缺少所需的参数“ user_id”。"
 
-#: lib/search_index_backend.rb:598
+#: lib/search_index_backend.rb:633
 msgid "The required parameter 'value' is missing."
 msgstr "缺少所需的参数“值”。"
 
@@ -17720,7 +17750,7 @@ msgstr "该字段的配置不正确，无法提交。"
 msgid "This group has no email address configured for outgoing communication."
 msgstr "该组没有配置用于传出通信的电子邮件地址。"
 
-#: app/models/group.rb:81
+#: app/models/group.rb:83
 msgid "This group or its children exceed the allowed nesting depth."
 msgstr "该小组或其子女超过了允许的筑巢深度。"
 
@@ -17930,7 +17960,7 @@ msgstr "提到的用户无法访问该票证"
 msgid "This user has no access and will not receive notifications."
 msgstr "用户无权访问，也不会收到通知。"
 
-#: app/assets/javascripts/app/controllers/user.coffee:120
+#: app/assets/javascripts/app/controllers/user.coffee:15
 msgid ""
 "This user is currently blocked because of too many failed login attempts."
 msgstr "目前，由于登录尝试过多，该用户被阻止。"
@@ -18568,7 +18598,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr "指派给你有 %s 笔, 共 %s 笔"
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:602
+#: app/controllers/tickets_controller.rb:563
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "仅当系统处于导入模式时，才能导入门票。"
 
@@ -18832,7 +18862,7 @@ msgstr "要触发预览，请在上面输入一些搜索词。"
 msgid "To work on Tickets."
 msgstr "處理工單中"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:49
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:50
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:109
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
@@ -19366,7 +19396,7 @@ msgstr "链接问题"
 msgid "Unlink object"
 msgstr "链接问题"
 
-#: app/assets/javascripts/app/controllers/user.coffee:185
+#: app/assets/javascripts/app/controllers/user.coffee:107
 msgid "Unlock"
 msgstr "开锁"
 
@@ -19392,7 +19422,7 @@ msgstr "通知"
 msgid "Unsaved Changes"
 msgstr "放弃更改"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:29
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:35
 #, fuzzy
 #| msgid "Notification"
 msgid "Unseen notifications count"
@@ -19406,7 +19436,7 @@ msgstr "通知"
 msgid "Unselect Option"
 msgstr "设置可选"
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:703
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:706
 #, fuzzy
 #| msgid "Restore Defaults"
 msgid "Unset default"
@@ -20032,7 +20062,7 @@ msgstr "外出"
 msgid "User menu"
 msgstr "用户名"
 
-#: app/assets/javascripts/app/controllers/user.coffee:199
+#: app/assets/javascripts/app/controllers/user.coffee:121
 msgid "User successfully unlocked!"
 msgstr "用户成功解锁了！"
 
@@ -20248,7 +20278,7 @@ msgstr "無篩選器"
 msgid "View"
 msgstr "看法"
 
-#: app/assets/javascripts/app/controllers/user.coffee:140
+#: app/assets/javascripts/app/controllers/user.coffee:62
 msgid "View from user's perspective"
 msgstr "切换为该用户视角"
 
@@ -21414,7 +21444,7 @@ msgid "archived"
 msgstr "存档"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:55
-#: app/assets/javascripts/app/models/overview.coffee:38
+#: app/assets/javascripts/app/models/overview.coffee:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:37
 #, fuzzy
 #| msgid "pending"
@@ -21435,7 +21465,7 @@ msgstr "在"
 msgid "at least one letter is required"
 msgstr "至少需要一个字母"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1054
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1058
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
 msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
@@ -21672,7 +21702,7 @@ msgid "delivered to the customer"
 msgstr "删除客户"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
-#: app/assets/javascripts/app/models/overview.coffee:39
+#: app/assets/javascripts/app/models/overview.coffee:38
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:38
 #, fuzzy
 #| msgid "pending"
@@ -22029,7 +22059,7 @@ msgid "in process"
 msgstr "进行中"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1429
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1433
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -22156,7 +22186,7 @@ msgstr "是错误的长度（应该为％{count}字符）"
 msgid "is the wrong length (should be 1 character)"
 msgstr "是错误的长度（应该是1个字符）"
 
-#: app/models/user.rb:822
+#: app/models/user.rb:829
 msgid "is too long"
 msgstr "太长"
 
