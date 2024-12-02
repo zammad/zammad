@@ -3668,7 +3668,7 @@ msgstr ""
 msgid "Creation Channels"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr ""
 
@@ -5326,7 +5326,7 @@ msgstr ""
 msgid "Edit item"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr ""
 
@@ -6002,7 +6002,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr ""
@@ -9633,11 +9633,11 @@ msgstr ""
 msgid "New Priority"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 msgid "New Public Link"
 msgstr ""
 
@@ -9649,7 +9649,7 @@ msgstr ""
 msgid "New SLA"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr ""
 
@@ -9692,7 +9692,7 @@ msgstr ""
 msgid "New Translation"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr ""
 
@@ -9710,11 +9710,11 @@ msgstr ""
 msgid "New Version"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr ""
 
@@ -9752,7 +9752,7 @@ msgid "New user?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -9779,7 +9779,7 @@ msgstr ""
 msgid "Next month"
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 msgid "Next page"
 msgstr ""
 
@@ -10783,7 +10783,7 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr ""
 
@@ -11170,7 +11170,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 msgid "Please enter a valid JSON string."
 msgstr ""
 
@@ -11309,12 +11309,12 @@ msgstr ""
 msgid "Powered by"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr ""
 
@@ -11915,7 +11915,7 @@ msgstr ""
 msgid "Report Profile"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr ""
@@ -12413,7 +12413,7 @@ msgstr ""
 msgid "Scheduler"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr ""
 
@@ -14723,15 +14723,15 @@ msgstr ""
 msgid "The provided email account is already in use."
 msgstr ""
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr ""
 
@@ -14743,7 +14743,7 @@ msgstr ""
 msgid "The provided password is incorrect."
 msgstr ""
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
@@ -16473,7 +16473,7 @@ msgstr ""
 msgid "Turn chat into ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -17680,11 +17680,11 @@ msgstr ""
 msgid "Woo hoo! Your password has been changed!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr ""
 
