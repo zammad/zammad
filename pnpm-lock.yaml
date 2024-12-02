@@ -312,8 +312,8 @@ importers:
         specifier: ^8.14.0
         version: 8.14.0(eslint@8.57.1)(typescript@5.6.3)
       '@vitejs/plugin-vue':
-        specifier: ^5.2.0
-        version: 5.2.0(vite@5.4.11(@types/node@18.11.4)(sass@1.81.0)(terser@5.31.0))(vue@3.5.13(typescript@5.6.3))
+        specifier: ^5.2.1
+        version: 5.2.1(vite@5.4.11(@types/node@18.11.4)(sass@1.81.0)(terser@5.31.0))(vue@3.5.13(typescript@5.6.3))
       '@vue/compiler-dom':
         specifier: ^3.5.13
         version: 3.5.13
@@ -444,8 +444,8 @@ importers:
         specifier: ^5.4.11
         version: 5.4.11(@types/node@18.11.4)(sass@1.81.0)(terser@5.31.0)
       vite-plugin-pwa:
-        specifier: ^0.21.0
-        version: 0.21.0(vite@5.4.11(@types/node@18.11.4)(sass@1.81.0)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.3.0)
+        specifier: ^0.21.1
+        version: 0.21.1(vite@5.4.11(@types/node@18.11.4)(sass@1.81.0)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.3.0)
       vite-plugin-ruby:
         specifier: ^5.1.1
         version: 5.1.1(vite@5.4.11(@types/node@18.11.4)(sass@1.81.0)(terser@5.31.0))
@@ -2364,11 +2364,11 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@vitejs/plugin-vue@5.2.0':
-    resolution: {integrity: sha512-7n7KdUEtx/7Yl7I/WVAMZ1bEb0eVvXF3ummWTeLcs/9gvo9pJhuLdouSXGjdZ/MKD1acf1I272+X0RMua4/R3g==}
+  '@vitejs/plugin-vue@5.2.1':
+    resolution: {integrity: sha512-cxh314tzaWwOLqVes2gnnCtvBDcM1UMdn+iFR+UjAn411dPT3tOmqrJjbMd7koZpMAmBM/GqeV4n9ge7JSiJJQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
-      vite: ^5.0.0
+      vite: ^5.0.0 || ^6.0.0
       vue: ^3.2.25
 
   '@vitest/expect@2.1.5':
@@ -6300,12 +6300,12 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
-  vite-plugin-pwa@0.21.0:
-    resolution: {integrity: sha512-gnDE5sN2hdxA4vTl0pe6PCTPXqChk175jH8dZVVTBjFhWarZZoXaAdoTIKCIa8Zbx94sC0CnCOyERBWpxvry+g==}
+  vite-plugin-pwa@0.21.1:
+    resolution: {integrity: sha512-rkTbKFbd232WdiRJ9R3u+hZmf5SfQljX1b45NF6oLA6DSktEKpYllgTo1l2lkiZWMWV78pABJtFjNXfBef3/3Q==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@vite-pwa/assets-generator': ^0.2.6
-      vite: ^3.1.0 || ^4.0.0 || ^5.0.0
+      vite: ^3.1.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
       workbox-build: ^7.3.0
       workbox-window: ^7.3.0
     peerDependenciesMeta:
@@ -8988,7 +8988,7 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-vue@5.2.0(vite@5.4.11(@types/node@18.11.4)(sass@1.81.0)(terser@5.31.0))(vue@3.5.13(typescript@5.6.3))':
+  '@vitejs/plugin-vue@5.2.1(vite@5.4.11(@types/node@18.11.4)(sass@1.81.0)(terser@5.31.0))(vue@3.5.13(typescript@5.6.3))':
     dependencies:
       vite: 5.4.11(@types/node@18.11.4)(sass@1.81.0)(terser@5.31.0)
       vue: 3.5.13(typescript@5.6.3)
@@ -13334,7 +13334,7 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-pwa@0.21.0(vite@5.4.11(@types/node@18.11.4)(sass@1.81.0)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.3.0):
+  vite-plugin-pwa@0.21.1(vite@5.4.11(@types/node@18.11.4)(sass@1.81.0)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.3.0):
     dependencies:
       debug: 4.3.7
       pretty-bytes: 6.1.1
