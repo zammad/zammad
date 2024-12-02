@@ -124,6 +124,10 @@ curl http://localhost/api/report_profiles.json -v -u #{login}:#{password} -H "Co
     model_update_render(Report::Profile, params)
   end
 
+  def search
+    model_search_render(Report::Profile, params)
+  end
+
 =begin
 
 Resource:

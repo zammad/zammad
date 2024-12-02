@@ -33,6 +33,10 @@ class WebhooksController < ApplicationController
     model_destroy_render(Webhook, params)
   end
 
+  def search
+    model_search_render(Webhook, params)
+  end
+
   def pre_defined_webhooks
     render json: Webhook::PreDefined.pre_defined_webhook_definitions, status: :ok
   end

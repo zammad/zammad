@@ -5,8 +5,12 @@ class Job < ApplicationModel
   include ChecksConditionValidation
   include ChecksHtmlSanitized
   include HasTimeplan
+  include HasSearchIndexBackend
+  include CanSelector
+  include CanSearch
 
   include Job::Assets
+  include Job::SearchIndex
 
   OBJECTS_BATCH_SIZE = 2_000
 

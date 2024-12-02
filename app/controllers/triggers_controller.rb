@@ -19,6 +19,10 @@ class TriggersController < ApplicationController
     model_update_render(Trigger, params)
   end
 
+  def search
+    model_search_render(Trigger, params)
+  end
+
   def destroy
     model_destroy_render(Trigger, params)
   end

@@ -5,6 +5,7 @@ Zammad::Application.routes.draw do
 
   # core_workflows
   match api_path + '/core_workflows',            to: 'core_workflows#index',   via: :get
+  match api_path + '/core_workflows/search',     to: 'core_workflows#search',  via: %i[get post]
   match api_path + '/core_workflows/:id',        to: 'core_workflows#show',    via: :get
   match api_path + '/core_workflows',            to: 'core_workflows#create',  via: :post
   match api_path + '/core_workflows/:id',        to: 'core_workflows#update',  via: :put

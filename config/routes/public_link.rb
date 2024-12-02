@@ -5,6 +5,7 @@ Zammad::Application.routes.draw do
 
   # public_links
   match api_path + '/public_links',         to: 'public_links#index',     via: :get
+  match api_path + '/public_links/search',  to: 'public_links#search',  via: %i[get post]
   match api_path + '/public_links/:id',     to: 'public_links#show',      via: :get
   match api_path + '/public_links',         to: 'public_links#create',    via: :post
   match api_path + '/public_links/:id',     to: 'public_links#update',    via: :put

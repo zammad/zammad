@@ -4,6 +4,9 @@ class Trigger < ApplicationModel
   include ChecksConditionValidation
   include ChecksHtmlSanitized
   include CanSeed
+  include HasSearchIndexBackend
+  include CanSelector
+  include CanSearch
 
   include Trigger::Assets
 

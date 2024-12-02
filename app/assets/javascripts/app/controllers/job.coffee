@@ -11,6 +11,8 @@ class Job extends App.ControllerSubContent
       id: @id
       genericObject: 'Job'
       defaultSortBy: 'name'
+      searchBar: true
+      searchQuery: @search_query
       pageData:
         home: 'Jobs'
         object: __('Scheduler')
@@ -18,7 +20,7 @@ class Job extends App.ControllerSubContent
         pagerAjax: true
         pagerBaseUrl: '#manage/job/'
         pagerSelected: ( @page || 1 )
-        pagerPerPage: 150
+        pagerPerPage: 50
         navupdate: '#Jobs'
         buttons: [
           { name: __('New Scheduler'), 'data-type': 'new', class: 'btn--success' }
@@ -35,7 +37,7 @@ class Job extends App.ControllerSubContent
       if key isnt 'el' && key isnt 'shown' && key isnt 'match'
         @[key] = value
 
-    @genericController.paginate( @page || 1 )
+    @genericController.paginate(@page || 1, params)
 
   fetchTimezones: =>
     @ajax(

@@ -13,6 +13,8 @@ class Index extends App.ControllerSubContent
       id: @id
       genericObject: 'Webhook'
       defaultSortBy: 'name'
+      searchBar: true
+      searchQuery: @search_query
       pageData:
         home: 'webhooks'
         object: __('Webhook')
@@ -20,7 +22,7 @@ class Index extends App.ControllerSubContent
         pagerAjax: true
         pagerBaseUrl: '#manage/webhook/'
         pagerSelected: ( @page || 1 )
-        pagerPerPage: 150
+        pagerPerPage: 50
         navupdate: '#webhooks'
         buttons: [
           { name: __('Example Payload'), 'data-type': 'payload', class: 'btn' }
@@ -46,7 +48,7 @@ class Index extends App.ControllerSubContent
       if key isnt 'el' && key isnt 'shown' && key isnt 'match'
         @[key] = value
 
-    @genericController.paginate( @page || 1 )
+    @genericController.paginate(@page || 1, params)
 
   disableSwitchCallback: ->
     $(@).parents('form').find('[data-attribute-name="customized_payload"] label').css('pointer-events', 'none')

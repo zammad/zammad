@@ -4,6 +4,9 @@ class Webhook < ApplicationModel
   include ChecksClientNotification
   include ChecksHtmlSanitized
   include HasCollectionUpdate
+  include HasSearchIndexBackend
+  include CanSelector
+  include CanSearch
 
   before_save    :reset_custom_payload
   before_destroy Webhook::EnsureNoRelatedObjects
