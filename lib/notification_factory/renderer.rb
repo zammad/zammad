@@ -111,7 +111,7 @@ examples how to use
         previous_object_refs = temp
       elsif index == object_methods.length - 1 && (is_textarea_attribute = textarea_attributes(object_refs).include?(method))
         temp = object_refs
-        object_refs = object_refs.send(method.to_sym).text2html
+        object_refs = object_refs.send(method.to_sym)&.text2html
         previous_object_refs = temp
         escape = false
       end
