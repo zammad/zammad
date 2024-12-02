@@ -9,11 +9,11 @@ afterEach(() => {
 })
 
 const logger = {
-  log(...mesages: unknown[]) {
+  log(...messages: unknown[]) {
     if (process.env.VITEST_LOG_GQL_FACTORY) {
-      console.log(...mesages)
+      console.log(...messages)
     } else {
-      logs.push(mesages)
+      logs.push(messages)
     }
   },
   printMockerLog() {

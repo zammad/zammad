@@ -129,7 +129,7 @@ export default defineConfig(({ mode, command }) => {
       testTimeout: isEnvBooleanSet(process.env.CI) ? 30_000 : 5_000,
       unstubGlobals: true,
       onConsoleLog(log) {
-        if (log.includes('Not implemented: navigation')) return false
+        if (log.includes('Not implemented: navigation') || log.includes('<Suspense> is an experimental feature')) return false
       },
     },
     plugins,

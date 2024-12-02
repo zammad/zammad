@@ -816,20 +816,22 @@ describe('Ticket detail view', () => {
     })
 
     it('discards complete form with an reply and afterwards only the reply directly', async () => {
+      const ticket = createDummyTicket({
+        group: {
+          id: convertToGraphQLId('Group', 1),
+          emailAddress: {
+            name: 'Zammad Helpdesk',
+            emailAddress: 'zammad@localhost',
+          },
+        },
+        defaultPolicy: {
+          update: true,
+          agentReadAccess: true,
+        },
+      })
+
       mockTicketQuery({
-        ticket: createDummyTicket({
-          group: {
-            id: convertToGraphQLId('Group', 1),
-            emailAddress: {
-              name: 'Zammad Helpdesk',
-              emailAddress: 'zammad@localhost',
-            },
-          },
-          defaultPolicy: {
-            update: true,
-            agentReadAccess: true,
-          },
-        }),
+        ticket,
       })
 
       mockTicketArticlesQuery({
@@ -917,8 +919,39 @@ describe('Ticket detail view', () => {
 
       const view = await visitView('/tickets/1')
 
+      const ticketMetaSidebar = within(view.getByLabelText('Content sidebar'))
+      expect(
+        await ticketMetaSidebar.findByLabelText('State'),
+      ).toBeInTheDocument()
+
+      await getTicketUpdatesSubscriptionHandler().trigger({
+        ticketUpdates: {
+          ticket: {
+            ...ticket,
+            state: {
+              ...ticket.state,
+              id: convertToGraphQLId('Ticket::State', 4),
+              name: 'closed',
+              stateType: {
+                ...ticket.state.stateType,
+                id: convertToGraphQLId('Ticket::StateType', 5),
+                name: 'closed',
+              },
+            },
+          },
+        },
+      })
+
+      await waitForNextTick()
+
       // Discard changes inside the reply form
       await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+
+      await waitFor(() =>
+        expect(
+          view.queryByRole('textbox', { name: 'Text' }),
+        ).toBeInTheDocument(),
+      )
 
       await view.events.click(
         await view.findByRole('button', {
@@ -934,11 +967,13 @@ describe('Ticket detail view', () => {
         view.getByRole('button', { name: 'Discard Changes' }),
       )
 
-      expect(
-        view.queryByRole('button', {
-          name: 'Discard your unsaved changes',
-        }),
-      ).not.toBeInTheDocument()
+      await waitFor(() => {
+        expect(
+          view.queryByRole('button', {
+            name: 'Discard your unsaved changes',
+          }),
+        ).not.toBeInTheDocument()
+      })
 
       await view.events.click(view.getByRole('button', { name: 'Add reply' }))
 

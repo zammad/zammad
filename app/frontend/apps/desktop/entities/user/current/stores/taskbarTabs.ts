@@ -395,6 +395,8 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
     }
 
     const resetActiveTaskbarTab = () => {
+      if (!activeTaskbarTabEntityKey.value) return
+
       activeTaskbarTabEntityKey.value = undefined
     }
 

@@ -53,7 +53,7 @@ export const useTicketEdit = (
 
   const ticketFormRelatedData = computed<Partial<TicketById>>(
     (currentTicketFormRelatedData) => {
-      if (!ticket.value || !form.value) return {}
+      if (!ticket.value) return {}
 
       const newTicketFormRelatedData = (
         TICKET_FORM_RELEVANT_KEYS as Array<keyof TicketById>
@@ -88,7 +88,10 @@ export const useTicketEdit = (
       initialTicketValue.value = {
         id: ticket.value.id,
         owner_id: ownerInternalId === 1 ? null : ownerInternalId,
+        isDefaultFollowUpStateSet: undefined, // the default value for reset situations.
       }
+
+      if (!form.value?.formInitialSettled) return
 
       form.value?.resetForm(
         {

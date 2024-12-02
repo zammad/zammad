@@ -262,7 +262,7 @@ describe('Creating new ticket as agent', () => {
 
       await waitUntil(() => mockTicket.calls.resolve)
 
-      await expect(view.findByRole('alert')).resolves.toHaveTextContent(
+      expect(await view.findByRole('alert')).toHaveTextContent(
         'Ticket has been created successfully.',
       )
 

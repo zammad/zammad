@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import type { EnumTaskbarEntity } from '#shared/graphql/types.ts'
+import log from '#shared/utils/log.ts'
 
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
@@ -58,6 +59,10 @@ const activeTaskbarTab: NavigationGuard = async (
   // Remember the entity key for the current taskbar tab,
   //   so it can be used for checking the entity access.
   to.meta.taskbarTabEntityKey = taskbarTabEntityKey
+
+  log.debug(
+    `Route guard for '${to.path}': active taskbar tab with entity key '${taskbarTabEntityKey}'.`,
+  )
 
   next()
 }

@@ -182,9 +182,11 @@ interface MockedRouter extends Router {
 
 let routerInitialized = false
 let router: MockedRouter
+const history = createWebHistory(isDesktop ? '/desktop' : '/mobile')
 
 export const getTestPlugins = () => [...plugins]
 export const getTestRouter = () => router
+export const getHistory = () => history
 
 // cannot use "as const" here, because ESLint fails with obscure error :shrug:
 const routerMethods = [
@@ -240,7 +242,7 @@ const initializeRouter = (
   }
 
   router = createRouter({
-    history: createWebHistory(isDesktop ? '/desktop' : '/mobile'),
+    history,
     routes: localRoutes,
   }) as MockedRouter
 

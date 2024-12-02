@@ -44,48 +44,153 @@ describe('ticket create view', async () => {
       mockPermissions(['ticket.agent'])
     })
 
-    // FIXME: This test example has to be first, otherwise it will start to fail.
-    //   This is probably due to the leftover router instance, which has to be set up in a different way for this test.
-    it('supports updating dirty flag in the associated taskbar tab', async () => {
-      const uid = getUuid()
-
-      mockUserCurrentTaskbarItemListQuery({
-        userCurrentTaskbarItemList: [
-          {
-            __typename: 'UserTaskbarItem',
-            id: convertToGraphQLId('Taskbar', 1),
-            key: `TicketCreateScreen-${uid}`,
-            callback: EnumTaskbarEntity.TicketCreate,
-            entityAccess: EnumTaskbarEntityAccess.Granted,
-            entity: {
-              __typename: 'UserTaskbarItemEntityTicketCreate',
-              uid,
-              title: '',
-              createArticleTypeKey: 'phone-in',
-            },
-            dirty: false,
-          },
-        ],
-      })
-
+    it('keeps form values on cancel unsaved changes', async () => {
       handleMockFormUpdaterQuery()
 
-      const view = await visitView(`/ticket/create/${uid}`)
+      const view = await visitView('/ticket/create')
 
+      await view.events.type(await view.findByLabelText('Title'), 'Test Ticket')
+
+      await view.events.click(
+        await view.findByRole('button', { name: 'Discard Changes' }),
+      )
+
+      const dialog = await view.findByRole('dialog', {
+        name: 'Unsaved Changes',
+      })
+
+      const dialogView = within(dialog)
+
+      await view.events.click(
+        dialogView.getByRole('button', { name: 'Cancel & Go Back' }),
+      )
+
+      expect(view.getByText('Test Ticket')).toBeInTheDocument()
+    })
+
+    it('prevents submission on incomplete form', async () => {
+      handleMockFormUpdaterQuery()
+
+      const view = await visitView('/ticket/create')
+
+      await view.events.type(await view.findByLabelText('Title'), 'Test Ticket')
+
+      await view.events.click(view.getByRole('button', { name: 'Create' }))
+
+      expect(await view.findAllByText('This field is required.')).toHaveLength(
+        4,
+      )
+    })
+
+    it('creates a new ticket', async () => {
+      handleMockFormUpdaterQuery()
+
+      const view = await visitView('/ticket/create')
+
+      await view.events.type(await view.findByLabelText('Title'), 'Test Ticket')
+
+      // Page title updates when title is set
       expect(
-        await view.findByRole('button', { name: 'Cancel & Go Back' }),
+        await view.findByRole('heading', { level: 1, name: 'Test Ticket' }),
       ).toBeInTheDocument()
+
+      // Page title defaults back when title is cleared
+      await view.events.clear(view.getByLabelText('Title'))
+      await waitFor(() =>
+        expect(
+          view.getByRole('heading', { level: 1, name: 'New Ticket' }),
+        ).toBeInTheDocument(),
+      )
 
       await view.events.type(view.getByLabelText('Title'), 'Test Ticket')
 
-      const calls = await waitForUserCurrentTaskbarItemUpdateMutationCalls()
+      // Customer field
+      await handleCustomerMock(view)
 
-      expect(calls.at(-1)?.variables).toEqual(
-        expect.objectContaining({
-          input: expect.objectContaining({
-            dirty: true,
-          }),
+      handleMockUserQuery()
+
+      await view.events.click(
+        view.getByRole('option', {
+          name: 'Avatar (Nicole Braun) Nicole Braun – Zammad Foundation',
         }),
+      )
+
+      // Sidebar CUSTOMER
+      expect(view.getByLabelText('Avatar (Nicole Braun)')).toBeInTheDocument()
+      expect(view.getByText('Zammad Foundation')).toBeInTheDocument()
+      expect(view.getByText('open tickets')).toBeInTheDocument()
+      expect(view.getByText('nicole.braun@zammad.org')).toBeInTheDocument()
+      expect(view.getByText('closed tickets')).toBeInTheDocument()
+      expect(view.getByLabelText('Open tickets')).toHaveTextContent('17')
+
+      // Sidebar Organization
+      handleMockOrganizationQuery()
+
+      await view.events.click(view.getByLabelText('Organization'))
+
+      expect(view.getByText('Organization')).toBeInTheDocument()
+
+      expect(view.getByText('Members')).toBeInTheDocument()
+      expect(view.getByLabelText('Avatar (Nicole Braun)')).toBeInTheDocument()
+
+      // Text field
+      await view.events.type(
+        view.getByRole('textbox', { name: 'Text' }),
+        'Test ticket text',
+      )
+
+      // Group field
+      await view.events.click(view.getByLabelText('Group'))
+      await view.events.click(view.getByRole('option', { name: 'Users' }))
+
+      // State field
+      await view.events.click(view.getByLabelText('Priority'))
+      await view.events.click(view.getByRole('option', { name: '2 normal' }))
+
+      // Priority Field
+      await view.events.click(view.getByLabelText('State'))
+      await view.events.click(
+        view.getByRole('option', { name: 'pending reminder' }),
+      )
+
+      // Date selection Field on pending reminder
+      await view.events.click(view.getByText('Pending till'))
+
+      await waitFor(() => expect(view.getByRole('dialog')).toBeInTheDocument())
+
+      const dateCells: Element[] = view.getAllByRole('gridcell', { name: '29' })
+
+      await view.events.click(<Element>dateCells.at(-1))
+
+      // Submission
+      await view.events.click(view.getByRole('button', { name: 'Create' }))
+
+      const calls = await waitForTicketCreateMutationCalls()
+
+      expect(calls.at(-1)?.variables).toEqual({
+        input: {
+          article: {
+            body: 'Test ticket text',
+            cc: undefined,
+            contentType: 'text/html',
+            security: undefined,
+            sender: 'Customer',
+            type: 'phone',
+          },
+          customer: {
+            id: 'gid://zammad/User/2',
+          },
+          groupId: 'gid://zammad/Group/1',
+          objectAttributeValues: [],
+          pendingTime: '2024-11-29T00:00:00.000Z',
+          priorityId: 'gid://zammad/Ticket::Priority/2',
+          stateId: 'gid://zammad/Ticket::State/3',
+          title: 'Test Ticket',
+        },
+      })
+
+      expect(await view.findByRole('alert')).toHaveTextContent(
+        'Ticket has been created successfully.',
       )
     })
 
@@ -239,141 +344,46 @@ describe('ticket create view', async () => {
       )
     })
 
-    it('keeps form values on cancel unsaved changes', async () => {
-      handleMockFormUpdaterQuery()
+    it('supports updating dirty flag in the associated taskbar tab', async () => {
+      const uid = getUuid()
 
-      const view = await visitView('/ticket/create')
-
-      await view.events.type(await view.findByLabelText('Title'), 'Test Ticket')
-
-      await view.events.click(
-        await view.findByRole('button', { name: 'Discard Changes' }),
-      )
-
-      const dialog = await view.findByRole('dialog', {
-        name: 'Unsaved Changes',
+      mockUserCurrentTaskbarItemListQuery({
+        userCurrentTaskbarItemList: [
+          {
+            __typename: 'UserTaskbarItem',
+            id: convertToGraphQLId('Taskbar', 1),
+            key: `TicketCreateScreen-${uid}`,
+            callback: EnumTaskbarEntity.TicketCreate,
+            entityAccess: EnumTaskbarEntityAccess.Granted,
+            entity: {
+              __typename: 'UserTaskbarItemEntityTicketCreate',
+              uid,
+              title: '',
+              createArticleTypeKey: 'phone-in',
+            },
+            dirty: false,
+          },
+        ],
       })
 
-      const dialogView = within(dialog)
-
-      await view.events.click(
-        dialogView.getByRole('button', { name: 'Cancel & Go Back' }),
-      )
-
-      expect(view.getByText('Test Ticket')).toBeInTheDocument()
-    })
-
-    it('creates a new ticket', async () => {
       handleMockFormUpdaterQuery()
 
-      const view = await visitView('/ticket/create')
+      const view = await visitView(`/ticket/create/${uid}`)
 
-      await view.events.type(await view.findByLabelText('Title'), 'Test Ticket')
-
-      // Page title updates when title is set
       expect(
-        await view.findByRole('heading', { level: 1, name: 'Test Ticket' }),
+        await view.findByRole('button', { name: 'Cancel & Go Back' }),
       ).toBeInTheDocument()
-
-      // Page title defaults back when title is cleared
-      await view.events.clear(view.getByLabelText('Title'))
-      await waitFor(() =>
-        expect(
-          view.getByRole('heading', { level: 1, name: 'New Ticket' }),
-        ).toBeInTheDocument(),
-      )
 
       await view.events.type(view.getByLabelText('Title'), 'Test Ticket')
 
-      // Customer field
-      await handleCustomerMock(view)
+      const calls = await waitForUserCurrentTaskbarItemUpdateMutationCalls()
 
-      handleMockUserQuery()
-
-      await view.events.click(
-        view.getByRole('option', {
-          name: 'Avatar (Nicole Braun) Nicole Braun – Zammad Foundation',
+      expect(calls.at(-1)?.variables).toEqual(
+        expect.objectContaining({
+          input: expect.objectContaining({
+            dirty: true,
+          }),
         }),
-      )
-
-      // Sidebar CUSTOMER
-      expect(view.getByLabelText('Avatar (Nicole Braun)')).toBeInTheDocument()
-      expect(view.getByText('Zammad Foundation')).toBeInTheDocument()
-      expect(view.getByText('open tickets')).toBeInTheDocument()
-      expect(view.getByText('nicole.braun@zammad.org')).toBeInTheDocument()
-      expect(view.getByText('closed tickets')).toBeInTheDocument()
-      expect(view.getByLabelText('Open tickets')).toHaveTextContent('17')
-
-      // Sidebar Organization
-      handleMockOrganizationQuery()
-
-      await view.events.click(view.getByLabelText('Organization'))
-
-      expect(view.getByText('Organization')).toBeInTheDocument()
-
-      expect(view.getByText('Members')).toBeInTheDocument()
-      expect(view.getByLabelText('Avatar (Nicole Braun)')).toBeInTheDocument()
-
-      // Text field
-      await view.events.type(
-        view.getByRole('textbox', { name: 'Text' }),
-        'Test ticket text',
-      )
-
-      // Group field
-      await view.events.click(view.getByLabelText('Group'))
-      await view.events.click(view.getByRole('option', { name: 'Users' }))
-
-      // State field
-      await view.events.click(view.getByLabelText('Priority'))
-      await view.events.click(view.getByRole('option', { name: '2 normal' }))
-
-      // Priority Field
-      await view.events.click(view.getByLabelText('State'))
-      await view.events.click(
-        view.getByRole('option', { name: 'pending reminder' }),
-      )
-
-      // Date selection Field on pending reminder
-      await view.events.click(view.getByText('Pending till'))
-
-      await waitFor(() => expect(view.getByRole('dialog')).toBeInTheDocument())
-
-      const dateCells: Element[] = view.getAllByRole('gridcell', { name: '29' })
-
-      await view.events.click(<Element>dateCells.at(-1))
-
-      // Submission
-      await view.events.click(view.getByRole('button', { name: 'Create' }))
-
-      const calls = await waitForTicketCreateMutationCalls()
-
-      expect(calls.at(-1)?.variables).toEqual({
-        input: {
-          article: {
-            body: 'Test ticket text',
-            cc: undefined,
-            contentType: 'text/html',
-            security: undefined,
-            sender: 'Customer',
-            type: 'phone',
-          },
-          customer: {
-            id: 'gid://zammad/User/2',
-          },
-          groupId: 'gid://zammad/Group/1',
-          objectAttributeValues: [],
-          pendingTime: '2024-11-29T00:00:00.000Z',
-          priorityId: 'gid://zammad/Ticket::Priority/2',
-          stateId: 'gid://zammad/Ticket::State/3',
-          title: 'Test Ticket',
-        },
-      })
-
-      await waitFor(() =>
-        expect(
-          view.getByText('Ticket has been created successfully.'),
-        ).toBeInTheDocument(),
       )
     })
   })
@@ -453,10 +463,8 @@ describe('ticket create view', async () => {
           },
         })
 
-        await waitFor(() =>
-          expect(
-            view.getByText('Ticket has been created successfully.'),
-          ).toBeInTheDocument(),
+        expect(await view.findByRole('alert')).toHaveTextContent(
+          'Ticket has been created successfully.',
         )
       })
     })

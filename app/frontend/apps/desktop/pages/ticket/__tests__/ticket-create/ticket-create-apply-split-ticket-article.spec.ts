@@ -31,7 +31,7 @@ describe('ticket create view - splitting of a ticket article', async () => {
     })
 
     const view = await visitView(
-      '/ticket/create??splitTicketArticleId=ticket_article_gid',
+      '/ticket/create?splitTicketArticleId=ticket_article_gid',
     )
 
     const formUpdaterCalls = await waitForFormUpdaterQueryCalls()
@@ -74,7 +74,7 @@ describe('ticket create view - splitting of a ticket article', async () => {
     })
 
     const view = await visitView(
-      '/ticket/create??splitTicketArticleId=ticket_article_gid',
+      '/ticket/create?splitTicketArticleId=ticket_article_gid',
     )
 
     await waitForFormUpdaterQueryCalls()
