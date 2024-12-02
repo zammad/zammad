@@ -9,10 +9,16 @@ class PublicLink extends App.ControllerSubContent
       id: @id
       genericObject: 'PublicLink'
       defaultSortBy: 'prio'
+      searchBar: true
+      searchQuery: @search_query
       pageData:
         home: 'public_links'
         object: __('Public Link')
         objects: __('Public Links')
+        pagerAjax: true
+        pagerBaseUrl: '#manage/public_links/'
+        pagerSelected: ( @page || 1 )
+        pagerPerPage: 50
         navupdate: '#public_links'
         buttons: [
           { name: __('New Public Link'), 'data-type': 'new', class: 'btn--success' }
@@ -36,5 +42,12 @@ class PublicLink extends App.ControllerSubContent
           data:        JSON.stringify(prios: prios)
         )
     )
+
+  show: (params) =>
+    for key, value of params
+      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+        @[key] = value
+
+    @genericController.paginate(@page || 1, params)
 
 App.Config.set('Public Links', { prio: 3325, name: __('Public Links'), parent: '#manage', target: '#manage/public_links', controller: PublicLink, permission: ['admin.public_links'] }, 'NavBarAdmin')

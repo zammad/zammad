@@ -11,6 +11,8 @@ class CoreWorkflow extends App.ControllerSubContent
       id: @id
       genericObject: 'CoreWorkflow'
       defaultSortBy: 'priority, name'
+      searchBar: true
+      searchQuery: @search_query
       pageData:
         home: 'core_workflow'
         object: __('Workflow')
@@ -18,7 +20,7 @@ class CoreWorkflow extends App.ControllerSubContent
         pagerAjax: true
         pagerBaseUrl: '#manage/core_workflow/'
         pagerSelected: ( @page || 1 )
-        pagerPerPage: 150
+        pagerPerPage: 50
         navupdate: '#core_workflow'
         buttons: [
           { name: __('New Workflow'), 'data-type': 'new', class: 'btn--success' }
@@ -35,7 +37,7 @@ class CoreWorkflow extends App.ControllerSubContent
       if key isnt 'el' && key isnt 'shown' && key isnt 'match'
         @[key] = value
 
-    @genericController.paginate( @page || 1 )
+    @genericController.paginate(@page || 1, params)
 
   setAttributes: ->
     for field in App.CoreWorkflow.configure_attributes

@@ -5,6 +5,7 @@ Zammad::Application.routes.draw do
 
   # triggers
   match api_path + '/triggers',            to: 'triggers#index',   via: :get
+  match api_path + '/triggers/search',     to: 'triggers#search',  via: %i[get post]
   match api_path + '/triggers/:id',        to: 'triggers#show',    via: :get
   match api_path + '/triggers',            to: 'triggers#create',  via: :post
   match api_path + '/triggers/:id',        to: 'triggers#update',  via: :put

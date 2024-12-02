@@ -29,7 +29,7 @@ see e.g. also app/models/ticket/search.rb
     scope :search_sql_query_extension, lambda { |params|
       return if params[:query].blank?
 
-      search_columns = columns.select { |row| row.type == :string }.map(&:name)
+      search_columns = columns.select { |row| row.type == :string && !row.try(:array) }.map(&:name)
       return if search_columns.blank?
 
       where_or_cis(search_columns, "%#{SqlHelper.quote_like(params[:query].to_s.downcase)}%")

@@ -2,8 +2,13 @@
 
 class CoreWorkflow < ApplicationModel
   include ChecksClientNotification
-  include CoreWorkflow::Assets
   include ChecksCoreWorkflow
+  include HasSearchIndexBackend
+  include CanSelector
+  include CanSearch
+
+  include CoreWorkflow::Assets
+  include CoreWorkflow::Search
 
   core_workflow_screens 'create', 'edit'
 

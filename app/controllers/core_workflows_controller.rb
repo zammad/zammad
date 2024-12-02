@@ -19,6 +19,10 @@ class CoreWorkflowsController < ApplicationController
     model_update_render(CoreWorkflow.changeable, params)
   end
 
+  def search
+    model_search_render(CoreWorkflow, params)
+  end
+
   def destroy
     model_destroy_render(CoreWorkflow.changeable, params)
   end

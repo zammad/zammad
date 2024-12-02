@@ -5,6 +5,7 @@ Zammad::Application.routes.draw do
 
   # jobs
   match api_path + '/jobs',            to: 'jobs#index',   via: :get
+  match api_path + '/jobs/search',     to: 'jobs#search',  via: %i[get post]
   match api_path + '/jobs/:id',        to: 'jobs#show',    via: :get
   match api_path + '/jobs',            to: 'jobs#create',  via: :post
   match api_path + '/jobs/:id',        to: 'jobs#update',  via: :put

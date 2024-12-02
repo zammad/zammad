@@ -12,6 +12,8 @@ class Trigger extends App.ControllerSubContent
       id: @id
       genericObject: 'Trigger'
       defaultSortBy: 'name'
+      searchBar: true
+      searchQuery: @search_query
       pageData:
         home: 'triggers'
         object: __('Trigger')
@@ -19,8 +21,8 @@ class Trigger extends App.ControllerSubContent
         pagerAjax: true
         pagerBaseUrl: '#manage/trigger/'
         pagerSelected: ( @page || 1 )
-        pagerPerPage: 150
-        navupdate: '#triggers'
+        pagerPerPage: 50
+        navupdate: '#trigger'
         buttons: [
           { name: __('New Trigger'), 'data-type': 'new', class: 'btn--success' }
         ]
@@ -33,7 +35,7 @@ class Trigger extends App.ControllerSubContent
       if key isnt 'el' && key isnt 'shown' && key isnt 'match'
         @[key] = value
 
-    @genericController.paginate( @page || 1 )
+    @genericController.paginate(@page || 1, params)
 
   fetchTimezones: =>
     @ajax(

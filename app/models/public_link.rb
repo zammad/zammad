@@ -2,6 +2,9 @@
 
 class PublicLink < ApplicationModel
   include HasDefaultModelUserRelations
+  include HasSearchIndexBackend
+  include CanSelector
+  include CanSearch
 
   include CanPriorization
   include ChecksClientNotification

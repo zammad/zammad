@@ -48,7 +48,7 @@ RSpec.describe 'Manage > Organizations', type: :system do
     end
   end
 
-  context 'ajax pagination' do
+  context 'when ajax pagination' do
     include_examples 'pagination', model: :organization, klass: Organization, path: 'manage/organizations'
   end
 end

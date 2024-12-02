@@ -22,6 +22,10 @@ class PublicLinksController < ApplicationController
     model_update_render(PublicLink, params)
   end
 
+  def search
+    model_search_render(PublicLink, params)
+  end
+
   def destroy
     model_destroy_render(PublicLink, params)
   end

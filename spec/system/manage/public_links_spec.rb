@@ -1,8 +1,13 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'system/examples/pagination_examples'
 
 RSpec.describe 'Manage > Public Links', type: :system do
+  context 'when ajax pagination' do
+    include_examples 'pagination', model: :public_link, klass: PublicLink, path: 'manage/public_links', sort_by: :prio, main_column: :title
+  end
+
   context 'when creating a new public link' do
     it 'successfully creates a new public link' do
       visit '/#manage/public_links'

@@ -19,6 +19,10 @@ class JobsController < ApplicationController
     model_update_render(Job, params)
   end
 
+  def search
+    model_search_render(Job, params)
+  end
+
   def destroy
     model_destroy_render(Job, params)
   end
