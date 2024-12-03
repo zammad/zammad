@@ -1,0 +1,26 @@
+From: pgp1@example.com
+Bcc: zammad@localhost
+Message-ID: <64b697607eba9_133f1224c169a8@MBP-FL.fritz.box.mail>
+Mime-Version: 1.0
+Content-Type: multipart/encrypted;
+ boundary="--==_mimepart_64b6976080889_133f1224c171f3";
+ protocol="application/pgp-encrypted"
+Content-Transfer-Encoding: 7bit
+
+This is an OpenPGP/MIME encrypted message (RFC 3156)
+----==_mimepart_64b6976080889_133f1224c171f3
+Content-Type: application/pgp-encrypted
+Content-Transfer-Encoding: 7bit
+Content-Description: PGP/MIME Versions Identification
+
+Version: 1
+
+----==_mimepart_64b6976080889_133f1224c171f3
+Content-Type: application/octet-stream;
+ name=encrypted.asc
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename=encrypted.asc
+Content-Description: OpenPGP encrypted message
+Content-ID: <64b69760cfd14_133f1224c172d4@MBP-FL.fritz.box.mail>
+
