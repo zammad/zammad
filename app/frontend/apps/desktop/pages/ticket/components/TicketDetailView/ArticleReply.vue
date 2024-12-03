@@ -213,7 +213,7 @@ defineExpose({
       />
 
       <div
-        class="flex h-full flex-col"
+        class="isolate flex h-full flex-col"
         :class="{
           'rounded-xl border border-neutral-300 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500':
             !pinned,
