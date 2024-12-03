@@ -287,14 +287,11 @@ class SecureMailing::PGP::Incoming < SecureMailing::Backend::HandlerIncoming
 
   def decrypt_keys
     @decrypt_keys ||= begin
-      keys = []
-      mail[:mail_instance].to.each { |to| keys += pgp_keys(to, :encryption, true) }
+      %i[to cc bcc].filter_map do |recipient|
+        next if mail[:mail_instance].send(recipient).blank?
 
-      if mail[:mail_instance].cc.present?
-        mail[:mail_instance].cc.each { |cc| keys += pgp_keys(cc, :encryption, true) }
-      end
-
-      keys
+        mail[:mail_instance].send(recipient).map { |address| pgp_keys(address, :encryption, true) }
+      end.flatten
     end
   end
 

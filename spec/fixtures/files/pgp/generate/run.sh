@@ -172,8 +172,8 @@ done
 echo "Generating encrypted test mails"
 
 # Don't use dashes (-) in email addresses unless you know what you're doing!
-# shellcheck disable=SC2042
-for TEST_MAIL_SENDER_RECIPIENTS in mail-other-key,pgp1@example.com,pgp2@example.com-other,pgp3@example.com mail-decrypt-expired,pgp1@example.com,expiredpgp1@example.com,expiredpgp1@example.com mail-ocb,pgp1@example.com,ocbpgp1@example.com,pgp3@example.com
+# shellcheck disable=SC2042,SC2258
+for TEST_MAIL_SENDER_RECIPIENTS in mail-other-key,pgp1@example.com,pgp2@example.com-other,pgp3@example.com mail-decrypt-expired,pgp1@example.com,expiredpgp1@example.com,expiredpgp1@example.com mail-ocb,pgp1@example.com,ocbpgp1@example.com,pgp3@example.com mail-decrypt-bcc,pgp1@example.com,zammad@localhost,
 do
   TEST_MAIL=${TEST_MAIL_SENDER_RECIPIENTS%,*,*,*}
   EMAIL_ADDRESSES=${TEST_MAIL_SENDER_RECIPIENTS#*,}

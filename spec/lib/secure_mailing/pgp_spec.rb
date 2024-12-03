@@ -450,6 +450,22 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
             end
           end
         end
+
+        context 'when recipient is bcc only' do
+          let(:mail) do
+            create(:pgp_key, :with_private, fixture: 'zammad@localhost')
+
+            # Import a mail which was created with bcc recipient only.
+            pgp_mail = Rails.root.join('spec/fixtures/files/pgp/mail/mail-decrypt-bcc.box').read
+
+            mail = Channel::EmailParser.new.parse(pgp_mail)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it_behaves_like 'decrypting message content'
+        end
       end
 
       context 'with no private key present' do
