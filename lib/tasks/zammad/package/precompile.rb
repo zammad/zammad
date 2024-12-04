@@ -30,8 +30,10 @@ module Tasks
 
         def self.assets_precompile
           if ::Package.app_package_installation?
+            exec_command('zammad run bundle exec vite clobber')
             exec_command('zammad run rake assets:precompile')
           else
+            exec_command('bundle exec vite clobber')
             exec_command('rake assets:precompile')
           end
         end
