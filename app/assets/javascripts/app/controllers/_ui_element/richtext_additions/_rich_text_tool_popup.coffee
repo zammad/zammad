@@ -40,10 +40,16 @@ class App.UiElement.richtext.additions.RichTextToolPopup extends App.ControllerF
 
     $(@event.currentTarget).on('hidden.bs.popover', (e) => @willClose(e))
 
-    $(document).on('click', @onClickingBackround)
+    $(document).on('click', @onClickingBackground)
 
-  onClickingBackround: (e) =>
+  onClickingBackground: (e) =>
     return true if @el[0].contains(e.target)
+
+    # https://git.zammad.com/zammad/zammad/-/merge_requests/9317
+    # Sometimes DOM element may be no longer a part of the DOM tree by the time it gets to this callback.
+    # For example this happens in searchable select when adding a link to KB Answer.
+    # This treats such cases as clicking inside the popup
+    return true if $(e.target).closest('body').length == 0
 
     e.preventDefault()
     e.stopPropagation()
@@ -162,5 +168,5 @@ class App.UiElement.richtext.additions.RichTextToolPopup extends App.ControllerF
         textEditor = $(@event.currentTarget).closest('.richtext.form-control').find('[contenteditable]')
         textEditor.find('span.highlight-emulator').contents().unwrap()
 
-    $(document).off('click', @onClickingBackround)
+    $(document).off('click', @onClickingBackground)
     $(@event.currentTarget).off('hidden.bs.popover')
