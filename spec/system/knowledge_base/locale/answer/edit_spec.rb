@@ -89,6 +89,30 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
     end
   end
 
+  context 'add link to another KB answer' do
+    def open_editor_and_add_link(input)
+      visit "#knowledge_base/#{knowledge_base.id}/locale/#{primary_locale.system_locale.locale}/answer/#{draft_answer.id}/edit"
+
+      find('a[data-action="link_answer"]').click
+
+      within('.popover-content') do
+        find('input').fill_in with: input
+        first('.js-option span', text: input).click
+        find('[type=submit]').click
+      end
+    end
+
+    before do
+      published_answer
+    end
+
+    it 'adds a link to an answer' do
+      open_editor_and_add_link published_answer.translations.first.title
+
+      expect(page).to have_link(href: "#knowledge_base/#{knowledge_base.id}/locale/#{primary_locale.system_locale.locale}/answer/#{published_answer.id}/edit")
+    end
+  end
+
   context 'embedded video' do
 
     it 'has adding functionality' do
