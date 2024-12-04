@@ -4,34 +4,33 @@
 module Taskbar::List
   extend ActiveSupport::Concern
 
-  included do
-
-    class << self
-
-      def list(user, app: nil, restrict_entities: false)
-        clause = { user: user }
-        clause[:app] = app if app
-        clause[:callback] = taskbar_entities if restrict_entities
-
-        Taskbar.where(clause).reorder(:prio)
+  class_methods do
+    def reorder_list(user, order)
+      order_as_hash = order.each_with_object({}) do |elem, sum|
+        sum[elem[:id]] = elem[:prio]
       end
 
-      def reorder_list(user, order)
-        order.each do |relation|
-          taskbar = Taskbar.find(relation[:id])
-          next if taskbar.user_id != user.id
+      ActiveRecord::Base.transaction do |transaction|
+        TaskbarPolicy::Scope
+          .new(user, Taskbar)
+          .resolve
+          .where(id: order_as_hash.keys)
+          .each do |taskbar|
+            taskbar.skip_item_trigger = true
+            taskbar.skip_live_user_trigger = true
+            taskbar.update! prio: order_as_hash[taskbar.id]
+          end
 
-          taskbar.update!(prio: relation[:prio])
+        transaction.after_commit do
+          trigger_list_update(user, 'desktop')
         end
-        trigger_list_update(user, 'desktop')
       end
-
-      def trigger_list_update(user, app)
-        user_id = Gql::ZammadSchema.id_from_internal_id('User', user.id)
-        Gql::Subscriptions::User::Current::TaskbarItem::ListUpdates.trigger(nil, arguments: { user_id:, app: })
-      end
-
     end
 
+    def trigger_list_update(user, app)
+      user_id = Gql::ZammadSchema.id_from_object(user)
+
+      Gql::Subscriptions::User::Current::TaskbarItem::ListUpdates.trigger(nil, arguments: { user_id:, app: })
+    end
   end
 end

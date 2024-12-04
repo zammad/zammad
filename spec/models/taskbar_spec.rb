@@ -657,6 +657,17 @@ RSpec.describe Taskbar, type: :model do
     end
   end
 
+  describe '.app' do
+    let(:taskbar_1) { create(:taskbar, app: 'desktop') }
+    let(:taskbar_2) { create(:taskbar, app: 'mobile') }
+
+    before { taskbar_1 && taskbar_2 }
+
+    it 'returns given app taskbars' do
+      expect(described_class.app(:desktop)).to contain_exactly(taskbar_1)
+    end
+  end
+
   describe '#saved_chanegs_to_dirty?' do
     let(:taskbar) { create(:taskbar) }
 

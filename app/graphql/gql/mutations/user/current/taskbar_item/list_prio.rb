@@ -10,17 +10,13 @@ module Gql::Mutations
     field :success, Boolean, description: 'This indicates if sorting the taskbar item list was successful.'
 
     def resolve(list:)
-      prio = []
-      list.each do |item|
-        begin
-          taskbar_item = Gql::ZammadSchema.verified_object_from_id(item.id, type: Taskbar)
-          prio << { id: taskbar_item.id, prio: item.prio }
-        rescue ActiveRecord::RecordNotFound
-          next
-        end
+      list_with_internal_ids = list.map do |item|
+        internal_id = Gql::ZammadSchema.internal_id_from_id(item.id, type: ::Taskbar)
+
+        { id: internal_id, prio: item.prio }
       end
 
-      Taskbar.reorder_list(context.current_user, prio)
+      Taskbar.reorder_list(context.current_user, list_with_internal_ids)
 
       { success: true }
     end

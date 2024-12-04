@@ -44,6 +44,8 @@ class Taskbar < ApplicationModel
       .where.not(id: taskbar.id)
   }
 
+  scope :app, ->(app) { where(app:) }
+
   def self.taskbar_entities
     ApplicationModel.descendants.select { |model| model.included_modules.include?(HasTaskbars) }.each_with_object([]) do |model, result|
       model.taskbar_entities&.each do |entity|
@@ -112,8 +114,9 @@ class Taskbar < ApplicationModel
   private
 
   def update_last_contact
-    return true if local_update
-    return true if changes.blank?
+    return if local_update
+    return if changes.blank?
+    return if changed_only_prio?
 
     if changes['notify']
       count = 0
@@ -129,8 +132,8 @@ class Taskbar < ApplicationModel
   end
 
   def set_user
-    return true if local_update
-    return true if !UserInfo.current_user_id
+    return if local_update
+    return if !UserInfo.current_user_id
 
     self.user_id = UserInfo.current_user_id
   end
@@ -138,6 +141,7 @@ class Taskbar < ApplicationModel
   def update_preferences_infos
     return if key == 'Search'
     return if local_update
+    return if changed_only_prio?
 
     preferences = self.preferences || {}
     preferences[:tasks] = collect_related_tasks
@@ -154,6 +158,10 @@ class Taskbar < ApplicationModel
       .each_with_object({}) { |elem, memo| reduce_related_tasks(elem, memo) }
       .values
       .sort_by { |elem| elem[:id] || Float::MAX } # sort by IDs to pass old tests
+  end
+
+  def changed_only_prio?
+    changed_attribute_names_to_save.to_set == Set.new(%w[updated_at prio])
   end
 
   def reduce_related_tasks(elem, memo)
@@ -179,7 +187,7 @@ class Taskbar < ApplicationModel
   end
 
   def notify_clients
-    return true if !saved_change_to_attribute?('preferences')
+    return if !saved_change_to_attribute?('preferences')
 
     data = {
       event: 'taskbar:preferences',

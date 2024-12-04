@@ -46,9 +46,11 @@ RSpec.describe Gql::Subscriptions::User::Current::TaskbarItem::ListUpdates, type
       result = mock_channel.mock_broadcasted_messages.first[:result]['data']['userCurrentTaskbarItemListUpdates']
       expect(result).to include('taskbarItemList')
 
-      list = Taskbar.list(user, app: 'desktop')
-      ids = result['taskbarItemList'].pluck('id').map { |gid| Gql::ZammadSchema.verified_object_from_id(gid, type: Taskbar).id }
-      expect(ids).to eq(list.map(&:id))
+      ordered_list = TaskbarPolicy::Scope.new(user, Taskbar).resolve.app('desktop')
+
+      expected_global_ids = result['taskbarItemList'].pluck('id')
+      actual_global_ids   = ordered_list.map { |elem| elem.to_global_id.to_s }
+      expect(expected_global_ids).to eq(actual_global_ids)
     end
   end
 end

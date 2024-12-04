@@ -10,7 +10,10 @@ module Gql::Queries
     type [Gql::Types::User::TaskbarItemType], null: true
 
     def resolve(app: nil)
-      Taskbar.list(context[:current_user], app: app, restrict_entities: true)
+      TaskbarPolicy::Scope
+        .new(context.current_user, ::Taskbar)
+        .resolve
+        .then { |scope| app ? scope.app(app) : scope }
     end
   end
 end

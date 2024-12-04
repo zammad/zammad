@@ -34,7 +34,7 @@ RSpec.describe Taskbar::TriggersSubscriptions, :aggregate_failures do
     it 'triggers correctly' do
       taskbar.prio += 1
       taskbar.save!
-      expect(gqs::TicketLiveUserUpdates).to have_received(:trigger).exactly(2)
+      expect(gqs::TicketLiveUserUpdates).not_to have_received(:trigger)
       expect(gqs_uc::TaskbarItemUpdates).not_to have_received(:trigger_after_update)
       expect(gqs_uc::TaskbarItemStateUpdates).not_to have_received(:trigger)
     end

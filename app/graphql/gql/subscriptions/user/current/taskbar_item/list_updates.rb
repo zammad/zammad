@@ -15,7 +15,7 @@ module Gql::Subscriptions
     end
 
     def update(user:, app:)
-      { taskbar_item_list: Taskbar.list(user, app:) }
+      { taskbar_item_list: TaskbarPolicy::Scope.new(user, ::Taskbar).resolve.app(app) }
     end
 
   end
