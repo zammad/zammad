@@ -41,17 +41,17 @@ class Gql::ZammadSchema < GraphQL::Schema
 
   # Relay-style Object Identification:
 
-  # Return a string UUID for the internal ID.
+  # Return a string GUID for the internal ID.
   def self.id_from_internal_id(klass, internal_id)
     GlobalID.new(::URI::GID.build(app: GlobalID.app, model_name: klass.to_s, model_id: internal_id)).to_s
   end
 
-  # Return a string UUID for `object`
+  # Return a string GUID for `object`
   def self.id_from_object(object, _type_definition = nil, _query_ctx = nil)
     object.to_global_id.to_s
   end
 
-  # Given a string UUID, find the object.
+  # Given a string GUID, find the object.
   def self.object_from_id(id, _query_ctx = nil, type: ActiveRecord::Base)
     GlobalID.find(id, only: type)
   end
@@ -70,6 +70,42 @@ class Gql::ZammadSchema < GraphQL::Schema
       # Map Pundit errors since we are not in a GraphQL built-in authorization context here.
       raise Exceptions::Forbidden, e.message
     end
+  end
+
+  # Given a string GUID, extract the internal ID.
+  # This is very helpful if GUIDs have to be converted en-masse and then authorized in bulk using a scope.
+  # Meanwhile using .object_from_id family would load (and, optionally, authorize) objects one by one.
+  # Beware there's no built-in way to authorize given IDs in this method!
+  #
+  # @param id [String] GUID
+  # @param type [Class] optionally filter to specific class only
+  #
+  # @return [Integer, nil]
+  def self.internal_id_from_id(id, type: ActiveRecord::Base)
+    internal_ids_from_ids([id], type:).first
+  end
+
+  # Given an array of string GUIDs, extract the internal IDs
+  # @see .internal_id_from_id
+  #
+  # @param ids [Array<String>] GUIDs
+  # @param type [Class] optionally filter to specific class only
+  #
+  # @return [Array<Integer>]
+  def self.internal_ids_from_ids(...)
+    local_uris_from_ids(...).map { |uri| uri.model_id.to_i }
+  end
+
+  # Given an array of string GUIDs, return GUID instances
+  #
+  # @param ids [Array<String>] GUIDs
+  # @param type [Class] optionally filter to specific class only
+  #
+  # @return [Array<GlobalID>]
+  def self.local_uris_from_ids(ids, type: ActiveRecord::Base)
+    ids
+      .map { |id| GlobalID.parse id }
+      .select { |uri| (klass = uri.model_name.safe_constantize) && klass <= type }
   end
 
   def self.unauthorized_object(error)
