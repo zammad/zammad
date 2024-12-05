@@ -12,8 +12,8 @@ interface Props {
 const { event } = defineProps<Props>()
 
 const actionName2Source: Record<string, string> = {
-  'received-merge': __('Merged this ticket into %s'),
-  'merged-into': __('Merged %s into this ticket'),
+  'received-merge': __('Merged %s into this ticket'),
+  'merged-into': __('Merged this ticket into %s'),
 }
 </script>
 
