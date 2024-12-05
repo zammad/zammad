@@ -8,7 +8,5 @@ class CacheClearJob < ApplicationJob
     return if !Rails.cache.is_a? ActiveSupport::Cache::FileStore
 
     Rails.cache.cleanup
-  rescue => e
-    Rails.logger.error "Scheduled cache cleanup failed! #{e.inspect}"
   end
 end
