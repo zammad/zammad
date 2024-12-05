@@ -20,7 +20,8 @@ module Channel::Filter::BounceDeliveryPermanentFailed
       next if mail[:mail_instance].retryable? != false
       next if !match_error_status?(mail[:mail_instance].error_status)
 
-      recipients = recipients_article(mail, result) || recipients_system_notification(mail, result) || []
+      recipients = recipients_article(mail, result) || recipients_system_notification(mail, result)
+      next if recipients.nil?
 
       # get recipient bounce mail, mark this user to not sent notifications anymore
       final_recipient = mail[:mail_instance].final_recipient
