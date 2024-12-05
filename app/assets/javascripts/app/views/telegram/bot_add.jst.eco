@@ -37,4 +37,12 @@
       <div class="js-messagesGroup"></div>
     </div>
   </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="message_thread_id_as_chat_id"><%- @T('Use thread id as chat id in Telegram Forums.') %></label>
+    </div>
+    <div class="controls">
+      <input id="message_thread_id_as_chat_id" type="checkbox" name="message_thread_id_as_chat_id" value="1">
+    </div>
+  </div>
 </fieldset>
