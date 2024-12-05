@@ -305,7 +305,7 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
     users = User.where(email: recipient_email)
 
     users.any? do |user|
-      blocked_in_days = trigger_based_notification_blocked_in_days(user)
+      blocked_in_days = user.mail_delivery_failed_blocked_days
       if blocked_in_days.zero?
         false
       else
@@ -314,28 +314,6 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
       end
 
     end
-  end
-
-  def trigger_based_notification_blocked_in_days(user)
-    preferences = user.preferences
-
-    return 0 if !preferences[:mail_delivery_failed]
-    return 0 if preferences[:mail_delivery_failed_data].blank?
-
-    # Blocked for 60 full days; see #4459.
-    remaining_days = (preferences[:mail_delivery_failed_data].to_date - Time.zone.now.to_date).to_i + 61
-    return remaining_days if remaining_days.positive?
-
-    # Cleanup the user preferences
-    trigger_based_notification_reset_blocking(user)
-
-    0
-  end
-
-  def trigger_based_notification_reset_blocking(user)
-    user.preferences[:mail_delivery_failed] = false
-    user.preferences[:mail_delivery_failed_data] = nil
-    user.save!
   end
 
   def valid_recipient_address(recipient_email)
@@ -347,11 +325,9 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
       end
     rescue
       if recipient_email.present?
-        if recipient_email !~ %r{^(.+?)<(.+?)@(.+?)>$}
-          return nil # no usable format found
-        end
+        return if recipient_email !~ %r{^.+?<(.+?@.+?)>$}
 
-        recipient_email = "#{$2}@#{$3}".downcase.strip
+        recipient_email = $1.downcase.strip
 
         email_address_validation = EmailAddressValidation.new(recipient_email)
         return recipient_email if email_address_validation.valid?

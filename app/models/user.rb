@@ -706,6 +706,25 @@ try to find correct name
     preferences[:notification_config][:matrix] = Setting.get('ticket_agent_default_notifications')
   end
 
+  def mail_delivery_failed_blocked_days
+    return 0 if !preferences[:mail_delivery_failed]
+    return 0 if preferences[:mail_delivery_failed_data].blank?
+
+    # Blocked for 60 full days; see #4459.
+    remaining_days = (preferences[:mail_delivery_failed_data].to_date - Time.zone.now.to_date).to_i + 61
+    return remaining_days if remaining_days.positive?
+
+    reset_mail_delivery_failed
+
+    0
+  end
+
+  def reset_mail_delivery_failed
+    preferences[:mail_delivery_failed]      = false
+    preferences[:mail_delivery_failed_data] = nil
+    save!
+  end
+
   private
 
   def organization_history_log(org, type)
