@@ -93,8 +93,14 @@
     {
       "matchCategories": ["js"],
       "matchPackageNames": ["pinia", "/^@vue/", "/^vue/"],
+      "excludePackageNames": ["@vue/eslint-config-prettier", "@vue/eslint-config-typescript"],
       "groupName": "Vue packages",
       "groupSlug": "vue"
+    },
+    {
+      "matchPackageNames": ["@vue/eslint-config-prettier", "@vue/eslint-config-typescript"],
+      "groupName": "Vue ESLint Configs",
+      "groupSlug": "vue-eslint-configs"
     },
     {
       "matchCategories": ["js"],
