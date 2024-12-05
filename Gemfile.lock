@@ -154,7 +154,7 @@ GEM
       msgpack (~> 1.2)
     brakeman (6.2.2)
       racc
-    browser (6.1.0)
+    browser (6.2.0)
     buftok (0.2.0)
     builder (3.3.0)
     byebug (11.1.3)
