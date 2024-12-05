@@ -153,6 +153,12 @@ class Transaction::Notification
     # ignore inactive users
     return if !user.active?
 
+    blocked_in_days = user.mail_delivery_failed_blocked_days
+    if blocked_in_days.positive?
+      Rails.logger.info "Send no system notifications to #{user.email} because email is marked as mail_delivery_failed for #{blocked_in_days} day(s)"
+      return
+    end
+
     # ignore if no changes has been done
     changes = human_changes(@item[:changes], ticket, user)
     return if @item[:type] == 'update' && !article && changes.blank?
@@ -313,7 +319,7 @@ class Transaction::Notification
   end
 
   def possible_recipients_of_group(group_id)
-    Rails.cache.fetch("User/notification/possible_recipients_of_group/#{group_id}", expires_in: 20.seconds) do
+    Rails.cache.fetch("User/notification/possible_recipients_of_group/#{group_id}/#{User.latest_change}", expires_in: 20.seconds) do
       User.group_access(group_id, 'full').sort_by(&:login)
     end
   end

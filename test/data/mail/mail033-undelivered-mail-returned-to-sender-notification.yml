@@ -1,0 +1,90 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: MAILER-DAEMON@mx1.zammad.com (Mail Delivery System)
+from_email: MAILER-DAEMON@mx1.zammad.com
+from_display_name: Mail Delivery System
+to: edenhofer@zammad.example
+subject: Undelivered Mail Returned to Sender
+body: |
+  This is the mail system at host mx1.zammad.com.
+
+  I'm sorry to have to inform you that your message could not
+  be delivered to one or more recipients. It's attached below.
+
+  For further assistance, please send mail to postmaster.
+
+  If you do so, please include this problem report. You can
+  delete your own text from the attached returned message.
+
+                     The mail system
+
+  <not_existing@znuny.com>: host arber.znuny.com[88.198.51.81] said: 550 5.1.1
+      <not_existing@znuny.com>: Recipient address rejected: User unknown (in
+      reply to RCPT TO command)
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    Reporting-MTA: dns; mx1.zammad.com
+    X-Postfix-Queue-ID: EF1A820C3E97
+    X-Postfix-Sender: rfc822; edenhofer@zammad.example
+    Arrival-Date: Sun, 30 Aug 2015 16:56:02 +0200 (CEST)
+
+    Final-Recipient: rfc822; not_existing@znuny.com
+    Original-Recipient: rfc822;not_existing@znuny.com
+    Action: failed
+    Status: 5.1.1
+    Remote-MTA: dns; arber.znuny.com
+    Diagnostic-Code: smtp; 550 5.1.1 <not_existing@znuny.com>: Recipient address
+        rejected: User unknown
+  filename: Delivery report.txt
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/delivery-status
+    Content-Description: Delivery report
+    Mime-Type: message/delivery-status
+    Charset: UTF-8
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: "Return-Path: <edenhofer@zammad.example>\nReceived: from appnode2.dc.zammad.com
+    (appnode2.dc.zammad.com [144.1.1.1])\n\tby mx1.zammad.com (Postfix) with ESMTP
+    id 4B9BB20C3E96\n\tfor <not_existing@znuny.com>; Sun, 30 Aug 2015 16:56:02 +0200
+    (CEST)\nReceived: by appnode2.dc.zammad.com (Postfix, from userid 1001)\n\tid
+    36680141408; Sun, 30 Aug 2015 16:56:07 +0200 (CEST)\nDate: Sun, 30 Aug 2015 16:56:07
+    +0200\nFrom: Martin Edenhofer via Zammad Helpdesk <edenhofer@zammad.example>\nTo:
+    Martin Edenhofer <not_existing@znuny.com>\nMessage-ID: <notification.20150830145600.1.4.5f4fd063-f69b-4e64-a92d-5e7128bd6682@127.0.0.1:3000>\nIn-Reply-To:\nSubject:
+    test [Ticket#10010]\nMime-Version: 1.0\nContent-Type: multipart/mixed;\n boundary=\"--==_mimepart_55e319872c918_39d5375468c949db\";\n
+    charset=UTF-8\nContent-Transfer-Encoding: 7bit\nOrganization:\nX-Mailer: Zammad
+    Mail Service (1.x)\nX-znuny-MailScanner-Information: Please contact the ISP for
+    more information\nX-znuny-MailScanner-ID: 4B9BB20C3E96.A3EE2\nX-znuny-MailScanner:
+    Found to be clean\nX-znuny-MailScanner-From: edenhofer@zammad.example\nX-Spam-Status:
+    No\n\n\n----==_mimepart_55e319872c918_39d5375468c949db\nContent-Type: multipart/alternative;\n
+    boundary=\"--==_mimepart_55e319872c5bd_39d5375468c94778\";\n charset=UTF-8\nContent-Transfer-Encoding:
+    7bit\n\n\n----==_mimepart_55e319872c5bd_39d5375468c94778\nContent-Type: text/plain;\n
+    charset=UTF-8\nContent-Transfer-Encoding: 7bit\n\nHello,\n\nis somebody there?\n\nMartin
+    Edenhofer\n\n--\n Super Support - Waterford Business Park\n 5201 Blue Lagoon Drive
+    - 8th Floor & 9th Floor - Miami, 33126 USA\n Email: [1] hot@example.com - Web:
+    [2] http://www.example.com/\n--\n\n\n[1] mailto:hot@example.com\n[2] http://www.example.com/\n----==_mimepart_55e319872c5bd_39d5375468c94778\nContent-Type:
+    multipart/related;\n boundary=\"--==_mimepart_55e319872c7db_39d5375468c9486e\";\n
+    charset=UTF-8\nContent-Transfer-Encoding: 7bit\n\n\n----==_mimepart_55e319872c7db_39d5375468c9486e\nContent-Type:
+    text/html;\n charset=UTF-8\nContent-Transfer-Encoding: 7bit\n\n<!DOCTYPE html>\n<html>\n
+    \ <head>\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n
+    \   <style type=\"text/css\">\n    body {\n      width:90% !important;\n      -webkit-text-size-adjust:90%;\n
+    \     -ms-text-size-adjust:90%;\n      font-family:'Helvetica Neue', Helvetica,
+    Arial, Geneva, sans-serif; font-size: 12px;;\n    }\n    img {\n      outline:none;
+    text-decoration:none; -ms-interpolation-mode: bicubic;\n    }\n    a img {\n      border:none;\n
+    \   }\n    table td {\n      border-collapse: collapse;\n    }\n    table {\n
+    \     border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;\n
+    \   }\n    p, table, div, td {\n      max-width: 600px;\n    }\n    p {\n      margin:
+    0;\n    }\n    blockquote, pre {\n      margin: 0px;\n      padding: 8px 12px
+    8px 12px;\n    }\n\n    </style>\n  <head>\n  <body style=\"font-family:'Helvetica
+    Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;\"><div>Hello,</div><div><br></div><div>is
+    somebody there?</div><br><div data-signature=\"true\" data-signature-id=\"1\"><div>Martin
+    Edenhofer</div><div><br></div><div>--</div><div> Super Support - Waterford Business
+    Park</div><div> 5201 Blue Lagoon Drive - 8th Floor &amp; 9th Floor - Miami, 33126
+    USA</div><div> Email: <a href=\"mailto:hot@example.com\" title=\"mailto:hot@example.com\"
+    target=\"_blank\">hot@example.com</a> - Web: <a href=\"http://www.example.com/\"
+    title=\"http://www.example.com/\" target=\"_blank\">http://www.example.com/</a></div><div>--</div></div></body>\n</html>\n\n----==_mimepart_55e319872c7db_39d5375468c9486e--\n\n----==_mimepart_55e319872c5bd_39d5375468c94778--\n\n----==_mimepart_55e319872c918_39d5375468c949db--\n"
+  filename: test [Ticket#10010].eml
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/rfc822
+    Content-Description: Undelivered Message
+    Mime-Type: message/rfc822
+    Charset: UTF-8

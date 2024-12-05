@@ -69,7 +69,7 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
 
       it 'ensures tests were dynamically generated' do
-        expect(tests.count).to eq(108)
+        expect(tests.count).to eq(109)
       end
     end
 
