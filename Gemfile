@@ -14,7 +14,7 @@ gem 'json'
 gem 'parallel'
 
 # core - application servers
-gem 'puma', group: :puma
+gem 'puma', '~> 6.4.3', group: :puma
 
 # core - supported ORMs
 gem 'mysql2', group: :mysql

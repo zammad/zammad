@@ -842,7 +842,7 @@ DEPENDENCIES
   pry-rescue
   pry-stack_explorer
   pry-theme
-  puma
+  puma (~> 6.4.3)
   pundit
   pundit-matchers
   rack-attack
