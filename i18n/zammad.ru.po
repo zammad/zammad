@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-29 22:00+0000\n"
+"PO-Revision-Date: 2024-12-03 22:00+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -5088,8 +5088,8 @@ msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
 msgstr ""
-"Определяет, включен или нет метод двухфакторной аутентификации приложения-"
-"аутентификатора."
+"Определяет, включен или нет метод двухфакторной аутентификации "
+"приложения-аутентификатора."
 
 #: db/seeds/settings.rb:5649
 msgid ""
@@ -8705,7 +8705,7 @@ msgid "Ignore Escalation/SLA Information"
 msgstr ""
 "Игнорировать информацию об эскалации/cоглашение об уровне обслуживания (SLA)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:45
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:48
 msgid "Ignore Message"
 msgstr "Игнорировать сообщение"
 

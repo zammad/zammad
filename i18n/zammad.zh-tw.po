@@ -9428,7 +9428,7 @@ msgstr "提升層級"
 msgid "Ignore Escalation/SLA Information"
 msgstr "忽略 層級提升/服務級別協議SLA 資訊"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:45
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:48
 msgid "Ignore Message"
 msgstr ""
 

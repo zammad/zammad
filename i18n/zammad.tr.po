@@ -9129,7 +9129,7 @@ msgstr "escalation"
 msgid "Ignore Escalation/SLA Information"
 msgstr "Yükseltme/SLA Bilgilerini Yok Say"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:45
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:48
 #, fuzzy
 msgid "Ignore Message"
 msgstr "True"

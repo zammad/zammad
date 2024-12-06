@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-25 22:00+0000\n"
+"PO-Revision-Date: 2024-12-05 13:14+0000\n"
 "Last-Translator: Rok Poje <rok.poje@mintpos.si>\n"
 "Language-Team: Slovenian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sl/>\n"
@@ -2427,7 +2427,7 @@ msgstr ""
 
 #: app/models/report.rb:38
 msgid "Backlog"
-msgstr ""
+msgstr "Odprto"
 
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee:9
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:9
@@ -3389,7 +3389,7 @@ msgstr "Komentar"
 
 #: app/models/report.rb:234
 msgid "Communication"
-msgstr ""
+msgstr "Komunikacija"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:11
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:44
@@ -4144,10 +4144,8 @@ msgid "Creating new tickets via web is disabled."
 msgstr "Ustvarjanje novih zahtevkov prek spleta ni omogočeno."
 
 #: app/models/report.rb:85
-#, fuzzy
-#| msgid "Create Channels"
 msgid "Creation Channels"
-msgstr "Ustvarite kanale"
+msgstr "Kanali ustvarjanja"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:53
 msgid "Creation mask"
@@ -7220,7 +7218,7 @@ msgstr "Odzivni čas - prvi odgovor"
 
 #: app/models/report.rb:45
 msgid "First Solution"
-msgstr ""
+msgstr "Prva rešitev"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:4
 msgid "First Steps"
@@ -8335,7 +8333,7 @@ msgstr "Stopnjevanje zahtevka"
 msgid "Ignore Escalation/SLA Information"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:45
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:48
 msgid "Ignore Message"
 msgstr ""
 
@@ -13134,12 +13132,12 @@ msgstr "Poročilo"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:3
 msgid "Report Profile"
-msgstr "Vrsta poročila"
+msgstr "Profil poročila"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:15
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
-msgstr "Vrste poročil"
+msgstr "Profili poročil"
 
 #: app/assets/javascripts/app/controllers/report.coffee:6
 #: app/assets/javascripts/app/views/report/main.jst.eco:5
@@ -20460,13 +20458,12 @@ msgstr "nepovezan"
 #: db/seeds/object_manager_attributes.rb:1930
 msgid "do not reopen ticket after certain time but create new ticket"
 msgstr ""
-"po določenem času ne odpirajte zaključenega zahtevka, temveč ustvarite nov "
-"zahtevek"
+"ne odpri zaključenega zahtevka po določenem času, temveč ustvari nov zahtevek"
 
 #: app/assets/javascripts/app/models/group.coffee:9
 #: db/seeds/object_manager_attributes.rb:1929
 msgid "do not reopen ticket but create new ticket"
-msgstr "ne odpirajte zaključenega zahtevka, temveč ustvarite nov zahtevek"
+msgstr "ne odpri zaključenega zahtevka, temveč ustvari nov zahtevek"
 
 #: lib/validations/object_manager/attribute_validator/future_past.rb:30
 msgid "does not allow future dates"

@@ -8919,7 +8919,7 @@ msgstr "Eszkaláció figyelmen kívül hagyása"
 msgid "Ignore Escalation/SLA Information"
 msgstr "Az eszkaláció/SLA információk figyelmen kívül hagyása"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:45
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:48
 msgid "Ignore Message"
 msgstr "Üzenet figyelmen kívül hagyása"
 

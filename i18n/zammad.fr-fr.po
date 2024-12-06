@@ -8376,8 +8376,8 @@ msgstr ""
 "Ici, vous pouvez effectuer une recherche sur des clients, organisations ou "
 "tickets. Utiliser l'astérisque §*§ pour correspondre à n'importe quelle "
 "suite de lettres, p. ex. §smi*§ ou §rosent*l§. Vous pouvez également "
-"utiliser les ||guillemets|| pour effectuer une recherche sur une phrase : §"
-"\"une phrase\"§."
+"utiliser les ||guillemets|| pour effectuer une recherche sur une phrase : "
+"§\"une phrase\"§."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:23
 msgid ""
@@ -8736,7 +8736,7 @@ msgstr "Ignorer l'escalade"
 msgid "Ignore Escalation/SLA Information"
 msgstr "Ignorer l'information d'escalade/SLA"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:45
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:48
 msgid "Ignore Message"
 msgstr "Ignorer le message"
 
@@ -16189,11 +16189,11 @@ msgid ""
 "g., \"/support\", \"example.com\", or \"example.com/support\"). Then, follow "
 "the directions under \"Web Server Configuration\" to complete the process."
 msgstr ""
-"L'URL par défaut de votre base de connaissances est, par exemple, "
-"example.com ou example.com/help. Pour utiliser une URL personnalisée, "
-"saisissez la destination ci-dessous (p. ex. \"/support\", \"example.com\" ou "
-"\"example.com/support\"). Puis suivez les instructions de la partie "
-"\"Configuration du serveur web\" pour terminer le processus."
+"L'URL par défaut de votre base de connaissances est, par exemple, example."
+"com ou example.com/help. Pour utiliser une URL personnalisée, saisissez la "
+"destination ci-dessous (p. ex. \"/support\", \"example.com\" ou \"example."
+"com/support\"). Puis suivez les instructions de la partie \"Configuration du "
+"serveur web\" pour terminer le processus."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:118
 msgid "The default font size is 12px."

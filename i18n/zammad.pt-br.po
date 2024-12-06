@@ -8652,7 +8652,7 @@ msgstr "Ignorar Escalação"
 msgid "Ignore Escalation/SLA Information"
 msgstr "Ignorar informações de escalonamento / SLA"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:45
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:48
 msgid "Ignore Message"
 msgstr "Ignorar Mensagem"
 

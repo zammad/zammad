@@ -8873,7 +8873,7 @@ msgstr "Eskalasiyaya diqqət yetirmə"
 msgid "Ignore Escalation/SLA Information"
 msgstr "Escalation/SLA Information diqqət yetirmə"
 
-#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:45
+#: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:48
 msgid "Ignore Message"
 msgstr "Mesaja diqqət yetirmə"
 
