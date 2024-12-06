@@ -101,6 +101,12 @@ class PasswordResetVerify extends App.ControllerFullPage
 
   renderChanged: (data, status, xhr) =>
     if data.message is 'ok'
+      @notify(
+        type:      'success'
+        msg:       __('Woo hoo! Your password has been changed!')
+        removeAll: true
+      )
+
       App.Auth.login(
         data:
           username: data.user_login
@@ -110,25 +116,14 @@ class PasswordResetVerify extends App.ControllerFullPage
           # login check
           App.Auth.loginCheck()
 
-          # add notify
-          @notify(
-            type:      'success'
-            msg:       __('Woo hoo! Your password has been changed!')
-            removeAll: true
-          )
-
           # redirect to #
           @navigate '#'
 
         error: =>
-          @formEnable(@$('form'))
-
-          # add notify
-          @notify(
-            type:      'error'
-            msg:       __('Something went wrong. Please contact your administrator.')
-            removeAll: true
-          )
+          # The user may have an active 2FA method on their account, which will prevent an automatic login (#4989).
+          #   Instead, silently redirect to login screen and allow the user to login manually
+          #   and complete their 2FA challenge.
+          @navigate '#'
       )
     else
       if data.notice

@@ -200,7 +200,7 @@ const showPasswordLogin = computed(
           <div v-if="$c.user_create_account" class="flex justify-center py-3">
             <CommonLabel>
               {{ $t('New user?') }}
-              <CommonLink link="/signup" class="select-none">{{
+              <CommonLink link="/signup" class="select-none" size="medium">{{
                 $t('Register')
               }}</CommonLink>
             </CommonLabel>
