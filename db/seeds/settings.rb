@@ -1946,7 +1946,7 @@ Setting.create_if_not_exists(
           false => 'no',
         },
         default: true,
-        help:    __('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!'),
+        help:    __('This option only checks if the SSL connection is properly configured. Deactivating it has no security impact.'),
       },
       {
         display: __('Signing & Encrypting'),
