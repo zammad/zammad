@@ -1247,7 +1247,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:153
-#: app/models/user.rb:696
+#: app/models/user.rb:714
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -1727,7 +1727,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:599
+#: app/models/user.rb:617
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -1740,7 +1740,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:125
-#: app/models/user.rb:670
+#: app/models/user.rb:688
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -5468,7 +5468,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:609
+#: app/models/user.rb:627
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -7772,7 +7772,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:554
+#: app/models/user.rb:572
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -9157,7 +9157,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:622
+#: app/models/user.rb:640
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -12343,7 +12343,7 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:616
+#: app/models/user.rb:634
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
@@ -14410,7 +14410,7 @@ msgstr ""
 msgid "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The private PGP key could not be found."
 msgstr ""
 
@@ -14487,7 +14487,7 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The public PGP key could not be found."
 msgstr ""
 
@@ -17371,7 +17371,7 @@ msgstr ""
 msgid "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid "You are receiving this because you are out-of-office replacement for a participant of this ticket."
 msgstr ""
 
@@ -18505,7 +18505,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:820
+#: app/models/user.rb:838
 msgid "is too long"
 msgstr ""
 
