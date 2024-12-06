@@ -1549,7 +1549,7 @@ msgstr "گفت‌وگوی کارشناس"
 msgid "Agent idle timeout"
 msgstr "وقت آزاد کارشناس"
 
-#: app/models/role.rb:156 app/models/user.rb:705
+#: app/models/role.rb:156 app/models/user.rb:723
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Agent limit exceeded, please check your account settings."
 
@@ -2094,7 +2094,7 @@ msgstr ""
 "مهلت زمانی کارشناس برای رسیدگی به دقیقه، اگر کارشناس در مهلت تعیین شده به "
 "تیکت رسیدگی نکند، آن تیکت به حالت بدون کارشناس تغییر میکند."
 
-#: app/models/user.rb:608
+#: app/models/user.rb:626
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2110,7 +2110,7 @@ msgstr "حداقل یک قانون تطبیق لازم است، ولی چیزی 
 msgid "At least one object must be selected."
 msgstr "حداقل یک آبجکت باید انتخاب گردد."
 
-#: app/models/role.rb:128 app/models/user.rb:679
+#: app/models/role.rb:128 app/models/user.rb:697
 msgid "At least one user needs to have admin permissions."
 msgstr "حداقل یک کاربر بایستی دسترسی ادمین داشته باشد."
 
@@ -4144,7 +4144,7 @@ msgstr "ایجاد تیکت‌های جدید از طریق وب غیرفعال 
 msgid "Creation Channels"
 msgstr "ایجاد کانال‌ها"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr "ایجاد ماسک"
 
@@ -6024,7 +6024,7 @@ msgstr "بروز شدن تیکت"
 msgid "Edit item"
 msgstr "ویرایش ماسک"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr "ویرایش ماسک"
 
@@ -6206,7 +6206,7 @@ msgstr "تایید رایانامه"
 msgid "Email address"
 msgstr "آدرس ایمیل"
 
-#: app/models/user.rb:618
+#: app/models/user.rb:636
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -6809,7 +6809,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr "نمونه فایل CSV برای دانلود."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr "نمونه کد برنامه"
@@ -8782,7 +8782,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:563
+#: app/models/user.rb:581
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -10243,13 +10243,13 @@ msgstr "ادغام با تیکت شماره"
 msgid "Merged"
 msgstr "ادغام‌شده"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Find a ticket"
 msgid "Merged %s into this ticket"
 msgstr "یافتن تیکت"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
 #| msgid "Merge tickets"
 msgid "Merged this ticket into %s"
@@ -10459,7 +10459,7 @@ msgstr "حس و حال ( موود)"
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:631
+#: app/models/user.rb:649
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -10792,11 +10792,11 @@ msgstr "توکن دسترسی شخصی"
 msgid "New Priority"
 msgstr "اولویت جدید"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr "پروفایل جدید"
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 msgid "New Public Link"
 msgstr "پیوند عمومی جدید"
 
@@ -10808,7 +10808,7 @@ msgstr "نقش جدید"
 msgid "New SLA"
 msgstr "SLA جدید"
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr "تقویم جدید"
 
@@ -10853,7 +10853,7 @@ msgstr "تیکت‌ جدید"
 msgid "New Translation"
 msgstr "ترجمه جدید"
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr "اتوماسیون جدید"
 
@@ -10871,11 +10871,11 @@ msgstr "حساب های کاربری جدید"
 msgid "New Version"
 msgstr "نسخه جدید"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr "وب‌هوک جدید"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr "جریان کاری جدید"
 
@@ -10967,7 +10967,7 @@ msgid "New user?"
 msgstr "کاربر جدید؟"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -10996,7 +10996,7 @@ msgstr "تیکت بعدی"
 msgid "Next month"
 msgstr "ماه گذشته"
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 #, fuzzy
 #| msgid "Next State"
 msgid "Next page"
@@ -12099,7 +12099,7 @@ msgstr ""
 msgid "Overview"
 msgstr "پیش نمایش"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr ""
 
@@ -12507,7 +12507,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr "لطفا یک متن وارد نمایید."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 msgid "Please enter a valid JSON string."
 msgstr "لطفا یک متن JSON معتبر وارد نمایید."
 
@@ -12655,12 +12655,12 @@ msgstr ""
 msgid "Powered by"
 msgstr "قدرت گرفته از"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr "وب‌هوک از قبل تعریف شده"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr ""
 
@@ -13332,7 +13332,7 @@ msgstr "گزارش"
 msgid "Report Profile"
 msgstr "پروفایل گزارش"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr "پروفایل‌های گزارش"
@@ -13889,7 +13889,7 @@ msgstr "زمان‌بندی شده برای"
 msgid "Scheduler"
 msgstr "برنامه‌ریز"
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr "زمانبندی‌ها"
 
@@ -14053,7 +14053,7 @@ msgstr "جستجو…"
 msgid "Secondary organizations"
 msgstr "سازمان‌های کمکی"
 
-#: app/models/user.rb:625
+#: app/models/user.rb:643
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -16386,7 +16386,7 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The private PGP key could not be found."
 msgstr "کلید PGP خصوصی یافت نشد."
 
@@ -16434,16 +16434,16 @@ msgstr ""
 msgid "The provided email account is already in use."
 msgstr ""
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr ""
 
@@ -16457,7 +16457,7 @@ msgstr "عملگر تطابق ارائه شده، یا وجود ندارد یا 
 msgid "The provided password is incorrect."
 msgstr "تصویر با تغییر اندازه معتبر نیست."
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
@@ -16470,7 +16470,7 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The public PGP key could not be found."
 msgstr "کلید عمومی PGP یافت نشد."
 
@@ -17367,7 +17367,7 @@ msgid "This might take some time during which the system can't be used."
 msgstr ""
 
 #: app/controllers/application_controller/handles_errors.rb:99
-#: app/graphql/gql/zammad_schema.rb:83
+#: app/graphql/gql/zammad_schema.rb:116
 msgid "This object already exists."
 msgstr "این مورد قبلا ایجاد شده است."
 
@@ -18406,7 +18406,7 @@ msgstr "سه‌شنبه"
 msgid "Turn chat into ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -19826,11 +19826,11 @@ msgstr "آدرس ایمیل شما راستی‌آزمایی شد!"
 msgid "Woo hoo! Your password has been changed!"
 msgstr "رمز عبور شما تغییر کرد!"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr "جریان کاری"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr "جریان‌های کاری"
 
@@ -19882,7 +19882,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "شما به دلیل اینکه عضوی از گروه این تیکت هستید، پیام را دریافت کرده‌اید."
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -21171,7 +21171,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:829
+#: app/models/user.rb:847
 msgid "is too long"
 msgstr ""
 

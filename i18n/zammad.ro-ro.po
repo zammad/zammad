@@ -1697,7 +1697,7 @@ msgstr "Chat agent"
 msgid "Agent idle timeout"
 msgstr "Timpul de inactivitate al agentului"
 
-#: app/models/role.rb:156 app/models/user.rb:705
+#: app/models/role.rb:156 app/models/user.rb:723
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 "Limita de agenți a fost depășită, te rugăm să verifici setările contului tău."
@@ -2265,7 +2265,7 @@ msgstr ""
 "Timp de expirare pentru atribuire în minute dacă agentul atribuit nu "
 "lucrează la el. Tichetul va fi afișat ca neatribuit."
 
-#: app/models/user.rb:608
+#: app/models/user.rb:626
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2283,7 +2283,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr "Este necesar să selectați cel puțin un obiect."
 
-#: app/models/role.rb:128 app/models/user.rb:679
+#: app/models/role.rb:128 app/models/user.rb:697
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 "Este necesar ca cel puțin un utilizator să aibă drepturi de administrator."
@@ -4386,7 +4386,7 @@ msgstr "Crearea de tichete noi prin intermediul web-ului este dezactivată."
 msgid "Creation Channels"
 msgstr "Canale de creare"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr "Mască de creare"
 
@@ -6473,7 +6473,7 @@ msgstr "Actualizare tichet"
 msgid "Edit item"
 msgstr "Categorie"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr "Editează masca"
 
@@ -6659,7 +6659,7 @@ msgstr "Verificare e-mail"
 msgid "Email address"
 msgstr "Adresa de e-mail"
 
-#: app/models/user.rb:618
+#: app/models/user.rb:636
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 "Adresa de e-mail '%{email}' este deja folosită pentru un alt utilizator."
@@ -7366,7 +7366,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr "Exemplu de fișier CSV pentru descărcare."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr "Exemplu de încărcare (Payload)"
@@ -9424,7 +9424,7 @@ msgstr "client_id invalid în bucla de primire!"
 msgid "Invalid client_id received!"
 msgstr "client_id invalid primit!"
 
-#: app/models/user.rb:563
+#: app/models/user.rb:581
 msgid "Invalid email '%{email}'"
 msgstr "E-mail invalid '%{email}'"
 
@@ -10905,13 +10905,13 @@ msgstr "Fuzionează cu tichetul#"
 msgid "Merged"
 msgstr "Fuzionat"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Find a ticket"
 msgid "Merged %s into this ticket"
 msgstr "Caută un tichet"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
 #| msgid "Merge tickets"
 msgid "Merged this ticket into %s"
@@ -11121,7 +11121,7 @@ msgstr "Dispoziție"
 msgid "More information can be found here."
 msgstr "Mai multe informații pot fi găsite aici."
 
-#: app/models/user.rb:631
+#: app/models/user.rb:649
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Nu sunt permise mai mult de 250 de organizații secundare."
 
@@ -11456,11 +11456,11 @@ msgstr "Noul tău acces personal cu token"
 msgid "New Priority"
 msgstr "Prioritate nouă"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr "Profil nou"
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 msgid "New Public Link"
 msgstr "Link public nou"
 
@@ -11472,7 +11472,7 @@ msgstr "Rol nou"
 msgid "New SLA"
 msgstr "SLA Nou"
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr "Programator (scheluder) nou"
 
@@ -11517,7 +11517,7 @@ msgstr "Tichet nou"
 msgid "New Translation"
 msgstr "Traducere nouă"
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr "Declanșator(trigger) nou"
 
@@ -11535,11 +11535,11 @@ msgstr "Conturi de utilizator noi"
 msgid "New Version"
 msgstr "Versiune nouă"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr "Webhook nou"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr "Flux de lucru nou"
 
@@ -11631,7 +11631,7 @@ msgid "New user?"
 msgstr "Utilizator nou?"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -11660,7 +11660,7 @@ msgstr "Următorul în vizualizarea generală"
 msgid "Next month"
 msgstr "Status"
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 #, fuzzy
 #| msgid "Next State"
 msgid "Next page"
@@ -12792,7 +12792,7 @@ msgstr ""
 msgid "Overview"
 msgstr "Prezentare generală"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr "Mască pentru vizualizarea în masă"
 
@@ -13206,7 +13206,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr "Vă rugăm să introduceți un text."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 msgid "Please enter a valid JSON string."
 msgstr "Vă rugăm să introduceți un șir JSON valid."
 
@@ -13368,12 +13368,12 @@ msgstr "Filtru Postmaster"
 msgid "Powered by"
 msgstr "Cu sprijinul"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr "Webhook predefinit"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr "Webhook predefinit pentru %s."
 
@@ -14051,7 +14051,7 @@ msgstr "Raport"
 msgid "Report Profile"
 msgstr "Profil raport"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr "Profile de raportări"
@@ -14649,7 +14649,7 @@ msgstr "Programat pentru"
 msgid "Scheduler"
 msgstr "Planificator"
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr "Programatoare (Schedulers)"
 
@@ -14823,7 +14823,7 @@ msgstr "Căutare…"
 msgid "Secondary organizations"
 msgstr "Organizații secundare"
 
-#: app/models/user.rb:625
+#: app/models/user.rb:643
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -17273,7 +17273,7 @@ msgstr ""
 "Previzualizarea nu poate fi generată. Formatul este corupt sau nu este "
 "acceptat."
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The private PGP key could not be found."
 msgstr "Cheia privată PGP nu a fost găsită."
 
@@ -17325,19 +17325,19 @@ msgstr "Datele de autentificare furnizate sunt invalide."
 msgid "The provided email account is already in use."
 msgstr "Contul de e-mail furnizat este deja folosit."
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
 "Endpoint-ul furnizat este invalid, nu a fost specificat nici un hostname."
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 "Endpoint-ul furnizat este invalid, nu a fost specificat nici un protocol "
 "http sau https."
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr "Endpoint-ul furnizat este invalid."
 
@@ -17351,7 +17351,7 @@ msgstr "Operatorul de potrivire furnizat lipește sau este invalid."
 msgid "The provided password is incorrect."
 msgstr "Semnătură"
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr "Payload-ul furnizat este invalid. Vă rugăm să vă verificați sintaxa."
 
@@ -17364,7 +17364,7 @@ msgstr "Payload-ul furnizat este invalid. Vă rugăm să vă verificați sintaxa
 msgid "The provided token is invalid."
 msgstr "Tokenul furnizat este invalid."
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The public PGP key could not be found."
 msgstr "Cheia publică PGP nu a fost găsită."
 
@@ -18321,7 +18321,7 @@ msgid "This might take some time during which the system can't be used."
 msgstr "Acest lucru poate dura ceva timp în care sistemul nu poate fi folosit."
 
 #: app/controllers/application_controller/handles_errors.rb:99
-#: app/graphql/gql/zammad_schema.rb:83
+#: app/graphql/gql/zammad_schema.rb:116
 msgid "This object already exists."
 msgstr "Acest obiect există deja."
 
@@ -19469,7 +19469,7 @@ msgstr "Marți"
 msgid "Turn chat into ticket"
 msgstr "Transformă chat-ul într-un tichet"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -20947,11 +20947,11 @@ msgstr "Woo hoo! Adresa dvs. de e-mail a fost verificată!"
 msgid "Woo hoo! Your password has been changed!"
 msgstr "Woo hoo! Parola ta a fost schimbată!"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr "Flux de lucru"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr "Fluxuri de lucru"
 
@@ -21005,7 +21005,7 @@ msgstr ""
 "Primești acest mesaj deoarece ești membru al grupului asociat cu acest "
 "tichet."
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -22376,7 +22376,7 @@ msgstr "are lungimea incorectă (trebuie să fie de %{count} caractere)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "are lungimea incorectă (trebuie să fie de un caracter)"
 
-#: app/models/user.rb:829
+#: app/models/user.rb:847
 msgid "is too long"
 msgstr "este prea lung"
 

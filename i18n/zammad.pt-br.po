@@ -1683,7 +1683,7 @@ msgstr "Chat do agente"
 msgid "Agent idle timeout"
 msgstr "Tempo de inatividade do Atendente"
 
-#: app/models/role.rb:156 app/models/user.rb:705
+#: app/models/role.rb:156 app/models/user.rb:723
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Agent limit exceeded, please check your account settings."
 
@@ -2251,7 +2251,7 @@ msgstr ""
 "Tempo limite de atribuição se o agente não está trabalhando nele. O Ticket "
 "será exibido como não atribuído."
 
-#: app/models/user.rb:608
+#: app/models/user.rb:626
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2268,7 +2268,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr "Pelo menos um objeto precisa ser selecionado."
 
-#: app/models/role.rb:128 app/models/user.rb:679
+#: app/models/role.rb:128 app/models/user.rb:697
 msgid "At least one user needs to have admin permissions."
 msgstr "Pelo menos um usuário precisa ter permissões de admin."
 
@@ -4352,7 +4352,7 @@ msgstr "A criação de novos tickets via web está desativada."
 msgid "Creation Channels"
 msgstr "Canais de Criação"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr "Máscara de criação"
 
@@ -6355,7 +6355,7 @@ msgstr "Editar título da lista de verificação"
 msgid "Edit item"
 msgstr "Editar item"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr "Editar máscara"
 
@@ -6531,7 +6531,7 @@ msgstr "Verificação de Email"
 msgid "Email address"
 msgstr "Endereço de email"
 
-#: app/models/user.rb:618
+#: app/models/user.rb:636
 msgid "Email address '%{email}' is already used for another user."
 msgstr "O endereço de e-mail '%{email}' já está sendo usado por outro usuário."
 
@@ -7224,7 +7224,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr "Exemplo de arquivo CSV para download."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr "Exemplo de carga"
@@ -9245,7 +9245,7 @@ msgstr "Client_id inválido no loop de recebimento!"
 msgid "Invalid client_id received!"
 msgstr "Client_id inválido recebido!"
 
-#: app/models/user.rb:563
+#: app/models/user.rb:581
 msgid "Invalid email '%{email}'"
 msgstr "E-mail inválido '%{email}'"
 
@@ -10627,13 +10627,13 @@ msgstr "Combinar com o Ticket#"
 msgid "Merged"
 msgstr "Mesclado"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Find a ticket"
 msgid "Merged %s into this ticket"
 msgstr "Encontrar um ticket"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
 #| msgid "Merge tickets"
 msgid "Merged this ticket into %s"
@@ -10843,7 +10843,7 @@ msgstr "estado de espírito"
 msgid "More information can be found here."
 msgstr "Mais informações podem ser encontradas aqui."
 
-#: app/models/user.rb:631
+#: app/models/user.rb:649
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Mais de 250 organizações secundárias não são permitidas."
 
@@ -11162,11 +11162,11 @@ msgstr "Novo Token de Acesso Pessoal"
 msgid "New Priority"
 msgstr "Nova Prioridade"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr "Novo Perfil"
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 msgid "New Public Link"
 msgstr "Novo link público"
 
@@ -11178,7 +11178,7 @@ msgstr "Nova função"
 msgid "New SLA"
 msgstr "Novo SLA"
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr "Novo Agendador"
 
@@ -11221,7 +11221,7 @@ msgstr "Novo Tíquete: %s"
 msgid "New Translation"
 msgstr "Nova Tradução"
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr "Nova Trigger"
 
@@ -11239,11 +11239,11 @@ msgstr "Novas contas de usuarios"
 msgid "New Version"
 msgstr "Nova Versão"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr "Novo Webhook"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr "Novo fluxo de trabalho (Workflow)"
 
@@ -11333,7 +11333,7 @@ msgid "New user?"
 msgstr "Novo Usuário?"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -11360,7 +11360,7 @@ msgstr "Próximo em Visão Geral"
 msgid "Next month"
 msgstr "Próximo mês"
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 #, fuzzy
 #| msgid "Next State"
 msgid "Next page"
@@ -12435,7 +12435,7 @@ msgstr "Diminuir indentação de texto"
 msgid "Overview"
 msgstr "Visão Geral"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr "Visão geral da máscara em massa"
 
@@ -12840,7 +12840,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr "Por favor, digite um texto."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 msgid "Please enter a valid JSON string."
 msgstr "Por favor, insira uma string JSON válida."
 
@@ -12997,12 +12997,12 @@ msgstr "Filtro de Correio"
 msgid "Powered by"
 msgstr "Desenvolvido por"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr "Webhook pré-definido"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr "Webhook pré-definido para %s."
 
@@ -13644,7 +13644,7 @@ msgstr "Relatório"
 msgid "Report Profile"
 msgstr "Relatório de Perfil"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr "Perfil de Relatório"
@@ -14233,7 +14233,7 @@ msgstr "Agendado para"
 msgid "Scheduler"
 msgstr "Agendador"
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr "Agendador"
 
@@ -14407,7 +14407,7 @@ msgstr "Procurar…"
 msgid "Secondary organizations"
 msgstr "Organizações secundárias"
 
-#: app/models/user.rb:625
+#: app/models/user.rb:643
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -16777,7 +16777,7 @@ msgstr ""
 "A visualização não pode ser gerada. O formato está corrompido ou não é "
 "suportado."
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The private PGP key could not be found."
 msgstr "A chave privada PGP não pôde ser encontrada."
 
@@ -16829,18 +16829,18 @@ msgstr "As credenciais fornecidas são inválidas."
 msgid "The provided email account is already in use."
 msgstr "A conta de e-mail fornecida já está em uso."
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr "O endpoint fornecido é inválido, nenhum nome de host foi especificado."
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 "O endpoint fornecido é inválido, nenhum protocolo http ou https foi "
 "especificado."
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr "O endpoint fornecido é inválido."
 
@@ -16852,7 +16852,7 @@ msgstr "O operador de correspondência fornecido está ausente ou é inválido."
 msgid "The provided password is incorrect."
 msgstr "A senha fornecida está incorreta."
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr "The provided payload is invalid. Please check your syntax."
 
@@ -16865,7 +16865,7 @@ msgstr "The provided payload is invalid. Please check your syntax."
 msgid "The provided token is invalid."
 msgstr "O token fornecido é inválido."
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The public PGP key could not be found."
 msgstr "A chave pública PGP não pôde ser encontrada."
 
@@ -17820,7 +17820,7 @@ msgstr ""
 "Isto pode levar um tempo, enquanto isso o sistema não pode ser utilizado."
 
 #: app/controllers/application_controller/handles_errors.rb:99
-#: app/graphql/gql/zammad_schema.rb:83
+#: app/graphql/gql/zammad_schema.rb:116
 msgid "This object already exists."
 msgstr "Este objeto já existe."
 
@@ -18936,7 +18936,7 @@ msgstr "Terça"
 msgid "Turn chat into ticket"
 msgstr "Transforme chat em um Ticket"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -20392,11 +20392,11 @@ msgstr "Agora sim! Seu e-mail está verificado!"
 msgid "Woo hoo! Your password has been changed!"
 msgstr "Agora sim! Sua senha foi modificada!"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr "Fluxo de trabalho (Workflow)"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr "Fluxo de trabalhos (Workflows)"
 
@@ -20444,7 +20444,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Você está recebendo isso porque é membro do grupo deste ticket."
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -21779,7 +21779,7 @@ msgstr "o comprimento está incorreto (deve ser %{count} caracteres)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "o comprimento está incorreto (deve ser de 1 caracter)"
 
-#: app/models/user.rb:829
+#: app/models/user.rb:847
 msgid "is too long"
 msgstr "é muito longo"
 

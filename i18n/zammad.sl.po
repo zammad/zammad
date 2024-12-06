@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-26 07:04+0000\n"
+"PO-Revision-Date: 2024-12-05 13:14+0000\n"
 "Last-Translator: Rok Poje <rok.poje@mintpos.si>\n"
 "Language-Team: Slovenian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sl/>\n"
@@ -1517,7 +1517,7 @@ msgstr ""
 msgid "Agent idle timeout"
 msgstr ""
 
-#: app/models/role.rb:156 app/models/user.rb:705
+#: app/models/role.rb:156 app/models/user.rb:723
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Omejitev zastopnika je presežena, preverite nastavitve računa."
 
@@ -2053,7 +2053,7 @@ msgstr ""
 "Časovna omejitev dodelitve v minutah, če dodeljeni agent ne dela na "
 "zahtevku. Zahtevek bo prikazan kot nedodeljen."
 
-#: app/models/user.rb:608
+#: app/models/user.rb:626
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2067,7 +2067,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr "Izbran mora biti vsaj en zapis."
 
-#: app/models/role.rb:128 app/models/user.rb:679
+#: app/models/role.rb:128 app/models/user.rb:697
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2444,7 +2444,7 @@ msgstr ""
 
 #: app/models/report.rb:38
 msgid "Backlog"
-msgstr ""
+msgstr "Odprto"
 
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee:9
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:9
@@ -3421,7 +3421,7 @@ msgstr "Komentar"
 
 #: app/models/report.rb:234
 msgid "Communication"
-msgstr ""
+msgstr "Komunikacija"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:11
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:44
@@ -4183,12 +4183,10 @@ msgid "Creating new tickets via web is disabled."
 msgstr "Ustvarjanje novih zahtevkov prek spleta ni omogočeno."
 
 #: app/models/report.rb:85
-#, fuzzy
-#| msgid "Create Channels"
 msgid "Creation Channels"
-msgstr "Ustvarite kanale"
+msgstr "Kanali ustvarjanja"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr "Ustvarjalna maska"
 
@@ -6098,7 +6096,7 @@ msgstr "Posodobi zahtevek"
 msgid "Edit item"
 msgstr "Kategorija"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr ""
 
@@ -6286,7 +6284,7 @@ msgstr "SSL preverjanje"
 msgid "Email address"
 msgstr "E-poštni naslov"
 
-#: app/models/user.rb:618
+#: app/models/user.rb:636
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -6901,7 +6899,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr ""
@@ -7284,7 +7282,7 @@ msgstr "Odzivni čas - prvi odgovor"
 
 #: app/models/report.rb:45
 msgid "First Solution"
-msgstr ""
+msgstr "Prva rešitev"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:4
 msgid "First Steps"
@@ -8944,7 +8942,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:563
+#: app/models/user.rb:581
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -10340,13 +10338,13 @@ msgstr "Združi v Zahtevek#"
 msgid "Merged"
 msgstr "Združeno"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "assign tickets"
 msgid "Merged %s into this ticket"
 msgstr "Dodeli sporočilo"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
 #| msgid "Merge to Ticket#"
 msgid "Merged this ticket into %s"
@@ -10568,7 +10566,7 @@ msgstr "Razpoloženje"
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:631
+#: app/models/user.rb:649
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Več kot 250 sekundarnih organizacij ni dovoljeno."
 
@@ -10899,11 +10897,11 @@ msgstr "Nov osebni žeton za dostop"
 msgid "New Priority"
 msgstr "Prioriteta"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr "Nov profil"
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 msgid "New Public Link"
 msgstr ""
 
@@ -10915,7 +10913,7 @@ msgstr "Nova vloga"
 msgid "New SLA"
 msgstr "Nov SLA"
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr "Nov opravilnik"
 
@@ -10964,7 +10962,7 @@ msgstr "Nov zahtevek: %s"
 msgid "New Translation"
 msgstr "Prevodi"
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr "Nov sprožilec"
 
@@ -10982,11 +10980,11 @@ msgstr "Novi uporabniški računi"
 msgid "New Version"
 msgstr "Nova različica"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr ""
 
@@ -11050,7 +11048,7 @@ msgid "New user?"
 msgstr "Nov uporabnik?"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -11081,7 +11079,7 @@ msgstr "Naslednji v pregledu"
 msgid "Next month"
 msgstr "Stanje"
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 #, fuzzy
 #| msgid "State"
 msgid "Next page"
@@ -12182,7 +12180,7 @@ msgstr ""
 msgid "Overview"
 msgstr "Pregled"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr ""
 
@@ -12595,7 +12593,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 msgid "Please enter a valid JSON string."
 msgstr ""
 
@@ -12745,12 +12743,12 @@ msgstr ""
 msgid "Powered by"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr ""
 
@@ -13432,12 +13430,12 @@ msgstr "Poročilo"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:3
 msgid "Report Profile"
-msgstr "Vrsta poročila"
+msgstr "Profil poročila"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
-msgstr "Vrste poročil"
+msgstr "Profili poročil"
 
 #: app/assets/javascripts/app/controllers/report.coffee:6
 #: app/assets/javascripts/app/views/report/main.jst.eco:5
@@ -13993,7 +13991,7 @@ msgstr "Načrtovano"
 msgid "Scheduler"
 msgstr "Opravilnik"
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr "Opravilniki"
 
@@ -14161,7 +14159,7 @@ msgstr "Išči…"
 msgid "Secondary organizations"
 msgstr "Sekundarne organizacije"
 
-#: app/models/user.rb:625
+#: app/models/user.rb:643
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -16548,7 +16546,7 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The private PGP key could not be found."
@@ -16600,16 +16598,16 @@ msgstr ""
 msgid "The provided email account is already in use."
 msgstr ""
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr ""
 
@@ -16621,7 +16619,7 @@ msgstr ""
 msgid "The provided password is incorrect."
 msgstr "Navedeno geslo je napačno."
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
@@ -16634,7 +16632,7 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The public PGP key could not be found."
@@ -17536,7 +17534,7 @@ msgid "This might take some time during which the system can't be used."
 msgstr ""
 
 #: app/controllers/application_controller/handles_errors.rb:99
-#: app/graphql/gql/zammad_schema.rb:83
+#: app/graphql/gql/zammad_schema.rb:116
 #, fuzzy
 #| msgid "This bot already exists."
 msgid "This object already exists."
@@ -18614,7 +18612,7 @@ msgstr "torek"
 msgid "Turn chat into ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -20023,11 +20021,11 @@ msgstr ""
 msgid "Woo hoo! Your password has been changed!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr ""
 
@@ -20077,7 +20075,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "To sporočilo ste prejeli ker ste član skupine tega zahtevka."
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -20953,13 +20951,12 @@ msgstr "nepovezan"
 #: db/seeds/object_manager_attributes.rb:1930
 msgid "do not reopen ticket after certain time but create new ticket"
 msgstr ""
-"po določenem času ne odpirajte zaključenega zahtevka, temveč ustvarite nov "
-"zahtevek"
+"ne odpri zaključenega zahtevka po določenem času, temveč ustvari nov zahtevek"
 
 #: app/assets/javascripts/app/models/group.coffee:9
 #: db/seeds/object_manager_attributes.rb:1929
 msgid "do not reopen ticket but create new ticket"
-msgstr "ne odpirajte zaključenega zahtevka, temveč ustvarite nov zahtevek"
+msgstr "ne odpri zaključenega zahtevka, temveč ustvari nov zahtevek"
 
 #: lib/validations/object_manager/attribute_validator/future_past.rb:30
 msgid "does not allow future dates"
@@ -21396,7 +21393,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:829
+#: app/models/user.rb:847
 msgid "is too long"
 msgstr ""
 

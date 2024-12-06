@@ -1727,7 +1727,7 @@ msgstr "Ügynöki csevegés"
 msgid "Agent idle timeout"
 msgstr "Ügynök üresjárati időkorlát"
 
-#: app/models/role.rb:156 app/models/user.rb:705
+#: app/models/role.rb:156 app/models/user.rb:723
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Ügynöki limit túllépve, kérjük, ellenőrizze fiókja beállításait."
 
@@ -2303,7 +2303,7 @@ msgstr ""
 "A hozzárendelési időkorlát percben, ha a kijelölt ügynök nem dolgozik rajta. "
 "A jegy nem hozzárendeltként jelenik meg."
 
-#: app/models/user.rb:608
+#: app/models/user.rb:626
 #, fuzzy
 #| msgid ""
 #| "At least one identifier (firstname, lastname, phone or email) for user is "
@@ -2323,7 +2323,7 @@ msgstr "Legalább egy megfelelési szabály szükséges, de egy sem lett megadva
 msgid "At least one object must be selected."
 msgstr "Legalább egy objektumot ki kell választani."
 
-#: app/models/role.rb:128 app/models/user.rb:679
+#: app/models/role.rb:128 app/models/user.rb:697
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 "Legalább egy felhasználónak rendszergazdai jogosultságokkal kell "
@@ -4456,7 +4456,7 @@ msgstr "Az új jegyek webes létrehozása tiltva van."
 msgid "Creation Channels"
 msgstr "Csatornák létrehozása"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr "Létrehozási maszk"
 
@@ -6568,7 +6568,7 @@ msgstr "Jegy címe"
 msgid "Edit item"
 msgstr "Maszk szerkesztése"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr "Maszk szerkesztése"
 
@@ -6750,7 +6750,7 @@ msgstr "E-mail ellenőrzés"
 msgid "Email address"
 msgstr "E-mail cím"
 
-#: app/models/user.rb:618
+#: app/models/user.rb:636
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 "A '%{email}' e-mail cím már használatban van egy másik felhasználó számára."
@@ -7461,7 +7461,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr "Letölthető példa CSV fájl."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr "Hasznos terhelés példa"
@@ -9531,7 +9531,7 @@ msgstr "Érvénytelen client_id a fogadási ciklusban!"
 msgid "Invalid client_id received!"
 msgstr "Érvénytelen client_id érkezett!"
 
-#: app/models/user.rb:563
+#: app/models/user.rb:581
 msgid "Invalid email '%{email}'"
 msgstr "Érvénytelen e-mail cím '%{email}'"
 
@@ -10988,13 +10988,13 @@ msgstr "Egyesítés a Ticket#-be"
 msgid "Merged"
 msgstr "Egyesített"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Find a ticket"
 msgid "Merged %s into this ticket"
 msgstr "Jegy keresése"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
 #| msgid "Merge tickets"
 msgid "Merged this ticket into %s"
@@ -11206,7 +11206,7 @@ msgstr "Hangulat"
 msgid "More information can be found here."
 msgstr "További információk itt találhatók."
 
-#: app/models/user.rb:631
+#: app/models/user.rb:649
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "250-nél több másodlagos szervezet nem engedélyezett."
 
@@ -11535,11 +11535,11 @@ msgstr "Új személyes hozzáférési token"
 msgid "New Priority"
 msgstr "Új prioritás"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr "Új profil"
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 msgid "New Public Link"
 msgstr "Új nyilvános hivatkozás"
 
@@ -11551,7 +11551,7 @@ msgstr "Új szerepkör"
 msgid "New SLA"
 msgstr "Új SLA"
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr "Új ütemező"
 
@@ -11596,7 +11596,7 @@ msgstr "Új jegy"
 msgid "New Translation"
 msgstr "Új fordítás"
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr "Új eseményindító"
 
@@ -11614,11 +11614,11 @@ msgstr "Új felhasználói fiókok"
 msgid "New Version"
 msgstr "Új verzió"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr "Új webhook"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr "Új munkafolyamat"
 
@@ -11708,7 +11708,7 @@ msgid "New user?"
 msgstr "Új felhasználó?"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -11735,7 +11735,7 @@ msgstr "Következő az áttekintésben"
 msgid "Next month"
 msgstr "Következő hónap"
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 #, fuzzy
 #| msgid "Next State"
 msgid "Next page"
@@ -12863,7 +12863,7 @@ msgstr ""
 msgid "Overview"
 msgstr "Áttekintés"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr "Tömeges maszk áttekintése"
 
@@ -13271,7 +13271,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr "Kérjük, írjon be egy szöveget."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 msgid "Please enter a valid JSON string."
 msgstr "Kérjük, adjon meg egy érvényes JSON karakterláncot."
 
@@ -13429,12 +13429,12 @@ msgstr "Postmaster szűrő"
 msgid "Powered by"
 msgstr "Powered by"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr "Előre definiált Webhook"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr "Előre definiált webhook %s számára."
 
@@ -14093,7 +14093,7 @@ msgstr "Jelentés"
 msgid "Report Profile"
 msgstr "Jelentés profil"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr "Jelentés profilok"
@@ -14695,7 +14695,7 @@ msgstr "Ütemezve"
 msgid "Scheduler"
 msgstr "Ütemező"
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr "Ütemezők"
 
@@ -14861,7 +14861,7 @@ msgstr "Keresés…"
 msgid "Secondary organizations"
 msgstr "Másodlagos szervezetek"
 
-#: app/models/user.rb:625
+#: app/models/user.rb:643
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -17330,7 +17330,7 @@ msgid ""
 msgstr ""
 "Az előnézetet nem lehet létrehozni. A formátum sérült vagy nem támogatott."
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 #, fuzzy
 #| msgid "Avatar could not be found."
 msgid "The private PGP key could not be found."
@@ -17386,17 +17386,17 @@ msgstr "A megadott hitelesítő adatok érvénytelenek."
 msgid "The provided email account is already in use."
 msgstr "A megadott végpont érvénytelen."
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr "A megadott végpont érvénytelen, nincs gazdagépnév megadva."
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 "A megadott végpont érvénytelen, nincs megadva http vagy https protokoll."
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr "A megadott végpont érvénytelen."
 
@@ -17410,7 +17410,7 @@ msgstr "A megadott egyeztető operátor hiányzik vagy érvénytelen."
 msgid "The provided password is incorrect."
 msgstr "A felhasználónév vagy a jelszó helytelen."
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
@@ -17423,7 +17423,7 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr "A megadott token érvénytelen."
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 #, fuzzy
 #| msgid "Locale could not be found."
 msgid "The public PGP key could not be found."
@@ -18429,7 +18429,7 @@ msgid "This might take some time during which the system can't be used."
 msgstr "Ez eltarthat egy ideig, amely alatt a rendszer nem használható."
 
 #: app/controllers/application_controller/handles_errors.rb:99
-#: app/graphql/gql/zammad_schema.rb:83
+#: app/graphql/gql/zammad_schema.rb:116
 msgid "This object already exists."
 msgstr "Ez az objektum már létezik."
 
@@ -19570,7 +19570,7 @@ msgstr "kedd"
 msgid "Turn chat into ticket"
 msgstr "Csevegés jeggyé alakítása"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -21055,11 +21055,11 @@ msgstr "Juhéé! Ellenőrizted az email címedet!"
 msgid "Woo hoo! Your password has been changed!"
 msgstr "Juhéé! A jelszavad megváltozott!"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr "Munkafolyamat"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr "Munkafolyamatok"
 
@@ -21111,7 +21111,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Ezt azért kapja, mert Ön tagja az ehhez a jegyhez tartozó csoportnak."
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -22500,7 +22500,7 @@ msgstr "nem megfelelő hosszúságú (%{count} karaktereknek kellene lennie)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "nem megfelelő hosszúságú (1 karakter kellene, hogy legyen)"
 
-#: app/models/user.rb:829
+#: app/models/user.rb:847
 msgid "is too long"
 msgstr "túl hosszú"
 

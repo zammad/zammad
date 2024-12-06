@@ -1654,7 +1654,7 @@ msgstr "客服对话"
 msgid "Agent idle timeout"
 msgstr "客服空闲超时"
 
-#: app/models/role.rb:156 app/models/user.rb:705
+#: app/models/role.rb:156 app/models/user.rb:723
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "已超出客服限制，请检查您的帐户设置。"
 
@@ -2198,7 +2198,7 @@ msgid ""
 "will be shown as unassigend."
 msgstr "如果客服坐席不在工作岗位上，分配会很快超时，工单将显示为未分配。"
 
-#: app/models/user.rb:608
+#: app/models/user.rb:626
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2212,7 +2212,7 @@ msgstr "至少需要一条匹配规则，但你目前没有提供。"
 msgid "At least one object must be selected."
 msgstr "至少必须选择一个对象。"
 
-#: app/models/role.rb:128 app/models/user.rb:679
+#: app/models/role.rb:128 app/models/user.rb:697
 msgid "At least one user needs to have admin permissions."
 msgstr "至少有一个用户需要拥有admin权限。"
 
@@ -4270,7 +4270,7 @@ msgstr "通过网络创建新工单已被禁用。"
 msgid "Creation Channels"
 msgstr "创建渠道"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr "创建掩码"
 
@@ -6139,7 +6139,7 @@ msgstr "工單更新"
 msgid "Edit item"
 msgstr "编辑面具"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr "编辑面具"
 
@@ -6317,7 +6317,7 @@ msgstr "邮件确认"
 msgid "Email address"
 msgstr "电子邮件"
 
-#: app/models/user.rb:618
+#: app/models/user.rb:636
 msgid "Email address '%{email}' is already used for another user."
 msgstr "电子邮件地址“％{email}”已经用于另一个用户。"
 
@@ -6963,7 +6963,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr "可供下载的 CSV 文件示例。"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr "示例有效载荷"
@@ -8930,7 +8930,7 @@ msgstr "无效的client_id在接收循环中！"
 msgid "Invalid client_id received!"
 msgstr "接收到无效的client_id！"
 
-#: app/models/user.rb:563
+#: app/models/user.rb:581
 msgid "Invalid email '%{email}'"
 msgstr "无效的电子邮件'％{email}'"
 
@@ -10402,13 +10402,13 @@ msgstr "合併到工單"
 msgid "Merged"
 msgstr "合并"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Find a ticket"
 msgid "Merged %s into this ticket"
 msgstr "查找工单"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
 #| msgid "Merge tickets"
 msgid "Merged this ticket into %s"
@@ -10620,7 +10620,7 @@ msgstr "状态"
 msgid "More information can be found here."
 msgstr "更多信息可以在这里找到。"
 
-#: app/models/user.rb:631
+#: app/models/user.rb:649
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "不允许有250多个二级组织。"
 
@@ -10969,11 +10969,11 @@ msgstr "您的新個人 Access Token"
 msgid "New Priority"
 msgstr "优先级"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr "新配置"
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 #, fuzzy
 #| msgid "Public Menu"
 msgid "New Public Link"
@@ -10987,7 +10987,7 @@ msgstr "新增角色"
 msgid "New SLA"
 msgstr "新建 SLA"
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr "新增自动任务"
 
@@ -11040,7 +11040,7 @@ msgstr "新的工单"
 msgid "New Translation"
 msgstr "语言"
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr "新建触发器"
 
@@ -11058,11 +11058,11 @@ msgstr "新用户帐号"
 msgid "New Version"
 msgstr "新版本"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr "新的Webhook"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr "新工作流程"
 
@@ -11184,7 +11184,7 @@ msgid "New user?"
 msgstr "新增用户"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -11215,7 +11215,7 @@ msgstr "回到工单概览"
 msgid "Next month"
 msgstr "状态"
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 #, fuzzy
 #| msgid "State"
 msgid "Next page"
@@ -12391,7 +12391,7 @@ msgstr "减少缩进文本"
 msgid "Overview"
 msgstr "工单概览"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr "概述散装面具"
 
@@ -12802,7 +12802,7 @@ msgstr "请启用execution_time功能可以使用它（目前仅适用于触发�
 msgid "Please enter a text."
 msgstr "请输入文字。"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 msgid "Please enter a valid JSON string."
 msgstr "请输入有效的JSON字符串。"
 
@@ -12952,12 +12952,12 @@ msgstr "邮件管理过滤器"
 msgid "Powered by"
 msgstr "Powered by"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr "预定义的Webhook"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr "％s的预定Webhook。"
 
@@ -13631,7 +13631,7 @@ msgstr "统计报告"
 msgid "Report Profile"
 msgstr "报告模板"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr "报告"
@@ -14223,7 +14223,7 @@ msgstr "時間表給"
 msgid "Scheduler"
 msgstr "自动任务"
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr "自动任务"
 
@@ -14387,7 +14387,7 @@ msgstr "搜索…"
 msgid "Secondary organizations"
 msgstr "二级组织"
 
-#: app/models/user.rb:625
+#: app/models/user.rb:643
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -16736,7 +16736,7 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr "预览无法生成。该格式被损坏或不支持。"
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The private PGP key could not be found."
 msgstr "找不到 PGP 私钥。"
 
@@ -16784,16 +16784,16 @@ msgstr "提供的凭据无效。"
 msgid "The provided email account is already in use."
 msgstr "提供的电子邮件帐户已经在使用。"
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr "提供的端点无效，未指定主机名。"
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr "提供的端点无效，未指定 http 或 https 协议。"
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr "提供的端点无效。"
 
@@ -16807,7 +16807,7 @@ msgstr "提供的匹配操作员缺失或无效。"
 msgid "The provided password is incorrect."
 msgstr "回复签名"
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr "提供的有效载荷无效。请检查您的语法。"
 
@@ -16820,7 +16820,7 @@ msgstr "提供的有效载荷无效。请检查您的语法。"
 msgid "The provided token is invalid."
 msgstr "提供的令牌无效。"
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The public PGP key could not be found."
 msgstr "找不到公共 PGP 密钥。"
 
@@ -17831,7 +17831,7 @@ msgid "This might take some time during which the system can't be used."
 msgstr "無法使用該系統可能需要一些時間"
 
 #: app/controllers/application_controller/handles_errors.rb:99
-#: app/graphql/gql/zammad_schema.rb:83
+#: app/graphql/gql/zammad_schema.rb:116
 #, fuzzy
 #| msgid "Account already exists!"
 msgid "This object already exists."
@@ -19108,7 +19108,7 @@ msgstr "星期二"
 msgid "Turn chat into ticket"
 msgstr "将聊天变成门票"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -20684,11 +20684,11 @@ msgstr "太棒了！您的邮箱验证通过了！"
 msgid "Woo hoo! Your password has been changed!"
 msgstr "太棒了！您的密码修改成功了！"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr "工作流程"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr "工作流程"
 
@@ -20740,7 +20740,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "您之所以收到此信息，是因为您是这张票的组成员。"
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -22186,7 +22186,7 @@ msgstr "是错误的长度（应该为％{count}字符）"
 msgid "is the wrong length (should be 1 character)"
 msgstr "是错误的长度（应该是1个字符）"
 
-#: app/models/user.rb:829
+#: app/models/user.rb:847
 msgid "is too long"
 msgstr "太长"
 

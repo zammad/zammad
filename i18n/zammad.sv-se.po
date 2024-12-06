@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-28 09:00+0000\n"
+"PO-Revision-Date: 2024-12-02 10:05+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -1662,7 +1662,7 @@ msgstr "Agentchatt"
 msgid "Agent idle timeout"
 msgstr "Timeout för inaktiv agent"
 
-#: app/models/role.rb:156 app/models/user.rb:705
+#: app/models/role.rb:156 app/models/user.rb:723
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Handläggarbegränsning uppnådd, kontrollera dina kontoinställningar."
 
@@ -2223,7 +2223,7 @@ msgstr ""
 "Uppdragets timeout i minuter ifall tilldelad handläggare inte arbetar på "
 "den. Ärendet kommer att visas som ej tilldelad."
 
-#: app/models/user.rb:608
+#: app/models/user.rb:626
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2239,7 +2239,7 @@ msgstr "Åtminstone en regelmatchning krävs, men ingen var angiven."
 msgid "At least one object must be selected."
 msgstr "Åtminstone ett objekt måste väljas."
 
-#: app/models/role.rb:128 app/models/user.rb:679
+#: app/models/role.rb:128 app/models/user.rb:697
 msgid "At least one user needs to have admin permissions."
 msgstr "Minst en användare behöver ha admin-rättigheter."
 
@@ -4306,7 +4306,7 @@ msgstr "Skapa ärenden via webben är inaktiverat."
 msgid "Creation Channels"
 msgstr "Kanaler"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr "Skapa mask"
 
@@ -6290,7 +6290,7 @@ msgstr "Redigera checklistans titel"
 msgid "Edit item"
 msgstr "Redigera post"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr "Rediga mask"
 
@@ -6466,7 +6466,7 @@ msgstr "E-postverifiering"
 msgid "Email address"
 msgstr "E-postadress"
 
-#: app/models/user.rb:618
+#: app/models/user.rb:636
 msgid "Email address '%{email}' is already used for another user."
 msgstr "E-postadress '%{email}' används redan för en annan användare."
 
@@ -7150,7 +7150,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr "Exempel CSV-fil för nedladdning."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr "Exempel Payload"
@@ -9140,7 +9140,7 @@ msgstr "Ogiltigt client_id i mottagningsloop!"
 msgid "Invalid client_id received!"
 msgstr "Ogiltigt client_id mottaget!"
 
-#: app/models/user.rb:563
+#: app/models/user.rb:581
 msgid "Invalid email '%{email}'"
 msgstr "Ogiltigt email '%{email}'"
 
@@ -10488,11 +10488,11 @@ msgstr "Sammanfoga till Ärende#"
 msgid "Merged"
 msgstr "Sammanfogad"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 msgid "Merged %s into this ticket"
 msgstr "Sammanslagning av %s till detta ärende"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 msgid "Merged this ticket into %s"
 msgstr "Slog samman detta ärende till %s"
 
@@ -10700,7 +10700,7 @@ msgstr "Tillstånd"
 msgid "More information can be found here."
 msgstr "Mer information finns här."
 
-#: app/models/user.rb:631
+#: app/models/user.rb:649
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Fler än 250 sekundära organisationer är inte tillåtet."
 
@@ -11019,11 +11019,11 @@ msgstr "Ny Personlig Åtkomsttoken"
 msgid "New Priority"
 msgstr "Ny prioritet"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr "Ny Profil"
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 msgid "New Public Link"
 msgstr "Ny Publik länk"
 
@@ -11035,7 +11035,7 @@ msgstr "Ny Roll"
 msgid "New SLA"
 msgstr "Nytt SLA"
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr "Ny Schemaläggare"
 
@@ -11078,7 +11078,7 @@ msgstr "Nytt Ärende: %s"
 msgid "New Translation"
 msgstr "Ny Översättning"
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr "Ny Trigger"
 
@@ -11096,11 +11096,11 @@ msgstr "Tillåt nya användarkonton"
 msgid "New Version"
 msgstr "Ny Version"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr "Ny Webhook"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr "Nytt Arbetsflöde"
 
@@ -11190,7 +11190,7 @@ msgid "New user?"
 msgstr "Ny användare?"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -11217,11 +11217,9 @@ msgstr "Nästa i översikten"
 msgid "Next month"
 msgstr "Nästa månad"
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
-#, fuzzy
-#| msgid "Next State"
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 msgid "Next page"
-msgstr "Nästa Status"
+msgstr "Nästa sida"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:90
 msgid "Next year"
@@ -12273,7 +12271,7 @@ msgstr "Förskjut text"
 msgid "Overview"
 msgstr "Översikt"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr "Översikt bulk mall"
 
@@ -12351,10 +12349,8 @@ msgid "Packages"
 msgstr "Paket"
 
 #: app/assets/javascripts/app/views/generic/table_pager.jst.eco:3
-#, fuzzy
-#| msgid "Pages"
 msgid "Page %s"
-msgstr "Sidor"
+msgstr "Sida %s"
 
 #: app/views/knowledge_base/public/not_found.html.erb:4
 msgid "Page not found"
@@ -12366,10 +12362,8 @@ msgid "Pages"
 msgstr "Sidor"
 
 #: app/assets/javascripts/app/views/generic/table_pager.jst.eco:1
-#, fuzzy
-#| msgid "Organization tickets"
 msgid "Pagination links"
-msgstr "Min organisations ärenden"
+msgstr "Pagineringslänkar"
 
 #: app/controllers/integration/smime_controller.rb:77
 msgid "Parameter 'data' or 'file' required."
@@ -12676,7 +12670,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr "Vänligen ange en text."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 msgid "Please enter a valid JSON string."
 msgstr "Ange en giltig JSON-sträng."
 
@@ -12829,12 +12823,12 @@ msgstr "Postmaster-filter"
 msgid "Powered by"
 msgstr "Powered by"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr "Förinställd Webhook"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr "Fördefinierad webhook för %s."
 
@@ -12920,10 +12914,8 @@ msgid "Previous month"
 msgstr "Föregående månad"
 
 #: app/assets/javascripts/app/views/generic/table_pager.jst.eco:2
-#, fuzzy
-#| msgid "Previous year"
 msgid "Previous page"
-msgstr "Föregående år"
+msgstr "Föregående sida"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:91
 msgid "Previous year"
@@ -13465,7 +13457,7 @@ msgstr "Rapport"
 msgid "Report Profile"
 msgstr "Rapporteringsprofil"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr "Rapportprofiler"
@@ -14045,7 +14037,7 @@ msgstr "Schemalagd för"
 msgid "Scheduler"
 msgstr "Schemaläggare"
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr "Schemaläggare"
 
@@ -14104,10 +14096,8 @@ msgid "Search URL is missing."
 msgstr "Sök URL saknas."
 
 #: app/assets/javascripts/app/views/generic/admin/index.jst.eco:32
-#, fuzzy
-#| msgid "Search for users"
 msgid "Search for %s"
-msgstr "Sök efter användare"
+msgstr "Sök efter %s"
 
 #: app/assets/javascripts/app/views/user.jst.eco:15
 msgid "Search for users"
@@ -14217,7 +14207,7 @@ msgstr "Sök …"
 msgid "Secondary organizations"
 msgstr "Sekundära organisationer"
 
-#: app/models/user.rb:625
+#: app/models/user.rb:643
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -16532,7 +16522,7 @@ msgid ""
 msgstr ""
 "Förhandsgranskningen kan inte genereras. Formatet är skadat eller stöds inte."
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The private PGP key could not be found."
 msgstr "Privat PGP nyckel kunde inte hittas."
 
@@ -16584,17 +16574,17 @@ msgstr "De angivna autentiseringsuppgifterna är ogiltiga."
 msgid "The provided email account is already in use."
 msgstr "Den angivna e-postkontot används redan."
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr "Den angivna slutpunkten är ogiltig, inget värdnamn angavs."
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 "Den angivna slutpunkten är ogiltig, inget http- eller https-protokoll angavs."
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr "Den angivna slutpunkten är ogiltig."
 
@@ -16606,7 +16596,7 @@ msgstr "Den angivna matchningsoperatören saknas eller är ogiltig."
 msgid "The provided password is incorrect."
 msgstr "Det angivna Lösenordet är felaktigt."
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr "Den angivna payload är ogiltig. Kontrollera din syntax."
 
@@ -16619,7 +16609,7 @@ msgstr "Den angivna payload är ogiltig. Kontrollera din syntax."
 msgid "The provided token is invalid."
 msgstr "Den angivna token är ogiltig."
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The public PGP key could not be found."
 msgstr "Publika PGP nyckeln kunde inte hittas."
 
@@ -17554,7 +17544,7 @@ msgid "This might take some time during which the system can't be used."
 msgstr "Det kan ta lite tid. Under den tiden kan systemet inte användas."
 
 #: app/controllers/application_controller/handles_errors.rb:99
-#: app/graphql/gql/zammad_schema.rb:83
+#: app/graphql/gql/zammad_schema.rb:116
 msgid "This object already exists."
 msgstr "Objektet finns redan."
 
@@ -18637,7 +18627,7 @@ msgstr "Tisdag"
 msgid "Turn chat into ticket"
 msgstr "Skapa ärende från chat"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -20058,11 +20048,11 @@ msgstr "Woo hoo! Din e-postadress har verifierats!"
 msgid "Woo hoo! Your password has been changed!"
 msgstr "Woo hoo! Ditt lösenord har ändrats!"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr "Arbetsflöde"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr "Arbetsflöde"
 
@@ -20110,7 +20100,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Du får detta eftersom du är medlem i gruppen för detta ärende."
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -21434,7 +21424,7 @@ msgstr "har fel längd (ska vara %{antal} tecken)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "har fel längd (ska vara 1 tecken)"
 
-#: app/models/user.rb:829
+#: app/models/user.rb:847
 msgid "is too long"
 msgstr "är för lång"
 

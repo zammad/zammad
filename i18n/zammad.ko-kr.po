@@ -1753,7 +1753,7 @@ msgstr "에이전트"
 msgid "Agent idle timeout"
 msgstr ""
 
-#: app/models/role.rb:156 app/models/user.rb:705
+#: app/models/role.rb:156 app/models/user.rb:723
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "에이전트 한도 초과, 계정 설정을 확인하시기 바랍니다."
 
@@ -2338,7 +2338,7 @@ msgstr ""
 "분 할당 시간 초과 할당 된 에이전트가 작동하지 않은 경우. Ticket은 unassigend"
 "로 표시됩니다."
 
-#: app/models/user.rb:608
+#: app/models/user.rb:626
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2352,7 +2352,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr ""
 
-#: app/models/role.rb:128 app/models/user.rb:679
+#: app/models/role.rb:128 app/models/user.rb:697
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -4601,7 +4601,7 @@ msgstr "조직의 Ticket"
 msgid "Creation Channels"
 msgstr "채널 생성"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr ""
 
@@ -6635,7 +6635,7 @@ msgstr "Ticket 업데이트"
 msgid "Edit item"
 msgstr "범주"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr ""
 
@@ -6827,7 +6827,7 @@ msgstr "이메일 알림"
 msgid "Email address"
 msgstr "이메일 주소"
 
-#: app/models/user.rb:618
+#: app/models/user.rb:636
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -7498,7 +7498,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr "예 CSV는 다운로드 파일."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr ""
@@ -9661,7 +9661,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:563
+#: app/models/user.rb:581
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -11179,13 +11179,13 @@ msgstr "Ticket #에 병합"
 msgid "Merged"
 msgstr "병합"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "assign tickets"
 msgid "Merged %s into this ticket"
 msgstr "Ticket을 할당"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
 #| msgid "Merge to Ticket#"
 msgid "Merged this ticket into %s"
@@ -11413,7 +11413,7 @@ msgstr "Ticket 확대"
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:631
+#: app/models/user.rb:649
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -11772,11 +11772,11 @@ msgstr "귀하의 새 개인 액세스 토큰"
 msgid "New Priority"
 msgstr "우선 순위"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr "새 프로필"
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 #, fuzzy
 #| msgid "Public Menu"
 msgid "New Public Link"
@@ -11790,7 +11790,7 @@ msgstr "새 역할"
 msgid "New SLA"
 msgstr "새로운 SLA"
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr "새로운 스케줄러"
 
@@ -11843,7 +11843,7 @@ msgstr "새로운 Ticket"
 msgid "New Translation"
 msgstr "번역"
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr "새 트리거"
 
@@ -11861,11 +11861,11 @@ msgstr "새 사용자 계정"
 msgid "New Version"
 msgstr "새로운 버전"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr ""
 
@@ -11933,7 +11933,7 @@ msgid "New user?"
 msgstr "새로운 사용자"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -11964,7 +11964,7 @@ msgstr "Overview에서 다음"
 msgid "Next month"
 msgstr "상태"
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 #, fuzzy
 #| msgid "State"
 msgid "Next page"
@@ -13159,7 +13159,7 @@ msgstr ""
 msgid "Overview"
 msgstr "Overview"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr ""
 
@@ -13595,7 +13595,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 msgid "Please enter a valid JSON string."
 msgstr ""
 
@@ -13747,12 +13747,12 @@ msgstr ""
 msgid "Powered by"
 msgstr "에 의해 구동"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr ""
 
@@ -14484,7 +14484,7 @@ msgstr "보고"
 msgid "Report Profile"
 msgstr "보고서 프로필"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr "보고서 프로필"
@@ -15073,7 +15073,7 @@ msgstr "예정"
 msgid "Scheduler"
 msgstr "스케줄러"
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr "스케줄러"
 
@@ -15263,7 +15263,7 @@ msgstr "검색"
 msgid "Secondary organizations"
 msgstr "공유 조직"
 
-#: app/models/user.rb:625
+#: app/models/user.rb:643
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -17873,7 +17873,7 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The private PGP key could not be found."
@@ -17927,16 +17927,16 @@ msgstr ""
 msgid "The provided email account is already in use."
 msgstr ""
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr ""
 
@@ -17950,7 +17950,7 @@ msgstr ""
 msgid "The provided password is incorrect."
 msgstr "서명"
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
@@ -17963,7 +17963,7 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The public PGP key could not be found."
@@ -18970,7 +18970,7 @@ msgid "This might take some time during which the system can't be used."
 msgstr "이 시스템을 사용할 수없는 시간이 걸릴 수 있습니다."
 
 #: app/controllers/application_controller/handles_errors.rb:99
-#: app/graphql/gql/zammad_schema.rb:83
+#: app/graphql/gql/zammad_schema.rb:116
 #, fuzzy
 #| msgid "%s Object(s) are deleted."
 msgid "This object already exists."
@@ -20127,7 +20127,7 @@ msgstr "화요일"
 msgid "Turn chat into ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -21580,11 +21580,11 @@ msgstr "~이 우! 귀하의 이메일 주소가 확인되었습니다!"
 msgid "Woo hoo! Your password has been changed!"
 msgstr "당신의 비밀번호가 변경되었습니다!"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr ""
 
@@ -21636,7 +21636,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -23031,7 +23031,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:829
+#: app/models/user.rb:847
 msgid "is too long"
 msgstr ""
 

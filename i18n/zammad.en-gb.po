@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-17 05:57+0000\n"
+"PO-Revision-Date: 2024-12-05 09:00+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/en_GB/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -578,10 +578,8 @@ msgstr "%s people"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:31
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "%s reacted with a %s to message from %s |%s|"
-msgstr "%s ended switch to |%s|!"
+msgstr "%s reacted with a %s to message from %s |%s|"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
 msgid ""
@@ -619,89 +617,89 @@ msgstr "%s tickets"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:121
 msgid "%s tickets found"
-msgstr ""
+msgstr "%s tickets found"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
-msgstr ""
+msgstr "%s updated article for |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:30
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:33
 msgid "%s updated data privacy task to delete user ID |%s|"
-msgstr ""
+msgstr "%s updated data privacy task to delete user ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:32
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:28
 msgid "%s updated group |%s|"
-msgstr ""
+msgstr "%s updated group |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee:89
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:27
 msgid "%s updated organization |%s|"
-msgstr ""
+msgstr "%s updated organisation |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee:29
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:28
 msgid "%s updated role |%s|"
-msgstr ""
+msgstr "%s updated role |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:111
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:27
 msgid "%s updated ticket |%s|"
-msgstr ""
+msgstr "%s updated ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:210
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s updated user |%s|"
-msgstr ""
+msgstr "%s updated user |%s|"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:34
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:2
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:34
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:2
 msgid "%s user to %s user"
-msgstr ""
+msgstr "%s user to %s user"
 
 #: lib/whatsapp/webhook/message.rb:53
 msgid "%s via WhatsApp"
-msgstr ""
+msgstr "%s via WhatsApp"
 
 #: app/frontend/shared/i18n/dates.ts:99
 msgid "%s weeks ago"
-msgstr ""
+msgstr "%s weeks ago"
 
 #: app/frontend/shared/i18n/dates.ts:85
 msgid "%s years ago"
-msgstr ""
+msgstr "%s years ago"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
 msgid "%s% are currently in process"
-msgstr ""
+msgstr "%s% are currently in process"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco:11
 msgid "%s% have been reopened"
-msgstr ""
+msgstr "%s% have been reopened"
 
 #: app/models/concerns/has_group_relation_definition.rb:51
 msgid "%{model} can have full or granular access to group"
-msgstr ""
+msgstr "%{model} can have full or granular access to group"
 
 #: app/models/object_manager/attribute.rb:567
 msgid "%{name} already exists"
-msgstr ""
+msgstr "%{name} already exists"
 
 #: app/models/object_manager/attribute.rb:556
 msgid "%{name} is a reserved word"
-msgstr ""
+msgstr "%{name} is a reserved word"
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
-msgstr ""
+msgstr "(state: %s)"
 
 #: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:58
 msgid "(ticket status: %s)"
-msgstr ""
+msgstr "(ticket status: %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
@@ -714,6 +712,14 @@ msgid ""
 "activity type will be rendered for an entry in the **Activity** table under "
 "the **Accounted Time** tab."
 msgstr ""
+"**Activity Types** can be used to group the different ticket time accounting "
+"entries together. For example, entries that are relevant to a \"Billing\" "
+"type.\n"
+"\n"
+"When you enable the recording of the activity type, the users will be able "
+"to select a type from this list. Additionally, a column with an associated "
+"activity type will be rendered for an entry in the **Activity** table under "
+"the **Accounted Time** tab."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -727,6 +733,15 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
+"**Data Privacy** helps you to delete and verify the removal of existing data "
+"from the system.\n"
+"\n"
+"It can be used to delete tickets, organisations, and users. The owner "
+"assignment will be unset in case the deleted user is an agent.\n"
+"\n"
+"Data Privacy tasks will be executed every 10 minutes. The execution might "
+"take some additional time depending on the number of objects that will be "
+"deleted."
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
@@ -744,104 +759,117 @@ msgid ""
 "displayed in a separate view in your overviews. You can also configure "
 "**email notifications**."
 msgstr ""
+"**Service Level Agreements**, abbreviated **SLAs**, help you to meet "
+"specific response times for your customers' requests. This way you can "
+"define goals such as answering every inquiry within eight hours. If you are "
+"at risk of missing this target, Zammad will alert you.\n"
+"\n"
+"You can define targets for three different metrics: **response time** (time "
+"between the creation of a ticket and the first reaction of an agent), "
+"**update time** (time between a customer's request and an agent's reaction), "
+"and **solution time** (time between creating and closing a ticket).\n"
+"\n"
+"Any escalated tickets (i.e. tickets that have missed the defined target) are "
+"displayed in a separate view in your overviews. You can also configure "
+"**email notifications**."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:223
 msgid "1 attached file"
-msgstr ""
+msgstr "1 attached file"
 
 #: db/seeds/settings.rb:1106
 msgid "1 day"
-msgstr ""
+msgstr "1 day"
 
 #: app/frontend/shared/i18n/dates.ts:105
 msgid "1 day ago"
-msgstr ""
+msgstr "1 day ago"
 
 #: db/seeds/settings.rb:1106
 msgid "1 hour"
-msgstr ""
+msgstr "1 hour"
 
 #: app/frontend/shared/i18n/dates.ts:112
 msgid "1 hour ago"
-msgstr ""
+msgstr "1 hour ago"
 
 #: db/seeds/ticket_priorities.rb:3
 msgid "1 low"
-msgstr ""
+msgstr "1 low"
 
 #: app/frontend/shared/i18n/dates.ts:119
 msgid "1 minute ago"
-msgstr ""
+msgstr "1 minute ago"
 
 #: app/frontend/shared/i18n/dates.ts:91
 msgid "1 month ago"
-msgstr ""
+msgstr "1 month ago"
 
 #: db/seeds/settings.rb:1106
 msgid "1 week"
-msgstr ""
+msgstr "1 week"
 
 #: app/frontend/shared/i18n/dates.ts:98
 msgid "1 week ago"
-msgstr ""
+msgstr "1 week ago"
 
 #: app/frontend/shared/i18n/dates.ts:84
 msgid "1 year ago"
-msgstr ""
+msgstr "1 year ago"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:22
 msgid "1. Ticket Create"
-msgstr ""
+msgstr "1. Ticket Create"
 
 #: db/seeds/settings.rb:1106
 msgid "2 hours"
-msgstr ""
+msgstr "2 hours"
 
 #: db/seeds/settings.rb:2048
 msgid "2 lower case and 2 upper case characters"
-msgstr ""
+msgstr "2 lower case and 2 upper case characters"
 
 #: db/seeds/ticket_priorities.rb:4
 msgid "2 normal"
-msgstr ""
+msgstr "2 normal"
 
 #: db/seeds/settings.rb:1106
 msgid "2 weeks"
-msgstr ""
+msgstr "2 weeks"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:23
 msgid "2. Ticket Update"
-msgstr ""
+msgstr "2. Ticket Update"
 
 #: db/seeds/ticket_priorities.rb:5
 msgid "3 high"
-msgstr ""
+msgstr "3 high"
 
 #: db/seeds/settings.rb:1106
 msgid "3 weeks"
-msgstr ""
+msgstr "3 weeks"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:24
 msgid "3. Ticket Reminder Reached"
-msgstr ""
+msgstr "3. Ticket Reminder Reached"
 
 #: db/seeds/settings.rb:1106
 msgid "4 weeks"
-msgstr ""
+msgstr "4 weeks"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:25
 msgid "4. Ticket Escalation"
-msgstr ""
+msgstr "4. Ticket Escalation"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:26
 msgid "5. Ticket Escalation Warning"
-msgstr ""
+msgstr "5. Ticket Escalation Warning"
 
 #: public/assets/chat/chat-no-jquery.coffee:167
 #: public/assets/chat/chat.coffee:165
 msgid "<strong>Chat</strong> with us!"
-msgstr ""
+msgstr "<strong>Chat</strong> with us!"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
@@ -855,107 +883,131 @@ msgid ""
 "If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
+"A **calendar** is needed to calculate escalations based on business hours "
+"and to send out escalation notifications.\n"
+"\n"
+"Define a **\"standard\"** calendar which is valid system-wide. The "
+"escalation notifications will only be sent to your agents during the defined "
+"business hours.\n"
+"\n"
+"If you have customers with different business hours, you can create multiple "
+"calendars. Tickets are linked to calendars using **SLAs**."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:47
 msgid "A color scheme that uses dark-colored elements on a light background."
 msgstr ""
+"A colour scheme that uses dark-coloured elements on a light background."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:40
 msgid "A color scheme that uses light-colored elements on a dark background."
 msgstr ""
+"A colour scheme that uses light-coloured elements on a dark background."
 
 #: db/seeds/settings.rb:3886
 msgid "A list of active import backends that gets scheduled automatically."
-msgstr ""
+msgstr "A list of active import backends that gets scheduled automatically."
 
 #: lib/validations/mention_validator.rb:7
 msgid "A mentioned user has no agent access to this ticket"
-msgstr ""
+msgstr "A mentioned user has no agent access to this ticket"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:26
 msgid ""
 "A new session was created with your account. This session will be stopped to "
 "prevent a conflict."
 msgstr ""
+"A new session was created with your account. This session will be stopped to "
+"prevent a conflict."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:116
 msgid "A new version of Zammad is available, please reload your browser."
-msgstr ""
+msgstr "A new version of Zammad is available, please reload your browser."
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:74
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
 msgstr ""
+"A newer version of the app is available. Please reload at your earliest "
+"opportunity."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:156
 msgid "A powerful service to get more information about your customers."
-msgstr ""
+msgstr "A powerful service to get more information about your customers."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:208
 msgid "A queue is required!"
-msgstr ""
+msgstr "A queue is required!"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:86
 msgid ""
 "A team communication tool for the 21st century. Compatible with tools like "
 "%s."
 msgstr ""
+"A team communication tool for the 21st century. Compatible with tools like "
+"%s."
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:1
 msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
+"A test ticket has been created, you can find it in your overview \"%s\" %l."
 
 #: app/models/ticket.rb:278
 msgid "A ticket cannot be merged into itself."
-msgstr ""
+msgstr "A ticket cannot be merged into itself."
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 msgid ""
 "A ticket's priority is simply a ranking of how urgent or important it is. "
 "Different priorities allow you to see the importance of your tickets better."
 msgstr ""
+"A ticket's priority is simply a ranking of how urgent or important it is. "
+"Different priorities allow you to see the importance of your tickets better."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
 msgid ""
 "A ticket's state is used to categorize and manage the lifecycle of a ticket "
 "or customer inquiry."
 msgstr ""
+"A ticket's state is used to categorise and manage the lifecycle of a ticket "
+"or customer inquiry."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:215
 msgid "A user is required!"
-msgstr ""
+msgstr "A user is required!"
 
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:12
 msgid ""
 "A webhook can be fired by triggers and schedulers, don't forget to define "
 "them!"
 msgstr ""
+"A webhook can be fired by triggers and schedulers, don't forget to define "
+"them!"
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:227
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:64
 msgid "API Key"
-msgstr ""
+msgstr "API Key"
 
 #: db/seeds/settings.rb:3408
 msgid "API Password Access"
-msgstr ""
+msgstr "API Password Access"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:32
 msgid "API Token"
-msgstr ""
+msgstr "API Token"
 
 #: db/seeds/settings.rb:3383
 msgid "API Token Access"
-msgstr ""
+msgstr "API Token Access"
 
 #: lib/whatsapp/webhook/payload.rb:22
 msgid "API error."
-msgstr ""
+msgstr "API error."
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:43
@@ -965,94 +1017,94 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue:55
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:44
 msgid "API token"
-msgstr ""
+msgstr "API token"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee:48
 #: app/assets/javascripts/app/views/channel/form.jst.eco:127
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
-msgstr ""
+msgstr "Accept Data Privacy Policy & Acceptable Use Policy"
 
 #: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:37
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:33
 msgid "Access denied"
-msgstr ""
+msgstr "Access denied"
 
 #: db/seeds/permissions.rb:315
 msgid "Access the agent chat features."
-msgstr ""
+msgstr "Access the agent chat features."
 
 #: db/seeds/permissions.rb:330
 msgid "Access the agent phone features."
-msgstr ""
+msgstr "Access the agent phone features."
 
 #: db/seeds/permissions.rb:345
 msgid "Access the knowledge base editor features."
-msgstr ""
+msgstr "Access the knowledge base editor features."
 
 #: db/seeds/permissions.rb:351
 msgid "Access the knowledge base reader features."
-msgstr ""
+msgstr "Access the knowledge base reader features."
 
 #: db/seeds/permissions.rb:373
 msgid "Access the tickets as agent based on group access."
-msgstr ""
+msgstr "Access the tickets as agent based on group access."
 
 #: db/seeds/permissions.rb:382
 msgid "Access tickets as customer."
-msgstr ""
+msgstr "Access tickets as customer."
 
 #: db/seeds/permissions.rb:306
 msgid "Access to the chat interface."
-msgstr ""
+msgstr "Access to the chat interface."
 
 #: db/seeds/permissions.rb:336
 msgid "Access to the knowledge base interface."
-msgstr ""
+msgstr "Access to the knowledge base interface."
 
 #: db/seeds/permissions.rb:321
 msgid "Access to the phone interface."
-msgstr ""
+msgstr "Access to the phone interface."
 
 #: db/seeds/permissions.rb:358
 msgid "Access to the report interface."
-msgstr ""
+msgstr "Access to the report interface."
 
 #: db/seeds/permissions.rb:364
 msgid "Access to the ticket interface."
-msgstr ""
+msgstr "Access to the ticket interface."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:19
 msgid "Access token"
-msgstr ""
+msgstr "Access token"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:157
 msgid "Accessing your camera is forbidden. Please check your settings."
-msgstr ""
+msgstr "Accessing your camera is forbidden. Please check your settings."
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:45
 #: app/frontend/apps/mobile/pages/account/routes.ts:8
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:35
 msgid "Account"
-msgstr ""
+msgstr "Account"
 
 #: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
-msgstr ""
+msgstr "Account SID"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:113
 msgid "Account Time"
-msgstr ""
+msgstr "Account Time"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:582
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:198
 #: app/controllers/channels_email_controller.rb:204
 msgid "Account already exists!"
-msgstr ""
+msgstr "Account already exists!"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee:34
 msgid "Account not verified"
-msgstr ""
+msgstr "Account not verified"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:28
@@ -1064,11 +1116,11 @@ msgstr ""
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:18
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
-msgstr ""
+msgstr "Accounted Time"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:81
 msgid "Accounted time unit"
-msgstr ""
+msgstr "Accounted time unit"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:11
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:11
@@ -1084,7 +1136,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:3
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
 msgid "Accounts"
-msgstr ""
+msgstr "Accounts"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:721
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:115
@@ -1118,15 +1170,15 @@ msgstr "Action"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Action execution"
-msgstr ""
+msgstr "Action execution"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:12
 msgid "Action menu button for authenticator app"
-msgstr ""
+msgstr "Action menu button for authenticator app"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:14
 msgid "Action menu button for security keys"
-msgstr ""
+msgstr "Action menu button for security keys"
 
 #: app/assets/javascripts/app/models/macro.coffee:7
 #: app/assets/javascripts/app/models/template.coffee:7
@@ -1135,21 +1187,23 @@ msgstr ""
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 #: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:142
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 #: db/seeds/settings.rb:2743
 msgid "Activate the recursive processing of ticket triggers."
-msgstr ""
+msgstr "Activate the recursive processing of ticket triggers."
 
 #: app/assets/javascripts/app/models/trigger.coffee:7
 msgid "Activated by"
-msgstr ""
+msgstr "Activated by"
 
 #: db/seeds/settings.rb:1083
 msgid ""
 "Activates lost password feature for users. This setting is only effective if "
 "the password login is enabled."
 msgstr ""
+"Activates lost password feature for users. This setting is only effective if "
+"the password login is enabled."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:320
 #: app/assets/javascripts/app/models/chat.coffee:257
@@ -1181,20 +1235,20 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:212
 #: db/seeds/object_manager_attributes.rb:1468
 msgid "Active"
-msgstr ""
+msgstr "Active"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:310
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:35
 msgid "Active Agents"
-msgstr ""
+msgstr "Active Agents"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:16
 msgid "Activity"
-msgstr ""
+msgstr "Activity"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:10
 msgid "Activity Stream"
-msgstr ""
+msgstr "Activity Stream"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:49
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:50
@@ -1203,16 +1257,16 @@ msgstr ""
 #: app/controllers/time_accountings_controller.rb:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:95
 msgid "Activity Type"
-msgstr ""
+msgstr "Activity Type"
 
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:23
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:51
 msgid "Activity Types"
-msgstr ""
+msgstr "Activity Types"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:39
 msgid "Adapter"
-msgstr ""
+msgstr "Adapter"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:90
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:75
@@ -1246,7 +1300,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:278
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
-msgstr ""
+msgstr "Add"
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:7
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:8
@@ -1474,7 +1528,7 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1208
 msgid "Address"
-msgstr ""
+msgstr "Address"
 
 #: db/seeds/settings.rb:483
 msgid "Address of the proxy server for http and https resources."
@@ -1590,7 +1644,7 @@ msgstr ""
 msgid "Agent idle timeout"
 msgstr ""
 
-#: app/models/role.rb:156 app/models/user.rb:705
+#: app/models/role.rb:156 app/models/user.rb:723
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -2111,7 +2165,7 @@ msgid ""
 "will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:608
+#: app/models/user.rb:626
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2125,7 +2179,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr ""
 
-#: app/models/role.rb:128 app/models/user.rb:679
+#: app/models/role.rb:128 app/models/user.rb:697
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2953,16 +3007,12 @@ msgid "Change text color"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:17
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "Changed reaction on message %s from %s"
-msgstr "%s ended switch to |%s|!"
+msgstr "Changed reaction on message %s from %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:18
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "Changed reaction to %s on message %s from %s"
-msgstr "%s ended switch to |%s|!"
+msgstr "Changed reaction to %s on message %s from %s"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -4113,7 +4163,7 @@ msgstr ""
 msgid "Creation Channels"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr ""
 
@@ -5919,7 +5969,7 @@ msgstr ""
 msgid "Edit item"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr ""
 
@@ -6093,7 +6143,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:618
+#: app/models/user.rb:636
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -6190,10 +6240,8 @@ msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 
 #: db/seeds/settings.rb:5793
-#, fuzzy
-#| msgid "%s Checklist"
 msgid "Enable checklists."
-msgstr "%s Checklist"
+msgstr "Enable checklists."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -6682,7 +6730,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr ""
@@ -8590,7 +8638,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:563
+#: app/models/user.rb:581
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -8739,20 +8787,16 @@ msgid "Ionicons"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:37
-#, fuzzy
-#| msgid "%s URL"
 msgid "Issue URL"
-msgstr "%s URL"
+msgstr "Issue URL"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:54
 msgid "Issue status"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useIssueTracker.ts:39
-#, fuzzy
-#| msgid "%s URL"
 msgid "Issues"
-msgstr "%s URL"
+msgstr "Issues"
 
 #: lib/validations/data_privacy_task_validator.rb:50
 msgid "It is not possible to delete the last account with admin permissions."
@@ -9140,20 +9184,16 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:183
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:193
-#, fuzzy
-#| msgid "%s tickets"
 msgid "Link Objects"
-msgstr "%s tickets"
+msgstr "Link Objects"
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:19
 msgid "Link Related Answer"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:157
-#, fuzzy
-#| msgid "%s tickets"
 msgid "Link Tickets"
-msgstr "%s tickets"
+msgstr "Link Tickets"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:176
 msgid "Link account on %s"
@@ -9172,10 +9212,8 @@ msgid "Link issue"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:150
-#, fuzzy
-#| msgid "%s tickets"
 msgid "Link objects"
-msgstr "%s tickets"
+msgstr "Link objects"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:90
 msgid "Link removed successfully"
@@ -9186,10 +9224,8 @@ msgid "Link template"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
-#, fuzzy
-#| msgid "%s tickets"
 msgid "Link ticket"
-msgstr "%s tickets"
+msgstr "Link ticket"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:62
 msgid "Link type"
@@ -9886,10 +9922,8 @@ msgid "Merge"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:95
-#, fuzzy
-#| msgid "%s tickets"
 msgid "Merge Tickets"
-msgstr "%s tickets"
+msgstr "Merge Tickets"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:169
 msgid "Merge cells"
@@ -9907,17 +9941,13 @@ msgstr ""
 msgid "Merged"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
-#, fuzzy
-#| msgid "%s tickets"
-msgid "Merged %s into this ticket"
-msgstr "%s tickets"
-
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
-#, fuzzy
-#| msgid "%s tickets"
+msgid "Merged %s into this ticket"
+msgstr "Merged %s into this ticket"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 msgid "Merged this ticket into %s"
-msgstr "%s tickets"
+msgstr "Merged this ticket into %s"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -10123,7 +10153,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:631
+#: app/models/user.rb:649
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -10440,11 +10470,11 @@ msgstr ""
 msgid "New Priority"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 msgid "New Public Link"
 msgstr ""
 
@@ -10456,7 +10486,7 @@ msgstr ""
 msgid "New SLA"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr ""
 
@@ -10499,7 +10529,7 @@ msgstr ""
 msgid "New Translation"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr ""
 
@@ -10517,11 +10547,11 @@ msgstr ""
 msgid "New Version"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr ""
 
@@ -10585,7 +10615,7 @@ msgid "New user?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -10612,7 +10642,7 @@ msgstr ""
 msgid "Next month"
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 msgid "Next page"
 msgstr ""
 
@@ -11319,10 +11349,8 @@ msgid "Open %s"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:35
-#, fuzzy
-#| msgid "%s Checklist"
 msgid "Open Checklist"
-msgstr "%s Checklist"
+msgstr "Open Checklist"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
 msgid "Open Ticket# %s"
@@ -11637,7 +11665,7 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr ""
 
@@ -12028,7 +12056,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 msgid "Please enter a valid JSON string."
 msgstr ""
 
@@ -12174,12 +12202,12 @@ msgstr ""
 msgid "Powered by"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr ""
 
@@ -12452,16 +12480,12 @@ msgid "Raw"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "Reacted to message %s from %s"
-msgstr "%s ended switch to |%s|!"
+msgstr "Reacted to message %s from %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "Reacted with %s to message %s from %s"
-msgstr "%s ended switch to |%s|!"
+msgstr "Reacted with %s to message %s from %s"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -12712,10 +12736,8 @@ msgid "Remove two-factor authentication"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "Removed reaction from message %s from %s"
-msgstr "%s ended switch to |%s|!"
+msgstr "Removed reaction from message %s from %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -12799,7 +12821,7 @@ msgstr ""
 msgid "Report Profile"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr ""
@@ -13338,7 +13360,7 @@ msgstr ""
 msgid "Scheduler"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr ""
 
@@ -13500,7 +13522,7 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:625
+#: app/models/user.rb:643
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -14162,16 +14184,12 @@ msgid "Show to user roles"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:51
-#, fuzzy
-#| msgid "%s created ticket |%s|"
 msgid "Show tracking ticket"
-msgstr "%s created ticket |%s|"
+msgstr "Show tracking ticket"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:52
-#, fuzzy
-#| msgid "%s created ticket |%s|"
 msgid "Show tracking tickets"
-msgstr "%s created ticket |%s|"
+msgstr "Show tracking tickets"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:95
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:114
@@ -14893,10 +14911,8 @@ msgid "Target Language"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:47
-#, fuzzy
-#| msgid "%s tickets"
 msgid "Target ticket"
-msgstr "%s tickets"
+msgstr "Target ticket"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:163
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:3
@@ -15715,7 +15731,7 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The private PGP key could not be found."
 msgstr ""
 
@@ -15763,16 +15779,16 @@ msgstr ""
 msgid "The provided email account is already in use."
 msgstr ""
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr ""
 
@@ -15784,7 +15800,7 @@ msgstr ""
 msgid "The provided password is incorrect."
 msgstr ""
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
@@ -15797,7 +15813,7 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The public PGP key could not be found."
 msgstr ""
 
@@ -16671,7 +16687,7 @@ msgid "This might take some time during which the system can't be used."
 msgstr ""
 
 #: app/controllers/application_controller/handles_errors.rb:99
-#: app/graphql/gql/zammad_schema.rb:83
+#: app/graphql/gql/zammad_schema.rb:116
 msgid "This object already exists."
 msgstr ""
 
@@ -17595,22 +17611,16 @@ msgid "Triggered because pending reminder was reached"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:19
-#, fuzzy
-#| msgid "%s of my tickets escalated"
 msgid "Triggered because ticket was escalated"
-msgstr "%s of my tickets escalated"
+msgstr "Triggered because ticket was escalated"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
-#, fuzzy
-#| msgid "%s of my tickets escalated"
 msgid "Triggered because ticket will escalate soon"
-msgstr "%s of my tickets escalated"
+msgstr "Triggered because ticket will escalate soon"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:29
-#, fuzzy
-#| msgid "%s of my tickets escalated"
 msgid "Triggered because time event was reached"
-msgstr "%s of my tickets escalated"
+msgstr "Triggered because time event was reached"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
@@ -17664,7 +17674,7 @@ msgstr ""
 msgid "Turn chat into ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -17884,10 +17894,8 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:41
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/eventHelpers.ts:14
-#, fuzzy
-#| msgid "%s (unknown)"
 msgid "Unknown"
-msgstr "%s (unknown)"
+msgstr "Unknown"
 
 #: lib/password_policy/backend.rb:15
 msgid "Unknown error"
@@ -17983,7 +17991,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:147
 msgid "Update"
-msgstr ""
+msgstr "Update"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:38
 msgid "Update Database"
@@ -18977,11 +18985,11 @@ msgstr ""
 msgid "Woo hoo! Your password has been changed!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr ""
 
@@ -19029,7 +19037,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -20262,7 +20270,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:829
+#: app/models/user.rb:847
 msgid "is too long"
 msgstr ""
 
@@ -20585,16 +20593,12 @@ msgid "reached"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:140
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "reacted to message from %s '%s'"
-msgstr "%s ended switch to |%s|!"
+msgstr "reacted to message from %s '%s'"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:134
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "reacted with a %s to message from %s '%s'"
-msgstr "%s ended switch to |%s|!"
+msgstr "reacted with a %s to message from %s '%s'"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
@@ -20632,10 +20636,8 @@ msgid "remove option"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:143
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "removed reaction to message from %s '%s'"
-msgstr "%s ended switch to |%s|!"
+msgstr "removed reaction to message from %s '%s'"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:10
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee:8

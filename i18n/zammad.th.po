@@ -1766,7 +1766,7 @@ msgstr "ชื่อเจ้าหน้าที่"
 msgid "Agent idle timeout"
 msgstr "ระยะหมดเวลาของ เจ้าหน้าที่"
 
-#: app/models/role.rb:156 app/models/user.rb:705
+#: app/models/role.rb:156 app/models/user.rb:723
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "เกินขีดจำกัดเจ้าหน้าที่ โปรดตรวจสอบการตั้งค่าบัญชีของคุณ"
 
@@ -2351,7 +2351,7 @@ msgstr ""
 "หมดเวลาการมอบหมายเป็นนาทีหากตัวแทนที่ได้รับมอบหมายไม่ทำงาน Ticket จะแสดงเป็น "
 "ไม่ได้รับมอบหมาย"
 
-#: app/models/user.rb:608
+#: app/models/user.rb:626
 #, fuzzy
 #| msgid ""
 #| "At least one identifier (firstname, lastname, phone or email) for user is "
@@ -2369,7 +2369,7 @@ msgstr "ต้องมีกฎการจับคู่อย่างน้
 msgid "At least one object must be selected."
 msgstr "ต้องเลือกวัตถุอย่างน้อยหนึ่งรายการ"
 
-#: app/models/role.rb:128 app/models/user.rb:679
+#: app/models/role.rb:128 app/models/user.rb:697
 msgid "At least one user needs to have admin permissions."
 msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต้องมีสิทธิ์ของผู้ดูแลระบบ."
 
@@ -4571,7 +4571,7 @@ msgstr "สร้าง Tickets ใหม่สําหรับผู้ใช
 msgid "Creation Channels"
 msgstr "สร้างช่องทางสื่อสาร"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr "สร้างหน้ากาก"
 
@@ -6564,7 +6564,7 @@ msgstr "Ticket อัปเดต"
 msgid "Edit item"
 msgstr "แก้ไขหน้ากาก"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr "แก้ไขหน้ากาก"
 
@@ -6758,7 +6758,7 @@ msgstr "การแจ้งเตือนทางอีเมล"
 msgid "Email address"
 msgstr "ที่อยู่อีเมล"
 
-#: app/models/user.rb:618
+#: app/models/user.rb:636
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -7420,7 +7420,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr "ตัวอย่างไฟล์ CSV สำหรับดาวน์โหลด"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr ""
@@ -9533,7 +9533,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:563
+#: app/models/user.rb:581
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -11045,13 +11045,13 @@ msgstr "รวมเป็น Ticket#"
 msgid "Merged"
 msgstr "ผสาน"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Editing ticket"
 msgid "Merged %s into this ticket"
 msgstr "แก้ไข tickets"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
 #| msgid "Merge to Ticket#"
 msgid "Merged this ticket into %s"
@@ -11273,7 +11273,7 @@ msgstr "อารมณ์"
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:631
+#: app/models/user.rb:649
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "ไม่อนุญาตให้มีองค์กรรองมากกว่า 250 แห่ง"
 
@@ -11616,11 +11616,11 @@ msgstr "โทเค็นการเข้าถึงส่วนบุคค
 msgid "New Priority"
 msgstr "ความสำคัญ"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr "โปรไฟล์ใหม่"
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 msgid "New Public Link"
 msgstr "เมนูสาธารณะ"
 
@@ -11632,7 +11632,7 @@ msgstr ""
 msgid "New SLA"
 msgstr "SLA ใหม่"
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr "ตัวจัดกำหนดการใหม่"
 
@@ -11683,7 +11683,7 @@ msgstr "Ticket ใหม่"
 msgid "New Translation"
 msgstr "การแปล"
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr "ทริกเกอร์ใหม่"
 
@@ -11701,11 +11701,11 @@ msgstr "บัญชีผู้ใช้ใหม่"
 msgid "New Version"
 msgstr "เวอร์ชั่นใหม่"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr ""
 
@@ -11771,7 +11771,7 @@ msgid "New user?"
 msgstr "ผู้ใช้ใหม่?"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -11802,7 +11802,7 @@ msgstr "ต่อไปในภาพรวม"
 msgid "Next month"
 msgstr "เดือนที่แล้ว"
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 #, fuzzy
 #| msgid "Get Started"
 msgid "Next page"
@@ -12951,7 +12951,7 @@ msgstr ""
 msgid "Overview"
 msgstr "ภาพรวม"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr ""
 
@@ -13376,7 +13376,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr "กรุณากรอกข้อความ"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 #, fuzzy
 #| msgid "Please enter a valid email address."
 msgid "Please enter a valid JSON string."
@@ -13538,12 +13538,12 @@ msgstr ""
 msgid "Powered by"
 msgstr "ขับเคลื่อนโดย"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr ""
 
@@ -14249,7 +14249,7 @@ msgstr "การรายงาน"
 msgid "Report Profile"
 msgstr "โปรไฟล์รายงาน"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr "โปรไฟล์รายงาน"
@@ -14904,7 +14904,7 @@ msgstr ""
 msgid "Scheduler"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr "ตารางเวลา"
 
@@ -15084,7 +15084,7 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr "องค์กรที่ 2"
 
-#: app/models/user.rb:625
+#: app/models/user.rb:643
 #, fuzzy
 #| msgid ""
 #| "Secondary organizations are only allowed when the primary organization is "
@@ -17611,7 +17611,7 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 #, fuzzy
 #| msgid "Avatar could not be found."
 msgid "The private PGP key could not be found."
@@ -17669,16 +17669,16 @@ msgstr "ข้อมูลประจำตัวที่ระบุไม่
 msgid "The provided email account is already in use."
 msgstr "ปลายทางที่ระบุไม่ถูกต้อง"
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr "ปลายทางที่ระบุไม่ถูกต้อง ไม่ได้ระบุชื่อโฮสต์"
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr "ปลายทางที่ระบุไม่ถูกต้อง"
 
@@ -17692,7 +17692,7 @@ msgstr ""
 msgid "The provided password is incorrect."
 msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
@@ -17705,7 +17705,7 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr "โทเค็นที่ระบุไม่ถูกต้อง"
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 #, fuzzy
 #| msgid "Locale could not be found."
 msgid "The public PGP key could not be found."
@@ -18725,7 +18725,7 @@ msgid "This might take some time during which the system can't be used."
 msgstr "การดำเนินการนี้อาจใช้เวลาสักครู่ก่อนที่ระบบจะไม่สามารถใช้งานได้"
 
 #: app/controllers/application_controller/handles_errors.rb:99
-#: app/graphql/gql/zammad_schema.rb:83
+#: app/graphql/gql/zammad_schema.rb:116
 #, fuzzy
 #| msgid "This bot already exists."
 msgid "This object already exists."
@@ -19852,7 +19852,7 @@ msgstr "วันอังคาร"
 msgid "Turn chat into ticket"
 msgstr "เปลี่ยนแชทเป็น ticket"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -21335,11 +21335,11 @@ msgstr "วู้ฮู! อีเมลของคุณได้รับก�
 msgid "Woo hoo! Your password has been changed!"
 msgstr "วู้ฮู! รหัสผ่านของคุณถูกเปลี่ยน!"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr "เวิร์กโฟลว์"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr "เวิร์กโฟลว์"
 
@@ -21391,7 +21391,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -22771,7 +22771,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:829
+#: app/models/user.rb:847
 msgid "is too long"
 msgstr ""
 

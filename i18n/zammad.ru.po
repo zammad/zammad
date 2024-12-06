@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-30 09:00+0000\n"
+"PO-Revision-Date: 2024-12-04 09:00+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
@@ -1694,7 +1694,7 @@ msgstr "Агентский чат"
 msgid "Agent idle timeout"
 msgstr "Тайм-аут простоя агента"
 
-#: app/models/role.rb:156 app/models/user.rb:705
+#: app/models/role.rb:156 app/models/user.rb:723
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Превышен лимит агентов, проверьте настройки учётной записи."
 
@@ -2262,7 +2262,7 @@ msgstr ""
 "Время ожидания назначения в минутах, если назначенный агент не работает над "
 "заявкой. Заявка будет отображаться как «не назначенная»."
 
-#: app/models/user.rb:608
+#: app/models/user.rb:626
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2279,7 +2279,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr "Должен быть выбран хотя бы один объект."
 
-#: app/models/role.rb:128 app/models/user.rb:679
+#: app/models/role.rb:128 app/models/user.rb:697
 msgid "At least one user needs to have admin permissions."
 msgstr "По крайней мере, один пользователь должен иметь права администратора."
 
@@ -4362,7 +4362,7 @@ msgstr "Создание новых заявок через веб отключ�
 msgid "Creation Channels"
 msgstr "Создание каналов"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:53
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Creation mask"
 msgstr "Маска создания"
 
@@ -6382,7 +6382,7 @@ msgstr "Изменить название чек-листа"
 msgid "Edit item"
 msgstr "Изменить элемент"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:55
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:57
 msgid "Edit mask"
 msgstr "Редактировать маску"
 
@@ -6558,7 +6558,7 @@ msgstr "Проверка электронной почты"
 msgid "Email address"
 msgstr "Адрес электронной почты"
 
-#: app/models/user.rb:618
+#: app/models/user.rb:636
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 "Адрес электронной почты '%{email}' уже используется другим пользователем."
@@ -7258,7 +7258,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr "Файл CSV в качестве примера для загрузки."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:26
+#: app/assets/javascripts/app/controllers/webhook.coffee:28
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr "Пример полезной нагрузки (Payload)"
@@ -9283,7 +9283,7 @@ msgstr "Неверный идентификатор клиента (client_id) �
 msgid "Invalid client_id received!"
 msgstr "Получен неверный идентификатор клиента (client_id)!"
 
-#: app/models/user.rb:563
+#: app/models/user.rb:581
 msgid "Invalid email '%{email}'"
 msgstr "Неверно указан email '%{email}'"
 
@@ -10640,11 +10640,11 @@ msgstr "Объединить в заявку №"
 msgid "Merged"
 msgstr "Объединенные"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 msgid "Merged %s into this ticket"
 msgstr "Объединил(-а) %s в эту заявку"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 msgid "Merged this ticket into %s"
 msgstr "Объединил(-а) эту заявку в %s"
 
@@ -10852,7 +10852,7 @@ msgstr "Настроение"
 msgid "More information can be found here."
 msgstr "Более подробную информацию можно найти здесь."
 
-#: app/models/user.rb:631
+#: app/models/user.rb:649
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Не допускается наличие более 250 вторичных организаций."
 
@@ -11173,11 +11173,11 @@ msgstr "Новый персональный токен доступа"
 msgid "New Priority"
 msgstr "Новый приоритет"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:22
+#: app/assets/javascripts/app/controllers/report_profile.coffee:24
 msgid "New Profile"
 msgstr "Новый Профиль"
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:24
 msgid "New Public Link"
 msgstr "Новая общедоступная ссылка"
 
@@ -11189,7 +11189,7 @@ msgstr "Новая роль"
 msgid "New SLA"
 msgstr "Новое соглашение об уровне обслуживания (SLA)"
 
-#: app/assets/javascripts/app/controllers/job.coffee:24
+#: app/assets/javascripts/app/controllers/job.coffee:26
 msgid "New Scheduler"
 msgstr "Новое Расписание"
 
@@ -11232,7 +11232,7 @@ msgstr "Новая заявка: %s"
 msgid "New Translation"
 msgstr "Новый перевод"
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:25
+#: app/assets/javascripts/app/controllers/trigger.coffee:27
 msgid "New Trigger"
 msgstr "Новый триггер"
 
@@ -11250,11 +11250,11 @@ msgstr "Новые учётные записи пользователей"
 msgid "New Version"
 msgstr "Новая версия"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:28
+#: app/assets/javascripts/app/controllers/webhook.coffee:30
 msgid "New Webhook"
 msgstr "Новый веб-перехватчик (webhook)"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:26
 msgid "New Workflow"
 msgstr "Новый рабочий процесс"
 
@@ -11344,7 +11344,7 @@ msgid "New user?"
 msgstr "Новый пользователь?"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:124
+#: app/assets/javascripts/app/controllers/webhook.coffee:126
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -11371,7 +11371,7 @@ msgstr "Далее в представлении"
 msgid "Next month"
 msgstr "Следующий месяц"
 
-#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:11
+#: app/assets/javascripts/app/views/generic/table_pager.jst.eco:14
 msgid "Next page"
 msgstr "Следующая страница"
 
@@ -12429,7 +12429,7 @@ msgstr "Отступ текста"
 msgid "Overview"
 msgstr "Представление"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
 msgid "Overview bulk mask"
 msgstr "Общий обзор масок"
 
@@ -12828,7 +12828,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr "Пожалуйста, введите текст."
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:93
+#: app/assets/javascripts/app/controllers/webhook.coffee:95
 msgid "Please enter a valid JSON string."
 msgstr "Пожалуйста, введите корректную строку JSON."
 
@@ -12990,12 +12990,12 @@ msgstr "Фильтр почтового мастера"
 msgid "Powered by"
 msgstr "Работает на"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:32
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr "Предустановленный веб-перехватчик (webhook)"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:242
+#: app/assets/javascripts/app/controllers/webhook.coffee:244
 msgid "Pre-defined webhook for %s."
 msgstr "Предустановленный webhook для %s."
 
@@ -13623,7 +13623,7 @@ msgstr "Отчет"
 msgid "Report Profile"
 msgstr "Профиль отчета"
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr "Профили отчета"
@@ -14210,7 +14210,7 @@ msgstr "Запланированно"
 msgid "Scheduler"
 msgstr "Планировщик"
 
-#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
 msgid "Schedulers"
 msgstr "Планировщики"
 
@@ -14384,7 +14384,7 @@ msgstr "Поиск…"
 msgid "Secondary organizations"
 msgstr "Вторичные организации"
 
-#: app/models/user.rb:625
+#: app/models/user.rb:643
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -16725,7 +16725,7 @@ msgstr ""
 "Невозможно сформировать предпросмотр. Формат является недопустимым или не "
 "поддерживается."
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The private PGP key could not be found."
 msgstr "Не удалось найти закрытый ключ PGP."
 
@@ -16779,19 +16779,19 @@ msgstr "Указанные учётные данные недействител�
 msgid "The provided email account is already in use."
 msgstr "Указанная учетная запись электронной почты уже используется."
 
-#: app/models/webhook.rb:34
+#: app/models/webhook.rb:37
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
 "Указанная конечная точка недействительна (endpoint), имя хоста не указано."
 
-#: app/models/webhook.rb:33
+#: app/models/webhook.rb:36
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 "Указанная конечная точка (endpoint) недействительна, не указан протокол http "
 "или https."
 
-#: app/models/webhook.rb:36
+#: app/models/webhook.rb:39
 msgid "The provided endpoint is invalid."
 msgstr "Указанная конечная точка (endpoint) недействительна."
 
@@ -16803,7 +16803,7 @@ msgstr "Указанный оператор соответствия отсут�
 msgid "The provided password is incorrect."
 msgstr "Пароль введен неверно."
 
-#: app/models/webhook.rb:45
+#: app/models/webhook.rb:48
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 "Предоставленная полезная нагрузка (payload) недействительна. Пожалуйста, "
@@ -16818,7 +16818,7 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr "Указанный ключ недействителен."
 
-#: lib/secure_mailing/pgp/incoming.rb:305
+#: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The public PGP key could not be found."
 msgstr "Не удалось найти открытый ключ PGP."
 
@@ -17792,7 +17792,7 @@ msgstr ""
 "недоступна."
 
 #: app/controllers/application_controller/handles_errors.rb:99
-#: app/graphql/gql/zammad_schema.rb:83
+#: app/graphql/gql/zammad_schema.rb:116
 msgid "This object already exists."
 msgstr "Этот объект уже существует."
 
@@ -18881,7 +18881,7 @@ msgstr "Вторник"
 msgid "Turn chat into ticket"
 msgstr "Превратить чат в заявку"
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:231
+#: app/assets/javascripts/app/controllers/webhook.coffee:233
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -20315,11 +20315,11 @@ msgstr "Ура! Ваш почтовый адрес проверен успешн
 msgid "Woo hoo! Your password has been changed!"
 msgstr "Ура! Ваш пароль был изменён!"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:16
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 msgid "Workflow"
 msgstr "Рабочий процесс"
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
 msgid "Workflows"
 msgstr "Рабочие процессы"
 
@@ -20367,7 +20367,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Вы получаете это, потому что являетесь членом группы этой заявки."
 
-#: app/models/transaction/notification.rb:281
+#: app/models/transaction/notification.rb:287
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -21706,7 +21706,7 @@ msgstr "неправильная длина (должно быть %{count} си
 msgid "is the wrong length (should be 1 character)"
 msgstr "неправильная длина (должен быть 1 символ)"
 
-#: app/models/user.rb:829
+#: app/models/user.rb:847
 msgid "is too long"
 msgstr "слишком длинный"
 
