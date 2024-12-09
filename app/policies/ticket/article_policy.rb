@@ -10,6 +10,10 @@ class Ticket::ArticlePolicy < ApplicationPolicy
     access?(__method__)
   end
 
+  def external?
+    access?(__method__)
+  end
+
   def update?
     ticket_policy.agent_update_access?
   end
