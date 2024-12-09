@@ -14469,6 +14469,10 @@ msgstr ""
 msgid "The following changes will be made:"
 msgstr ""
 
+#: app/assets/javascripts/app/views/system_report.jst.eco:13
+msgid "The following contents are provided in the system report:"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:196
 msgid "The form content has been changed. Do you want to close it and lose your changes?"
 msgstr ""

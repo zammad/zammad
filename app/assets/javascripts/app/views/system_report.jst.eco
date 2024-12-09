@@ -10,11 +10,11 @@
   </p>
   <h2><%- @T('Contents') %></h2>
   <p>
-    The following contents are provided in the system report:
+    <%- @T('The following contents are provided in the system report:') %>
   </p>
   <ul>
   <% for description in @descriptions.map((desc) => @T(desc)).sort(): %>
-    <li><%= description %></li>
+    <li><%- description %></li>
   <% end %>
   </ul>
   <h2><%- @T('Preview') %> <a href="<%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/system_report/download" class="btn btn--action" data-type="attachment" download><%- @Icon('download') %><span><%- @T('Download') %></span></a></h2>
