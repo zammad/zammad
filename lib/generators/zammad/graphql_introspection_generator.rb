@@ -1,5 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+require 'rails/generators'
+
 class Zammad::GraphqlIntrospectionGenerator < Rails::Generators::Base
 
   desc 'Create JSON from the GraphQL introspection information and output it to STDOUT'
