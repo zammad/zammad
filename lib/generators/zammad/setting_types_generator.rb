@@ -1,5 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+require 'rails/generators'
+
 class Zammad::SettingTypesGenerator < Rails::Generators::Base
 
   desc 'Create the types/config.ts file to keep Settings configuration the same between frontend and backend.'

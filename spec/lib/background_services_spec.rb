@@ -49,6 +49,19 @@ RSpec.describe BackgroundServices do
       ensure_block_keeps_running { instance.run }
       expect(instance).to have_received(:run_service).with(config)
     end
+
+    context 'when config has multiple services' do
+      let(:forked)   { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 3) }
+      let(:threaded) { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0) }
+      let(:config)   { [threaded, forked] }
+
+      it 'runs forked services before threaded', aggregate_failures: true do
+        allow(instance).to receive(:run_service)
+        ensure_block_keeps_running { instance.run }
+        expect(instance).to have_received(:run_service).with(forked).ordered
+        expect(instance).to have_received(:run_service).with(threaded).ordered
+      end
+    end
   end
 
   describe '#run_service' do

@@ -15,9 +15,13 @@ class BackgroundServices
   def run
     Rails.logger.debug 'Starting BackgroundServices...'
 
-    config.each do |service_config|
-      run_service service_config
-    end
+    # Fork before starting the threads in the main process to ensure a consistent state
+    #   and minimal memory overhead (see also #5420).
+    config
+      .in_order_of(:start_as, %i[fork thread])
+      .each do |service_config|
+        run_service service_config
+      end
 
     Process.waitall
 
