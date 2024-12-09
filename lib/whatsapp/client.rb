@@ -50,12 +50,13 @@ class Whatsapp::Client
 
       # https://developers.facebook.com/docs/graph-api/guides/error-handling
       recoverable_errors = [
-        130_472, # User's number is part of an experiment'
-        131_021, # Recipient cannot be sender'
-        131_026, # Message undeliverable'
+        130_472, # User's number is part of an experiment
+        131_021, # Recipient cannot be sender
+        131_026, # Message undeliverable
         131_047, # Re-engagement message
-        131_052, # Media download error'
-        131_053  # Media upload error'
+        131_051, # Unsupported message type
+        131_052, # Media download error
+        131_053, # Media upload error
       ]
       recoverable_errors.include?(original_error.code)
     end
