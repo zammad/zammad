@@ -183,10 +183,10 @@ importers:
         version: 2.12.6(graphql@16.9.0)
       linkify-string:
         specifier: ^4.1.4
-        version: 4.1.4(linkifyjs@4.1.4)
+        version: 4.1.4(linkifyjs@4.2.0)
       linkifyjs:
-        specifier: ^4.1.4
-        version: 4.1.4
+        specifier: ^4.2.0
+        version: 4.2.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4527,8 +4527,8 @@ packages:
     peerDependencies:
       linkifyjs: ^4.0.0
 
-  linkifyjs@4.1.4:
-    resolution: {integrity: sha512-0/NxkHNpiJ0k9VrYCkAn9OtU1eu8xEr1tCCpDtSsVRm/SF0xAak2Gzv3QimSfgUgqLBCDlfhMbu73XvaEHUTPQ==}
+  linkifyjs@4.2.0:
+    resolution: {integrity: sha512-pCj3PrQyATaoTYKHrgWRF3SJwsm61udVh+vuls/Rl6SptiDhgE7ziUIudAedRY9QEfynmM7/RmLEfPUyw1HPCw==}
 
   listr2@4.0.5:
     resolution: {integrity: sha512-juGHV1doQdpNT3GSTs9IUN43QJb7KHdF9uqg7Vufs/tG9VTzpFphqF4pm/ICdAABGQxsyNn9CiYA3StkI6jpwA==}
@@ -8637,7 +8637,7 @@ snapshots:
     dependencies:
       '@tiptap/core': 2.10.3(@tiptap/pm@2.10.3)
       '@tiptap/pm': 2.10.3
-      linkifyjs: 4.1.4
+      linkifyjs: 4.2.0
 
   '@tiptap/extension-list-item@2.10.3(@tiptap/core@2.10.3(@tiptap/pm@2.10.3))':
     dependencies:
@@ -11472,11 +11472,11 @@ snapshots:
     dependencies:
       uc.micro: 2.1.0
 
-  linkify-string@4.1.4(linkifyjs@4.1.4):
+  linkify-string@4.1.4(linkifyjs@4.2.0):
     dependencies:
-      linkifyjs: 4.1.4
+      linkifyjs: 4.2.0
 
-  linkifyjs@4.1.4: {}
+  linkifyjs@4.2.0: {}
 
   listr2@4.0.5:
     dependencies:
