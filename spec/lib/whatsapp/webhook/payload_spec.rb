@@ -133,9 +133,9 @@ RSpec.describe Whatsapp::Webhook::Payload, :aggregate_failures, current_user_id:
                   },
                   errors:    [
                     {
-                      code:    131_051,
-                      details: 'Message type is not currently supported',
-                      title:   'Unsupported message type'
+                      code:    0,
+                      details: 'Unable to authenticate the app user',
+                      title:   'AuthException'
                     }
                   ],
                   type:      type
@@ -161,7 +161,7 @@ RSpec.describe Whatsapp::Webhook::Payload, :aggregate_failures, current_user_id:
         end
 
         expect(Rails.logger).to have_received(:error)
-          .with("WhatsApp channel (#{channel.options[:callback_url_uuid]}) - failed message: Unsupported message type (131051)")
+          .with("WhatsApp channel (#{channel.options[:callback_url_uuid]}) - failed message: AuthException (0)")
       end
 
       it 'updates the channel status' do
@@ -173,7 +173,7 @@ RSpec.describe Whatsapp::Webhook::Payload, :aggregate_failures, current_user_id:
 
         expect(channel.reload).to have_attributes(
           status_out:   'error',
-          last_log_out: 'Unsupported message type (131051)',
+          last_log_out: 'AuthException (0)',
         )
       end
     end

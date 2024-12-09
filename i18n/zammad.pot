@@ -1449,6 +1449,10 @@ msgstr ""
 msgid "Any recipient"
 msgstr ""
 
+#: lib/whatsapp/webhook/concerns/handles_error.rb:49
+msgid "Apologies, we're unable to process this kind of message due to restrictions within WhatsApp Business."
+msgstr ""
+
 #: db/seeds/settings.rb:1426
 msgid "App ID"
 msgstr ""
