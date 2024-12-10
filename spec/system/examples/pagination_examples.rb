@@ -20,7 +20,7 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
     visit path
   end
 
-  it 'does paginate' do
+  it 'does paginate' do # rubocop:disable RSpec/ExampleLength
     entries_per_page = page.all('.js-tableBody tr').count
 
     expect(page).to have_css('.js-pager')
