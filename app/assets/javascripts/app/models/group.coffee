@@ -44,6 +44,7 @@ class App.Group extends App.Model
     read: __('Read')
     create: __('Create')
     change: __('Change')
+    external: __('External') # External role allows posting articles with internal = false
     overview: __('Overview')
     full: __('Full')
 
