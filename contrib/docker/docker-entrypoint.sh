@@ -12,6 +12,7 @@ set -e
 : "${ELASTICSEARCH_REINDEX:=true}"
 : "${ELASTICSEARCH_SSL_VERIFY:=true}"
 : "${NGINX_PORT:=8080}"
+: "${NGINX_MAX_UPLOAD_SIZE:=50M}"
 : "${NGINX_SERVER_NAME:=_}"
 : "${NGINX_SERVER_SCHEME:=\$scheme}"
 : "${POSTGRESQL_DB:=zammad_production}"
@@ -121,6 +122,7 @@ elif [ "$1" = 'zammad-nginx' ]; then
       -e "s#server .*:3000#server ${ZAMMAD_RAILSSERVER_HOST}:${ZAMMAD_RAILSSERVER_PORT}#g" \
       -e "s#server .*:6042#server ${ZAMMAD_WEBSOCKET_HOST}:${ZAMMAD_WEBSOCKET_PORT}#g" \
       -e "s#server_name .*#server_name ${NGINX_SERVER_NAME};#g" \
+      -e "s#client_max_body_size .*#client_max_body_size ${NGINX_MAX_UPLOAD_SIZE};#g" \
       -e 's#/var/log/nginx/zammad.\(access\|error\).log#/dev/stdout#g' < contrib/nginx/zammad.conf > /etc/nginx/sites-enabled/default
 
   echo "starting nginx..."
