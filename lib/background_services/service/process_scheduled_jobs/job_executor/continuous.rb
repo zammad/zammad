@@ -2,6 +2,8 @@
 
 class BackgroundServices::Service::ProcessScheduledJobs
   class JobExecutor::Continuous < JobExecutor
+    include BackgroundServices::Concerns::HasInterruptibleSleep
+
     LOOP_LIMIT = 1_800
 
     def run
@@ -13,6 +15,10 @@ class BackgroundServices::Service::ProcessScheduledJobs
     def run_loop
       # only do a certain amount of loops in this thread
       LOOP_LIMIT.times do
+        break if BackgroundServices.shutdown_requested
+
+        ActiveRecord::Base.clear_query_caches_for_current_thread
+
         execute
 
         reload_job
@@ -20,7 +26,7 @@ class BackgroundServices::Service::ProcessScheduledJobs
         break if !job.runs_as_persistent_loop?
 
         # wait until next run
-        sleep job.period
+        interruptible_sleep job.period
       end
     end
 

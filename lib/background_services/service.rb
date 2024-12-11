@@ -2,7 +2,10 @@
 
 # Base class for background services
 class BackgroundServices::Service
+  include BackgroundServices::Concerns::HasInterruptibleSleep
   include Mixin::RequiredSubPaths
+
+  attr_reader :fork_id, :manager
 
   def self.service_name
     name.demodulize
@@ -13,6 +16,10 @@ class BackgroundServices::Service
     1
   end
 
+  def self.skip?(manager:)
+    false
+  end
+
   # Use this method to prepare for a service task.
   # This would be called only once regardless of how many workers would start.
   def self.pre_run
@@ -21,16 +28,21 @@ class BackgroundServices::Service
     end
   end
 
+  def self.run_in_service_context(&)
+    Rails.application.executor.wrap do
+      ApplicationHandleInfo.use('scheduler', &)
+    end
+  end
+
+  def initialize(manager:, fork_id: nil)
+    @fork_id = fork_id
+    @manager = manager
+  end
+
   # Use this method to run a background service.
   def run
     self.class.run_in_service_context do
       launch
-    end
-  end
-
-  def self.run_in_service_context(&)
-    Rails.application.executor.wrap do
-      ApplicationHandleInfo.use('scheduler', &)
     end
   end
 

@@ -23,6 +23,9 @@ class Sessions::Client
     user_updated_at_last_run = nil
     loop_count               = 0
     loop do
+      return if BackgroundServices.shutdown_requested
+
+      ActiveRecord::Base.clear_query_caches_for_current_thread
       ActiveSupport::CurrentAttributes.clear_all
 
       # check if session still exists

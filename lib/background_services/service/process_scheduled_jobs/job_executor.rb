@@ -1,11 +1,15 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class BackgroundServices::Service::ProcessScheduledJobs::JobExecutor
+  include BackgroundServices::Concerns::HasInterruptibleSleep
+
   TRY_COUNT_MAX = 10
 
   attr_reader :job, :try_count, :try_run_time, :started_at
 
   def self.run(job)
+    return if BackgroundServices.shutdown_requested
+
     klass = job.runs_as_persistent_loop? ? Continuous : OneTime
     klass.new(job).run
   end
@@ -84,7 +88,9 @@ class BackgroundServices::Service::ProcessScheduledJobs::JobExecutor
       return
     end
 
-    sleep(try_count) if Rails.env.production?
+    interruptible_sleep(try_count) if Rails.env.production?
+    return if BackgroundServices.shutdown_requested
+
     execute
   end
 

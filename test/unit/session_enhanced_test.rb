@@ -139,20 +139,23 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     messages = Sessions.queue(client_id3)
     assert_equal(messages.count, 0, 'messages count')
 
+    worker = nil
+
     # start jobs
     jobs = Thread.new do
       # Try to work around a problem with ActiveRecord::StatementInvalid: Mysql2::Error:
       #   This connection is in use by: #<Thread:0x000000000e940e18 /builds/zammad/zammad/lib/sessions.rb:533 dead>
       ActiveRecord::Base.connection_pool.release_connection
 
-      Sessions.jobs
+      worker = BackgroundServices::Service::ProcessSessionsJobs.new(manager: nil)
+      worker.launch
     end
     sleep 6
 
     # check client threads
-    assert(Sessions.thread_client_exists?(client_id1), 'check if client is running')
-    assert(Sessions.thread_client_exists?(client_id2), 'check if client is running')
-    assert(Sessions.thread_client_exists?(client_id3), 'check if client is running')
+    assert(worker.client_threads.key?(client_id1), 'check if client is running')
+    assert(worker.client_threads.key?(client_id2), 'check if client is running')
+    assert(worker.client_threads.key?(client_id3), 'check if client is running')
 
     # check if session still exists after idle cleanup
     travel 10.seconds
@@ -167,9 +170,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     sleep 6
 
     # check client threads
-    assert_not(Sessions.thread_client_exists?(client_id1), 'check if client is running')
-    assert_not(Sessions.thread_client_exists?(client_id2), 'check if client is running')
-    assert_not(Sessions.thread_client_exists?(client_id3), 'check if client is running')
+    assert_not(worker.client_threads.key?(client_id1), 'check if client is running')
+    assert_not(worker.client_threads.key?(client_id2), 'check if client is running')
+    assert_not(worker.client_threads.key?(client_id3), 'check if client is running')
 
     # exit jobs
     jobs.exit
@@ -236,13 +239,16 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     Sessions.destroy(client_id2)
     Sessions.destroy(client_id3)
 
+    worker = nil
+
     # start jobs
     jobs = Thread.new do
       # Try to work around a problem with ActiveRecord::StatementInvalid: Mysql2::Error:
       #   This connection is in use by: #<Thread:0x000000000e940e18 /builds/zammad/zammad/lib/sessions.rb:533 dead>
       ActiveRecord::Base.connection_pool.release_connection
 
-      Sessions.jobs
+      worker = BackgroundServices::Service::ProcessSessionsJobs.new(manager: nil)
+      worker.launch
     end
     sleep 5
     Sessions.create(client_id1_0, agent1.attributes, { type: 'websocket' })

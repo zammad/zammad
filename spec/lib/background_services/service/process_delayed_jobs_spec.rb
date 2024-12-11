@@ -10,10 +10,10 @@ end
 
 RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_exited: true do
   before do
-    stub_const "#{described_class}::SLEEP_IF_EMPTY", 0.5
+    stub_const "#{described_class}::SLEEP_IF_EMPTY", 1
   end
 
-  let(:instance) { described_class.new }
+  let(:instance) { described_class.new(manager: nil) }
 
   describe '#run' do
     context 'with a queued job' do
@@ -25,7 +25,7 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_e
       it 'processes a job' do
         expect do
           ensure_block_keeps_running do
-            described_class.new.run
+            described_class.new(manager: nil).run
           end
         end.to change(Delayed::Job, :count).by(-1)
       end
@@ -39,6 +39,16 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_e
         ensure_block_keeps_running { instance.run }
 
         expect(instance).to have_received(:process_results).at_least(1)
+      end
+
+      context 'when shutdown is requested' do
+        before do
+          allow(BackgroundServices).to receive(:shutdown_requested).and_return(true)
+        end
+
+        it 'does not start jobs' do
+          expect { described_class.new(manager: nil).run }.not_to change(Delayed::Job, :count)
+        end
       end
     end
   end

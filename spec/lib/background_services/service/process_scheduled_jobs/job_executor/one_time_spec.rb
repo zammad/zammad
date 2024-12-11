@@ -60,6 +60,16 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs::JobExecutor::O
         end.to change(instance, :try_count).by(BackgroundServices::Service::ProcessScheduledJobs::JobExecutor::TRY_COUNT_MAX + 1)
       end
     end
+
+    context 'when shutdown is requested' do
+      before do
+        allow(BackgroundServices).to receive(:shutdown_requested).and_return(true)
+      end
+
+      it 'does not execute the job' do
+        expect { instance.run }.not_to change(OneTimeSpecExecutor, :executions)
+      end
+    end
   end
 
 end

@@ -20,6 +20,8 @@ class BackgroundServices
         private
 
         def skip?
+          return true if BackgroundServices.shutdown_requested
+
           return true if skip_already_running?
 
           # check job.last_run

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe BackgroundServices::Service::ProcessScheduledJobs do
-  let(:instance)    { described_class.new }
+  let(:instance)    { described_class.new(manager: nil) }
   let(:scheduler_1) { create(:scheduler, active: true, prio: 5) }
   let(:scheduler_2) { create(:scheduler, active: true, prio: 1) }
   let(:scheduler_3) { create(:scheduler, active: false, prio: 3) }
@@ -16,10 +16,24 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs do
   end
 
   describe '#run' do
-    it 'keeps running jobs', ensure_threads_exited: true do
+    before do
       allow(instance).to receive(:run_jobs)
+    end
+
+    it 'keeps running jobs', ensure_threads_exited: true do
       ensure_block_keeps_running { instance.run }
       expect(instance).to have_received(:run_jobs).at_least(2)
+    end
+
+    context 'when shutdown is requested' do
+      before do
+        allow(BackgroundServices).to receive(:shutdown_requested).and_return(true)
+      end
+
+      it 'does not start jobs' do
+        instance.run
+        expect(instance).not_to have_received(:run_jobs)
+      end
     end
   end
 
@@ -30,14 +44,24 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs do
       allow_any_instance_of(described_class::Manager).to receive(:run) do
         log << :run_called
       end
+      scheduler_1
     end
 
     it 'runs manager for each active job' do
-      scheduler_1
-
       instance.send(:run_jobs)
 
       expect(log).to be_one
+    end
+
+    context 'when shutdown is requested' do
+      before do
+        allow(BackgroundServices).to receive(:shutdown_requested).and_return(true)
+      end
+
+      it 'does not run managers' do
+        instance.send(:run_jobs)
+        expect(log).to be_empty
+      end
     end
   end
 

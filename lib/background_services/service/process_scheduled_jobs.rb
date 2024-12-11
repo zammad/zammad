@@ -8,27 +8,35 @@ class BackgroundServices
 
       attr_reader :jobs_started
 
-      def initialize
-        super
+      def initialize(...)
         @jobs_started = Concurrent::Hash.new
+        super
       end
 
       def launch
         loop do
+          break if BackgroundServices.shutdown_requested
+
           Rails.logger.info 'ProcessScheduledJobs running...'
 
           run_jobs
 
-          sleep SLEEP_AFTER_LOOP
+          interruptible_sleep SLEEP_AFTER_LOOP
         end
+
+        # Wait for threads to finish for a clean shutdown.
+        jobs_started.each(&:join)
       end
 
       private
 
       def run_jobs
         scope.each do |job|
+          break if BackgroundServices.shutdown_requested
+
           result = Manager.new(job, jobs_started).run
-          sleep SLEEP_AFTER_JOB_START if result
+
+          interruptible_sleep SLEEP_AFTER_JOB_START if result
         end
       end
 

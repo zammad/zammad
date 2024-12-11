@@ -41,7 +41,12 @@ RSpec.describe BackgroundServices::ServiceConfig do
     it 'returns configurations for all known services' do
       configurations = described_class.configuration_from_env({})
 
-      expect(configurations.map(&:service)).to contain_exactly(BackgroundServices::Service::ProcessScheduledJobs, BackgroundServices::Service::ProcessDelayedJobs)
+      expect(configurations.map(&:service)).to contain_exactly(
+        BackgroundServices::Service::ManageSessionsJobs,
+        BackgroundServices::Service::ProcessScheduledJobs,
+        BackgroundServices::Service::ProcessSessionsJobs,
+        BackgroundServices::Service::ProcessDelayedJobs
+      )
     end
 
     it 'parses configuration for a service' do
@@ -52,6 +57,17 @@ RSpec.describe BackgroundServices::ServiceConfig do
 
       expect(single_config.workers).to be(12)
     end
+
+    it 'handles the deprecated setting ZAMMAD_SESSION_JOBS_CONCURRENT correctly', :aggregate_failures do
+      allow(ActiveSupport::Deprecation).to receive(:warn)
+      hash = { 'ZAMMAD_SESSION_JOBS_CONCURRENT' => 2 }
+
+      configurations = described_class.configuration_from_env(hash)
+      single_config = configurations.find { |config| config.service == BackgroundServices::Service::ProcessSessionsJobs }
+
+      expect(single_config.workers).to be(2)
+      expect(ActiveSupport::Deprecation).to have_received(:warn).once
+    end
   end
 
   describe '.single_configuration_from_env' do
@@ -61,7 +77,7 @@ RSpec.describe BackgroundServices::ServiceConfig do
 
     it 'takes disabled value when true' do
       hash = {
-        'ZAMMAD_PROCESS_DELAYED_JOBS_DISABLED' => true,
+        'ZAMMAD_PROCESS_DELAYED_JOBS_DISABLE' => true,
       }
 
       expect(run(hash).disabled).to be_truthy
@@ -69,7 +85,7 @@ RSpec.describe BackgroundServices::ServiceConfig do
 
     it 'takes disabled value when false' do
       hash = {
-        'ZAMMAD_PROCESS_DELAYED_JOBS_DISABLED' => 0,
+        'ZAMMAD_PROCESS_DELAYED_JOBS_DISABLE' => 0,
       }
 
       expect(run(hash).disabled).to be(false)

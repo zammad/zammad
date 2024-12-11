@@ -18,10 +18,14 @@ class BackgroundServices
 
       def launch
         loop do
+          break if BackgroundServices.shutdown_requested
+
           result = nil
 
           realtime = Benchmark.realtime do
             Rails.logger.debug { "*** worker thread, #{::Delayed::Job.count} in queue" }
+            # ::Delayed::Worker#stop? is monkey patched by config/initializers/delayed_worker_stop.rb
+            #   to ensure an early exit even during work_off().
             result = ::Delayed::Worker.new.work_off
           end
 
@@ -35,7 +39,7 @@ class BackgroundServices
         count = result.sum
 
         if count.zero?
-          sleep SLEEP_IF_EMPTY
+          interruptible_sleep SLEEP_IF_EMPTY
           Rails.logger.debug { '*** worker thread loop' }
         else
           Rails.logger.debug { format("*** #{count} jobs processed at %<jps>.4f j/s, %<failed>d failed ...\n", jps: count / realtime, failed: result.last) }

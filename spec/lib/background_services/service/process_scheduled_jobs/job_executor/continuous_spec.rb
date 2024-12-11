@@ -29,14 +29,24 @@ RSpec.describe BackgroundServices::Service::ProcessScheduledJobs::JobExecutor::C
       end
 
       it 'sleeps after every execution' do
-        allow(instance).to receive(:sleep)
+        allow(instance).to receive(:interruptible_sleep)
         instance.run
-        expect(instance).to have_received(:sleep).with(0).exactly(loop_limit).times
+        expect(instance).to have_received(:interruptible_sleep).with(0).exactly(loop_limit).times
       end
 
       it 'updates last_run time' do
         instance.job.last_run = nil
         expect { instance.run }.to change(instance.job, :last_run).to(Time.current)
+      end
+    end
+
+    context 'when shutdown is requested' do
+      before do
+        allow(BackgroundServices).to receive(:shutdown_requested).and_return(true)
+      end
+
+      it 'does not execute the job' do
+        expect { instance.run }.not_to change(ContinuousSpecExecutor, :executions)
       end
     end
 

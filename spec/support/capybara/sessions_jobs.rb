@@ -18,7 +18,9 @@ RSpec.configure do |config|
         #   This connection is in use by: #<Thread:0x000000000e940e18 /builds/zammad/zammad/lib/sessions.rb:533 dead>
         ActiveRecord::Base.connection_pool.release_connection
 
-        Sessions.jobs
+        BackgroundServices::Service::ProcessSessionsJobs
+          .new(manager: nil)
+          .launch
       end
     end
 
