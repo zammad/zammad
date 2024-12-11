@@ -333,7 +333,9 @@ describe('Ticket detail view', () => {
         'Internal',
       )
 
-      expect(complementary.firstChild).toHaveClass('bg-stripes')
+      expect(view.getByTestId('article-reply-stripes-panel')).toHaveClass(
+        'bg-stripes',
+      )
 
       const editor = view.getByRole('textbox', { name: 'Text' })
 

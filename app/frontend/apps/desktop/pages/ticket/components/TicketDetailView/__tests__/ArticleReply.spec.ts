@@ -174,32 +174,44 @@ describe('ArticleReply', () => {
       hasInternalArticle: true,
     })
 
-    const complementary = wrapper.getByRole('complementary', {
-      name: 'Reply',
-    })
-
-    expect(complementary.firstChild).toHaveClass('bg-stripes')
-    expect(complementary.firstChild).not.toHaveClass('border-stripes')
+    expect(wrapper.getByTestId('article-reply-stripes-panel')).toHaveClass(
+      'bg-stripes',
+    )
+    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass(
+      'border-stripes',
+    )
 
     await wrapper.events.click(
       wrapper.getByRole('button', { name: 'Pin this panel' }),
     )
 
-    expect(complementary.firstChild).not.toHaveClass('bg-stripes')
-    expect(complementary.firstChild).toHaveClass('border-stripes')
+    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass(
+      'bg-stripes',
+    )
+    expect(wrapper.getByTestId('article-reply-stripes-panel')).toHaveClass(
+      'border-stripes',
+    )
 
     await wrapper.rerender({
       hasInternalArticle: false,
     })
 
-    expect(complementary.firstChild).not.toHaveClass('bg-stripes')
-    expect(complementary.firstChild).not.toHaveClass('border-stripes')
+    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass(
+      'bg-stripes',
+    )
+    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass(
+      'border-stripes',
+    )
 
     await wrapper.events.click(
       wrapper.getByRole('button', { name: 'Unpin this panel' }),
     )
 
-    expect(complementary.firstChild).not.toHaveClass('bg-stripes')
-    expect(complementary.firstChild).not.toHaveClass('border-stripes')
+    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass(
+      'bg-stripes',
+    )
+    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass(
+      'border-stripes',
+    )
   })
 })

@@ -175,45 +175,46 @@ defineExpose({
   <div
     v-if="newArticlePresent"
     ref="articlePanel"
-    class="mx-auto w-full"
+    class="relative mx-auto flex w-full flex-col"
     :class="{
       'max-w-6xl px-12 py-4': !pinned,
-      'sticky bottom-0 z-20 border-t border-t-neutral-300 bg-neutral-50 dark:border-t-gray-900 dark:bg-gray-500':
+      'sticky bottom-0 z-20 overflow-hidden border-t border-t-neutral-300 bg-neutral-50 dark:border-t-gray-900 dark:bg-gray-500':
         pinned,
+    }"
+    :style="{
+      height: pinned ? `${articlePanelHeight}px` : 'auto',
     }"
     aria-labelledby="article-reply-form-title"
     role="complementary"
     :aria-expanded="!pinned"
     v-bind="$attrs"
   >
+    <ResizeLine
+      v-if="pinned"
+      ref="resizeLine"
+      class="group absolute top-0 z-10 h-3 w-full"
+      :label="$t('Resize article panel')"
+      orientation="horizontal"
+      :values="{
+        max: articlePanelMaxHeight,
+        min: MINIMUM_ARTICLE_PANEL_HEIGHT,
+        current: articlePanelHeight,
+      }"
+      @mousedown-event="startResizing"
+      @touchstart-event="startResizing"
+      @dblclick="resetHeight"
+    />
     <div
+      class="flex h-full grow flex-col"
+      data-test-id="article-reply-stripes-panel"
       :class="{
-        'bg-stripes relative z-0 rounded-xl outline outline-1 outline-blue-700 before:rounded-2xl':
+        'bg-stripes relative z-10 rounded-xl outline outline-1 outline-blue-700 before:rounded-2xl':
           hasInternalArticle && !pinned,
         'border-stripes': hasInternalArticle && pinned,
       }"
-      :style="{
-        height: pinned ? `${articlePanelHeight}px` : 'auto',
-      }"
     >
-      <ResizeLine
-        v-if="pinned"
-        ref="resizeLine"
-        class="group absolute h-3 w-full -translate-y-1.5 py-1"
-        :label="$t('Resize article panel')"
-        orientation="horizontal"
-        :values="{
-          max: articlePanelMaxHeight,
-          min: MINIMUM_ARTICLE_PANEL_HEIGHT,
-          current: articlePanelHeight,
-        }"
-        @mousedown-event="startResizing"
-        @touchstart-event="startResizing"
-        @dblclick="resetHeight"
-      />
-
       <div
-        class="isolate flex h-full flex-col"
+        class="isolate flex h-full grow flex-col"
         :class="{
           'rounded-xl border border-neutral-300 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500':
             !pinned,
@@ -254,7 +255,7 @@ defineExpose({
         <div
           id="ticketArticleReplyForm"
           ref="articleForm"
-          class="h-full px-3 pb-3"
+          class="grow px-3 pb-3"
           :class="{
             'overflow-y-auto': pinned,
             'my-[5px] px-4 pt-2': hasInternalArticle && pinned,
@@ -289,6 +290,7 @@ defineExpose({
 <style scoped>
 .border-stripes {
   position: relative;
+  z-index: -10;
   background-color: theme('colors.neutral.50');
 
   &::before {
