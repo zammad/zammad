@@ -30,6 +30,11 @@ interface Props {
   resizable?: boolean
   id: string
   noPadding?: boolean
+  classes?: {
+    resizeLine?: string
+    collapseButton?: string
+  }
+  rememberCollapse?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -46,9 +51,15 @@ const emit = defineEmits<{
   expand: [boolean]
 }>()
 
-const { toggleCollapse, isCollapsed } = useCollapseHandler(emit, {
-  storageKey: `${props.name}-sidebar-collapsed`,
-})
+const collapseOptions: { storageKey?: string } = {}
+
+if (props.rememberCollapse)
+  collapseOptions.storageKey = `${props.name}-sidebar-collapsed`
+
+const { toggleCollapse, isCollapsed } = useCollapseHandler(
+  emit,
+  collapseOptions,
+)
 
 // a11y keyboard navigation // TS: Does not infer type for some reason?
 const resizeLineInstance =
@@ -100,11 +111,10 @@ const collapseButtonClass = computed(() => {
 
 <template>
   <aside
-    :id="props.id"
+    :id="id"
     class="-:bg-neutral-950 -:max-h-screen relative flex flex-col overflow-y-clip border-neutral-100 dark:border-gray-900"
     :class="{
       'py-3': isCollapsed && !noPadding,
-      'border-e': position === SidebarPosition.Start,
       'border-s': position === SidebarPosition.End,
     }"
   >
@@ -134,13 +144,16 @@ const collapseButtonClass = computed(() => {
       ref="resize-line"
       :label="$t('Resize sidebar')"
       class="absolute z-20 has-[+div:hover]:opacity-100"
-      :class="{
-        'ltr:right-0 ltr:translate-x-1/2 rtl:left-0 rtl:-translate-x-1/2':
-          position === SidebarPosition.Start,
-        'ltr:left-0 ltr:-translate-x-1/2 rtl:right-0 rtl:translate-x-1/2':
-          position === SidebarPosition.End,
-        peer: !resizeLineInstance?.resizing,
-      }"
+      :class="[
+        {
+          'ltr:right-0 ltr:translate-x-1/2 rtl:left-0 rtl:-translate-x-1/2':
+            position === SidebarPosition.Start,
+          'ltr:left-0 ltr:-translate-x-1/2 rtl:right-0 rtl:translate-x-1/2':
+            position === SidebarPosition.End,
+          peer: !resizeLineInstance?.resizing,
+        },
+        classes?.resizeLine || '',
+      ]"
       :values="{
         max: Number(maxWidth)?.toFixed(2),
         min: minWidth,
@@ -156,21 +169,24 @@ const collapseButtonClass = computed(() => {
       v-if="collapsible"
       :collapsed="isCollapsed"
       :owner-id="id"
-      class="absolute top-[49px] z-30 peer-hover:opacity-100"
+      class="absolute top-[49px] z-20 peer-hover:opacity-100"
       :inverse="position === SidebarPosition.End"
       variant="tertiary-gray"
       :collapse-label="$t('Collapse sidebar')"
       :expand-label="$t('Expand sidebar')"
-      :class="{
-        'ltr:right-0 ltr:translate-x-[calc(100%-10px)] rtl:left-0 rtl:-translate-x-[calc(100%-10px)]':
-          position === SidebarPosition.Start,
-        'ltr:left-0 ltr:-translate-x-[calc(100%-10px)] rtl:right-0 rtl:translate-x-[calc(100%-10px)]':
-          position === SidebarPosition.End,
-        'ltr:translate-x-[calc(100%-7.5px)] rtl:-translate-x-[calc(100%-7.5px)]':
-          isCollapsed && position === SidebarPosition.Start,
-        'ltr:-translate-x-[calc(100%-7.5px)] rtl:translate-x-[calc(100%-7.5px)]':
-          isCollapsed && position === SidebarPosition.End,
-      }"
+      :class="[
+        {
+          'ltr:right-0 ltr:translate-x-[calc(100%-10px)] rtl:left-0 rtl:-translate-x-[calc(100%-10px)]':
+            position === SidebarPosition.Start,
+          'ltr:left-0 ltr:-translate-x-[calc(100%-10px)] rtl:right-0 rtl:translate-x-[calc(100%-10px)]':
+            position === SidebarPosition.End,
+          'ltr:translate-x-[calc(100%-7.5px)] rtl:-translate-x-[calc(100%-7.5px)]':
+            isCollapsed && position === SidebarPosition.Start,
+          'ltr:-translate-x-[calc(100%-7.5px)] rtl:translate-x-[calc(100%-7.5px)]':
+            isCollapsed && position === SidebarPosition.End,
+        },
+        classes?.collapseButton || '',
+      ]"
       :button-class="collapseButtonClass"
       @click="(node: MouseEvent) => (node.target as HTMLButtonElement)?.blur()"
       @toggle-collapse="toggleCollapse"

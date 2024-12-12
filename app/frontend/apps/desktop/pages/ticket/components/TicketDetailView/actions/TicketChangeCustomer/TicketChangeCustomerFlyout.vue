@@ -20,10 +20,11 @@ import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 
 interface Props {
   ticket: TicketById
-  name: string
 }
 
 const props = defineProps<Props>()
+
+const ticketChangeCustomerFlyoutName = 'ticket-change-customer'
 
 const { form } = useForm()
 
@@ -42,16 +43,16 @@ const formSchema = defineFormSchema([
 ])
 
 const { changeCustomer } = useTicketChangeCustomer(toRef(props, 'ticket'), {
-  onSuccess: () => closeFlyout(props.name),
+  onSuccess: () => closeFlyout(ticketChangeCustomerFlyoutName),
 })
 </script>
 
 <template>
   <CommonFlyout
-    :header-title="__('Change Customer')"
     header-icon="person"
-    name="change-customer"
     no-close-on-action
+    :name="ticketChangeCustomerFlyoutName"
+    :header-title="__('Change Customer')"
     :footer-action-options="{
       form,
       actionButton: {

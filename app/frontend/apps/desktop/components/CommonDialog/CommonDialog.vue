@@ -2,7 +2,8 @@
 
 <script setup lang="ts">
 import { onKeyUp } from '@vueuse/core'
-import { useTemplateRef, nextTick, onMounted } from 'vue'
+import { useTemplateRef, nextTick, onMounted, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import stopEvent from '#shared/utils/events.ts'
@@ -31,6 +32,8 @@ export interface Props {
   // Don't focus the first element inside a Dialog after being mounted
   // if nothing is focusable, will focus "Close" button when dismissable is active.
   noAutofocus?: boolean
+  fullscreen?: boolean
+  global?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -45,13 +48,21 @@ const emit = defineEmits<{
   close: [cancel?: boolean]
 }>()
 
+const { path } = useRoute()
+
+const router = useRouter()
+
+const isActive = computed(() =>
+  props.fullscreen ? true : path === router.currentRoute.value.path,
+)
+
 const dialogElement = useTemplateRef<HTMLElement>('dialog')
 const footerElement = useTemplateRef('footer')
 const contentElement = useTemplateRef('content')
 
 const close = async (cancel?: boolean) => {
   emit('close', cancel)
-  await closeDialog(props.name)
+  await closeDialog(props.name, props.global)
 }
 
 const dialogId = `dialog-${props.name}`
@@ -78,60 +89,82 @@ onMounted(() => {
     firstFocusable?.scrollIntoView({ block: 'nearest' })
   })
 })
+
+// It is the same as flyout, but could be changed in the future?
+const transition = VITE_TEST_MODE
+  ? undefined
+  : {
+      enterActiveClass: 'duration-300 ease-out',
+      enterFromClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
+      enterToClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
+      leaveActiveClass: 'duration-200 ease-in',
+      leaveFromClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
+      leaveToClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
+    }
 </script>
 
 <template>
-  <CommonOverlayContainer
-    :id="dialogId"
-    tag="div"
-    class="fixed top-[50%] z-50 w-[500px] translate-y-[-50%] ltr:left-[50%] ltr:translate-x-[-50%] rtl:right-[50%] rtl:-translate-x-[-50%]"
-    backdrop-class="z-40"
-    role="dialog"
-    :aria-labelledby="`${dialogId}-title`"
-    @click-background="close()"
-  >
-    <component
-      :is="wrapperTag"
-      ref="dialog"
-      data-common-dialog
-      class="flex flex-col gap-3 rounded-xl border border-neutral-100 bg-neutral-50 p-3 dark:border-gray-900 dark:bg-gray-500"
-    >
-      <div
-        class="flex items-center justify-between bg-neutral-50 dark:bg-gray-500"
+  <!--  `display:none` to prevent showing up inactive dialog for cached instance -->
+  <Transition :appear="isActive" v-bind="transition">
+    <!-- We use teleport here to  center it to target node and increase z index on fullscreen to avoid clicking collapse and resize buttons -->
+    <Teleport :to="fullscreen ? '#app' : '#main-content'">
+      <CommonOverlayContainer
+        :id="dialogId"
+        tag="div"
+        disable-teleport
+        class="absolute top-[50%] z-50 h-full w-full translate-y-[-50%] ltr:left-[50%] ltr:translate-x-[-50%] rtl:right-[50%] rtl:-translate-x-[-50%]"
+        :class="{ 'z-40': fullscreen, hidden: !isActive }"
+        role="dialog"
+        backdrop-class="z-40"
+        :show-backdrop="isActive"
+        :fullscreen="fullscreen"
+        :aria-labelledby="`${dialogId}-title`"
+        @click-background="close()"
       >
-        <slot name="header">
+        <component
+          :is="wrapperTag"
+          ref="dialog"
+          data-common-dialog
+          class="!absolute top-1/2 z-50 flex w-[500px] -translate-y-1/2 flex-col gap-3 rounded-xl border border-neutral-100 bg-neutral-50 p-3 ltr:left-1/2 ltr:-translate-x-1/2 rtl:right-1/2 rtl:translate-x-1/2 dark:border-gray-900 dark:bg-gray-500"
+        >
           <div
-            class="flex items-center gap-2 text-xl leading-snug text-gray-100 dark:text-neutral-400"
+            class="flex items-center justify-between bg-neutral-50 dark:bg-gray-500"
           >
-            <CommonIcon v-if="headerIcon" size="small" :name="headerIcon" />
-            <h3 :id="`${dialogId}-title`">{{ $t(headerTitle) }}</h3>
+            <slot name="header">
+              <div
+                class="flex items-center gap-2 text-xl leading-snug text-gray-100 dark:text-neutral-400"
+              >
+                <CommonIcon v-if="headerIcon" size="small" :name="headerIcon" />
+                <h3 :id="`${dialogId}-title`">{{ $t(headerTitle) }}</h3>
+              </div>
+            </slot>
+            <CommonButton
+              class="ms-auto"
+              variant="neutral"
+              size="medium"
+              icon="x-lg"
+              :aria-label="$t('Close dialog')"
+              @click="close()"
+            />
           </div>
-        </slot>
-        <CommonButton
-          class="ms-auto"
-          variant="neutral"
-          size="medium"
-          icon="x-lg"
-          :aria-label="$t('Close dialog')"
-          @click="close()"
-        />
-      </div>
-      <div ref="content" v-bind="$attrs" class="py-6 text-center">
-        <slot>
-          <CommonLabel size="large">{{
-            $t(content, ...(contentPlaceholder || []))
-          }}</CommonLabel>
-        </slot>
-      </div>
-      <div v-if="$slots.footer || !hideFooter" ref="footer">
-        <slot name="footer">
-          <CommonDialogActionFooter
-            v-bind="footerActionOptions"
-            @cancel="close(true)"
-            @action="close(false)"
-          />
-        </slot>
-      </div>
-    </component>
-  </CommonOverlayContainer>
+          <div ref="content" v-bind="$attrs" class="py-6 text-center">
+            <slot>
+              <CommonLabel size="large">{{
+                $t(content, ...(contentPlaceholder || []))
+              }}</CommonLabel>
+            </slot>
+          </div>
+          <div v-if="$slots.footer || !hideFooter" ref="footer">
+            <slot name="footer">
+              <CommonDialogActionFooter
+                v-bind="footerActionOptions"
+                @cancel="close(true)"
+                @action="close(false)"
+              />
+            </slot>
+          </div>
+        </component>
+      </CommonOverlayContainer>
+    </Teleport>
+  </Transition>
 </template>

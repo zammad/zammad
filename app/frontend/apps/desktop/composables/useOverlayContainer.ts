@@ -9,15 +9,17 @@ import {
   getCurrentInstance,
   onMounted,
   nextTick,
+  type AsyncComponentLoader,
+  type Component,
+  type Ref,
 } from 'vue'
+import { useRoute } from 'vue-router'
 
 import {
   destroyComponent,
   pushComponent,
 } from '#shared/components/DynamicInitializer/manage.ts'
 import testFlags from '#shared/utils/testFlags.ts'
-
-import type { AsyncComponentLoader, Component, Ref } from 'vue'
 
 export interface OverlayContainerOptions {
   name: string
@@ -29,8 +31,14 @@ export interface OverlayContainerOptions {
    * @default true
    */
   refocus?: boolean
-  beforeOpen?: () => Awaited<unknown>
-  afterClose?: () => Awaited<unknown>
+  beforeOpen?: (uniqueId?: string) => Awaited<unknown>
+  afterClose?: (uniqueId?: string) => Awaited<unknown>
+  fullscreen?: boolean
+  /**
+   * If true, no page context will be added to the name, e.g. for confirmation dialogs.
+   * @default false
+   */
+  global?: boolean
 }
 
 export type OverlayContainerType = 'dialog' | 'flyout'
@@ -111,16 +119,18 @@ export const closeOverlayContainer = async (
   type: OverlayContainerType,
   name: string,
 ) => {
+  const [realName, uniqueId] = name.split(':')
+
   if (!overlayContainerMeta[type].opened.value.has(name)) return
 
-  const options = getOverlayContainerOptions(type, name)
+  const options = getOverlayContainerOptions(type, realName)
 
   await destroyComponent(type, name)
 
   overlayContainerMeta[type].opened.value.delete(name)
 
   if (options.afterClose) {
-    await options.afterClose()
+    await options.afterClose(uniqueId)
   }
 
   const controllerElement =
@@ -141,39 +151,35 @@ export const openOverlayContainer = async (
   name: string,
   props: Record<string, unknown>,
 ) => {
-  // Close other open container from same type, before opening new one.
-  const alreadyOpenedContainer = currentOverlayContainersOpen.value[type]
-  if (alreadyOpenedContainer && alreadyOpenedContainer !== name) {
-    await closeOverlayContainer(type, alreadyOpenedContainer)
-  }
-
-  if (overlayContainerMeta[type].opened.value.has(name))
-    return Promise.resolve()
-
   const options = getOverlayContainerOptions(type, name)
 
+  let uniqueName = name
+  if (props.uniqueId) {
+    uniqueName = `${name}:${props.uniqueId}`
+  }
+
   if (options.refocus) {
-    overlayContainerMeta[type].lastFocusedElements[name] =
+    overlayContainerMeta[type].lastFocusedElements[uniqueName] =
       document.activeElement as HTMLElement
   }
 
-  overlayContainerMeta[type].opened.value.add(name)
+  overlayContainerMeta[type].opened.value.add(uniqueName)
 
   if (options.beforeOpen) {
-    await options.beforeOpen()
+    await options.beforeOpen(props.uniqueId as string | undefined)
   }
 
   const component = defineAsyncComponent(
     options.component as AsyncComponentLoader,
   )
 
-  await pushComponent(type, name, component, props)
+  await pushComponent(type, uniqueName, component, props)
 
   return new Promise<void>((resolve) => {
     options.component().finally(() => {
       resolve()
       nextTick(() => {
-        testFlags.set(`${name}.opened`)
+        testFlags.set(`${uniqueName}.opened`)
       })
     })
   })
@@ -183,53 +189,56 @@ export const useOverlayContainer = (
   type: OverlayContainerType,
   options: OverlayContainerOptions,
 ) => {
-  options.refocus ??= true
-
-  overlayContainerMeta[type].options.set(
-    options.name,
-    options as OverlayContainerOptions,
-  )
-
-  const isOpened = computed(() =>
-    overlayContainerMeta[type].opened.value.has(options.name),
-  )
+  const { name } = options
 
   const vm = getCurrentInstance()
-
-  if (vm) {
-    // Unmounted happens after setup, if component was unmounted so we need to add options again.
-    // This happens mainly in storybook stories.
-    onMounted(() => {
-      overlayContainerMeta[type].mounted.add(options.name)
-      overlayContainerMeta[type].options.set(
-        options.name,
-        options as OverlayContainerOptions,
-      )
-    })
-
-    onUnmounted(async () => {
-      overlayContainerMeta[type].mounted.delete(options.name)
-      await closeOverlayContainer(type, options.name)
-      // Was mounted during hmr.
-      if (!overlayContainerMeta[type].mounted.has(options.name)) {
-        overlayContainerMeta[type].options.delete(options.name)
-      }
-    })
+  if (!vm) {
+    throw new Error(
+      `Overlay container '${name}' from type '${type}' was not initialized inside setup context.`,
+    )
   }
 
+  options.refocus ??= true
+
+  const route = useRoute()
+
+  const currentName = options.global ? name : `${name}_${route.path}`
+
+  overlayContainerMeta[type].options.set(currentName, options)
+
+  const isOpened = computed(() =>
+    overlayContainerMeta[type].opened.value.has(currentName),
+  )
+
+  // Unmounted happens after setup, if component was unmounted so we need to add options again.
+  // This happens mainly in storybook stories.
+  onMounted(() => {
+    overlayContainerMeta[type].mounted.add(currentName)
+    overlayContainerMeta[type].options.set(currentName, options)
+  })
+
+  onUnmounted(async () => {
+    overlayContainerMeta[type].mounted.delete(currentName)
+    await closeOverlayContainer(type, currentName)
+    // Was mounted during hmr.
+    if (!overlayContainerMeta[type].mounted.has(currentName)) {
+      overlayContainerMeta[type].options.delete(currentName)
+    }
+  })
+
   const open = (props: Record<string, unknown> = {}) => {
-    return openOverlayContainer(type, options.name, props)
+    return openOverlayContainer(type, currentName, props)
   }
 
   const close = () => {
-    return closeOverlayContainer(type, options.name)
+    return closeOverlayContainer(type, currentName)
   }
 
   const toggle = (props: Record<string, unknown> = {}) => {
     if (isOpened.value) {
-      return closeOverlayContainer(type, options.name)
+      return closeOverlayContainer(type, currentName)
     }
-    return openOverlayContainer(type, options.name, props)
+    return openOverlayContainer(type, currentName, props)
   }
 
   let pendingPrefetch: Promise<unknown>
@@ -244,8 +253,9 @@ export const useOverlayContainer = (
   }
 
   return {
+    overlayContainerMeta,
     isOpened,
-    name: options.name,
+    name: currentName,
     open,
     close,
     toggle,

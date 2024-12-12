@@ -3,7 +3,7 @@
 import { computed, toRefs } from 'vue'
 
 import type { FormSchemaField } from '#shared/components/Form/types.ts'
-import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import getFieldFromAttribute from '../form/getFieldFromAttribute.ts'
@@ -83,4 +83,9 @@ export const useObjectAttributes = (object: EnumObjectManagerObjects) => {
   return {
     ...toRefs(objectAttributes.objectAttributesObjectLookup[object]),
   }
+}
+
+export const initializeDefaultObjectAttributes = () => {
+  useObjectAttributes(EnumObjectManagerObjects.Ticket)
+  useObjectAttributes(EnumObjectManagerObjects.TicketArticle)
 }

@@ -32,16 +32,16 @@ export const useTicketSharedDraft = () => {
     }
   }
 
+  const sharedDraftFlyout = useFlyout({
+    name: 'shared-draft',
+    component: () => import('../components/TicketSharedDraftFlyout.vue'),
+  })
+
   const openSharedDraftFlyout = (
     draftType: 'start' | 'detail-view',
     sharedDraftId?: string | null,
     form?: FormRef,
   ) => {
-    const sharedDraftFlyout = useFlyout({
-      name: 'shared-draft',
-      component: () => import('../components/TicketSharedDraftFlyout.vue'),
-    })
-
     sharedDraftFlyout.open({
       sharedDraftId,
       form,

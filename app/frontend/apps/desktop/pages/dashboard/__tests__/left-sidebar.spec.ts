@@ -230,7 +230,7 @@ describe('Left sidebar', () => {
         expect(
           view,
           'correctly redirects to personal settings page',
-        ).toHaveCurrentUrl('/personal-setting')
+        ).toHaveCurrentUrl('/personal-setting/appearance')
       })
 
       expect(

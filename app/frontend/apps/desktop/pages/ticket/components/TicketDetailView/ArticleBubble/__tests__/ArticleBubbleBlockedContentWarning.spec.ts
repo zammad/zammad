@@ -42,7 +42,6 @@ describe('ArticleBubbleBlockedContentWarning', () => {
         provideTicketInformationMocks(ticket)
       },
     })
-    console.log(wrapper.html())
     expect(wrapper.getByIconName('exclamation-triangle')).toBeInTheDocument()
     expect(wrapper.getByText('Original Formatting')).toBeInTheDocument()
   })

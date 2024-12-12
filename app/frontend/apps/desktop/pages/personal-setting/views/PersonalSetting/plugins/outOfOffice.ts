@@ -11,7 +11,6 @@ export default <PersonalSettingPlugin>{
   },
   route: {
     path: 'out-of-office',
-    alias: '',
     name: 'PersonalSettingOutOfOffice',
     component: () => import('../../PersonalSettingOutOfOffice.vue'),
     level: 2,

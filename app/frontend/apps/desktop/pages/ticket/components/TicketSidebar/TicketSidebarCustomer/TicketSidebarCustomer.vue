@@ -6,6 +6,7 @@ import { watch, computed } from 'vue'
 import { useUserDetail } from '#shared/entities/user/composables/useUserDetail.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
+import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
 import {
   type TicketSidebarProps,
   type TicketSidebarEmits,
@@ -20,11 +21,13 @@ import TicketSidebarCustomerContent from './TicketSidebarCustomerContent.vue'
 
 const props = defineProps<TicketSidebarProps>()
 
+const { persistentStates } = usePersistentStates()
+
 const emit = defineEmits<TicketSidebarEmits>()
 
 const application = useApplicationStore()
 
-// TODO: only for now, implement correct situtation for create/detail view.
+// TODO: only for now, implement correct situation for create/detail view.
 const customerId = computed(() => Number(props.context.formValues.customer_id))
 
 const {
@@ -90,6 +93,7 @@ if (customerId.value) {
   >
     <TicketSidebarCustomerContent
       v-if="customer"
+      v-model="persistentStates"
       :context="context"
       :sidebar-plugin="sidebarPlugin"
       :customer="customer"

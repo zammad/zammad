@@ -12,20 +12,30 @@ import type { ConfirmationVariantOptions } from './types.ts'
 
 const { confirmationOptions } = useConfirmation()
 
+interface Props {
+  uniqueId: string
+}
+
+const props = defineProps<Props>()
+
+const currentConfirmationOptions = computed(() => {
+  return confirmationOptions.value?.get(props.uniqueId)
+})
+
 const handleConfirmation = (isCancel?: boolean) => {
   if (isCancel) {
-    confirmationOptions.value?.cancelCallback()
+    currentConfirmationOptions.value?.cancelCallback()
   } else if (isCancel === false) {
-    confirmationOptions.value?.confirmCallback()
+    currentConfirmationOptions.value?.confirmCallback()
   } else {
-    confirmationOptions.value?.closeCallback()
+    currentConfirmationOptions.value?.closeCallback()
   }
 
-  confirmationOptions.value = undefined
+  confirmationOptions.value.delete(props.uniqueId)
 }
 
 const confirmationVariant = computed<ConfirmationVariantOptions>(() => {
-  switch (confirmationOptions.value?.confirmationVariant) {
+  switch (currentConfirmationOptions.value?.confirmationVariant) {
     case 'delete':
       return {
         headerTitle: __('Delete Object'),
@@ -33,7 +43,8 @@ const confirmationVariant = computed<ConfirmationVariantOptions>(() => {
         content: __('Are you sure you want to delete this object?'),
         footerActionOptions: {
           actionLabel:
-            confirmationOptions.value?.buttonLabel || __('Delete Object'),
+            currentConfirmationOptions.value?.buttonLabel ||
+            __('Delete Object'),
           actionButton: {
             variant: 'danger',
           },
@@ -57,21 +68,23 @@ const confirmationVariant = computed<ConfirmationVariantOptions>(() => {
         headerTitle: __('Confirmation'),
         content: __('Do you want to continue?'),
         footerActionOptions: {
-          actionLabel: confirmationOptions.value?.buttonLabel || __('Yes'),
+          actionLabel:
+            currentConfirmationOptions.value?.buttonLabel || __('Yes'),
           actionButton: {
-            variant: confirmationOptions.value?.buttonVariant || 'primary',
+            variant:
+              currentConfirmationOptions.value?.buttonVariant || 'primary',
           },
-          cancelLabel: confirmationOptions.value?.cancelLabel,
+          cancelLabel: currentConfirmationOptions.value?.cancelLabel,
         },
       }
   }
 })
 
 const headerTitle = computed(() => {
-  if (confirmationOptions.value?.headerTitle) {
+  if (currentConfirmationOptions.value?.headerTitle) {
     return i18n.t(
-      confirmationOptions.value?.headerTitle,
-      ...(confirmationOptions.value?.headerTitlePlaceholder || []),
+      currentConfirmationOptions.value?.headerTitle,
+      ...(currentConfirmationOptions.value?.headerTitlePlaceholder || []),
     )
   }
 
@@ -81,14 +94,15 @@ const headerTitle = computed(() => {
 
 <template>
   <CommonDialog
-    name="confirmation"
+    :name="`confirmation:${props.uniqueId}`"
     :header-title="headerTitle"
     :header-icon="
-      confirmationOptions?.headerIcon || confirmationVariant.headerIcon
+      currentConfirmationOptions?.headerIcon || confirmationVariant.headerIcon
     "
-    :content="confirmationOptions?.text || confirmationVariant.content"
-    :content-placeholder="confirmationOptions?.textPlaceholder"
+    :content="currentConfirmationOptions?.text || confirmationVariant.content"
+    :content-placeholder="currentConfirmationOptions?.textPlaceholder"
     :footer-action-options="confirmationVariant.footerActionOptions"
+    global
     @close="handleConfirmation"
-  ></CommonDialog>
+  />
 </template>

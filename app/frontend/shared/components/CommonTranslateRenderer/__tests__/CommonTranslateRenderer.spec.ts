@@ -68,8 +68,6 @@ describe('CommonlTranslateRenderer.vue', () => {
       router: true,
     })
 
-    console.log('view:', view.html())
-
     const label = view.getByTestId('common-label')
 
     expect(label).toHaveTextContent('Label')

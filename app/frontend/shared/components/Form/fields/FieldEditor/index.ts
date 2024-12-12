@@ -10,7 +10,7 @@ const fieldDefinition = createInput(
   FieldEditorWrapper,
   ['groupId', 'ticketId', 'customerId', 'meta', 'contentType'],
   {
-    features: [formUpdaterTrigger('delayed'), defaultEmptyValueString],
+    features: [formUpdaterTrigger('delayed', 500), defaultEmptyValueString],
   },
 )
 

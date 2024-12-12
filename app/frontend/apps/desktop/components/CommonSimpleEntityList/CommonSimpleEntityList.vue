@@ -22,6 +22,10 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const modelValue = defineModel<boolean>({
+  default: false,
+})
+
 defineEmits<{
   'load-more': []
 }>()
@@ -37,7 +41,12 @@ const entitySetup = computed(() => {
 </script>
 
 <template>
-  <CommonSectionCollapse :id="id" :title="label" :no-header="!label">
+  <CommonSectionCollapse
+    :id="id"
+    v-model="modelValue"
+    :title="label"
+    :no-header="!label"
+  >
     <ul v-if="entity.array?.length" class="flex flex-col gap-1.5">
       <li v-for="item in entitySetup.array" :key="`entity-${item.id}`">
         <component

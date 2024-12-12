@@ -12,8 +12,10 @@ import { useApplicationConfigTwoFactor } from '#shared/composables/authenticatio
 import type { TwoFactorActionTypes } from '#shared/entities/two-factor/types.ts'
 import { useUserCurrentTwoFactorRemoveMethodMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethod.api.ts'
 import { useUserCurrentTwoFactorSetDefaultMethodMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorSetDefaultMethod.api.ts'
+import { ErrorRouteType, redirectErrorRoute } from '#shared/router/error.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+import { ErrorStatusCodes } from '#shared/types/error.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
@@ -30,7 +32,13 @@ defineOptions({
   beforeRouteEnter() {
     const { hasEnabledMethods } = useApplicationConfigTwoFactor()
 
-    if (!hasEnabledMethods.value) return '/error'
+    if (!hasEnabledMethods.value)
+      return redirectErrorRoute({
+        type: ErrorRouteType.AuthenticatedError,
+        title: __('Forbidden'),
+        message: __('There are no enabled two-factor authentication methods.'),
+        statusCode: ErrorStatusCodes.Forbidden,
+      })
 
     return true
   },
@@ -51,7 +59,14 @@ const {
 watch(hasEnabledMethods, (newValue) => {
   if (newValue) return
 
-  router.replace('/error')
+  router.replace(
+    redirectErrorRoute({
+      type: ErrorRouteType.AuthenticatedError,
+      title: __('Forbidden'),
+      message: __('There are no enabled two-factor authentication methods.'),
+      statusCode: ErrorStatusCodes.Forbidden,
+    }),
+  )
 })
 
 const { breadcrumbItems } = useBreadcrumb(__('Two-factor Authentication'))

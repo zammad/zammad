@@ -27,17 +27,26 @@ const routeFiles = import.meta.glob<RouteModule>('../../pages/**/routes.ts', {
 
 const routeValues = Object.values(routeFiles)
 const firstLevelRoutes: PageRoute[] = []
+
+let permanentItemCount = 0
+
 routeValues.forEach((routeModule) => {
   if (Array.isArray(routeModule)) {
+    permanentItemCount += routeModule.filter(
+      (route: RouteRecordRaw) => route.meta?.permanentItem,
+    ).length
+
     const routes = routeModule.filter((route: RouteRecordRaw) => {
       return route.meta?.level === 1
     })
     if (!routes?.length) return
+
     const mappedRoutes = routes.map((route) => ({
       path: route.path,
       name: route.name,
       meta: route.meta,
     }))
+
     firstLevelRoutes.push(...mappedRoutes)
   }
 })
@@ -46,4 +55,6 @@ const sortedFirstLevelRoutes = firstLevelRoutes.sort(
   (a, b) => a.meta.order - b.meta.order,
 )
 
-export { firstLevelRoutes, sortedFirstLevelRoutes }
+const numberOfPermanentItems = permanentItemCount
+
+export { firstLevelRoutes, sortedFirstLevelRoutes, numberOfPermanentItems }

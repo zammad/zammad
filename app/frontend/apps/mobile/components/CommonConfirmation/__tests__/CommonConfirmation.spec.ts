@@ -15,7 +15,7 @@ let wrapper: ExtendedRenderResult
 const { confirmationOptions } = useConfirmation()
 
 beforeEach(() => {
-  confirmationOptions.value = undefined
+  confirmationOptions.value.delete('confirmation')
 
   wrapper = renderComponent(CommonConfirmation, { shallow: false })
 })
@@ -24,12 +24,12 @@ describe('popup confirm behaviour', () => {
   it('renders confirmation dialog with default values', async () => {
     const confirmCallbackSpy = vi.fn()
 
-    confirmationOptions.value = {
+    confirmationOptions.value.set('confirmation', {
       text: 'Test heading',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: vi.fn(),
       closeCallback: vi.fn(),
-    }
+    })
 
     await waitForNextTick()
 
@@ -43,14 +43,14 @@ describe('popup confirm behaviour', () => {
   it('renders confirmation dialog with custom values', async () => {
     const confirmCallbackSpy = vi.fn()
 
-    confirmationOptions.value = {
+    confirmationOptions.value.set('confirmation', {
       text: 'Test heading',
       buttonLabel: 'Custom button title',
       buttonVariant: 'danger',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: vi.fn(),
       closeCallback: vi.fn(),
-    }
+    })
 
     await waitForNextTick()
 
@@ -64,12 +64,12 @@ describe('popup confirm behaviour', () => {
     const confirmCallbackSpy = vi.fn()
     const cancelCallbackSpy = vi.fn()
 
-    confirmationOptions.value = {
+    confirmationOptions.value.set('confirmation', {
       text: 'Test heading',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: cancelCallbackSpy,
       closeCallback: vi.fn(),
-    }
+    })
 
     await waitForNextTick()
 

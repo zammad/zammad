@@ -14,3 +14,9 @@ export interface ObjectAttributesConfig {
     link?: string
   }
 }
+
+export interface ObjectAttributeProps<T, V> {
+  attribute: T
+  value: V
+  config?: ObjectAttributesConfig
+}

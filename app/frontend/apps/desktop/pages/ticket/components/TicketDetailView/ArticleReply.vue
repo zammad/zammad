@@ -79,9 +79,7 @@ const availableArticleTypes = computed(() => {
   })
 })
 
-const { userId } = useSessionStore()
-
-const pinned = useLocalStorage(`${userId}-article-reply-pinned`, false)
+const pinned = ref(false)
 
 const togglePinned = () => {
   pinned.value = !pinned.value
@@ -94,8 +92,8 @@ const articlePanel = ref<HTMLElement>()
 //   - the panel is being unpinned
 watch(
   () => [props.newArticlePresent, pinned.value],
-  ([newArticlePresent, pinned]) => {
-    if (!newArticlePresent || pinned) return
+  ([newArticlePresent, newPinned]) => {
+    if (!newArticlePresent || newPinned) return
 
     nextTick(() => {
       // NB: Give editor a chance to initialize its height.
@@ -106,8 +104,20 @@ watch(
   },
 )
 
+// Reset the pinned state whenever the article is removed.
+watch(
+  () => props.newArticlePresent,
+  (newArticlePresent) => {
+    if (newArticlePresent) return
+
+    pinned.value = false
+  },
+)
+
 const DEFAULT_ARTICLE_PANEL_HEIGHT = 290
 const MINIMUM_ARTICLE_PANEL_HEIGHT = 150
+
+const { userId } = useSessionStore()
 
 const articlePanelHeight = useLocalStorage(
   `${userId}-article-reply-height`,

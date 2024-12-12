@@ -11,7 +11,7 @@ const { confirmationOptions } = useConfirmation()
 
 beforeAll(() => {
   const app = document.createElement('div')
-  app.id = 'app'
+  app.id = 'main-content'
   document.body.appendChild(app)
 })
 
@@ -21,20 +21,25 @@ afterAll(() => {
 
 describe('dialog confirm behaviour', () => {
   beforeEach(() => {
-    confirmationOptions.value = undefined
+    confirmationOptions.value.delete('confirmation')
   })
 
   it('renders confirmation dialog with default values', async () => {
     const confirmCallbackSpy = vi.fn()
 
-    const wrapper = renderComponent(CommonConfirmationDialog)
+    const wrapper = renderComponent(CommonConfirmationDialog, {
+      props: {
+        uniqueId: 'confirmation',
+      },
+      router: true,
+    })
 
-    confirmationOptions.value = {
+    confirmationOptions.value.set('confirmation', {
       text: 'Test heading',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: vi.fn(),
       closeCallback: vi.fn(),
-    }
+    })
 
     await waitForNextTick()
 
@@ -48,14 +53,19 @@ describe('dialog confirm behaviour', () => {
   it('renders confirmation dialog with variant', async () => {
     const confirmCallbackSpy = vi.fn()
 
-    const wrapper = renderComponent(CommonConfirmationDialog)
+    const wrapper = renderComponent(CommonConfirmationDialog, {
+      props: {
+        uniqueId: 'confirmation',
+      },
+      router: true,
+    })
 
-    confirmationOptions.value = {
+    confirmationOptions.value.set('confirmation', {
       confirmationVariant: 'delete',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: vi.fn(),
       closeCallback: vi.fn(),
-    }
+    })
 
     await waitForNextTick()
 
@@ -75,16 +85,21 @@ describe('dialog confirm behaviour', () => {
   it('renders confirmation dialog with custom values', async () => {
     const confirmCallbackSpy = vi.fn()
 
-    const wrapper = renderComponent(CommonConfirmationDialog)
+    const wrapper = renderComponent(CommonConfirmationDialog, {
+      props: {
+        uniqueId: 'confirmation',
+      },
+      router: true,
+    })
 
-    confirmationOptions.value = {
+    confirmationOptions.value.set('confirmation', {
       text: 'Test heading',
       buttonLabel: 'Custom button title',
       buttonVariant: 'danger',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: vi.fn(),
       closeCallback: vi.fn(),
-    }
+    })
 
     await waitForNextTick()
 
@@ -100,14 +115,19 @@ describe('dialog confirm behaviour', () => {
     const confirmCallbackSpy = vi.fn()
     const cancelCallbackSpy = vi.fn()
 
-    const wrapper = renderComponent(CommonConfirmationDialog)
+    const wrapper = renderComponent(CommonConfirmationDialog, {
+      props: {
+        uniqueId: 'confirmation',
+      },
+      router: true,
+    })
 
-    confirmationOptions.value = {
+    confirmationOptions.value.set('confirmation', {
       text: 'Test heading',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: cancelCallbackSpy,
       closeCallback: vi.fn(),
-    }
+    })
 
     await waitForNextTick()
 

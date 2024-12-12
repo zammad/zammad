@@ -10,6 +10,7 @@ const renderPageHelp = (options: any = {}) => {
   return renderComponent(CommonPageHelp, {
     ...options,
     dialog: true,
+    router: true,
   })
 }
 

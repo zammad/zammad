@@ -6,6 +6,7 @@ import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvata
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
 import type { OrganizationQuery, User } from '#shared/graphql/types.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
@@ -22,6 +23,8 @@ interface Props extends TicketSidebarContentProps {
 }
 
 defineProps<Props>()
+
+const persistentStates = defineModel<ObjectLike>({ required: true })
 
 defineEmits<{
   'load-more-members': []
@@ -42,6 +45,7 @@ const actions: MenuItem[] = [
 
 <template>
   <TicketSidebarContent
+    v-model="persistentStates.scrollPosition"
     :title="sidebarPlugin.title"
     :icon="sidebarPlugin.icon"
     :entity="organization"
@@ -69,6 +73,7 @@ const actions: MenuItem[] = [
 
     <CommonSimpleEntityList
       id="organization-members"
+      v-model="persistentStates.collapseMembers"
       :type="EntityType.User"
       :label="__('Members')"
       :entity="organizationMembers"

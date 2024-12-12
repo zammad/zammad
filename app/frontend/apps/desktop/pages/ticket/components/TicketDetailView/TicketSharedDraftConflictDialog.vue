@@ -20,11 +20,12 @@ const props = defineProps<{
 }>()
 
 const { notify } = useNotifications()
+const dialogName = 'shared-draft-conflict'
 
 const { openSharedDraftFlyout } = useTicketSharedDraft()
 
 const close = () => {
-  closeDialog('shared-draft-conflict')
+  closeDialog(dialogName)
 }
 
 const draftUpdateMutation = new MutationHandler(
@@ -59,7 +60,7 @@ const showDraft = () => {
 
 <template>
   <CommonDialog
-    name="shared-draft-conflict"
+    :name="dialogName"
     header-title="Save Draft"
     content="There is an existing draft. Do you want to overwrite it?"
   >

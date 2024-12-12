@@ -3,6 +3,8 @@
 import { getNode } from '@formkit/core'
 
 import { renderComponent } from '#tests/support/components/index.ts'
+// import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { pushComponent } from '#shared/components/DynamicInitializer/manage.ts'
@@ -28,6 +30,8 @@ vi.mock('#shared/components/DynamicInitializer/manage.ts', () => {
   }
 })
 
+mockRouterHooks()
+
 const renderTicketSidebarSharedDraftStartContent = async (
   sharedDraftStartList: TicketSharedDraftStartListQuery['ticketSharedDraftStartList'],
   context: {
@@ -40,12 +44,14 @@ const renderTicketSidebarSharedDraftStartContent = async (
     props: {
       sidebarPlugin: sharedDraftStartSidebarPlugin,
       sharedDraftStartList,
+      modelValue: {},
       context: {
         screenType: TicketSidebarScreenType.TicketCreate,
         ...context,
       },
     },
     router: true,
+    routerView: true,
     form: true,
     ...options,
   })
@@ -169,7 +175,7 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
 
     expect(pushComponent).toHaveBeenCalledWith(
       'flyout',
-      'shared-draft',
+      'shared-draft_/', // appended test route path
       expect.anything(),
       {
         form: {
@@ -202,7 +208,7 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
       'foobar',
     )
 
-    await getNode('sharedDraftTitle')?.settled
+    await getNode('sharedDraftTitle-undefined')?.settled
 
     await wrapper.events.click(
       wrapper.getByRole('link', { name: 'Create Shared Draft' }),

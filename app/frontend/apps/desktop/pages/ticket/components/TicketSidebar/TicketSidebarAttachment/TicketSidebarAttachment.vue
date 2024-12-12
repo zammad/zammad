@@ -4,6 +4,7 @@
 import { computed, watch } from 'vue'
 
 import { useArticleContext } from '#desktop/pages/ticket/composables/useArticleContext.ts'
+import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
 import {
   type TicketSidebarProps,
   type TicketSidebarEmits,
@@ -17,6 +18,8 @@ import TicketSidebarAttachmentContent from './TicketSidebarAttachmentContent.vue
 import { useTicketAttachments } from './useTicketAttachments.ts'
 
 defineProps<TicketSidebarProps>()
+
+const { persistentStates } = usePersistentStates()
 
 const emit = defineEmits<TicketSidebarEmits>()
 
@@ -61,6 +64,7 @@ const badge = computed<TicketSidebarButtonBadgeDetails | undefined>(() => {
     :badge="badge"
   >
     <TicketSidebarAttachmentContent
+      v-model="persistentStates"
       :context="context"
       :sidebar-plugin="sidebarPlugin"
       :ticket-attachments="ticketAttachments"

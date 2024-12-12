@@ -6,7 +6,13 @@ import { ErrorStatusCodes } from '#shared/types/error.ts'
 
 import type { NavigationHookAfter, Router } from 'vue-router'
 
+export enum ErrorRouteType {
+  PublicError = 'Error',
+  AuthenticatedError = 'ErrorTab',
+}
+
 export interface ErrorOptions {
+  type?: ErrorRouteType
   title: string
   message: string
   statusCode: ErrorStatusCodes
@@ -31,19 +37,21 @@ export const errorAfterGuard: NavigationHookAfter = (to) => {
   }
 }
 
-export const redirectToError = (
-  router: Router,
-  options: Partial<ErrorOptions> = {},
-) => {
+export const redirectErrorRoute = (options: Partial<ErrorOptions> = {}) => {
   errorOptions.value = {
     ...defaultOptions,
     ...options,
   }
 
-  return router.replace({
-    name: 'Error',
+  return {
+    name: options.type ?? ErrorRouteType.PublicError,
     query: {
       redirect: '1',
     },
-  })
+  }
 }
+
+export const redirectToError = (
+  router: Router,
+  options: Partial<ErrorOptions> = {},
+) => router.replace(redirectErrorRoute(options))

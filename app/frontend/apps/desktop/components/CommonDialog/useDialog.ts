@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { useRoute } from 'vue-router'
+
 import {
   closeOverlayContainer,
   getOpenedOverlayContainers,
@@ -9,6 +11,7 @@ import {
   useOverlayContainer,
   type OverlayContainerOptions,
 } from '#desktop/composables/useOverlayContainer.ts'
+import { getCurrentApp } from '#desktop/currentApp.ts'
 
 const OVERLAY_CONTAINER_TYPE = 'dialog'
 
@@ -30,10 +33,34 @@ export const getDialogMeta = () => {
 export const openDialog = async (
   name: string,
   props: Record<string, unknown>,
-) => openOverlayContainer(OVERLAY_CONTAINER_TYPE, name, props)
+  global: boolean = false,
+) => {
+  let currentName = name
 
-export const closeDialog = async (name: string) =>
-  closeOverlayContainer(OVERLAY_CONTAINER_TYPE, name)
+  if (!global) {
+    getCurrentApp().runWithContext(() => {
+      const route = useRoute()
+
+      currentName = `${name}_${route.path}`
+    })
+  }
+
+  return openOverlayContainer(OVERLAY_CONTAINER_TYPE, currentName, props)
+}
+
+export const closeDialog = async (name: string, global: boolean = false) => {
+  let currentName = name
+
+  if (!global) {
+    getCurrentApp().runWithContext(() => {
+      const route = useRoute()
+
+      currentName = `${name}_${route.path}`
+    })
+  }
+
+  return closeOverlayContainer(OVERLAY_CONTAINER_TYPE, currentName)
+}
 
 export const useDialog = (options: OverlayContainerOptions) => {
   return useOverlayContainer(OVERLAY_CONTAINER_TYPE, options)

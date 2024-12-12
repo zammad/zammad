@@ -17,6 +17,7 @@ export interface TicketSidebarContext {
   screenType: TicketSidebarScreenType
   form?: FormRef
   formValues: FormValues
+  currentTaskbarTabId?: Ref<string | undefined>
 }
 
 export enum TicketSidebarButtonBadgeType {

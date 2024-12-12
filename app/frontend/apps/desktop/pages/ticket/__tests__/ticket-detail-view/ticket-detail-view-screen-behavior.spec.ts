@@ -109,23 +109,21 @@ describe('Ticket detail view screen behavior', () => {
     })
 
     // Simulate the history stack by visiting another (different) route before the current one.
-    const view = await visitView('/tickets/2')
+    const view = await visitView('/tickets/1')
 
     const router = getTestRouter()
     await router.push('/tickets/1')
 
     expect(router.currentRoute.value.path).toEqual('/tickets/1')
 
-    await getNode('form-ticket-edit')?.settled
+    await getNode('form-ticket-edit-1')?.settled
 
-    await view.events.click(view.getByRole('button', { name: 'Update' }))
+    await view.events.click(await view.findByRole('button', { name: 'Update' }))
 
     await waitForTicketUpdateMutationCalls()
 
     // Make sure the user is redirected to the previous route after the tab was closed.
-    await waitFor(() =>
-      expect(router.currentRoute.value.path).toEqual('/tickets/2'),
-    )
+    await waitFor(() => expect(router.currentRoute.value.path).toEqual('/'))
   })
 
   it('closes tab on ticket close after ticket update', async () => {

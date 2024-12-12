@@ -13,6 +13,7 @@ import type {
 import { i18n } from '#shared/i18n/index.ts'
 import { getApolloClient } from '#shared/server/apollo/client.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
@@ -35,6 +36,8 @@ import { useTicketChecklistTitleUpdateMutation } from '#desktop/pages/ticket/gra
 import type { TicketSidebarContentProps } from '#desktop/pages/ticket/types/sidebar.ts'
 
 defineProps<TicketSidebarContentProps>()
+
+const persistentStates = defineModel<ObjectLike>({ required: true })
 
 const checklistItemsInstance = useTemplateRef('checklist-items')
 
@@ -413,6 +416,7 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
 
 <template>
   <TicketSidebarContent
+    v-model="persistentStates.scrollPosition"
     :actions="!isTicketEditable ? undefined : checklistActions"
     :title="sidebarPlugin.title"
     :icon="sidebarPlugin.icon"

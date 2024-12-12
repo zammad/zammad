@@ -16,7 +16,7 @@ describe('linked accounts page', () => {
 
     await vi.waitFor(() => {
       expect(view, 'correctly redirects to error page').toHaveCurrentUrl(
-        '/error',
+        '/error-tab',
       )
     })
   })

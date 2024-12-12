@@ -40,6 +40,7 @@ const { objectAttributes: objectAttributesConfig } = useSharedVisualConfig()
             :is="field.component"
             :attribute="field.attribute"
             :value="field.value"
+            :config="objectAttributesConfig"
           />
         </CommonLink>
         <Component
@@ -47,6 +48,7 @@ const { objectAttributes: objectAttributesConfig } = useSharedVisualConfig()
           v-else
           :attribute="field.attribute"
           :value="field.value"
+          :config="objectAttributesConfig"
         />
       </Component>
     </template>

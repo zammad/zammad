@@ -3,11 +3,9 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 import type { ObjectAttributeRichtext } from './attributeRichtextTypes.ts'
+import type { ObjectAttributeProps } from '../../types.ts'
 
-defineProps<{
-  attribute: ObjectAttributeRichtext
-  value: string
-}>()
+defineProps<ObjectAttributeProps<ObjectAttributeRichtext, string>>()
 </script>
 
 <template>

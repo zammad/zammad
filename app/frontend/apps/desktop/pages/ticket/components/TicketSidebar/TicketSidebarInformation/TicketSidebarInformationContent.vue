@@ -4,16 +4,13 @@
 import { computed } from 'vue'
 
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
-import { useChangeCustomerMenuItem } from '#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
-import {
-  type TicketSidebarContentProps,
-  TicketSidebarScreenType,
-} from '#desktop/pages/ticket/types/sidebar.ts'
+import { type TicketSidebarContentProps } from '#desktop/pages/ticket/types/sidebar.ts'
 
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
@@ -24,14 +21,18 @@ import TicketTags from './TicketSidebarInformationContent/TicketTags.vue'
 
 const props = defineProps<TicketSidebarContentProps>()
 
+const persistentStates = defineModel<ObjectLike>({ required: true })
+
 const { ticket } = useTicketInformation()
 
 const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
 
-const MERGE_FLYOUT_KEY = 'merge-ticket'
+const ticketMergeFlyoutName = 'ticket-merge'
+const ticketChangeCustomerFlyoutName = 'ticket-change-customer'
+const ticketHistoryFlyoutName = 'ticket-history'
 
 const { open: openTicketMergeFlyout } = useFlyout({
-  name: MERGE_FLYOUT_KEY,
+  name: ticketMergeFlyoutName,
   component: () =>
     import(
       '#desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue'
@@ -39,53 +40,66 @@ const { open: openTicketMergeFlyout } = useFlyout({
 })
 
 const { open: openTicketHistoryFlyout } = useFlyout({
-  name: 'ticket-history',
+  name: ticketHistoryFlyoutName,
   component: () =>
     import(
       '#desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue'
     ),
 })
 
-const actions = computed(() => {
-  // :TODO find a way to provide the ticket via prop
-  const availableActions: MenuItem[] = [
-    {
-      key: 'ticket-history',
-      label: __('History'),
-      icon: 'clock-history',
-      show: () => isTicketAgent.value,
-      onClick: () => openTicketHistoryFlyout({ ticket }),
-    },
-    {
-      key: MERGE_FLYOUT_KEY,
-      label: __('Merge'),
-      icon: 'merge',
-      show: () => isTicketAgent.value && isTicketEditable.value,
-      onClick: () =>
-        openTicketMergeFlyout({
-          ticket,
-          name: MERGE_FLYOUT_KEY,
-        }),
-    },
-  ]
-
-  // shared actions
-  if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) {
-    const { customerChangeMenuItem } = useChangeCustomerMenuItem()
-    availableActions.push(customerChangeMenuItem)
-  }
-
-  return availableActions
+const { open: openChangeCustomerFlyout } = useFlyout({
+  name: ticketChangeCustomerFlyoutName,
+  component: () =>
+    import(
+      '#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue'
+    ),
 })
+
+// :TODO find a way to provide the ticket via prop
+const actions = computed<MenuItem[]>(() => [
+  {
+    key: ticketHistoryFlyoutName,
+    label: __('History'),
+    icon: 'clock-history',
+    show: () => isTicketAgent.value,
+    onClick: () => openTicketHistoryFlyout({ ticket }),
+  },
+  {
+    key: ticketMergeFlyoutName,
+    label: __('Merge'),
+    icon: 'merge',
+    show: () => isTicketAgent.value && isTicketEditable.value,
+    onClick: () =>
+      openTicketMergeFlyout({
+        ticket,
+      }),
+    currentTaskbarTabId: props.context.currentTaskbarTabId,
+  },
+  {
+    key: ticketChangeCustomerFlyoutName,
+    label: __('Change customer'),
+    icon: 'person',
+    show: () => isTicketAgent.value && isTicketEditable.value,
+    onClick: () =>
+      openChangeCustomerFlyout({
+        ticket,
+      }),
+  },
+])
 </script>
 
 <template>
   <TicketSidebarContent
+    v-model="persistentStates.scrollPosition"
     :title="sidebarPlugin.title"
     :icon="sidebarPlugin.icon"
     :actions="actions"
   >
-    <CommonSectionCollapse id="ticket-attributes" :title="__('Attributes')">
+    <CommonSectionCollapse
+      id="ticket-attributes"
+      v-model="persistentStates.collapseAttributes"
+      :title="__('Attributes')"
+    >
       <div
         id="ticketEditAttributeForm"
         data-test-id="ticket-edit-attribute-form"
@@ -95,6 +109,7 @@ const actions = computed(() => {
     <CommonSectionCollapse
       v-if="isTicketAgent && (isTicketEditable || ticket?.tags?.length)"
       id="ticket-tags"
+      v-model="persistentStates.collapseTags"
       :title="__('Tags')"
     >
       <TicketTags :ticket="ticket" :is-ticket-editable="isTicketEditable" />
@@ -104,6 +119,7 @@ const actions = computed(() => {
       v-if="isTicketAgent"
       v-show="isTicketEditable || $refs.ticketLinksInstance?.hasLinks"
       id="ticket-links"
+      v-model="persistentStates.collapseLinks"
       :title="__('Links')"
     >
       <TicketLinks
@@ -116,6 +132,7 @@ const actions = computed(() => {
     <CommonSectionCollapse
       v-if="ticket?.timeUnit && isTicketAgent"
       id="ticket-time-accounting"
+      v-model="persistentStates.collapseTimeAccounting"
       :title="__('Accounted Time')"
     >
       <TicketAccountedTime :ticket="ticket!" />
@@ -124,6 +141,7 @@ const actions = computed(() => {
     <CommonSectionCollapse
       v-if="isTicketAgent"
       id="ticket-subscribers"
+      v-model="persistentStates.collapseSubscribers"
       :title="__('Subscribers')"
     >
       <TicketSubscribers :ticket="ticket" />

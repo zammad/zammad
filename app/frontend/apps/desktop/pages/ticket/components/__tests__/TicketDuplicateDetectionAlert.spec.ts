@@ -3,7 +3,7 @@
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
-import TicketDuplicateDetectionAlert from '../TicketDuplicateDetectionAlert.vue'
+import TicketDuplicateDetectionAlert from '../TicketCreate/TicketDuplicateDetectionAlert.vue'
 
 describe('TicketDuplicateDetectionAlert.vue', () => {
   beforeEach(() => {

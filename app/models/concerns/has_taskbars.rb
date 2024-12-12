@@ -12,6 +12,10 @@ module HasTaskbars
     def taskbar_entities(*entities)
       @taskbar_entities ||= entities
     end
+
+    def taskbar_ignore_state_updates_entities(*entities)
+      @taskbar_ignore_state_updates_entities ||= entities
+    end
   end
 
 =begin

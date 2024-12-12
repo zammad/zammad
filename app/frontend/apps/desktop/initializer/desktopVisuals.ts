@@ -12,7 +12,9 @@ export const initializeDesktopVisuals = () => {
     objectAttributes: {
       outer: CommonObjectAttributeContainer,
       wrapper: CommonObjectAttribute,
-      classes: {},
+      classes: {
+        link: 'text-sm',
+      },
     },
     // TODO: should be moved to mobile only or renamed completley.
     tooltip: {

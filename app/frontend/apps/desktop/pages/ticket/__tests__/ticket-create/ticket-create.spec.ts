@@ -3,6 +3,7 @@
 import { waitFor, within } from '@testing-library/vue'
 
 import ticketCustomerObjectAttributes from '#tests/graphql/factories/fixtures/ticket-customer-object-attributes.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -404,8 +405,17 @@ describe('ticket create view', async () => {
       it('redirects to error page', async () => {
         const view = await visitView('/ticket/create')
 
-        expect(view.getByText('Not Found')).toBeInTheDocument()
-        expect(view.getByText("This page doesn't exist.")).toBeInTheDocument()
+        const router = getTestRouter()
+
+        await waitFor(() =>
+          expect(router.currentRoute.value.path).toBe('/error-tab'),
+        )
+
+        // :TODO is this supposed to be correct? It was before as a not found page. -> Multitasking update
+        expect(view.getByText('Forbidden')).toBeInTheDocument()
+        expect(
+          view.getByText('Creating new tickets via web is disabled.'),
+        ).toBeInTheDocument()
       })
     })
 

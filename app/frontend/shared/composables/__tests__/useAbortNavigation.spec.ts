@@ -2,14 +2,13 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
+
 import { useAbortNavigation } from '../useAbortNavigation.ts'
 
 const waitForVariantConfirmationMock = vi.fn()
 
-vi.mock('vue-router', () => ({
-  onBeforeRouteLeave: vi.fn(),
-  onBeforeRouteUpdate: vi.fn(),
-}))
+mockRouterHooks()
 
 vi.mock('#shared/composables/useConfirmation.ts', () => ({
   useConfirmation: () => ({

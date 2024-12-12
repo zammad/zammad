@@ -14,11 +14,8 @@ import TimeAccountingFlyout from '../TimeAccountingFlyout.vue'
 const renderTimeAccountingFlyout = async () => {
   const result = renderComponent(TimeAccountingFlyout, {
     form: true,
-    global: {
-      stubs: {
-        teleport: true,
-      },
-    },
+    flyout: true,
+    router: true,
   })
 
   await getNode('ticket-time-accounting')?.settled

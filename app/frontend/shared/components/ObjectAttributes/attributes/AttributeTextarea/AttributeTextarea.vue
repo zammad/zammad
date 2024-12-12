@@ -6,11 +6,9 @@
 import { textToHtml } from '#shared/utils/helpers.ts'
 
 import type { ObjectAttributeTextarea } from './attributeTextareaTypes.ts'
+import type { ObjectAttributeProps } from '../../types.ts'
 
-defineProps<{
-  attribute: ObjectAttributeTextarea
-  value: string
-}>()
+defineProps<ObjectAttributeProps<ObjectAttributeTextarea, string>>()
 </script>
 
 <template>

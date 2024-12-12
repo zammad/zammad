@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { vi } from 'vitest'
 import { ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
@@ -22,6 +24,8 @@ vi.mock('#shared/server/apollo/client.ts', () => ({
     },
   }),
 }))
+
+mockRouterHooks()
 
 describe('errors', () => {
   it('shows an generic error message if query fails due failure of i-doit api', async () => {

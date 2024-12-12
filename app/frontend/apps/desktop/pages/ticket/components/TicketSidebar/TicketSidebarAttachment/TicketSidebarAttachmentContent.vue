@@ -6,6 +6,7 @@ import { computed, toRef } from 'vue'
 import CommonFilePreview from '#shared/components/CommonFilePreview/CommonFilePreview.vue'
 import { useAttachments } from '#shared/composables/useAttachments.ts'
 import type { Attachment } from '#shared/entities/attachment/types.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import { useFilePreviewViewer } from '#desktop/composables/useFilePreviewViewer.ts'
@@ -20,6 +21,8 @@ interface Props extends TicketSidebarContentProps {
 
 const props = defineProps<Props>()
 
+const persistentStates = defineModel<ObjectLike>({ required: true })
+
 const { attachments: attachmentsWithUrls } = useAttachments({
   attachments: toRef(props, 'ticketAttachments'),
 })
@@ -30,7 +33,11 @@ const { showPreview } = useFilePreviewViewer(
 </script>
 
 <template>
-  <TicketSidebarContent :title="sidebarPlugin.title" :icon="sidebarPlugin.icon">
+  <TicketSidebarContent
+    v-model="persistentStates.scrollPosition"
+    :title="sidebarPlugin.title"
+    :icon="sidebarPlugin.icon"
+  >
     <CommonLoader :loading="loading">
       <div
         v-if="ticketAttachments && ticketAttachments.length > 0"

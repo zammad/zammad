@@ -4,8 +4,7 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
-
-import '#tests/graphql/builders/mocks.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { mockTicketHistoryQuery } from '#desktop/pages/ticket/graphql/queries/ticketHistory.mocks.ts'
 
@@ -17,6 +16,7 @@ describe('TicketHistoryFlyout', () => {
       props: { ticket: createDummyTicket() },
       flyout: true,
       store: true,
+      router: true,
     })
 
     expect(
@@ -45,7 +45,7 @@ describe('TicketHistoryFlyout', () => {
               ],
               issuer: {
                 __typename: 'User',
-                id: 'gid://zammad/User/2',
+                id: convertToGraphQLId('User', 2),
                 internalId: 2,
                 firstname: 'John',
                 lastname: 'Doe',

@@ -65,7 +65,15 @@ export const useArticleDataHandler = (
     })
   }
 
-  const isLoadingArticles = articlesQuery.loading()
+  const articleLoading = articlesQuery.loading()
+
+  const isLoadingArticles = computed(() => {
+    // Return already true when a article result already exists from the cache, also
+    // when maybe a loading is in progress(because of cache + network).
+    if (articleData.value !== undefined) return false
+
+    return articleLoading.value
+  })
 
   const adjustPageInfoAfterDeletion = (nextEndCursorEdge?: Maybe<string>) => {
     const newPageInfo: Pick<PageInfo, 'startCursor' | 'endCursor'> = {}

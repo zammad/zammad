@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { describe } from 'vitest'
+import { ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 import {
   organizationOption,
@@ -139,5 +141,33 @@ describe('CommonSimpleEntityList', () => {
     })
 
     expect(wrapper.getByText('No members found')).toBeInTheDocument()
+  })
+
+  it('supports model value for the collapsed state', async () => {
+    const modelValue = ref(false)
+
+    renderComponent(CommonSimpleEntityList, {
+      router: true,
+      vModel: {
+        modelValue,
+      },
+      props: {
+        id: 'test-id',
+        label: 'foobar',
+        type: EntityType.User,
+        entity: {
+          array: [],
+          totalCount: 0,
+        },
+      },
+    })
+
+    expect(document.querySelector('#test-id')).toHaveStyle('display: block')
+
+    modelValue.value = true
+
+    await waitForNextTick()
+
+    expect(document.querySelector('#test-id')).toHaveStyle('display: none')
   })
 })

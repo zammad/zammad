@@ -64,6 +64,11 @@ watch(
   },
   { flush: 'post' },
 )
+
+watch(
+  () => ticket,
+  () => ticketHistoryQuery.refetch(),
+)
 </script>
 
 <template>

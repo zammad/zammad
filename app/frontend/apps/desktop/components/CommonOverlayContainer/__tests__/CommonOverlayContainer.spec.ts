@@ -17,7 +17,7 @@ describe('CommonOverlayContainer', () => {
     app.id = 'app'
     document.body.appendChild(app)
     wrapper = renderComponent(CommonOverlayContainer, {
-      props: { tag: 'div' },
+      props: { tag: 'div', fullscreen: true },
       attachTo: app,
     })
   })
@@ -42,7 +42,7 @@ describe('CommonOverlayContainer', () => {
 
   it('should emit close event when backdrop is clicked, by default', async () => {
     const view = renderComponent({
-      template: html`<div id="test-backdrop"></div>`,
+      template: html`<div id="test-backdrop" />`,
     })
 
     const dialog = renderComponent(CommonOverlayContainer, {
@@ -85,5 +85,20 @@ describe('CommonOverlayContainer', () => {
     )
 
     expect(dialog.emitted('click-background')).toBeUndefined()
+  })
+
+  it('displays the component over entire viewport', () => {
+    const mainElement = document.createElement('main')
+    mainElement.id = 'main-content'
+
+    app.insertAdjacentElement('beforeend', mainElement)
+
+    const dialog = renderComponent(CommonOverlayContainer, {
+      props: {
+        fullscreen: false,
+      },
+    })
+
+    expect(mainElement.children).include(dialog.baseElement)
   })
 })

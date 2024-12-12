@@ -47,8 +47,14 @@ module Taskbar::TriggersSubscriptions
     # Active attribute is not sent by this subscription.
     # Nor are live users, which are most of preferences content.
     # However, there is dirty flag in preferences and it is checked separately.
+    without_saved_changes_keys = %w[active preferences prio last_contact updated_at]
+
+    if self.class.taskbar_ignore_state_updates_entities.include?(callback)
+      without_saved_changes_keys << 'state'
+    end
+
     return if !saved_change_to_dirty? &&
-              saved_changes.keys.without('active', 'preferences', 'prio', 'last_contact', 'updated_at').none?
+              saved_changes.keys.without(*without_saved_changes_keys).none?
 
     Gql::Subscriptions::User::Current::TaskbarItemUpdates.trigger_after_update(self)
   end

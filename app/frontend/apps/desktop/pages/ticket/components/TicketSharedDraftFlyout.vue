@@ -46,6 +46,8 @@ const emit = defineEmits<{
 
 const { metaInformationQuery, deleteMutation } = props
 
+const flyoutName = 'shared-draft'
+
 const metaInformationQueryHandler = new QueryHandler(
   metaInformationQuery({
     sharedDraftId: props.sharedDraftId,
@@ -81,7 +83,7 @@ const sharedDraftContent = computed(() => {
 })
 
 const close = () => {
-  closeFlyout('shared-draft')
+  closeFlyout(flyoutName)
 }
 
 const { waitForConfirmation, waitForVariantConfirmation } = useConfirmation()
@@ -177,7 +179,8 @@ const headerTitle = computed(() => {
       actionButton: { variant: 'primary' },
     }"
     header-icon="file-text"
-    name="shared-draft"
+    :name="flyoutName"
+    @activated="metaInformationQueryHandler.refetch()"
   >
     <div v-if="sharedDraft" class="flex flex-col gap-3">
       <!-- TODO: Surely we should also display the name of the shared draft somewhere, no? -->

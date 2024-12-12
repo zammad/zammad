@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 
+import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import {
   type TicketSidebarProps,
@@ -16,6 +17,8 @@ import TicketSidebarWrapper from '../TicketSidebarWrapper.vue'
 import TicketSidebarChecklistContent from './TicketSidebarChecklistContent.vue'
 
 defineProps<TicketSidebarProps>()
+
+const { persistentStates } = usePersistentStates()
 
 const emit = defineEmits<TicketSidebarEmits>()
 
@@ -51,6 +54,7 @@ onMounted(() => {
     :badge="badge"
   >
     <TicketSidebarChecklistContent
+      v-model="persistentStates"
       :context="context"
       :sidebar-plugin="sidebarPlugin"
     />

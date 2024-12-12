@@ -2,6 +2,7 @@
 
 import { getNode } from '@formkit/core'
 import { waitFor, within } from '@testing-library/vue'
+import { afterAll, beforeEach, describe } from 'vitest'
 
 import ticketCustomerObjectAttributes from '#tests/graphql/factories/fixtures/ticket-customer-object-attributes.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
@@ -28,12 +29,16 @@ import {
   convertToGraphQLId,
   getIdFromGraphQLId,
 } from '#shared/graphql/utils.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 
 import { handleMockFormUpdaterQuery } from '#desktop/pages/ticket/__tests__/support/ticket-create-helpers.ts'
 
 vi.hoisted(() => {
+  vi.useFakeTimers()
   vi.setSystemTime('2024-07-03T13:48:09Z')
 })
+
+const uid = getUuid()
 
 describe('ticket create view - shared drafts sidebar', async () => {
   describe('with agent permissions', async () => {
@@ -49,8 +54,13 @@ describe('ticket create view - shared drafts sidebar', async () => {
       handleMockFormUpdaterQuery()
     })
 
+    afterAll(() => {
+      vi.useRealTimers()
+    })
+
     it('supports creating shared drafts', async () => {
-      const view = await visitView('/ticket/create')
+      vi.useRealTimers()
+      const view = await visitView(`/ticket/create/${uid}`)
 
       await view.events.type(
         await view.findByLabelText('Text'),
@@ -80,7 +90,7 @@ describe('ticket create view - shared drafts sidebar', async () => {
         'Test shared draft 1',
       )
 
-      await getNode('sharedDraftTitle')?.settled
+      await getNode(`sharedDraftTitle-TicketCreateScreen-${uid}`)?.settled
 
       await view.events.click(
         aside.getByRole('link', { name: 'Create Shared Draft' }),

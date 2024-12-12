@@ -16,6 +16,7 @@ const route: RouteRecordRaw[] = [
       requiredPermission: ['*'],
       order: 0,
       level: 1,
+      permanentItem: true,
     },
   },
   {

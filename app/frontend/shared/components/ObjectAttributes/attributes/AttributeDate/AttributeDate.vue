@@ -4,11 +4,9 @@
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
 
 import type { ObjectAttributeDate } from './attributeDateTypes.ts'
+import type { ObjectAttributeProps } from '../../types.ts'
 
-defineProps<{
-  attribute: ObjectAttributeDate
-  value: string
-}>()
+defineProps<ObjectAttributeProps<ObjectAttributeDate, string>>()
 </script>
 
 <template>

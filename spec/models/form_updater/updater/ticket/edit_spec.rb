@@ -19,12 +19,13 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
     )
   end
 
-  let(:group)   { create(:group) }
-  let(:user)    { create(:agent, groups: [group]) }
-  let(:context) { { current_user: user } }
-  let(:meta)    { { initial: true, form_id: SecureRandom.uuid } }
-  let(:data)    { {} }
-  let(:id)      { nil }
+  let(:group)        { create(:group) }
+  let(:user)         { create(:agent, groups: [group]) }
+  let(:context)      { { current_user: user } }
+  let(:meta)         { { initial: true, form_id: SecureRandom.uuid, dirty_fields: } }
+  let(:data)         { {} }
+  let(:dirty_fields) { [] }
+  let(:id)           { nil }
 
   let(:relation_fields) do
     [
@@ -258,14 +259,18 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
       end
     end
 
-    context 'when auto save should be applied' do
+    context 'when auto save should be applied', :aggregate_failures do
       let(:taskbar_key)     { 'TicketZoom-1234' }
       let(:taskbar)         { create(:taskbar, key: taskbar_key, callback: 'Ticket', user_id: user.id, state: taskbar_state) }
-      let(:taskbar_state)   { { 'title' => 'test', 'owner_id' => 1 } }
+      let(:taskbar_state)   { { 'ticket' => { 'title' => 'test', 'owner_id' => 1 } } }
       let(:field_name)      { 'title' }
       let(:field_result)    { { value: 'test' } }
       let(:additional_data) { { 'taskbarId' => Gql::ZammadSchema.id_from_object(taskbar), 'applyTaskbarState' => true } }
-      let(:meta)            { { additional_data: } }
+      let(:meta)            { { additional_data:, dirty_fields: } }
+
+      let(:id) do
+        Gql::ZammadSchema.id_from_object(create(:ticket, title: 'Example ticket', group: group, priority_id: 1))
+      end
 
       before do
         # Trigger first object authorization check.
@@ -277,12 +282,35 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
         expect(fields['owner_id'][:value]).to be_nil
       end
 
+      context 'when apply should reset to default field value but field was changed' do
+        let(:taskbar_state) { { 'ticket' => {} } }
+        let(:dirty_fields) { %w[priority_id title] }
+
+        it 'priority_id should be present for reset of default' do
+          fields = resolved_result.resolve[:fields]
+          expect(fields['priority_id'][:value]).to eq(1)
+        end
+
+        context 'with partial reseted fields' do
+          let(:taskbar_state) { { 'ticket' => { 'priority_id' => 2 } } }
+
+          it 'priority_id should be present for reset of default' do
+            fields = resolved_result.resolve[:fields]
+            expect(fields['priority_id'][:value]).to eq(2)
+            expect(fields['title'][:value]).to eq('Example ticket')
+          end
+        end
+      end
+
       context 'when new article exists' do
-        let(:taskbar_state) { { 'title' => 'test', 'article' => { 'articleType' => 'email' } } }
+        let(:taskbar_state) { { 'ticket' => { 'title' => 'test' }, 'article' => { 'articleType' => 'email' } } }
 
         it 'checks that newArticlePresent flag is present' do
           flags = resolved_result.resolve[:flags]
           expect(flags[:newArticlePresent]).to be_truthy
+
+          fields = resolved_result.resolve[:fields]
+          expect(fields['title'][:value]).to eq('test')
         end
       end
     end

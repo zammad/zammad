@@ -12,6 +12,7 @@ import useFormKitConfig from '#shared/composables/form/useFormKitConfig.ts'
 import useAppMaintenanceCheck from '#shared/composables/useAppMaintenanceCheck.ts'
 import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 import usePushMessages from '#shared/composables/usePushMessages.ts'
+import { initializeDefaultObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
@@ -78,9 +79,10 @@ emitter.on('sessionInvalid', async () => {
 watch(
   () => session.initialized,
   (newValue, oldValue) => {
-    if (!oldValue && newValue) {
-      useTicketOverviewsStore()
-    }
+    if (!newValue && oldValue) return
+
+    useTicketOverviewsStore()
+    initializeDefaultObjectAttributes()
   },
   { immediate: true },
 )

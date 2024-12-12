@@ -6,6 +6,7 @@ import { computed, onMounted, watch } from 'vue'
 
 import TicketSidebarIdoitContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue'
 import type { ExternalReferencesFormValues } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/types.ts'
+import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
 import {
   TicketSidebarScreenType,
   type TicketSidebarEmits,
@@ -17,6 +18,8 @@ import { useThemeStore } from '#desktop/stores/theme.ts'
 import TicketSidebarWrapper from '../../TicketSidebarWrapper.vue'
 
 const props = defineProps<TicketSidebarProps>()
+
+const { persistentStates } = usePersistentStates()
 
 const emit = defineEmits<TicketSidebarEmits>()
 
@@ -89,6 +92,7 @@ if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) {
     :badge="objectBadges"
   >
     <TicketSidebarIdoitContent
+      v-model="persistentStates"
       :screen-type="context.screenType"
       :ticket-id="context.ticket?.value?.id"
       :sidebar-plugin="plugin"

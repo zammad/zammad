@@ -5,6 +5,7 @@ import { computed } from 'vue'
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
@@ -13,6 +14,8 @@ import githubPlugin from '#desktop/pages/ticket/components/TicketSidebar/plugins
 import TicketSidebarGitHub from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue'
 import { TicketExternalReferencesIssueTrackerItemListDocument } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIssueTrackerList.api.ts'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
+
+mockRouterHooks()
 
 describe('errors', () => {
   it('shows an generic error message if query fails due failure of GitLab api', async () => {
@@ -61,6 +64,7 @@ describe('errors', () => {
         },
       },
       flyout: true,
+      router: true,
     })
 
     expect(await wrapper.findByRole('alert')).toHaveTextContent(

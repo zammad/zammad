@@ -17,7 +17,6 @@ describe('SystemMessage', () => {
       subject: 'message from system',
       to: 'foo bar',
     })
-    console.log(wrapper.html())
     expect(wrapper.getByText(/message from system/i)).toBeInTheDocument()
     expect(wrapper.getByText(/foo bar/i)).toBeInTheDocument()
   })

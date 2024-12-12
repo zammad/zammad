@@ -97,6 +97,10 @@ export const useSessionStore = defineStore(
 
     const user = ref<Maybe<UserData>>(null)
 
+    // In case of unauthenticated users, current user ID may be an empty string.
+    //   Use with care.
+    const userId = computed(() => user.value?.id || '')
+
     let currentUserUpdateSubscription: SubscriptionHandler<
       CurrentUserUpdatesSubscription,
       CurrentUserUpdatesSubscriptionVariables
@@ -130,7 +134,7 @@ export const useSessionStore = defineStore(
           scope.run(() => {
             currentUserUpdateSubscription = new SubscriptionHandler(
               useCurrentUserUpdatesSubscription(() => ({
-                userId: (user.value as UserData)?.id,
+                userId: userId.value,
               })),
             )
 
@@ -169,10 +173,6 @@ export const useSessionStore = defineStore(
         user.value?.permissions?.names || [],
       )
     }
-
-    // In case of unauthenticated users, current user ID may be an empty string.
-    //   Use with care.
-    const userId = computed(() => user.value?.id || '')
 
     const setUserPreference = (key: string, value: JsonValue) => {
       if (!user.value) return

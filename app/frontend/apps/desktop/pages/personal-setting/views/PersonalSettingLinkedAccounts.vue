@@ -16,8 +16,10 @@ import {
   EnumAuthenticationProvider,
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
+import { ErrorRouteType, redirectErrorRoute } from '#shared/router/error.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+import { ErrorStatusCodes } from '#shared/types/error.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
@@ -36,7 +38,15 @@ defineOptions({
   beforeRouteEnter() {
     const { hasEnabledProviders } = useThirdPartyAuthentication()
 
-    if (!hasEnabledProviders.value) return '/error'
+    if (!hasEnabledProviders.value)
+      return redirectErrorRoute({
+        type: ErrorRouteType.AuthenticatedError,
+        title: __('Forbidden'),
+        message: __(
+          'There are no enabled third-party authentication providers.',
+        ),
+        statusCode: ErrorStatusCodes.Forbidden,
+      })
 
     return true
   },

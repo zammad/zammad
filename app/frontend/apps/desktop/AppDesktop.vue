@@ -12,6 +12,7 @@ import useFormKitConfig from '#shared/composables/form/useFormKitConfig.ts'
 import useAppMaintenanceCheck from '#shared/composables/useAppMaintenanceCheck.ts'
 import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 import usePushMessages from '#shared/composables/usePushMessages.ts'
+import { initializeDefaultObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
@@ -68,23 +69,13 @@ initializeConfirmationDialog()
 watch(
   () => session.initialized,
   (newValue, oldValue) => {
-    if (!oldValue && newValue) {
-      useUserCurrentTaskbarTabsStore()
-    }
+    if (!newValue && oldValue) return
+
+    useUserCurrentTaskbarTabsStore()
+    initializeDefaultObjectAttributes()
   },
   { immediate: true },
 )
-
-const transition = VITE_TEST_MODE
-  ? undefined
-  : {
-      enterActiveClass: 'duration-300 ease-out',
-      enterFromClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
-      enterToClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
-      leaveActiveClass: 'duration-200 ease-in',
-      leaveFromClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
-      leaveToClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
-    }
 
 onBeforeUnmount(() => {
   emitter.off('sessionInvalid')
@@ -99,7 +90,7 @@ onBeforeUnmount(() => {
     </Teleport>
     <RouterView />
 
-    <DynamicInitializer name="dialog" :transition="transition" />
-    <DynamicInitializer name="flyout" :transition="transition" />
+    <DynamicInitializer name="dialog" />
+    <DynamicInitializer name="flyout" />
   </template>
 </template>

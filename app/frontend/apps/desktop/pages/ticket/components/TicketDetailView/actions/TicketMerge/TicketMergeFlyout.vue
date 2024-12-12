@@ -1,7 +1,6 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -26,14 +25,12 @@ import { useTargetTicketOptions } from '#desktop/pages/ticket/composables/useTar
 
 interface Props {
   ticket: TicketById
-  name: string
+  currentTaskbarTabId?: string
 }
 
-const taskbarTabsStore = useUserCurrentTaskbarTabsStore()
-const { activeTaskbarTabId } = storeToRefs(taskbarTabsStore)
-const { deleteTaskbarTab } = taskbarTabsStore
+const { deleteTaskbarTab } = useUserCurrentTaskbarTabsStore()
 
-const { name, ticket: sourceTicket } = defineProps<Props>()
+const props = defineProps<Props>()
 
 const { form, updateFieldValues, onChangedField } = useForm()
 
@@ -45,7 +42,7 @@ const mergeFormSchema = [
     name: 'targetTicketId',
     type: 'ticket',
     label: __('Target ticket'),
-    exceptTicketInternalId: sourceTicket.internalId,
+    exceptTicketInternalId: props.ticket.internalId,
     options: formListTargetTicketOptions,
     clearable: true,
     required: true,
@@ -60,11 +57,13 @@ const router = useRouter()
 
 const { notify } = useNotifications()
 
+const fllyoutName = 'ticket-merge'
+
 const submitMerge = async (formData: Record<'targetTicketId', string>) => {
   const { targetTicketId } = formData
 
   await mergeMutation.send({
-    sourceTicketId: sourceTicket.id,
+    sourceTicketId: props.ticket.id,
     targetTicketId,
   })
 
@@ -74,8 +73,8 @@ const submitMerge = async (formData: Record<'targetTicketId', string>) => {
   })
 
   return () => {
-    closeFlyout(name)
-    deleteTaskbarTab(activeTaskbarTabId.value as string)
+    closeFlyout(fllyoutName)
+    if (props.currentTaskbarTabId) deleteTaskbarTab(props.currentTaskbarTabId)
     router.push(`/ticket/${getIdFromGraphQLId(targetTicketId)}`)
   }
 }
@@ -97,7 +96,7 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
     size="large"
     no-close-on-action
     :footer-action-options="footerActionOptions"
-    :name="name"
+    :name="fllyoutName"
   >
     <div class="space-y-6">
       <Form
@@ -112,8 +111,8 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
       />
 
       <TicketRelationAndRecentLists
-        :customer-id="sourceTicket.customer.id"
-        :internal-ticket-id="sourceTicket.internalId"
+        :customer-id="ticket.customer.id"
+        :internal-ticket-id="ticket.internalId"
         :selected-ticket-id="targetTicketId"
         @click-ticket="handleTicketClick"
       />

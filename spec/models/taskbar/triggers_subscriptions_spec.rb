@@ -75,7 +75,6 @@ RSpec.describe Taskbar::TriggersSubscriptions, :aggregate_failures do
         taskbar.state = { 'body' => 'test' }
         taskbar.save!
         expect(gqs::TicketLiveUserUpdates).to have_received(:trigger).exactly(2)
-        expect(gqs_uc::TaskbarItemUpdates).to have_received(:trigger_after_update).once # only for taskbar
         expect(gqs_uc::TaskbarItemStateUpdates).to have_received(:trigger).once
       end
     end

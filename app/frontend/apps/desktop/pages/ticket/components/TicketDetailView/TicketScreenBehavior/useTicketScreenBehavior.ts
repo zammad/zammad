@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, type Ref } from 'vue'
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { EnumTicketScreenBehavior } from '#shared/graphql/types.ts'
@@ -10,10 +10,10 @@ import { useSessionStore } from '#shared/stores/session.ts'
 
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
-export const useTicketScreenBehavior = () => {
-  const taskbarTabsStore = useUserCurrentTaskbarTabsStore()
-  const { activeTaskbarTabId } = storeToRefs(taskbarTabsStore)
-  const { deleteTaskbarTab } = taskbarTabsStore
+export const useTicketScreenBehavior = (
+  currentTaskbarTabId: Ref<string | undefined>,
+) => {
+  const { deleteTaskbarTab } = useUserCurrentTaskbarTabsStore()
 
   const { user } = storeToRefs(useSessionStore())
 
@@ -23,8 +23,11 @@ export const useTicketScreenBehavior = () => {
     () => user.value?.preferences?.secondaryAction,
   )
 
-  const closeCurrentTaskbarTab = () =>
-    deleteTaskbarTab(activeTaskbarTabId.value as string)
+  const closeCurrentTaskbarTab = () => {
+    if (!currentTaskbarTabId.value) return
+
+    deleteTaskbarTab(currentTaskbarTabId.value)
+  }
 
   const closeAndGoBack = () => {
     walker.back('/')

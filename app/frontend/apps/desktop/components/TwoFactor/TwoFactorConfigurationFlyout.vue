@@ -25,6 +25,8 @@ const props = defineProps<TwoFactorConfigurationProps>()
 const activeComponentInstance =
   useTemplateRef<TwoFactorConfigurationComponentInstance>('active-component')
 
+const flyoutName = 'two-factor-flyout'
+
 const headerTitle = computed(() => {
   switch (props.type) {
     case 'recovery_codes':
@@ -86,7 +88,7 @@ const onFooterButtonAction = () => {
     :header-title="headerTitle"
     :footer-action-options="activeComponentInstance?.footerActionOptions"
     :header-icon="activeComponentInstance?.headerIcon"
-    name="two-factor-flyout"
+    :name="flyoutName"
     no-close-on-action
     @action="onFooterButtonAction"
   >

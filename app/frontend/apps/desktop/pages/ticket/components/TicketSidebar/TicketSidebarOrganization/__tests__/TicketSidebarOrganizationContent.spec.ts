@@ -1,12 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { TicketSidebarScreenType } from '../../../../types/sidebar.ts'
 import organizationSidebarPlugin from '../../plugins/organization.ts'
 import TicketSidebarOrganizationContent from '../TicketSidebarOrganizationContent.vue'
+
+mockRouterHooks()
 
 const renderTicketSidebarOrganizationContent = async (options: any = {}) => {
   const result = renderComponent(TicketSidebarOrganizationContent, {
@@ -20,6 +23,7 @@ const renderTicketSidebarOrganizationContent = async (options: any = {}) => {
           update: true,
         },
       },
+      modelValue: {},
       organizationMembers: {
         array: [
           {

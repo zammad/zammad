@@ -2,7 +2,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
@@ -16,10 +15,11 @@ import type {
   UserCurrentAccessTokenListQuery,
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n/index.ts'
-import { redirectToError } from '#shared/router/error.ts'
+import { ErrorRouteType, redirectErrorRoute } from '#shared/router/error.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+import { ErrorStatusCodes } from '#shared/types/error.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
@@ -40,9 +40,17 @@ defineOptions({
   beforeRouteEnter() {
     const { canUseAccessToken } = useCheckTokenAccess()
 
-    if (canUseAccessToken.value) return true
+    if (!canUseAccessToken.value)
+      return redirectErrorRoute({
+        type: ErrorRouteType.AuthenticatedError,
+        title: __('Forbidden'),
+        message: __(
+          'Token-based API access has been disabled by the administrator.',
+        ),
+        statusCode: ErrorStatusCodes.Forbidden,
+      })
 
-    redirectToError(useRouter())
+    return true
   },
 })
 

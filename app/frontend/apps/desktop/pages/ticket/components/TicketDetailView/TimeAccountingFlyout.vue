@@ -22,11 +22,13 @@ const emit = defineEmits<{
 
 const { form } = useForm()
 
+const flyoutName = 'ticket-time-accounting'
+
 const submitForm = (
   formData: FormSubmitData<TicketArticleTimeAccountingFormData>,
 ) => {
   emit('account-time', formData)
-  closeFlyout('ticket-time-accounting')
+  closeFlyout(flyoutName)
 }
 
 const onClose = (isCancel?: boolean) => {
@@ -122,7 +124,7 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
     :header-title="__('Time Accounting')"
     :footer-action-options="footerActionOptions"
     header-icon="stopwatch"
-    name="ticket-time-accounting"
+    :name="flyoutName"
     no-close-on-action
     @close="onClose"
   >

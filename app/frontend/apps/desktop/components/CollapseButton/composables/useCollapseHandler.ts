@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+
 import { useLocalStorage } from '@vueuse/core'
-import { nextTick, onMounted, type Ref, ref } from 'vue'
+import { onMounted, type Ref, ref, watch } from 'vue'
 
 interface Emits {
   (event: 'collapse', arg: boolean): void
@@ -13,9 +14,10 @@ interface Emits {
  * * */
 export const useCollapseHandler = (
   emit: Emits,
-  options?: { storageKey: string },
+  options?: { storageKey?: string },
 ) => {
   let isCollapsed: Ref<boolean>
+
   if (options?.storageKey) {
     isCollapsed = useLocalStorage(options.storageKey, false)
   } else {
@@ -24,20 +26,32 @@ export const useCollapseHandler = (
 
   const toggleCollapse = () => {
     isCollapsed.value = !isCollapsed.value
+
     if (isCollapsed.value) {
       emit('collapse', true)
-    } else {
-      emit('expand', true)
+      return
     }
+
+    emit('expand', true)
   }
 
   onMounted(() => {
+    // Set up watcher on the local storage value, so other browser tabs can sync their collapse states.
     if (options?.storageKey) {
-      nextTick(() => {
-        // Share state on initial load
-        if (isCollapsed.value) emit('collapse', true)
-        else emit('expand', true)
-      })
+      watch(
+        isCollapsed,
+        (newValue) => {
+          if (newValue) {
+            emit('collapse', true)
+            return
+          }
+
+          emit('expand', true)
+        },
+        {
+          immediate: true,
+        },
+      )
     }
   })
 

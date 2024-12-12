@@ -1,15 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, type Ref, ref } from 'vue'
+import { computed, onBeforeUnmount, type Ref, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 import type { MacroById } from '#shared/entities/macro/types.ts'
 import { useMacrosQuery } from '#shared/graphql/queries/macros.api.ts'
-import { useMacrosUpdateSubscription } from '#shared/graphql/subscriptions/macrosUpdate.api.ts'
 import { EnumTicketScreenBehavior } from '#shared/graphql/types.ts'
-import {
-  QueryHandler,
-  SubscriptionHandler,
-} from '#shared/server/apollo/handler/index.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import { useMacroStore } from '#shared/stores/macro.ts'
 
 export const macroScreenBehaviourMapping: Record<
   string,
@@ -31,14 +29,18 @@ export const useMacros = (groupId: Ref<ID | undefined>) => {
     ),
   )
 
-  const macroSubscription = new SubscriptionHandler(
-    useMacrosUpdateSubscription(() => ({
-      enabled: !!groupId.value,
-    })),
-  )
+  const { activate, deactivate } = useMacroStore()
 
-  macroSubscription.onResult((data) => {
-    if (data.data?.macrosUpdate.macroUpdated) macroQuery.refetch()
+  const route = useRoute()
+
+  // TODO: Drop this mechanism once Apollo implements an effective deduplication of subscriptions on the client level.
+  //   More information: https://github.com/apollographql/apollo-client/issues/10117
+  const usageKey = route.meta.taskbarTabEntityKey ?? 'apply-template'
+
+  activate(usageKey, macroQuery)
+
+  onBeforeUnmount(() => {
+    deactivate(usageKey)
   })
 
   const result = macroQuery.result()

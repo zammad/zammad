@@ -11,7 +11,6 @@ export default <PersonalSettingPlugin>{
   },
   route: {
     path: 'appearance',
-    alias: '',
     name: 'PersonalSettingAppearance',
     component: () => import('../../PersonalSettingAppearance.vue'),
     level: 2,

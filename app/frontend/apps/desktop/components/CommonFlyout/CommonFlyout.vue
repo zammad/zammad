@@ -7,7 +7,12 @@ import {
   useScroll,
   useActiveElement,
   onKeyDown,
+  useCurrentElement,
+  type MaybeElementRef,
+  type ComputedRefWithControl,
+  type VueInstance,
 } from '@vueuse/core'
+import { whenever } from '@vueuse/shared'
 import {
   computed,
   nextTick,
@@ -18,7 +23,9 @@ import {
   shallowRef,
   watch,
 } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
+import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import stopEvent from '#shared/utils/events.ts'
 import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 
@@ -59,6 +66,11 @@ export interface Props {
    * if nothing is focusable, will focus "Close" button when dismissible is active.
    */
   noAutofocus?: boolean
+  fullscreen?: boolean
+  /**
+   * If true, no page context will be added to the name, e.g. for confirmation dialogs.
+   */
+  global?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -73,12 +85,25 @@ defineOptions({
 const emit = defineEmits<{
   action: []
   close: [boolean?]
+  activated: []
 }>()
+
+const { path } = useRoute()
+
+const router = useRouter()
+
+const isActive = computed(() =>
+  props.fullscreen ? true : path === router.currentRoute.value.path,
+)
+
+whenever(isActive, () => {
+  emit('activated')
+})
 
 const close = async (isCancel?: boolean) => {
   emit('close', isCancel)
 
-  await closeFlyout(props.name)
+  await closeFlyout(props.name, props.global)
 }
 
 // TODO: maybe we could add a better handling in combination with a form....
@@ -87,12 +112,21 @@ const action = async () => {
 
   if (props.noCloseOnAction) return
 
-  await closeFlyout(props.name)
+  await closeFlyout(props.name, props.global)
 }
 
 const flyoutId = `flyout-${props.name}`
 
 const flyoutSize = { medium: 500, large: 800 }
+
+const overlayInstance = useTemplateRef('flyout-container')
+
+// :TODO: seems to not be typed correctly inside the library
+const flyoutContainerElement = useCurrentElement(
+  overlayInstance as MaybeElementRef<VueInstance> | undefined,
+)
+
+useTrapTab(flyoutContainerElement as ComputedRefWithControl<HTMLElement>)
 
 // Width control over flyout
 let flyoutContainerWidth: Ref<number>
@@ -178,7 +212,6 @@ onMounted(async () => {
   })
 })
 
-// Keyboard
 onKeyDown('Escape', (e) => {
   if (props.noCloseOnEscape) return
   stopEvent(e)
@@ -225,88 +258,105 @@ onMounted(() => {
     firstFocusableNode?.scrollIntoView({ block: 'nearest' })
   })
 })
+
+// It is the same as dialog, but could be changed in the future?
+const transition = VITE_TEST_MODE
+  ? undefined
+  : {
+      enterActiveClass: 'duration-300 ease-out',
+      enterFromClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
+      enterToClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
+      leaveActiveClass: 'duration-200 ease-in',
+      leaveFromClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
+      leaveToClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
+    }
 </script>
 
 <template>
-  <CommonOverlayContainer
-    :id="flyoutId"
-    tag="aside"
-    tabindex="-1"
-    class="overflow-clip-x fixed bottom-0 top-0 z-40 flex max-h-dvh min-w-min flex-col border-y border-neutral-100 bg-neutral-50 ltr:right-0 ltr:rounded-l-xl ltr:border-l rtl:left-0 rtl:rounded-r-xl rtl:border-r dark:border-gray-900 dark:bg-gray-500"
-    :no-close-on-backdrop-click="noCloseOnBackdropClick"
-    :show-backdrop="showBackdrop"
-    :style="{ width: `${flyoutContainerWidth}px` }"
-    :class="{ 'transition-all': !isResizing }"
-    :aria-labelledby="`${flyoutId}-title`"
-    @click-background="close()"
-  >
-    <header
-      ref="header"
-      class="sticky top-0 flex items-center border-b border-neutral-100 border-b-transparent bg-neutral-50 p-3 ltr:rounded-tl-xl rtl:rounded-tr-xl dark:bg-gray-500"
-      :class="{
-        'border-b-neutral-100 dark:border-b-gray-900':
-          !arrivedState.top && isContentOverflowing,
-      }"
+  <Transition :appear="isActive" v-bind="transition">
+    <!--  `display:none` to prevent showing up inactive flyout for cached instance -->
+    <CommonOverlayContainer
+      :id="flyoutId"
+      ref="flyout-container"
+      tag="aside"
+      tabindex="-1"
+      class="overflow-clip-x fixed bottom-0 top-0 z-40 flex max-h-dvh min-w-min flex-col border-y border-neutral-100 bg-neutral-50 ltr:right-0 ltr:rounded-l-xl ltr:border-l rtl:left-0 rtl:rounded-r-xl rtl:border-r dark:border-gray-900 dark:bg-gray-500"
+      :no-close-on-backdrop-click="noCloseOnBackdropClick"
+      :show-backdrop="showBackdrop && isActive"
+      :style="{ width: `${flyoutContainerWidth}px` }"
+      :class="{ 'transition-all': !isResizing, hidden: !isActive }"
+      :fullscreen="fullscreen"
+      :aria-labelledby="`${flyoutId}-title`"
+      @click-background="close()"
     >
-      <slot name="header">
-        <CommonLabel
-          v-if="headerTitle"
-          :id="`${flyoutId}-title`"
-          tag="h2"
-          class="min-h-7 grow gap-1.5"
-          size="large"
-          :prefix-icon="headerIcon"
-          icon-color="text-stone-200 dark:text-neutral-500"
-        >
-          {{ $t(headerTitle) }}
-        </CommonLabel>
-      </slot>
-      <CommonButton
-        class="ltr:ml-auto rtl:mr-auto"
-        variant="neutral"
-        size="medium"
-        :aria-label="$t('Close side panel')"
-        icon="x-lg"
-        @click="close()"
-      />
-    </header>
-
-    <div ref="content" class="h-full overflow-y-scroll px-3" v-bind="$attrs">
-      <slot />
-    </div>
-
-    <footer
-      v-if="$slots.footer || !hideFooter"
-      ref="footer"
-      :aria-label="$t('Side panel footer')"
-      class="sticky bottom-0 border-t border-t-transparent bg-neutral-50 p-3 ltr:rounded-bl-xl rtl:rounded-br-xl dark:bg-gray-500"
-      :class="{
-        'border-t-neutral-100 dark:border-t-gray-900':
-          !arrivedState.bottom && isContentOverflowing,
-      }"
-    >
-      <slot name="footer" v-bind="{ action, close }">
-        <CommonFlyoutActionFooter
-          v-bind="footerActionOptions"
-          @cancel="close(true)"
-          @action="action()"
+      <header
+        ref="header"
+        class="sticky top-0 flex items-center border-b border-neutral-100 border-b-transparent bg-neutral-50 p-3 ltr:rounded-tl-xl rtl:rounded-tr-xl dark:bg-gray-500"
+        :class="{
+          'border-b-neutral-100 dark:border-b-gray-900':
+            !arrivedState.top && isContentOverflowing,
+        }"
+      >
+        <slot name="header">
+          <CommonLabel
+            v-if="headerTitle"
+            :id="`${flyoutId}-title`"
+            tag="h2"
+            class="min-h-7 grow gap-1.5"
+            size="large"
+            :prefix-icon="headerIcon"
+            icon-color="text-stone-200 dark:text-neutral-500"
+          >
+            {{ $t(headerTitle) }}
+          </CommonLabel>
+        </slot>
+        <CommonButton
+          class="ltr:ml-auto rtl:mr-auto"
+          variant="neutral"
+          size="medium"
+          :aria-label="$t('Close side panel')"
+          icon="x-lg"
+          @click="close()"
         />
-      </slot>
-    </footer>
+      </header>
 
-    <ResizeLine
-      v-if="resizable"
-      ref="resize-handle"
-      :label="$t('Resize side panel')"
-      class="absolute top-2 h-[calc(100%-16px)] overflow-clip ltr:left-px ltr:-translate-x-1/2 rtl:right-px rtl:translate-x-1/2"
-      orientation="vertical"
-      :values="{
-        current: flyoutContainerWidth,
-        max: flyoutMaxWidth,
-      }"
-      @mousedown-event="startResizing"
-      @touchstart-event="startResizing"
-      @dblclick-event="resetWidth()"
-    />
-  </CommonOverlayContainer>
+      <div ref="content" class="h-full overflow-y-scroll px-3" v-bind="$attrs">
+        <slot />
+      </div>
+
+      <footer
+        v-if="$slots.footer || !hideFooter"
+        ref="footer"
+        :aria-label="$t('Side panel footer')"
+        class="sticky bottom-0 border-t border-t-transparent bg-neutral-50 p-3 ltr:rounded-bl-xl rtl:rounded-br-xl dark:bg-gray-500"
+        :class="{
+          'border-t-neutral-100 dark:border-t-gray-900':
+            !arrivedState.bottom && isContentOverflowing,
+        }"
+      >
+        <slot name="footer" v-bind="{ action, close }">
+          <CommonFlyoutActionFooter
+            v-bind="footerActionOptions"
+            @cancel="close(true)"
+            @action="action()"
+          />
+        </slot>
+      </footer>
+
+      <ResizeLine
+        v-if="resizable"
+        ref="resize-handle"
+        :label="$t('Resize side panel')"
+        class="absolute top-2 h-[calc(100%-16px)] overflow-clip ltr:left-px ltr:-translate-x-1/2 rtl:right-px rtl:translate-x-1/2"
+        orientation="vertical"
+        :values="{
+          current: flyoutContainerWidth,
+          max: flyoutMaxWidth,
+        }"
+        @mousedown-event="startResizing"
+        @touchstart-event="startResizing"
+        @dblclick-event="resetWidth()"
+      />
+    </CommonOverlayContainer>
+  </Transition>
 </template>

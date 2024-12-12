@@ -54,6 +54,13 @@ const groupLabels = {
   macros: __('Macros'),
 }
 
+const { mapSharedDraftParams } = useTicketSharedDraft()
+
+const sharedDraftConflictDialog = useDialog({
+  name: 'shared-draft-conflict',
+  component: () => import('../TicketSharedDraftConflictDialog.vue'),
+})
+
 const actionItems = computed(() => {
   if (!macros.value) return null
 
@@ -72,14 +79,7 @@ const actionItems = computed(() => {
       key: 'save-draft',
       show: () => props.canUseDraft,
       onClick: () => {
-        const { mapSharedDraftParams } = useTicketSharedDraft()
-
         if (props.sharedDraftId) {
-          const sharedDraftConflictDialog = useDialog({
-            name: 'shared-draft-conflict',
-            component: () => import('../TicketSharedDraftConflictDialog.vue'),
-          })
-
           sharedDraftConflictDialog.open({
             sharedDraftId: props.sharedDraftId,
             sharedDraftParams: mapSharedDraftParams(props.ticketId, props.form),

@@ -9,7 +9,7 @@ const route: RouteRecordRaw = {
   alias: '/:pathMatch(.*)*',
   name: 'Error',
   props: true,
-  component: () => import('./views/Error.vue'),
+  component: () => import('../views/Error.vue'),
   meta: {
     requiresAuth: false,
     requiredPermission: null,

@@ -10,6 +10,7 @@ import {
   type GraphQLHandlerError,
 } from '#shared/types/error.ts'
 
+import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
 import {
   type TicketSidebarProps,
   type TicketSidebarEmits,
@@ -20,6 +21,8 @@ import TicketSidebarWrapper from '../TicketSidebarWrapper.vue'
 import TicketSidebarSharedDraftStartContent from './TicketSidebarSharedDraftStartContent.vue'
 
 const props = defineProps<TicketSidebarProps>()
+
+const { persistentStates } = usePersistentStates()
 
 const emit = defineEmits<TicketSidebarEmits>()
 
@@ -59,6 +62,7 @@ sharedDraftStartListQuery.onResult(({ data }) => {
   >
     <TicketSidebarSharedDraftStartContent
       v-if="sharedDraftStartList"
+      v-model="persistentStates"
       :context="context"
       :sidebar-plugin="sidebarPlugin"
       :shared-draft-start-list="sharedDraftStartList"

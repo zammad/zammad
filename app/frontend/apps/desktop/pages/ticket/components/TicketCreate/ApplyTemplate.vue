@@ -8,7 +8,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import CommonDropdown from '#desktop/components/CommonDropdown/CommonDropdown.vue'
 import type { DropdownItem } from '#desktop/components/CommonDropdown/types.ts'
 
-import { useApplyTemplate } from '../composables/useApplyTemplate.ts'
+import { useApplyTemplate } from '../../composables/useApplyTemplate.ts'
 
 const emit = defineEmits<{
   'select-template': [string]

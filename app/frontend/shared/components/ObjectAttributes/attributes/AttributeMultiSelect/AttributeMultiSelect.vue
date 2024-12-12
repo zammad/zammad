@@ -6,11 +6,10 @@ import { computed } from 'vue'
 import { translateOption } from '../../utils.ts'
 
 import type { ObjectAttributeMultiSelect } from './attributeMultiSelectTypes.ts'
+import type { ObjectAttributeProps } from '../../types.ts'
 
-const props = defineProps<{
-  attribute: ObjectAttributeMultiSelect
-  value: string[]
-}>()
+const props =
+  defineProps<ObjectAttributeProps<ObjectAttributeMultiSelect, string[]>>()
 
 const body = computed(() => {
   if (props.attribute.dataType === 'multi_tree_select') {

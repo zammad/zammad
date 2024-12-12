@@ -1,52 +1,29 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { onBeforeUnmount } from 'vue'
+import { useRoute } from 'vue-router'
 
-import {
-  type TemplatesQuery,
-  type TemplateUpdatesSubscription,
-  type TemplateUpdatesSubscriptionVariables,
-} from '#shared/graphql/types.ts'
-import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
-
-import { useTemplatesQuery } from '../graphql/queries/templates.api.ts'
-import { TemplateUpdatesDocument } from '../graphql/subscriptions/templateUpdates.api.ts'
+import { useTicketTemplateStore } from '../stores/ticketTemplate.ts'
 
 export const useApplyTemplate = () => {
-  const session = useSessionStore()
+  const templateStore = useTicketTemplateStore()
 
-  const templateListQuery = new QueryHandler(
-    useTemplatesQuery(
-      () => ({
-        onlyActive: true,
-      }),
-      () => ({ enabled: session.hasPermission('ticket.agent') }),
-    ),
-  )
+  const { templateList } = storeToRefs(templateStore)
 
-  templateListQuery.subscribeToMore<
-    TemplateUpdatesSubscriptionVariables,
-    TemplateUpdatesSubscription
-  >({
-    document: TemplateUpdatesDocument,
-    variables: {
-      onlyActive: true,
-    },
-    updateQuery: (prev, { subscriptionData }) => {
-      if (!subscriptionData.data?.templateUpdates.templates) {
-        return null as unknown as TemplatesQuery
-      }
+  const { activate, deactivate } = templateStore
 
-      return {
-        templates: subscriptionData.data.templateUpdates.templates,
-      }
-    },
+  const route = useRoute()
+
+  // TODO: Drop this mechanism once Apollo implements an effective deduplication of subscriptions on the client level.
+  //   More information: https://github.com/apollographql/apollo-client/issues/10117
+  const usageKey = route.meta.taskbarTabEntityKey ?? 'apply-template'
+
+  activate(usageKey)
+
+  onBeforeUnmount(() => {
+    deactivate(usageKey)
   })
-
-  const result = templateListQuery.result()
-
-  const templateList = computed(() => result.value?.templates || [])
 
   return {
     templateList,

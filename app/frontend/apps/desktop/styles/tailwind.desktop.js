@@ -29,7 +29,7 @@ module.exports = {
   theme: {
     colors: {
       alpha: {
-        900: '#00000080',
+        900: '#000000AA',
       },
       black: '#000000',
       white: '#FFFFFF',
@@ -117,6 +117,9 @@ module.exports = {
       },
       gridTemplateColumns: {
         '2-uneven': 'repeat(2, minmax(0, 1fr))',
+      },
+      zIndex: {
+        60: 60,
       },
     },
   },

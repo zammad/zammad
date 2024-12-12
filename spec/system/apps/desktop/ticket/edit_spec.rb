@@ -47,7 +47,7 @@ RSpec.describe 'Desktop > Ticket > Edit', app: :desktop_view, authenticated_as: 
       article
 
       visit "/ticket/#{ticket.id}"
-      wait_for_form_to_settle('form-ticket-edit')
+      wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
     end
 
     it 'works correctly' do

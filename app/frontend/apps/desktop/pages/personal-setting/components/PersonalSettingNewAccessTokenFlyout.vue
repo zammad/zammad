@@ -135,6 +135,7 @@ const actionCloseFlyout = () => {
     no-close-on-action
     name="new-access-token"
     @action="actionCloseFlyout()"
+    @activated="form?.triggerFormUpdater"
   >
     <div v-if="accessToken" class="flex flex-col gap-3">
       <CommonLabel>{{

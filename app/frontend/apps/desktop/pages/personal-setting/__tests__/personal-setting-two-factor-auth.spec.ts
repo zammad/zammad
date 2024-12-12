@@ -20,7 +20,7 @@ describe('password personal settings', () => {
 
     await vi.waitFor(() => {
       expect(view, 'correctly redirects to error page').toHaveCurrentUrl(
-        '/error',
+        '/error-tab',
       )
     })
   })

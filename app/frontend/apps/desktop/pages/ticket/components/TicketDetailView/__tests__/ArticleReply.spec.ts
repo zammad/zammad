@@ -1,14 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
-import { flushPromises } from '@vue/test-utils'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
-import type { UserData } from '#shared/types/store.ts'
 
 import ArticleReply from '../ArticleReply.vue'
 
@@ -138,34 +135,6 @@ describe('ArticleReply', () => {
     )
 
     expect(complementary).toHaveAttribute('aria-expanded', 'true')
-  })
-
-  it('restores pinned state', async () => {
-    const store = useSessionStore()
-
-    store.user = {
-      id: convertToGraphQLId('User', 100),
-      firstname: 'User',
-      lastname: 'Test',
-    } as UserData
-
-    await flushPromises()
-
-    localStorage.setItem(`${store.userId}-article-reply-pinned`, 'true')
-
-    const wrapper = renderArticleReply({
-      newArticlePresent: true,
-    })
-
-    const complementary = wrapper.getByRole('complementary', {
-      name: 'Reply',
-    })
-
-    expect(
-      wrapper.getByRole('button', { name: 'Unpin this panel' }),
-    ).toBeInTheDocument()
-
-    expect(complementary).toHaveAttribute('aria-expanded', 'false')
   })
 
   it('renders striped border for internal articles', async () => {

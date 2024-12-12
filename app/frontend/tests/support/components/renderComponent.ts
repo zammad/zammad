@@ -47,6 +47,7 @@ import type { AppName } from '#shared/types/app.ts'
 import type { FormFieldTypeImportModules } from '#shared/types/form.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
 
+import { setCurrentApp } from '#desktop/currentApp.ts'
 import { twoFactorConfigurationPluginLookup } from '#desktop/entities/two-factor-configuration/plugins/index.ts'
 import desktopIconsAliases from '#desktop/initializer/desktopIconsAliasesMap.ts'
 import mobileIconsAliases from '#mobile/initializer/mobileIconsAliasesMap.ts'
@@ -156,6 +157,7 @@ const plugins: (Plugin | [Plugin, ...unknown[]])[] = [
     app.config.globalProperties.i18n = i18n
     app.config.globalProperties.$t = i18n.t.bind(i18n)
     app.config.globalProperties.__ = (source: string) => source
+    setCurrentApp(app)
   },
 ]
 
@@ -349,6 +351,13 @@ const mountDialog = () => {
 
   const { element } = mount(Dialog, defaultWrapperOptions)
   document.body.appendChild(element)
+  document.body.id = 'app'
+
+  if (!document.getElementById('main-content')) {
+    const mainElement = document.createElement('div')
+    mainElement.id = 'main-content'
+    document.body.insertAdjacentElement('afterbegin', mainElement)
+  }
 
   dialogMounted = true
 }
@@ -365,7 +374,13 @@ const mountFlyout = () => {
 
   const { element } = mount(Flyout, defaultWrapperOptions)
   document.body.appendChild(element)
-  document.body.id = 'app' // used to teleport the flyout
+  document.body.id = 'app'
+
+  if (!document.getElementById('main-content')) {
+    const mainElement = document.createElement('div')
+    mainElement.id = 'main-content'
+    document.body.insertAdjacentElement('afterbegin', mainElement)
+  }
 
   flyoutMounted = true
 }

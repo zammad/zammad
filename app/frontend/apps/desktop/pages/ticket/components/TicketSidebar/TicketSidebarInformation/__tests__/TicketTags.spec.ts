@@ -4,6 +4,7 @@ import { within } from '@testing-library/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
@@ -26,14 +27,7 @@ import TicketTags, {
   type Props,
 } from '../TicketSidebarInformationContent/TicketTags.vue'
 
-vi.mock('vue-router', async () => {
-  const mod = await vi.importActual<typeof import('vue-router')>('vue-router')
-
-  return {
-    ...mod,
-    onBeforeRouteUpdate: vi.fn(),
-  }
-})
+mockRouterHooks()
 
 const testTags = ['tag 1', 'tag 2', 'tag 3']
 

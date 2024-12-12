@@ -5,6 +5,7 @@ import { computed } from 'vue'
 
 import { useForm } from '#shared/components/Form/useForm.ts'
 
+import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
 import {
   type TicketSidebarProps,
   type TicketSidebarEmits,
@@ -15,6 +16,8 @@ import TicketSidebarWrapper from '../TicketSidebarWrapper.vue'
 import TicketSidebarInformationContent from './TicketSidebarInformationContent.vue'
 
 const props = defineProps<TicketSidebarProps>()
+
+const { persistentStates } = usePersistentStates()
 
 // Form reference may be empty until it's initialized, rendering the subsequent call to composable non-reactive.
 //   Make sure to wrap it in a computed property in order to keep it reactive.
@@ -36,6 +39,7 @@ emit('show')
     :update-indicator="isDirty"
   >
     <TicketSidebarInformationContent
+      v-model="persistentStates"
       :context="context"
       :sidebar-plugin="sidebarPlugin"
     />

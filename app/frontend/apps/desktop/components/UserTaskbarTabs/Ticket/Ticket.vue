@@ -29,7 +29,7 @@ const ticketUpdatesSubscription = new SubscriptionHandler(
     initial: true,
   }),
   {
-    // NB: Silence toast notifications for particular errors, these will be handled by the layout page component.
+    // NB: Silence toast notifications for particular errors, these will be handled by the layout taskbar tab component.
     errorCallback: (errorHandler) =>
       errorHandler.type !== GraphQLErrorTypes.Forbidden &&
       errorHandler.type !== GraphQLErrorTypes.RecordNotFound,

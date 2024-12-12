@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises, mount } from '@vue/test-utils'
+import { useRoute, type RouteLocationNormalizedLoadedGeneric } from 'vue-router'
 
 import {
   destroyComponent,
@@ -19,7 +20,18 @@ vi.mock('#shared/components/DynamicInitializer/manage.ts', () => {
   }
 })
 
-const inContext = (fn: () => void) => {
+vi.mock('vue-router', () => ({
+  useRoute: vi.fn(),
+}))
+
+const mockedUseRoute = vi.mocked(useRoute)
+
+const inContext = (
+  fn: () => void,
+  route: Partial<RouteLocationNormalizedLoadedGeneric>,
+) => {
+  mockedUseRoute.mockReturnValue(route as RouteLocationNormalizedLoadedGeneric)
+
   const component = {
     setup() {
       fn()
@@ -36,54 +48,93 @@ describe('use dialog usage', () => {
   })
 
   test('name and component are required', () => {
-    // @ts-expect-error - component is required
-    useOverlayContainer('dialog', { name: 'name' })
-    // @ts-expect-error - name is required
-    useOverlayContainer('dialog', {
-      component: vi.fn(),
-    })
-    useOverlayContainer('dialog', {
-      name: 'name',
-      component: vi.fn(),
-    })
+    inContext(
+      () => {
+        // @ts-expect-error - component is required
+        useOverlayContainer('dialog', { name: 'name' })
+      },
+      {
+        path: '/example',
+      },
+    )
+
+    inContext(
+      () => {
+        // @ts-expect-error - name is required
+        useOverlayContainer('dialog', {
+          component: vi.fn(),
+        })
+      },
+      {
+        path: '/example',
+      },
+    )
+
+    inContext(
+      () => {
+        useOverlayContainer('dialog', {
+          name: 'name',
+          component: vi.fn(),
+        })
+      },
+      {
+        path: '/example',
+      },
+    )
   })
 
   test('adds and removes meta data', async () => {
-    const vm = inContext(() => {
-      useOverlayContainer('dialog', {
-        name: 'name',
-        component: vi.fn(),
-      })
-    })
+    const vm = inContext(
+      () => {
+        useOverlayContainer('dialog', {
+          name: 'name',
+          component: vi.fn(),
+        })
+      },
+      {
+        path: '/example',
+      },
+    )
     const { options } = getOverlayContainerMeta('dialog')
 
     expect(options.size).toBe(1)
-    expect(options.has('name')).toBe(true)
+    expect(options.has('name_/example')).toBe(true)
 
     vm.unmount()
 
     await flushPromises()
 
     expect(options.size).toBe(0)
-    expect(options.has('name')).toBe(false)
+    expect(options.has('name_/example')).toBe(false)
   })
 
   test('opens and closes dialog', async () => {
     const component = vi.fn().mockResolvedValue({})
-    const dialog = useOverlayContainer('dialog', {
-      name: 'name',
-      component,
-    })
+
+    let dialog!: ReturnType<typeof useOverlayContainer>
+
+    inContext(
+      () => {
+        dialog = useOverlayContainer('dialog', {
+          name: 'name',
+          component,
+        })
+      },
+      {
+        path: '/example',
+      },
+    )
+
     await dialog.open()
 
     const { opened } = getOverlayContainerMeta('dialog')
 
     expect(dialog.isOpened.value).toBe(true)
     expect(component).toHaveBeenCalled()
-    expect(opened.value.has('name')).toBe(true)
+    expect(opened.value.has('name_/example')).toBe(true)
     expect(pushComponent).toHaveBeenCalledWith(
       'dialog',
-      'name',
+      'name_/example',
       expect.anything(),
       {},
     )
@@ -91,58 +142,26 @@ describe('use dialog usage', () => {
     await dialog.close()
 
     expect(dialog.isOpened.value).toBe(false)
-    expect(opened.value.has('name')).toBe(false)
-    expect(destroyComponent).toHaveBeenCalledWith('dialog', 'name')
-  })
-
-  test('opens and closes already opned dialog', async () => {
-    const component = vi.fn().mockResolvedValue({})
-    const dialog = useOverlayContainer('dialog', {
-      name: 'name',
-      component,
-    })
-    const additionalDialog = useOverlayContainer('dialog', {
-      name: 'additional-name',
-      component,
-    })
-
-    await dialog.open()
-
-    const { opened } = getOverlayContainerMeta('dialog')
-
-    expect(dialog.isOpened.value).toBe(true)
-    expect(component).toHaveBeenCalled()
-    expect(opened.value.has('name')).toBe(true)
-    expect(pushComponent).toHaveBeenCalledWith(
-      'dialog',
-      'name',
-      expect.anything(),
-      {},
-    )
-
-    await additionalDialog.open()
-
-    expect(dialog.isOpened.value).toBe(false)
-    expect(opened.value.has('name')).toBe(false)
-    expect(destroyComponent).toHaveBeenCalledWith('dialog', 'name')
-
-    expect(additionalDialog.isOpened.value).toBe(true)
-    expect(component).toHaveBeenCalled()
-    expect(opened.value.has('additional-name')).toBe(true)
-    expect(pushComponent).toHaveBeenCalledWith(
-      'dialog',
-      'additional-name',
-      expect.anything(),
-      {},
-    )
+    expect(opened.value.has('name_/example')).toBe(false)
+    expect(destroyComponent).toHaveBeenCalledWith('dialog', 'name_/example')
   })
 
   test('prefetch starts loading', async () => {
     const component = vi.fn().mockResolvedValue({})
-    const dialog = useOverlayContainer('dialog', {
-      name: 'name',
-      component,
-    })
+
+    let dialog!: ReturnType<typeof useOverlayContainer>
+    inContext(
+      () => {
+        dialog = useOverlayContainer('dialog', {
+          name: 'name',
+          component,
+        })
+      },
+      {
+        path: '/example',
+      },
+    )
+
     await dialog.prefetch()
     expect(component).toHaveBeenCalled()
   })
@@ -152,18 +171,27 @@ describe('use dialog usage', () => {
     const beforeOpen = vi.fn()
     const afterClose = vi.fn()
 
-    const dialog = useOverlayContainer('flyout', {
-      name: 'name',
-      component,
-      beforeOpen,
-      afterClose,
-    })
-    await dialog.open()
+    let flyout!: ReturnType<typeof useOverlayContainer>
+    inContext(
+      () => {
+        flyout = useOverlayContainer('flyout', {
+          name: 'name',
+          component,
+          beforeOpen,
+          afterClose,
+        })
+      },
+      {
+        path: '/example',
+      },
+    )
+
+    await flyout.open()
 
     expect(beforeOpen).toHaveBeenCalled()
     expect(afterClose).not.toHaveBeenCalled()
 
-    await dialog.close()
+    await flyout.close()
 
     expect(afterClose).toHaveBeenCalled()
   })

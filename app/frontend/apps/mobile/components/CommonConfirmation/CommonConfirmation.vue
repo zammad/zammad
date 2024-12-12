@@ -10,37 +10,41 @@ import CommonSectionPopup from '../CommonSectionPopup/CommonSectionPopup.vue'
 
 import type { PopupItemDescriptor } from '../CommonSectionPopup/types.ts'
 
-const { confirmationOptions, showConfirmation } = useConfirmation()
+const { confirmationOptions } = useConfirmation()
+
+const currentConfirmationOptions = computed(() => {
+  return confirmationOptions.value?.get('confirmation')
+})
 
 const localState = computed({
-  get: () => showConfirmation.value,
+  get: () => !!confirmationOptions.value.get('confirmation'),
   set: (value) => {
-    if (!value) confirmationOptions.value = undefined
+    if (!value) confirmationOptions.value.delete('confirmation')
   },
 })
 
 const item = computed(() => {
   return {
     type: 'button' as const,
-    label: confirmationOptions.value?.buttonLabel || __('OK'),
-    buttonVariant: confirmationOptions.value
+    label: currentConfirmationOptions.value?.buttonLabel || __('OK'),
+    buttonVariant: currentConfirmationOptions.value
       ?.buttonVariant as PopupItemDescriptor['buttonVariant'],
-    onAction: confirmationOptions.value?.confirmCallback,
+    onAction: currentConfirmationOptions.value?.confirmCallback,
   }
 })
 
 const callCancelCallback = (isCancel: boolean) => {
   if (!isCancel) return
 
-  if (confirmationOptions.value?.cancelCallback) {
-    confirmationOptions.value.cancelCallback()
+  if (currentConfirmationOptions.value?.cancelCallback) {
+    currentConfirmationOptions.value.cancelCallback()
   }
 }
 
 const heading = computed(() => {
   return i18n.t(
-    confirmationOptions.value?.headerTitle || __('Confirm dialog'),
-    ...(confirmationOptions.value?.headerTitlePlaceholder || []),
+    currentConfirmationOptions.value?.headerTitle || __('Confirm dialog'),
+    ...(currentConfirmationOptions.value?.headerTitlePlaceholder || []),
   )
 })
 </script>
@@ -50,7 +54,8 @@ const heading = computed(() => {
     v-model:state="localState"
     :messages="[item]"
     :heading="heading"
-    :cancel-label="confirmationOptions?.cancelLabel"
+    :cancel-label="currentConfirmationOptions?.cancelLabel"
+    :fullscreen="currentConfirmationOptions?.fullscreen"
     @close="callCancelCallback"
   >
     <template #header>
@@ -59,8 +64,8 @@ const heading = computed(() => {
       >
         {{
           $t(
-            confirmationOptions?.text,
-            ...(confirmationOptions?.textPlaceholder || []),
+            currentConfirmationOptions?.text,
+            ...(currentConfirmationOptions?.textPlaceholder || []),
           )
         }}
       </div>

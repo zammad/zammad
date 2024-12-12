@@ -5,6 +5,7 @@ import { computed, ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
@@ -16,14 +17,7 @@ import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 
 const defaultTicket = createDummyTicket()
 
-vi.mock('vue-router', async () => {
-  const mod = await vi.importActual<typeof import('vue-router')>('vue-router')
-
-  return {
-    ...mod,
-    onBeforeRouteUpdate: vi.fn(),
-  }
-})
+mockRouterHooks()
 
 const renderInformationSidebar = (ticket = defaultTicket) =>
   renderComponent(TicketSidebarInformationContent, {
@@ -32,6 +26,7 @@ const renderInformationSidebar = (ticket = defaultTicket) =>
         screenType: TicketSidebarScreenType.TicketDetailView,
       },
       sidebarPlugin: plugin,
+      modelValue: {},
     },
     form: true,
     router: true,

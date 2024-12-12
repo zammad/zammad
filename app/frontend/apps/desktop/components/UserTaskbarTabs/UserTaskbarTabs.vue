@@ -36,8 +36,7 @@ const {
   taskbarTabListByTabEntityKey,
   taskbarTabListOrder,
   hasTaskbarTabs,
-  activeTaskbarTabEntityKey,
-  activeTaskbarTabContext,
+  taskbarTabContexts,
   loading,
 } = storeToRefs(taskbarTabStore)
 
@@ -173,21 +172,16 @@ const taskbarTabListLocation = computedAsync(() => {
 const getTaskbarTabContext = (tabEntityKey: string) => {
   if (!taskbarTabListContainer.value) return
 
-  return activeTaskbarTabEntityKey.value === tabEntityKey
-    ? activeTaskbarTabContext.value
-    : undefined
+  return taskbarTabContexts.value[tabEntityKey]
 }
 
 const getTaskbarTabDirtyFlag = (tabEntityKey: string) => {
   if (!taskbarTabListContainer.value) return
 
-  if (activeTaskbarTabEntityKey.value === tabEntityKey)
-    return (
-      activeTaskbarTabContext.value.formIsDirty ??
-      taskbarTabListByTabEntityKey.value[tabEntityKey].dirty
-    )
-
-  return taskbarTabListByTabEntityKey.value[tabEntityKey].dirty
+  return (
+    taskbarTabContexts.value[tabEntityKey]?.formIsDirty ??
+    taskbarTabListByTabEntityKey.value[tabEntityKey].dirty
+  )
 }
 </script>
 
@@ -264,7 +258,6 @@ const getTaskbarTabDirtyFlag = (tabEntityKey: string) => {
             >
               <component
                 :is="getTaskbarTabComponent(tabEntityKey)"
-                :entity="taskbarTabListByTabEntityKey[tabEntityKey].entity"
                 :context="getTaskbarTabContext(tabEntityKey)"
                 :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
                 :taskbar-tab-link="getTaskbarTabLink(tabEntityKey)"

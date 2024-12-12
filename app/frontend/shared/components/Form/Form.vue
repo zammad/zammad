@@ -1333,10 +1333,6 @@ const initializeFormSchema = () => {
         useFormUpdaterQuery(
           formUpdaterVariables as Ref<FormUpdaterQueryVariables>,
           {
-            // TODO: we can try it like that to improve a little bit the loading situation, but could
-            // lead to an flickering when something changes from server perspective...
-            // fetchPolicy: 'cache-and-network',
-            // nextFetchPolicy: 'no-cache',
             fetchPolicy: 'no-cache',
           },
         ),

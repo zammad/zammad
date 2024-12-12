@@ -7,11 +7,15 @@ import { computed } from 'vue'
 import { phoneify } from '#shared/utils/formatter.ts'
 
 import type { ObjectAttributeInput } from './attributeInputTypes.ts'
+import type { ObjectAttributeProps } from '../../types.ts'
 
-const props = defineProps<{
-  attribute: ObjectAttributeInput
-  value: string | number | { value: string | number; label: string }
-}>()
+const props =
+  defineProps<
+    ObjectAttributeProps<
+      ObjectAttributeInput,
+      string | number | { value: string | number; label: string }
+    >
+  >()
 
 const primitiveValue = computed(() => {
   if (typeof props.value === 'object' && props.value) return props.value.value
@@ -40,7 +44,7 @@ const link = computed(() => {
   <span v-if="!link">{{ title }}</span>
   <CommonLink
     v-else
-    class="text-blue cursor-pointer"
+    :class="config?.classes?.link"
     :external="attribute.dataOption.type !== 'url'"
     open-in-new-tab
     :link="link"

@@ -21,11 +21,11 @@ describe('TicketChangeCustomerFlyout', () => {
     const wrapper = renderComponent(TicketChangeCustomerFlyout, {
       props: {
         ticket: createDummyTicket(),
-        name: 'create-customer',
       },
       flyout: true,
       store: true,
       form: true,
+      router: true,
     })
 
     expect(

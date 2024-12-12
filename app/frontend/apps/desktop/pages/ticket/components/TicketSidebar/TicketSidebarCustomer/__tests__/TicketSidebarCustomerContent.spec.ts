@@ -4,6 +4,7 @@ import { computed, ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
@@ -69,6 +70,8 @@ const mockedUser = {
 }
 const defaultTicket = createDummyTicket()
 
+mockRouterHooks()
+
 const renderTicketSidebarCustomerContent = async (
   screen: TicketSidebarScreenType = TicketSidebarScreenType.TicketCreate,
   ticket = defaultTicket,
@@ -76,6 +79,7 @@ const renderTicketSidebarCustomerContent = async (
 ) =>
   renderComponent(TicketSidebarCustomerContent, {
     props: {
+      modelValue: {},
       sidebarPlugin: customerSidebarPlugin,
       customer: mockedUser,
       secondaryOrganizations,

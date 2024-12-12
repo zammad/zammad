@@ -46,8 +46,6 @@ describe('CommonDropdown', () => {
 
     expect(await wrapper.findByRole('menu')).toBeInTheDocument()
 
-    console.log(wrapper.html())
-
     await wrapper.events.click(
       wrapper.getByRole('button', { name: dropdownItems[0].label }),
     )

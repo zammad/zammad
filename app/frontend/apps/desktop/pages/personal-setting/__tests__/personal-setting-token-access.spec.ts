@@ -108,7 +108,7 @@ describe('personal settings for token access', () => {
 
     await vi.waitFor(() => {
       expect(view, 'correctly redirects to error page').toHaveCurrentUrl(
-        '/error',
+        '/error-tab',
       )
     })
   })

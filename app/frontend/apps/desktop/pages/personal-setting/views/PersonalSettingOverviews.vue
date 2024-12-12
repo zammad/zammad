@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { ref, watch } from 'vue'
+import { ref, watch, onActivated } from 'vue'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
@@ -38,6 +38,8 @@ const overviewList = ref<OverviewItem[]>()
 const overviewListQuery = new QueryHandler(useUserCurrentOverviewListQuery())
 
 const overviewListQueryLoading = overviewListQuery.loading()
+
+onActivated(() => overviewListQuery.refetch())
 
 overviewListQuery.subscribeToMore<
   UserCurrentOverviewOrderingUpdatesSubscriptionVariables,

@@ -42,6 +42,7 @@ const renderTicketDetailBottomBar = (props?: Partial<Props>) =>
       ...props,
     },
     store: true,
+    router: true,
   })
 
 describe('TicketDetailBottomBar', () => {

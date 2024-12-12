@@ -19,6 +19,7 @@ describe('IssueTrackerLinkFlyout', () => {
       },
       form: true,
       flyout: true,
+      router: true,
     })
 
     await wrapper.events.click(

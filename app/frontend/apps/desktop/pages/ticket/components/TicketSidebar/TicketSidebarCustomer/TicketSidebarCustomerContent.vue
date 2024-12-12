@@ -1,21 +1,25 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, type ComputedRef } from 'vue'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type { Organization, UserQuery } from '#shared/graphql/types.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
+import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/CommonSimpleEntityList.vue'
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 import NavigationMenuList from '#desktop/components/NavigationMenu/NavigationMenuList.vue'
 import { NavigationMenuDensity } from '#desktop/components/NavigationMenu/types.ts'
-import { useChangeCustomerMenuItem } from '#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts'
+import type { TicketInformation } from '#desktop/entities/ticket/types.ts'
+import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import {
   type TicketSidebarContentProps,
   TicketSidebarScreenType,
@@ -33,25 +37,49 @@ interface Props extends TicketSidebarContentProps {
 
 const props = defineProps<Props>()
 
+const persistentStates = defineModel<ObjectLike>({ required: true })
+
 defineEmits<{
   'load-more-secondary-organizations': []
 }>()
 
-const actions = computed<MenuItem[]>(() => {
-  const availableActions: MenuItem[] = []
+const CUSTOMER_FLYOUT_KEY = 'ticket-change-customer'
 
-  // :TODO find a way to provide the ticket via prop
-  if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) {
-    const { customerChangeMenuItem } = useChangeCustomerMenuItem()
-    availableActions.push(customerChangeMenuItem)
-  }
-
-  return availableActions // ADD the rest available menu actions
+const { open: openChangeCustomerFlyout } = useFlyout({
+  name: CUSTOMER_FLYOUT_KEY,
+  component: () =>
+    import(
+      '#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue'
+    ),
 })
+
+let ticket: TicketInformation['ticket']
+let isTicketAgent: ComputedRef<boolean>
+let isTicketEditable: ComputedRef<boolean>
+
+// :TODO find a way to provide the ticket via prop
+if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) {
+  ;({ ticket } = useTicketInformation())
+  ;({ isTicketAgent, isTicketEditable } = useTicketView(ticket))
+}
+
+const actions = computed<MenuItem[]>(() => [
+  {
+    key: CUSTOMER_FLYOUT_KEY,
+    label: __('Change customer'),
+    icon: 'person',
+    show: () => ticket && isTicketAgent.value && isTicketEditable.value,
+    onClick: () =>
+      openChangeCustomerFlyout({
+        ticket,
+      }),
+  },
+])
 </script>
 
 <template>
   <TicketSidebarContent
+    v-model="persistentStates.scrollPosition"
     :title="sidebarPlugin.title"
     :icon="sidebarPlugin.icon"
     :entity="customer"
@@ -83,13 +111,18 @@ const actions = computed<MenuItem[]>(() => {
     <CommonSimpleEntityList
       v-if="secondaryOrganizations.totalCount"
       id="customer-secondary-organizations"
+      v-model="persistentStates.collapseOrganizations"
       :type="EntityType.Organization"
       :label="__('Secondary organizations')"
       :entity="secondaryOrganizations"
       @load-more="$emit('load-more-secondary-organizations')"
     />
 
-    <CommonSectionCollapse id="customer-tickets" :title="__('Tickets')">
+    <CommonSectionCollapse
+      id="customer-tickets"
+      v-model="persistentStates.collapseTickets"
+      :title="__('Tickets')"
+    >
       <NavigationMenuList
         class="mt-1"
         :density="NavigationMenuDensity.Dense"

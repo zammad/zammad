@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { vi } from 'vitest'
 import { computed } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
@@ -21,10 +23,13 @@ vi.mock('#desktop/pages/ticket/composables/useTicketInformation.ts', () => ({
   }),
 }))
 
+mockRouterHooks()
+
 const renderAttachmentContent = () =>
   renderComponent(TicketSidebarAttachmentContent, {
     props: {
       sidebarPlugin: ticketArticlAttachmentsSidebarPlugin,
+      modelValue: {},
       ticketAttachments: [
         {
           __typename: 'StoredFile',

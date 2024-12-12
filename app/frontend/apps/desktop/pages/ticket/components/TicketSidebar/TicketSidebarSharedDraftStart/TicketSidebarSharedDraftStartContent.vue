@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { createMessage, getNode } from '@formkit/core'
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 import {
   NotificationTypes,
@@ -13,6 +14,7 @@ import { useTicketSharedDraftStartUpdateMutation } from '#shared/entities/ticket
 import type { TicketSharedDraftStartListQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 import { removeSignatureFromBody } from '#shared/utils/dom.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
@@ -26,6 +28,8 @@ interface Props extends TicketSidebarContentProps {
 }
 
 const props = defineProps<Props>()
+
+const persistentStates = defineModel<ObjectLike>({ required: true })
 
 const groupId = computed(() =>
   convertToGraphQLId('Group', Number(props.context.formValues.group_id)),
@@ -70,8 +74,15 @@ const sharedDraftContent = () => ({
   body: removeSignatureFromBody(props.context.formValues.body),
 })
 
-const createSharedDraft = () => {
-  const sharedDraftTitleNode = getNode('sharedDraftTitle')
+const route = useRoute()
+
+const sharedDraftTitleNodeId = computed(
+  () => `sharedDraftTitle-${route.meta.taskbarTabEntityKey}`,
+)
+
+const createSharedDraft = async () => {
+  const sharedDraftTitleNode = getNode(sharedDraftTitleNodeId.value)
+
   if (!sharedDraftTitleNode) return
 
   // Trigger field validation.
@@ -139,9 +150,13 @@ const openFlyout = (sharedDraftStartId: string) => {
 </script>
 
 <template>
-  <TicketSidebarContent :title="sidebarPlugin.title" :icon="sidebarPlugin.icon">
+  <TicketSidebarContent
+    v-model="persistentStates.scrollPosition"
+    :title="sidebarPlugin.title"
+    :icon="sidebarPlugin.icon"
+  >
     <FormKit
-      id="sharedDraftTitle"
+      :id="sharedDraftTitleNodeId"
       v-model="sharedDraftTitle"
       type="text"
       :label="__('Create a shared draft')"

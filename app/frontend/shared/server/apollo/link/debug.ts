@@ -17,7 +17,7 @@ const debugLink = new ApolloLink((operation, forward) => {
   const requestContext = operation.getContext()
 
   const definition = getMainDefinition(operation.query)
-  const opeationType =
+  const operationType =
     definition.kind === 'OperationDefinition'
       ? capitalize(definition.operation)
       : null
@@ -39,7 +39,7 @@ const debugLink = new ApolloLink((operation, forward) => {
   operation.setContext({ start: new Date() })
 
   log.debug(
-    `[GraphQL - Request] - ${opeationType} - ${operation.operationName}:`,
+    `[GraphQL - Request] - ${operationType} - ${operation.operationName}:`,
     requestOutput,
   )
 
@@ -65,7 +65,7 @@ const debugLink = new ApolloLink((operation, forward) => {
     }
 
     log.debug(
-      `[GraphQL - Response] - ${opeationType} - ${operation.operationName} (took ${duration}ms):`,
+      `[GraphQL - Response] - ${operationType} - ${operation.operationName} (took ${duration}ms):`,
       responseOutput,
     )
     return data

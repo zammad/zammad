@@ -62,7 +62,7 @@ useEventListener(
     <Component
       :is="cmp"
       v-for="{ cmp, name: cmpName, id, props: cmpProps } in components"
-      :key="`${cmpName + id}`"
+      :key="`${cmpName}-${id}`"
       v-bind="cmpProps"
     />
   </TransitionGroup>
@@ -71,7 +71,7 @@ useEventListener(
     <Component
       :is="cmp"
       v-for="{ cmp, name: cmpName, id, props: cmpProps } in components"
-      :key="`${cmpName + id}`"
+      :key="`${cmpName}-${id}`"
       v-bind="cmpProps"
     />
   </template>

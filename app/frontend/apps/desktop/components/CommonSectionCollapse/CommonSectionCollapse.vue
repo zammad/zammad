@@ -1,9 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
-import { useSessionStore } from '#shared/stores/session.ts'
+import { computed, watch } from 'vue'
 
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
 import { useCollapseHandler } from '#desktop/components/CollapseButton/composables/useCollapseHandler.ts'
@@ -23,6 +21,10 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'small',
 })
 
+const modelValue = defineModel<boolean>({
+  default: false,
+})
+
 const emit = defineEmits<{
   collapse: [boolean]
   expand: [boolean]
@@ -30,14 +32,34 @@ const emit = defineEmits<{
 
 const headerId = computed(() => `${props.id}-header`)
 
-const { userId } = useSessionStore()
-
-const { toggleCollapse, isCollapsed } = useCollapseHandler(emit, {
-  storageKey: `${userId}-${props.id}-section-collapsed`,
-})
+const { toggleCollapse, isCollapsed } = useCollapseHandler(emit)
 
 const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
   useTransitionCollapse()
+
+watch(
+  modelValue,
+  (newValue) => {
+    if (isCollapsed.value === newValue) return
+
+    isCollapsed.value = newValue
+  },
+  {
+    immediate: true,
+  },
+)
+
+watch(
+  isCollapsed,
+  (newValue) => {
+    if (modelValue.value === newValue) return
+
+    modelValue.value = newValue
+  },
+  {
+    immediate: true,
+  },
+)
 </script>
 
 <template>

@@ -6,11 +6,10 @@ import { computed } from 'vue'
 import { translateOption } from '../../utils.ts'
 
 import type { ObjectAttributeSingleSelect } from './attributeSingleSelectTypes.ts'
+import type { ObjectAttributeProps } from '../../types.ts'
 
-const props = defineProps<{
-  attribute: ObjectAttributeSingleSelect
-  value: string
-}>()
+const props =
+  defineProps<ObjectAttributeProps<ObjectAttributeSingleSelect, string>>()
 
 const body = computed(() => {
   if (props.attribute.dataType === 'tree_select') {

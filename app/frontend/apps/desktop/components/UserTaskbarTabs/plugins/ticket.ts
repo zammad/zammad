@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { TicketTaskbarTabAttributesFragmentDoc } from '#shared/entities/ticket/graphql/fragments/ticketTaskbarTabAttributes.api.ts'
 import {
   EnumTaskbarEntity,
@@ -32,11 +31,5 @@ export default <UserTaskbarTabPlugin>{
     }
     return `/tickets/${entity.internalId}`
   },
-  confirmTabRemove: async (dirty?: boolean) => {
-    if (!dirty) return true
-
-    const { waitForVariantConfirmation } = useConfirmation()
-
-    return waitForVariantConfirmation('unsaved')
-  },
+  confirmTabRemove: true,
 }

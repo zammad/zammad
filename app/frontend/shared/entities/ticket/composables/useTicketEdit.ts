@@ -21,6 +21,7 @@ import type {
 } from '#shared/graphql/types.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import type { GraphQLHandlerError } from '#shared/types/error.ts'
 import type { PartialRequired } from '#shared/types/utils.ts'
 import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
 
@@ -47,9 +48,14 @@ const TICKET_FORM_RELEVANT_KEYS = [
 export const useTicketEdit = (
   ticket: ComputedRef<TicketById | undefined>,
   form: ShallowRef<FormRef | undefined>,
+  errorCallback?: (error: GraphQLHandlerError) => boolean,
 ) => {
   const initialTicketValue = ref<FormValues>()
-  const mutationUpdate = new MutationHandler(useTicketUpdateMutation({}))
+
+  const mutationUpdate = new MutationHandler(useTicketUpdateMutation(), {
+    errorCallback,
+    errorNotificationMessage: __('Ticket update failed.'),
+  })
 
   const ticketFormRelatedData = computed<Partial<TicketById>>(
     (currentTicketFormRelatedData) => {

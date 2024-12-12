@@ -4,6 +4,7 @@ import { computed, ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
@@ -18,6 +19,7 @@ import { TicketSidebarScreenType } from '../../../../types/sidebar.ts'
 import customerSidebarPlugin from '../../plugins/customer.ts'
 import TicketSidebarCustomer from '../TicketSidebarCustomer.vue'
 
+mockRouterHooks()
 const renderTicketSidebarCustomer = async (
   context: {
     formValues: Record<string, unknown>

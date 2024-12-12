@@ -9,6 +9,7 @@ import {
 } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
@@ -54,6 +55,8 @@ vi.mock('#shared/composables/useConfirmation.ts', () => ({
     waitForVariantConfirmation: () => Promise.resolve(true),
   }),
 }))
+
+mockRouterHooks()
 
 const templateMocks: Partial<ChecklistTemplate>[] = [
   {

@@ -1,8 +1,6 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-
 import {
   NotificationTypes,
   useNotifications,
@@ -10,8 +8,9 @@ import {
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import { redirectToError } from '#shared/router/error.ts'
+import { ErrorRouteType, redirectErrorRoute } from '#shared/router/error.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { ErrorStatusCodes } from '#shared/types/error.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
@@ -26,9 +25,15 @@ defineOptions({
   beforeRouteEnter() {
     const { canChangePassword } = useCheckChangePassword()
 
-    if (canChangePassword.value) return true
+    if (!canChangePassword.value)
+      return redirectErrorRoute({
+        type: ErrorRouteType.AuthenticatedError,
+        title: __('Forbidden'),
+        message: __('Password change has been disabled by the administrator.'),
+        statusCode: ErrorStatusCodes.Forbidden,
+      })
 
-    return redirectToError(useRouter())
+    return true
   },
 })
 

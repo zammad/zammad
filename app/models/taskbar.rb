@@ -47,11 +47,23 @@ class Taskbar < ApplicationModel
   scope :app, ->(app) { where(app:) }
 
   def self.taskbar_entities
-    ApplicationModel.descendants.select { |model| model.included_modules.include?(HasTaskbars) }.each_with_object([]) do |model, result|
-      model.taskbar_entities&.each do |entity|
-        result << entity
+    @taskbar_entities ||= begin
+      ApplicationModel.descendants.select { |model| model.included_modules.include?(HasTaskbars) }.each_with_object([]) do |model, result|
+        model.taskbar_entities&.each do |entity|
+          result << entity
+        end
+      end | TASKBAR_STATIC_ENTITIES
+    end
+  end
+
+  def self.taskbar_ignore_state_updates_entities
+    @taskbar_ignore_state_updates_entities ||= begin
+      ApplicationModel.descendants.select { |model| model.included_modules.include?(HasTaskbars) }.each_with_object([]) do |model, result|
+        model.taskbar_ignore_state_updates_entities&.each do |entity|
+          result << entity
+        end
       end
-    end | TASKBAR_STATIC_ENTITIES
+    end
   end
 
   def state_changed?

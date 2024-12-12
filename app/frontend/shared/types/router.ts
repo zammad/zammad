@@ -25,6 +25,8 @@ export interface RouteRecordMeta {
   taskbarTabEntity?: EnumTaskbarEntity
   taskbarTabEntityKey?: string
   level?: number
+  pageKey?: string
+  permanentItem?: boolean
 }
 
 export type Link = RouteLocationRaw

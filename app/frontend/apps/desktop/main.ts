@@ -28,9 +28,14 @@ import initializeApolloClient from '#desktop/server/apollo/index.ts'
 import { useThemeStore } from '#desktop/stores/theme.ts'
 
 import App from './AppDesktop.vue'
+import { setCurrentApp } from './currentApp.ts'
 
 export const mountApp = async () => {
   const app = createApp(App)
+
+  // Remember the current created app.
+  setCurrentApp(app)
+
   initializeAppName('desktop')
 
   initializeApolloClient(app)

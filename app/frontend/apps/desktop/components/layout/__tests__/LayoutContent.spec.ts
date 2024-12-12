@@ -3,6 +3,7 @@ import { beforeAll } from 'vitest'
 import { h } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 
 import LayoutContent, {
   type Props,
@@ -33,6 +34,8 @@ const renderLayoutContent = (
     router: true,
   })
 }
+
+mockRouterHooks()
 
 describe('LayoutContent', () => {
   beforeAll(() => {

@@ -9,6 +9,7 @@ import {
   MutationHandler,
   QueryHandler,
 } from '#shared/server/apollo/handler/index.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
@@ -36,11 +37,13 @@ interface Props {
 }
 const props = defineProps<Props>()
 
+const persistentStates = defineModel<ObjectLike>({ required: true })
+
 const skipNextObjectUpdate = ref(false)
 
 const { open, name: FLYOUT_NAME } = useFlyout({
+  name: 'idoit',
   component: () => import('./IdoitFlyout.vue'),
-  name: 'add-idoit-objects',
 })
 
 const objectListQuery = new QueryHandler(
@@ -179,6 +182,7 @@ if (props.ticketId) {
 
 <template>
   <TicketSidebarContent
+    v-model="persistentStates.scrollPosition"
     :title="sidebarPlugin.title"
     :icon="sidebarPlugin.icon"
     :actions="actions"

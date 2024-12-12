@@ -49,8 +49,9 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
     const session = useSessionStore()
     const router = useRouter()
 
+    const taskbarTabContexts = ref<Record<string, TaskbarTabContext>>({})
+
     const activeTaskbarTabEntityKey = ref<string>()
-    const activeTaskbarTabContext = ref<TaskbarTabContext>({})
     const taskbarTabsInCreation = ref<UserTaskbarTab[]>([])
     const taskbarTabIDsInDeletion = ref<ID[]>([])
 
@@ -485,11 +486,12 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       activeTaskbarTab,
       activeTaskbarTabEntityKey,
       activeTaskbarTabEntityAccess,
-      activeTaskbarTabContext,
+      taskbarTabContexts,
       taskbarTabsInCreation,
       taskbarTabsRaw,
       taskbarTabList,
       taskbarTabListByTabEntityKey,
+      taskbarLookupByTypeAndTabEntityKey,
       taskbarTabListOrder,
       taskbarTabExists,
       getTaskbarTabTypePlugin,

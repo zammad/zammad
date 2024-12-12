@@ -89,8 +89,9 @@ const { durations } = useTransitionConfig()
       :style="$slots.sideBar && showSidebar ? gridColumns : undefined"
     >
       <LayoutMain
-        :class="{ 'overflow-y-hidden': noScrollable }"
+        ref="layout-main"
         :no-padding="noPadding"
+        :no-scrollable="noScrollable"
         :background-variant="backgroundVariant"
       >
         <div

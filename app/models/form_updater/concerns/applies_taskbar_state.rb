@@ -39,6 +39,30 @@ module FormUpdater::Concerns::AppliesTaskbarState
         apply_value.perform(field: field, config: { 'value' => value }, include_blank: true)
       end
     end
+
+    # When no object exists, we can ignore the additional check.
+    return if object.blank?
+
+    apply_taskbar_object_defaults(apply_value)
+  end
+
+  def apply_taskbar_object_defaults(apply_value)
+    apply_state_group_keys = self.class.instance_variable_get(:@apply_state_group_keys)
+
+    # We need to check the current dirty fields, to restore maybe some default value from the current ticket.
+    meta[:dirty_fields]&.each do |field|
+      next if SKIP_FIELDS.include?(field)
+
+      # Check first on the first level if it's present in the current state.
+      next if current_taskbar.state.key?(field)
+
+      next if apply_state_group_keys.present? && apply_state_group_keys.any? { |group_key| current_taskbar.state[group_key]&.key?(field) }
+
+      next if !object.respond_to?(field)
+      next if object[field] == data[field]
+
+      apply_value.perform(field: field, config: { 'value' => object[field] }, include_blank: true)
+    end
   end
 
   def current_taskbar

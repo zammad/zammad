@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import {
@@ -12,6 +13,7 @@ import { TicketSidebarScreenType } from '../../../../types/sidebar.ts'
 import organizationSidebarPlugin from '../../plugins/organization.ts'
 import TicketSidebarOrganization from '../TicketSidebarOrganization.vue'
 
+mockRouterHooks()
 const renderTicketSidebarOrganization = async (
   context: {
     formValues: Record<string, unknown>

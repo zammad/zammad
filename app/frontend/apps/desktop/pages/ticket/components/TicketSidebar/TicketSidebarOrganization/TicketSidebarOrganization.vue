@@ -7,6 +7,7 @@ import { useOrganizationDetail } from '#shared/entities/organization/composables
 import { useUserQuery } from '#shared/entities/user/graphql/queries/user.api.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
+import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
 import type {
   TicketSidebarProps,
   TicketSidebarEmits,
@@ -17,6 +18,8 @@ import TicketSidebarWrapper from '../TicketSidebarWrapper.vue'
 import TicketSidebarOrganizationContent from './TicketSidebarOrganizationContent.vue'
 
 const props = defineProps<TicketSidebarProps>()
+
+const { persistentStates } = usePersistentStates()
 
 const emit = defineEmits<TicketSidebarEmits>()
 
@@ -65,6 +68,7 @@ const { organization, organizationMembers, objectAttributes, loadAllMembers } =
   >
     <TicketSidebarOrganizationContent
       v-if="organization"
+      v-model="persistentStates"
       :context="context"
       :sidebar-plugin="sidebarPlugin"
       :organization="organization"

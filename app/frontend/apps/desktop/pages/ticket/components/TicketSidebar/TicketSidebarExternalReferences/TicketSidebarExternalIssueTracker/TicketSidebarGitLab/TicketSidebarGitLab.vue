@@ -9,6 +9,7 @@ import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import TicketSidebarContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarContent.vue'
 import IssueTrackerList from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue'
 import { useIssueTracker } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useIssueTracker.ts'
+import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
 import {
   TicketSidebarScreenType,
   type TicketSidebarEmits,
@@ -18,6 +19,8 @@ import {
 import TicketSidebarWrapper from '../../../TicketSidebarWrapper.vue'
 
 const props = defineProps<TicketSidebarProps>()
+
+const { persistentStates } = usePersistentStates()
 
 const emit = defineEmits<TicketSidebarEmits>()
 
@@ -84,6 +87,7 @@ const actions = computed((): MenuItem[] =>
     :badge="openIssuesBadge"
   >
     <TicketSidebarContent
+      v-model="persistentStates.scrollPosition"
       :title="sidebarPlugin.title"
       :icon="sidebarPlugin.icon"
       :actions="actions"

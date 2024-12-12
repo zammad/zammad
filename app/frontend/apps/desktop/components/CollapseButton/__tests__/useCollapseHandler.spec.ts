@@ -34,8 +34,22 @@ describe('useCollapseHandler', async () => {
       template: '<div></div>',
     }
     mount(TestComponent)
-    await nextTick()
     expect(emit).toHaveBeenCalledWith('collapse', true)
+  })
+
+  it('sync local storage state on subsequent mutations', async () => {
+    localStorage.setItem('test', 'true')
+    const TestComponent = {
+      setup() {
+        const { isCollapsed } = useCollapseHandler(emit, { storageKey: 'test' })
+        expect(isCollapsed.value).toBe(true)
+      },
+      template: '<div></div>',
+    }
+    mount(TestComponent)
+    expect(emit).toHaveBeenCalled()
+    localStorage.setItem('test', 'false')
+    expect(emit).toHaveBeenCalled()
   })
 
   it('calls expand if collapse state is false', async () => {

@@ -132,7 +132,7 @@ describe('LayoutSidebar', () => {
     it('defaults to start position (left)', async () => {
       const aside = view.getByRole('complementary')
 
-      expect(aside).toHaveClass('border-e')
+      expect(aside).not.toHaveClass('border-e')
 
       const collapseButton = view.getByLabelText('Collapse sidebar')
 
