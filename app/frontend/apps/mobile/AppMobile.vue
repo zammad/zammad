@@ -79,7 +79,7 @@ emitter.on('sessionInvalid', async () => {
 watch(
   () => session.initialized,
   (newValue, oldValue) => {
-    if (!newValue && oldValue) return
+    if (!newValue || oldValue) return
 
     useTicketOverviewsStore()
     initializeDefaultObjectAttributes()
