@@ -52,7 +52,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Mixin::Log::ContextIdenti
 
     context "when 'resource' has identifier methods" do
 
-      let(:resource) { double('Some remote resource', id: SecureRandom.base58, foo: SecureRandom.base58) } # rubocop:disable RSpec/VerifiedDoubles
+      let(:resource) { double('Some remote resource', id: SecureRandom.base64(16), foo: SecureRandom.base64(16)) } # rubocop:disable RSpec/VerifiedDoubles
 
       it 'adds resource identifiers' do
         expect(result).to include(resource.id)
@@ -65,7 +65,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Mixin::Log::ContextIdenti
 
     context "when 'resource' has Hash like accessor" do
 
-      let(:resource) { { id: SecureRandom.base58, foo: SecureRandom.base58 } }
+      let(:resource) { { id: SecureRandom.base64(16), foo: SecureRandom.base64(16) } }
 
       it 'adds resource identifiers' do
         expect(result).to include(resource[:id])
@@ -79,7 +79,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Mixin::Log::ContextIdenti
 
   context "when 'mapped' attribute is given" do
 
-    let(:mapped)     { { id: SecureRandom.base58, foo: SecureRandom.base58 } }
+    let(:mapped)     { { id: SecureRandom.base64(16), foo: SecureRandom.base64(16) } }
     let(:parameters) { { mapped: mapped } }
 
     it 'adds mapped identifiers' do
