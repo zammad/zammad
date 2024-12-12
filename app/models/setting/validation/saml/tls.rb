@@ -34,9 +34,9 @@ class Setting::Validation::Saml::TLS < Setting::Validation::Base
     Rails.logger.error("SAML: TLS verification failed for '#{url}': #{resp.error}")
 
     if resp.error.starts_with?('#<OpenSSL::SSL::SSLError')
-      __('The verification of the TLS connection failed. Please check the SAML IDP certificate.')
+      __('The verification of the TLS connection to the IDP SSO target URL failed. Please check the SAML IDP HTTPs certificate.')
     else
-      __('The verification of the TLS connection is not possible. Please check the SAML IDP connection.')
+      __('The verification of the TLS connection to the IDP SSO target URL is not possible. Please check the connection.')
     end
   end
 end
