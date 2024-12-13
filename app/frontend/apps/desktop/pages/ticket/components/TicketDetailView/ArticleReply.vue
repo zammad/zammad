@@ -79,7 +79,7 @@ const availableArticleTypes = computed(() => {
   })
 })
 
-const pinned = ref(false)
+const pinned = defineModel<boolean>('pinned')
 
 const togglePinned = () => {
   pinned.value = !pinned.value

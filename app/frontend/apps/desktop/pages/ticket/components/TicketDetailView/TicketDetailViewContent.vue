@@ -1,7 +1,6 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core'
 import { cloneDeep, isEqual } from 'lodash-es'
 import {
   computed,
@@ -54,7 +53,6 @@ import {
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 import {
   GraphQLErrorTypes,
   type GraphQLHandlerError,
@@ -100,6 +98,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const internalId = toRef(props, 'internalId')
+const isReplyPinned = ref(false)
 
 const { ticket, ticketId, ...ticketInformation } =
   initializeTicketInformation(internalId)
@@ -342,13 +341,6 @@ const formAdditionalRouteQueryParams = computed(() => ({
 
 const { notify } = useNotifications()
 
-const { userId } = useSessionStore()
-
-const articleReplyPinned = useLocalStorage(
-  `${userId}-article-reply-pinned`,
-  false,
-)
-
 const checkSubmitEditTicket = () => {
   if (!isFormValid.value) {
     if (activeSidebar.value !== 'information') switchSidebar('information')
@@ -356,7 +348,7 @@ const checkSubmitEditTicket = () => {
     if (
       newTicketArticlePresent.value &&
       !isArticleFormGroupValid.value &&
-      !articleReplyPinned.value
+      !isReplyPinned.value
     )
       scrollToArticlesEnd()
   }
@@ -595,9 +587,9 @@ const {
         class="relative grid h-full w-full overflow-y-auto"
         :class="{
           'grid-rows-[max-content_max-content_max-content]':
-            !newTicketArticlePresent || !articleReplyPinned,
+            !newTicketArticlePresent || !isReplyPinned,
           'grid-rows-[max-content_1fr_max-content]':
-            newTicketArticlePresent && articleReplyPinned,
+            newTicketArticlePresent && isReplyPinned,
         }"
         @scroll.passive="handleScroll"
       >
@@ -626,6 +618,7 @@ const {
         <ArticleReply
           v-if="ticket?.id && isTicketEditable"
           v-show="!isLoadingArticles"
+          v-model:pinned="isReplyPinned"
           :ticket="ticket"
           :new-article-present="newTicketArticlePresent"
           :create-article-type="ticket.createArticleType?.name"
