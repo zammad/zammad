@@ -116,10 +116,10 @@ features will not work.
 Zammad uses a [`Procfile`](https://devcenter.heroku.com/articles/procfile) to specify the different processes required by the application. We are using [**forego**](https://github.com/ddollar/forego)) to read the `Procfile` and spawn each process listed within it:
 
 ```sh
-$ forego start
+$ forego start -r
 ```
 
-Note that if any one of the managed processes spontaneously dies, `forego` will automatically kill the rest. Simply use  the `-r` flag to automatically respawn stopped processes instead.
+Note the `-r` switch which means that if any one of the services are gracefully stopped (e.g. due to a configuration change), `forego` will automatically respawn them for you.
 
 ### Manually
 

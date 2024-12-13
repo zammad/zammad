@@ -157,7 +157,7 @@ $ bundle install
 Zammad uses the gem `localhost` to automatically generate self-signed certificates. This will place `~/.local/state/localhost.rb/localhost.crt` and `~/.local/state/localhost.rb/localhost.key` files if needed. Then you can use one of the following commands to start the development server:
 
 ```sh
-$ VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -f Procfile.dev-https
+$ VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -r -f Procfile.dev-https
 # or
 $ pnpm dev:https
 ```
