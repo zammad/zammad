@@ -269,7 +269,6 @@ RSpec/MessageSpies:
     - 'spec/db/migrate/issue_1660_fix_tree_select_configurations_spec.rb'
     - 'spec/db/migrate/issue_1905_exchange_login_from_remote_id_spec.rb'
     - 'spec/db/migrate/object_manager_attribute_date_remove_future_past_spec.rb'
-    - 'spec/jobs/app_version_restart_job_spec.rb'
     - 'spec/jobs/search_index_job_spec.rb'
     - 'spec/lib/import/base_factory_examples.rb'
     - 'spec/lib/import/helper_spec.rb'

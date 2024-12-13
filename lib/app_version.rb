@@ -2,6 +2,17 @@
 
 class AppVersion
 
+  MAINTENANCE_THREAD_SLEEP   = 5.seconds
+  REDIS_RESTART_REQUIRED_KEY = 'zammad_restart_required_timestamp'.freeze
+  REDIS_RESTART_REQUIRED_TTL = 5.minutes
+
+  MSG_APP_VERSION    = 'app_version'.freeze
+  MSG_RESTART_MANUAL = 'restart_manual'.freeze
+  MSG_RESTART_AUTO   = 'restart_auto'.freeze
+  MSG_CONFIG_CHANGED = 'config_changed'.freeze
+
+  class_attribute :_redis
+
 =begin
 
 get current app version
@@ -18,36 +29,46 @@ returns
     Setting.get('app_version')
   end
 
-  MSG_APP_VERSION    = 'app_version'.freeze
-  MSG_RESTART_MANUAL = 'restart_manual'.freeze
-  MSG_RESTART_AUTO   = 'restart_auto'.freeze
-  MSG_CONFIG_CHANGED = 'config_changed'.freeze
+  def self.trigger_browser_reload(type, timestamp: make_timestamp)
+    return if !Setting.exists?(name: 'app_version')
 
-=begin
-
-set new app version and if browser reload is required
-
-  AppVersion.set(true) # true == reload is required / false == no reload is required
-
-send also reload type to clients
-
-  AppVersion.set(true, AppVersion::MSG_APP_VERSION)     # -> new app version
-  AppVersion.set(true, AppVersion::MSG_RESTART_MANUAL)  # -> app needs restart
-  AppVersion.set(true, AppVersion::MSG_RESTART_AUTO)    # -> app is restarting
-  AppVersion.set(true, AppVersion::MSG_CONFIG_CHANGED)  # -> config has changed
-
-=end
-
-  def self.set(reload_required = false, type = MSG_APP_VERSION)
-    return false if !Setting.exists?(name: 'app_version')
-
-    version = "#{Time.zone.now.strftime('%Y%m%d%H%M%S')}:#{reload_required}"
-    Setting.set('app_version', version)
-
-    # broadcast to clients
+    Setting.set('app_version', timestamp)
     Sessions.broadcast(event_data(type), 'public')
-
     Gql::Subscriptions::AppMaintenance.trigger({ type: type })
+  end
+
+  def self.trigger_restart
+    timestamp = make_timestamp
+
+    type = if Setting.get('auto_shutdown')
+             restart_required!(timestamp)
+             MSG_RESTART_AUTO
+           else
+             MSG_RESTART_MANUAL
+           end
+
+    trigger_browser_reload(type, timestamp:)
+  end
+
+  def self.start_maintenance_thread(process_name:)
+    return if !Setting.get('auto_shutdown')
+
+    initial_app_version = get
+
+    Rails.logger.debug { "Starting maintenance thread for #{process_name} (#{Process.pid})" }
+    Thread.new do
+      Thread.current.abort_on_exception = true
+
+      loop do
+        if restart_required?(initial_app_version)
+          Rails.logger.debug { "App version change detected, sending TERM signal to #{process_name} (#{Process.pid})" }
+          Process.kill('TERM', Process.pid)
+          break
+        end
+
+        sleep MAINTENANCE_THREAD_SLEEP
+      end
+    end
   end
 
   def self.event_data(type = 'app_version')
@@ -60,4 +81,25 @@ send also reload type to clients
     }
   end
 
+  def self.make_timestamp
+    Time.current.strftime('%Y%m%d%H%M%S')
+  end
+  private_class_method :make_timestamp
+
+  def self.restart_required!(timestamp)
+    redis.set(REDIS_RESTART_REQUIRED_KEY, timestamp, ex: REDIS_RESTART_REQUIRED_TTL)
+  end
+  private_class_method :restart_required!
+
+  def self.restart_required?(known_app_version)
+    value = redis.get(REDIS_RESTART_REQUIRED_KEY)
+
+    value.present? && (known_app_version != value)
+  end
+  private_class_method :restart_required?
+
+  def self.redis
+    self._redis ||= ::Redis.new(driver: :hiredis, url: ENV['REDIS_URL'].presence || 'redis://localhost:6379')
+  end
+  private_class_method :redis
 end

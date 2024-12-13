@@ -26,12 +26,7 @@ class SettingsController < ApplicationController
 
   # PUT /settings/1
   def update
-    clean_params = keep_certain_attributes
-
-    name = Setting.find(params[:id]).name
-    Zammad::Restart.perform if %w[http_type fqdn].include?(name)
-
-    model_update_render(Setting, clean_params)
+    model_update_render(Setting, keep_certain_attributes)
   end
 
   # PUT /settings/image/:id

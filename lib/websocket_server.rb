@@ -14,6 +14,9 @@ class WebsocketServer
     #   -v | --verbose => debug
 
     Rails.configuration.interface = 'websocket'
+
+    AppVersion.start_maintenance_thread(process_name: 'websocket-server')
+
     EventMachine.run do
       EventMachine::WebSocket.start(host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: @options[:tls_options]) do |ws|
 

@@ -6,6 +6,6 @@ class ReloadAfterCoreWorkflowAgain < ActiveRecord::Migration[6.0]
     # return if it's a new setup
     return if !Setting.exists?(name: 'system_init_done')
 
-    AppVersion.set(true, 'app_version')
+    AppVersion.trigger_browser_reload AppVersion::MSG_APP_VERSION
   end
 end

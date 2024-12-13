@@ -5818,3 +5818,14 @@ Setting.create_if_not_exists(
   state:       true,
   frontend:    true
 )
+
+Setting.create_if_not_exists(
+  title:       __('Auto Shutdown'),
+  name:        'auto_shutdown',
+  area:        'Core::WebApp',
+  description: __('Enable or disable self-shutdown of Zammad processes after significant configuration changes. This should only be used if the controlling process manager like systemd or docker supports an automatic restart policy.'),
+  options:     {},
+  state:       !Rails.env.test?,
+  preferences: { online_service_disable: true },
+  frontend:    false
+)

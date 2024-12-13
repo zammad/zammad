@@ -224,7 +224,7 @@ reload config settings
   def check_refresh
     return if ['auth_saml_credentials'].exclude?(name)
 
-    AppVersion.set(true, AppVersion::MSG_CONFIG_CHANGED)
+    AppVersion.trigger_browser_reload AppVersion::MSG_CONFIG_CHANGED
   end
 end
 # rubocop:enable Style/ClassVars

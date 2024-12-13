@@ -35,36 +35,60 @@ RSpec.describe Gql::Subscriptions::AppMaintenance, type: :graphql do
   end
 
   context 'when app maintenance update/change events (trigger actions in the frontend) are triggered' do
-    before do
-      gql.execute(subscription, context: { channel: mock_channel })
-      AppVersion.set(true, app_version_set)
+    context 'when browser reload is triggered' do
+      before do
+        gql.execute(subscription, context: { channel: mock_channel })
+        AppVersion.trigger_browser_reload(app_version_set)
+      end
+
+      context 'when app version event is triggered' do
+        let(:app_version_set) { AppVersion::MSG_APP_VERSION }
+
+        include_examples 'app maintenance subscription'
+      end
+
+      context 'when restart auto event is triggered' do
+        let(:app_version_set) { AppVersion::MSG_RESTART_AUTO }
+        let(:expected_type)   { 'restart_auto' }
+
+        include_examples 'app maintenance subscription'
+      end
+
+      context 'when restart manual event is triggered' do
+        let(:app_version_set) { AppVersion::MSG_RESTART_MANUAL }
+        let(:expected_type)   { 'restart_manual' }
+
+        include_examples 'app maintenance subscription'
+      end
+
+      context 'when config change event is triggered' do
+        let(:app_version_set) { AppVersion::MSG_CONFIG_CHANGED }
+        let(:expected_type)   { 'config_changed' }
+
+        include_examples 'app maintenance subscription'
+      end
     end
 
-    context 'when app version event is triggered' do
-      let(:app_version_set) { AppVersion::MSG_APP_VERSION }
+    context 'when system restart is triggered' do
+      before do
+        Setting.set('auto_shutdown', auto_shutdown_enabled)
+        gql.execute(subscription, context: { channel: mock_channel })
+        AppVersion.trigger_restart
+      end
 
-      include_examples 'app maintenance subscription'
-    end
+      context 'when auto restart is enabled' do
+        let(:auto_shutdown_enabled) { true }
+        let(:expected_type) { 'restart_auto' }
 
-    context 'when restart auto event is triggered' do
-      let(:app_version_set) { AppVersion::MSG_RESTART_AUTO }
-      let(:expected_type)   { 'restart_auto' }
+        include_examples 'app maintenance subscription'
+      end
 
-      include_examples 'app maintenance subscription'
-    end
+      context 'when auto restart is disabled' do
+        let(:auto_shutdown_enabled) { false }
+        let(:expected_type) { 'restart_manual' }
 
-    context 'when restart manual event is triggered' do
-      let(:app_version_set) { AppVersion::MSG_RESTART_MANUAL }
-      let(:expected_type)   { 'restart_manual' }
-
-      include_examples 'app maintenance subscription'
-    end
-
-    context 'when config change event is triggered' do
-      let(:app_version_set) { AppVersion::MSG_CONFIG_CHANGED }
-      let(:expected_type)   { 'config_changed' }
-
-      include_examples 'app maintenance subscription'
+        include_examples 'app maintenance subscription'
+      end
     end
   end
 end

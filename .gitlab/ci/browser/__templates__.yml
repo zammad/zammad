@@ -5,7 +5,6 @@
     - .tags_docker_low_concurrency
   variables:
     RAILS_ENV: "production"
-    APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
   script:
     - |
       script/build/test_slice_tests.sh $TEST_SLICE

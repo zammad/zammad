@@ -572,7 +572,7 @@ msgstr ""
 msgid "A new session was created with your account. This session will be stopped to prevent a conflict."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:116
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:114
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
 
@@ -1944,6 +1944,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:2466
 msgid "Auto Assignment Selector"
+msgstr ""
+
+#: db/seeds/settings.rb:5817
+msgid "Auto Shutdown"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee:16
@@ -5606,6 +5610,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:715
 msgid "Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available)."
+msgstr ""
+
+#: db/seeds/settings.rb:5820
+msgid "Enable or disable self-shutdown of Zammad processes after significant configuration changes. This should only be used if the controlling process manager like systemd or docker supports an automatic restart policy."
 msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:16
@@ -9713,7 +9721,7 @@ msgstr ""
 msgid "New User Accounts"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:113
 msgid "New Version"
 msgstr ""
 
@@ -13455,7 +13463,7 @@ msgid "Some system settings have changed, Zammad is restarting. Please wait unti
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:75
-msgid "Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
+msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 
 #: app/frontend/shared/errors/useErrorHandler.ts:35
@@ -15145,7 +15153,7 @@ msgstr ""
 msgid "The type of the private key is wrong."
 msgstr ""
 
-#: app/controllers/settings_controller.rb:49
+#: app/controllers/settings_controller.rb:44
 msgid "The uploaded image could not be processed. Need data:image in logo or logo_resize param."
 msgstr ""
 

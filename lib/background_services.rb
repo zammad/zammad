@@ -19,6 +19,7 @@ class BackgroundServices
     @child_pids = []
     @threads    = []
     install_signal_trap
+    AppVersion.start_maintenance_thread(process_name: 'background-worker')
   end
 
   def run

@@ -72,7 +72,7 @@ class Maintenance extends App.Controller
 
     @messageRestartManual = new App.SessionMessage(
       head:         __('Zammad requires a restart!')
-      message:      __('Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP_RESTART_CMD="/path/to/your_app_script.sh restart".')
+      message:      __('Some system settings have changed, please restart all Zammad processes!')
       keyboard:     false
       backdrop:     false
       buttonClose:  false
@@ -105,8 +105,6 @@ class Maintenance extends App.Controller
       @appVersion = data.app_version
       return
     @appVersion = data.app_version
-    localAppVersion = @appVersion.split(':')
-    return if localAppVersion[1] isnt 'true'
 
     App.SessionStorage.clear()
 

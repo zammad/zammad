@@ -26,7 +26,9 @@ end
 
 Rails.application.reloader.to_prepare do
   begin
-    request_origins = ['http://localhost:3000']
+    Rails.application.config.action_cable.allow_same_origin_as_host = true
+    # Support for configurations where the HTTP_HOST header is not correctly forwarded:
+    request_origins = [%r{https?://localhost:\d+}]
     request_origins << "#{Setting.get('http_type')}://#{Setting.get('fqdn')}"
     Rails.application.config.action_cable.allowed_request_origins = request_origins
     Rails.application.config.action_cable.disable_request_forgery_protection = true if !Rails.env.production?

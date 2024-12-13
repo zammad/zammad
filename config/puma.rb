@@ -11,6 +11,10 @@ environment ENV.fetch('RAILS_ENV', 'development')
 
 preload_app!
 
+on_booted do
+  AppVersion.start_maintenance_thread(process_name: 'puma')
+end
+
 if worker_count.positive?
   on_worker_boot do
     ActiveRecord::Base.establish_connection
