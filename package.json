@@ -163,7 +163,7 @@
     "linkifyjs": "^4.2.0",
     "lodash-es": "^4.17.21",
     "loglevel": "^1.9.2",
-    "lowlight": "^3.2.0",
+    "lowlight": "^3.3.0",
     "mitt": "^3.0.1",
     "pinia": "^2.3.0",
     "qrcode": "^1.5.4",
