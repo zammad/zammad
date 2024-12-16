@@ -6,7 +6,6 @@ import { useRouter } from 'vue-router'
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
-import { useWalker } from '#shared/router/walker.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
@@ -28,7 +27,6 @@ const { activeTaskbarTabEntityKey } = storeToRefs(taskbarTabStore)
 const { isTouchDevice } = useTouchDevice()
 
 const router = useRouter()
-const walker = useWalker()
 
 const confirmRemoveUserTaskbarTab = async () => {
   if (!props.taskbarTab.taskbarTabId) return
@@ -62,11 +60,7 @@ const confirmRemoveUserTaskbarTab = async () => {
     }
   }
 
-  // In case the tab is currently active, go back to previous route in the history stack.
-  if (props.taskbarTab.tabEntityKey === activeTaskbarTabEntityKey.value)
-    // TODO: Adjust the following redirect fallback to Overviews page instead, when ready.
-    walker.back('/')
-
+  // Redirection to a historical route will be handled by the store.
   taskbarTabStore.deleteTaskbarTab(props.taskbarTab.taskbarTabId)
 }
 </script>

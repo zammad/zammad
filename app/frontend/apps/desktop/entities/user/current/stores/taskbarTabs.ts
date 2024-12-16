@@ -27,7 +27,10 @@ import type { ObjectWithId } from '#shared/types/utils.ts'
 import log from '#shared/utils/log.ts'
 
 import { userTaskbarTabPluginByType } from '#desktop/components/UserTaskbarTabs/plugins/index.ts'
-import type { UserTaskbarTab } from '#desktop/components/UserTaskbarTabs/types.ts'
+import type {
+  BackRoute,
+  UserTaskbarTab,
+} from '#desktop/components/UserTaskbarTabs/types.ts'
 
 import { useUserCurrentTaskbarItemAddMutation } from '../graphql/mutations/userCurrentTaskbarItemAdd.api.ts'
 import { useUserCurrentTaskbarItemDeleteMutation } from '../graphql/mutations/userCurrentTaskbarItemDelete.api.ts'
@@ -58,90 +61,9 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
     const getTaskbarTabTypePlugin = (tabEntityType: EnumTaskbarEntity) =>
       userTaskbarTabPluginByType[tabEntityType]
 
-    const handleActiveTaskbarTabRemoval = (
-      taskbarTabList: UserCurrentTaskbarItemListQuery['userCurrentTaskbarItemList'],
-      removedItemId: string,
-    ) => {
-      const removedItem = taskbarTabList?.find(
-        (tab) => tab.id === removedItemId,
-      )
-
-      if (!removedItem) return
-      if (removedItem.key !== activeTaskbarTabEntityKey.value) return
-
-      // If the active taskbar tab was removed, redirect to the default route.
-      //   TODO: Clarify and define the default or contextual route.
-      router.push('/dashboard')
-    }
-
     const taskbarTabsQuery = new QueryHandler(
       useUserCurrentTaskbarItemListQuery({ app: EnumTaskbarApp.Desktop }),
     )
-
-    taskbarTabsQuery.subscribeToMore<
-      UserCurrentTaskbarItemUpdatesSubscriptionVariables,
-      UserCurrentTaskbarItemUpdatesSubscription
-    >({
-      document: UserCurrentTaskbarItemUpdatesDocument,
-      variables: {
-        app: EnumTaskbarApp.Desktop,
-        userId: session.userId,
-      },
-      updateQuery(previous, { subscriptionData }) {
-        const updates = subscriptionData.data.userCurrentTaskbarItemUpdates
-
-        if (!updates.addItem && !updates.updateItem && !updates.removeItem)
-          return null as unknown as UserCurrentTaskbarItemListQuery
-
-        if (!previous.userCurrentTaskbarItemList || updates.updateItem)
-          return previous
-
-        const previousTaskbarTabList = previous.userCurrentTaskbarItemList
-
-        if (updates.removeItem) {
-          const newTaskbarTabList = previousTaskbarTabList.filter(
-            (tab) => tab.id !== updates.removeItem,
-          )
-
-          handleActiveTaskbarTabRemoval(
-            previousTaskbarTabList,
-            updates.removeItem,
-          )
-
-          return {
-            userCurrentTaskbarItemList: newTaskbarTabList,
-          }
-        }
-
-        if (updates.addItem) {
-          const newIdPresent = previousTaskbarTabList.find((taskbarTab) => {
-            return taskbarTab.id === updates.addItem?.id
-          })
-
-          if (newIdPresent) return previous
-
-          return {
-            userCurrentTaskbarItemList: [
-              ...previousTaskbarTabList,
-              updates.addItem,
-            ],
-          }
-        }
-
-        return previous
-      },
-    })
-
-    taskbarTabsQuery.subscribeToMore<
-      UserCurrentTaskbarItemListUpdatesSubscriptionVariables,
-      UserCurrentTaskbarItemListUpdatesSubscription
-    >({
-      document: UserCurrentTaskbarItemListUpdatesDocument,
-      variables: {
-        userId: session.userId,
-        app: EnumTaskbarApp.Desktop,
-      },
-    })
 
     const taskbarTabsRaw = taskbarTabsQuery.result()
     const taskbarTabsLoading = taskbarTabsQuery.loading()
@@ -259,6 +181,129 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
 
     const taskbarTabExists = (type: EnumTaskbarEntity, tabEntityKey: string) =>
       Boolean(taskbarLookupByTypeAndTabEntityKey.value[type]?.[tabEntityKey])
+
+    const previousRoutes = ref<BackRoute[]>([])
+
+    // Keep track of previously visited routes and if they are taskbar tab routes.
+    router.afterEach((_, from) => {
+      // Clear all previous routes whenever a non-taskbar tab route is visited.
+      if (!from.meta?.taskbarTabEntityKey) previousRoutes.value.length = 0
+
+      previousRoutes.value.push({
+        path: from.fullPath,
+        taskbarTabEntityKey: from.meta?.taskbarTabEntityKey,
+      })
+    })
+
+    const backRoutes = computed(() => [...previousRoutes.value].reverse())
+
+    const redirectToLastHistoricalRoute = () => {
+      // In case of taskbar tab routes, make sure the tab is still present in the list.
+      //   We can do this by comparing the historical taskbar tab entity key against the current tab list.
+      const nextRoute = backRoutes.value.find((backRoute) => {
+        // Return a non-taskbar tab route immediately.
+        if (!backRoute.taskbarTabEntityKey) return true
+
+        // Ignore the current tab, we will be closing it shortly.
+        if (backRoute.taskbarTabEntityKey === activeTaskbarTabEntityKey.value)
+          return false
+
+        // Check if the taskbar tab route is part of the current taskbar.
+        return !!taskbarTabListByTabEntityKey.value[
+          backRoute.taskbarTabEntityKey
+        ]
+      })
+
+      // If identified, redirect to the historical route.
+      if (nextRoute) {
+        router.push(nextRoute.path)
+        return
+      }
+
+      // Otherwise, redirect to the fallback route.
+      //   TODO: Adjust the following redirect fallback to Overviews page instead, when ready.
+      router.push('/')
+    }
+
+    const handleActiveTaskbarTabRemoval = (
+      taskbarTabList: UserCurrentTaskbarItemListQuery['userCurrentTaskbarItemList'],
+      removedItemId: string,
+    ) => {
+      const removedItem = taskbarTabList?.find(
+        (tab) => tab.id === removedItemId,
+      )
+
+      if (!removedItem) return
+      if (removedItem.key !== activeTaskbarTabEntityKey.value) return
+
+      // If the active taskbar tab was removed, redirect to the last historical route.
+      redirectToLastHistoricalRoute()
+    }
+
+    taskbarTabsQuery.subscribeToMore<
+      UserCurrentTaskbarItemUpdatesSubscriptionVariables,
+      UserCurrentTaskbarItemUpdatesSubscription
+    >({
+      document: UserCurrentTaskbarItemUpdatesDocument,
+      variables: {
+        app: EnumTaskbarApp.Desktop,
+        userId: session.userId,
+      },
+      updateQuery(previous, { subscriptionData }) {
+        const updates = subscriptionData.data.userCurrentTaskbarItemUpdates
+
+        if (!updates.addItem && !updates.updateItem && !updates.removeItem)
+          return null as unknown as UserCurrentTaskbarItemListQuery
+
+        if (!previous.userCurrentTaskbarItemList || updates.updateItem)
+          return previous
+
+        const previousTaskbarTabList = previous.userCurrentTaskbarItemList
+
+        if (updates.removeItem) {
+          const newTaskbarTabList = previousTaskbarTabList.filter(
+            (tab) => tab.id !== updates.removeItem,
+          )
+
+          handleActiveTaskbarTabRemoval(
+            previousTaskbarTabList,
+            updates.removeItem,
+          )
+
+          return {
+            userCurrentTaskbarItemList: newTaskbarTabList,
+          }
+        }
+
+        if (updates.addItem) {
+          const newIdPresent = previousTaskbarTabList.find((taskbarTab) => {
+            return taskbarTab.id === updates.addItem?.id
+          })
+
+          if (newIdPresent) return previous
+
+          return {
+            userCurrentTaskbarItemList: [
+              ...previousTaskbarTabList,
+              updates.addItem,
+            ],
+          }
+        }
+
+        return previous
+      },
+    })
+
+    taskbarTabsQuery.subscribeToMore<
+      UserCurrentTaskbarItemListUpdatesSubscriptionVariables,
+      UserCurrentTaskbarItemListUpdatesSubscription
+    >({
+      document: UserCurrentTaskbarItemListUpdatesDocument,
+      variables: {
+        userId: session.userId,
+        app: EnumTaskbarApp.Desktop,
+      },
+    })
 
     const taskbarAddMutation = new MutationHandler(
       useUserCurrentTaskbarItemAddMutation({

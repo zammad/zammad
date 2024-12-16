@@ -567,11 +567,17 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(tabs[0]).not.toBeInTheDocument()
 
-    await vi.waitFor(() => {
-      expect(
-        wrapper,
-        'correctly redirects to the previous route',
-      ).toHaveCurrentUrl('/tickets/42')
+    await getUserCurrentTaskbarItemUpdatesSubscriptionHandler().trigger({
+      userCurrentTaskbarItemUpdates: {
+        addItem: null,
+        updateItem: null,
+        removeItem: convertToGraphQLId('Taskbar', 1),
+      },
     })
+
+    expect(
+      wrapper,
+      'correctly redirects to the previous route',
+    ).toHaveCurrentUrl('/tickets/42')
   })
 })

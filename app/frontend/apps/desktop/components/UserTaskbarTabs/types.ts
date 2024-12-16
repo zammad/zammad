@@ -48,3 +48,8 @@ export interface UserTaskbarTabPlugin {
   ) => string | undefined
   confirmTabRemove?: boolean
 }
+
+export interface BackRoute {
+  path: string
+  taskbarTabEntityKey?: string
+}
