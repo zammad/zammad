@@ -116,7 +116,7 @@
     "@formkit/validation": "^1.6.9",
     "@formkit/vue": "^1.6.9",
     "@github/webauthn-json": "^2.1.1",
-    "@rails/actioncable": "^7.2.200",
+    "@rails/actioncable": "^7.2.201",
     "@sinonjs/fake-timers": "^13.0.5",
     "@tiptap/core": "^2.10.3",
     "@tiptap/extension-blockquote": "^2.10.3",
