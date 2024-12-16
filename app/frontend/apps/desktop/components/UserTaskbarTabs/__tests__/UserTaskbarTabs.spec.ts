@@ -126,13 +126,13 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(link).toHaveAttribute('href', '/desktop/tickets/1')
     expect(link).toHaveAccessibleName('Ticket#53001 - Welcome to Zammad!')
-    expect(link).not.toHaveClass('!bg-yellow-500')
+    expect(link).not.toHaveClass('router-link-active router-link-exact-active')
 
     // Test active background based on the open state.
     const router = getTestRouter()
     await router.push('/tickets/1')
 
-    expect(link).toHaveClass('!bg-yellow-500')
+    expect(link).toHaveClass('router-link-active router-link-exact-active')
 
     expect(
       getByRole(tab, 'button', { name: 'Close this tab' }),
@@ -293,7 +293,7 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(link).toHaveAttribute('href', '/desktop/tickets/1')
     expect(link).toHaveAccessibleName('Ticket#53001 - Welcome to Zammad!')
-    expect(link).toHaveClass('!bg-yellow-500')
+    expect(link).toHaveClass('router-link-active router-link-exact-active')
 
     expect(
       getByRole(tab, 'button', { name: 'Close this tab' }),

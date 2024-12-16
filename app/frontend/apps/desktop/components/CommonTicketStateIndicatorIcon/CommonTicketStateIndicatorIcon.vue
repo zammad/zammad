@@ -61,9 +61,3 @@ const isEscalating = computed(
     :size="iconSize"
   />
 </template>
-
-<style scoped>
-.router-link-active > * > .icon {
-  @apply text-white;
-}
-</style>

@@ -1,13 +1,17 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { toRef } from 'vue'
+
 import { useUserTaskbarTabLink } from '#desktop/composables/useUserTaskbarTabLink.ts'
 
 import type { UserTaskbarTabEntityProps } from './types.ts'
 
-defineProps<UserTaskbarTabEntityProps>()
+const props = defineProps<UserTaskbarTabEntityProps>()
 
-const { tabLinkInstance } = useUserTaskbarTabLink()
+const { tabLinkInstance, taskbarTabActive } = useUserTaskbarTabLink(
+  toRef(props, 'taskbarTab'),
+)
 </script>
 
 <template>
@@ -16,8 +20,10 @@ const { tabLinkInstance } = useUserTaskbarTabLink()
     ref="tabLinkInstance"
     v-tooltip="$t('This object could not be found.')"
     class="flex grow gap-2 rounded-md px-2 py-3 hover:no-underline focus-visible:rounded-md focus-visible:outline-none group-hover/tab:bg-blue-600 group-hover/tab:dark:bg-blue-900"
+    :class="{
+      ['!bg-blue-800 text-white']: taskbarTabActive,
+    }"
     :link="taskbarTabLink"
-    exact-active-class="!bg-blue-800 text-white"
     internal
   >
     <CommonIcon
@@ -29,6 +35,9 @@ const { tabLinkInstance } = useUserTaskbarTabLink()
 
     <CommonLabel
       class="-:text-gray-300 -:dark:text-neutral-400 block truncate group-hover/tab:text-white group-focus-visible/link:text-white"
+      :class="{
+        '!text-white': taskbarTabActive,
+      }"
     >
       {{ $t('Not found') }}
     </CommonLabel>

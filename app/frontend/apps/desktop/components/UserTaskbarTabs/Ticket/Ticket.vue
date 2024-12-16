@@ -47,13 +47,16 @@ const updateNotifyFlag = (notify: boolean) => {
   })
 }
 
-const { tabLinkInstance } = useUserTaskbarTabLink(() => {
-  // Reset the notify flag when the tab becomes active.
-  if (props.taskbarTab.notify) updateNotifyFlag(false)
-})
+const { tabLinkInstance, taskbarTabActive } = useUserTaskbarTabLink(
+  toRef(props, 'taskbarTab'),
+  () => {
+    // Reset the notify flag when the tab becomes active.
+    if (props.taskbarTab.notify) updateNotifyFlag(false)
+  },
+)
 
 const isTicketUpdated = computed(() => {
-  if (tabLinkInstance.value?.isExactActive) return false
+  if (taskbarTabActive.value) return false
   return props.taskbarTab.notify
 })
 
@@ -92,11 +95,10 @@ const currentTitle = computed(() => {
   return props.taskbarTab.entity?.title || ''
 })
 
-const currentStateColorCode = computed(() => {
-  return (
-    props.taskbarTab.entity?.stateColorCode || EnumTicketStateColorCode.Open
-  )
-})
+const currentStateColorCode = computed(
+  () =>
+    props.taskbarTab.entity?.stateColorCode || EnumTicketStateColorCode.Open,
+)
 
 const activeBackgroundColor = computed(() => {
   switch (currentStateColorCode.value) {
@@ -124,13 +126,18 @@ const currentViewTitle = computed(
     v-tooltip="currentViewTitle"
     class="flex grow gap-2 rounded-md px-2 py-3 hover:no-underline focus-visible:rounded-md focus-visible:outline-none group-hover/tab:bg-blue-600 group-hover/tab:dark:bg-blue-900"
     :link="taskbarTabLink"
-    :exact-active-class="activeBackgroundColor"
+    :class="{
+      [activeBackgroundColor]: taskbarTabActive,
+    }"
     internal
   >
     <div class="relative">
       <CommonUpdateIndicator v-if="isTicketUpdated" />
       <CommonTicketStateIndicatorIcon
         class="group-focus-visible/link:text-white"
+        :class="{
+          '!text-white': taskbarTabActive,
+        }"
         :color-code="currentStateColorCode"
         :label="currentState"
         icon-size="small"
@@ -138,14 +145,11 @@ const currentViewTitle = computed(
     </div>
     <CommonLabel
       class="-:text-gray-300 -:dark:text-neutral-400 block truncate group-focus-visible/link:text-white group-hover/tab:dark:text-white"
+      :class="{
+        '!text-white': taskbarTabActive,
+      }"
     >
       {{ currentTitle }}
     </CommonLabel>
   </CommonLink>
 </template>
-
-<style scoped>
-a.router-link-active span {
-  @apply text-white;
-}
-</style>
