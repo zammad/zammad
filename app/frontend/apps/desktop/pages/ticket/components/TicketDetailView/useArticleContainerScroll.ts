@@ -1,7 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { useScroll, useThrottleFn, whenever } from '@vueuse/core'
-import { computed, type Ref, ref, type ShallowRef, watch } from 'vue'
+import {
+  computed,
+  onMounted,
+  onActivated,
+  type Ref,
+  ref,
+  type ShallowRef,
+  watch,
+} from 'vue'
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 
@@ -19,6 +27,8 @@ export const useArticleContainerScroll = (
   >,
 ) => {
   const THROTTLE_TIME = 250
+
+  let hasMounted = false
 
   const { arrivedState } = useScroll(contentContainerElement, {
     eventListenerOptions: { passive: true },
@@ -49,6 +59,12 @@ export const useArticleContainerScroll = (
   })
 
   const handleScroll = useThrottleFn((event: Event) => {
+    // Makes sure we always show the details on initial render and reactivated component.
+    if (!hasMounted) {
+      hasMounted = true
+      return
+    }
+
     const container = event.target! as HTMLDivElement
 
     const { scrollHeight, clientHeight } = container
@@ -70,23 +86,19 @@ export const useArticleContainerScroll = (
     previousPosition.value = scrollTop
   }, THROTTLE_TIME)
 
-  watch(
-    () => arrivedState.bottom,
-    (value) => {
-      isReachingBottom.value = !value
-
-      if (isHoveringOnTopBar.value) return
-
-      isHidingTicketDetails.value = true
-    },
-  )
-
   whenever(
     () => arrivedState.top,
     () => {
       if (isHoveringOnTopBar.value) return
 
       isHidingTicketDetails.value = false
+    },
+  )
+
+  watch(
+    () => arrivedState.bottom,
+    (value) => {
+      isReachingBottom.value = !value
     },
   )
 
@@ -126,6 +138,16 @@ export const useArticleContainerScroll = (
       articleListInstance.value?.scrollToArticle()
     },
   )
+
+  onMounted(() => {
+    hasMounted = false
+    isHidingTicketDetails.value = false
+  })
+
+  onActivated(() => {
+    hasMounted = false
+    isHidingTicketDetails.value = false
+  })
 
   return {
     handleScroll,
