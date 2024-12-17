@@ -12,6 +12,7 @@ set -e
 : "${ELASTICSEARCH_REINDEX:=true}"
 : "${ELASTICSEARCH_SSL_VERIFY:=true}"
 : "${NGINX_PORT:=8080}"
+: "${NGINX_CLIENT_MAX_BODY_SIZE:=50M}"
 : "${NGINX_SERVER_NAME:=_}"
 : "${NGINX_SERVER_SCHEME:=\$scheme}"
 : "${POSTGRESQL_DB:=zammad_production}"
@@ -131,6 +132,7 @@ elif [ "$1" = 'zammad-nginx' ]; then
       -e "s#proxy_pass http://zammad-railsserver;#set \$zammad_railsserver_url http://${ZAMMAD_RAILSSERVER_HOST}:${ZAMMAD_RAILSSERVER_PORT}; proxy_pass \$zammad_railsserver_url;#g" \
       -e "s#proxy_pass http://zammad-websocket;#set \$zammad_websocket_url http://${ZAMMAD_WEBSOCKET_HOST}:${ZAMMAD_WEBSOCKET_PORT}; proxy_pass \$zammad_websocket_url;#g" \
       -e "s#server_name .*#server_name ${NGINX_SERVER_NAME};#g" \
+      -e "s#client_max_body_size .*#client_max_body_size ${NGINX_CLIENT_MAX_BODY_SIZE};#g" \
       -e 's#/var/log/nginx/zammad.\(access\|error\).log#/dev/stdout#g' < contrib/nginx/zammad.conf > /etc/nginx/sites-enabled/default
 
   #
