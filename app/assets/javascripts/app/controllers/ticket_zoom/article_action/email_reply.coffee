@@ -15,6 +15,8 @@ class EmailReply extends App.Controller
 
       # check if reply all needs to be shown
       recipients = []
+      recipientsHasCC = false
+
       if article.sender.name is 'Customer'
         if article.from
           localRecipients = emailAddresses.parseAddressList(article.from)
@@ -28,6 +30,7 @@ class EmailReply extends App.Controller
         localRecipients = emailAddresses.parseAddressList(article.cc)
         if localRecipients
           recipients = recipients.concat localRecipients
+          recipientsHasCC = true
 
       # remove system addresses
       localAddresses = App.EmailAddress.all()
@@ -48,7 +51,7 @@ class EmailReply extends App.Controller
               foreignRecipients.push recipient
 
       # check if reply all is needed
-      if foreignRecipients.length > 1
+      if foreignRecipients.length > 1 || recipientsHasCC
         actions.push {
           name: __('reply all')
           type: 'emailReplyAll'
