@@ -7,6 +7,25 @@ class DataPrivacyTasksController < ApplicationController
     model_index_render(DataPrivacyTask, params)
   end
 
+  def by_state
+    scope = DataPrivacyTask.reorder('id DESC').limit(500)
+
+    in_process = scope.where(state: 'in process')
+    failed     = scope.where(state: 'failed')
+    completed  = scope.where(state: 'completed')
+
+    assets = ApplicationModel::CanAssets.reduce [in_process, failed, completed].flatten, {}
+
+    render json: {
+      record_ids: {
+        in_process: in_process.pluck(:id),
+        failed:     failed.pluck(:id),
+        completed:  completed.pluck(:id)
+      },
+      assets:     assets,
+    }, status: :ok
+  end
+
   def show
     model_show_render(DataPrivacyTask, params)
   end

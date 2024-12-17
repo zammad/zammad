@@ -9,16 +9,24 @@ class Index extends App.ControllerSubContent
   constructor: ->
     super
     @load()
-    @subscribeDataPrivacyTaskId = App.DataPrivacyTask.subscribe(@render)
+
+    @controllerBind(
+      'DataPrivacyTask:create DataPrivacyTask:update DataPrivacyTask:touch DataPrivacyTask:destroy',
+      @load
+    )
 
   load: =>
-    callback = =>
-      @stopLoading()
-      @render()
     @startLoading()
-    App.DataPrivacyTask.fetchFull(
-      callback
-      clear: true
+
+    @ajax(
+      id:    'data_privacy_tasks_by_state'
+      type:  'GET'
+      url:   "#{@apiPath}/data_privacy_tasks/by_state"
+      success: (data) =>
+        App.DataPrivacyTask.deleteAll()
+        App.Collection.loadAssets(data.assets)
+        @stopLoading()
+        @render(data.record_ids)
     )
 
   show: (params) =>
@@ -39,30 +47,18 @@ class Index extends App.ControllerSubContent
       @new(false, @user_id)
       @user_id = undefined
 
-  render: =>
-    runningTasks = App.DataPrivacyTask.search(
-      filter:
-        state: 'in process'
-      order:  'DESC'
-    )
+  render: (record_ids) =>
+    runningTasks = App.DataPrivacyTask.findAll(record_ids.in_process)
     runningTasksHTML = App.view('data_privacy/tasks')(
       tasks: runningTasks
     )
 
-    failedTasks = App.DataPrivacyTask.search(
-      filter:
-        state: 'failed'
-      order:  'DESC'
-    )
+    failedTasks = App.DataPrivacyTask.findAll(record_ids.failed)
     failedTasksHTML = App.view('data_privacy/tasks')(
       tasks: failedTasks
     )
 
-    completedTasks = App.DataPrivacyTask.search(
-      filter:
-        state: 'completed'
-      order:  'DESC'
-    )
+    completedTasks = App.DataPrivacyTask.findAll(record_ids.completed)
     completedTasksHTML = App.view('data_privacy/tasks')(
       tasks: completedTasks
     )
@@ -80,10 +76,6 @@ class Index extends App.ControllerSubContent
       completedTasksHTML: completedTasksHTML
       description: description
     )
-
-  release: =>
-    if @subscribeDataPrivacyTaskId
-      App.DataPrivacyTask.unsubscribe(@subscribeDataPrivacyTaskId)
 
   new: (e, user_id = undefined) ->
     if e
@@ -134,7 +126,7 @@ class Index extends App.ControllerSubContent
       container:   @el.closest('.content')
     )
 
-  formHandler: (params, attribute, attributes, classname, form, ui) =>
+  formHandler: (params, attribute, attributes, DataPrivacyTask, form, ui) =>
     return if !attribute
 
     userID = params['deletable_id']
@@ -194,10 +186,10 @@ class Index extends App.ControllerSubContent
               organization = App.Organization.find(user.organization_id)
               if organization && organization.member_ids.length < 2
                 attribute          = { name: 'preferences::delete_organization',  display: __('Delete organization?'), tag: 'boolean', default: true, translate: true }
-                deleteOrganization = ui.formGenItem(attribute, classname, form).html()
+                deleteOrganization = ui.formGenItem(attribute, DataPrivacyTask, form).html()
 
             sure_attribute = { name: 'preferences::sure',  display: __('Are you sure?'), tag: 'input', translate: false, placeholder: App.i18n.translateInline('delete').toUpperCase() }
-            sureInput      = ui.formGenItem(sure_attribute, classname, form).html()
+            sureInput      = ui.formGenItem(sure_attribute, DataPrivacyTask, form).html()
 
             preview_html = App.view('data_privacy/preview')(
               customer_count:           dataCustomer.object_count || 0
