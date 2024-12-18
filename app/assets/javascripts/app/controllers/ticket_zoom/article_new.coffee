@@ -39,7 +39,8 @@ class App.TicketZoomArticleNew extends App.Controller
     @type = @defaults['type'] || 'note'
     @setPossibleArticleTypes()
 
-    if @ticket.currentView() is 'agent'
+    # If you're an agent, and you have external or full group access, you can access the internal selector
+    if @ticket.currentView() is 'agent' and (@ticket.userGroupAccess('external') or @ticket.userGroupAccess('full'))
       @internalSelector = true
 
     @textareaHeight =
@@ -456,6 +457,10 @@ class App.TicketZoomArticleNew extends App.Controller
     for articleTypeConfig in @articleTypes
       if articleTypeConfig.name is type
         config = articleTypeConfig
+
+    # Automatically select internal on the new article if the user doesn't have external or full access
+    if (!@ticket.userGroupAccess('external') and !@ticket.userGroupAccess('full'))
+      config.internal = true
 
     if config
       if config.internal
