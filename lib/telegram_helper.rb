@@ -266,12 +266,18 @@ returns
       user.update!(user_data)
     else
       if message_user[:username]
-        user_data[:note] = "Telegram @#{message_user[:username]} [#{message_user[:id]}]" 
+        user_data[:note] = "Telegram @#{message_user[:username]} [#{message_user[:id]}]"
+        if User.column_names.include?('telegram_username')
+          user_data[:telegram_username] = message_user[:username]
+        end
       else
         user_data[:note] = "Telegram ID: #{message_user[:id]}" 
       end
       user_data[:active]   = true
       user_data[:role_ids] = Role.signup_role_ids
+      if User.column_names.include?('telegram_id')
+        user_data[:telegram_id] = message_user[:id]
+      end
       user                 = User.create(user_data)
     end
 
