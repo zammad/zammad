@@ -266,7 +266,9 @@ returns
       user.update!(user_data)
     else
       if message_user[:username]
-        user_data[:note] = "Telegram @#{message_user[:username]}"
+        user_data[:note] = "Telegram @#{message_user[:username]} [#{message_user[:id]}]" 
+      else
+        user_data[:note] = "Telegram ID: #{message_user[:id]}" 
       end
       user_data[:active]   = true
       user_data[:role_ids] = Role.signup_role_ids
