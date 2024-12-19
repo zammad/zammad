@@ -14,7 +14,7 @@ gem 'json'
 gem 'parallel'
 
 # core - application servers
-gem 'puma', group: :puma
+gem 'puma', group: :puma, git: 'https://github.com/zammad-deps/puma/', branch: 'linux-stack-trace'
 
 # core - supported ORMs
 gem 'mysql2', group: :mysql

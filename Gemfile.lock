@@ -26,6 +26,14 @@ GIT
       omniauth
       omniauth-oauth2
 
+GIT
+  remote: https://github.com/zammad-deps/puma/
+  revision: cc750a80f8aee79e6fe69dce2ced1078827549cd
+  branch: linux-stack-trace
+  specs:
+    puma (9.9.9)
+      nio4r (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -489,8 +497,6 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
-    puma (6.4.3)
-      nio4r (~> 2.0)
     pundit (2.4.0)
       activesupport (>= 3.0.0)
     pundit-matchers (3.1.2)
@@ -847,7 +853,7 @@ DEPENDENCIES
   pry-rescue
   pry-stack_explorer
   pry-theme
-  puma
+  puma!
   pundit
   pundit-matchers
   rack-attack
