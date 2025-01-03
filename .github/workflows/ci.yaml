@@ -10,7 +10,7 @@ jobs:
   CI:
     runs-on: ubuntu-latest
     container:
-      image: zammad/zammad-ci:3.2.4
+      image: zammad/zammad-ci:3.3.6
     services:
       postgresql:
         image: postgres:17
