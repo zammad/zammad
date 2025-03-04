@@ -48,7 +48,7 @@ jobs:
           docker load --input /tmp/zammad-local.tar
 
           cat - <<ENV_FILE >> .env
-          IMAGE_REPO=zammad-local-invalid
+          IMAGE_REPO=zammad-local
           VERSION=latest
           ENV_FILE
 
