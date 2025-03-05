@@ -12,7 +12,17 @@ class SystemReport::Plugin::Hardware < SystemReport::Plugin
   end
 
   def total_memory
-    open3_data&.dig('children')&.find { |entry| entry['description'].downcase == 'motherboard' }&.dig('children')&.find { |entry| entry['description'].downcase == 'system memory' }&.dig('size')
+    memory = open3_data&.dig('children')&.find { |entry| entry['description'].downcase == 'motherboard' }&.dig('children')&.find { |entry| entry['description'].downcase == 'system memory' }&.dig('size')
+
+    return memory unless memory.nil?
+
+    # Fallback to /proc/meminfo if lshw is missing or fails
+    begin
+      mem_kb = File.read('/proc/meminfo')[/MemTotal:\s+(\d+) kB/, 1].to_i
+      mem_kb * 1024
+    rescue
+      nil
+    end
   end
 
   def df_zammad_root
