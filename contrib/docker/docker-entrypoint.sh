@@ -25,6 +25,7 @@ set -e
 : "${RAILS_LOG_TO_STDOUT:=true}"
 : "${RAILS_TRUSTED_PROXIES:=127.0.0.1,::1}"
 : "${ZAMMAD_DIR:=/opt/zammad}"
+: "${ZAMMAD_EXT_PROXY:=false}"
 : "${ZAMMAD_RAILSSERVER_HOST:=zammad-railsserver}"
 : "${ZAMMAD_RAILSSERVER_PORT:=3000}"
 : "${ZAMMAD_WEBSOCKET_HOST:=zammad-websocket}"
@@ -122,13 +123,30 @@ elif [ "$1" = 'zammad-nginx' ]; then
   # There is a workaround needed to support DNS resolution of upstream container names with short TTL:
   #   we set the proxy pass directly with a variable including the URL (!), rather than just referring to the
   #   upstream {} definition. For details, see https://tenzer.dk/nginx-with-dynamic-upstreams/.
-  sed -e "s#\(listen\)\(.*\)80#\1\2${NGINX_PORT}#g" \
-      -e "s#proxy_set_header X-Forwarded-Proto .*;#proxy_set_header X-Forwarded-Proto ${NGINX_SERVER_SCHEME};#g" \
-      -e "s#proxy_pass http://zammad-railsserver;#set \$zammad_railsserver_url http://${ZAMMAD_RAILSSERVER_HOST}:${ZAMMAD_RAILSSERVER_PORT}; proxy_pass \$zammad_railsserver_url;#g" \
-      -e "s#proxy_pass http://zammad-websocket;#set \$zammad_websocket_url http://${ZAMMAD_WEBSOCKET_HOST}:${ZAMMAD_WEBSOCKET_PORT}; proxy_pass \$zammad_websocket_url;#g" \
+  sed_args=(
+    -e "s#\(listen\)\(.*\)80#\1\2${NGINX_PORT}#g" \
+    -e "s#proxy_set_header X-Forwarded-Proto .*;#proxy_set_header X-Forwarded-Proto ${NGINX_SERVER_SCHEME};#g" \
+    -e "s#proxy_pass http://zammad-railsserver;#set \$zammad_railsserver_url http://${ZAMMAD_RAILSSERVER_HOST}:${ZAMMAD_RAILSSERVER_PORT}; proxy_pass \$zammad_railsserver_url;#g" \
+    -e "s#proxy_pass http://zammad-websocket;#set \$zammad_websocket_url http://${ZAMMAD_WEBSOCKET_HOST}:${ZAMMAD_WEBSOCKET_PORT}; proxy_pass \$zammad_websocket_url;#g" \
+    -e "s#server_name .*#server_name ${NGINX_SERVER_NAME};#g" \
+    -e "s#client_max_body_size .*#client_max_body_size ${NGINX_CLIENT_MAX_BODY_SIZE};#g" \
+    -e 's#/var/log/nginx/zammad.\(access\|error\).log#/dev/stdout#g'
+  )
+
+  if [ "${ZAMMAD_EXT_PROXY}" = "true" ]; then
+    GATEWAY=$(ip route | awk '/default/ {print $3}')
+    echo "Detected gateway: ${GATEWAY}"
+
+    sed_args+=(
+      -e "s#server_name .*;#server_name ${NGINX_SERVER_NAME};\n  # Trust Docker network gateway\n  set_real_ip_from ${GATEWAY};\n  real_ip_header X-Forwarded-For;\n  real_ip_recursive on;#g" \
+    )
+  else
+    sed_args+=(
       -e "s#server_name .*#server_name ${NGINX_SERVER_NAME};#g" \
-      -e "s#client_max_body_size .*#client_max_body_size ${NGINX_CLIENT_MAX_BODY_SIZE};#g" \
-      -e 's#/var/log/nginx/zammad.\(access\|error\).log#/dev/stdout#g' < contrib/nginx/zammad.conf > /etc/nginx/sites-enabled/default
+    )
+  fi
+
+  sed "${sed_args[@]}" < contrib/nginx/zammad.conf > /etc/nginx/sites-enabled/default
 
   #
   # Once we can use an nginx version >= 1.27.3, we can drop the proxy_pass workaround above and
