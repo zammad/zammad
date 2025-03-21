@@ -55,5 +55,6 @@ jobs:
           globs: |
             *.md
             **/*.md
+            #node_modules
       - name: Test
         run: .github/workflows/ci/test.sh
