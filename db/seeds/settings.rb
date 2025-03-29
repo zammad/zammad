@@ -3729,7 +3729,7 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('Elasticsearch S Configuration'),
+  title:       __('Elasticsearch Asciifolding Configuration'),
   name:        'es_asciifolding',
   area:        'SearchIndex::Elasticsearch',
   description: __('Define if asciifolding analyzer should be used in Elasticsearch.'),
