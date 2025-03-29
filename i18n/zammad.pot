@@ -4157,7 +4157,6 @@ msgstr ""
 msgid "Define an exception of \"automatic assignment\" for certain users (e.g. executives)."
 msgstr ""
 
-#: db/migrate/20250329155232_add_es_asciifolding_setting.rb:10
 #: db/seeds/settings.rb:3735
 msgid "Define if asciifolding analyzer should be used in Elasticsearch."
 msgstr ""
@@ -5581,6 +5580,10 @@ msgstr ""
 msgid "Editor"
 msgstr ""
 
+#: db/seeds/settings.rb:3732
+msgid "Elasticsearch Asciifolding Configuration"
+msgstr ""
+
 #: db/seeds/settings.rb:3687
 msgid "Elasticsearch Attachment Extensions"
 msgstr ""
@@ -5611,11 +5614,6 @@ msgstr ""
 
 #: db/seeds/settings.rb:3714
 msgid "Elasticsearch Pipeline Name"
-msgstr ""
-
-#: db/migrate/20250329155232_add_es_asciifolding_setting.rb:7
-#: db/seeds/settings.rb:3732
-msgid "Elasticsearch S Configuration"
 msgstr ""
 
 #: db/seeds/settings.rb:3678
