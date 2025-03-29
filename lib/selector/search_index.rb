@@ -294,6 +294,17 @@ class Selector::SearchIndex < Selector::Base
         query_must_not.push t
       end
 
+    # is less/greater than
+    elsif ['is less than', 'is greater than'].include?(data[:operator])
+      t[:range] = {}
+      t[:range][key_tmp] = {}
+      if data[:operator] == 'is less than'
+        t[:range][key_tmp][:lt] = data[:value]
+      else
+        t[:range][key_tmp][:gt] = data[:value]
+      end
+      query_must.push t
+
     # within last/within next (relative)
     elsif ['within last (relative)', 'within next (relative)'].include?(data[:operator])
       range = relative_map[data[:range].to_sym]
