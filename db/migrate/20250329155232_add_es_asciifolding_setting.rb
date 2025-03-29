@@ -4,10 +4,10 @@ class AddEsAsciifoldingSetting < ActiveRecord::Migration[7.2]
     return if !Setting.exists?(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title:       __('Elasticsearch S Configuration'),
+      title:       'Elasticsearch Asciifolding Configuration',
       name:        'es_asciifolding',
       area:        'SearchIndex::Elasticsearch',
-      description: __('Define if asciifolding analyzer should be used in Elasticsearch.'),
+      description: 'Define if asciifolding analyzer should be used in Elasticsearch.',
       state:       false,
       preferences: { online_service_disable: true },
       frontend:    false

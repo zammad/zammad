@@ -962,9 +962,9 @@ helper method for making HTTP calls and raising error if response was not succes
       analysis: {
         analyzer: {
           default: {
-            type: :custom,
+            type:      :custom,
             tokenizer: :standard,
-            filter: [ :lowercase, :asciifolding ]
+            filter:    %i[lowercase asciifolding]
           }
         }
       }
