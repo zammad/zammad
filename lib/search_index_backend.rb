@@ -973,7 +973,7 @@ helper method for making HTTP calls and raising error if response was not succes
 
   def self.model_settings(model)
     settings = Setting.get('es_model_settings')[model.name] || {}
-    settings = settings.merge(default_asciifolding_settings) if Setting.get('es_asciifolding')
+    settings = default_asciifolding_settings.merge(settings) if Setting.get('es_asciifolding')
     default_model_settings.merge(settings)
   end
 
