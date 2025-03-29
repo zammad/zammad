@@ -957,8 +957,23 @@ helper method for making HTTP calls and raising error if response was not succes
     }
   end
 
+  def self.default_asciifolding_settings
+    {
+      analysis: {
+        analyzer: {
+          default: {
+            type: :custom,
+            tokenizer: :standard,
+            filter: [ :lowercase, :asciifolding ]
+          }
+        }
+      }
+    }
+  end
+
   def self.model_settings(model)
     settings = Setting.get('es_model_settings')[model.name] || {}
+    settings = settings.merge(default_asciifolding_settings) if Setting.get('es_asciifolding')
     default_model_settings.merge(settings)
   end
 

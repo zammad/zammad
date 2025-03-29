@@ -124,6 +124,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'es_attachment_max_size_in_mb',
           'es_pipeline',
           'es_model_settings',
+          'es_asciifolding',
           'import_mode',
           'import_backend',
           'import_ignore_sla',
