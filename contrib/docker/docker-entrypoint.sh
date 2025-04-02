@@ -114,7 +114,7 @@ elif [ "$1" = 'zammad-nginx' ]; then
   # configure nginx
 
   # Ensure that nginx has a short TTL so that recreated containers with new IP addresses are found.
-  NAMESERVER=$(grep "nameserver" < /etc/resolv.conf | awk '{print $2}')
+  NAMESERVER=$(grep -m1 "nameserver" < /etc/resolv.conf | awk '{print $2}')
   echo "resolver $NAMESERVER valid=5s;" > /etc/nginx/conf.d/resolver.conf
 
   # Inject docker related settings into the nginx configuration.
