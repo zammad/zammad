@@ -1,9 +1,36 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { ObjectManagerFrontendAttributesPayload } from '#shared/graphql/types.ts'
 
 export default (): ObjectManagerFrontendAttributesPayload => ({
   attributes: [
+    {
+      name: 'detected_language',
+      display: 'Detected Language',
+      dataType: 'select',
+      dataOption: {
+        maxlength: 255,
+        nulloption: true,
+        multiple: false,
+        null: true,
+        default: '',
+        translate: false,
+        options: {
+          de: 'German',
+        },
+        historical_options: {
+          de: 'German',
+        },
+      },
+      isInternal: true,
+      screens: {
+        create_middle: {},
+        edit: {
+          null: false,
+        },
+      },
+      __typename: 'ObjectManagerFrontendAttribute',
+    },
     {
       name: 'type_id',
       display: 'Type',

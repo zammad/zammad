@@ -4,8 +4,7 @@ set -eu
 
 cd "$(dirname $0)"
 
-docker compose down --timeout 0
-docker volume prune --all --force
+docker compose down --timeout 0 --volumes || true # Ignore "prune operation is already running" errors.
 
 DELETE_IMAGES=$(docker image ls "zammad-packagerio-ci-${CI_JOB_ID}" -q)
 if [ -n "$DELETE_IMAGES" ]

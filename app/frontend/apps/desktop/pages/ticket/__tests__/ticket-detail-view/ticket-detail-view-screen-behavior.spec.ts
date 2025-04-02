@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import { waitFor, within } from '@testing-library/vue'
@@ -222,8 +222,6 @@ describe('Ticket detail view screen behavior', () => {
     })
 
     const view = await visitView('/tickets/1')
-
-    await getNode('form-ticket-edit')?.settled
 
     const ticketMetaSidebar = within(view.getByLabelText('Content sidebar'))
 

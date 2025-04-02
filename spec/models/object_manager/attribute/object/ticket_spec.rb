@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -61,6 +61,23 @@ RSpec.describe 'ObjectManager::Attribute::Object::Ticket', aggregate_failures: t
       )
       ObjectManager::Attribute.migration_execute
       expect(ticket.reload.attributes).not_to include(attribute_name)
+    end
+  end
+
+  describe 'set unexpected defaults' do
+    before { attribute }
+
+    let(:attribute) do
+      attribute = create(:object_manager_attribute_text, data_option: { type: 'text', maxlength: 100, default: false })
+      ObjectManager::Attribute.migration_execute
+
+      attribute
+    end
+    let(:ticket) { create(:ticket) }
+    let(:mysql?)       { ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2' }
+
+    it 'is successful' do
+      expect(ticket.attributes[attribute.name]).to eq(mysql? ? '0' : 'f')
     end
   end
 end

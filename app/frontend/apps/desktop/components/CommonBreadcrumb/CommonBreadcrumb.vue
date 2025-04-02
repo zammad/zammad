@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -49,24 +49,39 @@ const sizeClasses = computed(() => {
 
         <CommonLink
           v-if="item.route"
-          class="focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+          class="focus:outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
           :link="item.route"
           internal
         >
           <CommonLabel size="large" class="line-clamp-1 hover:underline">{{
             item.noOptionLabelTranslation
-              ? $t(item.label as string)
-              : item.label
+              ? item.label
+              : $t(item.label as string)
           }}</CommonLabel>
         </CommonLink>
 
-        <h1 v-else class="line-clamp-1" aria-current="page">
+        <component
+          :is="items.at(-1) === item ? 'h1' : 'span'"
+          v-else
+          class="line-clamp-1"
+          :class="{ 'text-black dark:text-white': item.isActive }"
+          aria-current="page"
+        >
           {{
             item.noOptionLabelTranslation
-              ? $t(item.label as string)
-              : item.label
+              ? item.label
+              : $t(item.label as string)
           }}
-        </h1>
+        </component>
+
+        <CommonBadge
+          v-if="item.count !== undefined"
+          class="leading-snug font-bold ltr:ml-1.5 rtl:mr-1.5"
+          size="xs"
+          rounded
+        >
+          {{ item.count }}
+        </CommonBadge>
 
         <CommonIcon
           v-if="idx !== items.length - 1"

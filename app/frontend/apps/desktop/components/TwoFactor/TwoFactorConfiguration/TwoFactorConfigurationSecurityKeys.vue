@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -18,16 +18,19 @@ import {
   MutationHandler,
   QueryHandler,
 } from '#shared/server/apollo/handler/index.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
-import type { TableHeader } from '#desktop/components/CommonSimpleTable/types.ts'
+import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
+import type { TableSimpleHeader } from '#desktop/components/CommonTable/types.ts'
+import { usePasswordCheckTwoFactor } from '#desktop/entities/two-factor-configuration/composables/usePasswordCheckTwoFactor.ts'
 
-import type { TwoFactorConfigurationComponentProps } from '../types.ts'
+import type { TwoFactorConfigurationComponentPropsWithRequiredToken } from '../types.ts'
 
-const props = defineProps<TwoFactorConfigurationComponentProps>()
+const props =
+  defineProps<TwoFactorConfigurationComponentPropsWithRequiredToken>()
 
 const { twoFactorMethodLookup } = useTwoFactorPlugins()
 
@@ -75,12 +78,25 @@ const footerActionOptions = computed(() => {
   }
 })
 
+const { redirectToPasswordCheck } = usePasswordCheckTwoFactor(
+  props.formSubmitCallback,
+)
+
 const configurationQuery = new QueryHandler(
   useUserCurrentTwoFactorGetMethodConfigurationQuery({
     methodName: twoFactorPlugin.name,
+    token: props.token,
   }),
   {
     errorNotificationMessage: __('Could not fetch security keys'),
+    errorCallback: (error) => {
+      if (error.type === GraphQLErrorTypes.UnknownError) {
+        redirectToPasswordCheck()
+        return false
+      }
+
+      return true
+    },
   },
 )
 
@@ -94,7 +110,7 @@ const credentials = computed<ObjectLike[]>(
   () => configuration.value?.credentials || [],
 )
 
-const tableHeaders: TableHeader[] = [
+const tableHeaders: TableSimpleHeader[] = [
   {
     key: 'nickname',
     label: __('Name'),
@@ -123,6 +139,14 @@ const removeCredentialsMutation = new MutationHandler(
     errorNotificationMessage: __(
       'Could not remove two-factor authentication method.',
     ),
+    errorCallback: (error) => {
+      if (error.type === GraphQLErrorTypes.UnknownError) {
+        redirectToPasswordCheck()
+        return false
+      }
+
+      return true
+    },
   },
 )
 
@@ -137,6 +161,7 @@ const tableActions: MenuItem[] = [
 
       const removeCredentialsResult = await removeCredentialsMutation.send({
         methodName: twoFactorPlugin.name,
+        token: props.token,
         credentialId: entity.id,
       })
 
@@ -167,6 +192,7 @@ const initiateQuery = new QueryHandler(
   useUserCurrentTwoFactorInitiateMethodConfigurationLazyQuery(
     {
       methodName: twoFactorPlugin.name,
+      token: props.token,
     },
     {
       fetchPolicy: 'no-cache',
@@ -178,8 +204,17 @@ const setupCredential = async () => {
   const initiateQueryResult = await initiateQuery.query({
     variables: {
       methodName: twoFactorPlugin.name,
+      token: props.token,
     },
   })
+
+  if (
+    initiateQueryResult.error?.graphQLErrors?.[0]?.extensions?.type ===
+    'Gql::Concerns::HandlesPasswordRevalidationToken::InvalidTokenError'
+  ) {
+    redirectToPasswordCheck()
+    throw new Error()
+  }
 
   const initiateData =
     initiateQueryResult.data?.userCurrentTwoFactorInitiateMethodConfiguration
@@ -198,6 +233,16 @@ const setupCredential = async () => {
 
 const verifyMutation = new MutationHandler(
   useUserCurrentTwoFactorVerifyMethodConfigurationMutation(),
+  {
+    errorCallback: (error) => {
+      if (error.type === GraphQLErrorTypes.UnknownError) {
+        redirectToPasswordCheck()
+        return false
+      }
+
+      return true
+    },
+  },
 )
 
 const verifyCredential = async (
@@ -208,6 +253,7 @@ const verifyCredential = async (
     await verifyMutation.send({
       methodName: twoFactorPlugin.name,
       payload: setupResult.payload,
+      token: props.token,
       configuration: {
         ...initiateData,
         nickname: nickname.value,
@@ -345,6 +391,7 @@ defineExpose({
         }}</CommonLabel>
         <CommonSimpleTable
           v-if="tableItems.length"
+          :caption="$t('Security keys')"
           :headers="tableHeaders"
           :items="tableItems"
           :actions="tableActions"

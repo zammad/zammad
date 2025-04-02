@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { getAllByRole } from '@testing-library/vue'
 
@@ -9,26 +9,33 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { getUserCurrentOverviewOrderingUpdatesSubscriptionHandler } from '#desktop/entities/ticket/graphql/subscriptions/userCurrentOverviewOrderingUpdates.mocks.ts'
+
 import { mockUserCurrentOverviewResetOrderMutation } from '../graphql/mutations/userCurrentOverviewResetOrder.mocks.ts'
 import { mockUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentOverviewList.mocks.ts'
-import { getUserCurrentOverviewOrderingUpdatesSubscriptionHandler } from '../graphql/subscriptions/userCurrentOverviewOrderingUpdates.mocks.ts'
 
-const userCurrentOverviewList = [
+const userCurrentTicketOverviews = [
   {
     id: convertToGraphQLId('Overview', 1),
     name: 'Open Tickets',
+    organizationShared: false,
+    outOfOffice: false,
   },
   {
     id: convertToGraphQLId('Overview', 2),
     name: 'My Tickets',
+    organizationShared: false,
+    outOfOffice: false,
   },
   {
     id: convertToGraphQLId('Overview', 3),
     name: 'All Tickets',
+    organizationShared: false,
+    outOfOffice: false,
   },
 ]
 
-const userCurrentOverviewListAferReset = userCurrentOverviewList.reverse()
+const userCurrentOverviewListAferReset = userCurrentTicketOverviews.reverse()
 
 describe('personal settings for token access', () => {
   beforeEach(() => {
@@ -40,7 +47,7 @@ describe('personal settings for token access', () => {
   })
 
   it('shows the overviews order by priority', async () => {
-    mockUserCurrentOverviewListQuery({ userCurrentOverviewList })
+    mockUserCurrentOverviewListQuery({ userCurrentTicketOverviews })
 
     const view = await visitView('/personal-setting/ticket-overviews')
 
@@ -48,7 +55,7 @@ describe('personal settings for token access', () => {
 
     const overviews = getAllByRole(overviewContainer, 'listitem')
 
-    userCurrentOverviewList.forEach((overview, index) => {
+    userCurrentTicketOverviews.forEach((overview, index) => {
       expect(overviews[index]).toHaveTextContent(overview.name)
     })
   })
@@ -59,7 +66,7 @@ describe('personal settings for token access', () => {
   //   One approach could be to add keyboard shortcuts for changing the order, or perhaps even hidden buttons.
 
   it('allows to reset the order of overviews', async () => {
-    mockUserCurrentOverviewListQuery({ userCurrentOverviewList })
+    mockUserCurrentOverviewListQuery({ userCurrentTicketOverviews })
 
     const view = await visitView('/personal-setting/ticket-overviews')
 
@@ -95,24 +102,26 @@ describe('personal settings for token access', () => {
   })
 
   it('updates the overviews list when a new overview is added', async () => {
-    mockUserCurrentOverviewListQuery({ userCurrentOverviewList })
+    mockUserCurrentOverviewListQuery({ userCurrentTicketOverviews })
 
     const view = await visitView('/personal-setting/ticket-overviews')
 
     const overviewUpdateSubscription =
       getUserCurrentOverviewOrderingUpdatesSubscriptionHandler()
 
-    userCurrentOverviewList.forEach((overview) => {
+    userCurrentTicketOverviews.forEach((overview) => {
       expect(view.getByText(overview.name)).toBeInTheDocument()
     })
 
     overviewUpdateSubscription.trigger({
       userCurrentOverviewOrderingUpdates: {
         overviews: [
-          ...userCurrentOverviewList,
+          ...userCurrentTicketOverviews,
           {
             id: convertToGraphQLId('Overview', 4),
             name: 'New Overview',
+            organizationShared: false,
+            outOfOffice: false,
           },
         ],
       },

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -9,7 +9,7 @@ import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandl
 import { useSessionStore } from '#shared/stores/session.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
-import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue'
+import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicatorIcon.vue'
 import CommonUpdateIndicator from '#desktop/components/CommonUpdateIndicator/CommonUpdateIndicator.vue'
 import { useUserTaskbarTabLink } from '#desktop/composables/useUserTaskbarTabLink.ts'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
@@ -124,7 +124,7 @@ const currentViewTitle = computed(
     v-if="taskbarTabLink"
     ref="tabLinkInstance"
     v-tooltip="currentViewTitle"
-    class="flex grow gap-2 rounded-md px-2 py-3 hover:no-underline focus-visible:rounded-md focus-visible:outline-none group-hover/tab:bg-blue-600 group-hover/tab:dark:bg-blue-900"
+    class="flex grow gap-2 rounded-md px-2 py-3 group-hover/tab:bg-blue-600 hover:no-underline! focus-visible:rounded-md focus-visible:outline-hidden group-hover/tab:dark:bg-blue-900"
     :link="taskbarTabLink"
     :class="{
       [activeBackgroundColor]: taskbarTabActive,
@@ -144,9 +144,9 @@ const currentViewTitle = computed(
       />
     </div>
     <CommonLabel
-      class="-:text-gray-300 -:dark:text-neutral-400 block truncate group-focus-visible/link:text-white group-hover/tab:dark:text-white"
+      class="block! truncate text-gray-300 group-focus-visible/link:text-white dark:text-neutral-400 group-hover/tab:dark:text-white"
       :class="{
-        '!text-white': taskbarTabActive,
+        'text-white!': taskbarTabActive,
       }"
     >
       {{ currentTitle }}

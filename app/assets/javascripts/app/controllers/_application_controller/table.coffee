@@ -384,12 +384,30 @@ class App.ControllerTable extends App.Controller
           if hit
             for event, callback of item.events
               do (table, event, callback) ->
+                if typeof callback isnt 'function' and typeof callback.available is 'function'
+                  availabilityCheck = callback.available
+                  callback          = callback.callback
+
                 if cursorMap[event]
-                  table.find("tbody > tr > td:nth-child(#{position})").css('cursor', cursorMap[event])
+                  table.find("tbody > tr > td:nth-child(#{position})").each (i, elem) ->
+                    dom = $(elem)
+
+                    if availabilityCheck
+                      id = dom.parents('tr').data('id')
+
+                      return if !availabilityCheck(id, dom)
+
+
+                    dom.css('cursor', cursorMap[event])
                 table.on(event, "tbody > tr > td:nth-child(#{position})",
                   (e) ->
                     e.stopPropagation()
-                    id = $(e.target).parents('tr').data('id')
+
+                    col = $(e.currentTarget)
+                    id  = col.parents('tr').data('id')
+
+                    return if availabilityCheck && !availabilityCheck(id, col)
+
                     callback(id, e, e.currentTarget)
                 )
 
@@ -398,11 +416,26 @@ class App.ControllerTable extends App.Controller
       if @bindRow.events
         for event, callback of @bindRow.events
           do (table, event, callback) ->
+            if typeof callback isnt 'function' and typeof callback.available is 'function'
+              availabilityCheck = callback.available
+              callback          = callback.callback
+
             if cursorMap[event]
-              table.find('tbody > tr').css( 'cursor', cursorMap[event] )
+              table.find('tbody > tr').each (i, elem) ->
+                dom = $(elem)
+
+                if availabilityCheck
+                  id = dom.data('id')
+
+                  return if !availabilityCheck(id)
+
+                dom.css( 'cursor', cursorMap[event] )
             table.on(event, 'tbody > tr',
               (e) ->
                 id = $(e.target).parents('tr').data('id')
+
+                return if availabilityCheck && !availabilityCheck(id)
+
                 callback(id, e)
             )
 
@@ -653,6 +686,11 @@ class App.ControllerTable extends App.Controller
         display: __('Clone')
         icon: 'clipboard'
         class: 'create  js-clone'
+        available: (object) =>
+          if typeof @clone is 'function'
+            return @clone(object)
+
+          true
         callback: (id) =>
           item = @model.find(id)
           item.name = "Clone: #{item.name}"
@@ -728,7 +766,9 @@ class App.ControllerTable extends App.Controller
 
       @bindCol['action'] =
         events:
-          click: @toggleActionDropdown
+          click:
+            callback: @toggleActionDropdown
+            available: (id, elem) -> elem.find('[data-table-action]').length > 0
 
     @calculateHeaderWidths()
     @storeHeaderWidths()

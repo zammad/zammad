@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
@@ -22,6 +22,8 @@ const {
   signedStatusMessage,
   encryptedStatusMessage,
   signingMessage,
+  isEncrypted,
+  isSigned,
 } = useArticleSecurity(toRef(props.context.article))
 </script>
 
@@ -30,19 +32,19 @@ const {
     <CommonLabel v-if="typeLabel">{{ typeLabel }}</CommonLabel>
 
     <CommonLabel
-      v-if="encryptionMessage"
+      v-if="isEncrypted"
       v-tooltip="encryptionMessage"
       :prefix-icon="encryptionIcon"
-      class="text-black dark:text-white"
+      class="text-black! dark:text-white!"
     >
       {{ $t(encryptedStatusMessage) }}
     </CommonLabel>
 
     <CommonLabel
-      v-if="signingMessage"
+      v-if="isSigned"
       v-tooltip="signingMessage"
       :prefix-icon="signingIcon"
-      class="text-black dark:text-white"
+      class="text-black! dark:text-white!"
     >
       {{ $t(signedStatusMessage) }}
     </CommonLabel>

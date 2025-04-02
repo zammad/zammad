@@ -3,6 +3,9 @@ class App.TicketList extends App.Controller
   @registerPopovers 'Organization', 'User'
   orderBy: null
   orderDirection: null
+  pagerEnabled: false
+  orderEnabled: false
+  pagerAjax:    false
 
   constructor: ->
     super
@@ -130,6 +133,9 @@ class App.TicketList extends App.Controller
       bindCheckbox: @bindCheckbox
       radio: @radio
       sortClickCallback: @sortClickCallback
+      pagerEnabled: @pagerEnabled
+      orderEnabled: @orderEnabled
+      pagerAjax: @pagerAjax
     )
 
     @renderPopovers()

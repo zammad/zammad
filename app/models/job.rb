@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Job < ApplicationModel
   include ChecksClientNotification
@@ -135,7 +135,7 @@ job.run(true)
 
       logger.debug { "Job #{name} with #{object_count} object(s)" }
 
-      mark_as_started(objects&.count || 0)
+      mark_as_started([object_count, OBJECTS_BATCH_SIZE].min)
 
       objects&.pluck(:id) || []
     end

@@ -1,12 +1,14 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class TextModule::Suggestions < BaseQuery
 
     description 'Search for text modules and return them with variable interpolation'
 
-    argument :query, String, description: 'Query from the autocomplete field'
-    argument :limit, Integer, required: false, description: 'Limit for the amount of entries'
+    argument :query,    String, description: 'Query from the autocomplete field'
+    argument :limit,    Integer, required: false, description: 'Limit for the amount of entries'
+    argument :group_id, GraphQL::Types::ID, loads: Gql::Types::GroupType, required: false, description: 'Group to filter by'
+    argument :ticket_id, GraphQL::Types::ID, loads: Gql::Types::TicketType, required: false, description: 'Optional ticket this is going to be inserted into'
 
     type [Gql::Types::TextModuleType], null: false
 
@@ -14,32 +16,20 @@ module Gql::Queries
       ctx.current_user.permissions?('ticket.agent')
     end
 
-    def resolve(query:, template_render_context: nil, limit: 10)
-      find_text_modules(query: query, limit: limit || 10)
-    end
+    def resolve(query:, group: nil, ticket: nil, template_render_context: nil, limit: 10)
+      permission = ticket.present? ? :read : :create
 
-    def find_text_modules(query:, limit:)
-      ::TextModule.joins('LEFT OUTER JOIN groups_text_modules ON groups_text_modules.text_module_id = text_modules.id')
-        .distinct
-        .where('((text_modules.name LIKE :query) OR (text_modules.keywords LIKE :query))', query: "%#{SqlHelper.quote_like(query.strip)}%")
-        .where(active: true)
-        .where(where_agent_having_groups)
-        .limit(limit)
-        .reorder(:name)
-    end
+      scope = TextModulePolicy::Scope
+        .new(context.current_user, ::TextModule)
+        .resolve(context: permission)
 
-    private
-
-    def where_agent_having_groups
-      no_assigned_groups = 'groups_text_modules.group_id IS NULL'
-
-      groups = context.current_user.groups.access(:read)
-      if groups.any?
-        groups_matcher = groups.map(&:id).join(',')
-        return " (#{no_assigned_groups} OR (groups_text_modules.group_id IN (#{groups_matcher})))"
+      if group
+        scope = scope.available_in_groups(group)
       end
 
-      no_assigned_groups
+      scope.where('((text_modules.name LIKE :query) OR (text_modules.keywords LIKE :query))', query: "%#{SqlHelper.quote_like(query.strip)}%")
+        .limit(limit || 10)
+        .reorder(:name)
     end
   end
 end

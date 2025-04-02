@@ -1,11 +1,7 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class CoreWorkflow::Attributes::Group < CoreWorkflow::Attributes::Base
   def values
-    groups.each do |group|
-      assets(group)
-    end
-
     if groups.blank?
       ['']
     else
@@ -49,12 +45,5 @@ class CoreWorkflow::Attributes::Group < CoreWorkflow::Attributes::Base
 
   def groups_default
     Group.where(active: true)
-  end
-
-  def assets(group)
-    return if @attributes.assets == false
-    return if @attributes.assets[Group.to_app_model] && @attributes.assets[Group.to_app_model][group.id]
-
-    @attributes.assets = group.assets(@attributes.assets)
   end
 end

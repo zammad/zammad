@@ -1,0 +1,34 @@
+.template_browser-core_capybara_es:
+  extends:
+    - .template_browser-core_capybara
+  script:
+    - !reference [.scripts, zammad_ci_test_prepare]
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration -t searchindex --profile 10 spec/system
+
+.template_browser-core_capybara_chrome_es:
+  extends:
+    - .template_browser-core_capybara_es
+    - .variables_selenium_chrome
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, elasticsearch]
+    - !reference [.services, selenium-chrome]
+    - !reference [.services, redis]
+
+.template_browser-core_capybara_firefox_es:
+  extends:
+    - .template_browser-core_capybara_es
+    - .variables_selenium_firefox
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, elasticsearch]
+    - !reference [.services, selenium-firefox]
+    - !reference [.services, redis]
+
+capybara:es:chrome:
+  extends:
+    - .template_browser-core_capybara_chrome_es
+
+capybara:es:firefox:
+  extends:
+    - .template_browser-core_capybara_firefox_es

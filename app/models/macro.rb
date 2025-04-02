@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Macro < ApplicationModel
   include ChecksClientNotification
@@ -9,25 +9,17 @@ class Macro < ApplicationModel
   include CanSelector
   include CanSearch
   include Macro::TriggersSubscriptions
+  include HasOptionalGroups
 
   store     :perform
   validates :perform,         'validations/verify_perform_rules': true
   validates :name,            presence: true, uniqueness: { case_sensitive: false }
   validates :ux_flow_next_up, inclusion: { in: %w[none next_task next_task_on_close next_from_overview] }
 
-  has_and_belongs_to_many :groups, after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
-
   validates :note, length: { maximum: 250 }
   sanitized_html :note
 
   collection_push_permission('ticket.agent')
-
-  scope :available_in_groups, lambda { |groups|
-    left_outer_joins(:groups_macros)
-    .where(groups_macros: { group_id: [nil] + Array(groups) })
-    .where(active: true)
-    .distinct
-  }
 
   ApplicableOn = Struct.new(:result, :blocking_tickets) do
     delegate :==, to: :result

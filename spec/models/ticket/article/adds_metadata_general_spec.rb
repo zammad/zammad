@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -52,7 +52,7 @@ RSpec.describe Ticket::Article::AddsMetadataGeneral do
 
   context 'when Customer creates Article', current_user_id: -> { customer.id } do
     let(:ticket)  { create(:ticket, customer:) }
-    let(:article) { create(:ticket_article, :inbound_web, ticket:) }
+    let(:article) { create(:ticket_article, :inbound_web, ticket:, body: 'Entdecken Sie jetzt das Zammad Ticketsystem!') }
 
     context 'when customer has email address' do
       let(:customer) { create(:customer) }
@@ -68,6 +68,26 @@ RSpec.describe Ticket::Article::AddsMetadataGeneral do
 
       it '#from is set correctly to customer full name' do
         expect(article.from).to eq(customer.fullname)
+      end
+    end
+
+    context 'when it contains a detectable languages inside the body' do
+      let(:customer) { create(:customer) }
+
+      context 'when language detection for article is turned on' do
+        before { Setting.set('language_detection_article', true) }
+
+        it 'does detect the german locale' do
+          expect(article.detected_language).to eq('de')
+        end
+      end
+
+      context 'when language detection for article is turned off' do
+        before { Setting.set('language_detection_article', false) }
+
+        it 'does not detect the german locale' do
+          expect(article.detected_language).to be_blank
+        end
       end
     end
   end

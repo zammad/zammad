@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -83,9 +83,7 @@ describe('devices personal settings', () => {
 
     const table = within(view.getByRole('table'))
 
-    expect(
-      within(table.getAllByRole('row')[0]).getAllByRole('cell')[0],
-    ).toHaveTextContent(/This device/)
+    expect(view.getByRole('table')).toHaveTextContent(/This device/)
 
     expect(
       table.getAllByRole('button', { name: 'Delete this device' }),

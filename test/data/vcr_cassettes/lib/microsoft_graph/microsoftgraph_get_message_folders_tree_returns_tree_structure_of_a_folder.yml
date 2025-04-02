@@ -1,0 +1,517 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders
+    body:
+      encoding: UTF-8
+      string: '{"displayName":"<TOP_FOLDER_TREE>"}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Location:
+      - https://graph.microsoft.com/v1.0/users('<MICROSOFT365_USER>')/mailFolders('AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL5AAA=')
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - f3c485c5-cc80-4885-b627-5eb5ee7af422
+      Client-Request-Id:
+      - f3c485c5-cc80-4885-b627-5eb5ee7af422
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"003","RoleInstance":"FR1PEPF000017EE"}}'
+      Date:
+      - Wed, 08 Jan 2025 10:30:31 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''development%40zammadtesting.onmicrosoft.com'')/mailFolders/$entity","id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL5AAA=","displayName":"<TOP_FOLDER_TREE>","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false}'
+  recorded_at: Wed, 08 Jan 2025 10:30:32 GMT
+- request:
+    method: post
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL5AAA=/childFolders
+    body:
+      encoding: UTF-8
+      string: '{"displayName":"dead-end"}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Location:
+      - https://graph.microsoft.com/v1.0/users('<MICROSOFT365_USER>')/mailFolders('AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL6AAA=')
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - a261e934-316a-428a-a036-a05d455f3240
+      Client-Request-Id:
+      - a261e934-316a-428a-a036-a05d455f3240
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"005","RoleInstance":"FR3PEPF00000560"}}'
+      Date:
+      - Wed, 08 Jan 2025 10:30:31 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''development%40zammadtesting.onmicrosoft.com'')/mailFolders(''AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL5AAA%3D'')/childFolders/$entity","id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL6AAA=","displayName":"dead-end","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL5AAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false}'
+  recorded_at: Wed, 08 Jan 2025 10:30:32 GMT
+- request:
+    method: post
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL5AAA=/childFolders
+    body:
+      encoding: UTF-8
+      string: '{"displayName":"2nd-level"}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Location:
+      - https://graph.microsoft.com/v1.0/users('<MICROSOFT365_USER>')/mailFolders('AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL7AAA=')
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - cd0ab2ef-7f78-4ae8-a765-203d6cd7a0c3
+      Client-Request-Id:
+      - cd0ab2ef-7f78-4ae8-a765-203d6cd7a0c3
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"005","RoleInstance":"FR3PEPF00000366"}}'
+      Date:
+      - Wed, 08 Jan 2025 10:30:32 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''development%40zammadtesting.onmicrosoft.com'')/mailFolders(''AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL5AAA%3D'')/childFolders/$entity","id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL7AAA=","displayName":"2nd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL5AAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false}'
+  recorded_at: Wed, 08 Jan 2025 10:30:32 GMT
+- request:
+    method: post
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL7AAA=/childFolders
+    body:
+      encoding: UTF-8
+      string: '{"displayName":"3rd-level"}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Location:
+      - https://graph.microsoft.com/v1.0/users('<MICROSOFT365_USER>')/mailFolders('AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL8AAA=')
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 308e310b-92e9-4569-aad6-eaf3db6234e7
+      Client-Request-Id:
+      - 308e310b-92e9-4569-aad6-eaf3db6234e7
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"005","RoleInstance":"FR3PEPF000008EE"}}'
+      Date:
+      - Wed, 08 Jan 2025 10:30:32 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''development%40zammadtesting.onmicrosoft.com'')/mailFolders(''AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL7AAA%3D'')/childFolders/$entity","id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL8AAA=","displayName":"3rd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL7AAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false}'
+  recorded_at: Wed, 08 Jan 2025 10:30:33 GMT
+- request:
+    method: get
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders?$expand=childFolders($top=9999)&$top=9999
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 25f94e32-4ad1-4ee0-abc7-82d9f116e6f5
+      Client-Request-Id:
+      - 25f94e32-4ad1-4ee0-abc7-82d9f116e6f5
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"005","RoleInstance":"FR3PEPF00000917"}}'
+      Date:
+      - Wed, 08 Jan 2025 10:30:32 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''development%40zammadtesting.onmicrosoft.com'')/mailFolders(childFolders())","value":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAKfKAAA=","displayName":"Archiv","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEPAAA=","displayName":"Entw\u00fcrfe","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEKAAA=","displayName":"Gel\u00f6schte
+        Elemente","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEJAAA=","displayName":"Gesendete
+        Elemente","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":9775,"sizeInBytes":148375072,"isHidden":false,"childFolders":[]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEVAAA=","displayName":"Junk-E-Mail","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAELAAA=","displayName":"Postausgang","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEMAAA=","displayName":"Posteingang","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":0,"unreadItemCount":34,"totalItemCount":34,"sizeInBytes":1338083,"isHidden":false,"childFolders":[]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLLAAA=","displayName":"rspec-489a2ca8-f287-460b-a2ca-65d8afd5f14a","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":1,"sizeInBytes":2571,"isHidden":false,"childFolders":[]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLJAAA=","displayName":"rspec-8cb98488-1a5b-4ce8-b68c-74c0135a94e1","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL5AAA=","displayName":"<TOP_FOLDER_TREE>","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":2,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL7AAA=","displayName":"2nd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL5AAA=","childFolderCount":1,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL6AAA=","displayName":"dead-end","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL5AAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false}]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLhAAA=","displayName":"rspec-graph-client-1cd247c6-54cf-4f7e-a9cd-8f27d93b77a0","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":2,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLjAAA=","displayName":"2nd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLhAAA=","childFolderCount":1,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLiAAA=","displayName":"dead-end","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLhAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false}]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLbAAA=","displayName":"rspec-graph-client-2addf76f-0a41-4cf3-9c16-edf2b5681b42","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":2,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLdAAA=","displayName":"2nd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLbAAA=","childFolderCount":1,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLcAAA=","displayName":"dead-end","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLbAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false}]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLnAAA=","displayName":"rspec-graph-client-442c79fe-5046-4aaf-b984-2c01716dbbef","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":2,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLpAAA=","displayName":"2nd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLnAAA=","childFolderCount":1,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLoAAA=","displayName":"dead-end","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLnAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false}]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLtAAA=","displayName":"rspec-graph-client-62baf835-6d8c-4323-9bfc-b242297fe3fd","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":2,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLvAAA=","displayName":"2nd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLtAAA=","childFolderCount":1,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLuAAA=","displayName":"dead-end","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLtAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false}]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLzAAA=","displayName":"rspec-graph-client-b746c85f-14d0-428f-a499-1c4d602a62b9","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":2,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL1AAA=","displayName":"2nd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLzAAA=","childFolderCount":1,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL0AAA=","displayName":"dead-end","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLzAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false}]},{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAKfEAAA=","displayName":"Verlauf
+        der Unterhaltung","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAAAAAAEIAAA=","childFolderCount":1,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]}]}'
+  recorded_at: Wed, 08 Jan 2025 10:30:33 GMT
+- request:
+    method: get
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL7AAA=/childFolders?$expand=childFolders($top=9999)&$top=9999
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 1c4caf45-aae8-43e7-9c47-a752c19e3420
+      Client-Request-Id:
+      - 1c4caf45-aae8-43e7-9c47-a752c19e3420
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"005","RoleInstance":"FR3PEPF000008E2"}}'
+      Date:
+      - Wed, 08 Jan 2025 10:30:33 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''development%40zammadtesting.onmicrosoft.com'')/mailFolders(''AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL7AAA%3D'')/childFolders(childFolders())","value":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL8AAA=","displayName":"3rd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL7AAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]}]}'
+  recorded_at: Wed, 08 Jan 2025 10:30:33 GMT
+- request:
+    method: get
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLjAAA=/childFolders?$expand=childFolders($top=9999)&$top=9999
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 390c4bf0-9397-406e-8d89-c7cc635294bf
+      Client-Request-Id:
+      - 390c4bf0-9397-406e-8d89-c7cc635294bf
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"003","RoleInstance":"FR1PEPF00000BA2"}}'
+      Date:
+      - Wed, 08 Jan 2025 10:30:33 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''development%40zammadtesting.onmicrosoft.com'')/mailFolders(''AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLjAAA%3D'')/childFolders(childFolders())","value":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLkAAA=","displayName":"3rd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLjAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]}]}'
+  recorded_at: Wed, 08 Jan 2025 10:30:33 GMT
+- request:
+    method: get
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLdAAA=/childFolders?$expand=childFolders($top=9999)&$top=9999
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - d822381a-6335-4792-8994-d4944844801e
+      Client-Request-Id:
+      - d822381a-6335-4792-8994-d4944844801e
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"005","RoleInstance":"FR3PEPF0000036B"}}'
+      Date:
+      - Wed, 08 Jan 2025 10:30:33 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''development%40zammadtesting.onmicrosoft.com'')/mailFolders(''AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLdAAA%3D'')/childFolders(childFolders())","value":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLeAAA=","displayName":"3rd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLdAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]}]}'
+  recorded_at: Wed, 08 Jan 2025 10:30:33 GMT
+- request:
+    method: get
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLpAAA=/childFolders?$expand=childFolders($top=9999)&$top=9999
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 9bf293de-01d6-4255-9359-f1005f890ecd
+      Client-Request-Id:
+      - 9bf293de-01d6-4255-9359-f1005f890ecd
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"005","RoleInstance":"FR3PEPF000008EF"}}'
+      Date:
+      - Wed, 08 Jan 2025 10:30:33 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''development%40zammadtesting.onmicrosoft.com'')/mailFolders(''AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLpAAA%3D'')/childFolders(childFolders())","value":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLqAAA=","displayName":"3rd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLpAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]}]}'
+  recorded_at: Wed, 08 Jan 2025 10:30:33 GMT
+- request:
+    method: get
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLvAAA=/childFolders?$expand=childFolders($top=9999)&$top=9999
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - '097c7dc0-3c73-4931-8444-a09504427d59'
+      Client-Request-Id:
+      - '097c7dc0-3c73-4931-8444-a09504427d59'
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"005","RoleInstance":"FR3PEPF000002C3"}}'
+      Date:
+      - Wed, 08 Jan 2025 10:30:33 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''development%40zammadtesting.onmicrosoft.com'')/mailFolders(''AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLvAAA%3D'')/childFolders(childFolders())","value":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLwAAA=","displayName":"3rd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQLvAAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]}]}'
+  recorded_at: Wed, 08 Jan 2025 10:30:34 GMT
+- request:
+    method: get
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL1AAA=/childFolders?$expand=childFolders($top=9999)&$top=9999
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - a3895168-2376-40fc-b236-b17934d13bbc
+      Client-Request-Id:
+      - a3895168-2376-40fc-b236-b17934d13bbc
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"005","RoleInstance":"FR3PEPF000008DF"}}'
+      Date:
+      - Wed, 08 Jan 2025 10:30:34 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''development%40zammadtesting.onmicrosoft.com'')/mailFolders(''AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL1AAA%3D'')/childFolders(childFolders())","value":[{"id":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL2AAA=","displayName":"3rd-level","parentFolderId":"AAMkADUyYzNhMTE0LTc3ODYtNGZhNi05OWQ4LTQ0MDBkMzlmOGMxYwAuAAAAAABd4NbzwfnuTK9dVIq26pEeAQAoFLOPpw_DT6FzPiBEdLGRAADIJQL1AAA=","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false,"childFolders":[]}]}'
+  recorded_at: Wed, 08 Jan 2025 10:30:34 GMT
+recorded_with: VCR 6.3.1

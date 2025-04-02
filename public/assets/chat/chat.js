@@ -1225,6 +1225,25 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Извините, получение свободного слота занимает больше времени, чем ожидалось. Пожалуйста, повторите попытку позже или отправьте нам электронное письмо. Благодарим Вас!',
         'You are on waiting list position <strong>%s</strong>.': 'Вы находитесь в списке ожидания <strong>%s</strong>.'
       },
+      'sk': {
+        '<strong>Chat</strong> with us!': '<strong>Napíšte</strong> nám cez chat!',
+        'All colleagues are busy.': 'Všetci kolegovia sú zaneprázdnení.',
+        'Chat closed by %s': 'Chat zatvoril(a) %s',
+        'Compose your message…': 'Napíšte vašu správu…',
+        'Connecting': 'Pripája sa',
+        'Connection lost': 'Spojenie prerušené',
+        'Connection re-established': 'Pripojenie obnovené',
+        'Offline': 'Offline',
+        'Online': 'Online',
+        'Scroll down to see new messages': 'Posuňte sa nadol, aby ste videli nové správy',
+        'Send': 'Odoslať',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Keďže ste neodpovedali v posledných %s minútach, vaša konverzácia bola uzavretá.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Keďže ste v posledných %s minútach neodpovedali, vaša konverzácia s <strong>%s</strong> bola ukončená.',
+        'Start new conversation': 'Začať novú konverzáciu',
+        'Today': 'Dnes',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Je nám ľúto, že získanie slotu trvá dlhšie, než sme očakávali. Skúste to prosím neskôr alebo nám pošlite e-mail. Ďakujeme!',
+        'You are on waiting list position <strong>%s</strong>.': 'Na čakacej listine ste na pozícii <strong>%s</strong>.'
+      },
       'sr': {
         '<strong>Chat</strong> with us!': '<strong>Ћаскајте</strong> са нама!',
         'All colleagues are busy.': 'Све колеге су заузете.',

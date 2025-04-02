@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -293,6 +293,42 @@ RSpec.describe Translation do
   describe 'source string quality' do
     it 'strings use the unicode ellipsis sign (…) rather than three dots (...)' do
       expect(described_class.sources.where("source LIKE '%...%'").pluck(:source)).to eq([])
+    end
+  end
+
+  describe '#translate_all' do
+    let(:sources) { ['new', 'New', 'Some Not Existing Word', ['a %s string', 'given']] }
+
+    it 'translates all sources (en)' do
+      expect(described_class.translate_all('en', *sources))
+        .to eq({
+                 'new'                    => 'new',
+                 'New'                    => 'New',
+                 'Some Not Existing Word' => 'Some Not Existing Word',
+                 'a %s string'            => 'a given string'
+               })
+    end
+
+    it 'translates all sources (de-de)' do
+      expect(described_class.translate_all('de-de', *sources))
+        .to eq({
+                 'new'                    => 'neu',
+                 'New'                    => 'Neu',
+                 'Some Not Existing Word' => 'Some Not Existing Word',
+                 'a %s string'            => 'a given string'
+               })
+    end
+
+    it 'translates a single string' do
+      expect(described_class.translate_all('en', 'New')).to eq({ 'New' => 'New' })
+    end
+
+    it 'translates a single array' do
+      expect(described_class.translate_all('de-de', ['New'])).to eq({ 'New' => 'Neu' })
+    end
+
+    it 'returns an empty hash' do
+      expect(described_class.translate_all('en')).to eq({})
     end
   end
 end

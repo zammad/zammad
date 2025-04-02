@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe 'Form helpers', app: :desktop_view, authenticated_as: :agent, db_strategy: :reset, type: :system do
+RSpec.describe 'Form helpers', app: :desktop_view, authenticated_as: :agent, db_strategy: :reset, time_zone: 'Europe/London', type: :system do
   let(:group)       { Group.find_by(name: 'Users') }
   let(:agent)       { create(:agent, groups: [group]) }
   let(:object_name) { 'Ticket' }
@@ -245,9 +245,9 @@ RSpec.describe 'Form helpers', app: :desktop_view, authenticated_as: :agent, db_
     end
   end
 
-  context 'with date and datetime fields', authenticated_as: :authenticate, time_zone: 'Europe/London' do
+  context 'with date and datetime fields', authenticated_as: :authenticate do
     let(:date)     { Date.parse('2022-09-07') }
-    let(:datetime) { DateTime.parse('2023-09-07T08:00:00.000Z') }
+    let(:datetime) { DateTime.parse('2023-09-07T12:00:00.000Z') }
 
     def authenticate
       create(:object_manager_attribute_date, object_name: object_name, name: 'date', display: 'Date', screens: screens)

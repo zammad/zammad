@@ -1,0 +1,204 @@
+<table
+  class="relative table-fixed pb-3"
+  data-v-fd04734e=""
+>
+  <table-caption-stub
+    data-v-fd04734e=""
+    show="false"
+  />
+  <thead
+    class="sticky top-0 z-10 bg-neutral-50 dark:bg-gray-500"
+    data-v-fd04734e=""
+  >
+    <tr
+      data-v-fd04734e=""
+    >
+      <!--v-if-->
+      
+      <th
+        class="relative h-10 p-2.5 text-xs justify-start text-left"
+        data-v-fd04734e=""
+        id="title-header"
+      >
+        
+        <!-- eslint-disable vuejs-accessibility/no-static-element-interactions,vuejs-accessibility/mouse-events-have-key-events-->
+        <div
+          aria-label="Sorted descending"
+          class="flex items-center gap-1 justify-start text-left hover:cursor-pointer focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-800"
+          data-v-fd04734e=""
+          role="button"
+          tabindex="0"
+        >
+          <common-label-stub
+            class="relative block! truncate font-normal text-gray-100! select-none dark:text-neutral-400! hover:text-black! dark:hover:text-white!"
+            data-v-fd04734e=""
+            size="small"
+            tag="span"
+          />
+          <!--v-if-->
+        </div>
+        
+        
+        
+        <header-resize-line-stub
+          data-v-fd04734e=""
+        />
+      </th>
+      <th
+        class="relative h-10 p-2.5 text-xs justify-start text-left"
+        data-v-fd04734e=""
+        id="owner_id-header"
+      >
+        
+        <!-- eslint-disable vuejs-accessibility/no-static-element-interactions,vuejs-accessibility/mouse-events-have-key-events-->
+        <div
+          aria-label="Sorted descending"
+          class="flex items-center gap-1 justify-start text-left hover:cursor-pointer focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-800"
+          data-v-fd04734e=""
+          role="button"
+          tabindex="0"
+        >
+          <common-label-stub
+            class="relative block! truncate font-normal text-gray-100! select-none dark:text-neutral-400! hover:text-black! dark:hover:text-white!"
+            data-v-fd04734e=""
+            size="small"
+            tag="span"
+          />
+          <!--v-if-->
+        </div>
+        
+        
+        
+        <header-resize-line-stub
+          data-v-fd04734e=""
+        />
+      </th>
+      <th
+        class="relative h-10 p-2.5 text-xs justify-start text-left"
+        data-v-fd04734e=""
+        id="state_id-header"
+      >
+        
+        <!-- eslint-disable vuejs-accessibility/no-static-element-interactions,vuejs-accessibility/mouse-events-have-key-events-->
+        <div
+          aria-label="Sorted descending"
+          class="flex items-center gap-1 justify-start text-left hover:cursor-pointer focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-800"
+          data-v-fd04734e=""
+          role="button"
+          tabindex="0"
+        >
+          <common-label-stub
+            class="relative block! truncate font-normal text-gray-100! select-none dark:text-neutral-400! hover:text-black! dark:hover:text-white!"
+            data-v-fd04734e=""
+            size="small"
+            tag="span"
+          />
+          <!--v-if-->
+        </div>
+        
+        
+        
+        <header-resize-line-stub
+          data-v-fd04734e=""
+        />
+      </th>
+      <th
+        class="relative h-10 p-2.5 text-xs justify-start text-left"
+        data-v-fd04734e=""
+        id="priority_id-header"
+      >
+        
+        <!-- eslint-disable vuejs-accessibility/no-static-element-interactions,vuejs-accessibility/mouse-events-have-key-events-->
+        <div
+          aria-label="Sorted descending"
+          class="flex items-center gap-1 justify-start text-left hover:cursor-pointer focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-800"
+          data-v-fd04734e=""
+          role="button"
+          tabindex="0"
+        >
+          <common-label-stub
+            class="relative block! truncate font-normal text-gray-100! select-none dark:text-neutral-400! hover:text-black! dark:hover:text-white!"
+            data-v-fd04734e=""
+            size="small"
+            tag="span"
+          />
+          <!--v-if-->
+        </div>
+        
+        
+        
+        <header-resize-line-stub
+          data-v-fd04734e=""
+        />
+      </th>
+      <th
+        class="relative h-10 p-2.5 text-xs justify-end text-end"
+        data-v-fd04734e=""
+        id="created_at-header"
+      >
+        
+        <!-- eslint-disable vuejs-accessibility/no-static-element-interactions,vuejs-accessibility/mouse-events-have-key-events-->
+        <div
+          aria-label="Sorted descending"
+          class="flex items-center gap-1 justify-end text-end hover:cursor-pointer focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-800"
+          data-v-fd04734e=""
+          role="button"
+          tabindex="0"
+        >
+          <common-label-stub
+            class="relative block! truncate font-normal text-gray-100! select-none dark:text-neutral-400! hover:text-black! dark:hover:text-white!"
+            data-v-fd04734e=""
+            size="small"
+            tag="span"
+          />
+          <!--v-if-->
+        </div>
+        
+        
+        
+        <!--v-if-->
+      </th>
+      
+      <th
+        class="h-10 w-0 p-2.5 text-center"
+        data-v-fd04734e=""
+      >
+        <common-label-stub
+          class="font-normal text-stone-200! dark:text-neutral-500!"
+          data-v-fd04734e=""
+          size="small"
+          tag="span"
+        />
+      </th>
+    </tr>
+  </thead>
+  <tbody
+    class="relative"
+    data-v-fd04734e=""
+    inert="false"
+  >
+    
+    
+    <!--v-if-->
+    <table-row-stub
+      data-v-fd04734e=""
+      hascheckbox="false"
+      isrowselected="false"
+      isstriped="false"
+      item="[object Object]"
+      noautostriping="false"
+      tabindex="-1"
+    />
+    
+    
+    <transition-stub
+      appear="false"
+      css="true"
+      data-v-fd04734e=""
+      leaveactiveclass="absolute"
+      persisted="false"
+    >
+      <!--v-if-->
+    </transition-stub>
+  </tbody>
+</table>

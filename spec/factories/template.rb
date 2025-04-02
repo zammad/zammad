@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory :template do
-    name          { Faker::Name.unique.name }
+    sequence(:name) { |n| "Template #{n}" }
     options       { { 'ticket.title': { value: 'Some dummy title' } } }
     updated_by_id { 1 }
     created_by_id { 1 }

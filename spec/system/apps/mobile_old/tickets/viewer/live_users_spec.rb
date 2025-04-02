@@ -1,14 +1,16 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authenticated_as: :agent, type: :system do
+RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authenticated_as: :agent, performs_jobs: true, type: :system do
   let(:group)         { Group.find_by(name: 'Users') }
   let(:agent)         { create(:agent, groups: [group]) }
   let(:another_agent) { create(:agent, groups: [group]) }
   let(:third_agent)   { create(:agent, groups: [group]) }
   let(:customer)      { create(:customer) }
   let(:ticket)        { create(:ticket, customer: customer, group: group) }
+
+  around { |example| perform_enqueued_jobs { example.run } }
 
   def wait_for_viewers_subscription(number: 1)
     wait_for_gql('shared/entities/ticket/graphql/subscriptions/ticketLiveUserUpdates.graphql', number: number)

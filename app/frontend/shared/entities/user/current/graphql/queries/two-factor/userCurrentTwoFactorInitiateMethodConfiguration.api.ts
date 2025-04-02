@@ -6,8 +6,11 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserCurrentTwoFactorInitiateMethodConfigurationDocument = gql`
-    query userCurrentTwoFactorInitiateMethodConfiguration($methodName: EnumTwoFactorAuthenticationMethod!) {
-  userCurrentTwoFactorInitiateMethodConfiguration(methodName: $methodName)
+    query userCurrentTwoFactorInitiateMethodConfiguration($methodName: EnumTwoFactorAuthenticationMethod!, $token: String!) {
+  userCurrentTwoFactorInitiateMethodConfiguration(
+    methodName: $methodName
+    token: $token
+  )
 }
     `;
 export function useUserCurrentTwoFactorInitiateMethodConfigurationQuery(variables: Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables | VueCompositionApi.Ref<Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables> | ReactiveFunction<Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorInitiateMethodConfigurationQuery, Types.UserCurrentTwoFactorInitiateMethodConfigurationQueryVariables>> = {}) {

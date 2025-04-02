@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # User taskbar list actions.
 module Taskbar::List
@@ -28,9 +28,7 @@ module Taskbar::List
     end
 
     def trigger_list_update(user, app)
-      user_id = Gql::ZammadSchema.id_from_object(user)
-
-      Gql::Subscriptions::User::Current::TaskbarItem::ListUpdates.trigger(nil, arguments: { user_id:, app: })
+      Gql::Subscriptions::User::Current::TaskbarItem::ListUpdates.trigger(nil, arguments: { app: }, scope: user.id)
     end
   end
 end

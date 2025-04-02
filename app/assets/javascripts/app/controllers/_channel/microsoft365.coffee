@@ -1,10 +1,10 @@
 class App.ChannelMicrosoft365 extends App.ControllerTabs
   @requiredPermission: 'admin.channel_microsoft365'
-  header: __('Microsoft 365')
+  header: __('Microsoft 365 IMAP Email')
   constructor: ->
     super
 
-    @title __('Microsoft 365'), true
+    @title __('Microsoft 365 IMAP Email'), true
 
     @tabs = [
       {
@@ -29,6 +29,11 @@ class App.ChannelMicrosoft365 extends App.ControllerTabs
         params:     { area: 'Email::Base' },
       },
     ]
+
+    @alert = {
+      variant: 'info'
+      message: App.i18n.translateContent('Compared to the Microsoft 365 Graph API Email Channel, this is the traditional implementation using OAuth and IMAP. When setting up new channels, we suggest using the Graph API implementation instead. More information can be found here %l.', 'https://admin-docs.zammad.org/en/latest/channels/microsoft365/index.html')
+    }
 
     @render()
 
@@ -123,17 +128,21 @@ class ChannelAccountOverview extends App.ControllerSubContent
     # is already correct for them.
     if @channel_id
       item = App.Channel.find(@channel_id)
-      if item && item.area == 'Microsoft365::Account' && item.options && item.options.backup_imap_classic is undefined
-        @editInbound(undefined, @channel_id, true)
+      if item && item.area == 'Microsoft365::Account' && item.options && item.options.backup_imap_classic is undefined && not @error_code
+        @editInbound(undefined, @channel_id, true, true)
         @channel_id = undefined
 
     if @error_code is 'AADSTS65004'
       @error_code = undefined
-      new App.AdminConsentInfo(container: @container)
+      new App.AdminConsentInfo(container: @container, type: 'microsoft365')
 
     if @error_code is 'user_mismatch'
       @error_code = undefined
-      new App.UserMismatchInfo(container: @container)
+      new App.UserMismatchInfo(container: @container, type: 'microsoft365', item: item)
+
+    if @error_code is 'duplicate_email_address'
+      @error_code = undefined
+      new App.DuplicateEmailAddressInfo(container: @container, type: 'microsoft365', emailAddress: if @param then decodeURIComponent(@param))
 
   show: (params) =>
     for key, value of params
@@ -203,7 +212,7 @@ class ChannelAccountOverview extends App.ControllerSubContent
         @load()
     )
 
-  editInbound: (e, channel_id, set_active) =>
+  editInbound: (e, channel_id, set_active, redirect = false) =>
     if !channel_id
       e.preventDefault()
       channel_id = $(e.target).closest('.action').data('id')
@@ -212,7 +221,8 @@ class ChannelAccountOverview extends App.ControllerSubContent
       container: @el.closest('.content')
       item: item
       callback: @load
-      set_active: set_active,
+      set_active: set_active
+      redirect: redirect
     )
 
   rollbackMigration: (e) =>
@@ -281,6 +291,8 @@ class ChannelAccountOverview extends App.ControllerSubContent
     )
 
 class ChannelInboundEdit extends App.ControllerModal
+  @include App.DestinationGroupEmailAddressesMixin
+
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -288,14 +300,20 @@ class ChannelInboundEdit extends App.ControllerModal
 
   content: =>
     configureAttributesBase = [
-      { name: 'options::folder',          display: __('Folder'),   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false },
-      { name: 'options::keep_on_server',  display: __('Keep messages on server'), tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false },
+      { name: 'group_id',                display: __('Destination Group'), tag: 'tree_select', null: false, relation: 'Group', filter: { active: true } },
+      { name: 'group_email_address_id',  display: __('Destination group > Sending email address'), tag: 'select', null: false, options: @emailAddressOptions(@item.id, @item.group_id), note: __("This will adjust the corresponding setting of the destination group within the group management. A group's email address determines which address should be used for outgoing mails, e.g. when an agent is composing an email or a trigger is sending an auto-reply.") },
+      { name: 'options::folder',         display: __('Folder'),   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false },
+      { name: 'options::keep_on_server', display: __('Keep messages on server'), tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false },
     ]
     @form = new App.ControllerForm(
       model:
         configure_attributes: configureAttributesBase
         className: ''
-      params: @item.options.inbound
+      params: _.extend(
+        @item.options.inbound
+        group_id: @item.group_id
+      )
+      handlers: [@destinationGroupEmailAddressFormHandler(@item)]
     )
     @form.form
 
@@ -314,33 +332,73 @@ class ChannelInboundEdit extends App.ControllerModal
       @formValidate(form: e.target, errors: errors)
       return false
 
+    data =
+      options: params.options
+
     # disable form
     @formDisable(e)
 
-    if @set_active
-      params['active'] = true
-
-    # update
+    # probe
     @ajax(
       id:   'channel_email_inbound'
       type: 'POST'
       url:  "#{@apiPath}/channels_microsoft365_inbound/#{@item.id}"
+      data: JSON.stringify(data)
+      processData: true
+      success: (data, status, xhr) =>
+        if data.content_messages or not @set_active
+          new App.ChannelInboundEmailArchive(
+            container: @el.closest('.content')
+            item: @item
+            set_active: @set_active
+            content_messages: data.content_messages
+            inboundParams: params
+            callback: @verify
+          )
+          @close()
+          return
+
+        @verify(params)
+
+      error: (xhr) =>
+        data = JSON.parse(xhr.responseText)
+        @stopLoading()
+        @formEnable(e)
+        @el.find('.alert--danger').removeClass('hide').text(data.error_human || data.error || __('The changes could not be saved.'))
+    )
+
+  verify: (params = {}) =>
+    @startLoading()
+
+    if @set_active
+      params['active'] = true
+
+    @processDestinationGroupEmailAddressParams(params)
+
+    # update
+    @ajax(
+      id:   'channel_email_verify'
+      type: 'POST'
+      url:  "#{@apiPath}/channels_microsoft365_verify/#{@item.id}"
       data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
         @callback(true)
         @close()
       error: (xhr) =>
+        data = JSON.parse(xhr.responseText)
         @stopLoading()
-        @formEnable(e)
-        details = xhr.responseJSON || {}
-        @notify
-          type:    'error'
-          msg:     details.error_human || details.error || __('The changes could not be saved.')
-          timeout: 6000
+        @el.find('.alert--danger').removeClass('hide').text(data.error_human || data.error || __('The changes could not be saved.'))
     )
 
+  onCancel: =>
+    return if not @redirect
+
+    @navigate '#channels/microsoft365'
+
 class ChannelGroupEdit extends App.ControllerModal
+  @include App.DestinationGroupEmailAddressesMixin
+
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -348,13 +406,15 @@ class ChannelGroupEdit extends App.ControllerModal
 
   content: =>
     configureAttributesBase = [
-      { name: 'group_id', display: __('Destination Group'), tag: 'tree_select', null: false, relation: 'Group', nulloption: true, filter: { active: true } },
+      { name: 'group_id',               display: __('Destination Group'), tag: 'tree_select', null: false, relation: 'Group', filter: { active: true } },
+      { name: 'group_email_address_id', display: __('Destination group > Sending email address'), tag: 'select', options: @emailAddressOptions(@item.id, @item.group_id), note: __("This will adjust the corresponding setting of the destination group within the group management. A group's email address determines which address should be used for outgoing mails, e.g. when an agent is composing an email or a trigger is sending an auto-reply.") },
     ]
     @form = new App.ControllerForm(
       model:
         configure_attributes: configureAttributesBase
         className: ''
       params: @item
+      handlers: [@destinationGroupEmailAddressFormHandler(@item)]
     )
     @form.form
 
@@ -372,6 +432,8 @@ class ChannelGroupEdit extends App.ControllerModal
       @formValidate(form: e.target, errors: errors)
       return false
 
+    @processDestinationGroupEmailAddressParams(params)
+
     # disable form
     @formDisable(e)
 
@@ -388,7 +450,7 @@ class ChannelGroupEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || __('The changes could not be saved.'))
+        @el.find('.alert--danger').removeClass('hide').text(data.error || __('The changes could not be saved.'))
     )
 
 class AppConfig extends App.ControllerModal
@@ -397,6 +459,8 @@ class AppConfig extends App.ControllerModal
   button: 'Connect'
   buttonCancel: true
   small: true
+  events:
+    'click .js-copy': 'copyToClipboard'
 
   content: ->
     @external_credential = App.ExternalCredential.findByAttribute('name', 'microsoft365')
@@ -408,6 +472,15 @@ class AppConfig extends App.ControllerModal
       @selectAll(e)
     )
     content
+
+  copyToClipboard: (e) =>
+    e.preventDefault()
+
+    button = $(e.target).parents('[role="button"]')
+    field_name = button.data('targetField')
+    value = $(@container).find("input[name='#{jQuery.escapeSelector(field_name)}']").val()
+
+    @copyToClipboardWithTooltip(value, e.target,'.modal-body', true)
 
   onClosed: =>
     return if !@isChanged
@@ -434,11 +507,11 @@ class AppConfig extends App.ControllerModal
               @isChanged = true
               @close()
             fail: =>
-              @el.find('.alert').removeClass('hidden').text(__('The entry could not be created.'))
+              @el.find('.alert--danger').removeClass('hide').text(__('The entry could not be created.'))
           )
           return
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))
+        @el.find('.alert--danger').removeClass('hide').text(data.error || __('App could not be verified.'))
     )
 
 class App.AdminConsentInfo extends App.ControllerModal
@@ -453,6 +526,11 @@ class App.AdminConsentInfo extends App.ControllerModal
   onSubmit: =>
     @close()
 
+  onClosed: =>
+    return if not @type
+
+    @navigate "#channels/#{@type}"
+
 class App.UserMismatchInfo extends App.ControllerModal
   buttonClose: true
   small: true
@@ -460,9 +538,31 @@ class App.UserMismatchInfo extends App.ControllerModal
   head: __('User Mismatch')
 
   content: ->
-    App.view('microsoft365/user_mismatch')()
+    App.view('microsoft365/user_mismatch')(item: @item)
 
   onSubmit: =>
     @close()
 
-App.Config.set('microsoft365', { prio: 5000, name: __('Microsoft 365'), parent: '#channels', target: '#channels/microsoft365', controller: App.ChannelMicrosoft365, permission: ['admin.channel_microsoft365'] }, 'NavBarAdmin')
+  onClosed: =>
+    return if not @type
+
+    @navigate "#channels/#{@type}"
+
+class App.DuplicateEmailAddressInfo extends App.ControllerModal
+  buttonClose: true
+  small: true
+  buttonSubmit: __('Close')
+  head: __('Duplicate Email Address')
+
+  content: ->
+    App.view('microsoft365/duplicate_email_address')(emailAddress: @emailAddress)
+
+  onSubmit: =>
+    @close()
+
+  onClosed: =>
+    return if not @type
+
+    @navigate "#channels/#{@type}"
+
+App.Config.set('microsoft365', { prio: 5200, name: __('Microsoft 365 IMAP Email'), parent: '#channels', target: '#channels/microsoft365', controller: App.ChannelMicrosoft365, permission: ['admin.channel_microsoft365'] }, 'NavBarAdmin')

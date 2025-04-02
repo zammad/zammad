@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -29,7 +29,7 @@ RSpec.describe 'Admin Panel > Knowledge Base > Public Menu', type: :system do
     let(:color) { 'rgb(255, 0, 255)' }
 
     it 'applies color for header preview' do
-      elem = all('.kb-menu-preview a')[0]
+      elem = first('.kb-menu-preview a')
 
       expect(elem).to have_computed_style :color, color
     end

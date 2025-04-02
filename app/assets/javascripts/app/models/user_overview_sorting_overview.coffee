@@ -7,6 +7,23 @@ class App.UserOverviewSortingOverview extends App.Model
     'name',
   ]
 
+  @badges = [
+    {
+      display: __('Only when shared organization member')
+      active: (object) ->
+        object.organization_shared
+      attribute: 'name'
+      class: 'primary'
+    },
+    {
+      display: __('Only when out of office replacement')
+      active: (object) ->
+        object.out_of_office
+      attribute: 'name'
+      class: 'primary'
+    },
+  ]
+
   @all: ->
     super.sort(@overviewSort)
 

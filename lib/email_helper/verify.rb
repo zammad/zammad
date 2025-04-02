@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class EmailHelper
   class Verify
@@ -35,7 +35,7 @@ class EmailHelper
         begin
           driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
           driver_instance = driver_class.new
-          fetch_result    = driver_instance.fetch(params[:inbound][:options], self, 'verify', subject)
+          fetch_result    = driver_instance.verify_transport(params[:inbound][:options], subject)
         rescue => e
           result = {
             result:        'invalid',

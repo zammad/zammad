@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::Checklist::Add < Ticket::Checklist::Base
@@ -10,7 +10,7 @@ module Gql::Mutations
     field :checklist, Gql::Types::ChecklistType, null: true, description: 'Created checklist'
 
     def authorized?(ticket:, template_id: nil)
-      Setting.get('checklist') && Pundit.authorize(context.current_user, ticket, :agent_update_access?)
+      Setting.get('checklist') && pundit_authorized?(ticket, :agent_update_access?)
     end
 
     def resolve(ticket:, template_id: nil)

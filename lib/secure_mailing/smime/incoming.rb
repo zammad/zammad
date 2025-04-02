@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
   EXPRESSION_MIME      = %r{application/(x-pkcs7|pkcs7)-mime}i

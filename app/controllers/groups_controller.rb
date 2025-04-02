@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class GroupsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -49,7 +49,7 @@ curl http://localhost/api/v1/groups -v -u #{login}:#{password}
 =end
 
   def index
-    model_index_render(Group.sorted, params)
+    model_index_render(GroupPolicy::Scope.new(UserInfo.current_user, Group).resolve.sorted, params)
   end
 
 =begin
@@ -70,7 +70,7 @@ curl http://localhost/api/v1/groups/#{id} -v -u #{login}:#{password}
 =end
 
   def show
-    model_show_render(Group, params)
+    model_show_render(GroupPolicy::Scope.new(UserInfo.current_user, Group).resolve, params)
   end
 
 =begin

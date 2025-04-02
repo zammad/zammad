@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { injectSvgIcons } from '#shared/components/CommonIcon/injectIcons.ts'
 import { provideIcons } from '#shared/components/CommonIcon/useIcons.ts'

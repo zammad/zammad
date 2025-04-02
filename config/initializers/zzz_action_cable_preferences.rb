@@ -1,17 +1,20 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+
+require_relative '../../lib/zammad/service/redis'
 
 # If REDIS_URL is not set, fall back to default port / localhost, to ease configuration
 #   for simple installations.
 redis_url = ENV['REDIS_URL'].presence || 'redis://localhost:6379'
+driver = redis_url.start_with?('rediss://') ? :ruby : :hiredis
 
 Rails.application.config.action_cable.cable = {
   adapter:        :redis,
-  driver:         :hiredis,
+  driver:         driver,
   url:            redis_url,
   channel_prefix: "zammad_#{Rails.env}",
 }
 begin
-  Redis.new(driver: :hiredis, url: redis_url).ping
+  Zammad::Service::Redis.new.ping
   Rails.logger.info { "ActionCable is using the redis instance at #{redis_url}." }
 rescue Redis::CannotConnectError => e
   warn "There was an error trying to connect to Redis via #{redis_url}."

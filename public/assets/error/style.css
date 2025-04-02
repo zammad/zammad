@@ -23,6 +23,7 @@ html {
 
 body {
   display: -webkit-flex;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
   display: -ms-flexbox;
   display: flex;
   -webkit-flex-direction: column;

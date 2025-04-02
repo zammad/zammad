@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -17,6 +17,7 @@ export interface Props {
   variant?: Variant
   icon?: string
   labelClass?: string
+  iconClass?: string
 }
 
 const props = defineProps<Props>()
@@ -28,6 +29,7 @@ const variantClass = computed(() => {
 })
 
 const iconColor = computed(() => {
+  if (props.iconClass) return props.iconClass
   if (props.variant === 'secondary') return 'text-blue-800'
   if (props.variant === 'danger') return 'text-red-500'
   return 'text-stone-200 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white group-focus-within:text-white group-hover:group-focus-within:text-white'
@@ -39,12 +41,12 @@ const iconColor = computed(() => {
     :is="link ? 'CommonLink' : 'button'"
     :link="link"
     :external="link && linkExternal"
-    class="block cursor-pointer leading-snug hover:no-underline focus-visible:!outline-none"
+    class="group block cursor-pointer leading-snug hover:no-underline! focus-visible:!outline-hidden"
     data-test-id="popover-menu-item"
   >
     <slot name="leading" />
     <CommonLabel
-      class="gap-2"
+      class="gap-2 text-left"
       :class="[labelClass, variantClass]"
       :prefix-icon="icon"
       :icon-color="iconColor"

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -48,7 +48,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
 
   let(:input_base_payload) do
     {
-      title:      'Ticket Create Mutation Test',
+      title:      'Ticket Update Mutation Test',
       groupId:    gql.id(group),
       priorityId: gql.id(priority),
       customer:   { id: gql.id(customer) },
@@ -65,7 +65,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
   let(:expected_base_response) do
     {
       'id'                    => gql.id(Ticket.last),
-      'title'                 => 'Ticket Create Mutation Test',
+      'title'                 => 'Ticket Update Mutation Test',
       'owner'                 => { 'fullname' => agent.fullname },
       'group'                 => { 'name' => agent.groups.first.name },
       'customer'              => { 'fullname' => customer.fullname },
@@ -132,7 +132,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
             }
           end
 
-          it 'adds a new article with time unit' do
+          it 'applies the macro' do
             gql.execute(query, variables:)
 
             expect(ticket.reload).to have_attributes(title: new_title)
@@ -262,7 +262,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
 
         let(:input_base_payload) do
           {
-            title:      'Ticket Create Mutation Test',
+            title:      'Ticket Update Mutation Test',
             groupId:    gql.id(group),
             priorityId: gql.id(priority),
             customer:   { id: gql.id(customer) },

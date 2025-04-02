@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Link::Add < BaseMutation
@@ -17,16 +17,16 @@ module Gql::Mutations
       target = fetch_object(input.target_id, permission: :update?)
       type = input.type
 
-      begin
-        ::Link.add(
-          link_type:                type,
-          link_object_source:       source.class.name,
-          link_object_source_value: source.id,
-          link_object_target:       target.class.name,
-          link_object_target_value: target.id
-        )
-      rescue ActiveRecord::RecordNotUnique
-        return error_response({ message: __('Link already exists') })
+      link = ::Link.add(
+        link_type:                type,
+        link_object_source:       source.class.name,
+        link_object_source_value: source.id,
+        link_object_target:       target.class.name,
+        link_object_target_value: target.id
+      )
+
+      if !link.valid?
+        return error_response({ message: link.errors.full_messages.first })
       end
 
       {

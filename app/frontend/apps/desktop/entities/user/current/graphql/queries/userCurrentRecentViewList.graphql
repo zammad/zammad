@@ -1,0 +1,33 @@
+query userCurrentRecentViewList($limit: Int) {
+  userCurrentRecentViewList(limit: $limit) {
+    ... on Ticket {
+      id
+      internalId
+      title
+      number
+      state {
+        id
+        name
+      }
+      priority {
+        id
+        name
+        defaultCreate
+        uiColor
+      }
+      stateColorCode
+    }
+    ... on User {
+      id
+      internalId
+      fullname
+      active
+    }
+    ... on Organization {
+      id
+      internalId
+      name
+      active
+    }
+  }
+}

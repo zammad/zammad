@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'lib/report_examples'
@@ -12,12 +12,7 @@ RSpec.describe Report::TicketMoved, searchindex: true do
         range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         interval:    'month',
-        selector:    {
-          'ticket_state.name' => {
-            'operator' => 'is not',
-            'value'    => 'merged',
-          }
-        },
+        selector:    {},
         params:      {
           type: 'in',
         },
@@ -50,12 +45,7 @@ RSpec.describe Report::TicketMoved, searchindex: true do
         range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         interval:    'month',
-        selector:    {
-          'ticket_state.name' => {
-            'operator' => 'is not',
-            'value'    => 'merged',
-          }
-        },
+        selector:    {},
         params:      {
           type: 'out',
         },
@@ -108,12 +98,7 @@ RSpec.describe Report::TicketMoved, searchindex: true do
       result = described_class.items(
         range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
-        selector:    {
-          'ticket_state.name' => {
-            'operator' => 'is not',
-            'value'    => 'merged',
-          }
-        }, # ticket selector to get only a collection of tickets
+        selector:    {},
         params:      {
           type: 'out',
         },

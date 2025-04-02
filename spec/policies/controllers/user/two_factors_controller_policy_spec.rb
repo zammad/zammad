@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -6,56 +6,31 @@ describe Controllers::User::TwoFactorsControllerPolicy do
   subject { described_class.new(user, record) }
 
   let(:record_class) { User::TwoFactorsController }
-  let(:record) do
-    rec             = record_class.new
-    rec.params      = params
+  let(:record)       { record_class.new }
+  let(:user)         { create(:agent) }
 
-    rec
+  let(:actions) do
+    %i[
+      enabled_authentication_methods personal_configuration authentication_method_initiate_configuration authentication_method_configuration
+      verify_configuration default_authentication_method recovery_codes_generate
+      remove_authentication_method authentication_remove_credentials
+    ]
   end
 
-  let(:twofactoree) { create(:agent) }
-
-  describe 'endpoints for current user' do
-    let(:user)   { twofactoree }
-    let(:params) { {} }
-
-    let(:permitted_actions) do
-      %i[two_factor_verify_configuration two_factor_authentication_method_initiate_configuration two_factor_default_authentication_method two_factor_authentication_method_configuration two_factor_authentication_remove_credentials]
-    end
-
-    it { is_expected.to permit_actions(permitted_actions) }
+  context 'when user has 2FA permission' do
+    it { is_expected.to permit_actions(actions) }
   end
 
-  describe 'endpoints allowing to manage other users' do
-    let(:params) { { id: twofactoree.id } }
-    let(:actions) do
-      %i[two_factor_enabled_authentication_methods two_factor_remove_authentication_method two_factor_remove_all_authentication_methods]
+  context 'when user does not have 2FA permission' do
+    before do
+      user
+        .roles
+        .first
+        .permission_revoke 'user_preferences.two_factor_authentication'
     end
 
-    context 'with an admin' do
-      let(:user) { create(:admin) }
+    let(:user) { create(:customer) }
 
-      it { is_expected.to permit_actions(actions) }
-    end
-
-    context 'with a different user' do
-      let(:user) { create(:agent) }
-
-      it { is_expected.to forbid_actions(actions) }
-    end
-
-    context 'with the user' do
-      let(:user) { twofactoree }
-
-      it { is_expected.to permit_actions(actions) }
-
-      context 'when user does not have user_preferences.two_factor_authentication permission' do
-        before do
-          user.roles.each { |role| role.permission_revoke('user_preferences') }
-        end
-
-        it { is_expected.to forbid_actions(actions) }
-      end
-    end
+    it { is_expected.to forbid_actions(actions) }
   end
 end

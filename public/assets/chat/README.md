@@ -1,8 +1,10 @@
-# Recreating the Static Zammad Chat Build
+# Chat
 
-```
-$ pnpm install
-$ pnpm exec gulp build
+## Recreating the Static Zammad Chat Build
+
+```sh
+pnpm install
+pnpm exec gulp build
 [11:13:03] Using gulpfile zammad/public/assets/chat/gulpfile.js
 [11:13:03] Starting 'build'...
 [11:13:03] Starting 'js'...
@@ -14,11 +16,11 @@ $ pnpm exec gulp build
 [11:13:03] Finished 'build' after 9.8 ms
 ```
 
-# Development Mode
+## Development Mode
 
 This is useful when developing. Gulp will watch the files for changes and start rebuilds automatically.
 
-```
+```sh
 pnpm exec gulp
 [11:14:46] Using gulpfile ~/wz/zammad/public/assets/chat/gulpfile.js
 [11:14:46] Starting 'default'...

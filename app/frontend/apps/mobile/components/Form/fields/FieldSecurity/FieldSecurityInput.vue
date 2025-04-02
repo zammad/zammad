@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref, toRef } from 'vue'
@@ -114,7 +114,7 @@ const tooltipMessages = computed(() => {
         type="button"
         tabindex="0"
         role="option"
-        class="flex flex-1 select-none items-center justify-center rounded-md px-2 py-1"
+        class="flex flex-1 items-center justify-center rounded-md px-2 py-1 select-none"
         :aria-selected="previewMethod === securityType"
         :class="{
           'bg-white font-semibold text-black': previewMethod === securityType,
@@ -149,7 +149,7 @@ const tooltipMessages = computed(() => {
           :key="option"
           type="button"
           role="option"
-          class="flex select-none items-center gap-1 rounded-md px-2 py-1 text-base"
+          class="flex items-center gap-1 rounded-md px-2 py-1 text-base select-none"
           :class="{
             'bg-gray-600/50 text-white/30': isSecurityOptionDisabled(option),
             'cursor-pointer': !isSecurityOptionDisabled(option),

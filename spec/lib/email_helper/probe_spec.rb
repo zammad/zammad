@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -33,7 +33,7 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
         options: {
           host:       host,
           port:       port,
-          ssl:        true,
+          ssl:        'ssl',
           user:       user,
           password:   password,
           ssl_verify: false,

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class ImportOtrsController < ApplicationController
 
@@ -22,7 +22,7 @@ class ImportOtrsController < ApplicationController
       'Connection refused'                                        => __('The connection was refused.'),
     }
 
-    response = UserAgent.request(params[:url])
+    response = UserAgent.get(params[:url])
     if !response.success? && response.code.to_s !~ %r{^40.$}
       message_human = ''
       translation_map.each do |key, message|

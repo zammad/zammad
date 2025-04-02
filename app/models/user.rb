@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class User < ApplicationModel
   include CanBeImported
@@ -115,7 +115,11 @@ class User < ApplicationModel
                          :image,
                          :authorizations,
                          :groups,
-                         :user_groups
+                         :user_groups,
+                         :two_factor_preferences,
+                         :chat_agent_created_by,
+                         :chat_agent_updated_by,
+                         :overview_sortings
 
   validates :note, length: { maximum: 5000 }
   sanitized_html :note, no_images: true
@@ -363,7 +367,7 @@ returns
     # try second lookup with email
     user ||= User.find_by(email: username.downcase.strip, active: true)
 
-    return if !user || !user.email
+    return if !user || user.email.blank?
 
     # Discard any possible previous tokens for safety reasons.
     Token.where(action: 'PasswordReset', user_id: user.id).destroy_all

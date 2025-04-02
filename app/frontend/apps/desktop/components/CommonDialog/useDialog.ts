@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { useRoute } from 'vue-router'
 
@@ -6,6 +6,7 @@ import {
   closeOverlayContainer,
   getOpenedOverlayContainers,
   getOverlayContainerMeta,
+  getRouteIdentifier,
   isOverlayContainerOpened,
   openOverlayContainer,
   useOverlayContainer,
@@ -41,7 +42,7 @@ export const openDialog = async (
     getCurrentApp().runWithContext(() => {
       const route = useRoute()
 
-      currentName = `${name}_${route.path}`
+      currentName = `${name}_${getRouteIdentifier(route)}`
     })
   }
 
@@ -55,7 +56,7 @@ export const closeDialog = async (name: string, global: boolean = false) => {
     getCurrentApp().runWithContext(() => {
       const route = useRoute()
 
-      currentName = `${name}_${route.path}`
+      currentName = `${name}_${getRouteIdentifier(route)}`
     })
   }
 

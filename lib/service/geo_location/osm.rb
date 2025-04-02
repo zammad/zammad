@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::GeoLocation::Osm
   OSM_SEARCH_URL = 'https://nominatim.openstreetmap.org/search?q=%s&format=jsonv2'.freeze

@@ -1,7 +1,9 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::TwoFactor::VerifyMethodConfiguration < BaseMutation
+    include Gql::Concerns::HandlesPasswordRevalidationToken
+
     description 'Verifies two factor authentication method configuration.'
 
     argument :method_name, Gql::Types::Enum::TwoFactor::AuthenticationMethodType, description: 'Name of the method which should be verified.'
@@ -14,7 +16,9 @@ module Gql::Mutations
       ctx.current_user.permissions?('user_preferences.two_factor_authentication')
     end
 
-    def resolve(method_name:, payload:, configuration:)
+    def resolve(method_name:, token:, payload:, configuration:)
+      token_object = verify_token!(token)
+
       verify_method_configuration = Service::User::TwoFactor::VerifyMethodConfiguration.new(
         user:          context.current_user,
         method_name:,
@@ -22,11 +26,13 @@ module Gql::Mutations
         configuration: configuration.symbolize_keys!
       )
 
-      begin
-        verify_method_configuration.execute
-      rescue Service::User::TwoFactor::VerifyMethodConfiguration::Failed => e
-        error_response({ message: e })
-      end
+      result = verify_method_configuration.execute
+
+      token_object.destroy
+
+      result
+    rescue Service::User::TwoFactor::VerifyMethodConfiguration::Failed => e
+      error_response({ message: e })
     end
   end
 end

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -6,7 +6,7 @@ import { computed, toRef } from 'vue'
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar/index.ts'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
-import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
+import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotification/useOnlineNotificationSeen.ts'
 import { useOrganizationDetail } from '#shared/entities/organization/composables/useOrganizationDetail.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 

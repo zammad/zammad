@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # This file collects a few Rails extensions to make it possible to translate both
 # errors built into Rails or other gems, and also our custom errors in the Zammad codebase.

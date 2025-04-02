@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { initializeEditorColorMenuClasses } from '#shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/initializeEditorColorMenu.ts'
 import { initializeAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
@@ -13,7 +13,7 @@ import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserA
 
 export const initializeGlobalComponentStyles = () => {
   initializeBadgeClasses({
-    base: '-:inline-flex justify-center items-center border-0',
+    base: 'inline-flex justify-center items-center border-0',
     success:
       'bg-green-300 text-green-500 dark:bg-green-900 dark:text-green-500',
     info: 'bg-blue-500 text-blue-800 dark:bg-blue-950 dark:text-blue-800',
@@ -36,7 +36,7 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializeAvatarClasses({
-    base: 'border -:border-neutral-100 dark:-:border-gray-900 text-black',
+    base: 'border border-neutral-100 dark:border-gray-900 text-black',
     vipOrganization: 'text-neutral-400',
     vipUser: 'text-yellow-300',
   })
@@ -59,7 +59,7 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializeLinkClasses({
-    base: 'cursor-pointer no-underline hover:underline text-blue-800 focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-none focus-visible:outline-offset-1 focus-visible:outline-blue-800',
+    base: 'cursor-pointer no-underline hover:underline text-blue-800 focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-hidden focus-visible:outline-offset-1 focus-visible:outline-blue-800',
   })
 
   initializeNotificationClasses({
@@ -89,9 +89,9 @@ export const initializeGlobalComponentStyles = () => {
     base: 'dark:text-white text-black text-sm leading-snug',
     wrapper: 'p-2.5',
     preview:
-      'hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-none focus:outline-0 focus:outline-offset-0 focus:hover:outline-1 focus:hover:outline-offset-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:hover:outline-blue-900',
-    link: 'hover:rounded-sm hover:no-underline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900',
-    size: '-:dark:text-neutral-500 -:text-stone-400 text-xs leading-snug',
-    icon: '-:dark:text-neutral-500 -:text-stone-400',
+      'hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-hidden focus:outline-0 focus:outline-offset-0 focus:hover:outline-1 focus:hover:outline-offset-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:hover:outline-blue-900',
+    link: 'hover:rounded-xs hover:no-underline! hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900',
+    size: 'dark:text-neutral-500 text-stone-400 text-xs leading-snug',
+    icon: 'dark:text-neutral-500 text-stone-400',
   })
 }

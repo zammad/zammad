@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { nullableMock } from '#tests/support/utils.ts'
 
@@ -60,6 +60,7 @@ export const defaultState = {
   name: 'open',
   stateType: {
     __typename: 'TicketStateType',
+    id: convertToGraphQLId('Ticket::StateType', 2),
     name: 'open',
   },
 }

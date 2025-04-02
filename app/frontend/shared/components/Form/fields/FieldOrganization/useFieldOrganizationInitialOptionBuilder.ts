@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import type { AutocompleteOrganizationProps } from '#shared/components/Form/fields/FieldOrganization/types.ts'

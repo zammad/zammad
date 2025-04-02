@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -128,6 +128,6 @@ defineExpose({
     ]"
     @click="onClick"
   >
-    <slot></slot>
+    <slot :is-active="isExactActive" :is-exact-active="isExactActive" />
   </a>
 </template>

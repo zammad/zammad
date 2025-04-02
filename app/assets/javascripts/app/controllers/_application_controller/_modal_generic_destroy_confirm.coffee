@@ -1,7 +1,7 @@
 class App.ControllerGenericDestroyConfirm extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: __('delete')
+  buttonSubmit: __('Delete')
   buttonClass: 'btn--danger'
   head: __('Confirmation')
   small: true

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -442,7 +442,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       'ticket.created_at' => {
         operator: 'within last (relative)',
         range:    'year', # minute|hour|day|month|
-        value:    '10',
+        value:    '20',
       },
     }
     ticket_count, = Ticket.selectors(condition, limit: 10, current_user: @agent1)

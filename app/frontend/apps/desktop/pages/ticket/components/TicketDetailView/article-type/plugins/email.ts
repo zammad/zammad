@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { useArticleSecurity } from '#shared/composables/useArticleSecurity.ts'
 
@@ -15,7 +15,10 @@ export default <ChannelModule>{
       name: 'securityState',
       order: 500,
       show: (article) => {
-        const { hasError } = useArticleSecurity(article)
+        const { hasError, isEncrypted, isSigned } = useArticleSecurity(article)
+
+        if (isEncrypted.value || isSigned.value) return true
+
         return hasError.value
       },
       component: ArticleMetaSecurity,

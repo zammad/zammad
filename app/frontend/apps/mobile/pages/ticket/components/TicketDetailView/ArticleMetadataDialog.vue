@@ -1,13 +1,16 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 
+import ObjectAttributeContent from '#shared/components/ObjectAttributes/ObjectAttribute.vue'
 import { useArticleSecurity } from '#shared/composables/useArticleSecurity.ts'
+import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import { useWhatsapp } from '#shared/entities/ticket/channel/composables/useWhatsapp.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { getArticleChannelIcon } from '#shared/entities/ticket-article/composables/getArticleChannelIcon.ts'
 import { translateArticleSecurity } from '#shared/entities/ticket-article/composables/translateArticleSecurity.ts'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
@@ -72,6 +75,14 @@ const {
   encryptedStatusMessage,
   signedStatusMessage,
 } = useArticleSecurity(toRef(props.article))
+
+const { attributesLookup } = useObjectAttributes(
+  EnumObjectManagerObjects.TicketArticle,
+)
+
+const detectedLanguageAttribute = computed(() =>
+  attributesLookup.value.get('detected_language'),
+)
 </script>
 
 <template>
@@ -86,6 +97,17 @@ const {
       <ArticleMetadataAddress :address="article.cc" :label="__('CC')" />
       <CommonSectionMenuItem v-if="article.subject" :label="__('Subject')">
         <div>{{ article.subject }}</div>
+      </CommonSectionMenuItem>
+      <CommonSectionMenuItem
+        v-if="article.detectedLanguage"
+        :label="__('Detected language')"
+      >
+        <ObjectAttributeContent
+          v-if="detectedLanguageAttribute"
+          :attribute="detectedLanguageAttribute"
+          :object="article"
+        />
+        <div v-else>{{ article.detectedLanguage }}</div>
       </CommonSectionMenuItem>
       <CommonSectionMenuItem v-if="article.type?.name" :label="__('Channel')">
         <span class="inline-flex items-center gap-1">

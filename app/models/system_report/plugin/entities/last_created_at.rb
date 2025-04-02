@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class SystemReport::Plugin::Entities::LastCreatedAt < SystemReport::Plugin
   DESCRIPTION = __('Last created at of database objects (e.g. when was the last trigger created)').freeze

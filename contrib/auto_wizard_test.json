@@ -53,7 +53,7 @@
   "EmailAddresses": [
     {
       "id": 1,
-      "channel_id": 1,
+      "channel_id": 3,
       "name": "Zammad Helpdesk",
       "email": "zammad@localhost"
     }

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { initializeEditorColorMenuClasses } from '#shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/initializeEditorColorMenu.ts'
 import { initializeAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
@@ -74,10 +74,10 @@ export const initializeGlobalComponentStyles = () => {
   initializeFilePreviewClasses({
     base: 'leading-4',
     wrapper:
-      'focus-within:bg-blue-highlight mb-2 gap-2 rounded-2xl border p-3 outline-none last:mb-0 -:border-gray-300',
+      'focus-within:bg-blue-highlight mb-2 gap-2 rounded-2xl border p-3 outline-hidden last:mb-0 border-gray-300',
     preview: '',
     link: '',
-    size: '-:text-white/80',
-    icon: '-:border-gray-300',
+    size: 'text-white/80',
+    icon: 'border-gray-300',
   })
 }

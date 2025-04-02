@@ -12,6 +12,10 @@ class App.AfterAuthTwoFactorConfiguration extends App.ControllerAfterAuthModal
     if params.noFadeTransition
       params.className = 'modal'
 
+    if not params.data?.token
+      @invalidPasswordToken()
+      return
+
     super(params)
 
   content: ->
@@ -27,10 +31,12 @@ class App.AfterAuthTwoFactorConfiguration extends App.ControllerAfterAuthModal
     return if !App.User.current()
 
     @ajax(
-      id:      'two_factor_enabled_authentication_methods'
-      type:    'GET'
-      url:     "#{@apiPath}/users/#{App.User.current().id}/two_factor_enabled_authentication_methods"
-      success: @renderAvailableMethods
+      id:          'two_factor_enabled_authentication_methods'
+      type:        'POST'
+      url:         "#{@apiPath}/users/two_factor/enabled_authentication_methods"
+      data:        JSON.stringify(token: @data?.token)
+      processData: true
+      success:     @renderAvailableMethods
       error: (xhr, status, error) =>
         return if xhr.status != 403
 
@@ -39,6 +45,11 @@ class App.AfterAuthTwoFactorConfiguration extends App.ControllerAfterAuthModal
       )
 
   renderAvailableMethods: (data, status, xhr) =>
+    if data?.invalid_password_token
+      @closeWithoutFade()
+      @invalidPasswordToken(true)
+      return
+
     methodButtons = $(App.view('after_auth/two_factor_configuration/method_buttons')(
       enabledMethods: @transformTwoFactorMethods(data)
     ))
@@ -78,7 +89,30 @@ class App.AfterAuthTwoFactorConfiguration extends App.ControllerAfterAuthModal
 
     new App['TwoFactorConfigurationMethod' + configurationMethod](
       mode: 'after_auth'
+      token: @data?.token
       successCallback: =>
         @fetchAfterAuth()
         App.User.current().trigger('two_factor_changed')
+    )
+
+  invalidPasswordToken: (notify = false) =>
+    if notify
+      @notify(
+        type:      'error'
+        msg:       __('Invalid password revalidation token, please confirm your password again.')
+        removeAll: true
+      )
+
+    new App.TwoFactorConfigurationModalPasswordCheck(
+      logoutOnCancel: @logoutOnCancel
+      backdrop: @backdrop
+      keyboard: @keyboard
+      buttonClose: @buttonClose
+      buttonCancel: @buttonCancel
+      onCancel: @onCancel
+      successCallback: (data) ->
+        new App.AfterAuthTwoFactorConfiguration(
+          data: data
+          className: 'modal' # no automatic fade transitions
+        )
     )

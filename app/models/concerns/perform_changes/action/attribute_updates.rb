@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
   def execute(...)
@@ -66,20 +66,21 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
   end
 
   def subscribe(value)
-    if value['pre_condition'] == 'specific'
-      Mention.subscribe! record, User.find_by(id: value['value'])
-    else
-      Mention.subscribe! record, User.find_by(id: user_id)
-    end
+    user = value['pre_condition'] == 'specific' ? User.find_by(id: value['value']) : User.find_by(id: user_id)
+
+    # Ignore it for non-agent users.
+    return true if !Mention.mentionable?(record, user)
+
+    Mention.subscribe! record, user, sourceable: performable
   end
 
   def unsubscribe(value)
     if value['pre_condition'] == 'specific'
-      Mention.unsubscribe! record, User.find_by(id: value['value'])
+      Mention.unsubscribe! record, User.find_by(id: value['value']), sourceable: performable
     elsif value['pre_condition'] == 'not_set'
-      Mention.unsubscribe_all! record
+      Mention.unsubscribe_all! record, sourceable: performable
     else
-      Mention.unsubscribe! record, User.find_by(id: user_id)
+      Mention.unsubscribe! record, User.find_by(id: user_id), sourceable: performable
     end
   end
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::ExternalReferences::IdoitObjectRemove < BaseMutation
@@ -14,7 +14,7 @@ module Gql::Mutations
     end
 
     def authorized?(idoit_object_id:, ticket:)
-      Pundit.authorize(context.current_user, ticket, :agent_update_access?)
+      pundit_authorized?(ticket, :agent_update_access?)
     end
 
     def resolve(idoit_object_id:, ticket: nil)

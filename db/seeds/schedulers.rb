@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 Scheduler.create_if_not_exists(
   name:   __('Process pending tickets.'),
@@ -87,7 +87,7 @@ Scheduler.create_or_update(
 Scheduler.create_or_update(
   name:          __('Delete old token entries.'),
   method:        'Token.cleanup',
-  period:        30.days,
+  period:        1.day,
   prio:          2,
   active:        true,
   updated_by_id: 1,

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
@@ -62,7 +62,7 @@ export default {
       v-model="filter"
       v-bind="$attrs"
       :placeholder="i18n.t(placeholder)"
-      class="placeholder:text-gray h-12 w-full grow rounded-xl bg-gray-500 px-9 text-base focus:shadow-none focus:outline-none focus:ring-0"
+      class="placeholder:text-gray h-12 w-full grow rounded-xl bg-gray-500 px-9 text-base focus:shadow-none focus:ring-0 focus:outline-hidden"
       :class="{
         'focus:border-white focus:ring-0': !noBorder,
         'focus:border-transparent': noBorder,

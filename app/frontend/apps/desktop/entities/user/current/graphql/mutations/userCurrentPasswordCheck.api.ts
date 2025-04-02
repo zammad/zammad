@@ -10,6 +10,7 @@ export const UserCurrentPasswordCheckDocument = gql`
     mutation userCurrentPasswordCheck($password: String!) {
   userCurrentPasswordCheck(password: $password) {
     success
+    token
     errors {
       ...errors
     }

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor, within } from '@testing-library/vue'
 
@@ -70,7 +70,11 @@ describe('ticket create view', async () => {
     })
 
     it('prevents submission on incomplete form', async () => {
-      handleMockFormUpdaterQuery()
+      handleMockFormUpdaterQuery({
+        pending_time: {
+          show: true,
+        },
+      })
 
       const view = await visitView('/ticket/create')
 
@@ -84,7 +88,11 @@ describe('ticket create view', async () => {
     })
 
     it('creates a new ticket', async () => {
-      handleMockFormUpdaterQuery()
+      handleMockFormUpdaterQuery({
+        pending_time: {
+          show: true,
+        },
+      })
 
       const view = await visitView('/ticket/create')
 
@@ -116,13 +124,21 @@ describe('ticket create view', async () => {
         }),
       )
 
+      const sidebar = view.getByLabelText('Content sidebar')
+
       // Sidebar CUSTOMER
-      expect(view.getByLabelText('Avatar (Nicole Braun)')).toBeInTheDocument()
-      expect(view.getByText('Zammad Foundation')).toBeInTheDocument()
-      expect(view.getByText('open tickets')).toBeInTheDocument()
-      expect(view.getByText('nicole.braun@zammad.org')).toBeInTheDocument()
-      expect(view.getByText('closed tickets')).toBeInTheDocument()
-      expect(view.getByLabelText('Open tickets')).toHaveTextContent('17')
+      expect(
+        within(sidebar).getByLabelText('Avatar (Nicole Braun)'),
+      ).toBeInTheDocument()
+      expect(within(sidebar).getByText('Zammad Foundation')).toBeInTheDocument()
+      expect(within(sidebar).getByText('open tickets')).toBeInTheDocument()
+      expect(
+        within(sidebar).getByText('nicole.braun@zammad.org'),
+      ).toBeInTheDocument()
+      expect(within(sidebar).getByText('closed tickets')).toBeInTheDocument()
+      expect(within(sidebar).getByLabelText('Open tickets')).toHaveTextContent(
+        '17',
+      )
 
       // Sidebar Organization
       handleMockOrganizationQuery()
@@ -183,10 +199,11 @@ describe('ticket create view', async () => {
           },
           groupId: 'gid://zammad/Group/1',
           objectAttributeValues: [],
-          pendingTime: '2024-11-29T00:00:00.000Z',
+          pendingTime: '2024-11-29T00:00:00Z',
           priorityId: 'gid://zammad/Ticket::Priority/2',
           stateId: 'gid://zammad/Ticket::State/3',
           title: 'Test Ticket',
+          sharedDraftId: undefined,
         },
       })
 
@@ -287,7 +304,11 @@ describe('ticket create view', async () => {
     })
 
     it('prevents submission on incomplete form', async () => {
-      handleMockFormUpdaterQuery()
+      handleMockFormUpdaterQuery({
+        pending_time: {
+          show: true,
+        },
+      })
 
       const view = await visitView('/ticket/create')
 
@@ -387,6 +408,58 @@ describe('ticket create view', async () => {
         }),
       )
     })
+
+    it('shows alert for missing attachments', async () => {
+      handleMockFormUpdaterQuery()
+
+      const view = await visitView('/ticket/create')
+
+      await view.events.type(await view.findByLabelText('Title'), 'Test Ticket')
+
+      // Customer field
+      await handleCustomerMock(view)
+
+      handleMockUserQuery()
+
+      await view.events.click(
+        view.getByRole('option', {
+          name: 'Avatar (Nicole Braun) Nicole Braun – Zammad Foundation',
+        }),
+      )
+
+      // Text field
+      await view.events.type(
+        view.getByRole('textbox', { name: 'Text' }),
+        'Test ticket text. See attachment.',
+      )
+
+      // Group field
+      await view.events.click(view.getByLabelText('Group'))
+      await view.events.click(view.getByRole('option', { name: 'Users' }))
+
+      // Priority Field
+      await view.events.click(view.getByLabelText('Priority'))
+      await view.events.click(view.getByRole('option', { name: '2 normal' }))
+
+      // State field
+      await view.events.click(view.getByLabelText('State'))
+      await view.events.click(view.getByRole('option', { name: 'new' }))
+
+      // Submission
+      await view.events.click(view.getByRole('button', { name: 'Create' }))
+
+      const dialog = await view.findByRole('dialog', {
+        name: 'Confirmation',
+      })
+      expect(dialog).toBeInTheDocument()
+
+      const dialogView = within(dialog)
+      expect(
+        dialogView.getByText(
+          'Did you plan to include attachments with this message?',
+        ),
+      ).toBeInTheDocument()
+    })
   })
 
   describe('with customer permission', () => {
@@ -411,7 +484,6 @@ describe('ticket create view', async () => {
           expect(router.currentRoute.value.path).toBe('/error-tab'),
         )
 
-        // :TODO is this supposed to be correct? It was before as a not found page. -> Multitasking update
         expect(view.getByText('Forbidden')).toBeInTheDocument()
         expect(
           view.getByText('Creating new tickets via web is disabled.'),

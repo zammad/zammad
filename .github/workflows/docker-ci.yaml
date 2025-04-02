@@ -28,6 +28,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          build-args: |
+            COMMIT_SHA=${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           pull: true
           push: false
@@ -44,6 +46,15 @@ jobs:
         run: |
           cd zammad-docker-compose
           docker load --input /tmp/zammad-local.tar
-          docker compose -f docker-compose.yml -f docker-compose.override-local.yml up --detach
-          docker cp .github/auto_wizard.json zammad-docker-compose-zammad-railsserver-1:/opt/zammad/tmp
-          .github/tests.sh
+
+          cat - <<ENV_FILE >> .env
+          IMAGE_REPO=zammad-local
+          VERSION=latest
+          ENV_FILE
+
+          .github/tests/setup/default.sh
+          .github/tests/default.sh
+
+          docker compose ps
+          # Ensure we are running with the correct image
+          docker compose ps | grep zammad-local:latest

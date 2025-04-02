@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -34,7 +34,7 @@ RSpec.describe Gql::Queries::Tickets::ByOverview, type: :graphql do
         }
       QUERY
     end
-    let(:variables) { { overviewId: gql.id(overview), showPriority: true, showUpdatedBy: true } }
+    let(:variables) { { overviewId: gql.id(overview) } }
     let(:overview)    { Overview.find_by(link: 'all_unassigned') }
     let!(:ticket)     { create(:ticket) }
 

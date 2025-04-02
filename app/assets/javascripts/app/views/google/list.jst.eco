@@ -1,6 +1,6 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h1><%- @T('Gmail') %> <small><%- @T('Accounts') %></small></h1>
+    <h1><%- @T('Google Email') %> <small><%- @T('Accounts') %></small></h1>
   </div>
 
   <div class="page-header-meta">

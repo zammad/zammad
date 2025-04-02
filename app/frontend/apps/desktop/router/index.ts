@@ -1,5 +1,6 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
+import redirectGuard from '#shared/router/guards/before/redirect.ts'
 import mainInitializeRouter from '#shared/router/index.ts'
 import type { InitializeAppRouter, RoutesModule } from '#shared/types/router.ts'
 
@@ -58,6 +59,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'LayoutPage',
     component: () => import('#desktop/components/layout/LayoutPage.vue'),
+    beforeEnter: redirectGuard,
     children: childRoutes,
   },
 ]

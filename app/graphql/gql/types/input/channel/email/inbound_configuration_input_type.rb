@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Input
   class Channel::Email::InboundConfigurationInputType < Gql::Types::BaseInputObject
@@ -17,6 +17,7 @@ module Gql::Types::Input
 
     argument :archive, Boolean, required: false, description: 'Whether to perform the email import in archive mode'
     argument :archive_before, GraphQL::Types::ISO8601DateTime, required: false, description: 'Import mails older than this date in archive mode'
+    argument :archive_state_id, Integer, required: false, description: 'Archive ticket target state internal ID'
 
   end
 end

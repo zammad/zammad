@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'mobile app: create article' do |type_label, internal: false, attachments: false, conditional: true|
   let(:group)       { Group.find_by(name: 'Users') }

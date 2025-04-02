@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # This file registers a before and after each hook callback that
 # resets the stored current_user_id in the UserInfo which will otherwise

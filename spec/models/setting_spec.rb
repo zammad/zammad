@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -22,6 +22,18 @@ RSpec.describe Setting, type: :model do
 
         expect(described_class.get('broadcast_test'))
           .to eq("test #{described_class.get('fqdn')}")
+      end
+    end
+
+    context 'with offending chars in product_name and fqdn (#4355)' do
+      before do
+        described_class.set('product_name', '<My "Helpdesk">')
+        described_class.set('fqdn', 'localhost:8080')
+      end
+
+      it 'sanitizes notification_sender value' do
+        expect(described_class.get('notification_sender'))
+          .to eq('"<My \'\'Helpdesk\'\'>" <noreply@localhost>')
       end
     end
   end

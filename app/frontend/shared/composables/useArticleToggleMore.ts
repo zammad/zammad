@@ -1,7 +1,8 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { onMounted, ref } from 'vue'
 
+import { waitForImagesToLoad } from '#shared/utils/dom.ts'
 import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 
 export const useArticleToggleMore = () => {
@@ -58,6 +59,10 @@ export const useArticleToggleMore = () => {
 
   onMounted(async () => {
     if (!bubbleElement.value) return
+
+    // Wait for inline images to load before calculating height
+    // Resolved immediately if no images are present
+    await waitForImagesToLoad(bubbleElement)
 
     await setHeight()
   })

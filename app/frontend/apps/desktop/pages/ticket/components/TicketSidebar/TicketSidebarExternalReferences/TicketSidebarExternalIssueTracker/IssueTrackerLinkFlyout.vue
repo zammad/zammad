@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import Form from '#shared/components/Form/Form.vue'
@@ -51,9 +51,7 @@ const submitLink = async (data: SubmitData) => {
 
   await props.onSubmit(link)
 
-  return () => {
-    closeFlyout(props.name)
-  }
+  return () => closeFlyout(props.name)
 }
 </script>
 

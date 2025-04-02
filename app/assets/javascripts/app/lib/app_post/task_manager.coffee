@@ -682,7 +682,7 @@ class _taskManagerSingleton extends App.Controller
                   persistent: true
                   init:       true
                 )
-              taskCount * 350
+              taskCount * 50
               undefined
               'task'
               true
@@ -704,7 +704,7 @@ class _taskManagerSingleton extends App.Controller
               persistent: false
               init:       true
             )
-          taskCount * 350
+          taskCount * 50
           undefined
           'task'
           true

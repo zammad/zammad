@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -136,6 +136,9 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
           visit '/'
 
           expect(page).to have_text('Set Up Two-factor Authentication')
+          fill_in('Current password', with: 'test')
+          click_on 'Next'
+
           expect(page).to have_text('You must protect your account with two-factor authentication.')
           expect(page).to have_text('Choose your preferred two-factor authentication method to set it up.')
 

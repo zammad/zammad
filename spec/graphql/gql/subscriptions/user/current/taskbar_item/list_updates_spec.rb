@@ -1,15 +1,15 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::User::Current::TaskbarItem::ListUpdates, type: :graphql do
   let(:user)         { create(:agent) }
-  let(:variables)    { { userId: gql.id(user), app: 'desktop' } }
+  let(:variables)    { { app: 'desktop' } }
   let(:mock_channel) { build_mock_channel }
   let(:subscription) do
     <<~QUERY
-      subscription userCurrentTaskbarItemListUpdates($userId: ID!, $app: EnumTaskbarApp!) {
-        userCurrentTaskbarItemListUpdates(userId: $userId, app: $app) {
+      subscription userCurrentTaskbarItemListUpdates($app: EnumTaskbarApp!) {
+        userCurrentTaskbarItemListUpdates(app: $app) {
           taskbarItemList {
             id
           }

@@ -1,5 +1,5 @@
-subscription userCurrentAccessTokenUpdates($userId: ID!) {
-  userCurrentAccessTokenUpdates(userId: $userId) {
+subscription userCurrentAccessTokenUpdates {
+  userCurrentAccessTokenUpdates {
     tokens {
       ...tokenAttributes
     }

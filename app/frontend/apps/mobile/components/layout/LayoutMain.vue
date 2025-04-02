@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref, unref } from 'vue'
@@ -48,16 +48,11 @@ const { stickyStyles } = useStickyHeader([title], headerElement)
     >
       <!-- let's see how it feels without transition -->
       <RouterView />
-      <div v-if="showBottomNavigation" class="BottomNavigationPadding"></div>
+      <div
+        v-if="showBottomNavigation"
+        class="h-[calc(var(--safe-bottom,0)+3.5rem)] w-full shrink-0"
+      />
     </main>
     <LayoutBottomNavigation v-if="showBottomNavigation" />
   </div>
 </template>
-
-<style scoped>
-.BottomNavigationPadding {
-  @apply w-full shrink-0;
-
-  height: calc(var(--safe-bottom, 0) + theme('height.14'));
-}
-</style>

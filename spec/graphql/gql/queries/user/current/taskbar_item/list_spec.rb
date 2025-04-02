@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -12,6 +12,11 @@ RSpec.describe Gql::Queries::User::Current::TaskbarItem::List, type: :graphql do
           userCurrentTaskbarItemList(app: $app) {
             app
             key
+            entity {
+              ... on User {
+                id
+              }
+            }
           }
         }
       QUERY
@@ -19,7 +24,7 @@ RSpec.describe Gql::Queries::User::Current::TaskbarItem::List, type: :graphql do
 
     before do
       %w[desktop desktop mobile].each do |app|
-        create(:taskbar, user_id: agent.id, app: app)
+        create(:taskbar, user_id: agent.id, app: app, key: "User-#{create(:customer).id}")
       end
 
       gql.execute(query, variables: variables)

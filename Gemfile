@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 source 'https://rubygems.org'
 
 # core - base
-ruby '3.2.4'
+ruby '3.2.8'
 gem 'rails', '~> 7.2.0'
 
 # core - rails additions
@@ -47,6 +47,7 @@ gem 'pundit'
 # core - graphql handling
 gem 'graphql'
 gem 'graphql-batch', require: 'graphql/batch'
+gem 'graphql-fragment_cache'
 
 # core - image processing
 gem 'rszr'
@@ -62,6 +63,13 @@ gem 'vite_rails'
 
 # asset handling - config.assets for pipeline
 gem 'sprockets-rails'
+
+# Workaround
+# Explicitly specify nokogiri, even though it is an internal Rails dependency
+#   to work around issues with precompiled versions not running on RHEL 8 any more.
+# See https://github.com/sparklemotion/nokogiri/issues/3399.
+# Consider removing this again after CentOS 8 support was dropped.
+gem 'nokogiri', force_ruby_platform: true
 
 # Only load gems for asset compilation if they are needed to avoid
 #   having unneeded runtime dependencies like NodeJS.
@@ -107,6 +115,7 @@ gem 'omniauth-gitlab'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-microsoft-office365'
+gem 'omniauth_openid_connect'
 gem 'omniauth-saml'
 gem 'omniauth-twitter'
 gem 'omniauth-weibo-oauth2', git: 'https://github.com/zammad-deps/omniauth-weibo-oauth2', branch: 'unpin-dependencies'
@@ -128,7 +137,6 @@ gem 'mime-types'
 gem 'rchardet', '>= 1.8.0'
 
 # networking libraries were removed from stdlib in ruby 3.1..
-gem 'net-ftp',  require: false
 gem 'net-http', require: false
 gem 'net-imap', require: false
 gem 'net-pop',  require: false
@@ -201,6 +209,12 @@ gem 'macaddr'
 # watch file changes (also relevant for graphql generation in context of CDs)
 gem 'listen'
 
+# language detection
+gem 'cld'
+
+# CLDR wrapper for i18n and l10n
+gem 'twitter_cldr'
+
 # Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do
@@ -257,7 +271,7 @@ group :development, :test do
   gem 'localhost'
 
   # Keycloak admin tool for setting up SAML auth tests
-  gem 'keycloak-admin', github: 'tschaefer/ruby-keycloak-admin', tag: 'v26.0.0', require: false
+  gem 'ruby-keycloak-admin'
 
   # Debugging and profiling
   gem 'pry-doc' # This gem is very large, so don't include it in production.

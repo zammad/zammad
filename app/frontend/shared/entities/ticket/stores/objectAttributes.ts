@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { EntityStaticObjectAttributes } from '#shared/entities/object-attributes/types/store.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
@@ -95,8 +95,9 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
       display: __('Created by'),
       dataOption: {
         relation: 'User',
+        belongs_to: 'createdBy',
       },
-      dataType: 'autocomplete',
+      dataType: 'autocompletion_ajax',
       isStatic: true,
       isInternal: true,
     },
@@ -112,8 +113,9 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
       display: __('Updated by'),
       dataOption: {
         relation: 'User',
+        belongs_to: 'updatedBy',
       },
-      dataType: 'autocomplete',
+      dataType: 'autocompletion_ajax',
       isStatic: true,
       isInternal: true,
     },

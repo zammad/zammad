@@ -1,0 +1,4 @@
+<div class="alert alert--danger" role="alert"><%- @T(@error.message) %></div>
+<% if @error.hint: %>
+<div class="alert alert--warning" role="alert"><%- @T(@error.hint, 'https://admin-docs.zammad.org/en/latest/channels/microsoft365-graph/common-errors.html') %></div>
+<% end %>

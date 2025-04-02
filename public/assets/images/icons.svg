@@ -572,6 +572,8 @@
         <path fill="currentColor" d="M37.5 10H0l10-7h37.5z"/>
         <path d="m0 8 10-7h37.5l-10 7z"/>
     </g>
+</symbol><symbol id="icon-openid-connect-button" viewBox="0 0 29 24">
+    <path d="M13.459 3.257V22l3.5-2.195V1l-3.5 2.257ZM12.014 19.541C8.781 18.756 6.5 16.806 6.5 14.524c0-2.267 2.281-4.216 5.514-5.007V7.249C6.819 8.118 3 11.045 3 14.524c0 3.478 3.83 6.41 9.014 7.287v-2.27ZM23.834 9.201C22.36 8.282 20.49 7.6 18.403 7.25v2.263c1.121.272 2.13.683 2.967 1.2l-2.237 1.389h6.98V7.793L23.833 9.2Z"/>
 </symbol><symbol id="icon-organization" viewBox="0 0 16 16">
     <title>organization</title>
     <path d="M1 15h7V1H1v14Zm2-2H2v-1h1v1Zm0-2H2v-1h1v1Zm0-2H2V8h1v1Zm0-2H2V6h1v1Zm0-2H2V4h1v1ZM2 3V2h1v1H2Zm3 10H4v-1h1v1Zm0-2H4v-1h1v1Zm0-2H4V8h1v1Zm0-2H4V6h1v1Zm0-2H4V4h1v1Zm0-2H4V2h1v1Zm2 10H6v-1h1v1Zm0-2H6v-1h1v1Zm0-2H6V8h1v1Zm0-2H6V6h1v1Zm0-2H6V4h1v1Zm0-2H6V2h1v1Zm1 2v10h7V5H8Zm1 8v-1h1v1H9Zm1-2H9v-1h1v1Zm0-2H9V8h1v1Zm0-2H9V6h1v1Zm2 6h-1v-1h1v1Zm0-2h-1v-1h1v1Zm0-2h-1V8h1v1Zm0-2h-1V6h1v1Zm2 6h-1v-1h1v1Zm0-2h-1v-1h1v1Zm0-2h-1V8h1v1Zm0-2h-1V6h1v1Z" fill-rule="evenodd"/>

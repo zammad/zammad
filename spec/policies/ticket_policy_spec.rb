@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -7,7 +7,7 @@ describe TicketPolicy do
 
   let(:record) { create(:ticket) }
 
-  context 'when given ticket’s owner' do
+  context "when given ticket's owner" do
     let(:user) { record.owner }
 
     it { is_expected.to forbid_actions(%i[show full]) }
@@ -35,13 +35,13 @@ describe TicketPolicy do
 
     it { is_expected.to forbid_actions(%i[show full]) }
 
-    context 'but the user is an agent with full access to ticket’s group' do
+    context "but the user is an agent with full access to ticket's group" do
       before { user.group_names_access_map = { record.group.name => 'full' } }
 
       it { is_expected.to permit_actions(%i[show full]) }
     end
 
-    context 'but the user is a customer from the same organization as ticket’s customer' do
+    context "but the user is a customer from the same organization as ticket's customer" do
       let(:record)   { create(:ticket, customer: customer) }
       let(:customer) { create(:customer, organization: create(:organization)) }
       let(:user)     { create(:customer, organization: customer.organization) }
@@ -66,6 +66,16 @@ describe TicketPolicy do
   end
 
   context 'when user is agent' do
+
+    context 'when user is owner but has no access to the group' do
+      let(:user) do
+        create(:agent, groups: []).tap do |user|
+          record.update!(owner: user)
+        end
+      end
+
+      it { is_expected.to forbid_actions(%i[show full]) }
+    end
 
     context 'when owner has ticket.agent permission' do
 

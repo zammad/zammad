@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from 'vue'
@@ -101,7 +101,7 @@ defineExpose({
       <CommonIcon
         v-if="!isTicketItem"
         tabindex="0"
-        class="mt-1.5 shrink-0 text-gray-100 outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
+        class="mt-1.5 shrink-0 text-gray-100 outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
         size="xs"
         role="checkbox"
         aria-readonly="true"
@@ -157,7 +157,7 @@ defineExpose({
     <CommonActionMenu
       v-if="!inlineEditInstance?.isEditing && !isReordering"
       button-size="small"
-      class="mt-0.5 flex"
+      class="mt-0.5 flex!"
       placement="arrowEnd"
       :actions="actions"
       :entity="item"

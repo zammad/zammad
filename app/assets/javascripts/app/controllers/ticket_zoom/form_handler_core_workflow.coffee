@@ -309,7 +309,11 @@ class App.FormHandlerCoreWorkflow
   # this will use the form handler information to send the data to the backend via ajax/websockets
   @request: (classname, form, ui, attributes, params) ->
     requestID = "CoreWorkflow-#{Math.floor( Math.random() * 999999 ).toString()}"
-    coreWorkflowRequests = {}
+
+    for key, value of coreWorkflowRequests
+      continue if ui.idPrefix isnt value.ui.idPrefix
+      delete coreWorkflowRequests[key]
+
     coreWorkflowRequests[requestID] = { classname: classname, form: form, ui: ui, attributes: attributes, params: params }
 
     requestData = {

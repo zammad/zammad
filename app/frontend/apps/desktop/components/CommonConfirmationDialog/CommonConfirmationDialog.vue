@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -75,6 +75,7 @@ const confirmationVariant = computed<ConfirmationVariantOptions>(() => {
               currentConfirmationOptions.value?.buttonVariant || 'primary',
           },
           cancelLabel: currentConfirmationOptions.value?.cancelLabel,
+          hideCancelButton: currentConfirmationOptions.value?.hideCancelButton,
         },
       }
   }
@@ -102,6 +103,7 @@ const headerTitle = computed(() => {
     :content="currentConfirmationOptions?.text || confirmationVariant.content"
     :content-placeholder="currentConfirmationOptions?.textPlaceholder"
     :footer-action-options="confirmationVariant.footerActionOptions"
+    :fullscreen="currentConfirmationOptions?.fullscreen ?? false"
     global
     @close="handleConfirmation"
   />

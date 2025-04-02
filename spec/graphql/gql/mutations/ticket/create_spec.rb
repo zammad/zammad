@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -188,7 +188,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
 
           it 'fails to create the ticket' do
             it_fails_to_create_ticket
-            expect(gql.result.error_message).to include('The email address is invalid.')
+            expect(gql.result.error_message).to include('The email address is invalid')
           end
         end
 

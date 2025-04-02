@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
@@ -53,7 +53,7 @@ onMounted(() => {
   <div>
     <div class="flex items-center gap-1">
       <button
-        class="flex items-center gap-2 bg-[--highlight-color]"
+        class="flex items-center gap-2 bg-(--highlight-color)"
         :style="{
           '--highlight-color': isDarkMode
             ? color?.value?.dark
@@ -64,8 +64,8 @@ onMounted(() => {
       >
         <CommonIcon size="xs" name="highlighter" />
         <CommonLabel
-          class="rounded-sm p-1 text-xs"
-          :class="{ 'text-black dark:text-white': isActive }"
+          class="rounded-xs p-1 text-xs"
+          :class="{ 'text-black! dark:text-white!': isActive }"
           :style="{ backgroundColor: isActive ? color?.value : undefined }"
           >{{ $t('Highlight') }}</CommonLabel
         >
@@ -94,13 +94,14 @@ onMounted(() => {
         >
           <button
             :aria-label="$t((item as ExtendedMenuItem).name)"
-            class="relative flex grow items-center gap-2 p-2.5 text-gray-100 outline-none dark:text-neutral-400"
+            class="relative flex grow items-center gap-2 p-2.5 text-gray-100 outline-hidden dark:text-neutral-400"
             :class="{
               'bg-blue-600 text-black dark:bg-blue-900 dark:text-white':
                 (item as ExtendedMenuItem).id === color?.id,
               'rounded-t-lg': index === 0,
               'rounded-b-lg': index === colorLabels.length - 1,
-              'pseudo-border-b': index !== colorLabels.length - 1,
+              'after:absolute after:bottom-0 after:left-1/2 after:h-[1px] after:w-[calc(100%-1rem)] after:-translate-x-1/2 after:bg-neutral-100 after:dark:bg-gray-900':
+                index !== colorLabels.length - 1,
             }"
             @click="selectColor(item as ExtendedMenuItem)"
           >
@@ -125,11 +126,3 @@ onMounted(() => {
     </CommonPopover>
   </div>
 </template>
-
-<style scoped>
-.pseudo-border-b::after {
-  content: '';
-
-  @apply absolute bottom-0 left-1/2 h-[1px] w-[calc(100%-1rem)] -translate-x-1/2 bg-neutral-100 dark:bg-gray-900;
-}
-</style>

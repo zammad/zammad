@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::Overview::ResetOrder < BaseMutation
@@ -21,7 +21,7 @@ module Gql::Mutations
 
       {
         success:   true,
-        overviews: Service::User::Overview::List.new(context.current_user).execute
+        overviews: Service::User::Overview::List.new(context.current_user, ignore_user_conditions: true).execute
       }
     end
   end

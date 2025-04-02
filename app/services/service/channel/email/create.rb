@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Channel::Email::Create < Service::Base
 
-  def execute(inbound_configuration:, outbound_configuration:, group:, email_address:, email_realname:)
+  def execute(inbound_configuration:, outbound_configuration:, group:, email_address:, email_realname:, group_email_address: false)
 
-    ::Channel.create!(
+    new_channel = ::Channel.create!(
       area:         'Email::Account',
       options:      {
         inbound:  inbound_configuration,
@@ -19,6 +19,12 @@ class Service::Channel::Email::Create < Service::Base
     ).tap do |channel|
       set_email_address(channel:, email_address:, email_realname:)
     end
+
+    if group_email_address
+      Service::Channel::Email::UpdateDestinationGroupEmail.new(group:, channel: new_channel).execute
+    end
+
+    new_channel
   end
 
   private

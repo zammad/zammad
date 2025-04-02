@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -101,8 +101,10 @@ RSpec.describe TriggerWebhookJob, type: :job do
       {}.to_json
     end
 
+    let(:response_headers) { {} }
+
     before do
-      stub_request(:post, endpoint).to_return(status: response_status, body: response_body)
+      stub_request(:post, endpoint).to_return(headers: response_headers, status: response_status, body: response_body)
 
       perform
     end
@@ -164,6 +166,16 @@ RSpec.describe TriggerWebhookJob, type: :job do
       end
     end
 
+    context 'when response is a redirect' do
+      let(:response_status)  { 301 }
+      let(:response_headers) { { Location: 'http://redirect.target/' } }
+
+      it 'enqueues job again due to redirect exception', :aggregate_failures do
+        expect(described_class).to have_been_enqueued
+        expect(HttpLog.last.response).to include('code' => 0, 'content' => '')
+      end
+    end
+
     context 'with different payloads' do
       subject(:perform) do
         described_class.perform_now(
@@ -177,7 +189,7 @@ RSpec.describe TriggerWebhookJob, type: :job do
         )
       end
 
-      let(:webhook) { create(:webhook, endpoint: endpoint, customized_payload: customized_payload, custom_payload: custom_payload, pre_defined_webhook_type: pre_defined_webhook_type) }
+      let(:webhook)                  { create(:webhook, endpoint: endpoint, customized_payload: customized_payload, custom_payload: custom_payload, pre_defined_webhook_type: pre_defined_webhook_type) }
       let(:customized_payload)       { false }
       let(:custom_payload)           { nil }
       let(:pre_defined_webhook_type) { nil }

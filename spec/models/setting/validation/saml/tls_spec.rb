@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -47,7 +47,7 @@ RSpec.describe Setting::Validation::Saml::TLS do
             allow(UserAgent).to receive(:get).and_return(result)
           end
 
-          expect { Setting.set(setting_name, setting_value) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: The verification of the TLS connection failed. Please check the SAML IDP certificate.')
+          expect { Setting.set(setting_name, setting_value) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: The verification of the TLS connection to the IDP SSO target URL failed. Please check the SAML IDP certificate.')
         end
       end
 
@@ -65,7 +65,7 @@ RSpec.describe Setting::Validation::Saml::TLS do
           result = UserAgent::Result.new(success: false, error: '#<Errno::EHOSTUNREACH')
           allow(UserAgent).to receive(:get).and_return(result)
 
-          expect { Setting.set(setting_name, setting_value) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: The verification of the TLS connection is not possible. Please check the SAML IDP connection.')
+          expect { Setting.set(setting_name, setting_value) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: The verification of the TLS connection to the IDP SSO target URL is not possible. Please check the connection.')
         end
       end
     end

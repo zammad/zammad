@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar'
@@ -14,14 +14,14 @@ defineProps<Props>()
 <template>
   <CommonLink
     :link="`/organizations/${entity.internalId}`"
-    class="flex gap-2 hover:no-underline"
+    class="flex gap-2 hover:no-underline!"
   >
     <!--            :TODO add popover with user details-->
     <CommonOrganizationAvatar
       :entity="entity as AvatarOrganization"
       size="small"
     />
-    <CommonLabel class="text-blue-800 hover:underline"
+    <CommonLabel class="text-blue-800! hover:underline dark:text-neutral-400!"
       >{{ entity.name }}
     </CommonLabel>
   </CommonLink>

@@ -7,8 +7,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserCurrentTaskbarItemUpdatesDocument = gql`
-    subscription userCurrentTaskbarItemUpdates($userId: ID!, $app: EnumTaskbarApp!) {
-  userCurrentTaskbarItemUpdates(userId: $userId, app: $app) {
+    subscription userCurrentTaskbarItemUpdates($app: EnumTaskbarApp!) {
+  userCurrentTaskbarItemUpdates(app: $app) {
     addItem {
       ...userCurrentTaskbarItemAttributes
     }

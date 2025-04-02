@@ -6,8 +6,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const MacrosDocument = gql`
-    query macros($groupId: ID!) {
-  macros(groupId: $groupId) {
+    query macros($groupIds: [ID!]!) {
+  macros(groupIds: $groupIds) {
     id
     active
     name

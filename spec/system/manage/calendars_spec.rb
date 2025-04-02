@@ -1,13 +1,13 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Calendars', type: :system do
+RSpec.describe 'Manage > Calendars', time_zone: 'America/Sao_Paulo', type: :system do
 
   context 'Date' do
     let(:calendar_title) { "test calendar #{SecureRandom.uuid}" }
 
-    it 'show festivity dates correctly far away from UTC', time_zone: 'America/Sao_Paulo' do
+    it 'show festivity dates correctly far away from UTC' do
       visit '/#manage/calendars'
 
       click '.js-new'

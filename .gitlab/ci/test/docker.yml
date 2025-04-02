@@ -1,0 +1,45 @@
+docker:
+  image: docker
+  stage: test
+  interruptible: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_REF_NAME =~ /^private/
+      when: manual
+      allow_failure: true
+    - when: on_success
+  services: []
+  cache: []
+  variables:
+    ZAMMAD_IMAGE_TAG: "ci-${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
+    ZAMMAD_IMAGE_REPO: "zammad-local"
+    ZAMMAD_IMAGE: "${ZAMMAD_IMAGE_REPO}:${ZAMMAD_IMAGE_TAG}"
+  before_script:
+    - docker build --build-arg COMMIT_SHA=${CI_COMMIT_SHORT_SHA} -t $ZAMMAD_IMAGE .
+  script: |
+    git clone --depth=1 https://github.com/zammad/zammad-docker-compose.git
+    cd zammad-docker-compose
+
+    # Make the stack use the image that was just built.
+    echo "IMAGE_REPO=${ZAMMAD_IMAGE_REPO}" > .env
+    echo "VERSION=${ZAMMAD_IMAGE_TAG}" >> .env
+    cat .env
+
+    # Use dynamic stack name and no exposed port to avoid conflicts.
+    cat - > docker-compose.override.yml <<COMPOSE_OVERRIDE_FILE
+    ---
+    name: zammad-docker-ci-${ZAMMAD_IMAGE_TAG}
+    services:
+      zammad-nginx:
+        ports: !reset []
+    COMPOSE_OVERRIDE_FILE
+
+    .github/tests/setup/default.sh
+    DISABLE_EXTERNAL_TESTS=1 .github/tests/default.sh
+
+    docker compose ps
+    # Ensure we are running with the correct image
+    docker compose ps | grep ${ZAMMAD_IMAGE}
+  after_script:
+    - cd zammad-docker-compose
+    - docker compose down --timeout 0 --volumes
+    - docker image rm ${ZAMMAD_IMAGE}

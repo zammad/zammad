@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -29,8 +29,6 @@ RSpec.describe Gql::Mutations::Channel::Email::GuessConfiguration, type: :graphq
             }
             mailboxStats {
               contentMessages
-              archivePossible
-              archiveWeekRange
             }
           }
         }
@@ -54,11 +52,9 @@ RSpec.describe Gql::Mutations::Channel::Email::GuessConfiguration, type: :graphq
       let(:probe_full_response) do
         # Example from function documentation
         {
-          result:             'ok',
-          content_messages:   23,
-          archive_possible:   true,
-          archive_week_range: 2,
-          setting:            {
+          result:           'ok',
+          content_messages: 23,
+          setting:          {
             inbound:  {
               adapter: 'imap',
               options: {
@@ -90,9 +86,7 @@ RSpec.describe Gql::Mutations::Channel::Email::GuessConfiguration, type: :graphq
         {
           'result' => {
             'mailboxStats'          => {
-              'contentMessages'  => 23,
-              'archivePossible'  => true,
-              'archiveWeekRange' => 2,
+              'contentMessages' => 23,
             },
             'inboundConfiguration'  => {
               'adapter'   => 'imap',

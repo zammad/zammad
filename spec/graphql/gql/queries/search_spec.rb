@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -17,27 +17,32 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
     let(:search)    { SecureRandom.uuid }
     let(:query)     do
       <<~QUERY
-        query search($search: String!, $onlyIn: EnumSearchableModels) {
-          search(search: $search, onlyIn: $onlyIn) {
-            ... on Ticket {
-              __typename
-              number
-              title
-            }
-            ... on User {
-              __typename
-              firstname
-              lastname
-            }
-            ... on Organization {
-              __typename
-              name
+        query search($search: String!, $onlyIn: EnumSearchableModels!, $orderBy: String, $orderDirection: EnumOrderDirection, $offset: Int = 0, $limit: Int = 10) {
+          search(search: $search, onlyIn: $onlyIn, orderBy: $orderBy, orderDirection: $orderDirection, offset: $offset, limit: $limit) {
+            totalCount
+            items {
+              ... on Ticket {
+                __typename
+                number
+                title
+              }
+              ... on User {
+                __typename
+                firstname
+                lastname
+              }
+              ... on Organization {
+                __typename
+                name
+              }
             }
           }
         }
       QUERY
     end
-    let(:variables) { { search: search } }
+    let(:only_in)   { 'Ticket' }
+    let(:order_by)  { 'title' }
+    let(:variables) { { search: search, onlyIn: only_in, orderBy: order_by, orderDirection: 'ASCENDING' } }
     let(:es_setup) do
       Setting.set('es_url', nil)
     end
@@ -50,29 +55,43 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
     shared_examples 'test search query' do
 
       context 'with an agent', authenticated_as: :agent do
-        context 'without model limit' do
-          let(:expected_result) do
-            [
-              { '__typename' => 'Ticket', 'number' => ticket.number, 'title' => ticket.title },
-              { '__typename' => 'User', 'firstname' => agent.firstname, 'lastname' => agent.lastname },
-              { '__typename' => 'Organization', 'name' => organization.name },
-            ]
-          end
+        let(:expected_result) do
+          { 'items' => [{ '__typename' => 'Ticket', 'number' => ticket.number, 'title' => ticket.title }], 'totalCount' => 1 }
+        end
 
-          it 'finds expected objects across models' do
+        context 'with direct_search_index: false' do
+          it 'finds expected objects' do
             expect(gql.result.data).to eq(expected_result)
           end
         end
 
-        context 'with model restriction' do
-          let(:variables) { { search: search, onlyIn: 'User' } }
+        context 'with direct_search_index: true' do
+          let(:only_in) { 'User' }
+          let(:order_by) { 'login' }
           let(:expected_result) do
-            [
-              { '__typename' => 'User', 'firstname' => agent.firstname, 'lastname' => agent.lastname },
-            ]
+            { 'items' => [{ '__typename' => 'User', 'firstname' => agent.firstname, 'lastname' => agent.lastname }], 'totalCount' => 1 }
           end
 
-          it 'finds expected objects only from selected model' do
+          it 'finds expected objects' do
+            expect(gql.result.data).to eq(expected_result)
+          end
+        end
+
+        context 'with invalid order_by' do
+          let(:order_by) { 'nonexisting' }
+
+          it 'raises an error' do
+            expect(gql.result.error_message).to eq("Found invalid column 'nonexisting' for sorting.")
+          end
+        end
+
+        context 'with offset in a non-matching window' do
+          let(:variables) { { search:, onlyIn: only_in, limit: 10, offset: 10 } }
+          let(:expected_result) do
+            { 'items' => [], 'totalCount' => 1 }
+          end
+
+          it 'finds expected objects across models' do
             expect(gql.result.data).to eq(expected_result)
           end
         end
@@ -80,14 +99,26 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
 
       context 'with a customer', authenticated_as: :customer do
         let(:customer) { create(:customer, firstname: search, organization: organization) }
+        let(:only_in)  { 'Organization' }
+        let(:order_by) { 'name' }
         let(:expected_result) do
-          [
-            { '__typename' => 'Organization', 'name' => organization.name },
-          ]
+          { 'items' => [{ '__typename' => 'Organization', 'name' => organization.name }], 'totalCount' => 1 }
         end
 
-        it 'finds only objects available to the customer' do
+        it 'finds objects available to the customer' do
           expect(gql.result.data).to eq(expected_result)
+        end
+
+        context 'when searching for inacessible models' do
+          let(:only_in) { 'User' }
+          let(:order_by) { 'login' }
+          let(:expected_result) do
+            { 'items' => [], 'totalCount' => 0 }
+          end
+
+          it 'gets no result' do
+            expect(gql.result.data).to eq(expected_result)
+          end
         end
       end
     end

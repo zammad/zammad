@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
@@ -9,6 +9,7 @@ Zammad::Application.routes.draw do
   match api_path + '/channels_microsoft365',                        to: 'channels_microsoft365#destroy',            via: :delete
   match api_path + '/channels_microsoft365_group/:id',              to: 'channels_microsoft365#group',              via: :post
   match api_path + '/channels_microsoft365_inbound/:id',            to: 'channels_microsoft365#inbound',            via: :post
+  match api_path + '/channels_microsoft365_verify/:id',             to: 'channels_microsoft365#verify',             via: :post
   match api_path + '/channels_microsoft365_rollback_migration',     to: 'channels_microsoft365#rollback_migration', via: :post
 
 end

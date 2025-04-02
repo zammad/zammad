@@ -12,6 +12,7 @@ class TicketState extends App.ControllerSubContent
       genericObject: 'TicketState'
       defaultSortBy: 'name'
       handlers: [@formHandler]
+      editAvailable: (id) -> App.TicketState.find(id)?.state_type?.name isnt 'merged'
       pageData:
         home: 'ticket_states'
         object: __('Ticket State')
@@ -21,6 +22,7 @@ class TicketState extends App.ControllerSubContent
           { name: __('New Ticket State'), 'data-type': 'new', class: 'btn--success' }
         ]
         tableExtend: {
+          clone: (object) -> object.state_type.name isnt 'merged'
           customActions: [
             {
               name: 'set_default_create'
@@ -30,7 +32,7 @@ class TicketState extends App.ControllerSubContent
               callback: (id) =>
                 @setDefaultState('default_create', id)
               available: (object) ->
-                object.active and not object.default_create
+                object.active and not object.default_create and object.state_type.name isnt 'merged'
             },
             {
               name: 'set_default_follow_up'
@@ -40,7 +42,7 @@ class TicketState extends App.ControllerSubContent
               callback: (id) =>
                 @setDefaultState('default_follow_up', id)
               available: (object) ->
-                object.active and not object.default_follow_up
+                object.active and not object.default_follow_up and object.state_type.name isnt 'merged'
             }
           ]
         }
@@ -49,6 +51,9 @@ class TicketState extends App.ControllerSubContent
     )
 
   formHandler: (params, attribute, attributes, classname, form, ui) =>
+    merged_state = App.TicketStateType.findByAttribute('name', 'merged')
+    form.find("select[name='state_type_id'] option[value='#{merged_state.id}']").remove()
+
     if params.state_type_id is @pendingActionStateTypeId
       form.find('[data-attribute-name="next_state_id"]').show()
     else
@@ -67,5 +72,6 @@ class TicketState extends App.ControllerSubContent
       currentItem?.refresh(default_follow_up: false)
     else
       console.error('Unknown default state type', type)
+
 
 App.Config.set('Ticket States', { prio: 3325, name: __('Ticket States'), parent: '#manage', target: '#manage/ticket_states', controller: TicketState, permission: ['admin.object'], hidden: true }, 'NavBarAdmin')

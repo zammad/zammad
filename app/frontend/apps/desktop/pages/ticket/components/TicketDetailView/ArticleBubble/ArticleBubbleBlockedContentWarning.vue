@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
@@ -28,9 +28,9 @@ const { originalFormattingUrl } = useEmailFileUrls(
     role="alert"
   >
     <CommonIcon class="shrink-0" name="exclamation-triangle" size="small" />
-    <CommonLabel class="block">
+    <CommonLabel class="block!">
       {{
-        i18n.t(
+        $t(
           'This message contains images or other content hosted by an external source. It was blocked, but you can download the original formatting.',
         )
       }}
@@ -41,7 +41,7 @@ const { originalFormattingUrl } = useEmailFileUrls(
         size="medium"
         target="_blank"
       >
-        {{ i18n.t('Original Formatting') }}
+        {{ $t('Original Formatting') }}
       </CommonLink>
     </CommonLabel>
   </div>

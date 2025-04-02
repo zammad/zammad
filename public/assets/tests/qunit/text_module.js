@@ -1,5 +1,25 @@
 // text module
 QUnit.test('test text module behaviour with group_ids', assert => {
+  App.User.refresh([{
+    "login": "hh@example.com",
+    "firstname": "Harald",
+    "lastname": "Habebe",
+    "email": "hh@example.com",
+    "role_ids": [ 1, 2, 4 ],
+    "group_ids": [ 1, 2 ],
+    "active": true,
+    "updated_at": "2017-02-09T09:17:04.770Z",
+    "address": "",
+    "vip": false,
+    "custom_key": undefined,
+    "asdf": "",
+    "id": 6
+  }]);
+  App.Session.set(6)
+
+  // mock user methods
+  App.Session.get().allGroupIds = () => ['1','2']
+  App.Session.get().permission = () => true
 
   // active textmodule without group_ids
   App.TextModule.refresh([
@@ -32,6 +52,14 @@ QUnit.test('test text module behaviour with group_ids', assert => {
       content:   'content4',
       active:    false,
       group_ids: [1,2],
+    },
+    {
+      id:        5,
+      name:      'test5',
+      keywords:  'keywords5',
+      content:   'content5',
+      active:    false,
+      group_ids: [3],
     },
   ])
 

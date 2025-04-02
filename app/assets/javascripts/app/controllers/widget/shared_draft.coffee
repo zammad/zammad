@@ -1,7 +1,6 @@
 class App.WidgetSharedDraft extends App.Controller
   constructor: ->
     super
-    @load()
     @subscribeId = App.TicketSharedDraftStart.subscribe(@render)
     @render()
 
@@ -21,17 +20,6 @@ class App.WidgetSharedDraft extends App.Controller
       shared_drafts: @visibleDrafts()
       active_draft:  active_draft
     )
-
-  load: =>
-    @ajax
-      id: 'shared_drafts_index'
-      type: 'GET'
-      url: @apiPath + '/tickets/shared_drafts'
-      processData: true
-      success: (data, status, xhr) =>
-        App.TicketSharedDraftStart.deleteAll()
-        App.Collection.loadAssets(data.assets)
-        @render()
 
   visibleDrafts: ->
     App.TicketSharedDraftStart.findAllByAttribute 'group_id', parseInt(@group_id)

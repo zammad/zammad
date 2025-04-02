@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -46,7 +46,7 @@ RSpec.describe 'OTRS import', integration: true, integration_standalone: true, r
       expect(Ticket.count).to eq(603)
       expect(Ticket::Article.count).to eq(3182)
       expect(Store.count).to eq(274)
-      expect(Ticket::State.count).to eq(10)
+      expect(Ticket::State.count).to eq(9)
       expect(Group.count).to eq(24)
     end
   end

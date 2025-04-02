@@ -145,6 +145,8 @@ class ProfileAvatar extends App.ControllerSubContent
 
       reader.readAsDataURL(@)
 
+    @fileInput.val('')
+
 App.Config.set('Avatar', { prio: 1100, name: __('Avatar'), parent: '#profile', target: '#profile/avatar', controller: ProfileAvatar, permission: ['user_preferences.avatar'] }, 'NavBarProfile')
 
 class ImageCropper extends App.ControllerModal

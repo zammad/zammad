@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -80,9 +80,12 @@ describe('password personal settings', () => {
         const calls =
           await waitForUserCurrentTwoFactorRemoveMethodMutationCalls()
 
-        expect(calls.at(-1)?.variables).toEqual({
-          methodName: 'authenticator_app',
-        })
+        expect(calls.at(-1)?.variables).toEqual(
+          expect.objectContaining({
+            methodName: 'authenticator_app',
+          }),
+        )
+
         expect(flyout).not.toBeInTheDocument()
       })
 

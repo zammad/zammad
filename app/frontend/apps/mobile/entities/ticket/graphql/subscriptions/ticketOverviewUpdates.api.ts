@@ -7,18 +7,17 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketOverviewUpdatesDocument = gql`
-    subscription ticketOverviewUpdates($withTicketCount: Boolean!) {
-  ticketOverviewUpdates {
+    subscription ticketOverviewUpdates($ignoreUserConditions: Boolean = false, $withTicketCount: Boolean!) {
+  ticketOverviewUpdates(ignoreUserConditions: $ignoreUserConditions) {
     ticketOverviews {
-      edges {
-        node {
-          ...overviewAttributes
-        }
-        cursor
+      ...overviewAttributes
+      viewColumns {
+        key
+        value
       }
-      pageInfo {
-        endCursor
-        hasNextPage
+      orderColumns {
+        key
+        value
       }
     }
   }

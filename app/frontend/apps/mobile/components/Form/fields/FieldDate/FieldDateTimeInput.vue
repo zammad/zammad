@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import VueDatePicker from '@vuepic/vue-datepicker'
@@ -196,109 +196,107 @@ useEventListener('click', (e) => {
 }
 
 :deep(.dp__theme_dark) {
-  --dp-background-color: theme(colors.gray.500);
-  --dp-text-color: theme(colors.white);
-  --dp-hover-color: theme(colors.transparent);
-  --dp-hover-text-color: theme(colors.white);
-  --dp-hover-icon-color: theme(colors.white);
-  --dp-primary-color: theme(colors.blue.DEFAULT);
-  --dp-secondary-color: theme(colors.gray.200);
-  --dp-border-color: theme(colors.transparent);
-  --dp-menu-border-color: theme(colors.transparent);
-  --dp-border-color-hover: theme(colors.transparent);
-  --dp-range-between-dates-background-color: theme(colors.blue.highlight);
-  --dp-range-between-dates-text-color: theme(colors.white);
-  --dp-range-between-border-color: theme(colors.transparent);
+  --dp-background-color: var(--color-gray-500);
+  --dp-text-color: var(--color-white);
+  --dp-hover-color: transparent;
+  --dp-hover-text-color: var(--color-white);
+  --dp-hover-icon-color: var(--color-white);
+  --dp-primary-color: var(--color-blue);
+  --dp-secondary-color: var(--color-gray-200);
+  --dp-border-color: transparent;
+  --dp-menu-border-color: transparent;
+  --dp-border-color-hover: transparent;
+  --dp-range-between-dates-background-color: var('--color-blue-highlight');
+  --dp-range-between-dates-text-color: var(--color-white);
+  --dp-range-between-border-color: transparent;
 
   &:where([data-errors='true'] *),
   &:where([data-invalid='true'] *) {
-    --dp-background-color: theme(colors.red.dark);
+    --dp-background-color: var(--color-red-dark);
   }
 }
 
 :deep(.dp__main) {
-  --dp-font-family: theme(fontFamily.sans);
-  --dp-border-radius: theme(borderRadius.md);
-  --dp-cell-border-radius: theme(borderRadius.full);
-  --dp-button-height: theme(size.8);
-  --dp-action-button-height: theme(size.8);
-  --dp-month-year-row-height: theme(size.8);
-  --dp-month-year-row-button-size: theme(size.8);
-  --dp-common-padding: theme(padding.2);
-  --dp-action-row-padding: theme(padding.2);
+  --dp-font-family: var(--default-font-family);
+  --dp-border-radius: 0.375rem;
+  --dp-cell-border-radius: 9999px;
+  --dp-button-height: 2rem;
+  --dp-action-button-height: 2rem;
+  --dp-month-year-row-height: 2rem;
+  --dp-month-year-row-button-size: 2rem;
+  --dp-common-padding: 0.5rem;
+  --dp-action-row-padding: 0.5rem;
   --dp-menu-min-width: 260px;
-  --dp-font-size: theme(fontSize.base);
-  --dp-preview-font-size: theme(fontSize.base);
-  --dp-time-font-size: theme(fontSize.xl);
+  --dp-font-size: 1rem;
+  --dp-preview-font-size: 1rem;
+  --dp-time-font-size: 1.25rem;
 
   & > div {
     width: 100%;
   }
 
-  .dp {
-    &__button,
-    &__action_button {
-      border: none;
-      color: theme(colors.white);
-      background: theme(colors.gray.200);
-    }
+  .dp__button,
+  .dp__action_button {
+    border: none;
+    color: var(--color-white);
+    background: var(--color-gray-200);
+  }
 
-    &--clear-btn {
-      top: 2.3rem;
-    }
+  .dp--clear-btn {
+    top: 2.3rem;
+  }
 
-    &--tp-wrap {
-      padding: var(--dp-common-padding);
-      max-width: none;
-    }
+  .dp--tp-wrap {
+    padding: var(--dp-common-padding);
+    max-width: none;
+  }
 
-    &__btn,
-    &__button,
-    &__calendar_item,
-    &__action_button {
-      transition: none;
-      border-radius: theme(borderRadius.md);
-    }
+  .dp__btn,
+  .dp__button,
+  .dp__calendar_item,
+  .dp__action_button {
+    transition: none;
+    border-radius: 0.375rem;
+  }
 
-    &__action_buttons {
-      margin-inline-start: 0;
-      flex-grow: 1;
-    }
+  .dp__action_buttons {
+    margin-inline-start: 0;
+    flex-grow: 1;
+  }
 
-    &__action_button {
-      margin-inline-start: 0;
-      transition: none;
-      flex-grow: 1;
-      display: inline-flex;
-      justify-content: center;
-      border-radius: theme(borderRadius.md);
-    }
+  .dp__action_button {
+    margin-inline-start: 0;
+    transition: none;
+    flex-grow: 1;
+    display: inline-flex;
+    justify-content: center;
+    border-radius: 0.375rem;
+  }
 
-    &__action_cancel {
-      border: none;
-    }
+  .dp__action_cancel {
+    border: none;
+  }
 
-    &--arrow-btn-nav .dp__inner_nav {
-      color: theme(colors.blue.DEFAULT);
-    }
+  .dp--arrow-btn-nav .dp__inner_nav {
+    color: var(--color-blue);
+  }
 
-    &__overlay_container {
-      padding-bottom: theme(padding.2);
-    }
+  .dp__overlay_container {
+    padding-bottom: 0.5rem;
+  }
 
-    &__overlay_container + .dp__button,
-    &__overlay_row + .dp__button {
-      width: auto;
-      margin: theme(margin.2);
-    }
+  .dp__overlay_container + .dp__button,
+  .dp__overlay_row + .dp__button {
+    width: auto;
+    margin: 0.5rem;
+  }
 
-    &__overlay_container + .dp__button:not(.dp__overlay_action) {
-      width: calc(var(--dp-menu-min-width) - theme(margin[1.5]) * 2);
-    }
+  .dp__overlay_container + .dp__button:not(.dp__overlay_action) {
+    width: calc(var(--dp-menu-min-width) - 0.375rem * 2);
+  }
 
-    &__overlay_container + .dp__button.dp__overlay_action {
-      width: calc(var(--dp-menu-min-width) - theme(margin[2.5]) * 2);
-    }
+  .dp__overlay_container + .dp__button.dp__overlay_action {
+    width: calc(var(--dp-menu-min-width) - 0.625rem * 2);
   }
 }
 </style>

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   fireEvent,
@@ -6,6 +6,7 @@ import {
   getByLabelText,
   getByRole,
 } from '@testing-library/vue'
+import { flushPromises } from '@vue/test-utils'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -256,6 +257,8 @@ describe('Left sidebar', () => {
       })
 
       await view.events.click(logoutLink)
+
+      await flushPromises()
 
       await vi.waitFor(() => {
         expect(view, 'correctly redirects to login page').toHaveCurrentUrl(

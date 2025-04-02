@@ -1,6 +1,6 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-class Report::TicketFirstSolution
+class Report::TicketFirstSolution < Report::BaseSql
 
 =begin
 
@@ -45,7 +45,10 @@ returns
         params[:range_end] = params[:range_start] + 1.minute
       end
 
-      query, bind_params, tables = Ticket.selector2sql(params[:selector], { exclude_merged: true })
+      local_selector = params[:selector].clone
+      local_selector.merge!(without_merged_tickets_selector) # do not show merged tickets in reports
+
+      query, bind_params, tables = Ticket.selector2sql(local_selector)
       ticket_list = Ticket.select('tickets.id, tickets.close_at, tickets.created_at').where(
         'tickets.close_at IS NOT NULL AND tickets.close_at >= ? AND tickets.close_at < ?',
         params[:range_start],
@@ -85,7 +88,10 @@ returns
 =end
 
   def self.items(params)
-    query, bind_params, tables = Ticket.selector2sql(params[:selector], { exclude_merged: true })
+    local_selector = params[:selector].clone
+    local_selector.merge!(without_merged_tickets_selector) # do not show merged tickets in reports
+
+    query, bind_params, tables = Ticket.selector2sql(local_selector)
     ticket_list = Ticket.select('tickets.id, tickets.close_at, tickets.created_at').where(
       'tickets.close_at IS NOT NULL AND tickets.close_at >= ? AND tickets.close_at < ?',
       params[:range_start],

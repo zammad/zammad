@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useActiveElement, useMagicKeys, onClickOutside } from '@vueuse/core'
@@ -50,7 +50,7 @@ const { durations } = useTransitionConfig()
     ref="container"
     class="mb-2 flex h-10 shrink-0 items-center gap-2 rounded-lg transition-colors"
     :class="{
-      'bg-blue-200 px-2 has-[input:focus]:outline has-[input:hover]:outline has-[input:focus]:outline-1 has-[input:hover]:outline-1 has-[input:focus]:outline-offset-1 has-[input:hover]:outline-offset-1 has-[input:focus]:outline-blue-800 has-[input:hover]:has-[input:focus]:outline-blue-800 has-[input:hover]:outline-blue-600 dark:bg-gray-700 dark:has-[input:hover]:has-[input:focus]:outline-blue-800 dark:has-[input:hover]:outline-blue-900':
+      'bg-blue-200 px-2 has-[input:focus]:outline has-[input:focus]:outline-1 has-[input:focus]:outline-offset-1 has-[input:focus]:outline-blue-800 has-[input:hover]:outline has-[input:hover]:outline-1 has-[input:hover]:outline-offset-1 has-[input:hover]:outline-blue-600 has-[input:hover]:has-[input:focus]:outline-blue-800 dark:bg-gray-700 dark:has-[input:hover]:outline-blue-900 dark:has-[input:hover]:has-[input:focus]:outline-blue-800':
         filterFieldOpen,
     }"
   >
@@ -75,7 +75,7 @@ const { durations } = useTransitionConfig()
       v-model.trim="searchText"
       :placeholder="$t('Apply filter…')"
       :aria-label="$t('Navigation filter')"
-      class="w-0 bg-transparent text-sm text-black transition-[width] duration-200 focus:outline-none dark:text-white"
+      class="w-0 bg-transparent text-sm text-black transition-[width] duration-200 focus:outline-hidden dark:text-white"
       :class="{ 'w-full': filterFieldOpen }"
       type="text"
       role="searchbox"
@@ -85,7 +85,7 @@ const { durations } = useTransitionConfig()
         v-if="filterFieldOpen"
         icon="x-lg"
         variant="neutral"
-        class="hover:text-black hover:outline-none hover:outline-transparent hover:dark:text-white"
+        class="hover:text-black hover:outline-hidden hover:outline-transparent hover:dark:text-white"
         :aria-label="i18n.t('Clear filter')"
         @click="closeFilterField"
       />

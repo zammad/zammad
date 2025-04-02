@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useEventListener } from '@vueuse/core'
@@ -139,7 +139,7 @@ const ticketTitleSection = getFormSchemaGroupSection(
       innerClass: '$reset flex justify-center items-center px-8 w-full',
       messagesClass: 'pt-2',
       inputClass:
-        '$reset formkit-input block bg-transparent grow border-b-[0.5px] border-white outline-none text-center text-xl placeholder:text-white placeholder:text-opacity-50',
+        '$reset formkit-input block bg-transparent grow border-b-[0.5px] border-white outline-hidden text-center text-xl placeholder:text-white placeholder:text-opacity-50',
       props: {
         placeholder: __('Title'),
         onSubmit,
@@ -293,6 +293,7 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
             meta: {
               mentionText: {
                 customerNodeName: 'customer_id',
+                groupNodeName: 'group_id',
               },
               mentionUser: {
                 groupNodeName: 'group_id',
@@ -481,7 +482,7 @@ export default {
 <template>
   <LayoutHeader
     ref="headerElement"
-    class="!h-16"
+    class="h-16!"
     :style="stickyStyles.header"
     back-url="/"
     :title="__('Create Ticket')"
@@ -542,7 +543,7 @@ export default {
     <CommonStepper
       v-model="activeStep"
       :steps="allSteps"
-      class="mb-8 mt-4 px-8"
+      class="mt-4 mb-8 px-8"
     />
   </footer>
 </template>

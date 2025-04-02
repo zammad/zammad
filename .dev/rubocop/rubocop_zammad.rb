@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require_relative 'cop/zammad/active_record_reorder'
 require_relative 'cop/zammad/correct_migration_timestamp'
@@ -12,6 +12,7 @@ require_relative 'cop/zammad/faker_unique'
 require_relative 'cop/zammad/forbid_def_send'
 require_relative 'cop/zammad/forbid_default_scope'
 require_relative 'cop/zammad/forbid_rand'
+require_relative 'cop/zammad/forbid_redis_client'
 require_relative 'cop/zammad/forbid_translatable_marker'
 require_relative 'cop/zammad/migration_scheduler_last_run'
 require_relative 'cop/zammad/no_to_sym_on_string'
@@ -20,3 +21,4 @@ require_relative 'cop/zammad/timezone_default'
 require_relative 'cop/zammad/to_forbid_over_not_to_permit'
 require_relative 'cop/zammad/trigger_from_commit_hooks'
 require_relative 'cop/zammad/update_copyright'
+require_relative 'cop/zammad/ensures_time_zone_at_spec_top_level'

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -33,6 +33,22 @@ RSpec.describe Gql::Mutations::User::PasswordReset::Send, type: :graphql do
       it 'raises an error' do
         gql.execute(query, variables: variables)
         expect(gql.result.error_message).to eq 'This feature is not enabled.'
+      end
+    end
+
+    context 'with import mode' do
+      before do
+        Setting.set('import_mode', true)
+      end
+
+      it 'raises an error' do
+        gql.execute(query, variables: variables)
+
+        expect(gql.result.data).to include(
+          errors: include(
+            include(message: 'The email could not be sent to the user because import_mode setting is on.')
+          )
+        )
       end
     end
 

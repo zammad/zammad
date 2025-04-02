@@ -2,17 +2,19 @@
 # https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml
 
 require:
+  - rubocop-inflector
+  - ../../config/initializers/inflections.rb
+  - ./rubocop_zammad.rb
+
+plugins:
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-faker
   - rubocop-graphql
-  - rubocop-inflector
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
   - rubocop-rspec_rails
-  - ../../config/initializers/inflections.rb
-  - ./rubocop_zammad.rb
 
 inherit_from:
   - todo.yml
@@ -232,6 +234,10 @@ Rails/Output:
   Include:
     - "**/*_spec.rb"
 
+Rails/Delegate:
+  Description: Looks for delegations that could have been created automatically with the delegate method.
+  Enabled: false
+
 Style/ClassAndModuleChildren:
   Description: 'Checks style of children classes and modules.'
   Enabled: true
@@ -280,6 +286,10 @@ Lint/InterpolationCheck:
     - "test/unit/notification_factory_template_test.rb"
     - "test/unit/ticket_trigger_test.rb"
     - "test/unit/ticket_trigger_recursive_disabled_test.rb"
+
+Lint/UselessConstantScoping:
+  Description: Checks for useless constant scoping.
+  Enabled: false
 
 Style/StringConcatenation:
   Description: 'Checks for places where string concatenation can be replaced with string interpolation.'
@@ -482,3 +492,12 @@ Zammad/ExistsDbStrategy:
     - "spec/**/*.rb"
   Exclude:
     - "spec/support/capybara/*.rb"
+
+Zammad/EnsuresTimeZoneAtSpecTopLevel:
+  Enabled: true
+  Include:
+    - 'spec/system/**/*.rb'
+
+Capybara/NegationMatcherAfterVisit:
+  Description: 'Allow to use negated matcher after visit'
+  Enabled: false

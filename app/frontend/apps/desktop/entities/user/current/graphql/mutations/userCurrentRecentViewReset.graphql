@@ -1,0 +1,5 @@
+mutation userCurrentRecentViewReset {
+  userCurrentRecentViewReset {
+    success
+  }
+}

@@ -153,6 +153,12 @@
 <div class="article-meta-clip bottom">
   <div class="article-content-meta bottom hide">
     <div class="article-meta bottom">
+    <% if @article.detected_language && @ticket.currentView() is 'agent': %>
+      <div class="horizontal article-meta-row">
+        <div class="article-meta-key"><%- @T('Detected Language') %></div>
+        <div class="article-meta-value"><%- @P(@article, 'detected_language') %></div>
+      </div>
+    <% end %>
       <div class="horizontal article-meta-row">
         <div class="article-meta-key"><%- @T('Channel') %></div>
         <div class="article-meta-value">

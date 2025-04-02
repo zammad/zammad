@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { onClickOutside, onKeyUp, useVModel } from '@vueuse/core'
@@ -131,7 +131,7 @@ const getClassesByType = (type: PopupItemDescriptor['type']) => {
       <!-- empty @click is needed for https://stackoverflow.com/a/39712411 -->
       <div
         v-if="localState"
-        class="window pb-safe-4 fixed bottom-0 top-0 flex w-screen flex-col justify-end px-4 text-white ltr:left-0 rtl:right-0"
+        class="window pb-safe-4 fixed top-0 bottom-0 flex w-screen flex-col justify-end px-4 text-white ltr:left-0 rtl:right-0"
         :class="{ 'z-20': !zIndex }"
         :style="{ zIndex }"
         role="presentation"
@@ -162,7 +162,7 @@ const getClassesByType = (type: PopupItemDescriptor['type']) => {
             </component>
           </div>
           <CommonButton
-            class="mt-3 flex h-14 w-full items-center justify-center !bg-black"
+            class="mt-3 flex h-14 w-full items-center justify-center bg-black!"
             @click="hidePopup()"
           >
             {{ $t(cancelLabel) }}

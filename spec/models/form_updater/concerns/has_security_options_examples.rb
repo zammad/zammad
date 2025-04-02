@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'FormUpdater::HasSecurityOptions' do |type:|
   context 'with security options' do
@@ -126,7 +126,7 @@ RSpec.shared_examples 'FormUpdater::HasSecurityOptions' do |type:|
         securityAllowed:        { 'SMIME' => [] },
         securityDefaultOptions: { 'SMIME' => [] },
         value:                  { 'method' => 'SMIME', 'options' => [] },
-        securityMessages:       { 'SMIME'=>{ 'encryption' => { message: "Can't find S/MIME encryption certificates for: smime2@example.com", messagePlaceholder: [] }, 'sign' => { message: 'There was no certificate found.', messagePlaceholder: [] } } }
+        securityMessages:       { 'SMIME'=>{ 'encryption' => { message: 'The certificate for smime2@example.com was not found.', messagePlaceholder: [] }, 'sign' => { message: 'There was no certificate found.', messagePlaceholder: [] } } }
       }
 
       context 'with recipient certificate present' do

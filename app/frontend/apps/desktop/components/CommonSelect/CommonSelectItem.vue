@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
@@ -79,7 +79,7 @@ const goToNextPage = (option: AutoCompleteOption, noFocus?: boolean) => {
     tabindex="0"
     :aria-selected="selected"
     :aria-disabled="option.disabled ? 'true' : undefined"
-    class="group flex h-9 cursor-default items-center gap-1.5 self-stretch px-2.5 text-sm text-black outline-none dark:text-white"
+    class="group flex h-9 cursor-default items-center gap-1.5 self-stretch px-2.5 text-sm text-black outline-hidden dark:text-white"
     role="option"
     :data-value="option.value"
     @click="select(option)"

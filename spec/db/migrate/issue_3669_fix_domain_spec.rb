@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -10,7 +10,7 @@ RSpec.describe Issue3669FixDomain, type: :db_migration do
         options: {
           auth_type: 'XOAUTH2',
           host:      'imap.gmail.com',
-          ssl:       true,
+          ssl:       'ssl',
           user:      'example@gmail.com',
         },
       },

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { nullableMock } from '#tests/support/utils.ts'
 
@@ -59,6 +59,7 @@ export const createDummyArticle = (options?: {
   senderName?: EnumTicketArticleSenderName
   mediaErrorState?: ArticleNode['mediaErrorState']
   preferences?: ArticleNode['preferences']
+  detectedLanguage?: ArticleNode['detectedLanguage']
   // eslint-disable-next-line sonarjs/cognitive-complexity
 }) => {
   return nullableMock({
@@ -92,5 +93,6 @@ export const createDummyArticle = (options?: {
       options?.securityState === undefined ? null : options.securityState,
     mediaErrorState:
       options?.mediaErrorState === undefined ? null : options.mediaErrorState,
+    detectedLanguage: options?.detectedLanguage ?? null,
   }) as ArticleNode
 }

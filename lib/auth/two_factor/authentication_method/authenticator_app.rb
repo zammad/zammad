@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp < Auth::TwoFactor::AuthenticationMethod
   ORDER = 2000
@@ -28,6 +28,10 @@ class Auth::TwoFactor::AuthenticationMethod::AuthenticatorApp < Auth::TwoFactor:
       secret:           secret,
       provisioning_uri: totp(secret).provisioning_uri(user.login),
     }
+  end
+
+  def without_client_config?
+    true
   end
 
   private

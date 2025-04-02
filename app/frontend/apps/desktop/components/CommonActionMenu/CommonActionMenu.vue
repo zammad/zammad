@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRefs } from 'vue'
@@ -67,11 +67,17 @@ const singleActionAriaLabel = computed(() => {
 })
 
 const buttonVariantClassExtension = computed(() => {
+  const hoverClass = 'dark:hover:border-blue-700! hover:border-blue-800!'
+
   if (props.defaultButtonVariant === 'neutral-dark')
-    return 'border border-neutral-100 !outline-transparent dark:hover:border-blue-700 hover:border-blue-800 bg-neutral-50 hover:bg-white text-gray-100 dark:border-gray-900 dark:bg-gray-500 dark:text-neutral-400'
+    return ` border! border-neutral-100! bg-neutral-50! hover:bg-white! hover:dark:bg-gray-500! text-gray-100! dark:border-gray-900! dark:bg-gray-500! dark:text-neutral-400! ${
+      popoverIsOpen.value ? 'border-transparent!' : hoverClass
+    }`
 
   if (props.defaultButtonVariant === 'neutral-light')
-    return 'border border-neutral-100 !outline-transparent dark:hover:border-blue-700 hover:border-blue-800 hover:bg-white bg-blue-100 text-gray-100 dark:border-gray-900 dark:bg-stone-500 dark:text-neutral-400'
+    return ` border! border-neutral-100! bg-blue-100! text-gray-100! dark:border-gray-900! dark:bg-stone-500! dark:text-neutral-400! ${
+      popoverIsOpen.value ? '' : hoverClass
+    }`
 
   return ''
 })
@@ -83,22 +89,22 @@ const singleActionMode = computed(() => {
 })
 
 const variantClasses = computed(() => {
-  if (singleMenuItem.value?.variant === 'secondary') return 'text-blue-800'
-  if (singleMenuItem.value?.variant === 'danger') return 'text-red-500'
-  return 'text-stone-200 dark:text-neutral-500'
+  if (singleMenuItem.value?.variant === 'secondary') return 'text-blue-800!'
+  if (singleMenuItem.value?.variant === 'danger') return 'text-red-500!'
+  return 'text-stone-200! dark:text-neutral-500!'
 })
 </script>
 
 <template>
   <div
     v-if="filteredMenuItems && filteredMenuItems.length > 0"
-    class="-:inline-block"
+    class="inline-block"
   >
     <template v-if="singleActionMode">
       <CommonLink
         v-if="singleMenuItem?.link"
         v-tooltip="$t(singleActionAriaLabel)"
-        class="flex focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+        class="flex focus:outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
         :aria-label="$t(singleActionAriaLabel)"
         :disabled="disabled"
         :link="singleMenuItem.link"
@@ -113,7 +119,7 @@ const variantClasses = computed(() => {
       <CommonButton
         v-else
         v-tooltip="$t(singleActionAriaLabel)"
-        class="rounded-sm p-0"
+        class="rounded-xs p-0!"
         :class="[variantClasses]"
         :size="buttonSize"
         :disabled="disabled"
@@ -131,12 +137,12 @@ const variantClasses = computed(() => {
         aria-haspopup="true"
         :aria-controls="popoverIsOpen ? menuId : undefined"
         :disabled="disabled"
+        class="outline-offset-0!"
         :class="[
           {
-            'outline outline-1 outline-offset-1 outline-blue-800 hover:outline-blue-800 hover:dark:outline-blue-800':
-              popoverIsOpen,
+            'outline! outline-blue-800!': popoverIsOpen,
             'p-0': noPaddedDefaultButton,
-            'rounded-sm': !noSmallRoundingDefaultButton,
+            'rounded-xs': !noSmallRoundingDefaultButton,
           },
           buttonVariantClassExtension,
         ]"

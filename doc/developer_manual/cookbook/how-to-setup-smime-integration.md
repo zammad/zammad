@@ -1,10 +1,12 @@
 # How to Setup S/MIME Integration
 
-For development purposes, it's possible to set up S/MIME integration for a local Zammad instance. However, since the approach uses self-generated test certificates, this is considered unsafe for production. You've been warned!
+For development purposes, it's possible to set up S/MIME integration for a local Zammad instance. However, since the
+approach uses self-generated test certificates, this is considered unsafe for production. You've been warned!
 
 ## Configure S/MIME Integration
 
-Navigate to the **System > Integrations > S/MIME** section in GUI, and turn on the toggle switch on top to activate the feature.
+Navigate to the **System > Integrations > S/MIME** section in GUI, and turn on the toggle switch on top to activate the
+feature.
 
 ### Upload Sender Certificate & Private Key
 
@@ -80,7 +82,8 @@ Navigate to the **System > Integrations > S/MIME** section in GUI, and turn on t
 6. Leave **Enter Private Key Secret** box empty.
 7. Click on the **Add** button.
 
-The test sender certificate above was generated for the following sender email address: `zammad@localhost`. In case your sender address is different, please see below how to re-generate it.
+The test sender certificate above was generated for the following sender email address: `zammad@localhost`. In case
+your sender address is different, please see below how to re-generate it.
 
 ### Upload Recipient Certificate
 
@@ -120,7 +123,8 @@ The test sender certificate above was generated for the following sender email a
 
 3. Click on the **Add** button.
 
-The test recipient certificate above was generated for the following customer email address: `nicole.braun@zammad.org`. In case your recipient address is different, please see below how to re-generate it.
+The test recipient certificate above was generated for the following customer email address: `nicole.braun@zammad.org`.
+In case your recipient address is different, please see below how to re-generate it.
 
 ### Upload CA Certificate
 
@@ -212,7 +216,9 @@ You will need an installation of a recent `openssl` utility for the following co
 
    Confirm each field with a return (the value will be pre-populated from the configuration file).
 
-You can now upload your new test CA certificate. Either upload the actual text file (`ca.crt`) or paste its content in appropriate box. Note that in this case you should NOT upload the generated private key since the certificate may be used only for the trust chain verification.
+You can now upload your new test CA certificate. Either upload the actual text file (`ca.crt`) or paste its content in
+appropriate box. Note that in this case you should NOT upload the generated private key since the certificate may be
+used only for the trust chain verification.
 
 ### Generate Sender Certificate & Private Key
 
@@ -253,7 +259,8 @@ You can now upload your new test CA certificate. Either upload the actual text f
    extendedKeyUsage = emailProtection
    ```
 
-   Adjust all `*_default` values to match desired settings. The most important is `emailAddress_default` which must match your sender's email address.
+   Adjust all `*_default` values to match desired settings. The most important is `emailAddress_default` which must
+   match your sender's email address.
 
 3. Run the following command in the same directory to generate the certificate request:
 
@@ -281,7 +288,10 @@ You can now upload your new test CA certificate. Either upload the actual text f
    openssl x509 -req -days 3650 -in sender.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out sender.crt -addtrust emailProtection -addreject clientAuth -addreject serverAuth -trustout -extensions v3_ca -extfile v3_ca.conf
    ```
 
-You can now upload your new test sender certificate & private key. Either upload the actual text files (`sender.crt` and `sender.key`) or paste their contents in appropriate boxes. Remember to omit the input for the private key secret since it was not defined during the re-generation, but don't skip the private key upload since the certificate may be used for signing and decryption.
+You can now upload your new test sender certificate & private key. Either upload the actual text files (`sender.crt`
+and `sender.key`) or paste their contents in appropriate boxes. Remember to omit the input for the private key secret
+since it was not defined during the re-generation, but don't skip the private key upload since the certificate may be
+used for signing and decryption.
 
 ### Generate Recipient Certificate & Private Key
 
@@ -321,7 +331,8 @@ You can now upload your new test sender certificate & private key. Either upload
    extendedKeyUsage = emailProtection
    ```
 
-   Adjust all `*_default` values to match desired settings. The most important is `emailAddress_default` which must match your recipient's email address.
+   Adjust all `*_default` values to match desired settings. The most important is `emailAddress_default` which must
+   match your recipient's email address.
 
 3. Run the following command in the same directory to generate the certificate request:
 
@@ -349,7 +360,9 @@ You can now upload your new test sender certificate & private key. Either upload
    openssl x509 -req -days 3650 -in recipient.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out recipient.crt -addtrust emailProtection -addreject clientAuth -addreject serverAuth -trustout -extensions v3_ca -extfile v3_ca.conf
    ```
 
-You can now upload your new test recipient certificate. Either upload the actual text file (`recipient.crt`) or paste its content in appropriate box. Note that in this case you should NOT upload the generated private key since the certificate may be used only for encryption.
+You can now upload your new test recipient certificate. Either upload the actual text file (`recipient.crt`) or paste
+its content in appropriate box. Note that in this case you should NOT upload the generated private key since the
+certificate may be used only for encryption.
 
 ## Other Useful OpenSSL commands
 

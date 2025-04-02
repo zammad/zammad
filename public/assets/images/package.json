@@ -1,6 +1,9 @@
 {
   "private": true,
   "description": "Zammad SVG Icon Store",
+  "pnpm": {
+    "neverBuiltDependencies": []
+  },
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-cheerio": "^1.0.0",

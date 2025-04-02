@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 import type { ExtendedRenderResult } from '#tests/support/components'
 import { nullableMock } from '#tests/support/utils.ts'
 
@@ -44,6 +44,9 @@ export const handleMockFormUpdaterQuery = (additionalProperties = {}) =>
             { value: 6, label: 'pending close' },
             { value: 3, label: 'pending reminder' },
           ],
+        },
+        pending_time: {
+          show: false,
         },
         ...additionalProperties,
       },

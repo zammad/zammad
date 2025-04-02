@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 withDefaults(
@@ -37,7 +37,7 @@ defineEmits<{
       :to="fullscreen ? '#app' : teleportTo"
     >
       <div
-        class="bg-alpha-900 absolute bottom-0 left-0 right-0 top-0 z-30 h-full w-full"
+        class="bg-alpha-900 absolute top-0 right-0 bottom-0 left-0 z-30 h-full w-full"
         :class="backdropClass"
         role="presentation"
         tabindex="-1"

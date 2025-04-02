@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # The name AssetsSet combines the Assets term in Zammad with the Set class from the Ruby StdLib.
 # Zammad Assets serve the purpose to limit requests to the REST API. For a requested object all

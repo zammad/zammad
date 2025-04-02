@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class TextModulesController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -49,7 +49,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password}
 =end
 
   def index
-    model_index_render(TextModule, params)
+    model_index_render(policy_scope(TextModule), params)
   end
 
 =begin

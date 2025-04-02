@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -63,7 +63,7 @@ const showDivider = computed(() => shownUnits.value.length > 1) // If more than 
         <CommonLabel
           :id="`accounted-time-${name}`"
           size="small"
-          class="text-black dark:text-white"
+          class="text-black! dark:text-white!"
           :class="{ uppercase: index === 0 }"
           >{{ $t(name) }}</CommonLabel
         >
@@ -71,13 +71,13 @@ const showDivider = computed(() => shownUnits.value.length > 1) // If more than 
           size="small"
           :aria-labelledby="`accounted-time-label-${name}`"
           :aria-describedby="`accounted-time-unit-${name}`"
-          class="text-black ltr:ml-auto rtl:mr-auto dark:text-white"
+          class="text-black! ltr:ml-auto rtl:mr-auto dark:text-white!"
           >{{ timeUnit }}</CommonLabel
         >
         <CommonLabel
           :id="`accounted-time-unit-${name}`"
           size="small"
-          class="text-stone-200 dark:text-neutral-500"
+          class="text-stone-200! dark:text-neutral-500!"
           :aria-description="$t('Accounted time unit')"
           >{{ timeAccountingDisplayUnit }}</CommonLabel
         >
@@ -86,7 +86,7 @@ const showDivider = computed(() => shownUnits.value.length > 1) // If more than 
 
     <CommonButton
       v-if="shouldDisplayShowButton"
-      class="!hover:outline-transparent mt-1 ltr:float-right ltr:-ml-2 ltr:-mr-2 rtl:float-left rtl:-ml-2 rtl:-mr-2"
+      class="mt-1 hover:outline-transparent! ltr:float-right ltr:-mr-2 ltr:-ml-2 rtl:float-left rtl:-mr-2 rtl:-ml-2"
       variant="secondary"
       @click="showAll = true"
       >{{ $t('Show %s more', remainingUnitsCount) }}&hellip;</CommonButton

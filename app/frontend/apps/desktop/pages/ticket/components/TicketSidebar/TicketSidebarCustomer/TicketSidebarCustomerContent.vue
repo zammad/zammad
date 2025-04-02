@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, type ComputedRef } from 'vue'
@@ -88,7 +88,7 @@ const actions = computed<MenuItem[]>(() => [
     <div class="flex gap-2">
       <CommonUserAvatar v-if="customer" :entity="customer" size="normal" />
       <div class="flex flex-col justify-center gap-px">
-        <CommonLabel size="large" class="text-gray-300 dark:text-neutral-400">
+        <CommonLabel size="large" class="text-gray-300! dark:text-neutral-400!">
           {{ customer?.fullname }}
         </CommonLabel>
 

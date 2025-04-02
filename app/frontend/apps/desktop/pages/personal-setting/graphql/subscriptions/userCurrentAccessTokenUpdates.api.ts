@@ -7,15 +7,15 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserCurrentAccessTokenUpdatesDocument = gql`
-    subscription userCurrentAccessTokenUpdates($userId: ID!) {
-  userCurrentAccessTokenUpdates(userId: $userId) {
+    subscription userCurrentAccessTokenUpdates {
+  userCurrentAccessTokenUpdates {
     tokens {
       ...tokenAttributes
     }
   }
 }
     ${TokenAttributesFragmentDoc}`;
-export function useUserCurrentAccessTokenUpdatesSubscription(variables: Types.UserCurrentAccessTokenUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.UserCurrentAccessTokenUpdatesSubscriptionVariables> | ReactiveFunction<Types.UserCurrentAccessTokenUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAccessTokenUpdatesSubscription, Types.UserCurrentAccessTokenUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAccessTokenUpdatesSubscription, Types.UserCurrentAccessTokenUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAccessTokenUpdatesSubscription, Types.UserCurrentAccessTokenUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.UserCurrentAccessTokenUpdatesSubscription, Types.UserCurrentAccessTokenUpdatesSubscriptionVariables>(UserCurrentAccessTokenUpdatesDocument, variables, options);
+export function useUserCurrentAccessTokenUpdatesSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAccessTokenUpdatesSubscription, Types.UserCurrentAccessTokenUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAccessTokenUpdatesSubscription, Types.UserCurrentAccessTokenUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAccessTokenUpdatesSubscription, Types.UserCurrentAccessTokenUpdatesSubscriptionVariables>> = {}) {
+  return VueApolloComposable.useSubscription<Types.UserCurrentAccessTokenUpdatesSubscription, Types.UserCurrentAccessTokenUpdatesSubscriptionVariables>(UserCurrentAccessTokenUpdatesDocument, {}, options);
 }
 export type UserCurrentAccessTokenUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.UserCurrentAccessTokenUpdatesSubscription, Types.UserCurrentAccessTokenUpdatesSubscriptionVariables>;

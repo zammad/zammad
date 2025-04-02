@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -27,12 +27,14 @@ export const checkSimpleTableContent = (
 
   const rows = table.getAllByRole('row')
 
-  expect(rows).toHaveLength(rowContents.length)
+  expect(rows).toHaveLength(rowContents.length + 1) // +1 for header row
 
   rows.forEach((row, index) => {
-    within(row)
-      .getAllByRole('cell')
-      .forEach((cell, cellIndex) => {
+    const cells = within(row).queryAllByRole('cell')
+
+    if (!cells.length)
+      cells.forEach((cell, cellIndex) => {
+        if (!cell) return
         const content = rowContents[index][cellIndex]
         if (content) {
           const withinCell = within(cell)

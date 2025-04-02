@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Mention < ApplicationModel
   include HasDefaultModelUserRelations
@@ -7,6 +7,11 @@ class Mention < ApplicationModel
   include HasHistory
 
   include Mention::Assets
+
+  # used to forward the sourceable to the mention model
+  # to keep track of added and removed mention by
+  # postmaster filters, triggers and schedulers
+  attr_accessor :sourceable
 
   after_create :update_mentionable
   after_destroy :update_mentionable
@@ -31,6 +36,7 @@ class Mention < ApplicationModel
       related_o_id:           mentionable_id,
       related_history_object: mentionable_type,
       value_to:               user.id,
+      sourceable:,
     }
   end
 
@@ -65,8 +71,8 @@ class Mention < ApplicationModel
   # @param target to subscribe to
   # @param user
   # @return Boolean
-  def self.subscribe!(object, user)
-    object.mentions.create!(user: user) if !subscribed?(object, user)
+  def self.subscribe!(object, user, sourceable: nil)
+    object.mentions.create!(user: user, sourceable: sourceable) if !subscribed?(object, user)
 
     true
   end
@@ -75,11 +81,13 @@ class Mention < ApplicationModel
   # @param target to unsubscribe from
   # @param user
   # @return Boolean
-  def self.unsubscribe!(object, user)
-    object
-      .mentions
-      .find_by(user: user)
-      &.destroy!
+  def self.unsubscribe!(object, user, sourceable: nil)
+    mention = object.mentions.find_by(user:)
+
+    return true if mention.blank?
+
+    mention.sourceable = sourceable
+    mention.destroy!
 
     true
   end
@@ -87,8 +95,13 @@ class Mention < ApplicationModel
   # Unsubscribe all users from changes of an object
   # @param target to unsubscribe from
   # @return Boolean
-  def self.unsubscribe_all!(object)
-    object.mentions.destroy_all
+  def self.unsubscribe_all!(object, sourceable: nil)
+    return object.mentions.destroy_all if sourceable.blank?
+
+    object.mentions.all? do |mention|
+      mention.sourceable = sourceable
+      mention.destroy!
+    end
   end
 
   # Check if given user is able to subscribe to a given object

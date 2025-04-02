@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, onBeforeUnmount, type Ref, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -19,13 +19,13 @@ export const macroScreenBehaviourMapping: Record<
   none: EnumTicketScreenBehavior.StayOnTab,
 }
 
-export const useMacros = (groupId: Ref<ID | undefined>) => {
+export const useMacros = (groupIds: Ref<ID[] | undefined>) => {
   const macroQuery = new QueryHandler(
     useMacrosQuery(
       () => ({
-        groupId: groupId.value as string,
+        groupIds: groupIds.value as ID[],
       }),
-      () => ({ enabled: !!groupId.value }),
+      () => ({ enabled: !!groupIds.value?.length }),
     ),
   )
 
@@ -35,7 +35,7 @@ export const useMacros = (groupId: Ref<ID | undefined>) => {
 
   // TODO: Drop this mechanism once Apollo implements an effective deduplication of subscriptions on the client level.
   //   More information: https://github.com/apollographql/apollo-client/issues/10117
-  const usageKey = route.meta.taskbarTabEntityKey ?? 'apply-template'
+  const usageKey = route.meta.taskbarTabEntityKey ?? 'apply-macro'
 
   activate(usageKey, macroQuery)
 
@@ -45,9 +45,15 @@ export const useMacros = (groupId: Ref<ID | undefined>) => {
 
   const result = macroQuery.result()
 
+  const macrosLoaded = ref(false)
+
+  macroQuery.watchOnResult(() => {
+    macrosLoaded.value = true
+  })
+
   const macros = computed(() => result.value?.macros)
 
-  return { macros }
+  return { macrosLoaded, macros }
 }
 
 export const useTicketMacros = (formSubmit: () => void) => {

@@ -1,11 +1,11 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 
-import CommonTabManager from '#desktop/components/CommonTabManager/CommonTabManager.vue'
+import CommonTabGroup from '#desktop/components/CommonTabGroup/CommonTabGroup.vue'
 
 import type { FieldToggleButtonsProps } from './types.ts'
 
@@ -32,10 +32,6 @@ const tabs = computed(() => {
     :aria-describedby="context.describedBy"
     v-bind="context.attrs"
   >
-    <CommonTabManager
-      v-if="tabs.length > 0"
-      v-model="localValue"
-      :tabs="tabs"
-    />
+    <CommonTabGroup v-if="tabs.length > 0" v-model="localValue" :tabs="tabs" />
   </div>
 </template>

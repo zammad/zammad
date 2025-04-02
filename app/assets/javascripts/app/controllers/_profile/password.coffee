@@ -34,9 +34,9 @@ class ProfilePassword extends App.ControllerSubContent
     @startLoading()
 
     @ajax(
-      id:   'profile_two_factor'
+      id:   'profile_two_factor_personal_configuration'
       type: 'GET'
-      url:  @apiPath + '/users/two_factor_personal_configuration'
+      url:  @apiPath + '/users/two_factor/personal_configuration'
       processData: true
       success: (data, status, xhr) =>
         @stopLoading()
@@ -175,14 +175,15 @@ class ProfilePassword extends App.ControllerSubContent
     new App.TwoFactorConfigurationModalPasswordCheck(
       headPrefix: __('Remove two-factor authentication')
       buttonSubmit: 'Remove'
-      successCallback: =>
+      successCallback: (data) =>
         @ajax(
           id:   'profile_two_factor_removal'
           type: 'DELETE'
-          url:  @apiPath + "/users/#{App.User.current().id}/two_factor_remove_authentication_method"
+          url:  @apiPath + '/users/two_factor/remove_authentication_method'
           processData: true
           data: JSON.stringify(
             method: key
+            token: data.token
           )
           success: (data, status, xhr) =>
             @notify

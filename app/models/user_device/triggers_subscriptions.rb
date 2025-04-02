@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Trigger GraphQL subscriptions on user device changes.
 module UserDevice::TriggersSubscriptions
@@ -11,11 +11,6 @@ module UserDevice::TriggersSubscriptions
   private
 
   def trigger_subscriptions
-    Gql::Subscriptions::User::Current::DevicesUpdates.trigger(
-      nil,
-      arguments: {
-        user_id: Gql::ZammadSchema.id_from_internal_id('User', user_id)
-      }
-    )
+    Gql::Subscriptions::User::Current::DevicesUpdates.trigger(nil, scope: user_id)
   end
 end

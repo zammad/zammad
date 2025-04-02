@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketPolicy < ApplicationPolicy
 
@@ -88,13 +88,8 @@ class TicketPolicy < ApplicationPolicy
 
   def agent_access?(access)
     return false if !user.permissions?('ticket.agent')
-    return true if owner?
 
     user.group_access?(record.group.id, access)
-  end
-
-  def owner?
-    record.owner_id == user.id
   end
 
   def customer_access?

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FilePreviewVisualConfig } from '#shared/components/CommonFilePreview/types.ts'
 import type { TooltipVisualConfig } from '#shared/components/CommonTooltip/types.ts'

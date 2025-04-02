@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
@@ -82,12 +82,12 @@ const ariaChecked = computed(() => {
   <button
     type="button"
     role="checkbox"
-    class="-:bg-stone-200 dark:-:bg-gray-500 hover:-:outline-blue-600 dark:hover:-:outline-blue-900 focus:-:outline-blue-800 hover:focus:-:outline-blue-800 dark:hover:focus:-:outline-blue-800 relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full ring-1 ring-neutral-100 transition-colors duration-200 ease-in-out hover:outline hover:outline-1 hover:outline-offset-2 focus:outline focus:outline-1 focus:outline-offset-2 dark:ring-gray-900"
+    class="relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full bg-stone-200 ring-1 ring-neutral-100 transition-colors duration-200 ease-in-out hover:outline hover:outline-1 hover:outline-offset-2 hover:outline-blue-600 focus:outline focus:outline-1 focus:outline-offset-2 focus:outline-blue-800 hover:focus:outline-blue-800 dark:bg-gray-500 dark:ring-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
     :class="[
       trackSizeClasses,
       {
         'bg-white dark:bg-white': isLight,
-        'bg-blue-800 dark:bg-blue-800': isDark,
+        'bg-blue-800! dark:bg-blue-800!': isDark,
       },
     ]"
     :aria-label="$t('Dark Mode')"
@@ -97,12 +97,12 @@ const ariaChecked = computed(() => {
     @keydown.space="updateLocalValue"
   >
     <div
-      class="-:bg-white -:text-black pointer-events-none flex transform items-center justify-center rounded-full transition duration-200 ease-in-out"
+      class="pointer-events-none flex transform items-center justify-center rounded-full bg-white text-black transition duration-200 ease-in-out"
       :class="[
         knobSizeClasses,
         knobTranslateClasses,
         {
-          'bg-blue-800 text-white': isLight,
+          'bg-blue-800! text-white!': isLight,
         },
       ]"
     >

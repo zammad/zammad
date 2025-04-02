@@ -212,4 +212,4 @@ class BotEdit extends App.ControllerModal
         @el.find('.alert').removeClass('hidden').text(error_message)
     )
 
-App.Config.set('Telegram', { prio: 5100, name: __('Telegram'), parent: '#channels', target: '#channels/telegram', controller: ChannelTelegram, permission: ['admin.channel_telegram'] }, 'NavBarAdmin')
+App.Config.set('Telegram', { prio: 5500, name: __('Telegram'), parent: '#channels', target: '#channels/telegram', controller: ChannelTelegram, permission: ['admin.channel_telegram'] }, 'NavBarAdmin')

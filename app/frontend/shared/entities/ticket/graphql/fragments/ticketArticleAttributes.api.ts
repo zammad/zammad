@@ -90,5 +90,6 @@ export const TicketArticleAttributesFragmentDoc = gql`
   mediaErrorState {
     error
   }
+  detectedLanguage
 }
     `;

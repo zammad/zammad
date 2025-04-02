@@ -1,7 +1,10 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
+import { useSessionStore } from '#shared/stores/session.ts'
+import emitter from '#shared/utils/emitter.ts'
 
 import ChecklistBadge from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadge.vue'
 import ReferencingTicketsBadgePopover from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue'
@@ -24,8 +27,11 @@ const totalItemsCount = computed(() => checklist.value?.total)
 
 const isCompleted = computed(() => checklist.value?.completed)
 
+const { userId } = useSessionStore()
+
 const openChecklistInSidebar = () => {
   ticketSidebar.switchSidebar('checklist')
+  emitter.emit('expand-collapsed-content', `${userId}-ticket-detail`)
 }
 </script>
 
@@ -40,11 +46,11 @@ const openChecklistInSidebar = () => {
     @keydown.enter="openChecklistInSidebar"
   >
     <template #label>
-      <CommonLabel size="small" class="uppercase text-current">
+      <CommonLabel size="small" class="text-current! uppercase">
         {{ $t('checked') }}
       </CommonLabel>
     </template>
-    <CommonLabel size="small" class="text-black dark:text-white">
+    <CommonLabel size="small" class="text-black! dark:text-white!">
       {{ $t('%s of %s', completedItemsCount, totalItemsCount) }}
     </CommonLabel>
   </ChecklistBadge>

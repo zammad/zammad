@@ -3,6 +3,7 @@ class App.UserProfile extends App.Controller
 
   constructor: (params) ->
     super
+    @init = params.init
 
     # fetch new data if needed
     App.User.full(@user_id, @render)
@@ -64,6 +65,7 @@ class App.UserProfile extends App.Controller
     new App.TicketStats(
       el:   elLocal.find('.js-ticket-stats')
       user: user
+      init: @init
     )
 
     @html elLocal

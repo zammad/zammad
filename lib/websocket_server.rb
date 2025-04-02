@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class WebsocketServer
 
@@ -16,6 +16,7 @@ class WebsocketServer
     Rails.configuration.interface = 'websocket'
 
     AppVersion.start_maintenance_thread(process_name: 'websocket-server')
+    Zammad::ProcessDebug.install_thread_status_handler
 
     EventMachine.run do
       EventMachine::WebSocket.start(host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: @options[:tls_options]) do |ws|

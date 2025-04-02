@@ -54,7 +54,7 @@
             <% end %>
           </ul>
         </div>
-      <% else: %>
+      <% else if @actions.length == 1: %>
         <div class="btn btn--text btn--secondary <%= @actions[0].class %>" title="<%= @actions[0].display %>" data-table-action="<%= @actions[0].name %>">
           <%- @Icon(@actions[0].icon) %>
         </div>

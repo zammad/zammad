@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -16,7 +16,7 @@ RSpec.describe 'Error handling', type: :request do
       # a random error code that can be easily found in the logs by an
       # administrator. However, this makes it hard to check for the exact error
       # message. Therefore we only check for the substring in this particular case
-      if message == 'Please contact your administrator' || message == 'Mysql2::Error' || message == 'PG::ForeignKeyViolation'
+      if ['Please contact your administrator', 'Mysql2::Error', 'PG::ForeignKeyViolation'].include?(message)
         expect(json_response['error']).to include(message)
       else
         expect(json_response['error']).to eq(message)

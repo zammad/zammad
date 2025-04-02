@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Gql::ZammadSchema < GraphQL::Schema
   mutation      Gql::EntryPoints::Mutations
@@ -7,9 +7,8 @@ class Gql::ZammadSchema < GraphQL::Schema
   context_class Gql::Context::CurrentUserAware
 
   use GraphQL::Subscriptions::ActionCableSubscriptions, broadcast: true, default_broadcastable: false
-
-  # Enable batch loading
   use GraphQL::Batch
+  use GraphQL::FragmentCache
 
   description 'This is the Zammad GraphQL API'
 
@@ -18,25 +17,11 @@ class Gql::ZammadSchema < GraphQL::Schema
   default_page_size 100
   max_complexity 10_000
 
-  # Depth of 15 is needed for commmon introspection queries like Insomnia.
-  max_depth 15
+  max_depth 8, count_introspection_fields: false
 
-  TYPE_MAP = {
-    ::Store   => ::Gql::Types::StoredFileType,
-    ::Taskbar => ::Gql::Types::User::TaskbarItemType,
-  }.freeze
-
-  ABSTRACT_TYPE_MAP = {
-    ::Gql::Types::User::TaskbarItemEntityType => ::Gql::Types::User::TaskbarItemEntity::TicketCreateType,
-  }.freeze
-
-  # Union and Interface Resolution
-  def self.resolve_type(abstract_type, obj, _ctx)
-    TYPE_MAP[obj.class] || "Gql::Types::#{obj.class.name}Type".constantize
-  rescue NameError
-    ABSTRACT_TYPE_MAP[abstract_type]
-  rescue
-    raise GraphQL::RequiredImplementationMissingError, "Cannot resolve type for '#{obj.class.name}'."
+  # Required for loads:, other types like unions need to implement type resolution directly.
+  def self.resolve_type(abstract_type, _obj, _ctx)
+    abstract_type
   end
 
   # Relay-style Object Identification:
@@ -65,7 +50,7 @@ class Gql::ZammadSchema < GraphQL::Schema
   #   This is only needed for objects where no validation takes place through their GraphQL type.
   def self.authorized_object_from_id(id, type:, user:, query: :show?)
     verified_object_from_id(id, type: type).tap do |object|
-      Pundit.authorize user, object, query
+      Pundit.authorize(user, object, query)
     rescue Pundit::NotAuthorizedError => e
       # Map Pundit errors since we are not in a GraphQL built-in authorization context here.
       raise Exceptions::Forbidden, e.message

@@ -1,0 +1,96 @@
+query ticketsCachedByOverview(
+  $overviewId: ID!
+  $orderBy: String
+  $orderDirection: EnumOrderDirection
+  $cursor: String
+  $pageSize: Int = 25
+  $cacheTtl: Int!
+  $renewCache: Boolean
+  $knownCollectionSignature: String
+) {
+  ticketsCachedByOverview(
+    overviewId: $overviewId
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    after: $cursor
+    first: $pageSize
+    cacheTtl: $cacheTtl
+    renewCache: $renewCache
+    knownCollectionSignature: $knownCollectionSignature
+  ) {
+    totalCount
+    edges {
+      node {
+        id
+        internalId
+        number
+        title
+        createdAt
+        createdBy {
+          id
+          fullname
+        }
+        updatedAt
+        updatedBy {
+          id
+          fullname
+        }
+        owner {
+          id
+          fullname
+        }
+        customer {
+          id
+          fullname
+        }
+        organization {
+          id
+          name
+        }
+        state {
+          id
+          name
+          stateType {
+            id
+            name
+          }
+        }
+        pendingTime
+        group {
+          id
+          name
+        }
+        priority {
+          id
+          name
+          uiColor
+        }
+        objectAttributeValues {
+          ...objectAttributeValues
+        }
+        articleCount
+        stateColorCode
+        escalationAt
+        firstResponseEscalationAt
+        updateEscalationAt
+        closeEscalationAt
+        firstResponseAt
+        closeAt
+        timeUnit
+        lastCloseAt
+        lastContactAt
+        lastContactAgentAt
+        lastContactCustomerAt
+        policy {
+          update
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    collectionSignature
+  }
+}

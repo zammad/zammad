@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import {
@@ -429,7 +429,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
         v-show="isTargetVisible"
         id="field-tree-select-input-dropdown"
         ref="dropdown"
-        class="fixed z-10 flex min-h-9 antialiased"
+        class="fixed z-50 flex min-h-9 antialiased"
         :style="dropdownStyle"
       >
         <div class="w-full" role="menu">
@@ -448,7 +448,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
             >
               <CommonLabel
                 v-if="currentPath.length"
-                class="text-blue-800 hover:text-black focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800 dark:hover:text-white"
+                class="text-blue-800 hover:text-black focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800 dark:hover:text-white"
                 :prefix-icon="
                   locale.localeData?.dir === 'rtl'
                     ? 'chevron-right'
@@ -466,7 +466,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
               </CommonLabel>
               <CommonLabel
                 v-if="multiple && hasMoreSelectableOptions"
-                class="ms-auto text-blue-800 hover:text-black focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800 dark:hover:text-white"
+                class="ms-auto text-blue-800 hover:text-black focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800 dark:hover:text-white"
                 prefix-icon="check-all"
                 size="small"
                 role="button"

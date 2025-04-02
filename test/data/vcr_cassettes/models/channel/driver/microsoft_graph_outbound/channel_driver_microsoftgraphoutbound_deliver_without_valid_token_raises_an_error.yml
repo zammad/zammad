@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/sendMail
+    body:
+      encoding: US-ASCII
+      string: RGF0ZTogVHVlLCAwNyBKYW4gMjAyNSAwOTo0MToxMSArMDEwMA0KVG86IGRldmVsb3BtZW50QHphbW1hZHRlc3Rpbmcub25taWNyb3NvZnQuY29tDQpNZXNzYWdlLUlEOiA8Njc3Y2U4YTc1OGM5YV85NjM3MjQ2ODQ1OWFmQE1hY0Jvb2tQcm8uZnJpdHouYm94Lm1haWw+DQpTdWJqZWN0OiBDSSB0ZXN0IGZvciBDaGFubmVsOjpEcml2ZXI6Ok1pY3Jvc29mdEdyYXBoT3V0Ym91bmQNCk1pbWUtVmVyc2lvbjogMS4wDQpDb250ZW50LVR5cGU6IHRleHQvcGxhaW47DQogY2hhcnNldD1VVEYtOA0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogN2JpdA0KDQpUZXN0IGVtYWls
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Content-Type:
+      - text/plain
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 64b252a3-29be-47da-b265-b5066c009a5c
+      Client-Request-Id:
+      - 64b252a3-29be-47da-b265-b5066c009a5c
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Poland Central","Slice":"E","Ring":"2","ScaleUnit":"001","RoleInstance":"WA2PEPF00000384"}}'
+      Www-Authenticate:
+      - Bearer realm="", authorization_uri="https://login.microsoftonline.com/common/oauth2/authorize",
+        client_id="00000003-0000-0000-c000-000000000000"
+      - PoP realm="", authorization_uri="https://login.microsoftonline.com/common/oauth2/authorize",
+        client_id="00000003-0000-0000-c000-000000000000", nonce="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkFCNzZGQTZEM0I1OTY3MjNGQjZDRTA5MUZENDI4QURBNDBGMjRFNEEifQ.eyJ0cyI6MTczNjIzOTI2MH0.dmb3IeHdjrmFxzT6WJczBcu76Pkj00Kzp4ttjUmmgL7V8y6lOKnwnBCmYHD5z9JKVtdax4HS93LnyLNOewY03odms_3O9Qic3hjuzd8T6J1pi3YTmVU1rP5UsEcxEfxEKKDEfMQPWF2EJ-324Y7heSz8VFsBd4l2wHGWn31Ky07OA_RW_V_aQTRQoKHfOCr8s25dAwrIjMsjfHKZOgp7qG5h2csIA40PBMcfA063VPCSRVYGPrii-AJ3mYyltlCq-f9VefPtTU1JJGCLwLMsfCjjdIJo0S4X-QmN-HfhLEKNgzWFtK_0ZR9nV5ofmkzScDN6QzjZhTUetWn1t7TF5Q"
+      Date:
+      - Tue, 07 Jan 2025 08:41:10 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"error":{"code":"InvalidAuthenticationToken","message":"IDX14100:
+        JWT is not well formed, there are no dots (.).\nThe token needs to be in JWS
+        or JWE Compact Serialization Format. (JWS): ''EncodedHeader.EncodedPayload.EncodedSignature''.
+        (JWE): ''EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag''.","innerError":{"date":"2025-01-07T08:41:11","request-id":"64b252a3-29be-47da-b265-b5066c009a5c","client-request-id":"64b252a3-29be-47da-b265-b5066c009a5c"}}}'
+  recorded_at: Tue, 07 Jan 2025 08:41:11 GMT
+recorded_with: VCR 6.3.1

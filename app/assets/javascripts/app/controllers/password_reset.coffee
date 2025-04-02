@@ -69,6 +69,7 @@ class PasswordReset extends App.ControllerFullPage
       data:        JSON.stringify(params)
       processData: true
       success:     @success
+      error:       @error
     )
 
   success: (data) =>
@@ -81,5 +82,14 @@ class PasswordReset extends App.ControllerFullPage
     @html(App.view('password/reset_sent')(
       public_links: public_links
     ))
+
+  error: (data, statusText, error) =>
+    @formEnable(@form.el)
+
+    details = data.responseJSON || {}
+    @notify(
+      type: 'error'
+      msg:  details.error_human || details.error || __('Loading failed.')
+    )
 
 App.Config.set('password_reset', PasswordReset, 'Routes')

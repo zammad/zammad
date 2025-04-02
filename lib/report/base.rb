@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Report::Base
 
@@ -372,5 +372,16 @@ class Report::Base
     end
 
     INTERVAL_LENGTH[interval]
+  end
+
+  def self.without_merged_tickets_selector
+    merged_state_id = Ticket::StateType.where(name: 'merged').pick(:id)
+
+    {
+      self::TICKET_STATE_ATTRIBUTE => {
+        'operator' => 'is not',
+        'value'    => merged_state_id
+      }
+    }
   end
 end

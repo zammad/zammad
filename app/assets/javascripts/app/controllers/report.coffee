@@ -18,7 +18,10 @@ class Reporting extends App.ControllerAppContent
             objectName: 'Report'
           )
           return
-        @config = data.config
+        @config   = data.config
+        @profiles = data.profiles
+        @checkStoreParams()
+
         App.Collection.load(type: 'ReportProfile', data: data.profiles)
         @render()
     )
@@ -27,7 +30,7 @@ class Reporting extends App.ControllerAppContent
     return @params if @params
 
     @params = {}
-    paramsRaw = App.SessionStorage.get('report::params')
+    paramsRaw = @getStoreParams()
     if paramsRaw
       @params = paramsRaw
       return @params
@@ -60,7 +63,20 @@ class Reporting extends App.ControllerAppContent
 
     @params
 
-  storeParams: =>
+  checkStoreParams: =>
+    params = @getStoreParams()
+    return if _.isEmpty(params)
+
+    configProfileIDs = @profiles.map((profile) -> profile.id)
+    storeProfileIDs  = Object.keys(params.profileSelected).map((id) -> parseInt(id))
+    return if _.intersection(configProfileIDs, storeProfileIDs).length is storeProfileIDs.length
+
+    App.SessionStorage.delete('report::params')
+
+  getStoreParams: ->
+    App.SessionStorage.get('report::params')
+
+  setStoreParams: =>
     # store latest params
     App.SessionStorage.set('report::params', @params)
 
@@ -116,7 +132,7 @@ class Graph extends App.Controller
     for key, value of data.data
       if @params.backendSelected[key] is true
         dataNew[key] = value
-      @ui.storeParams()
+      @ui.setStoreParams()
 
     if !@lastParams
       @lastParams = {}
@@ -252,7 +268,7 @@ class Download extends App.Controller
     $(e.target).parent().addClass('active')
     @profileSelectedId = $(e.target).data('profile-id')
     @params.downloadBackendSelected = $(e.target).data('backend')
-    @ui.storeParams()
+    @ui.setStoreParams()
     @table = false
     @render()
 
@@ -272,7 +288,7 @@ class Download extends App.Controller
       for backend in @config.metric[@params.metric].backend
         if backend.dataDownload && !@params.downloadBackendSelected
           @params.downloadBackendSelected = backend.name
-      @ui.storeParams()
+      @ui.setStoreParams()
 
     # get used profiles
     profiles = []
@@ -458,7 +474,7 @@ class TimePicker extends App.Controller
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
     App.Event.trigger('ui:report:rerender')
-    @ui.storeParams()
+    @ui.setStoreParams()
 
   selectTimeMonth: (e) =>
     e.preventDefault()
@@ -466,7 +482,7 @@ class TimePicker extends App.Controller
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
     App.Event.trigger('ui:report:rerender')
-    @ui.storeParams()
+    @ui.setStoreParams()
 
   selectTimeWeek: (e) =>
     e.preventDefault()
@@ -474,7 +490,7 @@ class TimePicker extends App.Controller
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
     App.Event.trigger('ui:report:rerender')
-    @ui.storeParams()
+    @ui.setStoreParams()
 
   selectTimeYear: (e) =>
     e.preventDefault()
@@ -483,7 +499,7 @@ class TimePicker extends App.Controller
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
     App.Event.trigger('ui:report:rerender')
-    @ui.storeParams()
+    @ui.setStoreParams()
 
   _timeSlotPicker: ->
     @timeRangeYear = []
@@ -592,7 +608,7 @@ class Sidebar extends App.Controller
     @params.metric                  = metric
     @params.downloadBackendSelected = undefined
     App.Event.trigger('ui:report:rerender')
-    @ui.storeParams()
+    @ui.setStoreParams()
 
   selectProfile: (e) =>
     profile_id = $(e.target).val()
@@ -600,7 +616,7 @@ class Sidebar extends App.Controller
       delete @params.profileSelected[key]
     @params.profileSelected[profile_id] = true
     App.Event.trigger('ui:report:rerender')
-    @ui.storeParams()
+    @ui.setStoreParams()
 
   selectBackend: (e) =>
     backend = $(e.target).val()
@@ -610,7 +626,7 @@ class Sidebar extends App.Controller
     else
       delete @params.backendSelected[backend]
     App.Event.trigger('ui:report:rerender')
-    @ui.storeParams()
+    @ui.setStoreParams()
 
 App.Config.set('report', Reporting, 'Routes')
 App.Config.set('Reporting', { prio: 8000, parent: '', name: __('Reporting'), translate: true, target: '#report', icon: 'report', permission: ['report'] }, 'NavBarRight')

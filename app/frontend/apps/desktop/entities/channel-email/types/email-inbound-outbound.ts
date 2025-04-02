@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type {
   Scalars,
@@ -36,6 +36,7 @@ export type EmailOutboundData =
 export interface EmailInboundMessagesData {
   archive?: boolean
   archiveBefore?: Scalars['ISO8601DateTime']['output']
+  archiveStateId?: number
 }
 
 export interface EmailInboundData
@@ -51,12 +52,10 @@ export type EmailInboundMetaInformationNextAction = 'roundtrip' | 'outbound'
 
 export interface EmailInboundMetaInformation {
   contentMessages: number
-  archivePossible?: boolean
-  archivePossibleIsFallback?: boolean
-  archiveWeekRange?: number
   nextAction: EmailInboundMetaInformationNextAction
   archive?: boolean
   archiveBefore?: Scalars['ISO8601DateTime']['output']
+  archiveStateId?: number
 }
 
 export type UpdateMetaInformationInboundFunction = (

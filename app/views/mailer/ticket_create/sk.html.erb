@@ -1,8 +1,8 @@
 Nový tiket (#{ticket.title})
 
-<div>Pani/Pán #{recipient.firstname},</div>
+<div>Dobrý deň, #{recipient.firstname},</div>
 <br>
-<div>Bol vytvorený nový tiket (#{ticket.title}) od "<b>#{current_user.longname}</b>".</div>
+<div>Bol vytvorený nový tiket (#{ticket.title}) používateľom "<b>#{current_user.longname}</b>".</div>
 <br>
 <div>
 Skupina: #{ticket.group.name}<br>
@@ -12,7 +12,7 @@ Stav: #{t(ticket.state.name)}<br>
 <br>
 <% if @objects[:article] %>
   <div>
-  Text:
+  Informácia:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -20,5 +20,5 @@ Stav: #{t(ticket.state.name)}<br>
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Pozrieť online v #{config.product_name}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Zobraziť v #{config.product_name}</a>
 </div>

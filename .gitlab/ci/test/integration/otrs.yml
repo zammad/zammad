@@ -17,6 +17,13 @@
     IMPORT_OTRS_ENDPOINT: 'http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator'
     TZ: 'Europe/Berlin' # Required for the zammad-ci-otrsimport-app containers
 
+.template_integration_otrs_manual:
+  extends:
+    - .template_integration_otrs
+  rules:
+    - when: manual
+      allow_failure: true
+
 rspec:integration:otrs:6:
   extends:
     - .template_integration_otrs
@@ -25,30 +32,30 @@ rspec:integration:otrs:6:
 
 rspec:integration:otrs:5:
   extends:
-    - .template_integration_otrs
+    - .template_integration_otrs_manual
   variables:
     OTRS_CONTAINER_TAG: 'otrs5'
 
 rspec:integration:otrs:4:
   extends:
-    - .template_integration_otrs
+    - .template_integration_otrs_manual
   variables:
     OTRS_CONTAINER_TAG: 'otrs4'
 
 rspec:integration:otrs:33:
   extends:
-    - .template_integration_otrs
+    - .template_integration_otrs_manual
   variables:
     OTRS_CONTAINER_TAG: 'otrs33'
 
 rspec:integration:otrs:32:
   extends:
-    - .template_integration_otrs
+    - .template_integration_otrs_manual
   variables:
     OTRS_CONTAINER_TAG: 'otrs32'
 
 rspec:integration:otrs:31:
   extends:
-    - .template_integration_otrs
+    - .template_integration_otrs_manual
   variables:
     OTRS_CONTAINER_TAG: 'otrs31'

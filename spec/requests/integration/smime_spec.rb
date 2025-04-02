@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -69,7 +69,9 @@ RSpec.describe 'Integration SMIME', type: :request do
           created_at
           updated_at
           subject_alternative_name
+          usage
         ]
+        expect(json_response.first['usage']).to match_array(%w[Signature Encryption])
         expect(json_response.first['subject_alternative_name']).to include(email_address)
         expect(json_response.any? { |e| e['id'] == certificate.id }).to be true
       end
@@ -175,7 +177,7 @@ RSpec.describe 'Integration SMIME', type: :request do
 
           expect(response).to have_http_status(:ok)
           expect(json_response['encryption']['success']).to be(false)
-          expect(json_response['encryption']['comment']).to eq("Can't find S/MIME encryption certificates for: #{email_address}")
+          expect(json_response['encryption']['comment']).to eq("The certificate for #{email_address} was not found.")
           expect(json_response['encryption']['commentPlaceholders']).to eq([])
           expect(json_response['encryption']['comment']).to include(email_address)
           expect(json_response['sign']['success']).to be(false)

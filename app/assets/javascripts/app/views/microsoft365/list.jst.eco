@@ -1,6 +1,6 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h1><%- @T('Microsoft 365') %> <small><%- @T('Accounts') %></small></h1>
+    <h1><%- @T('Microsoft 365 IMAP Email') %> <small><%- @T('Accounts') %></small></h1>
   </div>
 
   <div class="page-header-meta">
@@ -101,14 +101,14 @@
     </div>
 
     <div class="action-controls">
+      <% if channel.active is true: %>
+        <div class="btn js-disable"><%- @T('Disable') %></div>
+      <% else: %>
+        <div class="btn btn--secondary js-enable"><%- @T('Enable') %></div>
+      <% end %>
       <div class="btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
       <% if channel.options.backup_imap_classic: %>
         <div class="btn btn--secondary js-rollbackMigration"><%- @T('Rollback migration') %></div>
-      <% end %>
-      <% if channel.active is true: %>
-        <div class="btn btn--secondary js-disable"><%- @T('Disable') %></div>
-      <% else: %>
-        <div class="btn btn--secondary js-enable"><%- @T('Enable') %></div>
       <% end %>
       <div class="btn btn--secondary js-reauthenticate"><%- @T('Reauthenticate') %></div>
     </div>

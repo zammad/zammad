@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
@@ -32,7 +32,7 @@ const { fields } = useArticleMeta(toRef(props, 'article'))
           :prefix-icon="field.icon && !field.component ? field.icon : undefined"
           v-bind="field.props || {}"
           :context="{ field, article }"
-          class="text-black dark:text-white"
+          class="text-black! dark:text-white!"
         >
           {{ field.value }}
         </Component>
@@ -44,7 +44,7 @@ const { fields } = useArticleMeta(toRef(props, 'article'))
             :link="url"
             :rest-api="api"
             :target="target"
-            class="text-sm text-white/75"
+            class="text-sm! text-[rgba(255,255,255,0.75)]!"
           >
             {{ $t(label) }}
           </CommonLink>

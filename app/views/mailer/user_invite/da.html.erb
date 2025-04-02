@@ -1,0 +1,13 @@
+Invitation til #{config.product_name} på #{config.fqdn}
+
+<div>Hej #{user.firstname},</div>
+<br>
+<div>Jeg (#{current_user.firstname} #{current_user.lastname}) inviterer dig til #{config.product_name} - vores kundesupportplatform.</div>
+</div>
+<div>Klik på <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}">her</a> og indstil din adgangskode.</div>
+</div>
+<div>God fornøjelse,</div>
+<br>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
+<br>
+<div>Dit #{config.product_name} team</div>

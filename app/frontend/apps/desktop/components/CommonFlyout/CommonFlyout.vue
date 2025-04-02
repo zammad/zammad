@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import {
@@ -33,6 +33,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
 import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
 import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
+import { getRouteIdentifier } from '#desktop/composables/useOverlayContainer.ts'
 
 import CommonFlyoutActionFooter from './CommonFlyoutActionFooter.vue'
 import { closeFlyout } from './useFlyout.ts'
@@ -88,12 +89,14 @@ const emit = defineEmits<{
   activated: []
 }>()
 
-const { path } = useRoute()
+const routeIdentifier = getRouteIdentifier(useRoute())
 
 const router = useRouter()
 
 const isActive = computed(() =>
-  props.fullscreen ? true : path === router.currentRoute.value.path,
+  props.fullscreen
+    ? true
+    : routeIdentifier === getRouteIdentifier(router.currentRoute.value),
 )
 
 whenever(isActive, () => {
@@ -280,7 +283,7 @@ const transition = VITE_TEST_MODE
       ref="flyout-container"
       tag="aside"
       tabindex="-1"
-      class="overflow-clip-x fixed bottom-0 top-0 z-40 flex max-h-dvh min-w-min flex-col border-y border-neutral-100 bg-neutral-50 ltr:right-0 ltr:rounded-l-xl ltr:border-l rtl:left-0 rtl:rounded-r-xl rtl:border-r dark:border-gray-900 dark:bg-gray-500"
+      class="overflow-clip-x fixed top-0 bottom-0 z-40 flex max-h-dvh min-w-min flex-col border-y border-neutral-100 bg-neutral-50 ltr:right-0 ltr:rounded-l-xl ltr:border-l rtl:left-0 rtl:rounded-r-xl rtl:border-r dark:border-gray-900 dark:bg-gray-500"
       :no-close-on-backdrop-click="noCloseOnBackdropClick"
       :show-backdrop="showBackdrop && isActive"
       :style="{ width: `${flyoutContainerWidth}px` }"

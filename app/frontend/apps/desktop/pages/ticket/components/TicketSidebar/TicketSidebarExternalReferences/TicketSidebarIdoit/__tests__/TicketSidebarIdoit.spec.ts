@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 import { vi } from 'vitest'
@@ -12,11 +12,15 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import TicketSidebarIdoit from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue'
 import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 import { waitForTicketExternalReferencesIdoitObjectRemoveMutationCalls } from '#desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIdoitObjectRemove.mocks.ts'
-import { mockTicketExternalReferencesIdoitObjectListQuery } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIdoitObjectList.mocks.ts'
+import {
+  mockTicketExternalReferencesIdoitObjectListQuery,
+  mockTicketExternalReferencesIdoitObjectListQueryError,
+} from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIdoitObjectList.mocks.ts'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 
 import idoitPlugin from '../../../plugins/idoit.ts'
@@ -329,5 +333,72 @@ describe('TicketSidebarIdoit', () => {
     const wrapper = renderIdoitSidebar()
 
     expect(wrapper.getAllByIconName('i-doit-logo-dark')).toHaveLength(2)
+  })
+})
+
+describe('errors', () => {
+  it('shows an generic error message if query fails due failure of i-doit api', async () => {
+    mockApplicationConfig({
+      idoit_integration: true,
+    })
+
+    mockTicketExternalReferencesIdoitObjectListQueryError(
+      'I-doit request failed. Please have a look at the log file for details',
+      { type: GraphQLErrorTypes.UnknownError },
+    )
+
+    const wrapper = renderComponent(TicketSidebarIdoit, {
+      props: {
+        sidebar: 'i-doit',
+        sidebarPlugin: idoitPlugin,
+        selected: true,
+        context: {
+          screenType: TicketSidebarScreenType.TicketDetailView,
+          formValues: {},
+          toggleCollapse: () => {},
+          isCollapsed: false,
+          ticket: ref(
+            createDummyTicket({
+              preferences: {
+                idoit: {
+                  object_ids: [
+                    {
+                      idoitObjectId: 111,
+                      title: 'Object 1',
+                      link: 'www.idoit.com/?object_id=111',
+                      type: 'Application',
+                    },
+                    {
+                      idoitObjectId: 2222,
+                      title: 'Object 2',
+                      link: 'www.idoit.com/?object_id=222',
+                      type: 'Monitor',
+                    },
+                  ],
+                },
+              },
+            }),
+          ),
+          isTicketEditable: true,
+        },
+      },
+      global: {
+        stubs: {
+          teleport: true,
+        },
+      },
+      flyout: true,
+      form: true,
+      router: true,
+      store: true,
+    })
+
+    expect(await wrapper.findByRole('alert')).toHaveTextContent(
+      'Error fetching information from i-doit. Please contact your administrator.',
+    )
+
+    expect(
+      wrapper.queryByRole('button', { name: 'Action menu button' }),
+    ).not.toBeInTheDocument()
   })
 })

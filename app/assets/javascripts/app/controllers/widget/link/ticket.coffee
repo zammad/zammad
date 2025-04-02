@@ -38,7 +38,7 @@ class App.WidgetLink.Ticket extends App.WidgetLink
 
       if item['link_object'] is 'Ticket'
         ticket = App.Ticket.fullLocal( item['link_object_value'] )
-        if ticket.state.name is 'merged'
+        if ticket.state.state_type.name is 'merged'
           ticket.css = 'merged'
         list[ item['link_type'] ].tickets.push ticket
         @subscribeTicket(ticket)

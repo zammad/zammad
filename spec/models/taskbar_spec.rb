@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/taskbar/has_attachments_examples'
 require 'models/taskbar/list_examples'
 
-RSpec.describe Taskbar, type: :model do
+RSpec.describe Taskbar, performs_jobs: true, type: :model do
   it_behaves_like 'Taskbar::HasAttachments'
   it_behaves_like 'Taskbar::List'
 
@@ -127,6 +127,8 @@ RSpec.describe Taskbar, type: :model do
         user_id:  1,
       )
 
+      perform_enqueued_jobs
+
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(2)
       expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
@@ -152,6 +154,8 @@ RSpec.describe Taskbar, type: :model do
         notify:   false,
         user_id:  1,
       )
+
+      perform_enqueued_jobs
 
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(2)
@@ -186,6 +190,8 @@ RSpec.describe Taskbar, type: :model do
         notify:   false,
         user_id:  1,
       )
+
+      perform_enqueued_jobs
 
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
@@ -223,6 +229,8 @@ RSpec.describe Taskbar, type: :model do
       taskbar2.state = { article: {}, ticket: {} }
       taskbar2.save!
 
+      perform_enqueued_jobs
+
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
       expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
@@ -259,6 +267,8 @@ RSpec.describe Taskbar, type: :model do
       taskbar2.state = { article: { body: 'some body' }, ticket: {} }
       taskbar2.save!
 
+      perform_enqueued_jobs
+
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
       expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
@@ -294,6 +304,8 @@ RSpec.describe Taskbar, type: :model do
       UserInfo.current_user_id = 1
       taskbar1.state = { article: { body: '' }, ticket: { state_id: 123 } }
       taskbar1.save!
+
+      perform_enqueued_jobs
 
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
@@ -337,6 +349,8 @@ RSpec.describe Taskbar, type: :model do
       taskbar2.state = { article: { body: 'some body' }, ticket: {} }
       taskbar2.notify = true
       taskbar2.save!
+
+      perform_enqueued_jobs
 
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
@@ -384,6 +398,8 @@ RSpec.describe Taskbar, type: :model do
       taskbar2.state = { article: { body: 'some body 222' }, ticket: {} }
       taskbar2.notify = true
       taskbar2.save!
+
+      perform_enqueued_jobs
 
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
@@ -514,6 +530,7 @@ RSpec.describe Taskbar, type: :model do
 
       it 'updates related items when creating a taskbar' do
         create(:taskbar, key: key)
+        perform_enqueued_jobs
 
         expect(other_taskbar.reload.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: 1))
       end
@@ -543,6 +560,8 @@ RSpec.describe Taskbar, type: :model do
         other_taskbar.update_columns preferences: {}
 
         taskbar.update! state: { a: :b }
+
+        perform_enqueued_jobs
 
         expect(other_taskbar.reload.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: 1))
       end
@@ -618,10 +637,11 @@ RSpec.describe Taskbar, type: :model do
     before { taskbar_1 && taskbar_2 && taskbar_3 }
 
     it 'updates related taskbars' do
-      taskbar_1.send(:update_related_taskbars, { a: 1 })
+      taskbar_1.send(:update_related_taskbars)
+      perform_enqueued_jobs
 
-      expect(taskbar_2.reload).to have_attributes(preferences: { a: 1 })
-      expect(taskbar_3.reload).not_to have_attributes(preferences: { a: 1 })
+      expect(taskbar_2.reload.preferences[:tasks].count).to eq(2)
+      expect(taskbar_3.reload.preferences[:tasks].count).to eq(1)
     end
   end
 
@@ -704,6 +724,38 @@ RSpec.describe Taskbar, type: :model do
       taskbar.save!
 
       expect(taskbar).to be_saved_change_to_dirty
+    end
+  end
+
+  describe '.to_object_ids' do
+    let(:ticket)       { create(:ticket) }
+    let(:ticket2)      { create(:ticket) }
+    let(:organization) { create(:organization) }
+    let(:user)         { create(:user) }
+
+    let(:taskbar_ticket)       { create(:taskbar, params: { ticket_id: ticket.id }) }
+    let(:taskbar_ticket2)      { create(:taskbar, params: { ticket_id: ticket2.id }) }
+    let(:taskbar_organization) { create(:taskbar, params: { organization_id: organization.id }) }
+    let(:taskbar_user)         { create(:taskbar, params: { user_id: user.id }) }
+
+    before do
+      taskbar_ticket && taskbar_ticket2 && taskbar_organization && taskbar_user
+    end
+
+    it 'returns object ids' do
+      expect(described_class.to_object_ids).to include(
+        ticket_ids:       [ticket.id, ticket2.id],
+        user_ids:         [user.id],
+        organization_ids: [organization.id]
+      )
+    end
+
+    it 'returns object ids in scoped relation' do
+      expect(described_class.where(id: [taskbar_ticket2, taskbar_user]).to_object_ids).to include(
+        ticket_ids:       [ticket2.id],
+        user_ids:         [user.id],
+        organization_ids: []
+      )
     end
   end
 end

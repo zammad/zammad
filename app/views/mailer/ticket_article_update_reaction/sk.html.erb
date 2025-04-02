@@ -1,0 +1,19 @@
+Aktualizovaný článok tiketu (#{ticket.title})
+
+<div>Dobrý deň, #{recipient.firstname},</div>
+<br>
+<div>
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> zareagoval(a) s <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> na správu od #{article.created_by.fullname}:
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Zobraziť v #{config.product_name}</a>
+</div>

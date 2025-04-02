@@ -97,6 +97,8 @@ class App.SearchableSelect extends Spine.Controller
 
     @clear.on('click.searchable_select', @clearValue)
 
+    @el.addClass('searchableSelect-dropdown-up') if @attribute.direction == 'up'
+
   renderSubmenus: (options) ->
     html = ''
     if options
@@ -224,8 +226,6 @@ class App.SearchableSelect extends Spine.Controller
 
   onDropdownShown: =>
     @input.on('click', @stopPropagation)
-
-    @dropupSetTopOffsetIfNeeded()
 
     @highlightFirst()
     if @level > 0
@@ -462,13 +462,7 @@ class App.SearchableSelect extends Spine.Controller
         duration: 240
 
     if @attribute.direction == 'up'
-      adjustBy = @currentMenu.height() - target_menu.height()
-
-      if adjustBy > 0
-        target_menu.css('top', adjustBy)
-      else if adjustBy < 0
-        @currentMenu.css('top', adjustBy * -1)
-        @dropdown.css('top', "-#{target_menu.height()}px")
+      @dropdown.css('overflow-y', 'hidden')
 
     @currentMenu.velocity
       properties:
@@ -477,7 +471,7 @@ class App.SearchableSelect extends Spine.Controller
         duration: 240
         complete: =>
           if @attribute.direction == 'up'
-            target_menu.css('top', 0)
+            @dropdown.css('overflow-y', 'auto')
 
           oldCurrentItem.removeClass('is-active')
           oldCurrentItem.removeClass('is-highlighted') if oldCurrentItem.hasClass('js-enter')
@@ -486,7 +480,6 @@ class App.SearchableSelect extends Spine.Controller
           @dropdown.height(target_menu.height())
           @currentMenu = target_menu
           @animating = false
-          @dropupSetTopOffsetIfNeeded()
 
   showSubmenu: (menu) ->
     @currentMenu.prop('hidden', true)
@@ -672,9 +665,6 @@ class App.SearchableSelect extends Spine.Controller
     else
       @highlightFirst(true)
 
-    if @isOpen
-      @dropupSetTopOffsetIfNeeded()
-
   addValueToShadowInput: (currentText, dataId) ->
     @resetSearch()
 
@@ -706,11 +696,6 @@ class App.SearchableSelect extends Spine.Controller
     @currentItem.removeClass('is-active')
     @currentItem.removeClass('is-highlighted') if @currentItem.hasClass('js-enter')
     @currentItem = null
-
-  dropupSetTopOffsetIfNeeded: =>
-    return if @attribute.direction != 'up'
-
-    @dropdown.css('top', "-#{@dropdown.find('ul:visible').height()}px")
 
   toggleClear: =>
     if @attribute.value and not @isOpen

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # taken from https://makandracards.com/makandra/1080-rspec-matcher-to-check-if-an-activerecord-exists-in-the-database
 RSpec::Matchers.define :exist_in_database do

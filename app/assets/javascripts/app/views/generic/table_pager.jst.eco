@@ -1,15 +1,21 @@
 <div class="horizontal" role="group" aria-label="<%- @T('Pagination links') %>" style="margin-bottom: 5px;">
   <a href="#" class="btn btn--split--first btn--slim btn--small btn--secondary js-page<% if @page <= 0: %> is-disabled<% end %>" data-page="<%= @page - 1 %>" aria-label="<%- @T('Previous page') %>"<% if @page <= 0: %> aria-disabled="true"<% end %>>&lsaquo;</a>
   <a href="#" class="btn btn--split btn--slim btn--small js-page<% if @page is 0: %> btn--primary btn--active<% else: %> btn--secondary<% end %>" data-page="0" aria-label="<%- @T('Page %s', 1) %>">1</a>
-<% stepper = 2 %>
-<% stepper = 3 if @page is 1 || @page is @pages - 1 %>
-<% stepper = 4 if @page is 0 || @page is @pages %>
-<% if @pages > 1: %>
-  <% for page in [1..@pages - 1]: %>
-    <% continue if page > @page + stepper || page < @page - stepper %>
-    <a href="#" class="btn btn--split btn--slim btn--small js-page<% if @page is page: %> btn--primary btn--active<% else: %> btn--secondary<% end %>" aria-label="<%- @T('Page %s', page + 1) %>" aria-current="true" data-page="<%= page %>"><% if page is @page - stepper || page is @page + stepper: %>&hellip;<% else: %><%= page + 1 %><% end %></a>
+
+  <% stepper = 2 %>
+  <% stepper = 3 if @page is 1 || @page is @pages - 1 %>
+  <% stepper = 4 if @page is 0 || @page is @pages %>
+
+  <% if @pages > 1: %>
+    <% for page in [1..@pages - 1]: %>
+      <% continue if page > @page + stepper || page < @page - stepper %>
+      <a href="#" class="btn btn--split btn--slim btn--small js-page<% if @page is page: %> btn--primary btn--active<% else: %> btn--secondary<% end %>" aria-label="<%- @T('Page %s', page + 1) %>" aria-current="true" data-page="<%= page %>"><% if page is @page - stepper || page is @page + stepper: %>&hellip;<% else: %><%= page + 1 %><% end %></a>
+    <% end %>
   <% end %>
-<% end %>
-  <a href="#" class="btn btn--split btn--slim btn--small js-page<% if @page is @pages: %> btn--primary btn--active<% else: %> btn--secondary<% end %>" data-page="<%= @pages %>" aria-label="<%- @T('Page %s', @pages + 1) %>"><%= @pages + 1 %></a>
+
+  <% if @pages > 0: %>
+    <a href="#" class="btn btn--split btn--slim btn--small js-page<% if @page is @pages: %> btn--primary btn--active<% else: %> btn--secondary<% end %>" data-page="<%= @pages %>" aria-label="<%- @T('Page %s', @pages + 1) %>"><%= @pages + 1 %></a>
+  <% end %>
+
   <a href="#" class="btn btn--split--last btn--slim btn--small btn--secondary js-page<% if @page >= @pages: %> is-disabled<% end %>" data-page="<%= @page + 1 %>" aria-label="<%- @T('Next page') %>"<% if @page >= @pages: %> aria-disabled="true"<% end %>>&rsaquo;</a>
 </div>

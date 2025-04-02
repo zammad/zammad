@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -48,7 +48,7 @@ RSpec.describe EmailHelper do
       let(:password)     { 'some_pw' }
 
       context 'when inbound' do
-        let(:ssl_options)             { { key: 'ssl', value: true } }
+        let(:ssl_options)             { { key: 'ssl', value: 'ssl' } }
         let(:expected_result_inbound) { provider_setting('imap', 993, mail_address, password, ssl_options) }
 
         it 'contains correct inbound provider information' do
@@ -103,7 +103,7 @@ RSpec.describe EmailHelper do
         options: {
           host:     host,
           port:     port,
-          ssl:      true,
+          ssl:      'ssl',
           user:     user,
           password: password,
         },
@@ -142,7 +142,7 @@ RSpec.describe EmailHelper do
         options: {
           host:     host,
           port:     port,
-          ssl:      true,
+          ssl:      'ssl',
           user:     user,
           password: password,
         }

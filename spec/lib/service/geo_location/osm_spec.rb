@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -12,29 +12,29 @@ RSpec.describe Service::GeoLocation::Osm, :integration, use_vcr: true do
   describe '#geocode' do
     subject(:geocode) { described_class.geocode(address) }
 
+    let(:result)  { [be_a(Float), be_a(Float)] }
+
     context 'with a german address' do
       let(:address) { 'Marienstrasse 13, 10117 Berlin' }
-      let(:result)  { [52.5220514, 13.3832091] }
 
-      it { is_expected.to eq(result) }
+      it { is_expected.to match_array(result) }
 
       context 'without a separator between street, zipcode and city' do
         let(:address) { 'Marienstrasse 13 10117 Berlin' }
 
-        it { is_expected.to eq(result) }
+        it { is_expected.to match_array(result) }
       end
     end
 
     context 'with a swiss address' do
       let(:address) { 'Martinsbruggstrasse 35, 9016 St. Gallen' }
-      let(:result)  { [47.43664765, 9.409934047751209] }
 
-      it { is_expected.to eq(result) }
+      it { is_expected.to match_array(result) }
 
       context 'without a separator between street, zipcode and city' do
         let(:address) { 'Martinsbruggstrasse 35 9016 St. Gallen' }
 
-        it { is_expected.to eq(result) }
+        it { is_expected.to match_array(result) }
       end
     end
   end

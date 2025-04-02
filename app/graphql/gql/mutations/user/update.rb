@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Update < BaseMutation
@@ -10,7 +10,7 @@ module Gql::Mutations
     field :user, Gql::Types::UserType, description: 'The created user.'
 
     def authorized?(current_user:, input:)
-      Pundit.authorize(context.current_user, current_user, :update?)
+      pundit_authorized?(current_user, :update?)
     end
 
     def resolve(current_user:, input:)

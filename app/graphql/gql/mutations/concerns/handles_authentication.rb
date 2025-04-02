@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations::Concerns::HandlesAuthentication
   extend ActiveSupport::Concern
@@ -40,7 +40,7 @@ module Gql::Mutations::Concerns::HandlesAuthentication
       {
         session: {
           id:         context[:controller].session.id,
-          after_auth: Auth::AfterAuth.run(context.current_user, context[:controller].session)
+          after_auth: Auth::AfterAuth.run(context.current_user, context[:controller].session, options: { initial: true })
         }
       }
     end

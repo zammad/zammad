@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { onClickOutside } from '@vueuse/core'
@@ -247,8 +247,8 @@ const minHeightClassMap = {
 
 const editBackgroundClass = computed(() =>
   props.alternativeBackground
-    ? 'before:bg-neutral-50 before:dark:bg-gray-500'
-    : 'before:bg-blue-200 before:dark:bg-gray-700',
+    ? 'before:bg-neutral-50 dark:before:bg-gray-500'
+    : 'before:bg-blue-200 dark:before:bg-gray-700',
 )
 
 const hoverClasses = computed(() => {
@@ -256,9 +256,9 @@ const hoverClasses = computed(() => {
     'before:absolute before:-left-[5px] before:top-1/2 before:-translate-y-1/2 before:-z-10 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:rounded-md'
 
   if (props.alternativeBackground) {
-    classes += ' hover:before:bg-neutral-50 hover:before:dark:bg-gray-500'
+    classes += ' hover:before:bg-neutral-50 dark:hover:before:bg-gray-500'
   } else {
-    classes += ' hover:before:bg-blue-200 hover:before:dark:bg-gray-700' // default background
+    classes += ' hover:before:bg-blue-200 dark:hover:before:bg-gray-700' // default background
   }
 
   return props.disabled ? '' : classes
@@ -275,7 +275,7 @@ defineExpose({
   <div
     ref="target"
     :role="activeEditingMode || disabled ? undefined : 'button'"
-    class="-:w-fit group relative flex items-center gap-1 focus:outline-none"
+    class="group relative flex w-fit items-center gap-1 focus:outline-hidden"
     :class="[
       disabledClasses,
       {
@@ -308,7 +308,7 @@ defineExpose({
         :id="id"
         ref="label"
         class="z-10 break-words"
-        style="word-break: break-word"
+        style="word-break: normal; overflow-wrap: anywhere"
         v-bind="labelAttrs"
         :size="size"
         :class="[classes?.label, minHeightClassMap[size]]"
@@ -318,7 +318,7 @@ defineExpose({
 
     <div
       v-else
-      class="flex max-w-full items-center gap-2 before:absolute before:-left-[5px] before:top-1/2 before:z-0 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md"
+      class="flex max-w-full items-center gap-2 before:absolute before:top-1/2 before:-left-[5px] before:z-0 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md"
       :class="[
         { 'w-full': block },
         editBackgroundClass,
@@ -330,7 +330,7 @@ defineExpose({
           key="editable-content-key"
           v-model.trim="inputValue"
           v-focus
-          class="-:text-gray-100 -:dark:text-neutral-400 block w-full flex-shrink-0 bg-transparent outline-none"
+          class="block w-full flex-shrink-0 bg-transparent text-gray-100 outline-hidden dark:text-neutral-400"
           :class="[{ grow: block }, classes?.input || '']"
           :disabled="disabled || loading"
           :placeholder="placeholder"

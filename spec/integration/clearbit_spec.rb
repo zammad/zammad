@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 RSpec.describe 'Clearbit', aggregate_failures: true, current_user_id: 1, integration: true, performs_jobs: true, required_envs: %w[CLEARBIT_CI_API_KEY] do

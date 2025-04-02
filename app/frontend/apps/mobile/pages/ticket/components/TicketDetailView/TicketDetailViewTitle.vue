@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -76,7 +76,7 @@ const customer = computed(() => {
               </div>
             </template>
           </div>
-          <h1 class="line-clamp-3 break-words text-xl font-bold leading-7">
+          <h1 class="line-clamp-3 text-xl leading-7 font-bold break-words">
             {{ ticket.title }}
           </h1>
           <div class="mt-2 flex flex-wrap gap-2">
@@ -98,7 +98,7 @@ const customer = computed(() => {
         <CommonIcon
           :name="`chevron-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`"
           size="base"
-          class="shrink-0 self-center ltr:-mr-2 ltr:ml-auto rtl:-ml-2 rtl:mr-auto"
+          class="shrink-0 self-center ltr:-mr-2 ltr:ml-auto rtl:mr-auto rtl:-ml-2"
           decorative
         />
       </CommonLink>

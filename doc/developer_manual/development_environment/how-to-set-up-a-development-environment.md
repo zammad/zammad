@@ -55,8 +55,8 @@ For Linux and macOS:
 
 ```screen
 curl -sSL https://get.rvm.io | bash -s stable --rails
-rvm install ruby-3.2.4
-rvm --default use 3.2.4
+rvm install ruby-3.2.8
+rvm --default use 3.2.8
 ```
 
 ## NVM, Node.js and pnpm
@@ -84,6 +84,10 @@ To ensure a well-readable and maintainable code base, we're using linting tools 
 - [CoffeeLint](http://www.coffeelint.org/)
 - [Stylelint](https://stylelint.io/)
 - [ESLint](https://eslint.org/)
+- [Markdownlint](https://github.com/DavidAnson/markdownlint)
+
+There is also a dependency on [Docker](https://www.docker.com/) for some linting tasks, make sure it's available on your
+system.
 
 For Linux and macOS:
 
@@ -148,38 +152,46 @@ All Ruby dependencies (including development dependencies) can be installed easi
 For Linux and macOS:
 
 ```screen
-$ cd </path/to/zammad-develop/>
-$ bundle install
+cd </path/to/zammad-develop/>
+bundle install
 ```
 
 ## Using HTTPS
 
-Zammad uses the gem `localhost` to automatically generate self-signed certificates. This will place `~/.local/state/localhost.rb/localhost.crt` and `~/.local/state/localhost.rb/localhost.key` files if needed. Then you can use one of the following commands to start the development server:
+Zammad uses the gem `localhost` to automatically generate self-signed certificates. This will place
+`~/.local/state/localhost.rb/localhost.crt` and `~/.local/state/localhost.rb/localhost.key` files if needed. Then you
+can use one of the following commands to start the development server:
 
 ```sh
-$ VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -r -f Procfile.dev-https
+VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -r -f Procfile.dev-https
 # or
-$ pnpm dev:https
+pnpm dev:https
 ```
 
 The application will be listening on [https://localhost:3000](https://localhost:3000).
 
 ### Self-signed Certificate Exemption
 
-By default, the browser will not allow you to access an HTTPS site with a self-signed certificate. You will need to add an exemption by clicking on **Advanced** and choosing **Proceed (unsafe)** or **Accept the Risk and Continue**.
+By default, the browser will not allow you to access an HTTPS site with a self-signed certificate. You will need to add
+an exemption by clicking on **Advanced** and choosing **Proceed (unsafe)** or **Accept the Risk and Continue**.
 
-In Firefox, you will also have to add an exemption for WebSocket addresses, since they use a different port. Visit [https://localhost:6042](https://localhost:6042) and [https://localhost:3036](https://localhost:3036) to kick-start the process and then try to reload the app.
+In Firefox, you will also have to add an exemption for WebSocket addresses, since they use a different port. Visit
+[https://localhost:6042](https://localhost:6042) and [https://localhost:3036](https://localhost:3036) to kick-start the
+process and then try to reload the app.
 
 ### Signed Certificate Issued via Let's Encrypt
 
-Sometimes, using self-signed certificates might not be enough, due to some platforms still not executing the app in a secure context. You can issue a proper signed certificate via [Let's Encrypt](https://letsencrypt.org/) service for free. As a pre-requisite, you will need an access to a DNS table of a custom domain and a local instance of [Docker](https://www.docker.com/).
+Sometimes, using self-signed certificates might not be enough, due to some platforms still not executing the app in a
+secure context. You can issue a proper signed certificate via [Let's Encrypt](https://letsencrypt.org/) service for
+free. As a pre-requisite, you will need an access to a DNS table of a custom domain and a local instance of
+[Docker](https://www.docker.com/).
 
 First, decide on a subdomain for your app, i.e. if you own `example.com` you may want to use `localhost.example.com`.
 
 Next, run the following Docker container to start the DNS01 challenge process to verify you own the domain in question:
 
 ```sh
-$ docker run --rm -it -v /path/to/certs:/etc/letsencrypt certbot/dns-cloudflare certonly --manual --preferred-challenges dns --email you@example.com --agree-tos --no-eff-email --key-type rsa -d localhost.example.com
+docker run --rm -it -v /path/to/certs:/etc/letsencrypt certbot/dns-cloudflare certonly --manual --preferred-challenges dns --email you@example.com --agree-tos --no-eff-email --key-type rsa -d localhost.example.com
 ```
 
 Where:
@@ -188,24 +200,31 @@ Where:
 - `you@example.com` is your email address
 - `localhost.example.com` is the FQDN of your subdomain
 
-When asked to deploy a DNS TXT record by certbot, open the DNS table of your domain. Add a TXT record with suggested name in form of `_acme-challenge.localhost.example.com.` and suggested random value. Save the record and wait some seconds for changes to propagate (this may depend on your DNS host).
+When asked to deploy a DNS TXT record by certbot, open the DNS table of your domain. Add a TXT record with suggested
+name in form of `_acme-challenge.localhost.example.com.` and suggested random value. Save the record and wait some
+seconds for changes to propagate (this may depend on your DNS host).
 
-Then, press Enter to continue the challenge process. If the certbot identifies your DNS record, it will automatically issue an appropriate certificate. Do not proceed if there was an error logged, resolve it first.
+Then, press Enter to continue the challenge process. If the certbot identifies your DNS record, it will automatically
+issue an appropriate certificate. Do not proceed if there was an error logged, resolve it first.
 
 Next, backup your current self-signed certificate files (if they exist) and create symbolic links to the new ones:
 
 ```sh
-$ cd ~/.local/state/localhost.rb
-$ mv localhost.crt localhost.crt.self-signed
-$ mv localhost.key localhost.key.self-signed
-$ ln -s /path/to/certs/live/localhost.example.com/cert.pem ~/.local/state/localhost.rb/localhost.crt
-$ ln -s /path/to/certs/live/localhost.example.com/privkey.pem ~/.local/state/localhost.rb/localhost.key
+cd ~/.local/state/localhost.rb
+mv localhost.crt localhost.crt.self-signed
+mv localhost.key localhost.key.self-signed
+ln -s /path/to/certs/live/localhost.example.com/cert.pem ~/.local/state/localhost.rb/localhost.crt
+ln -s /path/to/certs/live/localhost.example.com/privkey.pem ~/.local/state/localhost.rb/localhost.key
 ```
 
 You may need to adjust the paths depending on your subdomain name.
 
-Next, add an A DNS record for your subdomain that points to your local IP. You can find out your local IP via `ifconfig` or a similar command.
+Next, add an A DNS record for your subdomain that points to your local IP. You can find out your local IP via
+`ifconfig` or a similar command.
 
-For example, if your local IP is `192.168.0.39` and your subdomain is `localhost.example.com`, add an A DNS record with the name of `localhost` and point it to `192.168.0.39`. This will allow you to access the app from within your local network only by using the proper FQDN: perfect for testing the app on mobile devices.
+For example, if your local IP is `192.168.0.39` and your subdomain is `localhost.example.com`, add an A DNS record with
+the name of `localhost` and point it to `192.168.0.39`. This will allow you to access the app from within your local
+network only by using the proper FQDN: perfect for testing the app on mobile devices.
 
-Finally, start the development server with `pnpm dev:https` command. You can now access the app via [https://localhost.example.com:3000](https://localhost.example.com:3000) and it should show up as a trusted site.
+Finally, start the development server with `pnpm dev:https` command. You can now access the app via
+[https://localhost.example.com:3000](https://localhost.example.com:3000) and it should show up as a trusted site.

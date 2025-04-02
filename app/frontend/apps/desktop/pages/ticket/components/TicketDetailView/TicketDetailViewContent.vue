@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { cloneDeep, isEqual } from 'lodash-es'
@@ -607,7 +607,7 @@ const {
               :key="`${isHidingTicketDetails}-top-bar`"
               v-model:hover="isHoveringOnTopBar"
               data-test-id="visible-ticket-detail-top-bar"
-              class="absolute left-0 right-0 top-0 w-full"
+              class="absolute! top-0 right-0 left-0 w-full"
               :hide-details="isHidingTicketDetails"
             />
           </Transition>

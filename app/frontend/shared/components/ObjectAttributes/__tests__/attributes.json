@@ -264,17 +264,6 @@
     "__typename": "ObjectManagerFrontendAttribute"
   },
   {
-    "name": "invisible",
-    "display": "Invisible",
-    "dataType": "input",
-    "dataOption": {
-      "null": false,
-      "item_class": "checkbox",
-      "permission": ["invisible.*"]
-    },
-    "__typename": "ObjectManagerFrontendAttribute"
-  },
-  {
     "name": "some_url",
     "display": "Url",
     "dataType": "input",

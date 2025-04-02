@@ -1,8 +1,10 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Guided Setup', app: :desktop_view, authenticated_as: false, required_envs: %w[MAIL_ADDRESS MAIL_PASS], set_up: false, type: :system do
+require_relative '../../../../lib/zammad/service/redis'
+
+RSpec.describe 'Desktop > Guided Setup', app: :desktop_view, authenticated_as: false, integration: true, required_envs: %w[MAIL_ADDRESS MAIL_PASS], set_up: false, type: :system do
 
   before do
     # Import mail server CA certificate into the trust store.
@@ -13,7 +15,7 @@ RSpec.describe 'Desktop > Guided Setup', app: :desktop_view, authenticated_as: f
 
   after do
     # Make sure lock is lifted even on test errors.
-    Redis.new(driver: :hiredis, url: ENV['REDIS_URL'].presence || 'redis://localhost:6379').del('Zammad::System::Setup')
+    Zammad::Service::Redis.new.del('Zammad::System::Setup')
   end
 
   it 'Perform the basic system set-up' do

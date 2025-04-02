@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class BackgroundServices
 
@@ -6,6 +6,7 @@ class BackgroundServices
     BackgroundServices::Service.descendants
   end
 
+  CHILD_PROCESS_MONITOR_INTERVAL = 5.seconds
   # Waiting time before processes get killed.
   SHUTDOWN_GRACE_PERIOD = 30.seconds
 
@@ -20,6 +21,7 @@ class BackgroundServices
     @threads    = []
     install_signal_trap
     AppVersion.start_maintenance_thread(process_name: 'background-worker')
+    Zammad::ProcessDebug.install_thread_status_handler
   end
 
   def run
@@ -33,6 +35,8 @@ class BackgroundServices
         run_service service_config
       end
 
+    monitor_child_processes
+
     child_pids.each { |pid| Process.waitpid(pid) }
     threads.each(&:join)
   ensure
@@ -40,6 +44,28 @@ class BackgroundServices
   end
 
   private
+
+  # Check if child processes are still alive, terminate the main process otherwise to
+  #   signal to the controlling process manager that the background worker needs a restart.
+  def monitor_child_processes
+    return if child_pids.blank?
+
+    Thread.new do
+      Thread.current.abort_on_exception = true
+      Thread.current.name = 'child process monitoring'
+
+      until self.class.shutdown_requested
+        child_pids.each do |child_pid|
+          Process.getpgid(child_pid)
+        rescue Errno::ESRCH
+          Rails.logger.error { "BackgroundServices child process #{child_pid} has died, terminating the background worker…" }
+          Process.kill('TERM', Process.pid)
+          Thread.current.exit
+        end
+        sleep CHILD_PROCESS_MONITOR_INTERVAL
+      end
+    end
+  end
 
   def install_signal_trap
     Signal.trap('TERM') { handle_signal('TERM') }
@@ -53,6 +79,8 @@ class BackgroundServices
     #   If it doesn't, it will send KILL signals to all child processes and the main process
     #   to enforce the termination.
     Thread.new do
+      Thread.current.name = 'shutdown handler'
+
       Rails.logger.info { "BackgroundServices shutdown requested via #{signal} signal for process #{Process.pid}" }
 
       sleep SHUTDOWN_GRACE_PERIOD
@@ -107,6 +135,7 @@ class BackgroundServices
   def start_as_thread(service)
     Thread.new do
       Thread.current.abort_on_exception = true
+      Thread.current.name = "service #{service.service_name}"
 
       Rails.logger.info { "Starting thread for service #{service.service_name} in the main process." }
       service.new(manager: self).run

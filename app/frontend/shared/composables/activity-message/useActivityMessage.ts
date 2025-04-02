@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type Ref } from 'vue'
 
@@ -30,7 +30,7 @@ export const useActivityMessage = (
 
   if (builder.value && !message) {
     log.error(
-      `Unknow action for (${activity.value.objectName}/${activity.value.typeName}), extend activityMessages() of model.`,
+      `Unknown action for (${activity.value.objectName}/${activity.value.typeName}), extend activityMessages() of model.`,
     )
   }
 

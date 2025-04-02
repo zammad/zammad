@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Public::CategoriesController < KnowledgeBase::Public::BaseController
   skip_before_action :load_kb, only: :forward_root

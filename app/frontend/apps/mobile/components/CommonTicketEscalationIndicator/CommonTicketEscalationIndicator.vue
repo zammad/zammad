@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
@@ -27,13 +27,13 @@ const escalationState = useEscalationState(toRef(() => props.escalationAt))
       'bg-yellow-highlight text-yellow':
         escalationState === EscalationState.Warning,
     }"
-    class="flex select-none items-center rounded bg-gray-100 py-1 text-black ltr:pl-1 ltr:pr-1.5 rtl:pl-1.5 rtl:pr-1"
+    class="flex items-center rounded bg-gray-100 py-1 text-black select-none ltr:pr-1.5 ltr:pl-1 rtl:pr-1 rtl:pl-1.5"
     role="alert"
   >
     <CommonIcon name="ticket-escalating" size="tiny" decorative />
     <div
       v-if="escalationAt"
-      class="text-xs uppercase leading-[14px] ltr:ml-[2px] rtl:mr-[2px]"
+      class="text-xs leading-[14px] uppercase ltr:ml-[2px] rtl:mr-[2px]"
     >
       {{ $t('escalation %s', i18n.relativeDateTime(escalationAt)) }}
     </div>

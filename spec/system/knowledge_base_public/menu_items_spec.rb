@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -49,7 +49,7 @@ RSpec.describe 'Public Knowledge Base menu items', authenticated_as: false, type
     let(:color) { 'rgb(255, 0, 255)' }
 
     it 'applies color for header preview' do
-      elem = all('.menu-item')[0]
+      elem = first('.menu-item')
 
       expect(elem).to have_computed_style :color, color
     end

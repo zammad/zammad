@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class TriggerWebhookJob < ApplicationJob
 
@@ -68,17 +68,18 @@ class TriggerWebhookJob < ApplicationJob
       webhook.endpoint,
       payload,
       {
-        json:             true,
-        jsonParseDisable: true,
-        open_timeout:     4,
-        read_timeout:     30,
-        total_timeout:    60,
-        headers:          headers,
-        signature_token:  webhook.signature_token,
-        verify_ssl:       webhook.ssl_verify,
-        user:             webhook.basic_auth_username,
-        password:         webhook.basic_auth_password,
-        log:              {
+        json:                    true,
+        jsonParseDisable:        true,
+        open_timeout:            4,
+        read_timeout:            30,
+        total_timeout:           60,
+        headers:                 headers,
+        signature_token:         webhook.signature_token,
+        verify_ssl:              webhook.ssl_verify,
+        user:                    webhook.basic_auth_username,
+        password:                webhook.basic_auth_password,
+        do_not_follow_redirects: true,
+        log:                     {
           facility: 'webhook',
         },
       },

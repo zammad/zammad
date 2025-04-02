@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class CoreWorkflow::Result::Backend
   def initialize(result_object:, field:, perform_config:, skip_rerun: false, skip_mark_restricted: false)

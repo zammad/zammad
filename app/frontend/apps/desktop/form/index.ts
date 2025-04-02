@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { initializeFileClasses } from '#shared/components/Form/fields/FieldFile/initializeFileClasses.ts'
 import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
@@ -61,7 +61,7 @@ export const initializeFormFields = () => {
   initializeFieldLinkClasses({
     container: 'formkit-link',
     base: 'ms-3 mb-2.5',
-    link: 'hover:rounded-sm hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900',
+    link: 'hover:rounded-xs hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900',
   })
 
   initializeFormGroupClasses({
@@ -74,7 +74,7 @@ export const initializeFormFields = () => {
   initializeToggleClasses({
     track:
       'bg-stone-200 dark:bg-gray-500 ring-1 ring-neutral-100 dark:ring-gray-900 hover:outline hover:outline-1 hover:outline-offset-2 hover:outline-blue-600 dark:hover:outline-blue-900 focus:outline focus:outline-1 focus:outline-offset-2 focus:outline-blue-800 hover:focus:outline-blue-800 dark:hover:focus:outline-blue-800 formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-2 formkit-invalid:outline-red-500 dark:hover:formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-2 formkit-errors:outline-red-500 dark:hover:formkit-errors:outline-red-500',
-    trackOn: '!bg-blue-800',
+    trackOn: 'bg-blue-800!',
     knob: 'bg-white',
   })
 

@@ -10,16 +10,16 @@ importers:
     devDependencies:
       '@frsource/cypress-plugin-visual-regression-diff':
         specifier: ^3.3.10
-        version: 3.3.10(cypress@13.16.1)
+        version: 3.3.10(cypress@13.17.0)
       '@testing-library/cypress':
-        specifier: ^10.0.2
-        version: 10.0.2(cypress@13.16.1)
+        specifier: ^10.0.3
+        version: 10.0.3(cypress@13.17.0)
       cypress:
-        specifier: ^13.16.1
-        version: 13.16.1
+        specifier: ^13.17.0
+        version: 13.17.0
       cypress-real-events:
-        specifier: ^1.13.0
-        version: 1.13.0(cypress@13.16.1)
+        specifier: ^1.14.0
+        version: 1.14.0(cypress@13.17.0)
 
 packages:
 
@@ -59,11 +59,11 @@ packages:
     peerDependencies:
       cypress: '>=4.5.0'
 
-  '@testing-library/cypress@10.0.2':
-    resolution: {integrity: sha512-dKv95Bre5fDmNb9tOIuWedhGUryxGu1GWYWtXDqUsDPcr9Ekld0fiTb+pcBvSsFpYXAZSpmyEjhoXzLbhh06yQ==}
+  '@testing-library/cypress@10.0.3':
+    resolution: {integrity: sha512-TeZJMCNtiS59cPWalra7LgADuufO5FtbqQBYxuAgdX6ZFAR2D9CtQwAG8VbgvFcchW3K414va/+7P4OkQ80UVg==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
-      cypress: ^12.0.0 || ^13.0.0
+      cypress: ^12.0.0 || ^13.0.0 || ^14.0.0
 
   '@testing-library/dom@10.1.0':
     resolution: {integrity: sha512-wdsYKy5zupPyLCW2Je5DLHSxSfbIp6h80WoHOQc+RPtmPGA52O9x5MJEkv92Sjonpq+poOAtUKhh1kBGAXBrNA==}
@@ -260,13 +260,13 @@ packages:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
 
-  cypress-real-events@1.13.0:
-    resolution: {integrity: sha512-LoejtK+dyZ1jaT8wGT5oASTPfsNV8/ClRp99ruN60oPj8cBJYod80iJDyNwfPAu4GCxTXOhhAv9FO65Hpwt6Hg==}
+  cypress-real-events@1.14.0:
+    resolution: {integrity: sha512-XmI8y3OZLh6cjRroPalzzS++iv+pGCaD9G9kfIbtspgv7GVsDt30dkZvSXfgZb4rAN+3pOkMVB7e0j4oXydW7Q==}
     peerDependencies:
-      cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x
+      cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x || ^14.x
 
-  cypress@13.16.1:
-    resolution: {integrity: sha512-17FtCaz0cx7ssWYKXzGB0Vub8xHwpVPr+iPt2fHhLMDhVAPVrplD+rTQsZUsfb19LVBn5iwkEUFjQ1yVVJXsLA==}
+  cypress@13.17.0:
+    resolution: {integrity: sha512-5xWkaPurwkIljojFidhw8lFScyxhtiFHl/i/3zov+1Z5CmY4t9tjIdvSXfu82Y3w7wt0uR9KkucbhkVvJZLQSA==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
 
@@ -956,10 +956,10 @@ snapshots:
 
   '@frsource/base64@1.0.17': {}
 
-  '@frsource/cypress-plugin-visual-regression-diff@3.3.10(cypress@13.16.1)':
+  '@frsource/cypress-plugin-visual-regression-diff@3.3.10(cypress@13.17.0)':
     dependencies:
       '@frsource/base64': 1.0.17
-      cypress: 13.16.1
+      cypress: 13.17.0
       glob: 8.1.0
       meta-png: 1.0.6
       move-file: 2.1.0
@@ -967,11 +967,11 @@ snapshots:
       pngjs: 7.0.0
       sharp: 0.32.1
 
-  '@testing-library/cypress@10.0.2(cypress@13.16.1)':
+  '@testing-library/cypress@10.0.3(cypress@13.17.0)':
     dependencies:
       '@babel/runtime': 7.17.9
       '@testing-library/dom': 10.1.0
-      cypress: 13.16.1
+      cypress: 13.17.0
 
   '@testing-library/dom@10.1.0':
     dependencies:
@@ -1160,11 +1160,11 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  cypress-real-events@1.13.0(cypress@13.16.1):
+  cypress-real-events@1.14.0(cypress@13.17.0):
     dependencies:
-      cypress: 13.16.1
+      cypress: 13.17.0
 
-  cypress@13.16.1:
+  cypress@13.17.0:
     dependencies:
       '@cypress/request': 3.0.6
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)

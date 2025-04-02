@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { cloneDeep, noop } from 'lodash-es'
@@ -22,7 +22,7 @@ import type {
 } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
+import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotification/useOnlineNotificationSeen.ts'
 import { useTicketEdit } from '#shared/entities/ticket/composables/useTicketEdit.ts'
 import { useTicketEditForm } from '#shared/entities/ticket/composables/useTicketEditForm.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'

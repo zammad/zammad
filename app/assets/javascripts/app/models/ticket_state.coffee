@@ -90,3 +90,7 @@ A ticket's state is used to categorize and manage the lifecycle of a ticket or c
       continue if !_.contains(state_types, App.TicketStateType.find(state.state_type_id).name)
       result.push(state)
     result
+
+  rowClass: ->
+    return if @state_type.name != 'merged'
+    'is-grayed-out u-notAllowed'

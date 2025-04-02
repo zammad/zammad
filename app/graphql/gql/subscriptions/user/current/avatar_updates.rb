@@ -1,21 +1,20 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
   class User::Current::AvatarUpdates < BaseSubscription
 
-    argument :user_id, GraphQL::Types::ID, 'ID of the user to receive avatar updates for', loads: Gql::Types::UserType
-
     description 'Updates to account avatar records'
+
+    subscription_scope :current_user_id
 
     field :avatars, [Gql::Types::AvatarType], null: true, description: 'List of avatars for the user'
 
-    # Instance method: allow subscriptions only for the current user
-    def authorized?(user:)
-      context.current_user.permissions?('user_preferences.avatar') && user.id == context.current_user.id
+    def authorized?
+      context.current_user.permissions?('user_preferences.avatar')
     end
 
-    def update(user:)
-      { avatars: Avatar.list('User', user.id, raw: true) }
+    def update
+      { avatars: Avatar.list('User', context.current_user.id, raw: true) }
     end
   end
 end

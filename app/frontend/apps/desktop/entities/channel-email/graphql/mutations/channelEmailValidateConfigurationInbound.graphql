@@ -7,9 +7,6 @@ mutation channelEmailValidateConfigurationInbound(
     success
     mailboxStats {
       contentMessages
-      archivePossible
-      archivePossibleIsFallback
-      archiveWeekRange
     }
     errors {
       ...errors

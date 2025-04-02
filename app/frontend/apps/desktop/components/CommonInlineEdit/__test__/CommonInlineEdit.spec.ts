@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { fireEvent, waitFor } from '@testing-library/vue'
 
@@ -250,7 +250,7 @@ describe('CommonInlineEdit', () => {
     await wrapper.events.click(wrapper.getByText('test value'))
 
     expect(wrapper.html()).toContain(
-      'before:bg-neutral-50 before:dark:bg-gray-500',
+      'before:bg-neutral-50 dark:before:bg-gray-500',
     )
 
     await wrapper.rerender({
@@ -258,11 +258,11 @@ describe('CommonInlineEdit', () => {
     })
 
     expect(wrapper.html()).toContain(
-      'before:bg-blue-200 before:dark:bg-gray-700',
+      'before:bg-blue-200 dark:before:bg-gray-700',
     )
 
     expect(wrapper.html()).not.toContain(
-      'before:bg-neutral-50 before:dark:bg-gray-500',
+      'before:bg-neutral-50 dark:before:bg-gray-500',
     )
   })
 })

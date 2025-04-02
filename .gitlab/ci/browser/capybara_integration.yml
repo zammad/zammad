@@ -2,11 +2,14 @@ capybara:integration:other:
   extends:
     - .template_browser-core_capybara_chrome
     - .variables_idoit
+    - .variables_proxy
   services:
     - !reference [.services, postgresql]
     - !reference [.services, selenium-chrome]
     - !reference [.services, redis]
     - !reference [.services, idoit]
+    - !reference [.services, imap]
+    - !reference [.services, proxy]
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
     - bundle exec rspec -t integration -t ~integration_standalone --profile 10 spec/system
@@ -24,7 +27,7 @@ capybara:integration:saml:
     - !reference [.scripts, zammad_ci_test_prepare]
     - bundle exec rspec -t integration_standalone:saml --profile 10 spec/system
 
-capybara:integration:otrs:
+.template_capybara_integration_otrs:
   extends:
     - .template_browser-core_capybara_chrome
   variables:
@@ -37,6 +40,17 @@ capybara:integration:otrs:
       alias: zammad-ci-otrsimport-db
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs6
       alias: zammad-ci-otrsimport-app
+
+capybara:integration:otrs:
+  extends:
+    - .template_capybara_integration_otrs
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
-    - bundle exec rspec -t integration_standalone:otrs --profile 10 spec/system
+    - bundle exec rspec -t integration_standalone:otrs --profile 10 spec/system/apps
+
+capybara:integration:otrs:legacy:
+  extends:
+    - .template_capybara_integration_otrs
+  script:
+    - !reference [.scripts, zammad_ci_test_prepare]
+    - bundle exec rspec -t integration_standalone:otrs --profile 10 spec/system/import

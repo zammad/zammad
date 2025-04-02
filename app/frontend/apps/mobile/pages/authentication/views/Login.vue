@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -86,7 +86,7 @@ const showError = (error: UserError) => {
 </script>
 
 <template>
-  <div class="flex h-full min-h-screen flex-col items-center px-6 pb-4 pt-6">
+  <div class="flex h-full min-h-screen flex-col items-center px-6 pt-6 pb-4">
     <div v-if="statePreviousMap[loginFlow.state]" class="flex w-full">
       <button
         class="cursor-pointer"
@@ -143,7 +143,7 @@ const showError = (error: UserError) => {
       >
         {{ $t('Having problems?') }}
         <button
-          class="text-gray cursor-pointer pb-2 font-semibold leading-4"
+          class="text-gray cursor-pointer pb-2 leading-4 font-semibold"
           @click.prevent="updateState('2fa-select')"
         >
           {{ $t('Try another method') }}
@@ -172,13 +172,13 @@ const showError = (error: UserError) => {
     </section>
     <div
       v-if="loginFlow.state !== 'credentials' && !hasAlternativeLoginMethod"
-      class="text-gray pb-2 font-medium leading-4"
+      class="text-gray pb-2 leading-4 font-medium"
     >
       {{ $t('Contact the administrator if you have any problems logging in.') }}
     </div>
     <CommonLink
       link="/#login"
-      class="text-gray font-medium leading-4"
+      class="text-gray leading-4 font-medium"
       @click="forceDesktop"
     >
       {{ $t('Continue to desktop') }}
@@ -192,7 +192,7 @@ const showError = (error: UserError) => {
           :link="link.link"
           :title="link.description"
           :open-in-new-tab="link.newTab"
-          class="text-gray font-semibold leading-4 tracking-wide after:ml-1 after:font-medium after:text-gray-200 after:content-['|'] last:after:content-none"
+          class="text-gray leading-4 font-semibold tracking-wide after:ml-1 after:font-medium after:text-gray-200 after:content-['|'] last:after:content-none"
         >
           {{ $t(link.title) }}
         </CommonLink>

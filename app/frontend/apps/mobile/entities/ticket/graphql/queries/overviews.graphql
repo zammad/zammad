@@ -1,0 +1,13 @@
+query ticketOverviews($withTicketCount: Boolean!) {
+  ticketOverviews(ignoreUserConditions: false) {
+    ...overviewAttributes
+    viewColumns {
+      key
+      value
+    }
+    orderColumns {
+      key
+      value
+    }
+  }
+}

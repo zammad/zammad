@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::TaskbarControllerPolicy < Controllers::ApplicationControllerPolicy
   def index?
@@ -19,6 +19,10 @@ class Controllers::TaskbarControllerPolicy < Controllers::ApplicationControllerP
 
   def destroy?
     own?
+  end
+
+  def init?
+    true
   end
 
   private

@@ -564,6 +564,11 @@
         "url": "",
         "license": "MIT"
     },
+    "openid-connect-button.svg": {
+        "author": "OpenID",
+        "url": "https://openid.net/",
+        "license": ""
+    },
     "organization.svg": {
         "author": "Felix Niklas",
         "url": "",

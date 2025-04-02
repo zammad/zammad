@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -35,17 +35,18 @@ RSpec.describe Gql::Mutations::Channel::Email::Add, type: :graphql do
   end
   let(:inbound_configuration) do
     {
-      adapter:       'imap',
-      host:          'nonexisting.host.local',
-      port:          993,
-      ssl:           'ssl',
-      user:          'some@example.com',
-      password:      'password',
-      folder:        'some_folder',
-      keepOnServer:  true,
-      sslVerify:     false,
-      archive:       true,
-      archiveBefore: '2012-03-04T00:00:00',
+      adapter:        'imap',
+      host:           'nonexisting.host.local',
+      port:           993,
+      ssl:            'ssl',
+      user:           'some@example.com',
+      password:       'password',
+      folder:         'some_folder',
+      keepOnServer:   true,
+      sslVerify:      false,
+      archive:        true,
+      archiveBefore:  '2012-03-04T00:00:00',
+      archiveStateId: Ticket::State.find_by(name: 'closed').id,
     }
   end
   let(:group) { create(:group) }
@@ -84,16 +85,17 @@ RSpec.describe Gql::Mutations::Channel::Email::Add, type: :graphql do
       {
         adapter: 'imap',
         options: {
-          host:           'nonexisting.host.local',
-          port:           993,
-          ssl:            'ssl',
-          user:           'some@example.com',
-          password:       'password',
-          folder:         'some_folder',
-          keep_on_server: true,
-          ssl_verify:     false,
-          archive:        true,
-          archive_before: '2012-03-04T00:00:00'.to_time, # rubocop:disable Rails/TimeZone
+          host:             'nonexisting.host.local',
+          port:             993,
+          ssl:              'ssl',
+          user:             'some@example.com',
+          password:         'password',
+          folder:           'some_folder',
+          keep_on_server:   true,
+          ssl_verify:       false,
+          archive:          true,
+          archive_before:   '2012-03-04T00:00:00'.to_time, # rubocop:disable Rails/TimeZone
+          archive_state_id: Ticket::State.find_by(name: 'closed').id,
         }
       }
     end

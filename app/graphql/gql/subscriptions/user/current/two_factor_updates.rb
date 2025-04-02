@@ -1,30 +1,30 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
   class User::Current::TwoFactorUpdates < BaseSubscription
 
     description 'Updates to current user two factor records'
 
-    argument :user_id, GraphQL::Types::ID, 'ID of the user to receive avatar updates for', loads: Gql::Types::UserType
+    subscription_scope :current_user_id
 
     field :configuration, Gql::Types::User::ConfigurationTwoFactorType, description: 'Configuration information for the current user.'
 
-    # Instance method: allow subscriptions only for the current user
-    def authorized?(user:)
-      context.current_user.permissions?('user_preferences.two_factor_authentication') && user.id == context.current_user.id
+    def authorized?
+      context.current_user.permissions?('user_preferences.two_factor_authentication')
     end
 
-    def subscribe(user:)
-      response(user)
+    def subscribe
+      response
     end
 
-    def update(user:)
-      response(user)
+    def update
+      response
     end
 
     private
 
-    def response(user)
+    def response
+      user = context.current_user
       enabled_authentication_methods = user.two_factor_enabled_authentication_methods
 
       {

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   getGraphQLMockCalls,
@@ -8,7 +8,7 @@ import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 
-import type { SearchQuery } from '#shared/graphql/types.ts'
+import { type SearchQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { SearchDocument } from '../graphql/queries/searchOverview.api.ts'
@@ -31,7 +31,10 @@ describe('visiting search page', () => {
     const view = await visitView('/search', { mockApollo: false })
 
     const mocker = mockGraphQLResult<SearchQuery>(SearchDocument, {
-      search: [],
+      search: {
+        items: [],
+        totalCount: 0,
+      },
     })
 
     const searchInput = view.getByPlaceholderText('Search…')
@@ -94,30 +97,34 @@ describe('avatars', () => {
   it('renders user as inactive', async () => {
     setupView('agent')
     mockGraphQLResult<SearchQuery>(SearchDocument, {
-      search: [
-        {
-          __typename: 'User',
-          id: convertToGraphQLId('User', 100),
-          internalId: 100,
-          updatedAt: new Date().toISOString(),
-          active: false,
-          vip: true,
-          firstname: 'Max',
-          lastname: 'Mustermann',
-        },
-        {
-          __typename: 'User',
-          id: convertToGraphQLId('User', 200),
-          internalId: 200,
-          updatedAt: new Date().toISOString(),
-          outOfOffice: true,
-          active: true,
-          vip: false,
-          image: 'jon.png',
-          firstname: 'Jon',
-          lastname: 'Doe',
-        },
-      ],
+      search: {
+        __typename: 'SearchResult',
+        totalCount: 2,
+        items: [
+          {
+            __typename: 'User',
+            id: convertToGraphQLId('User', 100),
+            internalId: 100,
+            updatedAt: new Date().toISOString(),
+            active: false,
+            vip: true,
+            firstname: 'Max',
+            lastname: 'Mustermann',
+          },
+          {
+            __typename: 'User',
+            id: convertToGraphQLId('User', 200),
+            internalId: 200,
+            updatedAt: new Date().toISOString(),
+            outOfOffice: true,
+            active: true,
+            vip: false,
+            image: 'jon.png',
+            firstname: 'Jon',
+            lastname: 'Doe',
+          },
+        ],
+      },
     })
 
     const view = await visitView('/search/user?search=max', {
@@ -145,7 +152,10 @@ describe('avatars', () => {
 test('correctly redirects from hash-based routes', async () => {
   setupView('agent')
   mockGraphQLResult<SearchQuery>(SearchDocument, {
-    search: [],
+    search: {
+      items: [],
+      totalCount: 0,
+    },
   })
   await visitView('/#search/string', { mockApollo: false })
   const router = getTestRouter()

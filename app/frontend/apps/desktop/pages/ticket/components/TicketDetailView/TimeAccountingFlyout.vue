@@ -1,10 +1,13 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
 
 import Form from '#shared/components/Form/Form.vue'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import type {
+  FormSchemaNode,
+  FormSubmitData,
+} from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import type { TicketArticleTimeAccountingFormData } from '#shared/entities/ticket/types.ts'
 import { EnumFormUpdaterId } from '#shared/graphql/types.ts'
@@ -14,6 +17,8 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import type { ActionFooterOptions } from '#desktop/components/CommonFlyout/types.ts'
 import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+
+import type { FormKitNode } from '@formkit/core'
 
 const emit = defineEmits<{
   'account-time': [TicketArticleTimeAccountingFormData]
@@ -27,6 +32,9 @@ const flyoutName = 'ticket-time-accounting'
 const submitForm = (
   formData: FormSubmitData<TicketArticleTimeAccountingFormData>,
 ) => {
+  if (formData.time_unit) {
+    formData.time_unit = formData.time_unit.replace(',', '.')
+  }
   emit('account-time', formData)
   closeFlyout(flyoutName)
 }
@@ -56,6 +64,11 @@ const timeAccountingUnit = computed(() => {
   }
 })
 
+const validationRuleTimeAccountingUnit = (node: FormKitNode<string>) => {
+  if (!node.value) return false
+  return !Number.isNaN(+node.value.replace(',', '.'))
+}
+
 const formSchema = [
   {
     isLayout: true,
@@ -71,7 +84,15 @@ const formSchema = [
         type: 'text',
         required: true,
         placeholder: __('Enter the time you want to record'),
-        validation: 'number',
+        validation: 'validationRuleTimeAccountingUnit',
+        validationRules: {
+          validationRuleTimeAccountingUnit,
+        },
+        validationMessages: {
+          validationRuleTimeAccountingUnit: __(
+            'This field must contain a number.',
+          ),
+        },
         ...(timeAccountingUnit.value
           ? {
               sectionsSchema: {
@@ -102,7 +123,7 @@ const formSchema = [
       },
     ],
   },
-]
+] as FormSchemaNode[]
 
 const timeAccountingTypes = computed(() => config.time_accounting_types)
 

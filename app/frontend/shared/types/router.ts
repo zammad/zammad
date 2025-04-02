@@ -1,10 +1,15 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { EnumTaskbarEntity } from '#shared/graphql/types.ts'
 
 import type { RequiredPermission } from './permission.ts'
 import type { App } from 'vue'
-import type { Router, RouteRecordRaw, RouteLocationRaw } from 'vue-router'
+import type {
+  Router,
+  RouteRecordRaw,
+  RouteLocationRaw,
+  RouteLocationNormalizedGeneric,
+} from 'vue-router'
 
 export type InitializeAppRouter = (app: App) => Router
 
@@ -24,6 +29,7 @@ export interface RouteRecordMeta {
   hasOwnLandmarks?: boolean
   taskbarTabEntity?: EnumTaskbarEntity
   taskbarTabEntityKey?: string
+  isTaskbarTabPossible?: (route: RouteLocationNormalizedGeneric) => boolean
   level?: number
   pageKey?: string
   permanentItem?: boolean

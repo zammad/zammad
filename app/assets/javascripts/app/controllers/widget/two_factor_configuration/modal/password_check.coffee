@@ -35,9 +35,9 @@ class App.TwoFactorConfigurationModalPasswordCheck extends App.TwoFactorConfigur
         if data?.success
           if @successCallback && !@container
             @close()
-            @successCallback()
+            @successCallback(token: data.token)
           else
-            @next()
+            @next(token: data.token)
 
           return
 

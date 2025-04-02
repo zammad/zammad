@@ -7,8 +7,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketLiveUserUpdatesDocument = gql`
-    subscription ticketLiveUserUpdates($userId: ID!, $key: String!, $app: EnumTaskbarApp!) {
-  ticketLiveUserUpdates(userId: $userId, key: $key, app: $app) {
+    subscription ticketLiveUserUpdates($key: String!, $app: EnumTaskbarApp!) {
+  ticketLiveUserUpdates(key: $key, app: $app) {
     liveUsers {
       ...ticketLiveUserAttributes
     }

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { isEqual } from 'lodash-es'
@@ -22,7 +22,7 @@ import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonInputCopyToClipboard from '#desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue'
-import CommonTabManager from '#desktop/components/CommonTabManager/CommonTabManager.vue'
+import CommonTabGroup from '#desktop/components/CommonTabGroup/CommonTabGroup.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
@@ -317,11 +317,11 @@ const tabs = [
         @update:model-value="formSubmit"
       />
 
-      <CommonLabel role="heading" aria-level="2" class="mb-2 mt-5" size="large">
+      <CommonLabel role="heading" aria-level="2" class="mt-5 mb-2" size="large">
         {{ $t('Subscription settings') }}
       </CommonLabel>
 
-      <CommonTabManager v-model="activeStep" class="mb-3" :tabs="tabs" />
+      <CommonTabGroup v-model="activeStep" class="mb-3" :tabs="tabs" />
 
       <div
         :id="`tab-panel-${activeStep}`"

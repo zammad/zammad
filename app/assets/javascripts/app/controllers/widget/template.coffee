@@ -4,7 +4,8 @@ class App.WidgetTemplate extends App.Controller
 
   constructor: ->
     super
-    @subscribeId = App.Template.subscribe(@render, initFetch: true)
+    @subscribeId = App.Template.subscribe(@render)
+    @render()
 
   release: =>
     App.Template.unsubscribe(@subscribeId)

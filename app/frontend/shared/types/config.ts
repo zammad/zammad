@@ -10,6 +10,7 @@ export interface ConfigList {
   auth_google_oauth2?: boolean | null
   auth_linkedin?: boolean | null
   auth_microsoft_office365?: boolean | null
+  auth_openid_connect?: boolean | null
   auth_saml?: boolean | null
   auth_sso?: boolean | null
   auth_twitter?: boolean | null
@@ -88,6 +89,7 @@ export interface ConfigList {
   two_factor_authentication_method_authenticator_app?: boolean | null
   two_factor_authentication_method_security_keys?: boolean | null
   two_factor_authentication_recovery_codes?: boolean | null
+  ui_desktop_beta_switch: boolean
   ui_sidebar_open_ticket_indicator_colored?: boolean | null
   ui_table_group_by_show_count?: boolean | null
   ui_task_mananger_max_task_count: number
@@ -95,6 +97,7 @@ export interface ConfigList {
   ui_ticket_create_available_types: ('phone-in' | 'phone-out' | 'email-out')[]
   ui_ticket_create_default_type: 'phone-in' | 'phone-out' | 'email-out'
   ui_ticket_create_notes: unknown
+  ui_ticket_overview_query_polling: unknown
   ui_ticket_overview_ticket_limit: number
   ui_ticket_priority_icons?: boolean | null
   ui_ticket_zoom_article_delete_timeframe: number

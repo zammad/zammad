@@ -7,8 +7,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserCurrentTwoFactorRemoveMethodDocument = gql`
-    mutation userCurrentTwoFactorRemoveMethod($methodName: String!) {
-  userCurrentTwoFactorRemoveMethod(methodName: $methodName) {
+    mutation userCurrentTwoFactorRemoveMethod($methodName: String!, $token: String!) {
+  userCurrentTwoFactorRemoveMethod(methodName: $methodName, token: $token) {
     success
     errors {
       ...errors

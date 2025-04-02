@@ -1,7 +1,7 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, useTemplateRef, useSlots } from 'vue'
+import { computed, useTemplateRef, useSlots, type SetupContext } from 'vue'
 
 import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
@@ -37,7 +37,13 @@ const props = withDefaults(defineProps<Props>(), {
   refetch: false,
   containerTag: 'header',
 })
-const slots = useSlots()
+
+/**
+ *Workaround to satisfy linter
+ * @bug https://github.com/vuejs/language-tools/issues/5082
+ * Wait to be closed
+ * */
+const slots: SetupContext['slots'] = useSlots()
 
 const hasSlots = computed(() => Object.keys(slots).length > 0)
 

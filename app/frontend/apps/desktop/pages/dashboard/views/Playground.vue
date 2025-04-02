@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 <!-- eslint-disable zammad/zammad-detect-translatable-string -->
 
 <script setup lang="ts">
@@ -51,10 +51,15 @@ import CommonInputCopyToClipboard from '#desktop/components/CommonInputCopyToCli
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonProgressBar from '#desktop/components/CommonProgressBar/CommonProgressBar.vue'
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
-import CommonTabManager from '#desktop/components/CommonTabManager/CommonTabManager.vue'
-import { useTabManager } from '#desktop/components/CommonTabManager/useTabManager.ts'
+import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
+import CommonTabGroup from '#desktop/components/CommonTabGroup/CommonTabGroup.vue'
+import { useTabGroup } from '#desktop/components/CommonTabGroup/useTabGroup.ts'
+import CommonAdvancedTable from '#desktop/components/CommonTable/CommonAdvancedTable.vue'
+import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
+import CommonTableSkeleton from '#desktop/components/CommonTable/Skeleton/CommonTableSkeleton.vue'
+import type { TableAdvancedItem } from '#desktop/components/CommonTable/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import SplitButton from '#desktop/components/SplitButton/SplitButton.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
 
 const alphabetOptions = computed(() =>
@@ -203,6 +208,11 @@ const permissions = [
         value: 'admin.channel_microsoft365',
         label: ' Microsoft 365',
         description: 'To manage Microsoft 365 channel of your system.',
+      },
+      {
+        value: 'admin.channel_microsoft_graph',
+        label: ' Microsoft Graph',
+        description: 'To manage Microsoft Graph channel of your system.',
       },
       {
         value: 'admin.channel_twitter',
@@ -1023,6 +1033,8 @@ const tableHeaders = [
   },
 ]
 
+const tableHeadersAdvanced = ['name', 'title', 'email', 'role']
+
 const tableItems = reactive([
   {
     id: 1,
@@ -1030,6 +1042,7 @@ const tableItems = reactive([
     title: 'Front-end Developer',
     email: 'lindsay.walton@example.com',
     role: 'Member',
+    checked: true,
   },
   {
     id: 2,
@@ -1067,7 +1080,120 @@ const tableItems = reactive([
     email: 'floyd.miles@example.com',
     role: 'Member',
   },
+  {
+    id: 7,
+    name: 'Floyd Miles2',
+    title:
+      'Principal Designer for a very long way to go to see the end of the title. It is a very long title, indeed.',
+    email: 'floyd.miles@example.com',
+    role: 'Member',
+  },
+  {
+    id: 8,
+    name: 'Floyd Miles3',
+    title:
+      'Principal Designer for a very long way to go to see the end of the title. It is a very long title, indeed.',
+    email: 'floyd.miles@example.com',
+    role: 'Member',
+  },
+  {
+    id: 9,
+    name: 'Floyd Miles4',
+    title:
+      'Principal Designer for a very long way to go to see the end of the title. It is a very long title, indeed.',
+    email: 'floyd.miles@example.com',
+    role: 'Member',
+  },
+  {
+    id: 10,
+    name: 'Floyd Miles5',
+    title:
+      'Principal Designer for a very long way to go to see the end of the title. It is a very long title, indeed.',
+    email: 'floyd.miles@example.com',
+    role: 'Member',
+  },
 ])
+
+const tableItemsAdvanced = reactive<TableAdvancedItem[]>([
+  {
+    id: '1',
+    name: 'Lindsay Walton',
+    title: 'Front-end Developer',
+    email: 'lindsay.walton@example.com',
+    role: 'Member',
+  },
+  {
+    id: '2',
+    name: 'Courtney Henry',
+    title: 'Designer',
+    email: 'courtney.henry@example.com',
+    role: 'Admin',
+  },
+  {
+    id: '3',
+    name: 'Tom Cook',
+    title: 'Director of Product',
+    email: 'tom.cook@example.com',
+    role: 'Member',
+  },
+  {
+    id: '4',
+    name: 'Whitney Francis',
+    title: 'Copywriter',
+    email: 'whitney.francis@example.com',
+    role: 'Admin',
+  },
+  {
+    id: '5',
+    name: 'Leonard Krasner',
+    title: 'Senior Designer Principal Designer ',
+    email: 'leonard.krasner@example.com',
+    role: 'Owner',
+  },
+  {
+    id: '6',
+    name: 'Floyd Miles',
+    title:
+      'Principal Designer for a very long way to go to see the end of the title. It is a very long title, indeed.',
+    email: 'floyd.miles@example.com',
+    role: 'Member',
+  },
+  {
+    id: '7',
+    name: 'Floyd Miles2',
+    title:
+      'Principal Designer for a very long way to go to see the end of the title. It is a very long title, indeed.',
+    email: 'floyd.miles@example.com',
+    role: 'Member',
+  },
+  {
+    id: '8',
+    name: 'Floyd Miles3',
+    title:
+      'Principal Designer for a very long way to go to see the end of the title. It is a very long title, indeed.',
+    email: 'floyd.miles@example.com',
+    role: 'Member',
+  },
+  {
+    id: '9',
+    name: 'Floyd Miles4',
+    title:
+      'Principal Designer for a very long way to go to see the end of the title. It is a very long title, indeed.',
+    email: 'floyd.miles@example.com',
+    role: 'Member',
+  },
+  {
+    id: '10',
+    name: 'Floyd Miles5',
+    title:
+      'Principal Designer for a very long way to go to see the end of the title. It is a very long title, indeed.',
+    email: 'floyd.miles@example.com',
+    role: 'Member',
+  },
+])
+
+const tableItemsMap = new Set(['1', '2'])
+const checkedAdvancedTableItems = ref(tableItemsMap)
 
 const tableActions: MenuItem[] = [
   {
@@ -1089,13 +1215,13 @@ const tableActions: MenuItem[] = [
   },
 ]
 
-const changeRow = () => {
+const changeRowSimple = () => {
   tableItems[0].role = tableItems[0].role ? '' : 'Member'
 }
 
-const { activeTab } = useTabManager<string>()
+const { activeTab } = useTabGroup<string>()
 
-const { activeTab: activeFilters } = useTabManager<string[]>()
+const { activeTab: activeFilters } = useTabGroup<string[]>()
 
 const popoverOrientation: Ref<Orientation> = ref('autoVertical')
 const popoverOrientationOptions = [
@@ -1159,11 +1285,66 @@ const breadcrumbItems = [
 const popoverHideArrow = ref(false)
 
 const inlineEditValue = ref('Edit me inline')
+
+const splitButtonMenuItems: MenuItem[] = [
+  {
+    label: 'Save as draft',
+    groupLabel: 'Drafts',
+    icon: 'floppy',
+    key: 'save-draft',
+    onClick: () => {
+      console.log('Save as draft clicked!')
+    },
+  },
+  {
+    label: 'Macro 1',
+    groupLabel: 'Macros',
+    icon: 'play-circle',
+    iconClass: 'text-yellow-300',
+    key: 'macro-1',
+    onClick: () => {
+      console.log('Macro 1 clicked!')
+    },
+  },
+  {
+    label: 'Macro 2',
+    groupLabel: 'Macros',
+    icon: 'play-circle',
+    iconClass: 'text-yellow-300',
+    key: 'macro-2',
+    onClick: () => {
+      console.log('Macro 2 clicked!')
+    },
+  },
+  {
+    label: 'Macro 3',
+    groupLabel: 'Macros',
+    icon: 'play-circle',
+    iconClass: 'text-yellow-300',
+    key: 'macro-3',
+    onClick: () => {
+      console.log('Macro 3 clicked!')
+    },
+  },
+]
+
+const onSplitButtonClick = () => {
+  console.log('Split button clicked!')
+}
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="[]">
+  <LayoutContent>
     <div>
+      Generic skeleton
+      <CommonSkeleton class="h-8 w-full" />
+
+      Avatar example
+      <CommonSkeleton rounded class="h-8 w-8" />
+
+      Table Skeleton
+      <CommonTableSkeleton />
+
       <div class="w-1/2">
         <div class="flex space-x-3 py-2">
           <CommonTranslateRenderer
@@ -1238,7 +1419,7 @@ const inlineEditValue = ref('Edit me inline')
         </div>
 
         <h3>Misc</h3>
-        <div class="flex-wrap space-x-3 space-y-2 py-2">
+        <div class="flex-wrap space-y-2 space-x-3 py-2">
           <CommonButton variant="submit" block>Block</CommonButton>
           <CommonButton variant="primary" disabled>Disabled</CommonButton>
           <CommonButton variant="secondary" disabled>Disabled</CommonButton>
@@ -1250,7 +1431,7 @@ const inlineEditValue = ref('Edit me inline')
         </div>
 
         <h3>Group</h3>
-        <div class="w-1/2 space-x-3 space-y-2 py-2">
+        <div class="w-1/2 space-y-2 space-x-3 py-2">
           <CommonButtonGroup :items="buttonGroupOptions" />
         </div>
       </div>
@@ -1276,10 +1457,10 @@ const inlineEditValue = ref('Edit me inline')
         </CommonAlert>
         <CommonAlert variant="success" class="mb-2.5">
           <div class="flex flex-col gap-1.5">
-            <CommonLabel class="text-yellow-600" size="large"
+            <CommonLabel class="text-yellow-600!" size="large"
               >Similar tickets found</CommonLabel
             >
-            <CommonLabel class="text-yellow-600"
+            <CommonLabel class="text-yellow-600!"
               >Tickets with the same attributes were found.</CommonLabel
             >
             <ul class="list-inside list-disc">
@@ -1386,17 +1567,89 @@ const inlineEditValue = ref('Edit me inline')
         </div>
       </div>
 
-      <h2 class="mb-2 mt-8">Table</h2>
+      <h2 class="mt-8 mb-2">Table (Simple)</h2>
       <div class="mb-6 flex flex-col gap-4">
-        <CommonButton variant="primary" @click="changeRow()"
+        <CommonButton variant="primary" @click="changeRowSimple()"
           >Change row</CommonButton
         >
         <CommonSimpleTable
+          caption="test"
           :headers="tableHeaders"
           :items="tableItems"
           :actions="tableActions"
         ></CommonSimpleTable>
       </div>
+
+      <h2 class="mt-8 mb-2">Table (Advanced)</h2>
+      <div class="mb-6 flex flex-col gap-4">
+        <CommonAdvancedTable
+          v-model:checked-item-ids="checkedAdvancedTableItems"
+          :headers="tableHeadersAdvanced"
+          :items="tableItemsAdvanced"
+          :actions="tableActions"
+          :max-items="5"
+          :total-items="10"
+          has-checkbox-column
+          caption="test advanced table"
+          table-id="2"
+          :attributes="[
+            {
+              name: 'name',
+              label: 'Name',
+              headerPreferences: {
+                noResize: false,
+                hideLabel: false,
+                displayWidth: 200,
+              },
+              columnPreferences: {
+                alignContent: 'left',
+              },
+              dataType: 'integer',
+            },
+            {
+              name: 'title',
+              label: 'Title',
+              headerPreferences: {
+                noResize: false,
+                hideLabel: false,
+                displayWidth: 200,
+              },
+              columnPreferences: {
+                alignContent: 'center',
+              },
+              dataType: 'integer',
+            },
+            {
+              name: 'email',
+              label: 'Email',
+              headerPreferences: {
+                noResize: false,
+                hideLabel: false,
+                displayWidth: 200,
+              },
+              columnPreferences: {
+                alignContent: 'right',
+              },
+              dataType: 'integer',
+            },
+            {
+              name: 'role',
+              label: 'Role',
+              headerPreferences: {
+                noResize: false,
+                hideLabel: false,
+                displayWidth: 200,
+              },
+              columnPreferences: {
+                alignContent: 'left',
+              },
+              dataType: 'integer',
+            },
+          ]"
+        />
+      </div>
+
+      {{ checkedAdvancedTableItems }}
 
       <div class="w-1/2">
         <h2 class="text-lg">Avatar</h2>
@@ -1444,7 +1697,7 @@ const inlineEditValue = ref('Edit me inline')
             size="small"
           />
           <CommonUserAvatar
-            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            class="cursor-pointer border border-neutral-100 outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
             tabindex="0"
             :entity="{
               id: 'gid://zammad/User/4',
@@ -1455,7 +1708,7 @@ const inlineEditValue = ref('Edit me inline')
             size="medium"
           />
           <CommonUserAvatar
-            class="cursor-pointer outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            class="cursor-pointer outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
             tabindex="0"
             :entity="{
               id: 'gid://zammad/User/5',
@@ -1466,7 +1719,7 @@ const inlineEditValue = ref('Edit me inline')
             size="normal"
           />
           <CommonUserAvatar
-            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            class="cursor-pointer border border-neutral-100 outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
             tabindex="0"
             :entity="{
               id: 'gid://zammad/User/6',
@@ -1477,7 +1730,7 @@ const inlineEditValue = ref('Edit me inline')
             size="large"
           />
           <CommonUserAvatar
-            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            class="cursor-pointer border border-neutral-100 outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
             tabindex="0"
             :entity="{
               id: 'gid://zammad/User/7',
@@ -1570,7 +1823,7 @@ const inlineEditValue = ref('Edit me inline')
           </CommonPopover>
           <button
             ref="popoverTarget"
-            class="-:outline-transparent hover:-:outline-blue-900 rounded-full outline outline-2 focus:outline-blue-800 hover:focus:outline-blue-800"
+            class="rounded-full outline-2 outline-transparent hover:outline-blue-900 focus:outline-blue-800 hover:focus:outline-blue-800"
             :class="{
               'outline-blue-800 hover:outline-blue-800': popoverIsOpen,
             }"
@@ -1635,7 +1888,7 @@ const inlineEditValue = ref('Edit me inline')
       </div>
 
       <div class="w-1/2">
-        <h2 class="mb-2 mt-8">Flyout and Dialog</h2>
+        <h2 class="mt-8 mb-2">Flyout and Dialog</h2>
         <div class="mb-6 flex gap-4">
           <CommonButton variant="tertiary" @click="dialog.open()"
             >Show Dialog
@@ -1652,7 +1905,7 @@ const inlineEditValue = ref('Edit me inline')
           </CommonButton>
         </div>
 
-        <h2 class="mb-2 mt-8">Input Copy To Clipboard</h2>
+        <h2 class="mt-8 mb-2">Input Copy To Clipboard</h2>
         <div class="mb-6">
           <CommonInputCopyToClipboard
             value="some text to copy"
@@ -1688,14 +1941,15 @@ const inlineEditValue = ref('Edit me inline')
           </template>
         </Form>
         <pre
-          class="flex flex-wrap gap-5 text-wrap rounded-lg bg-blue-200 p-5 font-mono text-sm text-gray-100 dark:bg-gray-700 dark:text-neutral-400"
+          class="flex flex-wrap gap-5 rounded-lg bg-blue-200 p-5 font-mono text-sm text-wrap text-gray-100 dark:bg-gray-700 dark:text-neutral-400"
           >{{ formValues }}</pre
         >
       </div>
 
       <h3>Tabs Groups</h3>
-      <CommonTabManager
+      <CommonTabGroup
         v-model="activeTab"
+        class="mb-4"
         :tabs="[
           { label: 'Tab 1', key: 'tab-1' },
           { label: 'Tab 2', default: true, key: 'tab-2' },
@@ -1703,8 +1957,20 @@ const inlineEditValue = ref('Edit me inline')
         ]"
       />
 
+      <h3>Search Entities</h3>
+      <CommonTabGroup
+        v-model="activeTab"
+        class="mb-4"
+        size="medium"
+        :tabs="[
+          { label: 'Organization', count: 5, key: 'organization' },
+          { label: 'Ticket', default: true, count: 5, key: 'ticket' },
+          { label: 'User', key: 'user', count: 2 },
+        ]"
+      />
+
       <h3>Filter Selector</h3>
-      <CommonTabManager
+      <CommonTabGroup
         v-model="activeFilters"
         label="Roles"
         :tabs="[
@@ -1714,6 +1980,31 @@ const inlineEditValue = ref('Edit me inline')
         ]"
         multiple
       />
+
+      <h3>Split Button</h3>
+      <div class="mb-3 flex justify-end gap-3">
+        <SplitButton
+          variant="submit"
+          size="large"
+          :items="splitButtonMenuItems"
+          disabled
+          >Disabled</SplitButton
+        >
+        <SplitButton
+          variant="submit"
+          size="large"
+          addon-disabled
+          @click="onSplitButtonClick"
+          >Addon disabled</SplitButton
+        >
+        <SplitButton
+          variant="submit"
+          size="large"
+          :items="splitButtonMenuItems"
+          @click="onSplitButtonClick"
+          >Update</SplitButton
+        >
+      </div>
     </div>
   </LayoutContent>
 </template>

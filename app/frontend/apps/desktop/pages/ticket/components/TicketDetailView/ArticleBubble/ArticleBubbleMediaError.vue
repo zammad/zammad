@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -30,11 +30,11 @@ const retryDownload = async () => {
 </script>
 
 <template>
-  <CommonAlert v-if="hasError" class="-:rounded-none" variant="warning">
+  <CommonAlert v-if="hasError" class="rounded-none" variant="warning">
     <div>
       <h2>{{ $t('Failed to load content.') }}</h2>
       <CommonButton
-        class="!p-0 !text-current underline hover:outline-transparent dark:hover:outline-transparent"
+        class="p-0! text-current! underline hover:outline-transparent dark:hover:outline-transparent"
         size="medium"
         transparent-background
         :disabled="loading"

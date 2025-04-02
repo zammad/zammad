@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 
@@ -143,7 +143,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
 
     await view.events.click(mergeButton)
 
-    expect(
+    await expect(
       view.findByRole('dialog', { name: 'Find a ticket' }),
     ).resolves.toBeInTheDocument()
 

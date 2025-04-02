@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { dateFieldProps } from '#shared/components/Form/fields/FieldDate/types.ts'
 import createInput from '#shared/form/core/createInput.ts'

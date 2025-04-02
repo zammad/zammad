@@ -1,5 +1,9 @@
 query userCurrentTwoFactorInitiateMethodConfiguration(
   $methodName: EnumTwoFactorAuthenticationMethod!
+  $token: String!
 ) {
-  userCurrentTwoFactorInitiateMethodConfiguration(methodName: $methodName)
+  userCurrentTwoFactorInitiateMethodConfiguration(
+    methodName: $methodName
+    token: $token
+  )
 }

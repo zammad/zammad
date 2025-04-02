@@ -1,11 +1,13 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket > Update > Simultaneously with two different user', type: :system do
+RSpec.describe 'Ticket > Update > Simultaneously with two different user', performs_jobs: true, type: :system do
   let(:group)  { Group.find_by(name: 'Users') }
   let(:ticket) { create(:ticket, group: group) }
   let(:agent)  { User.find_by(login: 'agent1@example.com') }
+
+  around { |example| perform_enqueued_jobs { example.run } }
 
   # rubocop:disable RSpec/InstanceVariable
   define :have_avatar do |expected|

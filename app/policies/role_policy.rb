@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class RolePolicy < ApplicationPolicy
   def show?
     return true if admin?
 
     if user.role_ids.include? record.id
-      return agent? ? true : customer_field_scope
+      return agent? || customer_field_scope
     end
 
     false

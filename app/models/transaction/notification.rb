@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Transaction::Notification
   include ChecksHumanChanges
@@ -140,15 +140,20 @@ class Transaction::Notification
     end
   end
 
+  def recipient_myself?(user)
+    return false if @params[:interface_handle] != 'application_server'
+    return true if article&.updated_by_id == user.id
+    return true if !article && @item[:user_id] == user.id
+
+    false
+  end
+
   def send_to_single_recipient(recipient_settings)
     user     = recipient_settings[:user]
     channels = recipient_settings[:channels]
 
     # ignore user who changed it by him self via web
-    if @params[:interface_handle] == 'application_server'
-      return if article&.updated_by_id == user.id
-      return if !article && @item[:user_id] == user.id
-    end
+    return if recipient_myself?(user)
 
     # ignore inactive users
     return if !user.active?
@@ -164,7 +169,7 @@ class Transaction::Notification
     return if @item[:type] == 'update' && !article && changes.blank?
 
     # check if today already notified
-    if @item[:type] == 'reminder_reached' || @item[:type] == 'escalation' || @item[:type] == 'escalation_warning'
+    if %w[reminder_reached escalation escalation_warning].include?(@item[:type])
       identifier = user.email
       if !identifier || identifier == ''
         identifier = user.login
@@ -194,7 +199,7 @@ class Transaction::Notification
         created_by_id = 1
         OnlineNotification.remove_by_type('Ticket', ticket.id, @item[:type], user)
 
-      elsif @item[:type] == 'escalation' || @item[:type] == 'escalation_warning'
+      elsif %w[escalation escalation_warning].include?(@item[:type])
         seen = false
         created_by_id = 1
         OnlineNotification.remove_by_type('Ticket', ticket.id, 'escalation', user)

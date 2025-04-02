@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::StateType < ApplicationModel
   include HasDefaultModelUserRelations
@@ -28,7 +28,12 @@ class Ticket::StateType < ApplicationModel
     viewable_customer_edit: %w[open closed],
     closed:                 %w[closed],
     merged:                 %w[merged],
+    archivable_into:        %w[new open closed],
   }.with_indifferent_access.freeze
+
+  def solo?
+    name == 'merged'
+  end
 
   def self.names_in_category(category)
     CATEGORIES.fetch category

@@ -1,6 +1,6 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-class Report::TicketGenericTime
+class Report::TicketGenericTime < Report::BaseElasticSearch
 
 =begin
 
@@ -34,20 +34,13 @@ returns
       timezone: params[:timezone],
     }
 
-    without_merged_tickets = {
-      'state.name' => {
-        'operator' => 'is not',
-        'value'    => 'merged'
-      }
-    }
-
     selector = params[:selector].clone
     if params[:params].present? && params[:params][:selector].present?
       selector = selector.merge(params[:params][:selector])
     end
-    selector.merge!(without_merged_tickets) # do not show merged tickets in reports
+    selector.merge!(without_merged_tickets_selector) # do not show merged tickets in reports
 
-    result_es = SearchIndexBackend.selectors('Ticket', selector, { current_user: params[:current_user] }, aggs_interval)
+    result_es = SearchIndexBackend.selectors('Ticket', selector, { current_user: params_origin[:current_user] }, aggs_interval) # use params_origin because deep_dup removes current_user.id
     case params[:interval]
     when 'month'
       stop_interval = 12
@@ -157,18 +150,11 @@ returns
       limit = 100
     end
 
-    without_merged_tickets = {
-      'state.name' => {
-        'operator' => 'is not',
-        'value'    => 'merged'
-      }
-    }
-
     selector = params[:selector].clone
     if params[:params] && params[:params][:selector]
       selector = selector.merge(params[:params][:selector])
     end
-    selector.merge!(without_merged_tickets) # do not show merged tickets in reports
+    selector.merge!(without_merged_tickets_selector) # do not show merged tickets in reports
 
     result = SearchIndexBackend.selectors('Ticket', selector, { current_user: params[:current_user], limit: limit }, aggs_interval)
     result[:ticket_ids] = result.delete(:object_ids)

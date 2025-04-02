@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # This file registers the custom Zammad chrome and firefox drivers.
 # The options check if a REMOTE_URL ENV is given and change the
@@ -22,6 +22,11 @@ Capybara.register_driver(:zammad_firefox_mobile) do |app|
   build_firefox_driver(app, user_agent: 'Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/112.0 Firefox/112.0')
 end
 
+# `clear_local_storage` and `clear_session_storage` are deprecated in Selenium, but Capybara still uses them.
+#   For now, we can ignore these warnings.
+# https://github.com/teamcapybara/capybara/issues/2779
+Selenium::WebDriver.logger.ignore(:clear_local_storage, :clear_session_storage)
+
 private
 
 def build_chrome_driver(app, user_agent: nil)
@@ -36,7 +41,16 @@ def build_chrome_driver(app, user_agent: nil)
       'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
     },
     # Disable shared memory usage as it does not really provide a performance gain but cause resource limit issues in CI.
-    args:             %w[--enable-logging --v=1 --disable-dev-shm-usage --disable-search-engine-choice-screen],
+    #   https://peter.sh/experiments/chromium-command-line-switches/
+    args:             %w[
+      --enable-logging
+      --v=1
+      --disable-component-update
+      --disable-dev-shm-usage
+      --disable-features=OptimizationGuideModelDownloading,OptimizationHintsFetching,OptimizationTargetPrediction,OptimizationHints
+      --disable-search-engine-choice-screen
+      --no-first-run
+    ],
     # Disable the "Chrome is being controlled by automated test software." info bar.
     exclude_switches: ['enable-automation'],
   )

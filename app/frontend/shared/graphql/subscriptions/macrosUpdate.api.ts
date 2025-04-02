@@ -8,7 +8,9 @@ export type ReactiveFunction<TParam> = () => TParam;
 export const MacrosUpdateDocument = gql`
     subscription macrosUpdate {
   macrosUpdate {
-    macroUpdated
+    macroId
+    groupIds
+    removeMacroId
   }
 }
     `;

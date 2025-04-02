@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory :channel do
@@ -320,6 +320,47 @@ FactoryBot.define do
             'expires_in'    => 3599,
             'refresh_token' => ENV['MICROSOFT365_REFRESH_TOKEN'],
             'scope'         => 'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access openid profile email',
+            'token_type'    => 'Bearer',
+            'id_token'      => 'xxx',
+            'created_at'    => 30.days.ago,
+            'client_id'     => ENV['MICROSOFT365_CLIENT_ID'],
+            'client_secret' => ENV['MICROSOFT365_CLIENT_SECRET'],
+            'client_tenant' => ENV['MICROSOFT365_CLIENT_TENANT'],
+          }
+        }
+      end
+    end
+
+    factory :microsoft_graph_channel do
+      transient do
+        microsoft_user           { ENV['MICROSOFT365_USER'] || Faker::Internet.unique.email }
+        microsoft_shared_mailbox { nil }
+        inbound_options          { {} }
+      end
+
+      area { 'MicrosoftGraph::Account' }
+      options do
+        {
+          'inbound'  => {
+            'adapter' => 'microsoft_graph_inbound',
+            'options' => {
+              'user'           => microsoft_user,
+              'shared_mailbox' => microsoft_shared_mailbox,
+            }.merge(inbound_options),
+          },
+          'outbound' => {
+            'adapter' => 'microsoft_graph_outbound',
+            'options' => {
+              'user' => microsoft_user,
+            },
+          },
+          'auth'     => {
+            'type'          => 'XOAUTH2',
+            'provider'      => 'microsoft_graph',
+            'access_token'  => 'xxx',
+            'expires_in'    => 3599,
+            'refresh_token' => ENV['MICROSOFTGRAPH_REFRESH_TOKEN'],
+            'scope'         => 'offline_access openid profile email mail.readwrite mail.readwrite.shared mail.send mail.send.shared',
             'token_type'    => 'Bearer',
             'id_token'      => 'xxx',
             'created_at'    => 30.days.ago,

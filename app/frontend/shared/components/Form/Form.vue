@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { getNode, createMessage } from '@formkit/core'
@@ -90,7 +90,7 @@ import type {
   FormKitMessageProps,
 } from '@formkit/core'
 import type { Except, SetRequired } from 'type-fest'
-import type { Component, Ref } from 'vue'
+import type { Component, Ref, SetupContext } from 'vue'
 
 export interface Props {
   id?: string
@@ -158,7 +158,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const formId = props.formId ? props.formId : getUuid()
 
-const slots = useSlots()
+const slots: SetupContext['slots'] = useSlots()
 
 const hasSchema = computed(
   () => Boolean(slots.default) || Boolean(props.schema),
@@ -1333,6 +1333,14 @@ const initializeFormSchema = () => {
         useFormUpdaterQuery(
           formUpdaterVariables as Ref<FormUpdaterQueryVariables>,
           {
+            context: {
+              batch: {
+                active: false,
+              },
+              websocket: {
+                active: true,
+              },
+            },
             fetchPolicy: 'no-cache',
           },
         ),
@@ -1499,7 +1507,7 @@ export default {
           $el: undefined,
           $cmp: 'CommonAlert',
           props: {
-            id: `$id + '-' + $message.key`,
+            id: `$: '${id}-' + $message.key`,
             key: '$message.key',
             variant: {
               if: '$message.type == error || $message.type == validation',

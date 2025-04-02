@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationModel::ChecksAttributeValuesAndLength
   extend ActiveSupport::Concern
@@ -28,7 +28,7 @@ module ApplicationModel::ChecksAttributeValuesAndLength
         self[name].force_encoding('BINARY')
       end
 
-      next if value.blank?
+      next if value.blank? || self[name].frozen?
 
       # strip null byte chars (postgresql will complain about it)
       if column.type == :text && Rails.application.config.db_null_byte == false

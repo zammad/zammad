@@ -1,0 +1,5 @@
+subscription userCurrentRecentViewUpdates {
+  userCurrentRecentViewUpdates {
+    recentViewsUpdated
+  }
+}

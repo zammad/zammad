@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -18,7 +18,7 @@ const body = computed(() => {
         value
           .split('::')
           .map((option) => translateOption(props.attribute, option))
-          .join('::'),
+          .join(' › '),
       )
       .join(', ')
   }

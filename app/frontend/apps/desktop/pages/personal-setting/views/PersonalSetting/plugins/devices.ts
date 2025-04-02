@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { PersonalSettingPlugin } from './types.ts'
 
@@ -11,6 +11,7 @@ export default <PersonalSettingPlugin>{
   },
   route: {
     path: 'devices',
+    alias: '/profile/devices',
     name: 'PersonalSettingDevices',
     component: () => import('../../PersonalSettingDevices.vue'),
     level: 2,

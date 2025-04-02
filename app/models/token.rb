@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Token < ApplicationModel
   include Token::Permissions
@@ -94,7 +94,7 @@ returns
 
 =begin
 
-cleanup old token
+clean up all old non-persistent tokens that are older than 30 days or have their expiration date set in the past
 
   Token.cleanup
 
@@ -102,6 +102,7 @@ cleanup old token
 
   def self.cleanup
     Token.where(persistent: false, created_at: ...30.days.ago).delete_all
+    Token.where(persistent: false, expires_at: ...Time.zone.now).delete_all
 
     true
   end
@@ -129,6 +130,28 @@ cleanup old token
 
     token if token&.check?
   end
+
+  # Validates whether token exists, belongs to expected user and has not yet expired.
+  # Error is raised if token is not valid
+  #
+  # @param action [String, Symbol] action name
+  # @param token [String, Symbol] token value
+  # @param user [User, Integer] expected owner of the token
+  #
+  # @raise [Token::InvalidToken] Raised if token is not valid
+  # @return [Token] returns token object if all checks pass
+  def self.validate!(action:, token:, user: UserInfo.current_user_id)
+    token = find_by(action:, token:, user:)
+
+    raise TokenAbsent if !token
+    raise TokenExpired if token.expired?
+
+    token
+  end
+
+  class TokenInvalid < StandardError; end
+  class TokenExpired < TokenInvalid; end
+  class TokenAbsent < TokenInvalid; end
 
   # creates or returns existing token
   #
@@ -170,6 +193,12 @@ cleanup old token
 
   def visible_in_frontend?
     action == 'api' && persistent
+  end
+
+  def expired?
+    return false if expires_at.nil?
+
+    Time.zone.now >= expires_at
   end
 
   private

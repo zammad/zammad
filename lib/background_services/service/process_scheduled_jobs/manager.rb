@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class BackgroundServices
   class Service
@@ -71,6 +71,8 @@ class BackgroundServices
 
         def start
           Thread.new do
+            Thread.current.name = "ProcessScheduledJobs manager thread for job \"#{job.name}\" (#{job.id})"
+
             Rails.application.executor.wrap do
               start_in_thread
             end

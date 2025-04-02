@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
@@ -723,6 +723,18 @@ RSpec.describe Ticket::Article, type: :model do
           let(:to) { 'not_a_mail' }
 
           it_behaves_like 'raising an error'
+        end
+
+        context 'when multiple recipients are present and at least one is invalid' do
+          let(:to) { 'users, test@example.com' }
+
+          it_behaves_like 'raising an error'
+        end
+
+        context 'when multiple recipients are present and all are valid' do
+          let(:to) { 'users@example.com, test@example.com' }
+
+          it_behaves_like 'not raising an error'
         end
       end
     end

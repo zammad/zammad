@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
@@ -16,6 +16,10 @@ export interface CommonInputSearchExpose {
   focus(): void
 }
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const props = withDefaults(defineProps<CommonInputSearchProps>(), {
   placeholder: __('Search…'),
 })
@@ -23,17 +27,19 @@ const props = withDefaults(defineProps<CommonInputSearchProps>(), {
 const emit = defineEmits<{
   'update:modelValue': [filter: string]
   keydown: [event: KeyboardEvent]
+  'focus-input': []
+  'blur-input': []
 }>()
 
 const filter = useVModel(props, 'modelValue', emit)
 
 const filterInput = useTemplateRef('filter-input')
 
-const focus = () => {
-  filterInput.value?.focus()
-}
+const focus = () => filterInput.value?.focus()
 
-defineExpose({ focus })
+const blur = () => filterInput.value?.blur()
+
+defineExpose({ focus, blur })
 
 const clearFilter = () => {
   filter.value = ''
@@ -59,20 +65,12 @@ const maybeAcceptSuggestion = (event: Event) => {
   filter.value = props.suggestion
 }
 
-const onKeydown = (event: KeyboardEvent) => {
-  emit('keydown', event)
-}
-</script>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
+const onKeydown = (event: KeyboardEvent) => emit('keydown', event)
 </script>
 
 <template>
   <div
-    class="inline-flex grow items-center justify-start gap-1"
+    class="inline-flex grow items-center justify-start gap-1 text-sm"
     :class="wrapperClass"
   >
     <CommonIcon
@@ -89,17 +87,20 @@ export default {
           v-bind="$attrs"
           :placeholder="i18n.t(placeholder)"
           :aria-label="$t('Search…')"
-          class="w-full min-w-16 text-black outline-none dark:text-white"
+          class="w-full min-w-16 text-black outline-hidden dark:text-white"
           :class="{
             'bg-blue-200 dark:bg-gray-700': !alternativeBackground,
             'bg-neutral-50 dark:bg-gray-500': alternativeBackground,
           }"
           type="text"
           role="searchbox"
+          autocomplete="off"
           @keydown.right="maybeAcceptSuggestion"
           @keydown.end="maybeAcceptSuggestion"
           @keydown.tab="maybeAcceptSuggestion"
           @keydown="onKeydown"
+          @focus="emit('focus-input')"
+          @blur="emit('blur-input')"
         />
       </div>
       <div
@@ -116,14 +117,14 @@ export default {
     <div class="flex shrink-0 items-center gap-1">
       <slot name="controls" />
       <CommonIcon
-        class="fill-stone-200 hover:fill-black focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+        class="fill-stone-200 hover:fill-black focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
         :class="{
           invisible: !filter?.length,
         }"
-        :aria-label="i18n.t('Clear Search')"
+        :aria-label="$t('Clear Search')"
         :aria-hidden="!filter?.length ? 'true' : undefined"
         name="backspace2"
-        size="tiny"
+        size="xs"
         role="button"
         :tabindex="!filter?.length ? '-1' : '0'"
         @click.stop="clearFilter()"

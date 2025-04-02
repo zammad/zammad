@@ -1,31 +1,31 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { nullableMock } from '#tests/support/utils.ts'
 
 import {
   EnumTicketStateColorCode,
-  type TicketsByOverviewQuery,
+  type TicketsByOverviewSlimQuery,
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 
-import { TicketsByOverviewDocument } from '../../graphql/queries/ticketsByOverview.api.ts'
+import { TicketsByOverviewSlimDocument } from '../../graphql/queries/ticketsByOverviewSlim.api.ts'
 
-type TicketItemByOverview = ConfidentTake<
-  TicketsByOverviewQuery,
+type TicketItemByOverviewSlim = ConfidentTake<
+  TicketsByOverviewSlimQuery,
   'ticketsByOverview.edges.node'
 >
 
 type TicketByOverviewPageInfo = ConfidentTake<
-  TicketsByOverviewQuery,
+  TicketsByOverviewSlimQuery,
   'ticketsByOverview.pageInfo'
 >
 
 const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
 
 export const ticketDefault = () =>
-  nullableMock<TicketItemByOverview>({
+  nullableMock<TicketItemByOverviewSlim>({
     __typename: 'Ticket',
     id: 'af12',
     title: 'Ticket 1',
@@ -47,7 +47,7 @@ export const ticketDefault = () =>
       __typename: 'TicketPriority',
       id: 'fdsf214fse12e',
       name: 'high',
-      defaultCreate: false,
+      defaultCreate: true,
     },
     group: {
       __typename: 'Group',
@@ -65,19 +65,19 @@ export const ticketDefault = () =>
   })
 
 export const mockTicketsByOverview = (
-  tickets: Partial<TicketItemByOverview>[] = [ticketDefault()],
+  tickets: Partial<TicketItemByOverviewSlim>[] = [ticketDefault()],
   pageInfo: Partial<TicketByOverviewPageInfo> = {},
   totalCount: number | null = null,
 ) => {
   return mockGraphQLApi(
-    TicketsByOverviewDocument,
-  ).willResolve<TicketsByOverviewQuery>({
+    TicketsByOverviewSlimDocument,
+  ).willResolve<TicketsByOverviewSlimQuery>({
     ticketsByOverview: {
       __typename: 'TicketConnection',
       totalCount: totalCount ?? tickets.length,
       edges: tickets.map((node, index) => ({
         __typename: 'TicketEdge',
-        node: nullableMock(node) as TicketItemByOverview,
+        node: nullableMock(node) as TicketItemByOverviewSlim,
         cursor: `node${index}`,
       })),
       pageInfo: {

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { TypePolicy } from '@apollo/client/cache'
 import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'

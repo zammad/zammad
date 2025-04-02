@@ -1,16 +1,16 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::User::Current::TaskbarItemUpdates, type: :graphql do
   let(:user)         { create(:agent) }
   let(:app)          { 'desktop' }
-  let(:variables)    { { userId: gql.id(user), app: app } }
+  let(:variables)    { { app: app } }
   let(:mock_channel) { build_mock_channel }
   let(:subscription) do
     <<~QUERY
-      subscription userCurrentTaskbarItemUpdates($userId: ID!, $app: EnumTaskbarApp!) {
-        userCurrentTaskbarItemUpdates(userId: $userId, app: $app) {
+      subscription userCurrentTaskbarItemUpdates($app: EnumTaskbarApp!) {
+        userCurrentTaskbarItemUpdates(app: $app) {
           addItem {
             app
             key
@@ -85,17 +85,6 @@ RSpec.describe Gql::Subscriptions::User::Current::TaskbarItemUpdates, type: :gra
         create(:taskbar, user_id: user.id, app: 'desktop', key: 'key')
 
         expect(mock_channel.mock_broadcasted_messages).to be_empty
-      end
-    end
-
-    context 'with different target user' do
-      let(:another_user) { create(:agent) }
-      let(:variables)    { { userId: gql.id(another_user), app: app } }
-
-      it 'does not subscribe to taskbar item updates and returns a forbidden error' do
-        gql.execute(subscription, variables: variables, context: { channel: mock_channel })
-
-        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
       end
     end
   end

@@ -1,0 +1,10 @@
+mutation userCurrentOverviewUpdateLastUsed(
+  $overviewsLastUsed: [UserCurrentOverviewLastUsed!]!
+) {
+  userCurrentOverviewUpdateLastUsed(overviewsLastUsed: $overviewsLastUsed) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

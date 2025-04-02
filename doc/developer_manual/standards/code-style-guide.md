@@ -5,10 +5,11 @@
 ### Enforcing style guides
 
 Our coding standards are enforced in the internal CI by various tools like Rubocop and ESLint.
-To make sure you always keep them in mind, you can use git hooks based on [**overcommit**](https://github.com/sds/overcommit) for this.
+To make sure you always keep them in mind, you can use git hooks based on
+[**overcommit**](https://github.com/sds/overcommit) for this.
 
 ```screen
-$ overcommit --install
+overcommit --install
 ```
 
 This will execute several checks on the changed files whenever you commit.
@@ -18,31 +19,37 @@ Linters can also be run manually:
 
 ```screen
 # Robocop
-$ bundle exec rubocop --parallel
+bundle exec rubocop --parallel
 
-# Type checks, ESLint & Stylelint
-$ pnpm lint
+# Type checks, ESLint, Stylelint & Markdownlint
+pnpm lint
 
-# Type checks, ESLint & Stylelint with automatic fixing
-$ pnpm lint:fix
+# Type checks, ESLint, Stylelint & Markdownlint with automatic fixing
+pnpm lint:fix
 
 # Just type checking
-$ pnpm lint:ts
+pnpm lint:ts
 
 # Just ESLint checks
-$ pnpm lint:js
+pnpm lint:js
 
 # Just ESLint checks with automatic fixing
-$ pnpm lint:js:fix
+pnpm lint:js:fix
 
 # Just Stylelint checks
-$ pnpm lint:css
+pnpm lint:css
 
 # Just Stylelint checks with automatic fixing
-$ pnpm lint:css:fix
+pnpm lint:css:fix
+
+# Just Markdownlint checks
+pnpm lint:md
+
+# Just Markdownlint checks with automatic fixing
+pnpm lint:md:fix
 
 # Coffeelint
-$ coffeelint --rules ./.dev/coffeelint/rules/* app/
+coffeelint --rules ./.dev/coffeelint/rules/* app/
 ```
 
 ### Wording
@@ -66,30 +73,33 @@ Rubocop will tell you. Don't forget to run it. Here are some additional tips.
 
 ### Naming of Concerns
 
-#### Has*
+#### `Has*`
 
 The methods are doing model related functions and events.
 This area is mainly used to do changes to other related objects.
 
 For example, a model
-* gets some new events to clear the cache in the cache object
-* will get some new events to verify attachments in the store object
-* will modify the external sync object after destroying an object
 
-#### Checks*
+- gets some new events to clear the cache in the cache object
+- will get some new events to verify attachments in the store object
+- will modify the external sync object after destroying an object
+
+#### `Checks*`
 
 The code contains hooks to events (e.g. `after_commit`), validations or another pre/post function checks.
 
 For example:
-* added a check to verify the length of an attribute
 
-#### Can*
+- added a check to verify the length of an attribute
+
+#### `Can*`
 
 The code contains new functions without any relations to any hook or event.
 
 For example, a model will get some new util functions
-* which can be used to read additional assets
-* to handle parameters in a more efficient way
+
+- which can be used to read additional assets
+- to handle parameters in a more efficient way
 
 ### RSpec
 
@@ -110,40 +120,42 @@ lowerCamelCase_ e.g. fileSize
 
 #### Files-Names
 
-##### Vue-Components:
+##### Vue Components
 
 UpperCamelCase: e.g. CommonDateTime.vue
 
-##### Typescript-Files / Other
+##### Typescript Files / Other
 
-##### Vue Template Refs:
+##### Vue Template Refs
 
 - Use SnakeCase for template ref f.g `ref="resize-line"`
 - Component instance variables should contain `${ComponentName}Instance`
 - Prefer to use `useTemplateRef` over `ref` for template references
 
 ###### useTemplateRef
+
 [docs](https://vuejs.org/api/composition-api-helpers.html#usetemplateref)
 
-```vue 
+```vue
 <script setup lang="ts">
 import { useTemplateRef } from 'vue'
-  
+
 const buttonInstance =  useTemplateRef('button')
 const resizeLineInstance = useTemplateRef('resize-line')
-  
+
 const listElement = useTemplateRef('list')
 </script>
 
 <template>
   <CommonButton ref="button"/>
   <ResizeLine ref="resize-line"/>
-  
+
   <ul ref="list"/>
 </template>
 ```
 
 ###### ref
+
 [docs](https://vuejs.org/api/reactivity-core.html#ref)
 
 ```vue
@@ -174,7 +186,7 @@ TBD
 
 UpperCamelCase:
 
-```
+```plain
 <div>
 <CommonDateTime ... />
 <CommonDateTime>...</CommonDateTime>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 VCR.configure do |c|
   # The API key is used only inside the base64 encoded Basic Auth string, so mask that as well.

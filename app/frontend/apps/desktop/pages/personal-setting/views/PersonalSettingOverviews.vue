@@ -1,7 +1,6 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { ref, watch, onActivated } from 'vue'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
@@ -14,11 +13,11 @@ import type {
 } from '#shared/graphql/types.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { UserCurrentOverviewOrderingUpdatesDocument } from '#desktop/entities/ticket/graphql/subscriptions/userCurrentOverviewOrderingUpdates.api.ts'
 
 import PersonalSettingOverviewOrder, {
   type OverviewItem,
@@ -27,15 +26,14 @@ import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 import { useUserCurrentOverviewResetOrderMutation } from '../graphql/mutations/userCurrentOverviewResetOrder.api.ts'
 import { useUserCurrentOverviewUpdateOrderMutation } from '../graphql/mutations/userCurrentOverviewUpdateOrder.api.ts'
 import { useUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentOverviewList.api.ts'
-import { UserCurrentOverviewOrderingUpdatesDocument } from '../graphql/subscriptions/userCurrentOverviewOrderingUpdates.api.ts'
-
-const { user } = storeToRefs(useSessionStore())
 
 const { breadcrumbItems } = useBreadcrumb(__('Overviews'))
 
-const overviewList = ref<OverviewItem[]>()
+const overviewList = ref<OverviewItem[]>([])
 
-const overviewListQuery = new QueryHandler(useUserCurrentOverviewListQuery())
+const overviewListQuery = new QueryHandler(
+  useUserCurrentOverviewListQuery({ ignoreUserConditions: true }),
+)
 
 const overviewListQueryLoading = overviewListQuery.loading()
 
@@ -46,23 +44,21 @@ overviewListQuery.subscribeToMore<
   UserCurrentOverviewOrderingUpdatesSubscription
 >({
   document: UserCurrentOverviewOrderingUpdatesDocument,
-  variables: {
-    userId: user.value?.id || '',
-  },
-  updateQuery: (prev, { subscriptionData }) => {
+  variables: { ignoreUserConditions: true },
+  updateQuery: (_, { subscriptionData }) => {
     if (!subscriptionData.data?.userCurrentOverviewOrderingUpdates.overviews) {
       return null as unknown as UserCurrentOverviewListQuery
     }
 
     return {
-      userCurrentOverviewList:
+      userCurrentTicketOverviews:
         subscriptionData.data.userCurrentOverviewOrderingUpdates.overviews,
     }
   },
 })
 
 watch(overviewListQuery.result(), (newValue) => {
-  overviewList.value = newValue?.userCurrentOverviewList
+  overviewList.value = newValue?.userCurrentTicketOverviews || []
 })
 
 const { notify } = useNotifications()
@@ -129,7 +125,7 @@ const confirmResetOverviewOrder = async () => {
 
 <template>
   <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
-    <CommonLoader class="mb-3 mt-5" :loading="overviewListQueryLoading">
+    <CommonLoader class="mt-5 mb-3" :loading="overviewListQueryLoading">
       <div class="mb-4">
         <CommonLabel
           id="label-ticket-overview-order"

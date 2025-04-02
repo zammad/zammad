@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/examples/pagination_examples'
 
-RSpec.describe 'Manage > Templates', type: :system do
+RSpec.describe 'Manage > Templates', time_zone: 'Europe/London', type: :system do
   context 'with ajax pagination' do
     include_examples 'pagination', model: :template, klass: Template, path: 'manage/templates'
   end
@@ -120,7 +120,7 @@ RSpec.describe 'Manage > Templates', type: :system do
                })
       end
 
-      context 'with static operator', time_zone: 'Europe/London' do
+      context 'with static operator' do
         let(:date) { 1.day.from_now }
         let(:pending_time) do
           {

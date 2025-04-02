@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import Mention from '@tiptap/extension-mention'
 
@@ -29,7 +29,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     const { meta: editorMeta = {}, formId } = context.value
 
     const meta = editorMeta[PLUGIN_NAME] || {}
-    let { ticketId, customerId } = context.value
+    let { ticketId, customerId, groupId } = context.value
 
     if (!ticketId && meta.ticketNodeName) {
       const node = getNodeByName(formId, meta.ticketNodeName)
@@ -41,9 +41,15 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
       customerId = node?.value as string
     }
 
+    if (!groupId && meta.groupNodeName) {
+      const node = getNodeByName(formId, meta.groupNodeName)
+      groupId = node?.value as string
+    }
+
     const { data } = await queryHandler.query({
       variables: {
         query,
+        groupId: groupId && ensureGraphqlId('Group', groupId),
         customerId: customerId && ensureGraphqlId('User', customerId),
         ticketId: ticketId && ensureGraphqlId('Ticket', ticketId),
         limit: LIMIT_QUERY_MODULES,

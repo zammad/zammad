@@ -50,10 +50,20 @@ class App.TicketStats extends App.Controller
     return if type is 'change'
 
     if @organization
+      if @init
+        @init = false
+        initData = App.TaskbarInit.ticket_stats_organization(@organization.id)
+        return @render(initData) if initData
+
       ajaxKey = "org_#{@organization.id}"
       data =
         organization_id: @organization.id
     else
+      if @init
+        @init = false
+        initData = App.TaskbarInit.ticket_stats_user(@user.id)
+        return @render(initData) if initData
+
       ajaxKey = "user_#{@user.id}"
       data =
         user_id:         @user.id

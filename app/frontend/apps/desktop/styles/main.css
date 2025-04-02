@@ -1,10 +1,12 @@
-@import url('./transitions.css');
+/* stylelint-disable import-notation */
+@import 'tailwindcss';
+@import './tokens.css';
+@import './transitions.css';
 
-@config './tailwind.desktop.js';
+@plugin '@formkit/themes/tailwindcss';
+@plugin '../../../build/zammadTailwindPlugin.js';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] * ));
 
 @layer base {
   /* Override autofill styles in Firefox. */
@@ -14,14 +16,14 @@
 
   /* Override autofill styles in Webkit-based browsers. */
   :-webkit-autofill {
-    -webkit-text-fill-color: theme('colors.black');
+    -webkit-text-fill-color: var(--color-black);
     -webkit-background-clip: text;
-    caret-color: theme('colors.black');
+    caret-color: var(--color-black);
   }
 
   [data-theme='dark'] :-webkit-autofill {
-    -webkit-text-fill-color: theme('colors.white');
-    caret-color: theme('colors.white');
+    -webkit-text-fill-color: var(--color-white);
+    caret-color: var(--color-white);
   }
 
   /* No-op animation for hooking into autofill mechanism in Webkit-based browsers. */
@@ -39,7 +41,7 @@
   }
 
   a {
-    @apply outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800;
+    @apply outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800;
   }
 
   @keyframes onAutoFillStart {
@@ -69,10 +71,6 @@
     @apply text-stone-200 dark:text-neutral-500;
   }
 
-  .required::after {
-    @apply inline-block font-extrabold text-yellow-600 content-['•'] ltr:ml-1 rtl:mr-1;
-  }
-
   /*
     Responsive multi-column mode for form groups:
     - compatibility layer for object attributes and form columns via legacy `.formGroup--halfSize` class
@@ -80,7 +78,7 @@
   */
   .form-group .formkit-outer {
     /* stylelint-disable-next-line scss/operator-no-unspaced */
-    @apply @lg/form-group:col-span-1 col-span-2;
+    @apply col-span-2 @lg/form-group:col-span-1;
 
     /* Optional full-width style for specific fields. */
     &[data-type='editor'],
@@ -98,6 +96,24 @@
   /*
     Use specific selector for dirty flag styling due to nested FormKit fields.
   */
+  [data-theme='dark']
+    .form-group.form-group-mark-dirty
+    > .formkit-outer[data-dirty]
+    > .formkit-block
+    > .formkit-wrapper
+    > .formkit-inner {
+    &::before {
+      background: repeating-linear-gradient(
+          45deg,
+          var(--color-gray-200),
+          var(--color-gray-200) 5px,
+          transparent 5px,
+          transparent 10px
+        )
+        repeat center;
+    }
+  }
+
   .form-group.form-group-mark-dirty
     > .formkit-outer[data-dirty]
     > .formkit-block
@@ -106,43 +122,32 @@
     @apply relative;
 
     &::before {
-      @apply absolute bottom-0 top-0 w-2 rounded-es-lg rounded-ss-lg content-[''] ltr:left-0 rtl:right-0;
+      @apply absolute top-0 bottom-0 w-2 rounded-ss-lg rounded-es-lg content-[''] ltr:left-0 rtl:right-0;
 
       background: repeating-linear-gradient(
           45deg,
-          theme(colors.white),
-          theme(colors.white) 5px,
+          var(--color-white),
+          var(--color-white) 5px,
           transparent 5px,
           transparent 10px
         )
         repeat center;
       mask-image: linear-gradient(
         90deg,
-        theme(colors.black),
-        theme(colors.black) 0.4rem,
+        var(--color-black),
+        var(--color-black) 0.4rem,
         transparent 0.4rem,
         transparent
       );
-
-      [data-theme='dark'] & {
-        background: repeating-linear-gradient(
-            45deg,
-            theme(colors.gray.200),
-            theme(colors.gray.200) 5px,
-            transparent 5px,
-            transparent 10px
-          )
-          repeat center;
-      }
     }
   }
 
   .tooltip {
-    @apply fixed z-50 w-fit -translate-y-2 select-none text-wrap rounded-md border border-neutral-100 bg-blue-200 px-2 py-1 text-xs leading-snug text-gray-100 opacity-0 transition-all dark:border-gray-900 dark:bg-gray-700 dark:text-neutral-400;
+    @apply fixed z-50 w-fit -translate-y-2 rounded-md border border-neutral-100 bg-blue-200 px-2 py-1 text-xs leading-snug text-wrap text-gray-100 opacity-0 transition-all select-none dark:border-gray-900 dark:bg-gray-700 dark:text-neutral-400;
+  }
 
-    &-animate {
-      @apply translate-y-0 opacity-100;
-    }
+  .tooltip-animate {
+    @apply translate-y-0 opacity-100;
   }
 
   /*
@@ -174,7 +179,7 @@
     ul {
       @apply pb-2;
 
-      padding-inline-start: theme('spacing.2');
+      padding-inline-start: 0.5rem;
       list-style-position: inside;
 
       p {
@@ -183,15 +188,15 @@
     }
 
     h1 {
-      @apply mb-1 mt-2 text-2xl font-bold;
+      @apply mt-2 mb-1 text-2xl font-bold;
     }
 
     h2 {
-      @apply mb-1 mt-2 text-xl font-bold;
+      @apply mt-2 mb-1 text-xl font-bold;
     }
 
     h3 {
-      @apply mb-1 mt-2 text-lg font-bold;
+      @apply mt-2 mb-1 text-lg font-bold;
     }
 
     a {
@@ -211,10 +216,10 @@
     content: '';
     background-image: repeating-linear-gradient(
       45deg,
-      theme('colors.blue.400'),
-      theme('colors.blue.400') 5px,
-      theme('colors.blue.700') 5px,
-      theme('colors.blue.700') 10px
+      var(--color-blue-400),
+      var(--color-blue-400) 5px,
+      var(--color-blue-700) 5px,
+      var(--color-blue-700) 10px
     );
     height: calc(100% + 10px);
     width: calc(100% + 10px);
@@ -223,34 +228,42 @@
     position: absolute;
     z-index: -10;
   }
+}
 
-  [data-theme='dark'] .bg-stripes::before {
-    background-image: repeating-linear-gradient(
-      45deg,
-      theme('colors.blue.700'),
-      theme('colors.blue.700') 5px,
-      theme('colors.blue.900') 5px,
-      theme('colors.blue.900') 10px
-    );
+[data-theme='dark'] .bg-stripes::before {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--color-blue-700),
+    var(--color-blue-700) 5px,
+    var(--color-blue-900) 5px,
+    var(--color-blue-900) 10px
+  );
+}
+
+@utility group-block {
+  @apply rounded-3xl bg-neutral-50 p-5 text-black dark:bg-gray-500 dark:text-white;
+}
+
+@utility backface-hidden {
+  backface-visibility: hidden;
+}
+
+@utility required {
+  @apply after:ms-1 after:inline-block after:font-extrabold after:text-yellow-600 after:content-['•'];
+}
+
+/* Uses to be in the @layer utilities */
+@media print {
+  [data-print-mode='true'] body {
+    @apply invisible;
+
+    & .print-area {
+      @apply visible fixed inset-0;
+    }
   }
 }
 
-@layer utilities {
-  .group-block {
-    @apply rounded-3xl bg-neutral-50 p-5 text-black dark:bg-gray-500 dark:text-white;
-  }
-
-  .backface-hidden {
-    backface-visibility: hidden;
-  }
-
-  @media print {
-    [data-print-mode='true'] body {
-      @apply invisible;
-
-      .print-area {
-        @apply visible fixed inset-0;
-      }
-    }
-  }
+button,
+[role='button'] {
+  cursor: pointer;
 }

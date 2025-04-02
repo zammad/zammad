@@ -1,11 +1,11 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { getAllByTestId, getByTestId, within } from '@testing-library/vue'
 
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
-import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
+import { mockTicketOverviewOrder } from '#tests/support/mocks/ticket-overviews.ts'
 
 import {
   NotificationTypes,
@@ -19,7 +19,7 @@ const actualLocalStorage = window.localStorage
 describe('playing with overviews', () => {
   beforeEach(() => {
     mockUserCurrent({ id: '666' })
-    mockTicketOverviews()
+    mockTicketOverviewOrder()
   })
 
   afterEach(() => {
@@ -56,6 +56,7 @@ describe('playing with overviews', () => {
     expect(excludedOverviews[0]).toHaveTextContent('Overview 3')
 
     vi.stubGlobal('localStorage', {
+      getItem: vi.fn(),
       setItem: vi.fn(),
     })
 
@@ -101,6 +102,7 @@ describe('playing with overviews', () => {
     expect(includedOverviews.at(-1)).toHaveTextContent('Overview 1')
 
     vi.stubGlobal('localStorage', {
+      getItem: vi.fn(),
       setItem: vi.fn(),
     })
 

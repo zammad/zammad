@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed } from 'vue'
 
@@ -52,7 +52,7 @@ export const useChecklistTemplates = (
     variables: {
       onlyActive: true,
     },
-    updateQuery: (prev, { subscriptionData }) => {
+    updateQuery: (_, { subscriptionData }) => {
       if (!subscriptionData.data?.checklistTemplateUpdates.checklistTemplates)
         return null as unknown as ChecklistTemplatesQuery
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -1083,7 +1083,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
           expect(response).to have_http_status(:ok)
           expect(json_response).to be_a(Hash)
-          expect(json_response['message']).to eq('failed')
+          expect(json_response['message']).to eq('ok')
         end
       end
 
@@ -1886,18 +1886,20 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
     context 'with wrong password' do
       let(:password) { 'wrong' }
 
-      it 'returns false' do
+      it 'returns false for success and does not include a token' do
         expect(response).to have_http_status(:ok)
         expect(json_response['success']).to be false
+        expect(json_response['token']).to be_nil
       end
     end
 
     context 'with correct password' do
       let(:password) { 'beer' }
 
-      it 'returns true' do
+      it 'returns true for success and includes a token' do
         expect(response).to have_http_status(:ok)
         expect(json_response['success']).to be true
+        expect(json_response['token']).to be_a String
       end
     end
   end

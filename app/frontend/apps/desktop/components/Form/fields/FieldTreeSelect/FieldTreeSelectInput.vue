@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import {
@@ -278,7 +278,7 @@ setupMissingOrDisabledOptionHandling()
         ref="output"
         role="combobox"
         :name="context.node.name"
-        class="flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-none dark:text-white"
+        class="flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-hidden dark:text-white"
         tabindex="0"
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled ? 'true' : undefined"
@@ -325,14 +325,14 @@ setupMissingOrDisabledOptionHandling()
                 decorative
               />
               <span
-                class="line-clamp-3 whitespace-pre-wrap break-words"
+                class="line-clamp-3 break-words whitespace-pre-wrap"
                 :title="getSelectedOptionFullPath(selectedValue)"
               >
                 {{ getSelectedOptionFullPath(selectedValue) }}
               </span>
               <CommonIcon
                 :aria-label="i18n.t('Unselect Option')"
-                class="shrink-0 fill-stone-200 hover:fill-black focus:outline-none focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+                class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
                 name="x-lg"
                 size="xs"
                 role="button"
@@ -370,7 +370,7 @@ setupMissingOrDisabledOptionHandling()
               decorative
             />
             <span
-              class="line-clamp-3 whitespace-pre-wrap break-words"
+              class="line-clamp-3 break-words whitespace-pre-wrap"
               :title="getSelectedOptionFullPath(currentValue)"
             >
               {{ getSelectedOptionFullPath(currentValue) }}
@@ -380,7 +380,7 @@ setupMissingOrDisabledOptionHandling()
         <CommonIcon
           v-if="context.clearable && hasValue && !context.disabled"
           :aria-label="i18n.t('Clear Selection')"
-          class="shrink-0 fill-stone-200 hover:fill-black focus:outline-none focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+          class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
           name="x-lg"
           size="xs"
           role="button"

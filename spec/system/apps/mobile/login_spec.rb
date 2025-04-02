@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -36,7 +36,7 @@ RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :s
     end
   end
 
-  context 'when loggin in via external authentication provider', authenticated_as: false, integration: true, integration_standalone: :saml, required_envs: %w[KEYCLOAK_BASE_URL KEYCLOAK_ADMIN_USER KEYCLOAK_ADMIN_PASSWORD] do
+  context 'when logging in via external authentication provider', authenticated_as: false, integration: true, integration_standalone: :saml, required_envs: %w[KEYCLOAK_BASE_URL KEYCLOAK_ADMIN_USER KEYCLOAK_ADMIN_PASSWORD] do
     let(:zammad_base_url)              { "#{Capybara.app_host}:#{Capybara.current_session.server.port}" }
     let(:zammad_saml_metadata)         { "#{zammad_base_url}/auth/saml/metadata" }
     let(:saml_base_url)                { ENV['KEYCLOAK_BASE_URL'] }
@@ -73,8 +73,8 @@ RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :s
       # Manual logout
       click_on 'JD' # avatar
       click_on 'Sign out'
-      expect(page).to have_current_path(%r{/login})
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
+      expect(page).to have_current_path(%r{/login})
 
       visit '/'
       expect_current_route '/login'

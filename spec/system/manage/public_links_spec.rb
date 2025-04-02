@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/examples/pagination_examples'
 
 RSpec.describe 'Manage > Public Links', type: :system do
   context 'when ajax pagination' do
-    include_examples 'pagination', model: :public_link, klass: PublicLink, path: 'manage/public_links', sort_by: :prio, main_column: :title
+    include_examples 'pagination', model: :public_link, klass: PublicLink, path: 'manage/public_links', main_column: :title
   end
 
   context 'when creating a new public link' do
@@ -79,7 +79,7 @@ RSpec.describe 'Manage > Public Links', type: :system do
         row.find('.js-delete').click
 
         in_modal do
-          click_on 'delete'
+          click_on 'Delete'
         end
 
         expect(page).to have_no_text('Zammad Homepage')

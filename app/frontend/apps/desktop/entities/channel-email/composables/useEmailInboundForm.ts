@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { shallowRef, computed, ref, reactive } from 'vue'
 
@@ -32,9 +32,6 @@ export const useEmailInboundForm = () => {
   ) => {
     metaInformationInbound.value = {
       contentMessages: data.contentMessages || 0,
-      archivePossible: !!data.archivePossible,
-      archivePossibleIsFallback: !!data.archivePossibleIsFallback,
-      archiveWeekRange: data.archiveWeekRange || 0,
       nextAction,
     }
   }

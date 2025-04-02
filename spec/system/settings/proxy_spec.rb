@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Settings > System > Network', required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD], type: :system do
+RSpec.describe 'Manage > Settings > System > Network', integration: true, required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD], type: :system do
 
   before { visit 'settings/system' }
 

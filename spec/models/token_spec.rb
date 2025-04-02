@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -278,13 +278,120 @@ RSpec.describe Token, type: :model do
       end
     end
 
-    context 'when token is persistent and old' do
-      let(:token) { create(:token, persistent: true, created_at: 1.day.ago) }
+    context 'when token is non persistent and has an expiration date in the past' do
+      let(:token) { create(:token, persistent: false, expires_at: 30.minutes.ago, created_at: 1.hour.ago) }
+
+      it 'is removed' do
+        expect { described_class.cleanup }
+          .to change { described_class.exists? token.id }
+          .to false
+      end
+    end
+
+    context 'when token is non persistent and has an expiration date in the future' do
+      let(:token) { create(:token, persistent: false, expires_at: 30.minutes.from_now, created_at: 30.minutes.ago) }
 
       it 'is not removed' do
         expect { described_class.cleanup }
           .not_to change { described_class.exists? token.id }
           .from true
+      end
+    end
+
+    context 'when token is persistent and old' do
+      let(:token) { create(:token, persistent: true, created_at: 31.days.ago) }
+
+      it 'is not removed' do
+        expect { described_class.cleanup }
+          .not_to change { described_class.exists? token.id }
+          .from true
+      end
+    end
+  end
+
+  describe '#expired?' do
+    context 'when token has an expiration date' do
+      subject(:token) { create(:token, persistent: false, expires_at: expires_at) }
+
+      context 'with the expiration date in the future' do
+        context 'with day precision' do
+          let(:expires_at) { 1.day.from_now }
+
+          it { is_expected.not_to be_expired }
+        end
+
+        context 'with hour precision' do
+          let(:expires_at) { 1.hour.from_now }
+
+          it { is_expected.not_to be_expired }
+        end
+      end
+
+      context 'with the expiration date in the past' do
+        context 'with day precision' do
+          let(:expires_at) { 1.day.ago }
+
+          it { is_expected.to be_expired }
+        end
+
+        context 'with hour precision' do
+          let(:expires_at) { 1.hour.ago }
+
+          it { is_expected.to be_expired }
+        end
+      end
+    end
+
+    context 'when token has no expiration date date' do
+      let(:token) { create(:token, persistent: false) }
+
+      it { is_expected.not_to be_expired }
+    end
+  end
+
+  describe '.validate!' do
+    let(:action)     { 'example' }
+    let(:user)       { create(:user) }
+    let(:expires_at) { nil }
+    let(:token)      { create(:token, action:, expires_at:, user:) }
+
+    before { token }
+
+    it 'returns token if all is good' do
+      expect(described_class.validate!(action:, token: token.token, user:))
+        .to eq(token)
+    end
+
+    it 'returns token if all is good for current user', current_user_id: -> { user.id } do
+      expect(described_class.validate!(action:, token: token.token))
+        .to eq(token)
+    end
+
+    it 'raises error if token does not exist' do
+      expect { described_class.validate!(action:, token: 'nonexistant') }
+        .to raise_error(Token::TokenAbsent)
+    end
+
+    it 'raises error if token belongs to another user' do
+      expect { described_class.validate!(action:, token: token.token, user: create(:agent)) }
+        .to raise_error(Token::TokenAbsent)
+    end
+
+    context 'when token has expiration date in the future' do
+      let(:expires_at) { 1.day.from_now }
+
+      it 'returns token' do
+        expect(described_class.validate!(action:, token: token.token, user:))
+          .to eq(token)
+      end
+    end
+
+    context 'when token has expiration date in the past' do
+      let(:expires_at) { 1.day.ago }
+
+      it 'raises error' do
+        expect { described_class.validate!(action:, token: token.token, user:) }
+          .to raise_error(Token::TokenExpired)
       end
     end
   end

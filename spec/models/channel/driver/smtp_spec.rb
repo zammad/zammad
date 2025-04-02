@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -18,7 +18,7 @@ RSpec.describe Channel::Driver::Smtp, integration: true, required_envs: %w[MAIL_
                host:     'mx1.example.com',
                user:     'example',
                password: 'some_pw',
-               ssl:      true,
+               ssl:      'ssl',
              }
            })
   end
@@ -27,8 +27,6 @@ RSpec.describe Channel::Driver::Smtp, integration: true, required_envs: %w[MAIL_
   let(:article)    { create(:ticket_article, :outbound_email, ticket: ticket, to: Faker::Internet.unique.email, subject: 'some subject', message_id: 'some@id', body: 'some message delivery test') }
 
   before do
-    ENV['ZAMMAD_MAIL_TO_FILE'] = '1'
-
     freeze_time
     email_address.update!(channel_id: channel.id)
     ticket && article

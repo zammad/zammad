@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
@@ -20,6 +20,7 @@ export interface ConfirmationOptions {
   buttonLabel?: string
   buttonVariant?: ButtonVariant
   cancelLabel?: string
+  hideCancelButton?: boolean
   fullscreen?: boolean
   // TODO: should maybe also be implemented for mobile, so that we have a better alignment for the code
   confirmationVariant?: ConfirmationVariant

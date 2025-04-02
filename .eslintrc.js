@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs')
@@ -311,7 +311,6 @@ module.exports = {
     defineExpose: 'readonly',
     withDefaults: 'readonly',
   },
-  parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser', // the typescript-parser for eslint, instead of tslint
     sourceType: 'module', // allow the use of imports statements

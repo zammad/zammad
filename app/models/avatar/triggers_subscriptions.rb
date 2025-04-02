@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Trigger GraphQL subscriptions on avatar changes.
 module Avatar::TriggersSubscriptions
@@ -48,11 +48,6 @@ module Avatar::TriggersSubscriptions
   def trigger_user_subscription
     return if ObjectLookup.by_id(object_lookup_id) != 'User'
 
-    Gql::Subscriptions::User::Current::AvatarUpdates.trigger(
-      nil,
-      arguments: {
-        user_id: Gql::ZammadSchema.id_from_internal_id('User', o_id)
-      }
-    )
+    Gql::Subscriptions::User::Current::AvatarUpdates.trigger(nil, scope: o_id)
   end
 end

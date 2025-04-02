@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class ImportZendeskController < ApplicationController
 
@@ -23,7 +23,7 @@ class ImportZendeskController < ApplicationController
       'Connection refused'                                        => __('The connection was refused.'),
     }
 
-    response = UserAgent.request(URI.join(params[:url], '/api/v2/users/me').to_s, verify_ssl: true)
+    response = UserAgent.get(URI.join(params[:url], '/api/v2/users/me').to_s, {}, verify_ssl: true)
 
     if !response.success?
       message_human = ''

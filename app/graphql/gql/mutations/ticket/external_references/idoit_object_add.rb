@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::ExternalReferences::IdoitObjectAdd < BaseMutation
@@ -15,7 +15,7 @@ module Gql::Mutations
 
     def authorized?(idoit_object_ids:, ticket: nil)
       if ticket.present?
-        Pundit.authorize(context.current_user, ticket, :agent_update_access?)
+        pundit_authorized?(ticket, :agent_update_access?)
       else
         context.current_user.permissions?('ticket.agent')
       end

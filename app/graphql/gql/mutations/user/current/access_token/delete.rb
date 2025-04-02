@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::AccessToken::Delete < BaseMutation
@@ -11,14 +11,14 @@ module Gql::Mutations
       ctx.current_user.permissions?('user_preferences.access_token')
     end
 
+    def authorized?(token:)
+      pundit_authorized?(token, :destroy?)
+    end
+
     def resolve(token:)
       token.destroy!
 
       { success: true }
-    end
-
-    def authorized?(token:)
-      Pundit.authorize(context.current_user, token, :destroy?)
     end
   end
 end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class EmailHelper
 
@@ -85,7 +85,7 @@ returns
         options: {
           host: 'imap.gmail.com',
           port: 993,
-          ssl: true,
+          ssl: 'ssl',
           user: email,
           password: password,
         },
@@ -116,7 +116,7 @@ returns
           options: {
             host:     'imap.gmail.com',
             port:     993,
-            ssl:      true,
+            ssl:      'ssl',
             user:     email,
             password: password,
           },
@@ -139,7 +139,7 @@ returns
           options: {
             host:     'imap-mail.outlook.com',
             port:     993,
-            ssl:      true,
+            ssl:      'ssl',
             user:     email,
             password: password,
           },
@@ -162,7 +162,7 @@ returns
           options: {
             host:     'pop.gmail.com',
             port:     995,
-            ssl:      true,
+            ssl:      'ssl',
             user:     email,
             password: password,
           },
@@ -195,7 +195,7 @@ returns
     options: {
       host: mx_domains[0],
       port: 993,
-      ssl: true,
+      ssl: 'ssl',
       user: user,
       password: password,
     },
@@ -205,7 +205,7 @@ returns
     options: {
       host: mx_domains[0],
       port: 993,
-      ssl: true,
+      ssl: 'ssl',
       user: email,
       password: password,
     },
@@ -222,7 +222,7 @@ returns
           options: {
             host:     domain,
             port:     993,
-            ssl:      true,
+            ssl:      'ssl',
             user:     user,
             password: password,
           },
@@ -232,7 +232,7 @@ returns
           options: {
             host:     domain,
             port:     993,
-            ssl:      true,
+            ssl:      'ssl',
             user:     email,
             password: password,
           },
@@ -256,7 +256,7 @@ returns
     options: {
       host: "mail.#{domain}",
       port: 993,
-      ssl: true,
+      ssl: 'ssl',
       user: user,
       password: password,
     },
@@ -266,7 +266,7 @@ returns
     options: {
       host: "mail.#{domain}",
       port: 993,
-      ssl: true,
+      ssl: 'ssl',
       user: email,
       password: password,
     },
@@ -282,7 +282,7 @@ returns
         options: {
           host:     "mail.#{domain}",
           port:     993,
-          ssl:      true,
+          ssl:      'ssl',
           user:     user,
           password: password,
         },
@@ -292,7 +292,7 @@ returns
         options: {
           host:     "mail.#{domain}",
           port:     993,
-          ssl:      true,
+          ssl:      'ssl',
           user:     email,
           password: password,
         },
@@ -302,7 +302,7 @@ returns
         options: {
           host:     "imap.#{domain}",
           port:     993,
-          ssl:      true,
+          ssl:      'ssl',
           user:     user,
           password: password,
         },
@@ -312,7 +312,7 @@ returns
         options: {
           host:     "imap.#{domain}",
           port:     993,
-          ssl:      true,
+          ssl:      'ssl',
           user:     email,
           password: password,
         },
@@ -322,7 +322,7 @@ returns
         options: {
           host:     "mail.#{domain}",
           port:     995,
-          ssl:      true,
+          ssl:      'ssl',
           user:     user,
           password: password,
         },
@@ -332,7 +332,7 @@ returns
         options: {
           host:     "mail.#{domain}",
           port:     995,
-          ssl:      true,
+          ssl:      'ssl',
           user:     email,
           password: password,
         },
@@ -342,7 +342,7 @@ returns
         options: {
           host:     "pop.#{domain}",
           port:     995,
-          ssl:      true,
+          ssl:      'ssl',
           user:     user,
           password: password,
         },
@@ -352,7 +352,7 @@ returns
         options: {
           host:     "pop.#{domain}",
           port:     995,
-          ssl:      true,
+          ssl:      'ssl',
           user:     email,
           password: password,
         },
@@ -362,7 +362,7 @@ returns
         options: {
           host:     "pop3.#{domain}",
           port:     995,
-          ssl:      true,
+          ssl:      'ssl',
           user:     user,
           password: password,
         },
@@ -372,7 +372,7 @@ returns
         options: {
           host:     "pop3.#{domain}",
           port:     995,
-          ssl:      true,
+          ssl:      'ssl',
           user:     email,
           password: password,
         },
@@ -493,7 +493,7 @@ returns
     options: {
       host: "mail.#{domain}",
       port: 993,
-      ssl: true,
+      ssl: 'ssl',
       user: user,
       password: password,
     },
@@ -503,7 +503,7 @@ returns
     options: {
       host: "mail.#{domain}",
       port: 993,
-      ssl: true,
+      ssl: 'ssl',
       user: email,
       password: password,
     },

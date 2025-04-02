@@ -1,7 +1,7 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
-import { getAllByRole, getByRole } from '@testing-library/vue'
+import { getAllByRole, getByRole, waitFor } from '@testing-library/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -181,15 +181,38 @@ describe('TimeAccountingFlyout.vue', () => {
     ])
   })
 
-  it.todo('should autofocus accounted time on mounted', async () => {
+  it('should autofocus accounted time on mounted', async () => {
     const wrapper = await renderTimeAccountingFlyout()
 
     await waitForNextTick()
 
-    // :TODO in test env it does not focus the input but the button? Investigate.
-    expect(
-      // await wrapper.findByPlaceholderText('Enter the time you want to record'),
-      wrapper.getByPlaceholderText('Enter the time you want to record'),
-    ).toHaveFocus()
+    await waitFor(() =>
+      expect(
+        wrapper.getByPlaceholderText('Enter the time you want to record'),
+      ).toHaveFocus(),
+    )
+  })
+
+  it('supports time unit separated by coma and converts it to float', async () => {
+    const wrapper = await renderTimeAccountingFlyout()
+
+    const input = wrapper.getByLabelText('Accounted Time')
+
+    await wrapper.events.type(input, '1,5')
+
+    await getNode('timeUnit')?.settled
+
+    await wrapper.events.click(
+      wrapper.getByRole('button', { name: 'Account Time' }),
+    )
+
+    expect(wrapper.emitted('account-time')[0]).toEqual(
+      expect.arrayContaining([
+        {
+          time_unit: '1.5',
+          accounted_time_type_id: 1,
+        },
+      ]),
+    )
   })
 })

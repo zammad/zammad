@@ -59,7 +59,7 @@ class App.ControllerGenericIndex extends App.Controller
       App[@genericObject].unsubscribe(@subscribeId)
 
   paginate: (page, params) =>
-    search_query = decodeURIComponent(params?.search_query || '')
+    search_query = params?.search_query || ''
     return if page is @pageData.pagerSelected && @searchQuery is search_query
 
     @pageData.pagerSelected = page
@@ -84,8 +84,8 @@ class App.ControllerGenericIndex extends App.Controller
       @title @pageData.objects, true
 
     if @pageData.pagerAjax
-      sortBy  = @table?.customOrderBy || @table?.orderBy || @defaultSortBy  || 'id'
-      orderBy = @table?.customOrderDirection || @table?.orderDirection || @defaultOrder || 'ASC'
+      sortBy  = @table?.customOrderBy || @table?.lastOrderBy || @defaultSortBy  || 'id'
+      orderBy = @table?.customOrderDirection || @table?.lastOrderDirection || @defaultOrder || 'ASC'
 
       fallbackSortBy  = sortBy
       fallbackOrderBy = orderBy
@@ -187,7 +187,9 @@ class App.ControllerGenericIndex extends App.Controller
         objects: objects
         bindRow:
           events:
-            click: @edit
+            click:
+              callback: @edit
+              available: @editAvailable
         container: @container
         explanation: @pageData.explanation
         groupBy: @groupBy
@@ -224,6 +226,8 @@ class App.ControllerGenericIndex extends App.Controller
 
   editControllerClass: ->
     App.ControllerGenericEdit
+
+  editAvailable: (id) -> true
 
   edit: (id, e) =>
     e.preventDefault()

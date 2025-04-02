@@ -1,0 +1,5 @@
+<a href="#" class="dismiss-button">
+  <%- @Icon('diagonal-cross') %>
+</a>
+<div class="js-switchControl"></div>
+<!--<a href="#" class="learn-more-link"><%- @T('Learn More') %></a>-->

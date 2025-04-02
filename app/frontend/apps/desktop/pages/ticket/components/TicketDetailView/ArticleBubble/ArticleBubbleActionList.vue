@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -28,9 +28,9 @@ const { isTouchDevice } = useTouchDevice()
 const buttonVariantClassExtension = computed(() => {
   // TODO maybe general classes string for same classes
   if (props.position === 'left')
-    return 'border border-neutral-100 !outline-transparent hover:border-blue-700 dark:hover:border-blue-700 hover:border-blue-800 bg-neutral-50 hover:bg-white text-gray-100 dark:border-gray-900 dark:bg-gray-500 dark:text-neutral-400'
+    return 'border! border-neutral-100! outline-transparent! hover:border-blue-700! hover:border-blue-800! bg-neutral-50! hover:dark:bg-gray-500! hover:bg-white!  text-gray-100! dark:border-gray-900! dark:bg-gray-500! dark:text-neutral-400!'
 
-  return 'border border-neutral-100 !outline-transparent hover:border-blue-700 dark:hover:border-blue-700 bg-blue-100 bg-blue-100  text-gray-100 dark:border-gray-900 dark:bg-stone-500 dark:text-neutral-400'
+  return 'border! border-neutral-100! outline-transparent! hover:border-blue-700! dark:hover:border-blue-700! bg-blue-100! bg-blue-100!  text-gray-100! dark:border-gray-900! dark:bg-stone-500! dark:text-neutral-400!'
 })
 
 const { getNewArticleBody, openReplyForm } = useTicketArticleReplyAction(
@@ -134,15 +134,15 @@ const actions = computed(() => {
       v-for="action in actions.alwaysVisibleActions"
       :key="action.key"
       data-test-id="top-level-article-action-container"
-      class="-:order-1 flex items-center"
+      class="order-1 flex items-center"
       :class="{
-        '-order-1': position === 'right',
-        'opacity-0 transition-opacity group-hover/article:opacity-100':
+        '-order-1!': position === 'right',
+        'opacity-0 transition-opacity group-hover/article:opacity-100 focus-within:opacity-100':
           !isTouchDevice,
       }"
     >
       <CommonButton
-        class="!py-0.5 px-1 !text-xs"
+        class="px-1 py-0.5! text-xs! focus-visible:outline-offset-0! focus-visible:outline-blue-800!"
         :class="[buttonVariantClassExtension]"
         :prefix-icon="action.icon"
         size="large"
@@ -152,7 +152,7 @@ const actions = computed(() => {
     </div>
 
     <CommonActionMenu
-      class="flex"
+      class="flex!"
       :no-padded-default-button="false"
       no-small-rounding-default-button
       :entity="{ ticket, article }"

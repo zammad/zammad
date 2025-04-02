@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class ObjectManager::Attribute < ApplicationModel
   include HasDefaultModelUserRelations
@@ -28,6 +28,45 @@ class ObjectManager::Attribute < ApplicationModel
     group_permissions
     active
   ].freeze
+
+  RESERVED_NAMES = %w[
+    destroy
+    true
+    false
+    integer
+    select
+    drop
+    create
+    alter
+    index
+    table
+    varchar
+    blob
+    date
+    datetime
+    timestamp
+    url
+    icon
+    initials
+    avatar
+    permission
+    validate
+    subscribe
+    unsubscribe
+    translate
+    search
+    _type
+    _doc
+    _id
+    id
+    action
+    scope
+    constructor
+  ].freeze
+
+  RESERVED_NAMES_PER_MODEL = {
+    'Ticket' => %w[article],
+  }.freeze
 
   self.table_name = 'object_manager_attributes'
 
@@ -909,8 +948,12 @@ is certain attribute used by triggers, overviews or schedulers
     end
 
     # do not allow model method names as attributes
-    reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp url icon initials avatar permission validate subscribe unsubscribe translate search _type _doc _id id action scope constructor]
-    if name.match?(%r{^(#{reserved_words.join('|')})$})
+    if name.match?(%r{^(#{RESERVED_NAMES.join('|')})$})
+      errors.add(:name, __('%{name} is a reserved word'), name: name)
+    end
+
+    model = object_lookup.name
+    if RESERVED_NAMES_PER_MODEL.key?(model) && name.match?(%r{^(#{RESERVED_NAMES_PER_MODEL[model].join('|')})$})
       errors.add(:name, __('%{name} is a reserved word'), name: name)
     end
 
@@ -921,7 +964,7 @@ is certain attribute used by triggers, overviews or schedulers
       errors.add(:name, __('%{name} is a reserved word'), name: name)
     end
 
-    record = object_lookup.name.constantize.new
+    record = model.constantize.new
     if new_record? && (record.respond_to?(name.to_sym) || record.attributes.key?(name))
       errors.add(:name, __('%{name} already exists'), name: name)
     end

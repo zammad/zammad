@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   computed,
@@ -14,6 +14,7 @@ import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 
 interface PageOptions {
   metaTitle?: ComputedRef<string>
+  onReactivate?: () => void
 }
 
 export const usePage = (pageOptions: PageOptions) => {
@@ -21,13 +22,19 @@ export const usePage = (pageOptions: PageOptions) => {
 
   const pageInactive = computed(() => !pageActive.value)
 
-  const { metaTitle } = pageOptions
+  const { metaTitle, onReactivate } = pageOptions
 
   let stopMetaTitleWatcher: WatchHandle | undefined
 
   const { setViewTitle } = useMetaTitle()
 
   onActivated(() => {
+    // When it's already true, it means it's the first time, because onActivated is also called on the
+    // first mount.
+    if (pageActive.value !== true) {
+      onReactivate?.()
+    }
+
     pageActive.value = true
 
     if (metaTitle) {

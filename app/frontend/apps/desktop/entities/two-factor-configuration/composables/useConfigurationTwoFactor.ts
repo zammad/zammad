@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { storeToRefs } from 'pinia'
 import { computed, watch } from 'vue'
@@ -32,7 +32,7 @@ export const useConfigurationTwoFactor = () => {
   )
 
   const userCurrentTwoFactorSubscription = new SubscriptionHandler(
-    useUserCurrentTwoFactorUpdatesSubscription({ userId: session.userId }),
+    useUserCurrentTwoFactorUpdatesSubscription(),
   )
 
   const userCurrentTwoFactorResult = userCurrentTwoFactorSubscription.result()

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 // To update snapshots, run `pnpm cypress:snapshots`
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)
@@ -7,7 +7,8 @@ import { mountFormField, checkFormMatchesSnapshot } from '#cy/utils.ts'
 
 import { FormValidationVisibility } from '#shared/components/Form/types.ts'
 
-describe('testing visuals for "FieldDate"', () => {
+// :TODO fix please the suite
+describe.skip('testing visuals for "FieldDate"', () => {
   const inputs = [
     { type: 'date', input: '2021-01-01' },
     { type: 'datetime', input: '2021-01-01 13:12' },

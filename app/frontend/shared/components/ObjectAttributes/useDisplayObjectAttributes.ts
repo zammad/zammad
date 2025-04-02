@@ -1,26 +1,34 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-import { keyBy, get } from 'lodash-es'
+import { keyBy } from 'lodash-es'
 import { computed } from 'vue'
 
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
 import type { ObjectAttributeValue } from '#shared/graphql/types.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
-import { camelize } from '#shared/utils/formatter.ts'
+
+import { getLink, getValue, isEmpty } from './utils.ts'
 
 import type { AttributeDeclaration } from './types.ts'
 import type { Dictionary } from 'ts-essentials'
 import type { Component } from 'vue'
 
-export interface ObjectAttributesDisplayOptions {
+interface BaseObjectAttributeDisplayOptions {
   object: ObjectLike
-  attributes: ObjectAttribute[]
-  skipAttributes?: string[]
-  accessors?: Record<string, string>
 }
 
-interface AttributeField {
+export interface ObjectAttributeDisplayOptions
+  extends BaseObjectAttributeDisplayOptions {
+  attribute: ObjectAttribute
+}
+
+export interface ObjectAttributesDisplayOptions
+  extends BaseObjectAttributeDisplayOptions {
+  skipAttributes?: string[]
+  attributes: ObjectAttribute[]
+}
+
+export interface AttributeField {
   attribute: ObjectAttribute
   component: Component
   value: unknown
@@ -42,6 +50,31 @@ const definitionsByType = Object.values(attributesDeclarations).reduce(
   {} as Record<string, Component>,
 )
 
+export const useDisplayObjectAttribute = (
+  options: ObjectAttributeDisplayOptions,
+) => {
+  const attributesObject = computed<Dictionary<ObjectAttributeValue>>(() => {
+    return keyBy(options.object.objectAttributeValues || {}, 'attribute.name')
+  })
+
+  const field = computed<AttributeField>(() => {
+    const { attribute, object } = options
+
+    return {
+      attribute,
+      component: definitionsByType[attribute.dataType],
+      value: getValue(
+        attribute.name,
+        object,
+        attributesObject.value,
+        attribute,
+      ),
+      link: getLink(attribute.name, attributesObject.value),
+    }
+  })
+  return { field }
+}
+
 export const useDisplayObjectAttributes = (
   options: ObjectAttributesDisplayOptions,
 ) => {
@@ -49,64 +82,22 @@ export const useDisplayObjectAttributes = (
     return keyBy(options.object.objectAttributeValues || {}, 'attribute.name')
   })
 
-  const getValue = (key: string) => {
-    const accessor = options.accessors?.[key]
-    if (accessor) {
-      return get(options.object, accessor)
-    }
-    if (key in attributesObject.value) {
-      return attributesObject.value[key].value
-    }
-    if (key in options.object) {
-      return options.object[key]
-    }
-    return options.object[camelize(key)]
-  }
-
-  const isEmpty = (value: unknown) => {
-    if (Array.isArray(value)) {
-      return value.length === 0
-    }
-    // null or undefined or ''
-    return value == null || value === ''
-  }
-
-  const getLink = (name: string) => {
-    const attribute = attributesObject.value[name]
-    return attribute?.renderedLink || null
-  }
-
-  const session = useSessionStore()
-
   const fields = computed<AttributeField[]>(() => {
     return options.attributes
       .filter((attribute) => !attribute.isStatic)
-      .map((attribute) => {
-        let value = getValue(attribute.name)
-
-        if (typeof value !== 'boolean' && !value) {
-          value = attribute.dataOption?.default
-        }
-
-        return {
+      .map((attribute) => ({
+        attribute,
+        component: definitionsByType[attribute.dataType],
+        value: getValue(
+          attribute.name,
+          options.object,
+          attributesObject.value,
           attribute,
-          component: definitionsByType[attribute.dataType],
-          value,
-          link: getLink(attribute.name),
-        }
-      })
+        ),
+        link: getLink(attribute.name, attributesObject.value),
+      }))
       .filter(({ attribute, value, component }) => {
         if (!component) return false
-
-        const dataOption = attribute.dataOption || {}
-
-        if (
-          'permission' in dataOption &&
-          dataOption.permission &&
-          !session.hasPermission(dataOption.permission)
-        ) {
-          return false
-        }
 
         if (isEmpty(value)) {
           return false

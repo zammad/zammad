@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Auth::TwoFactor::AuthenticationMethod::SecurityKeys < Auth::TwoFactor::AuthenticationMethod
   ORDER = 1000

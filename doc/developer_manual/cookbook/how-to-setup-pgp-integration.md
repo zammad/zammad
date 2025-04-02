@@ -1,12 +1,15 @@
 # How to Setup PGP Integration
 
-For development purposes, it's possible to set up PGP integration for a local Zammad instance. However, since the approach uses self-generated test keys, this is considered unsafe for production. You've been warned!
+For development purposes, it's possible to set up PGP integration for a local Zammad instance. However, since the
+approach uses self-generated test keys, this is considered unsafe for production. You've been warned!
 
 ## Configure PGP Integration
 
-Navigate to the **System > Integrations > PGP** section in GUI, and turn on the toggle switch on top to activate the feature.
+Navigate to the **System > Integrations > PGP** section in GUI, and turn on the toggle switch on top to activate the
+feature.
 
-**Note**: In case your local `gpg` binary cannot be found or it's a wrong version, you may receive an error message on top. Please try to fix it before proceeding by either installing or updating your GnuPG installation.
+**Note**: In case your local `gpg` binary cannot be found or it's a wrong version, you may receive an error message on
+top. Please try to fix it before proceeding by either installing or updating your GnuPG installation.
 
 ### Upload Sender Private Key
 
@@ -72,10 +75,11 @@ Navigate to the **System > Integrations > PGP** section in GUI, and turn on the 
    -----END PGP PRIVATE KEY BLOCK-----
    ```
 
-3. Enter *zammad* in **Passphrase** box.
+3. Enter _zammad_ in **Passphrase** box.
 4. Click on the **Add** button.
 
-The test sender private key above was generated for the following sender email address: `zammad@localhost`. In case your sender address is different, please see below on how to re-generate it.
+The test sender private key above was generated for the following sender email address: `zammad@localhost`. In case
+your sender address is different, please see below on how to re-generate it.
 
 ### Upload Recipient Public Key
 
@@ -117,7 +121,8 @@ The test sender private key above was generated for the following sender email a
 3. Leave **Passphrase** box empty.
 4. Click on the **Add** button.
 
-The test recipient public key above was generated for the following customer email address: `nicole.braun@zammad.org`. In case your recipient address is different, please see below how to re-generate it.
+The test recipient public key above was generated for the following customer email address: `nicole.braun@zammad.org`.
+In case your recipient address is different, please see below how to re-generate it.
 
 ## Create a Test Email Ticket with Encrypted & Signed Content
 
@@ -126,7 +131,7 @@ The test recipient public key above was generated for the following customer ema
 3. Provide a **Title**.
 4. Choose a **Customer** called _Nicole Braun_.
 5. Provide some **Text**.
-6. Choose *Users* for the **Group**.
+6. Choose _Users_ for the **Group**.
 7. Verify that both **Encrypt** and **Sign** toggle buttons are now active.
 8. Click on the **Create** button.
 9. Verify that the first article has a **Security** attribute in article metadata with _PGP: Encrypted / Signed_ value.
@@ -144,7 +149,8 @@ You will need a recent installation of `gpg` utility (GnuPG) for the following c
    export GNUPGHOME
    ```
 
-   On systems with GnuPG version higher than 2.3.0, please set the following configuration option before generating new keys, so they can be backwards compatible:
+   On systems with GnuPG version higher than 2.3.0, please set the following configuration option before generating new
+   keys, so they can be backwards compatible:
 
    ```sh
    echo "default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed" > "$GNUPGHOME/gpg.conf"
@@ -156,7 +162,8 @@ You will need a recent installation of `gpg` utility (GnuPG) for the following c
    gpg --quick-generate-key "zammad@localhost" rsa4096 sign,encr 10y
    ```
 
-   Where `zammad@localhost` is the key UID, `rsa4096` key algorithm, `sign,encr` key usage and `10y` key expiration date relative to current time.
+   Where `zammad@localhost` is the key UID, `rsa4096` key algorithm, `sign,encr` key usage and `10y` key expiration date
+   relative to current time.
 
    Provide the key passphrase when asked, confirm it and remember it for later.
 
@@ -177,7 +184,10 @@ You will need a recent installation of `gpg` utility (GnuPG) for the following c
    unset GNUPGHOME
    ```
 
-You can now upload your new test sender private key. Either upload the actual text file (`zammad@localhost.asc`) or paste its contents in the appropriate box. Remember that the private key export includes the public key information as well, there is no need to import them separately. Also, you will have to provide the passphrase for the private key during the upload to Zammad.
+You can now upload your new test sender private key. Either upload the actual text file (`zammad@localhost.asc`) or
+paste its contents in the appropriate box. Remember that the private key export includes the public key information
+as well, there is no need to import them separately. Also, you will have to provide the passphrase for the private key
+during the upload to Zammad.
 
 ### Generate Recipient Key
 
@@ -188,7 +198,8 @@ You can now upload your new test sender private key. Either upload the actual te
    export GNUPGHOME
    ```
 
-   On systems with GnuPG version higher than 2.3.0, please set the following configuration option before generating new keys, so they can be backwards compatible:
+   On systems with GnuPG version higher than 2.3.0, please set the following configuration option before generating new
+   keys, so they can be backwards compatible:
 
    ```sh
    echo "default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed" > "$GNUPGHOME/gpg.conf"
@@ -200,7 +211,8 @@ You can now upload your new test sender private key. Either upload the actual te
    gpg --quick-generate-key "Nicole Braun <nicole.braun@zammad.org>" rsa4096 sign,encr 10y
    ```
 
-   Where `Nicole Braun <nicole.braun@zammad.org>` is the key UID, `rsa4096` key algorithm, `sign,encr` key usage and `10y` key expiration date relative to current time.
+   Where `Nicole Braun <nicole.braun@zammad.org>` is the key UID, `rsa4096` key algorithm, `sign,encr` key usage and
+   `10y` key expiration date relative to current time.
 
    Provide the key passphrase when asked and confirm it.
 
@@ -210,7 +222,8 @@ You can now upload your new test sender private key. Either upload the actual te
    gpg --output "nicole.braun@zammad.org.pub.asc" --armor --export "Nicole Braun <nicole.braun@zammad.org>"
    ```
 
-   Where `nicole.braun@zammad.org.pub.asc` is the file output for the public key and `Nicole Braun <nicole.braun@zammad.org>` the key UID.
+   Where `nicole.braun@zammad.org.pub.asc` is the file output for the public key and
+   `Nicole Braun <nicole.braun@zammad.org>` the key UID.
 
 4. Clean up the temporary GPG keyring:
 
@@ -219,7 +232,9 @@ You can now upload your new test sender private key. Either upload the actual te
    unset GNUPGHOME
    ```
 
-You can now upload your new test recipient public key. Either upload the actual text file (`nicole.braun@zammad.org.pub.asc`) or paste its content in the appropriate box. Note that in this case you should NOT upload the generated private key since the public key may be used only for encryption.
+You can now upload your new test recipient public key. Either upload the actual text file
+(`nicole.braun@zammad.org.pub.asc`) or paste its content in the appropriate box. Note that in this case you should NOT
+upload the generated private key since the public key may be used only for encryption.
 
 ## Other Useful GnuPG commands
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { TwoFactorPlugin } from '#shared/entities/two-factor/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'

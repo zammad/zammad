@@ -28,6 +28,7 @@
   <div class="menu js-menu"></div>
   <div class="tasks tasks-navigation"></div>
   <% if !_.isEmpty(@user): %>
+    <div class="navbar-desktop-beta-switch" style="display: none"></div>
     <ul class="user-menu navbar-items-personal"></ul>
   <% end %>
   <a class="menu-item menu-item-navigation-toggle-button js-navigation-toggle-button" href="#">

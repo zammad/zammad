@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -14,8 +14,8 @@ import { useFieldSecurity } from '#shared/components/Form/fields/FieldSecurity/u
 import { translateArticleSecurity } from '#shared/entities/ticket-article/composables/translateArticleSecurity.ts'
 import { i18n } from '#shared/i18n.ts'
 
-import CommonTabManager from '#desktop/components/CommonTabManager/CommonTabManager.vue'
-import type { Tab } from '#desktop/components/CommonTabManager/types.ts'
+import CommonTabGroup from '#desktop/components/CommonTabGroup/CommonTabGroup.vue'
+import type { Tab } from '#desktop/components/CommonTabGroup/types.ts'
 
 const props = defineProps<FieldSecurityProps>()
 const contextReactive = toRef(props, 'context')
@@ -88,7 +88,7 @@ const selectOption = (value: Tab['key'] | Tab['key'][]) => {
     v-bind="context.attrs"
   >
     <div class="flex gap-2">
-      <CommonTabManager
+      <CommonTabGroup
         v-if="securityMethods.length > 1"
         :model-value="previewMethod"
         :tabs="securityMethodTabs"
@@ -97,7 +97,7 @@ const selectOption = (value: Tab['key'] | Tab['key'][]) => {
           changeSecurityState($event as EnumSecurityStateType)
         "
       />
-      <CommonTabManager
+      <CommonTabGroup
         :model-value="selectedOptionTabs"
         :tabs="optionTabs"
         size="medium"

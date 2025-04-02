@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -130,7 +130,7 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
       find('.js-table-action-menu .js-delete').click
 
       in_modal do
-        click_on('delete')
+        click_on('Delete')
       end
 
       expect(page).to have_no_content('Test Checklist')

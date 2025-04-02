@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -343,13 +343,20 @@ RSpec.describe SearchIndexBackend do
   end
 
   describe '.selectors', searchindex: true do
-
-    let(:group1)        { create(:group) }
-    let(:organization1) { create(:organization, note: 'hihi') }
-    let(:agent1)        { create(:agent, organization: organization1, groups: [group1]) }
-    let(:customer1)     { create(:customer, organization: organization1, firstname: 'special-first-name') }
+    let(:initialize_object_manager_attributes) { nil }
+    let(:group1)                               { create(:group) }
+    let(:additional_ticket_attributes1)        { {} }
+    let(:organization1)                        { create(:organization, note: 'hihi') }
+    let(:agent1)                               { create(:agent, organization: organization1, groups: [group1]) }
+    let(:customer1)                            { create(:customer, organization: organization1, firstname: 'special-first-name') }
     let(:ticket1) do
-      ticket = create(:ticket, title: 'some-title1', state_id: 1, created_by: agent1, group: group1)
+      attributes = {
+        title:      'some-title1',
+        state_id:   1,
+        created_by: agent1,
+        group:      group1,
+      }
+      ticket = create(:ticket, attributes.merge(additional_ticket_attributes1))
       ticket.tag_add('t1', 1)
       ticket
     end
@@ -373,6 +380,9 @@ RSpec.describe SearchIndexBackend do
 
     before do
       Ticket.destroy_all # needed to remove not created tickets
+
+      initialize_object_manager_attributes
+
       travel(-1.hour)
       create(:mention, mentionable: ticket1, user: agent1)
       ticket1.search_index_update_backend
@@ -981,6 +991,154 @@ RSpec.describe SearchIndexBackend do
                                              field: 'created_at', # sort to verify result
                                            })
         expect(result).to eq({ count: 7, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s] })
+      end
+    end
+
+    context 'with external data source field', db_adapter: :postgresql, db_strategy: :reset do
+      let(:external_data_source_attribute) do
+        create(:object_manager_attribute_autocompletion_ajax_external_data_source,
+               name: 'external_data_source_attribute')
+      end
+
+      let(:name) { "ticket.#{external_data_source_attribute.name}" }
+
+      let(:external_data_source_attribute_value) { 123 }
+      let(:additional_ticket_attributes1) do
+        {
+          external_data_source_attribute.name => {
+            value: external_data_source_attribute_value,
+            label: 'Example'
+          }
+        }
+      end
+
+      let(:condition) do
+        { operator: 'AND', conditions: [ {
+          name:     name,
+          operator: operator,
+          value:    value,
+        } ] }
+      end
+
+      let(:initialize_object_manager_attributes) do
+        external_data_source_attribute
+        ObjectManager::Attribute.migration_execute
+      end
+
+      describe "operator 'is'" do
+        let(:operator) { 'is' }
+
+        context 'with string' do
+          context 'with matching string as value' do
+            let(:external_data_source_attribute_value) { 'Example' }
+            let(:value) do
+              {
+                value: 'Example',
+                label: 'Example'
+              }
+            end
+
+            it 'finds the ticket' do
+              result = described_class.selectors('Ticket', condition, { current_user: agent1 })
+              expect(result[:object_ids].count).to eq(1)
+            end
+          end
+
+          context 'with non-matching string' do
+            let(:value) do
+              {
+                value: 'Wrong',
+                label: 'Wrong'
+              }
+            end
+
+            it 'does not find the ticket' do
+              result = described_class.selectors('Ticket', condition, { current_user: agent1 })
+              expect(result[:object_ids].count).to eq(0)
+            end
+          end
+        end
+
+        context 'with matching integer as value' do
+          let(:value) do
+            {
+              value: 123,
+              label: 'Example'
+            }
+          end
+
+          it 'finds the ticket' do
+            result = described_class.selectors('Ticket', condition, { current_user: agent1 })
+            expect(result[:object_ids].count).to eq(1)
+          end
+        end
+
+        context 'with matching integer as value (but array style)' do
+          let(:value) do
+            [{
+              value: 123,
+              label: 'Example'
+            }]
+          end
+
+          it 'finds the ticket' do
+            result = described_class.selectors('Ticket', condition, { current_user: agent1 })
+            expect(result[:object_ids].count).to eq(1)
+          end
+        end
+
+        context 'with multiple values for matching' do
+          let(:value) do
+            [
+              {
+                value: 123,
+                label: 'Example'
+              },
+              {
+                value: 987,
+                label: 'Example 2'
+              }
+            ]
+          end
+
+          it 'finds the ticket' do
+            result = described_class.selectors('Ticket', condition, { current_user: agent1 })
+            expect(result[:object_ids].count).to eq(1)
+          end
+        end
+
+        context 'with matching boolean as value' do
+          let(:external_data_source_attribute_value) { true }
+          let(:value) do
+            {
+              value: true,
+              label: 'Yes'
+            }
+          end
+
+          it 'finds the ticket' do
+            result = described_class.selectors('Ticket', condition, { current_user: agent1 })
+            expect(result[:object_ids].count).to eq(1)
+          end
+        end
+      end
+
+      describe "operator 'is not'" do
+        let(:operator) { 'is not' }
+
+        context 'with matching integer as value' do
+          let(:value) do
+            {
+              value: 986,
+              label: 'Example'
+            }
+          end
+
+          it 'find the ticket' do
+            result = described_class.selectors('Ticket', condition, { current_user: agent1 })
+            expect(result[:object_ids].count).to eq(8)
+          end
+        end
       end
     end
   end

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
@@ -12,5 +12,6 @@ defineProps<ObjectAttributeProps<ObjectAttributeTextarea, string>>()
 </script>
 
 <template>
-  <div v-html="textToHtml(value)" />
+  <div v-if="mode === 'view'" v-html="textToHtml(value)" />
+  <template v-else>{{ value }}</template>
 </template>

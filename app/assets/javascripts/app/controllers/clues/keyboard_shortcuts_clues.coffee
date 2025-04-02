@@ -11,3 +11,5 @@ class App.KeyboardShortcutsClues extends App.CluesBase
       ]
     }
   ]
+
+App.Config.set('KeyboardShortcutsClues', { prio: 1000, controller: App.KeyboardShortcutsClues, preference_key: 'keyboard_shortcuts_clues' }, 'Clues')

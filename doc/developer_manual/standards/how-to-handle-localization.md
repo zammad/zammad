@@ -35,21 +35,33 @@ Writing strings that can be translated well and are a pleasure to read for the e
 
 #### Bad Examples
 
-- `lock` - this English word is ambiguous, it can be a noun (`a lock`), an infinitive (`to lock`) and an imperative (`lock this!`). That makes it impossible to translate it properly.
+- `lock` - this English word is ambiguous, it can be a noun (`a lock`), an infinitive (`to lock`) and an imperative
+  (`lock this!`). That makes it impossible to translate it properly.
 - `No email!` - this error message is not understandable for an end user.
 
 #### Good Practices
 
-- *Talk to the end user.* Imagine you are a non-technical end user of Zammad. Would you understand the error messages? Use natural, respectful language.
-- *Write at least two words.* Whenever possible, avoid creating single-word strings. This will reduce ambiguity drastically.
-- *Include punctuation.* Strings should include punctuation like final stops (`This is a sentence.`) or colons (`My label:`) as part of the translatable string. This punctuation might look different in some languages and should therefore not be hardcoded.
-- *Use placeholders, don't concatenate strings.* Bad: `"Open" + ticket_number`, good: `"Open ticket %s"` (and pass `ticket_number` as parameter). It's almost always a good idea to produce such slightly longer strings with placeholders. That helps translators to understand them and allows them to change the position of the placeholders in translations.
-- *Personal pronouns only for the user*: When referring to the user, `you` and `my` are fine (`Do you want to proceed?`, `My escalated tickets`). Other pronouns should be avoided, especially when talking about the software/system itself. Bad: `I / we could not generate the key`. Use the passive (`The key could not be generated`) or talk about `Zammad` instead (`Zammad does not support OTRS BPM processes`).
+- _Talk to the end user._ Imagine you are a non-technical end user of Zammad. Would you understand the error messages?
+  Use natural, respectful language.
+- _Write at least two words._ Whenever possible, avoid creating single-word strings. This will reduce ambiguity
+  drastically.
+- _Include punctuation._ Strings should include punctuation like final stops (`This is a sentence.`) or colons
+  (`My label:`) as part of the translatable string. This punctuation might look different in some languages and should
+  therefore not be hardcoded.
+- _Use placeholders, don't concatenate strings._ Bad: `"Open" + ticket_number`, good: `"Open ticket %s"` (and pass
+  `ticket_number` as parameter). It's almost always a good idea to produce such slightly longer strings with
+  placeholders. That helps translators to understand them and allows them to change the position of the placeholders in
+  translations.
+- _Personal pronouns only for the user_: When referring to the user, `you` and `my` are fine (`Do you want to proceed?`,
+  `My escalated tickets`). Other pronouns should be avoided, especially when talking about the software/system itself.
+  Bad: `I / we could not generate the key`. Use the passive (`The key could not be generated`) or talk about `Zammad`
+  instead (`Zammad does not support OTRS BPM processes`).
 
 ### Weblate Process Overview
 
 - The codebase has a translation catalog file [i18n/zammad.pot](zammad.pot), which must be kept up-to-date.
-- Weblate automatically picks this file up from git and updates its database. Now translators see the new/changed strings and can work on them.
+- Weblate automatically picks this file up from git and updates its database. Now translators see the new/changed
+  strings and can work on them.
 - From time to time, Weblate pushes the new/updated translations via merge request to git.
 - After the merge, the translation files in `i18n/zammad.*.po` are updated.
 - Zammad will pick them up as soon as `Translation.sync` gets called, which happens for example during a package update.
@@ -75,7 +87,8 @@ To test any changes made to translations in Weblate that are not yet published t
 you can use this workflow:
 
 - Download the current state of the language from Weblate as po file.
-- Save it locally in the Zammad folder as `i18n/zammad.pt-br.po` (for `pt-br` in this case, use corresponding file names for other languages).
+- Save it locally in the Zammad folder as `i18n/zammad.pt-br.po` (for `pt-br` in this case, use corresponding file
+  names for other languages).
 - Run `rails r Translation.sync` to import the latest state to the database.
 - Now the changes should appear in the GUI.
 

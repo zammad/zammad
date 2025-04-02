@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Role
   module Assets
@@ -37,14 +37,6 @@ returns
       # loops, will be updated with lookup attributes later
       data[ app_model ][ id ] = local_attributes
 
-      local_attributes['group_ids'].each_key do |group_id|
-        next if data[:Group] && data[:Group][group_id]
-
-        group = Group.lookup(id: group_id)
-        next if !group
-
-        data = group.assets(data)
-      end
       data
     end
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -21,7 +21,7 @@ RSpec.describe SecureMailing::SMIME::SecurityOptions, :aggregate_failures do
 
       it 'has no possible security options' do
         expect(instance.process.signing).to have_attributes(possible?: false, active_by_default?: false, message: 'The certificate for %s was not found.', message_placeholders: ['smime1@example.com'])
-        expect(instance.process.encryption).to have_attributes(possible?: false, active_by_default?: false, message: "Can't find S/MIME encryption certificates for: smime1@example.com", message_placeholders: [])
+        expect(instance.process.encryption).to have_attributes(possible?: false, active_by_default?: false, message: 'The certificate for smime1@example.com was not found.', message_placeholders: [])
       end
 
     end
@@ -31,7 +31,7 @@ RSpec.describe SecureMailing::SMIME::SecurityOptions, :aggregate_failures do
 
       it 'has no possible security options' do
         expect(instance.process.signing).to have_attributes(possible?: false, active_by_default?: false, message: 'There was no certificate found.', message_placeholders: [])
-        expect(instance.process.encryption).to have_attributes(possible?: false, active_by_default?: false, message: "Can't find S/MIME encryption certificates for: smime1@example.com", message_placeholders: [])
+        expect(instance.process.encryption).to have_attributes(possible?: false, active_by_default?: false, message: 'The certificate for smime1@example.com was not found.', message_placeholders: [])
       end
 
     end

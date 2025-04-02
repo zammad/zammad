@@ -3,7 +3,8 @@
   stage: test
   interruptible: false
   rules:
-  - if: $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"
+  # These jobs can only run for a) published paths and b) when triggered after the packager.io build is complete.
+  - if: ($CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web") && $CI_COMMIT_REF_NAME =~ /^(stable|develop)/
   services: []
   cache: []
   before_script: []

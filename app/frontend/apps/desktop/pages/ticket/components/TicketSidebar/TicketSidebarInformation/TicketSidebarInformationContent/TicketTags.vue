@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { getNode } from '@formkit/core'
@@ -175,7 +175,7 @@ const { config } = useApplicationStore()
           v-if="isTicketEditable"
           v-tooltip="$t('Remove this tag')"
           :class="{ 'opacity-0 transition-opacity': !isTouchDevice }"
-          class="focus:opacity-100 group-hover:opacity-100"
+          class="group-hover:opacity-100 focus:opacity-100"
           icon="x-lg"
           size="small"
           variant="remove"

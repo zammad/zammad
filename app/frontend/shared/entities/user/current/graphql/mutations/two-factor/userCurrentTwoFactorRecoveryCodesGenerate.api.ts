@@ -7,8 +7,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserCurrentTwoFactorRecoveryCodesGenerateDocument = gql`
-    mutation userCurrentTwoFactorRecoveryCodesGenerate {
-  userCurrentTwoFactorRecoveryCodesGenerate {
+    mutation userCurrentTwoFactorRecoveryCodesGenerate($token: String!) {
+  userCurrentTwoFactorRecoveryCodesGenerate(token: $token) {
     recoveryCodes
     errors {
       ...errors

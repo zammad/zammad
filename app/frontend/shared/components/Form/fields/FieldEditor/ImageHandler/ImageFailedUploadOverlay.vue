@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 defineProps<{
@@ -10,7 +10,7 @@ defineProps<{
 <template>
   <div
     div
-    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70"
+    class="bg-opacity-70 absolute inset-0 flex items-center justify-center bg-black"
     :style="{
       width: width,
       height: height,

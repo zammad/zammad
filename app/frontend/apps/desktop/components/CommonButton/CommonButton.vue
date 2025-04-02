@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { startCase } from 'lodash-es'
@@ -75,7 +75,7 @@ const variantClasses = computed(() => {
       return []
     case 'secondary':
     default:
-      return ['-:bg-transparent', '-:hover:bg-transparent', 'text-blue-800']
+      return ['bg-transparent', 'hover:bg-transparent', 'text-blue-800']
   }
 })
 
@@ -141,7 +141,7 @@ const iconSizeClass = computed(() => {
 
 <template>
   <button
-    class="-:inline-flex -:focus:outline-none -:focus:outline-0 -:focus:outline-offset-0 -:border-0 h-min min-h-min flex-shrink-0 flex-nowrap items-center justify-center gap-x-1 font-normal shadow-none transition-transform duration-200 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:hover:outline focus:hover:outline-1 focus:hover:outline-offset-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 focus:active:scale-[95%] focus:active:!outline-blue-800 dark:hover:outline-blue-900"
+    class="inline-flex h-min min-h-min flex-shrink-0 flex-nowrap items-center justify-center gap-x-1 border-0 font-normal shadow-none transition-transform duration-200 hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-hidden focus:outline-0 focus:outline-offset-0 focus:hover:outline-1 focus:hover:outline-offset-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 focus:active:scale-[95%] focus:active:outline-blue-800! dark:hover:outline-blue-900"
     :class="[
       ...variantClasses,
       ...sizeClasses,
@@ -155,6 +155,7 @@ const iconSizeClass = computed(() => {
     ]"
     :type="type"
     :form="form"
+    :tabindex="disabled ? '-1' : '0'"
     :aria-disabled="disabled ? 'true' : undefined"
   >
     <slot name="label">

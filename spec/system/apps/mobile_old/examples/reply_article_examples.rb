@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'mobile app: reply article' do |type_label, note, internal: false, attachments: false|
   let(:attributes) do

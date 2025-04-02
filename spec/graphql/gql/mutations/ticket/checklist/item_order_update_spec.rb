@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -66,7 +66,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemOrderUpdate, current_user_
     context 'with ticket read permission' do
       let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => 'read' }) }
 
-      it_behaves_like 'raising an error', Pundit::NotAuthorizedError
+      it_behaves_like 'raising an error', Exceptions::Forbidden
     end
 
     context 'with ticket read+change permissions' do

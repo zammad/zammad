@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Channels > Email', type: :system do
+RSpec.describe 'Manage > Channels > Email', integration: true, type: :system do
 
   context 'when managing email channels', required_envs: %w[MAIL_ADDRESS MAIL_PASS] do
 
@@ -221,15 +221,13 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
   end
 
   context 'when editing inbound email settings' do
-    it 'the expert form fields are not shown' do
+    it 'does not display intro form fields' do
       visit '#channels/email'
       click '.js-channelEnable'
       click '.js-editInbound'
 
       in_modal do
         expect(page).to have_no_text 'ORGANIZATION & DEPARTMENT NAME'
-        expect(page).to have_no_text 'ORGANIZATION SUPPORT'
-        expect(page).to have_no_text 'EMAIL'
       end
     end
 

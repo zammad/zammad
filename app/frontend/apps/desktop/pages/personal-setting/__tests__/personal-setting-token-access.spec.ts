@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -145,7 +145,7 @@ describe('personal settings for token access', () => {
 
     const table = within(view.getByRole('table'))
 
-    const deleteButton = within(table.getAllByRole('row')[0]).getByRole(
+    const deleteButton = within(table.getAllByRole('row')[1]).getByRole(
       'button',
       {
         name: 'Delete this access token',

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -76,7 +76,7 @@ const haveUnread = computed(() => unseenCount.value > 0)
 
 <template>
   <CommonLoader :loading="!notifications.length && loading">
-    <div class="ltr:pl-3 ltr:pr-4 rtl:pl-4 rtl:pr-3">
+    <div class="ltr:pr-4 ltr:pl-3 rtl:pr-3 rtl:pl-4">
       <NotificationItem
         v-for="notification of notifications"
         :key="notification.id"

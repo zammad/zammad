@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class OnlineNotification::MarkAllAsSeen < BaseMutation
@@ -9,7 +9,7 @@ module Gql::Mutations
 
     def authorized?(online_notifications:)
       online_notifications.all? do |elem|
-        Pundit.authorize(context.current_user, elem, :update?)
+        pundit_authorized?(elem, :update?)
       end
     end
 

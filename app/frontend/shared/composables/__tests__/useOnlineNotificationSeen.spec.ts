@@ -1,13 +1,12 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
 import { waitUntil } from '#tests/support/utils.ts'
 
 import { mockOnlineNotificationSeenGql } from '#shared/composables/__tests__/mocks/online-notification.ts'
+import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotification/useOnlineNotificationSeen.ts'
 import type { ObjectWithId } from '#shared/types/utils.ts'
-
-import { useOnlineNotificationSeen } from '../useOnlineNotificationSeen.ts'
 
 describe('useOnlineNotificationSeen', () => {
   it('calls mutation when object changes', async () => {

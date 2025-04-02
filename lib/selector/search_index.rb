@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Selector::SearchIndex < Selector::Base
   def get
@@ -158,6 +158,7 @@ class Selector::SearchIndex < Selector::Base
 
       case data[:pre_condition]
       when 'not_set'
+        wildcard_or_term = 'term'
         data[:value] = if key_tmp.match?(%r{^(created_by|updated_by|owner|customer|user)_id})
                          1
                        end
@@ -175,6 +176,7 @@ class Selector::SearchIndex < Selector::Base
       when 'current_user.organization_id'
         raise "Use current_user.id in selector, but no current_user is set #{data.inspect}" if !current_user_id
 
+        wildcard_or_term = 'term'
         user = User.find_by(id: current_user_id)
         data[:value] = user.organization_id
       end
@@ -231,7 +233,7 @@ class Selector::SearchIndex < Selector::Base
     end
 
     # for pre condition not_set we want to check if values are defined for the object by exists
-    if data[:pre_condition] == 'not_set' && operators_is_isnot.include?(data[:operator]) && data[:value].nil?
+    if operators_is_isnot.include?(data[:operator]) && data[:value].nil?
       t['exists'] = {
         field: key_tmp,
       }
@@ -249,7 +251,21 @@ class Selector::SearchIndex < Selector::Base
     # is/is not/contains/contains not
     elsif ['is', 'is not', 'contains', 'contains not', 'is any of', 'is none of'].include?(data[:operator])
       t[wildcard_or_term] = {}
-      t[wildcard_or_term][key_tmp] = data[:value]
+
+      # We need a special handling for external data sources, because of the sub-hash.
+      # Because of the automatic field map detection of ES, we need to use the integer or string way.
+      # This can currently lead to a not working condition (when ES detected the wrong data type, can normally be fixed with a reindex).
+      if (data[:value].is_a?(Array) && data[:value][0].is_a?(Hash)) || data[:value].is_a?(Hash)
+        key_value = "#{key_tmp}.value"
+        if (data[:value].is_a?(Hash) && data[:value][:value].is_a?(String)) || (data[:value].is_a?(Array) && data[:value].any? { |item| item[:value].is_a?(String) })
+          key_value += '.keyword'
+        end
+
+        t[wildcard_or_term][key_value] = data[:value].is_a?(Hash) ? data[:value][:value] : data[:value].pluck(:value)
+      else
+        t[wildcard_or_term][key_tmp] = data[:value]
+      end
+
       case data[:operator]
       when 'is', 'contains', 'is any of'
         query_must.push t
@@ -331,9 +347,9 @@ class Selector::SearchIndex < Selector::Base
       t[:range] = {}
       t[:range][key_tmp] = {}
       if data[:operator] == 'before (absolute)'
-        t[:range][key_tmp][:lt] = (data[:value])
+        t[:range][key_tmp][:lt] = data[:value]
       else
-        t[:range][key_tmp][:gt] = (data[:value])
+        t[:range][key_tmp][:gt] = data[:value]
       end
       query_must.push t
     elsif data[:operator] == 'today'

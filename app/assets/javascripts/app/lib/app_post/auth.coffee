@@ -104,6 +104,17 @@ class App.Auth
       App.Event.trigger('ui:rerender')
       return false
 
+    App.Ajax.request(
+      id:    'taskbar_init'
+      async: false
+      type:  'GET'
+      url:   App.Config.get('api_path') + '/taskbar/init'
+      success: (data_taskbar, status, xhr) =>
+        @bootup(data, type, data_taskbar)
+    )
+
+  @bootup: (data, type, data_taskbar) ->
+
     # clear local store
     if type isnt 'check'
       App.Event.trigger('clearStore')
@@ -122,6 +133,9 @@ class App.Auth
     # load assets
     if data.assets
       App.Collection.loadAssets(data.assets)
+
+    # add taskbar data & assets
+    App.TaskbarInit.set(data_taskbar)
 
     # store user data
     App.Session.set(data.session.id)

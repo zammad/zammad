@@ -1,0 +1,8 @@
+subscription userCurrentTicketOverviewUpdates($ignoreUserConditions: Boolean!) {
+  userCurrentTicketOverviewUpdates(ignoreUserConditions: $ignoreUserConditions) {
+    ticketOverviews {
+        id
+        name
+    }
+  }
+}

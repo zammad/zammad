@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -8,6 +8,32 @@ RSpec.describe 'iCal endpoints', type: :request do
       get '/ical/tickets'
 
       expect(response.body).to eq("HTTP Basic: Access denied.\n")
+    end
+  end
+
+  context 'with basic auth as agent' do
+    let(:password)   { Faker::Internet.password }
+    let(:user)       { create(:agent, password: password) }
+    let(:basic_auth) { ActionController::HttpAuthentication::Basic.encode_credentials(user.email, password) }
+
+    context 'when two-factor auth is disabled' do
+      it 'returns 200 OK' do
+        get '/ical/tickets', headers: { 'Authorization' => basic_auth }
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when two-factor auth is enabled' do
+      before do
+        Setting.set('two_factor_authentication_enforce_role_ids', [])
+        Setting.set('two_factor_authentication_method_authenticator_app', true)
+        create(:user_two_factor_preference, :authenticator_app, user: user)
+      end
+
+      it 'returns 200 OK' do
+        get '/ical/tickets', headers: { 'Authorization' => basic_auth }
+        expect(response).to have_http_status(:ok)
+      end
     end
   end
 

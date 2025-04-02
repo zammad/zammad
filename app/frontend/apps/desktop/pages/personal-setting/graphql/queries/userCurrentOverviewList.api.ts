@@ -6,17 +6,19 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserCurrentOverviewListDocument = gql`
-    query userCurrentOverviewList {
-  userCurrentOverviewList {
+    query userCurrentOverviewList($ignoreUserConditions: Boolean!) {
+  userCurrentTicketOverviews(ignoreUserConditions: $ignoreUserConditions) {
     id
     name
+    organizationShared
+    outOfOffice
   }
 }
     `;
-export function useUserCurrentOverviewListQuery(options: VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>(UserCurrentOverviewListDocument, {}, options);
+export function useUserCurrentOverviewListQuery(variables: Types.UserCurrentOverviewListQueryVariables | VueCompositionApi.Ref<Types.UserCurrentOverviewListQueryVariables> | ReactiveFunction<Types.UserCurrentOverviewListQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>(UserCurrentOverviewListDocument, variables, options);
 }
-export function useUserCurrentOverviewListLazyQuery(options: VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>(UserCurrentOverviewListDocument, {}, options);
+export function useUserCurrentOverviewListLazyQuery(variables?: Types.UserCurrentOverviewListQueryVariables | VueCompositionApi.Ref<Types.UserCurrentOverviewListQueryVariables> | ReactiveFunction<Types.UserCurrentOverviewListQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>(UserCurrentOverviewListDocument, variables, options);
 }
 export type UserCurrentOverviewListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.UserCurrentOverviewListQuery, Types.UserCurrentOverviewListQueryVariables>;

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -69,17 +69,17 @@ RSpec.describe User::OutOfOffice, type: :model do
         end
 
         it 'tomorrow not in office' do
-          travel 1.day
+          travel_to 1.day.from_now # travel to specific date instead of moving a duration to deal with DST switches
           expect(agent).to be_out_of_office
         end
 
         it 'after 7 days not in office' do
-          travel 7.days
+          travel_to 7.days.from_now # travel to specific date instead of moving a duration to deal with DST switches
           expect(agent).to be_out_of_office
         end
 
         it 'after 8 days in office' do
-          travel 8.days
+          travel_to 8.days.from_now # travel to specific date instead of moving a duration to deal with DST switches
           expect(agent).not_to be_out_of_office
         end
       end

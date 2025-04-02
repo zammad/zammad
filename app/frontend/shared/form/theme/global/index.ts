@@ -1,9 +1,9 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormThemeClasses } from '#shared/types/form.ts'
 
 const defaultTextInput: Record<string, string> = {
-  input: 'block focus:outline-none focus:ring-0',
+  input: 'block focus:outline-hidden focus:ring-0',
 }
 
 const classes: FormThemeClasses = {
@@ -29,7 +29,7 @@ const classes: FormThemeClasses = {
     wrapper: 'inline-flex items-center cursor-pointer',
     inner: 'flex',
     input:
-      'appearance-none focus:outline-none focus:ring-0 focus:ring-offset-0',
+      'appearance-none focus:outline-hidden focus:ring-0 focus:ring-offset-0',
     decorator:
       'relative invisible formkit-is-checked:visible rtl:-right-4 ltr:-left-4',
     decoratorIcon: 'absolute',
@@ -38,7 +38,7 @@ const classes: FormThemeClasses = {
     wrapper: 'inline-flex items-center cursor-pointer',
     inner: 'flex',
     input:
-      'appearance-none focus:outline-none focus:ring-0 focus:ring-offset-0',
+      'appearance-none focus:outline-hidden focus:ring-0 focus:ring-offset-0',
     decorator:
       'relative invisible formkit-is-checked:visible rtl:-right-4 ltr:-left-4',
     decoratorIcon: 'absolute',

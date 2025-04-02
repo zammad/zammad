@@ -1,9 +1,9 @@
-## Specification
+# Specification
 
 <!--Insert the link to a GitHub issue in (), or describe the changes if there is no issue -->
-[Issue Link]()
+[Issue Link](/add-your-link-here.tld)
 
-## Screenshots  <!-- Optional, very helpful for the reviewer colleagues from other teams -->
+## Screenshots <!-- Optional, very helpful for the reviewer colleagues from other teams -->
 
 ### Before
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket < ApplicationModel
   include CanBeImported
@@ -410,7 +410,8 @@ returns
       ExternalSync.migrate('Ticket', id, target_ticket.id)
 
       # set state to 'merged'
-      self.state_id = Ticket::State.lookup(name: 'merged').id
+      state_type = Ticket::StateType.lookup(name: 'merged')
+      self.state_id = Ticket::State.lookup(state_type_id: state_type.id).id
 
       # rest owner
       self.owner_id = 1
@@ -513,11 +514,7 @@ perform active triggers on ticket
         next if ticket_count.zero?
         next if tickets.take.id != ticket.id
 
-        if recursive == false && local_options[:loop_count] > 1
-          message = "Do not execute recursive triggers per default until Zammad 3.0. With Zammad 3.0 and higher the following trigger is executed '#{trigger.name}' on Ticket:#{ticket.id}. Please review your current triggers and change them if needed."
-          logger.info { message }
-          return [true, message]
-        end
+        return [true, message] if recursive == false && local_options[:loop_count] > 1
 
         if article && send_notification == false && trigger.perform['notification.email'] && trigger.perform['notification.email']['recipient']
           recipient = trigger.perform['notification.email']['recipient']

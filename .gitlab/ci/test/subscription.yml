@@ -1,0 +1,36 @@
+# Run back-end subscription add-on tests to check if it is still compatible.
+addon:subscription:
+  stage: test
+  extends:
+    - .job_rules_default
+  rules:
+  - if: $CI_COMMIT_REF_NAME == 'develop'
+    when: on_success
+    # Complain if breaking changes were merged and subscription is not ported.
+    allow_failure: false
+  - if: $CI_COMMIT_REF_NAME =~ /^(private|develop)/
+    when: on_success
+    # It could happen that in a branch we need to make breaking changes, so
+    #   only hint at the situation but don't block the pipeline.
+    allow_failure: true
+  - when: never
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
+  variables:
+    SUBSCRIPTION_CHECKOUT_DIR: $CI_PROJECT_DIR/../subscription
+  script:
+    - mkdir -p $SUBSCRIPTION_CHECKOUT_DIR
+    - git clone --depth 1 https://gitlab-ci-token:$CI_JOB_TOKEN@git.zammad.com/zammad/subscription.git $SUBSCRIPTION_CHECKOUT_DIR
+    - !reference [.scripts, zammad_db_init]
+    - bundle exec rails runner "pp Package.link('${SUBSCRIPTION_CHECKOUT_DIR}')"
+    - !reference [.scripts, bundle_install]
+    - bundle exec rake zammad:package:migrate
+
+    # Run actual subscription tests
+    - (cd $SUBSCRIPTION_CHECKOUT_DIR/; find spec -type f -name "*.rb" | grep -v '/system/')
+    - bundle exec rspec $(cd $SUBSCRIPTION_CHECKOUT_DIR/; find spec -type f -name "*.rb" | grep -v '/system/')
+
+    - (cd $SUBSCRIPTION_CHECKOUT_DIR/; find test -type f -name "*.rb")
+    - bundle exec ruby -Itest $(cd $SUBSCRIPTION_CHECKOUT_DIR/; find test -type f -name "*.rb")

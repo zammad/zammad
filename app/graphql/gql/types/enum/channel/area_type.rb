@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Enum
   class Channel::AreaType < BaseEnum
@@ -11,6 +11,7 @@ module Gql::Types::Enum
       'Facebook::Account',
       'Google::Account',
       'Microsoft365::Account',
+      'MicrosoftGraph::Account',
       'Sms::Account',
       'Sms::Notification',
       'Telegram::Bot',

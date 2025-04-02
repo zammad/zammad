@@ -1,7 +1,6 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core'
 import { ignorableWatch } from '@vueuse/shared'
 import { debounce } from 'lodash-es'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
@@ -9,7 +8,9 @@ import { useRoute, useRouter } from 'vue-router'
 
 import type { CommonInputSearchExpose } from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonInputSearch from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
+import { useRecentSearches } from '#shared/composables/useRecentSearches.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
+import { EnumSearchableModels } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
@@ -27,8 +28,6 @@ interface SearchTypeItem extends MenuItem {
   value: string
 }
 
-const LAST_SEARCHES_LENGTH_MAX = 5
-
 const props = defineProps<{ type?: string }>()
 
 const route = useRoute()
@@ -43,11 +42,13 @@ const filter = ref(search.value)
 const canSearch = computed(() => filter.value.length >= 1)
 
 const found = reactive({} as Record<string, Record<string, unknown>[]>)
-const lastSearches = useLocalStorage<string[]>('lastSearches', [])
+
+const { recentSearches, addSearch } = useRecentSearches(5)
 
 const model = computed(() => {
-  if (!props.type) return undefined
-  return searchPlugins[props.type]?.model
+  return props.type
+    ? searchPlugins[props.type]?.model
+    : EnumSearchableModels.Ticket // default passed by router
 })
 
 const searchQuery = new QueryHandler(
@@ -64,8 +65,9 @@ const loading = searchQuery.loading()
 
 searchQuery.watchOnResult((data) => {
   if (!props.type) return
+  if (!data.search) return
 
-  found[props.type] = data.search
+  found[props.type] = data.search.items
 })
 
 const replaceQuery = (query: LocationQueryRaw) => {
@@ -104,15 +106,11 @@ const loadByFilter = async (filterQuery: string) => {
     return
   }
 
-  searchQuery.abort()
+  addSearch(filterQuery)
 
-  lastSearches.value = lastSearches.value.filter((item) => item !== filterQuery)
-  lastSearches.value.push(filterQuery)
-  if (lastSearches.value.length > LAST_SEARCHES_LENGTH_MAX) {
-    lastSearches.value.shift()
+  if (searchQuery.isFirstRun()) {
+    searchQuery.load()
   }
-
-  searchQuery.load()
 }
 
 // load data after a few ms to not overload the api
@@ -127,19 +125,19 @@ const { ignoreUpdates } = ignorableWatch(search, async (search) => {
   await debouncedLoad(search)
 })
 
-// load data immidiately when type changes or when last search selected
+// load data immidiately when type changes or when recent search selected
 watch(
   () => props.type,
   () => loadByFilter(search.value),
   { immediate: true },
 )
 
-const selectLastSearch = async (lastSearch: string) => {
+const selectRecentSearch = async (recentSearch: string) => {
   ignoreUpdates(() => {
-    search.value = lastSearch
+    search.value = recentSearch
   })
   focusSearch()
-  await loadByFilter(lastSearch)
+  await loadByFilter(recentSearch)
 }
 
 const pluginsArray = Object.entries(searchPlugins).map(([name, plugin]) => ({
@@ -230,7 +228,7 @@ export default {
       <h1 class="sr-only">{{ $t('Search') }}</h1>
       <CommonButtonGroup
         v-if="type"
-        class="border-b border-white/10 px-4 pb-4"
+        class="border-b border-[rgba(255,255,255,0.1)] px-4 pb-4"
         as="tabs"
         :options="searchPills"
         :model-value="type"
@@ -269,19 +267,19 @@ export default {
       <div
         v-if="canShowLastSearches"
         class="px-4 pt-8"
-        data-test-id="lastSearches"
+        data-test-id="recentSearches"
       >
-        <div class="text-white/50">{{ $t('Last searches') }}</div>
+        <div class="text-white/50">{{ $t('Recent searches') }}</div>
         <ul class="pt-3">
           <li
-            v-for="searchItem in [...lastSearches].reverse()"
+            v-for="searchItem in [...recentSearches].reverse()"
             :key="searchItem"
             class="pb-4"
           >
             <button
               type="button"
               class="flex items-center"
-              @click="selectLastSearch(searchItem)"
+              @click="selectRecentSearch(searchItem)"
             >
               <span>
                 <CommonIcon
@@ -294,7 +292,7 @@ export default {
               <span class="text-left text-base">{{ searchItem }}</span>
             </button>
           </li>
-          <li v-if="!lastSearches.length">{{ $t('No previous searches') }}</li>
+          <li v-if="!recentSearches.length">{{ $t('No recent searches') }}</li>
         </ul>
       </div>
     </div>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketArticleCommunicateEmailJob < ApplicationJob
 
@@ -44,6 +44,11 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
       log_error(record, "No channel defined for email_address id '#{email_address.id}'!")
     end
     channel = email_address.channel
+
+    if !channel.active
+      log_error(record, "Channel defined for email address id '#{email_address.id}' is not active!", channel)
+      return
+    end
 
     notification = false
     sender = Ticket::Article::Sender.lookup(id: record.sender_id)

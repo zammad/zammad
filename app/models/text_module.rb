@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class TextModule < ApplicationModel
   include HasDefaultModelUserRelations
@@ -9,6 +9,7 @@ class TextModule < ApplicationModel
   include HasSearchIndexBackend
   include CanSelector
   include CanSearch
+  include HasOptionalGroups
 
   validates :name,    presence: true
   validates :content, presence: true
@@ -20,8 +21,6 @@ class TextModule < ApplicationModel
   sanitized_html :content, :note
 
   csv_delete_possible true
-
-  has_and_belongs_to_many :groups, after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
 
   association_attributes_ignored :user
 

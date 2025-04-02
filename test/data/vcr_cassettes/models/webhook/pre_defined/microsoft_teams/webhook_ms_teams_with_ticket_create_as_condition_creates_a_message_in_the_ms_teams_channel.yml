@@ -2,12 +2,12 @@
 http_interactions:
 - request:
     method: post
-    uri: "<MS_TEAMS_CI_WEBHOOK_URL>"
+    uri: https://prod-10.germanywestcentral.logic.azure.com/workflows/acd7d08449cc40caa1c9e98af391d62c/triggers/manual/paths/invoke?api-version=2016-06-01&sig=96hHg66hPXGj6Ya8NwmF3nk2YSyX01-GmglaAgvran4&sp=/triggers/manual/run&sv=1.0
     body:
       encoding: UTF-8
       string: '{"type":"message","attachments":[{"contentType":"application/vnd.microsoft.card.adaptive","contentUrl":null,"content":{"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","type":"AdaptiveCard","version":"1.0","body":[{"type":"TextBlock","text":"MS
-        Teams Webhook Test","style":"heading","color":"warning"},{"type":"TextBlock","text":"*
-        Group: Users\n* Owner: -\n* State: new","wrap":true},{"type":"TextBlock","text":"","wrap":true},{"type":"ActionSet","actions":[{"type":"Action.OpenUrl","title":"Ticket#87002","url":"http://zammad.example.com/#ticket/zoom/14"}]}]}}]}'
+        Teams Webhook Test","color":"warning","weight":"bolder","size":"large","wrap":true},{"type":"TextBlock","text":"*
+        Group: Users\n* Owner: -\n* State: new","wrap":true},{"type":"TextBlock","text":"","wrap":true},{"type":"ActionSet","actions":[{"type":"Action.OpenUrl","title":"Ticket#38002","url":"http://zammad.example.com/#ticket/zoom/8"}]}]}}]}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -16,65 +16,62 @@ http_interactions:
       User-Agent:
       - Zammad User Agent
       Host:
-      - 2btx5w.webhook.office.com
+      - prod-10.germanywestcentral.logic.azure.com
       X-Zammad-Trigger:
       - Test trigger 1
       X-Zammad-Delivery:
-      - 81bed896-ea6c-40d7-a440-121adcc83357
+      - 6402e2ea-4635-42af-8d0a-cbb546d6abf1
       Content-Type:
       - application/json; charset=utf-8
   response:
     status:
-      code: 200
-      message: OK
+      code: 202
+      message: Accepted
     headers:
       Content-Length:
-      - '114'
-      Content-Type:
-      - text/plain; charset=utf-8
-      Server:
-      - Microsoft-HTTPAPI/2.0
-      X-Beserver:
-      - AS1P190MB1752
-      X-Nanoproxy:
-      - '1,1'
-      Request-Id:
-      - a56c227f-71c2-22b8-0609-fba49dba60ce
-      X-Calculatedfetarget:
-      - AS9PR06CU006.internal.outlook.com
-      Alt-Svc:
-      - h3=":443";ma=2592000,h3-29=":443";ma=2592000
-      Ms-Cv:
-      - fyJspcJxuCIGCfuknbpgzg.1.1
-      X-Backendhttpstatus:
-      - '200,200'
-      X-Bepartition:
-      - CLEURP190DHR01
-      X-Besku:
-      - Unknown
-      X-Calculatedbetarget:
-      - AS1P190MB1752.EURP190.PROD.OUTLOOK.COM
-      X-End2endlatencyms:
-      - '613'
-      X-Feefzinfo:
-      - DHR
-      X-Feproxyinfo:
-      - AS9PR06CA0151
-      X-Feserver:
-      - FR4P281CA0398
-      X-Proxy-Backendserverstatus:
-      - '200'
-      X-Proxy-Routingcorrectness:
-      - '1'
-      X-Firsthopcafeefz:
-      - FRA
+      - '0'
+      Date:
+      - Thu, 20 Mar 2025 07:29:57 GMT
+      Cache-Control:
+      - no-cache
+      Expires:
+      - "-1"
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
-      Date:
-      - Fri, 19 Jul 2024 10:17:34 GMT
+      X-Ms-Workflow-Run-Id:
+      - '08584591510880461205406495088CU17'
+      X-Ms-Correlation-Id:
+      - be51835e-706e-491e-88e4-de8db5e0c6ab
+      X-Ms-Client-Tracking-Id:
+      - '08584591510880461205406495088CU17'
+      X-Ms-Trigger-History-Name:
+      - '08584591510880461205406495088CU17'
+      X-Ms-Execution-Location:
+      - germanywestcentral
+      X-Ms-Workflow-System-Id:
+      - "/locations/germanywestcentral/scaleunits/prod-10/workflows/acd7d08449cc40caa1c9e98af391d62c"
+      X-Ms-Workflow-Id:
+      - acd7d08449cc40caa1c9e98af391d62c
+      X-Ms-Workflow-Version:
+      - '08584591513669743342'
+      X-Ms-Workflow-Name:
+      - 65bea2ed-81fc-48f5-a858-29c0036bfbee
+      X-Ms-Tracking-Id:
+      - be51835e-706e-491e-88e4-de8db5e0c6ab
+      X-Ms-Ratelimit-Burst-Remaining-Workflow-Writes:
+      - '448'
+      X-Ms-Ratelimit-Remaining-Workflow-Download-Contentsize:
+      - '322121728'
+      X-Ms-Ratelimit-Remaining-Workflow-Upload-Contentsize:
+      - '322120520'
+      X-Ms-Ratelimit-Time-Remaining-Directapirequests:
+      - '29999781'
+      X-Ms-Request-Id:
+      - germanywestcentral:be51835e-706e-491e-88e4-de8db5e0c6ab
     body:
       encoding: UTF-8
-      string: 'Webhook message delivery failed with error: Microsoft Teams endpoint
-        returned HTTP error 403 with ContextId 01=2..'
-  recorded_at: Fri, 19 Jul 2024 10:17:34 GMT
-recorded_with: VCR 6.2.0
+      string: ''
+  recorded_at: Thu, 20 Mar 2025 07:29:57 GMT
+recorded_with: VCR 6.3.1

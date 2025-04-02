@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { merge } from 'lodash-es'
 import { initializeAppName } from '#shared/composables/useAppName.ts'
@@ -38,7 +38,9 @@ export const mountComponent: typeof mount = (
   options: any,
 ): Cypress.Chainable => {
   const plugins = []
-  plugins.push(() => { initializeAppName('mobile') })
+  plugins.push(() => {
+    initializeAppName('mobile')
+  })
   plugins.push(initializeStore)
   plugins.push(initializeGlobalComponentStyles)
   plugins.push(initializeGlobalComponents)

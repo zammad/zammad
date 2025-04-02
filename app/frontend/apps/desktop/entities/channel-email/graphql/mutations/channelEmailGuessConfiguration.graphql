@@ -27,9 +27,6 @@ mutation channelEmailGuessConfiguration(
       }
       mailboxStats {
         contentMessages
-        archivePossible
-        archivePossibleIsFallback
-        archiveWeekRange
       }
     }
     errors {

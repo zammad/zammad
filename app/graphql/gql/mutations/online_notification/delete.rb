@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class OnlineNotification::Delete < BaseMutation
@@ -14,7 +14,7 @@ module Gql::Mutations
     end
 
     def authorized?(online_notification:)
-      Pundit.authorize(context.current_user, online_notification, :destroy?)
+      pundit_authorized?(online_notification, :destroy?)
     end
   end
 end

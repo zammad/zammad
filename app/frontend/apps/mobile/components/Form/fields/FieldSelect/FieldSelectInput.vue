@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef, useTemplateRef } from 'vue'
@@ -83,7 +83,7 @@ setupMissingOrDisabledOptionHandling()
         aria-haspopup="dialog"
         :aria-expanded="expanded"
         :name="context.node.name"
-        class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-none"
+        class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-hidden"
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled"
         :data-multiple="context.multiple"

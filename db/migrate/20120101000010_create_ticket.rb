@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class CreateTicket < ActiveRecord::Migration[4.2]
   def up
@@ -163,6 +163,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.references :ticket,                                    null: false
       t.references :type,                                      null: false
       t.references :sender,                                    null: false
+      t.column :detected_language,    :string, limit: 8,       null: true
       t.column :from,                 :string, limit: 3000,    null: true
       t.column :to,                   :string, limit: 3000,    null: true
       t.column :cc,                   :string, limit: 3000,    null: true

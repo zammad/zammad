@@ -1,23 +1,14 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRef } from 'vue'
-
-import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import type { FormRef } from '#shared/components/Form/types.ts'
-import { useMacros } from '#shared/entities/macro/composables/useMacros.ts'
 import type { MacroById } from '#shared/entities/macro/types.ts'
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
-import { useTicketSharedDraftZoomCreateMutation } from '#shared/entities/ticket-shared-draft-zoom/graphql/mutations/ticketSharedDraftZoomCreate.api.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
-import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import { useDialog } from '#desktop/components/CommonDialog/useDialog.ts'
 import TicketScreenBehavior from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue'
-import { useTicketSharedDraft } from '#desktop/pages/ticket/composables/useTicketSharedDraft.ts'
 
+import TicketAgentUpdateButton from './TicketAgentUpdateButton.vue'
 import TicketLiveUsers from './TicketLiveUsers.vue'
 import TicketSharedDraftZoom from './TicketSharedDraftZoom.vue'
 
@@ -35,81 +26,13 @@ export interface Props {
   liveUserList: TicketLiveAppUser[]
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
-const groupId = toRef(props, 'groupId')
-
-const emit = defineEmits<{
+defineEmits<{
   submit: [MouseEvent]
   discard: [MouseEvent]
   'execute-macro': [MacroById]
 }>()
-
-const { macros } = useMacros(groupId)
-
-const { notify } = useNotifications()
-
-const groupLabels = {
-  drafts: __('Drafts'),
-  macros: __('Macros'),
-}
-
-const { mapSharedDraftParams } = useTicketSharedDraft()
-
-const sharedDraftConflictDialog = useDialog({
-  name: 'shared-draft-conflict',
-  component: () => import('../TicketSharedDraftConflictDialog.vue'),
-})
-
-const actionItems = computed(() => {
-  if (!macros.value) return null
-
-  const macroMenu = macros.value.map((macro) => ({
-    key: macro.id,
-    label: macro.name,
-    groupLabel: groupLabels.macros,
-    onClick: () => emit('execute-macro', macro),
-  }))
-
-  return [
-    {
-      label: __('Save as draft'),
-      groupLabel: groupLabels.drafts,
-      icon: 'floppy',
-      key: 'save-draft',
-      show: () => props.canUseDraft,
-      onClick: () => {
-        if (props.sharedDraftId) {
-          sharedDraftConflictDialog.open({
-            sharedDraftId: props.sharedDraftId,
-            sharedDraftParams: mapSharedDraftParams(props.ticketId, props.form),
-            form: props.form,
-          })
-
-          return
-        }
-
-        const draftCreateMutation = new MutationHandler(
-          useTicketSharedDraftZoomCreateMutation(),
-          {
-            errorNotificationMessage: __('Draft could not be saved.'),
-          },
-        )
-
-        draftCreateMutation
-          .send({ input: mapSharedDraftParams(props.ticketId, props.form) })
-          .then(() => {
-            notify({
-              id: 'shared-draft-detail-view-created',
-              type: NotificationTypes.Success,
-              message: __('Shared draft has been created successfully.'),
-            })
-          })
-      },
-    },
-    ...(groupId.value ? macroMenu : []),
-  ]
-})
 </script>
 
 <template>
@@ -138,7 +61,19 @@ const actionItems = computed(() => {
 
     <TicketScreenBehavior />
 
+    <TicketAgentUpdateButton
+      v-if="isTicketAgent"
+      :ticket-id="ticketId"
+      :form="form"
+      :disabled="disabled"
+      :group-id="groupId"
+      :can-use-draft="canUseDraft"
+      :shared-draft-id="sharedDraftId"
+      @submit="$emit('submit', $event)"
+      @execute-macro="$emit('execute-macro', $event)"
+    />
     <CommonButton
+      v-else
       size="large"
       variant="submit"
       type="button"
@@ -146,14 +81,5 @@ const actionItems = computed(() => {
       @click="$emit('submit', $event)"
       >{{ $t('Update') }}
     </CommonButton>
-    <CommonActionMenu
-      v-if="isTicketAgent && actionItems"
-      class="flex"
-      button-size="large"
-      no-single-action-mode
-      placement="arrowEnd"
-      custom-menu-button-label="Additional ticket edit actions"
-      :actions="actionItems"
-    />
   </template>
 </template>

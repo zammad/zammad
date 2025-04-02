@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 Ticket::Priority.create_if_not_exists(id: 1, name: __('1 low'), ui_icon: 'low-priority', ui_color: 'low-priority')
 Ticket::Priority.create_if_not_exists(id: 2, name: __('2 normal'), default_create: true)

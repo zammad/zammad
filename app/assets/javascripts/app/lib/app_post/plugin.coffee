@@ -6,6 +6,9 @@ class App.Plugin
       _instance ?= new _pluginSingleton
     _instance.init(el)
 
+  @instance: ->
+    _instance
+
 class _pluginSingleton
   backends: {}
   el: undefined

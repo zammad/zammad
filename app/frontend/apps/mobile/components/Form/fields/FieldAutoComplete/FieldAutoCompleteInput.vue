@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { markRaw, ref, toRef, watch } from 'vue'
@@ -117,7 +117,7 @@ useFormBlock(contextReactive, onInputClick)
       :id="context.id"
       role="combobox"
       :name="context.node.name"
-      class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-none"
+      class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-hidden"
       :aria-disabled="context.disabled ? 'true' : undefined"
       :aria-labelledby="`label-${context.id}`"
       aria-haspopup="dialog"

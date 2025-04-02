@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Trigger GraphQL subscriptions on ticket changes.
 module Taskbar::TriggersSubscriptions
@@ -24,13 +24,13 @@ module Taskbar::TriggersSubscriptions
   def trigger_live_user_subscriptions
     return if !saved_change_to_attribute?('preferences')
 
-    Gql::Subscriptions::TicketLiveUserUpdates.trigger(
+    Gql::Subscriptions::Ticket::LiveUserUpdates.trigger(
       self,
       arguments: {
-        user_id: Gql::ZammadSchema.id_from_internal_id('User', user_id),
-        key:     key,
-        app:     app,
-      }
+        key: key,
+        app: app,
+      },
+      scope:     user_id,
     )
   end
 

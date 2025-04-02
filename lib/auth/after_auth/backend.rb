@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Auth::AfterAuth::Backend
   def self.run(...)
@@ -9,11 +9,12 @@ class Auth::AfterAuth::Backend
     name.demodulize
   end
 
-  attr_accessor :user, :session, :data
+  attr_accessor :user, :session, :options, :data
 
-  def initialize(user:, session:)
+  def initialize(user:, session:, options:)
     @user = user
     @session = session
+    @options = options
     @data = {}
   end
 

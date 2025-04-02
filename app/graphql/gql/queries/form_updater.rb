@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class FormUpdater < BaseQuery
@@ -33,7 +33,7 @@ module Gql::Queries
     def self.authorize(_obj, ctx)
       # Per default the queries require a authenticated user.
       if !ctx[:current_arguments][:form_updater_id].requires_authentication
-        true
+        return true
       end
 
       super

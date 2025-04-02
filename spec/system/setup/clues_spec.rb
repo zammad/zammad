@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -29,7 +29,7 @@ RSpec.describe 'Clues', authenticated_as: :agent, type: :system do
       visit 'dashboard'
 
       expect(page).to have_text('New Keyboard Shortcuts')
-      find('div.btn', text: 'Got it!').click
+      find('div.btn', text: 'Got it').click
 
       wait.until do
         agent.reload.preferences >= { 'intro' => true, 'keyboard_shortcuts_clues' => true }

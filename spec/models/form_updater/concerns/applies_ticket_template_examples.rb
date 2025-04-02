@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'FormUpdater::AppliesTicketTemplate' do
   context 'when applying a ticket template' do

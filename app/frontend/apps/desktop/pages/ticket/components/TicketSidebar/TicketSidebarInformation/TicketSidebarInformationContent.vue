@@ -1,7 +1,7 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -24,6 +24,8 @@ const props = defineProps<TicketSidebarContentProps>()
 const persistentStates = defineModel<ObjectLike>({ required: true })
 
 const { ticket } = useTicketInformation()
+
+const ticketLinksInstance = useTemplateRef('ticket-links')
 
 const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
 
@@ -117,13 +119,13 @@ const actions = computed<MenuItem[]>(() => [
 
     <CommonSectionCollapse
       v-if="isTicketAgent"
-      v-show="isTicketEditable || $refs.ticketLinksInstance?.hasLinks"
+      v-show="isTicketEditable || ticketLinksInstance?.hasLinks"
       id="ticket-links"
       v-model="persistentStates.collapseLinks"
       :title="__('Links')"
     >
       <TicketLinks
-        ref="ticketLinksInstance"
+        ref="ticket-links"
         :ticket="ticket"
         :is-ticket-editable="isTicketEditable"
       />

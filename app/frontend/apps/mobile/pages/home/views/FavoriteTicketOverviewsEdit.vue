@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { animations, updateConfig } from '@formkit/drag-and-drop'
@@ -14,24 +14,25 @@ import { useWalker } from '#shared/router/walker.ts'
 
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import { useHeader } from '#mobile/composables/useHeader.ts'
+import { useTicketOverviewOrderStore } from '#mobile/entities/ticket/stores/ticketOverviewOrder.ts'
 import { useTicketOverviewsStore } from '#mobile/entities/ticket/stores/ticketOverviews.ts'
 
 import TicketOverviewEditItem from '../components/TicketOverviewEditItem.vue'
 
-const overviewStore = useTicketOverviewsStore()
+const overviewOrderStore = useTicketOverviewOrderStore()
 
 const {
   overviews,
   loading: overviewsLoading,
   overviewsByKey,
-} = storeToRefs(overviewStore)
+} = storeToRefs(overviewOrderStore)
 
 // we store local included, so they won't affect home page
-const includedIds = ref(new Set(overviewStore.includedIds.values()))
+const includedIds = ref(new Set(overviewOrderStore.includedIds.values()))
 
 watch(
   // when overviews are loaded, updated local included
-  () => overviewStore.includedIds,
+  () => overviewOrderStore.includedIds,
   (ids) => {
     includedIds.value = ids
   },
@@ -77,7 +78,10 @@ useHeader({
       return
     }
 
-    overviewStore.saveOverviews(includedOverviews.value)
+    overviewOrderStore.saveOverviews(includedOverviews.value)
+
+    useTicketOverviewsStore().updateOverviews(includedOverviews.value)
+
     notify({
       id: 'overview-save',
       message: __('Ticket Overview settings are saved.'),

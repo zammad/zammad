@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Selector::Base
   attr_accessor :selector, :options, :changed_attributes, :target_class, :target_table, :target_name
@@ -22,24 +22,28 @@ class Selector::Base
   end
 
   def migrate
-    return if !selector[:conditions].nil?
+    @selector = self.class.migrate_selector(selector)
+  end
+
+  def self.migrate_selector(value)
+    return value if !value[:conditions].nil?
 
     result = {
       operator:   'AND',
       conditions: [],
     }
 
-    selector.each_key do |key|
+    value.each_key do |key|
       result[:conditions] << {
         name: key.to_s,
-      }.merge(selector[key])
+      }.merge(value[key])
     end
 
-    @selector = result
+    result
   end
 
   def set_static_conditions
-    conditions = static_conditions_ticket + static_conditions_article + static_conditions_merged + static_conditions_ticket_update + static_conditions_user_one
+    conditions = static_conditions_ticket + static_conditions_article + static_conditions_ticket_update + static_conditions_user_one
     return if conditions.blank?
 
     @selector = {
@@ -68,18 +72,6 @@ class Selector::Base
         name:     'article.id',
         operator: 'is',
         value:    options[:article_id]
-      }
-    ]
-  end
-
-  def static_conditions_merged
-    return [] if options[:exclude_merged].blank?
-
-    [
-      {
-        name:     'ticket_state.name',
-        operator: 'is not',
-        value:    Ticket::StateType.find_by(name: 'merged').states.pluck(:name),
       }
     ]
   end

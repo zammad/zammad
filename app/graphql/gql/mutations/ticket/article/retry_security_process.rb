@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::Article::RetrySecurityProcess < BaseMutation
@@ -14,7 +14,7 @@ module Gql::Mutations
     end
 
     def authorized?(article:)
-      Pundit.authorize(context.current_user, article, :update?)
+      pundit_authorized?(article, :update?)
     end
 
     def resolve(article:)

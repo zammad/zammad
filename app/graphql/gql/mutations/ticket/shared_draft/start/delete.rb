@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::SharedDraft::Start::Delete < BaseMutation
@@ -9,7 +9,7 @@ module Gql::Mutations
     field :success, Boolean, null: false, description: 'Was the ticket article deletion successful?'
 
     def authorized?(shared_draft:)
-      Pundit.authorize(context.current_user, shared_draft, :destroy?)
+      pundit_authorized?(shared_draft, :destroy?)
     end
 
     def resolve(shared_draft:)

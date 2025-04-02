@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useSharedVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
@@ -7,15 +7,19 @@ import type { ObjectLike } from '#shared/types/utils.ts'
 
 import { useDisplayObjectAttributes } from './useDisplayObjectAttributes.ts'
 
+import type { OutputMode } from './types.ts'
+
 export interface Props {
+  mode?: OutputMode
   object: ObjectLike
   attributes: ObjectAttribute[]
   skipAttributes?: string[]
-  accessors?: Record<string, string>
   alwaysShowAfterFields?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  mode: 'view',
+})
 
 const { fields } = useDisplayObjectAttributes(props)
 const { objectAttributes: objectAttributesConfig } = useSharedVisualConfig()
@@ -41,6 +45,7 @@ const { objectAttributes: objectAttributesConfig } = useSharedVisualConfig()
             :attribute="field.attribute"
             :value="field.value"
             :config="objectAttributesConfig"
+            :mode="mode"
           />
         </CommonLink>
         <Component
@@ -49,6 +54,7 @@ const { objectAttributes: objectAttributesConfig } = useSharedVisualConfig()
           :attribute="field.attribute"
           :value="field.value"
           :config="objectAttributesConfig"
+          :mode="mode"
         />
       </Component>
     </template>

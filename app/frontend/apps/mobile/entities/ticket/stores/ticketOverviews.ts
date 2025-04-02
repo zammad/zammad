@@ -1,30 +1,33 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { tryOnScopeDispose, watchOnce } from '@vueuse/core'
 import { keyBy } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
-import { useTicketOverviewsQuery } from '#shared/entities/ticket/graphql/queries/ticket/overviews.api.ts'
 import type {
+  Overview,
   TicketOverviewsQuery,
   TicketOverviewUpdatesSubscription,
   TicketOverviewUpdatesSubscriptionVariables,
 } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import type { ConfidentTake } from '#shared/types/utils.ts'
 
-import { TicketOverviewUpdatesDocument } from '../graphql/subscriptions/ticketOverviewUpdates.api.ts'
+import { useTicketOverviewsQuery } from '#mobile/entities/ticket/graphql/queries/overviews.api.ts'
+import { TicketOverviewUpdatesDocument } from '#mobile/entities/ticket/graphql/subscriptions/ticketOverviewUpdates.api.ts'
+
 import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage.ts'
 
-export type TicketOverview = ConfidentTake<
-  TicketOverviewsQuery,
-  'ticketOverviews.edges.node'
+export type TicketOverview = Pick<
+  Overview,
+  'id' | 'name' | 'organizationShared' | 'outOfOffice'
 >
 
 export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
   const ticketOverviewHandler = new QueryHandler(
-    useTicketOverviewsQuery({ withTicketCount: true }),
+    useTicketOverviewsQuery({
+      withTicketCount: true,
+    }),
   )
 
   // Updates the overviews when overviews got added, updated and/or deleted.
@@ -35,6 +38,7 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
     document: TicketOverviewUpdatesDocument,
     variables: {
       withTicketCount: true,
+      ignoreUserConditions: false,
     },
     updateQuery(_, { subscriptionData }) {
       const ticketOverviews =
@@ -54,11 +58,9 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
   const overviewsLoading = ticketOverviewHandler.loading()
 
   const overviews = computed(() => {
-    if (!overviewsRaw.value?.ticketOverviews.edges) return []
+    if (!overviewsRaw.value?.ticketOverviews) return []
 
-    return overviewsRaw.value.ticketOverviews.edges
-      .filter((overview) => overview?.node?.id)
-      .map((edge) => edge.node)
+    return overviewsRaw.value.ticketOverviews.filter((overview) => overview?.id)
   })
 
   const overviewsByKey = computed(() => keyBy(overviews.value, 'id'))
@@ -73,28 +75,24 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
       .filter(Boolean)
   })
 
-  const saveOverviews = (overviews: TicketOverview[]) => {
-    const ids = overviews.map(({ id }) => id)
-    storage.saveOverviews(ids)
-    includedIds.value = new Set(ids)
-  }
-
   const populateIncludeIds = (overviews: TicketOverview[]) => {
     overviews.forEach((overview) => {
       includedIds.value.add(overview.id)
     })
-
-    saveOverviews(overviews)
   }
 
-  // store overviews in local storage when loaded
-  // force it to have something
+  // Do not store overviews in local storage when loaded, fallback to query response.
   if (!includedIds.value.size) {
     if (!overviews.value.length) {
       watchOnce(overviews, populateIncludeIds)
     } else {
       populateIncludeIds(overviews.value)
     }
+  }
+
+  const updateOverviews = (overviews: TicketOverview[]) => {
+    const ids = overviews.map(({ id }) => id)
+    includedIds.value = new Set(ids)
   }
 
   tryOnScopeDispose(() => {
@@ -108,6 +106,6 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
     includedOverviews,
     includedIds,
     overviewsByKey,
-    saveOverviews,
+    updateOverviews,
   }
 })

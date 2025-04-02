@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 defineProps<{
@@ -39,7 +39,7 @@ const scrollDown = () => {
   >
     <div
       v-if="!hidden"
-      class="pb-safe-1 fixed bottom-0 z-10 bg-gray-600/90 px-2 text-white backdrop-blur-lg transition ltr:left-0 ltr:right-0 rtl:left-0 rtl:right-0"
+      class="pb-safe-1 fixed bottom-0 z-10 bg-gray-600/90 px-2 text-white backdrop-blur-lg transition ltr:right-0 ltr:left-0 rtl:right-0 rtl:left-0"
     >
       <div class="relative flex flex-1 items-center gap-2 p-2">
         <div class="flex-1">

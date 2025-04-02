@@ -7,15 +7,15 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserCurrentDevicesUpdatesDocument = gql`
-    subscription userCurrentDevicesUpdates($userId: ID!) {
-  userCurrentDevicesUpdates(userId: $userId) {
+    subscription userCurrentDevicesUpdates {
+  userCurrentDevicesUpdates {
     devices {
       ...userDeviceAttributes
     }
   }
 }
     ${UserDeviceAttributesFragmentDoc}`;
-export function useUserCurrentDevicesUpdatesSubscription(variables: Types.UserCurrentDevicesUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.UserCurrentDevicesUpdatesSubscriptionVariables> | ReactiveFunction<Types.UserCurrentDevicesUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentDevicesUpdatesSubscription, Types.UserCurrentDevicesUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentDevicesUpdatesSubscription, Types.UserCurrentDevicesUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentDevicesUpdatesSubscription, Types.UserCurrentDevicesUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.UserCurrentDevicesUpdatesSubscription, Types.UserCurrentDevicesUpdatesSubscriptionVariables>(UserCurrentDevicesUpdatesDocument, variables, options);
+export function useUserCurrentDevicesUpdatesSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentDevicesUpdatesSubscription, Types.UserCurrentDevicesUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentDevicesUpdatesSubscription, Types.UserCurrentDevicesUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentDevicesUpdatesSubscription, Types.UserCurrentDevicesUpdatesSubscriptionVariables>> = {}) {
+  return VueApolloComposable.useSubscription<Types.UserCurrentDevicesUpdatesSubscription, Types.UserCurrentDevicesUpdatesSubscriptionVariables>(UserCurrentDevicesUpdatesDocument, {}, options);
 }
 export type UserCurrentDevicesUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.UserCurrentDevicesUpdatesSubscription, Types.UserCurrentDevicesUpdatesSubscriptionVariables>;

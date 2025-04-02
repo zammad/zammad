@@ -1,10 +1,11 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import {
   getByLabelText,
   getByRole,
   getByText,
+  queryByLabelText,
   queryByText,
 } from '@testing-library/vue'
 
@@ -94,6 +95,43 @@ describe('guided setup manual channel email', () => {
 
       mockFormUpdaterQuery((variables) => {
         switch (variables.formUpdaterId) {
+          case EnumFormUpdaterId.FormUpdaterUpdaterGuidedSetupEmailArchive:
+            return {
+              formUpdater: {
+                fields: {
+                  archive_state_id: {
+                    initialValue: 4,
+                    options: [
+                      {
+                        value: 1,
+                        label: 'new',
+                      },
+                      {
+                        value: 2,
+                        label: 'open',
+                      },
+                      {
+                        value: 3,
+                        label: 'pending reminder',
+                      },
+                      {
+                        value: 4,
+                        label: 'closed',
+                      },
+                      {
+                        value: 5,
+                        label: 'merged',
+                      },
+                      {
+                        value: 6,
+                        label: 'pending close',
+                      },
+                    ],
+                  },
+                },
+              },
+            }
+
           case EnumFormUpdaterId.FormUpdaterUpdaterGuidedSetupEmailOutbound:
             return {
               formUpdater: {
@@ -169,8 +207,6 @@ describe('guided setup manual channel email', () => {
             outboundConfiguration,
             mailboxStats: {
               contentMessages: 0,
-              archivePossible: false,
-              archiveWeekRange: 2,
             },
           },
         },
@@ -265,8 +301,6 @@ describe('guided setup manual channel email', () => {
             outboundConfiguration,
             mailboxStats: {
               contentMessages: 0,
-              archivePossible: false,
-              archiveWeekRange: 2,
             },
           },
         },
@@ -322,8 +356,6 @@ describe('guided setup manual channel email', () => {
             outboundConfiguration,
             mailboxStats: {
               contentMessages: 0,
-              archivePossible: false,
-              archiveWeekRange: 2,
             },
           },
         },
@@ -405,9 +437,6 @@ describe('guided setup manual channel email', () => {
           success: true,
           mailboxStats: {
             contentMessages: 3,
-            archivePossible: true,
-            archivePossibleIsFallback: false,
-            archiveWeekRange: 2,
           },
         },
       })
@@ -431,94 +460,38 @@ describe('guided setup manual channel email', () => {
       )
 
       expect(inboundMessagesForm).toHaveTextContent(
-        'In addition, emails were found in your mailbox that are older than 2 weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.',
-      )
-
-      expect(
-        getByLabelText(inboundMessagesForm, 'Email import mode'),
-      ).toBeInTheDocument()
-
-      expect(view.getByRole('button', { name: 'Continue' })).toBeInTheDocument()
-    })
-
-    it('can show inbound messages form when some messages are detected but imap sort failed', async () => {
-      const view = await visitView('/guided-setup/manual/channels/email')
-
-      const accountForm = view.getByTestId('channel-email-account')
-
-      await view.events.type(
-        getByLabelText(accountForm, 'Full name'),
-        'Zammad Helpdesk',
-      )
-
-      await view.events.type(
-        getByLabelText(accountForm, 'Email address'),
-        'zammad@mail.test.dc.zammad.com',
-      )
-
-      await view.events.type(getByLabelText(accountForm, 'Password'), 'zammad')
-
-      mockChannelEmailGuessConfigurationMutation({
-        channelEmailGuessConfiguration: {
-          result: {
-            inboundConfiguration: null,
-            outboundConfiguration: null,
-          },
-        },
-      })
-
-      await view.events.click(
-        view.getByRole('button', {
-          name: 'Connect and Continue',
-        }),
-      )
-
-      const inboundForm = view.getByTestId('channel-email-inbound')
-
-      await view.events.type(
-        getByLabelText(inboundForm, 'Host'),
-        'mail.test.dc.zammad.com',
-      )
-
-      await getNode('channel-email-inbound')?.settled
-
-      mockChannelEmailValidateConfigurationInboundMutation({
-        channelEmailValidateConfigurationInbound: {
-          success: true,
-          mailboxStats: {
-            contentMessages: 3,
-            archivePossible: true,
-            archivePossibleIsFallback: true,
-            archiveWeekRange: 2,
-          },
-        },
-      })
-
-      await view.events.click(
-        view.getByRole('button', {
-          name: 'Continue',
-        }),
-      )
-
-      expect(inboundForm).not.toBeVisible()
-
-      const inboundMessagesForm = view.getByTestId(
-        'channel-email-inbound-messages',
-      )
-
-      expect(inboundMessagesForm).toBeVisible()
-
-      expect(inboundMessagesForm).toHaveTextContent(
-        '3 email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.',
+        'You can import some of your emails as an "archive", which means that no notifications are sent and the tickets will be in a target state that you define.',
       )
 
       expect(inboundMessagesForm).toHaveTextContent(
-        'Since the mail server does not support sorting messages by date, it was not possible to detect if there is any mail older than 2 weeks in the connected mailbox. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.',
+        'You can find archived emails in Zammad anytime using the search function, like for any other ticket.',
       )
 
       expect(
-        getByLabelText(inboundMessagesForm, 'Email import mode'),
+        getByLabelText(inboundMessagesForm, 'Archive emails'),
       ).toBeInTheDocument()
+
+      expect(
+        getByLabelText(inboundMessagesForm, 'Archive cut-off time'),
+      ).toBeDescribedBy(
+        'Emails before the cut-off time are imported as archived tickets. Emails after the cut-off time are imported as regular tickets.',
+      )
+
+      expect(
+        getByLabelText(inboundMessagesForm, 'Archive ticket target state'),
+      ).toBeInTheDocument()
+
+      await view.events.click(
+        getByLabelText(inboundMessagesForm, 'Archive emails'),
+      )
+
+      expect(
+        queryByLabelText(inboundMessagesForm, 'Archive cut-off time'),
+      ).not.toBeInTheDocument()
+
+      expect(
+        queryByLabelText(inboundMessagesForm, 'Archive ticket target state'),
+      ).not.toBeInTheDocument()
 
       expect(view.getByRole('button', { name: 'Continue' })).toBeInTheDocument()
     })
@@ -569,8 +542,6 @@ describe('guided setup manual channel email', () => {
           success: true,
           mailboxStats: {
             contentMessages: 0,
-            archivePossible: false,
-            archiveWeekRange: 2,
           },
         },
       })
@@ -615,8 +586,6 @@ describe('guided setup manual channel email', () => {
             outboundConfiguration,
             mailboxStats: {
               contentMessages: 0,
-              archivePossible: false,
-              archiveWeekRange: 2,
             },
           },
         },
@@ -696,12 +665,27 @@ describe('guided setup manual channel email', () => {
         channelEmailValidateConfigurationInbound: {
           success: true,
           mailboxStats: {
-            contentMessages: 0,
-            archivePossible: false,
-            archiveWeekRange: 2,
+            contentMessages: 1,
           },
         },
       })
+
+      await view.events.click(
+        view.getByRole('button', {
+          name: 'Continue',
+        }),
+      )
+
+      const inboundMessagesForm = view.getByTestId(
+        'channel-email-inbound-messages',
+      )
+
+      await view.events.type(
+        getByLabelText(inboundMessagesForm, 'Archive cut-off time'),
+        '2025-01-01 00:00',
+      )
+
+      await getNode('channel-email-inbound-messages')?.settled
 
       await view.events.click(
         view.getByRole('button', {
@@ -758,6 +742,9 @@ describe('guided setup manual channel email', () => {
             ssl: 'ssl',
             sslVerify: true,
             user: 'zammad@mail.test.dc.zammad.com',
+            archive: true,
+            archiveBefore: '2025-01-01T00:00:00Z',
+            archiveStateId: 4,
           },
           outboundConfiguration: {
             adapter: 'smtp',
@@ -895,8 +882,6 @@ describe('guided setup manual channel email', () => {
           success: true,
           mailboxStats: {
             contentMessages: 0,
-            archivePossible: false,
-            archiveWeekRange: 2,
           },
         },
       })

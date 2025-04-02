@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -6,8 +6,8 @@ RSpec.describe 'Desktop > Ticket > Online Notifications', app: :desktop_view, au
   let(:group)    { create(:group) }
   let(:agent)    { create(:agent, groups: [group]) }
   let(:agent_b)  { create(:agent, groups: [group]) }
-  let(:ticket)   { create(:ticket, group:, title: 'Ticket A') }
-  let(:ticket_b) { create(:ticket, group:, title: 'Ticket B') }
+  let(:ticket)   { create(:ticket, group:) }
+  let(:ticket_b) { create(:ticket, group:) }
 
   let(:online_notification)            { create(:online_notification, user: agent, created_by: agent_b, updated_by: agent_b, o: ticket, type_name: 'update') }
   let(:online_notification_new_ticket) { create(:online_notification, user: agent, created_by: agent_b, updated_by: agent_b, o: ticket_b, type_name: 'create') }
@@ -29,7 +29,7 @@ RSpec.describe 'Desktop > Ticket > Online Notifications', app: :desktop_view, au
       find('button[aria-label="Show notifications"]').click
 
       within('[role="region"]') do
-        expect(page).to have_text("#{agent_b.fullname} updated ticket Ticket A")
+        expect(page).to have_text("#{agent_b.fullname} updated ticket")
         click_on 'mark all as read'
         wait_for_mutation('onlineNotificationMarkAllAsSeen')
       end
@@ -37,7 +37,7 @@ RSpec.describe 'Desktop > Ticket > Online Notifications', app: :desktop_view, au
       find('button[aria-label="Show notifications"]').click
 
       within('[role="region"]') do
-        expect(page).to have_css('a', text: "#{agent_b.fullname} updated ticket Ticket A", style: { opacity: '0.3' })
+        expect(page).to have_css('a', text: "#{agent_b.fullname} updated ticket", style: { opacity: '0.3' })
       end
 
       find("[aria-label='#{Capybara::Selector::CSS.escape(agent.fullname)}']").click
@@ -81,7 +81,7 @@ RSpec.describe 'Desktop > Ticket > Online Notifications', app: :desktop_view, au
       find('button[aria-label="Show notifications"]').click
 
       within('[role="region"]') do
-        click_on "#{agent_b.fullname} created ticket Ticket B"
+        click_on "#{agent_b.fullname} created ticket"
       end
 
       wait_for_mutation('onlineNotificationSeen')
@@ -92,7 +92,7 @@ RSpec.describe 'Desktop > Ticket > Online Notifications', app: :desktop_view, au
       find('button[aria-label="Show notifications"]').click
 
       within('[role="region"]') do
-        expect(page).to have_css('a', text: "#{agent_b.fullname} created ticket Ticket B", style: { opacity: '0.3' })
+        expect(page).to have_css('a', text: "#{agent_b.fullname} created ticket", style: { opacity: '0.3' })
       end
     end
   end

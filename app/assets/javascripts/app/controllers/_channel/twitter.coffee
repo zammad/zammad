@@ -300,4 +300,4 @@ class AccountEdit extends App.ControllerModal
         @el.find('.alert').removeClass('hidden').text(data.error || __('The changes could not be saved.'))
     )
 
-App.Config.set('Twitter', { prio: 5000, name: __('Twitter'), parent: '#channels', target: '#channels/twitter', controller: ChannelTwitter, permission: ['admin.channel_twitter'] }, 'NavBarAdmin')
+App.Config.set('Twitter', { prio: 5300, name: __('Twitter'), parent: '#channels', target: '#channels/twitter', controller: ChannelTwitter, permission: ['admin.channel_twitter'] }, 'NavBarAdmin')

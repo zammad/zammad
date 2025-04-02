@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class UserAgentTestController < ApplicationController
   skip_before_action :verify_csrf_token
@@ -23,6 +23,11 @@ class UserAgentTestController < ApplicationController
     process_request('put', 200)
   end
 
+  # PUT test/patch
+  def patch
+    process_request('patch', 200)
+  end
+
   # DELETE test/delete
   def delete
     process_request('delete', 200)
@@ -43,6 +48,7 @@ class UserAgentTestController < ApplicationController
              remote_ip:              request.remote_ip,
              content_type_requested: request.media_type,
              method:                 type,
+             body:                   request.body,
              submitted:              params[:submitted]
            },
            status: status

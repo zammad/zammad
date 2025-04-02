@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::SharedDraftZoomPolicy < ApplicationPolicy
   def update?
@@ -16,6 +16,6 @@ class Ticket::SharedDraftZoomPolicy < ApplicationPolicy
   private
 
   def access?(_method)
-    TicketPolicy.new(user, record.ticket).update?
+    TicketPolicy.new(user, record.ticket).agent_update_access?
   end
 end

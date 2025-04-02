@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Gql::Queries::Ticket::SharedDraft::Zoom::Show, type: :graphql do
   let(:owner)             { create(:user) }
-  let(:ticket)            { create(:ticket, owner: owner) }
-  let(:shared_draft_zoom) { create(:ticket_shared_draft_zoom, ticket: ticket) }
+  let(:ticket)            { create(:ticket, owner:, group: Group.first) }
+  let(:shared_draft_zoom) { create(:ticket_shared_draft_zoom, ticket:) }
   let(:variables)         { { sharedDraftId: gql.id(shared_draft_zoom) } }
 
   let(:query) do
@@ -35,6 +35,7 @@ RSpec.describe Gql::Queries::Ticket::SharedDraft::Zoom::Show, type: :graphql do
     end
 
     context 'when agent has permission on related ticket' do
+      let(:agent) { create(:agent, groups: [Group.first]) }
       let(:owner) { agent }
 
       it 'returns the shared draft zoom' do

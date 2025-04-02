@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 ##
 # Redlock implementation for distributed locking.
@@ -10,9 +10,9 @@
 #       [0] https://github.com/leandromoreira/redlock-rb
 module Redlock
   class Client
-    def initialize(server)
+    def initialize
       @id = SecureRandom.uuid
-      @redis = Redis.new(driver: :hiredis, url: server)
+      @redis = Zammad::Service::Redis.new
     end
 
     def lock(resource, ttl, options = {}, &block)

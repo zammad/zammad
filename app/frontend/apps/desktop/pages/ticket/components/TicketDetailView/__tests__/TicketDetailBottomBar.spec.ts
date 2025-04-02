@@ -1,10 +1,11 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 import { ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
@@ -181,12 +182,16 @@ describe('TicketDetailBottomBar', () => {
       const calls = await waitForMacrosQueryCalls()
 
       expect(calls?.at(-1)?.variables).toEqual({
-        groupId: convertToGraphQLId('Group', 2),
+        groupIds: [convertToGraphQLId('Group', 2)],
       })
+
+      await waitForNextTick()
 
       await getMacrosUpdateSubscriptionHandler().trigger({
         macrosUpdate: {
-          macroUpdated: true,
+          macroId: convertToGraphQLId('Macro', 1),
+          groupIds: [],
+          removeMacroId: null,
         },
       })
 
@@ -244,6 +249,8 @@ describe('TicketDetailBottomBar', () => {
 
       const menu = await wrapper.findByRole('menu')
 
+      expect(within(menu).getByRole('menuitem')).toBeInTheDocument()
+
       await wrapper.events.click(within(menu).getByText('Macro 1'))
 
       expect(wrapper.emitted('execute-macro')).toEqual([
@@ -264,8 +271,14 @@ describe('TicketDetailBottomBar', () => {
         groupId: undefined,
       })
 
+      const addonButton = wrapper.getByRole('button', {
+        name: 'Additional ticket edit actions',
+      })
+
+      await wrapper.events.click(addonButton)
+
       expect(
-        wrapper.queryByLabelText('Additional ticket edit actions'),
+        within(wrapper.getByRole('menu')).queryByRole('menuitem'),
       ).not.toBeInTheDocument()
     })
   })

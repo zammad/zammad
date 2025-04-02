@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Enum
   class BaseEnum < GraphQL::Schema::Enum
@@ -14,7 +14,8 @@ module Gql::Types::Enum
     # Create an enum type from a list of strings.
     def self.build_string_list_enum(strings)
       strings.each do |string|
-        value graphql_compatible_name(string), value: string
+        # Since dynamic values might clash with existing methods, we explicitly disable them.
+        value graphql_compatible_name(string), value: string, value_method: false
       end
     end
 

@@ -1,13 +1,13 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe RecentView, type: :model do
-  let(:admin)    { create(:admin) }
-  let(:agent)    { create(:agent) }
+  let(:admin)    { create(:admin, groups: [Group.first]) }
+  let(:agent)    { create(:agent, groups: [Group.first]) }
   let(:customer) { create(:customer) }
-  let(:ticket)   { create(:ticket, owner: owner, customer: customer) }
-  let(:tickets)  { create_list(:ticket, 15, owner: owner, customer: customer) }
+  let(:ticket)   { create(:ticket, owner:, customer:, group: Group.first) }
+  let(:tickets)  { create_list(:ticket, 15, owner:, customer:, group: Group.first) }
   let(:owner)    { admin }
 
   describe '::list' do
@@ -70,9 +70,9 @@ RSpec.describe RecentView, type: :model do
           expect(described_class.list(agent).length).to eq(1)
         end
 
-        it 'does not include other agents’ tickets in results' do
+        it 'does not include tickets without permission in results' do
           described_class.log('Ticket', ticket.id, agent)
-          ticket.update(owner: User.first)
+          ticket.update!(group: create(:group))
 
           expect(described_class.list(agent).length).to eq(0)
         end
@@ -92,7 +92,7 @@ RSpec.describe RecentView, type: :model do
           expect(described_class.list(customer).length).to eq(1)
         end
 
-        it 'does not include other customers’ tickets in results' do
+        it "does not include other customers' tickets in results" do
           described_class.log('Ticket', ticket.id, customer)
           ticket.update(customer: User.first)
 

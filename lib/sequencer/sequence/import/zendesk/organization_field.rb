@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Sequence::Import::Zendesk::OrganizationField < Sequencer::Sequence::Base
 
@@ -7,6 +7,7 @@ class Sequencer::Sequence::Import::Zendesk::OrganizationField < Sequencer::Seque
       'Common::ModelClass::Organization',
       'Import::Zendesk::ObjectAttribute::SanitizedType',
       'Import::Zendesk::ObjectAttribute::SanitizedName',
+      'Import::Zendesk::ObjectAttribute::Skip',
       'Import::Zendesk::ObjectAttribute::Add',
       'Import::Zendesk::ObjectAttribute::FieldMap',
     ]

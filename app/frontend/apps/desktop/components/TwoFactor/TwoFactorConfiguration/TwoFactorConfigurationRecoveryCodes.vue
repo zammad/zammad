@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, onBeforeMount, ref } from 'vue'
@@ -7,10 +7,12 @@ import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
 import { useUserCurrentTwoFactorRecoveryCodesGenerateMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRecoveryCodesGenerate.api.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import { usePrintMode } from '#desktop/composables/usePrintMode.ts'
+import { usePasswordCheckTwoFactor } from '#desktop/entities/two-factor-configuration/composables/usePasswordCheckTwoFactor.ts'
 
 import type { TwoFactorConfigurationComponentProps } from '../types.ts'
 
@@ -27,7 +29,7 @@ const recoveryCodes = ref<string[] | null | undefined>(
 )
 
 onBeforeMount(async () => {
-  if (props.options?.recoveryCodes) return
+  if (props.options?.recoveryCodes || !props.token) return
 
   loading.value = true
 
@@ -35,11 +37,21 @@ onBeforeMount(async () => {
     useUserCurrentTwoFactorRecoveryCodesGenerateMutation(),
     {
       errorNotificationMessage: __('Could not generate recovery codes'),
+      errorCallback: (error) => {
+        if (error.type === GraphQLErrorTypes.UnknownError) {
+          usePasswordCheckTwoFactor(
+            props.formSubmitCallback,
+          ).redirectToPasswordCheck()
+          return false
+        }
+
+        return true
+      },
     },
   )
 
   recoveryCodesGenerate
-    .send()
+    .send({ token: props.token })
     .then((data) => {
       recoveryCodes.value =
         data?.userCurrentTwoFactorRecoveryCodesGenerate?.recoveryCodes

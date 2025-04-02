@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel < ApplicationModel
   include Channel::Assets
@@ -45,12 +45,10 @@ fetch one account
 
 =end
 
-  def fetch(force = false, driver_call_result = {})
-    args            = options[:args]
+  def fetch(force = false)
     adapter         = options[:adapter]
     adapter_options = options
     if options[:inbound] && options[:inbound][:adapter]
-      args            = options[:inbound][:args]
       adapter         = options[:inbound][:adapter]
       adapter_options = options[:inbound][:options]
     end
@@ -61,10 +59,9 @@ fetch one account
     driver_instance = driver_class.new
     return if !force && !driver_instance.fetchable?(self)
 
-    result = driver_instance.fetch(adapter_options, self, *args)
+    result = driver_instance.fetch(adapter_options, self)
     self.status_in   = result[:result]
     self.last_log_in = result[:notice]
-    driver_call_result.replace result
     preferences[:last_fetch] = Time.zone.now
     save!
     true
@@ -196,6 +193,7 @@ stream all accounts
 
         # start threads for each channel
         @@channel_stream[channel_id][:thread] = Thread.new do
+          Thread.current.name = "stream channel for '#{channel.id}' (#{channel.area})..."
 
           logger.info "Started stream channel for '#{channel.id}' (#{channel.area})..."
           channel.status_in = 'ok'
@@ -359,7 +357,7 @@ get instance of channel driver
     result = ExternalCredential.refresh_token(options[:auth][:provider], options[:auth])
 
     options[:auth]                          = result
-    options[:inbound][:options][:password]  = result[:access_token]
+    options[:inbound][:options][:password]  = result[:access_token] if options[:inbound].present?
     options[:outbound][:options][:password] = result[:access_token]
 
     return if new_record?

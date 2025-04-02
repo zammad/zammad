@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory :ldap_source do
@@ -19,7 +19,7 @@ FactoryBot.define do
       'user_uid'         => 'uid',
       'user_filter'      => '(objectClass=posixaccount)',
       'group_uid'        => 'dn',
-      'group_filter'     => '(objectClass=posixgroup)',
+      'group_filter'     => '(objectClass=groupOfNames)',
       'user_attributes'  => { 'cn' => 'firstname', 'sn' => 'lastname', 'mail' => 'email', 'uid' => 'login', 'telephonenumber' => 'phone' },
       'group_role_map'   => { 'cn=admin,ou=groups,dc=foo,dc=example,dc=com' => ['1'], 'cn=1st level,ou=groups,dc=foo,dc=example,dc=com' => ['2'] },
       'unassigned_users' => 'sigup_roles'

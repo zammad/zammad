@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
@@ -268,6 +268,54 @@ RSpec.describe Ticket::State, type: :model do
               'ticket.customer' => include('filter' => not_include(state.id))
             )
           )
+      end
+    end
+  end
+
+  describe 'Validations' do
+    describe 'type uniqueness validation' do
+      it 'allows to create multiple open type states' do
+        state = build(:ticket_state)
+        state.state_type = Ticket::StateType.lookup(name: 'open')
+        expect(state).to be_valid
+      end
+
+      it 'does not allow to multiple merged type states' do
+        state = build(:ticket_state)
+        state.state_type = Ticket::StateType.lookup(name: 'merged')
+        expect(state).not_to be_valid
+      end
+    end
+  end
+
+  describe '#prevent_merged_state_editing' do
+    context 'when state is merged type' do
+      it 'prevents editing' do
+        state = described_class.find_by name: 'merged'
+        expect(state.update(name: 'test')).to be_falsey
+      end
+    end
+
+    context 'when state is not merged type' do
+      it 'allows destruction' do
+        state = create(:ticket_state)
+        expect(state.update(name: 'test')).to be_truthy
+      end
+    end
+  end
+
+  describe '#prevent_merged_state_destruction' do
+    context 'when state is merged type' do
+      it 'stops destruction' do
+        state = described_class.find_by name: 'merged'
+        expect(state.destroy).to be_falsey
+      end
+    end
+
+    context 'when state is not merged type' do
+      it 'allows destruction' do
+        state = create(:ticket_state)
+        expect(state.destroy).to be_truthy
       end
     end
   end

@@ -1,20 +1,33 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+
+require 'graphql/gql/shared_examples/two_factor_token_validity_check'
 
 RSpec.describe Gql::Mutations::User::Current::TwoFactor::VerifyMethodConfiguration, type: :graphql do
   let(:user)                  { create(:user) }
   let(:method_name)           { 'authenticator_app' }
+  let(:token)                 { create(:token, action: 'PasswordCheck', persistent: false, user: user, expires_at: 1.hour.from_now).token }
   let(:recover_codes_enabled) { true }
   let(:payload)               { verification_code }
   let(:verification_code)     { ROTP::TOTP.new(configuration[:secret]).now }
   let(:configuration)         { user.auth_two_factor.authentication_method_object(method_name).initiate_configuration }
 
-  let(:variables) { { methodName: method_name, payload:, configuration: } }
+  let(:variables) { { methodName: method_name, token:, payload:, configuration: } }
   let(:mutation) do
     <<~MUTATION
-      mutation userCurrentTwoFactorVerifyMethodConfiguration($methodName: EnumTwoFactorAuthenticationMethod!, $payload: JSON!, $configuration: JSON!) {
-        userCurrentTwoFactorVerifyMethodConfiguration(methodName: $methodName, payload: $payload, configuration: $configuration) {
+      mutation userCurrentTwoFactorVerifyMethodConfiguration(
+        $methodName: EnumTwoFactorAuthenticationMethod!
+        $token: String!
+        $payload: JSON!
+        $configuration: JSON!
+      ) {
+        userCurrentTwoFactorVerifyMethodConfiguration(
+          methodName: $methodName
+          token: $token
+          payload: $payload
+          configuration: $configuration
+        ) {
           recoveryCodes
           errors {
             message
@@ -39,6 +52,9 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::VerifyMethodConfigurati
 
         expect(gql.result.data[:errors][0]).to eq('message' => 'The verification of the two-factor authentication method configuration failed.', 'field' => nil)
       end
+
+      it_behaves_like 'keeping used token', operation_name: :mutation
+
     end
 
     context 'with correct verification code', :aggregate_failures do
@@ -57,7 +73,11 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::VerifyMethodConfigurati
           expect(gql.result.data[:recoveryCodes]).to be_nil
         end
       end
+
+      it_behaves_like 'cleaning up used token', operation_name: :mutation
     end
+
+    it_behaves_like 'having token validity check', operation_name: :mutation
   end
 
   context 'with not authorized agent', authenticated_as: :user do

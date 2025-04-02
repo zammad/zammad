@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class ExternalCredentialsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -35,6 +35,7 @@ class ExternalCredentialsController < ApplicationController
     attributes = ExternalCredential.request_account_to_link(provider, params)
     session[:request_token] = attributes[:request_token]
     session[:channel_id] = params[:channel_id]
+    session[:shared_mailbox] = params[:shared_mailbox]
     redirect_to attributes[:authorize_url], allow_other_host: true
   end
 
@@ -45,13 +46,14 @@ class ExternalCredentialsController < ApplicationController
 
     session[:request_token] = nil
     session[:channel_id] = nil
+    session[:shared_mailbox] = nil
     redirect_to app_url(provider, channel.id), allow_other_host: true
   end
 
   private
 
   def link_params
-    params.permit!.to_h.merge(channel_id: session[:channel_id])
+    params.permit!.to_h.merge(channel_id: session[:channel_id], shared_mailbox: session[:shared_mailbox])
   end
 
   def callback_url(provider)

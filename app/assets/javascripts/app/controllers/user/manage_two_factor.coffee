@@ -17,7 +17,7 @@ class App.ControllerManageTwoFactor extends App.ControllerModal
 
     @ajax(
       type: 'GET'
-      url: "#{@apiPath}/users/#{@user.id}/two_factor_enabled_authentication_methods"
+      url: "#{@apiPath}/users/#{@user.id}/admin_two_factor/enabled_authentication_methods"
       success: (data, status, xhr) =>
         @stopLoading()
 
@@ -79,7 +79,7 @@ class App.ControllerManageTwoFactor extends App.ControllerModal
 
     @ajax(
       type: 'DELETE'
-      url: "#{@apiPath}/users/#{@user.id}/two_factor_remove_authentication_method"
+      url: "#{@apiPath}/users/#{@user.id}/admin_two_factor/remove_authentication_method"
       data: JSON.stringify(
         method: params.method
       )
@@ -119,7 +119,7 @@ class App.ControllerManageTwoFactor extends App.ControllerModal
       callback: =>
         @ajax(
           type: 'DELETE'
-          url: "#{@apiPath}/users/#{@user.id}/two_factor_remove_all_authentication_methods"
+          url: "#{@apiPath}/users/#{@user.id}/admin_two_factor/remove_all_authentication_methods"
           success: (data, status, xhr) =>
             @user.trigger('two_factor_changed')
 

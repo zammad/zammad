@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByRole } from '@testing-library/vue'
 
@@ -278,7 +278,11 @@ describe('Out of Office page', () => {
       const view = await visitView('/personal-setting/out-of-office')
 
       expect(view.getByLabelText('Reason for absence')).toHaveValue('')
-      expect(view.getByLabelText('Start and end date')).toHaveValue('')
+
+      expect(view.getByLabelText('Start and end date')).toHaveValue(
+        'YYYY-MM-DD - YYYY-MM-DD',
+      )
+
       expect(view.getByLabelText('Replacement agent')).toHaveValue('')
       expect(view.getByLabelText('Active')).not.toBeChecked()
     })

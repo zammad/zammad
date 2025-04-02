@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { animations } from '@formkit/drag-and-drop'
@@ -45,7 +45,8 @@ const checklistItems = computed({
   },
 })
 
-const checklistInstance = useTemplateRef('checklist')
+const checklistInstance =
+  useTemplateRef<InstanceType<typeof ChecklistItem>[]>('checklist')
 const containerElement = useTemplateRef<HTMLElement>('container')
 const checklistTitleInstance = useTemplateRef('title')
 
@@ -136,7 +137,7 @@ defineExpose({
           <template v-if="!item.ticketReference">
             <CommonIcon
               tabindex="0"
-              class="me-0.5 ms-1 mt-1 text-gray-100 outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
+              class="ms-1 me-0.5 mt-1 text-gray-100 outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
               size="xs"
               role="checkbox"
               aria-readonly="true"

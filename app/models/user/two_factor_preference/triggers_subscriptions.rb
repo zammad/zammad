@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Trigger GraphQL subscriptions on user changes.
 module User::TwoFactorPreference::TriggersSubscriptions
@@ -11,6 +11,6 @@ module User::TwoFactorPreference::TriggersSubscriptions
   private
 
   def trigger_subscriptions
-    Gql::Subscriptions::User::Current::TwoFactorUpdates.trigger(nil, arguments: { user_id: Gql::ZammadSchema.id_from_object(user) })
+    Gql::Subscriptions::User::Current::TwoFactorUpdates.trigger(nil, scope: user.id)
   end
 end

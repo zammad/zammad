@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Gql::Mutations::Ticket::SharedDraft::Zoom::Delete, :aggregate_failures, type: :graphql do
   let(:owner)           { create(:user) }
-  let(:ticket)          { create(:ticket, owner: owner) }
-  let(:shared_draft)    { create(:ticket_shared_draft_zoom, ticket: ticket) }
+  let(:ticket)          { create(:ticket, owner:, group: Group.first) }
+  let(:shared_draft)    { create(:ticket_shared_draft_zoom, ticket:) }
   let(:shared_draft_id) { gql.id(shared_draft) }
 
   let(:query) do
@@ -36,6 +36,7 @@ RSpec.describe Gql::Mutations::Ticket::SharedDraft::Zoom::Delete, :aggregate_fai
     end
 
     context 'when agent has permission on related ticket' do
+      let(:agent) { create(:agent, groups: [Group.first]) }
       let(:owner) { agent }
 
       it 'deletes the shared draft zoom' do

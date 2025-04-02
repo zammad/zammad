@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class ImportKayakoController < ApplicationController
   def url_check
@@ -100,7 +100,7 @@ class ImportKayakoController < ApplicationController
   end
 
   def valid_endpoint?(endpoint)
-    response = UserAgent.request("#{endpoint}/teams", verify_ssl: true)
+    response = UserAgent.get("#{endpoint}/teams", {}, verify_ssl: true)
 
     if response.header.nil? || !response.header['x-api-version']
       render json: {

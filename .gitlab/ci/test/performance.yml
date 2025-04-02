@@ -2,10 +2,12 @@ performance:
   stage: test
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"
+      allow_failure: true
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
         - .gitlab/ci/test/performance.yml
         - .gitlab/performance/**/*
+      allow_failure: true
   # Make sure this gets executed exclusively on a runner.
   tags: ['no_concurrency']
   services:
@@ -31,7 +33,7 @@ performance:
     - bundle exec rails r tmp/performance/run_tests.rb
     # Then, switch to the current commit, migrate to it and run a few selected tests.
     - git checkout $CI_COMMIT_SHA
-    - rvm use 3.2.4
+    - rvm use 3.2.8
     - !reference [.scripts, bundle_install]
     # Force redis usage, even if it was disabled by the initial configure_environment script of stable.
     - export REDIS_URL=redis://redis

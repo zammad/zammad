@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class ReportsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -11,9 +11,18 @@ class ReportsController < ApplicationController
       }
       return
     end
+
+    profiles = Report::Profile.list
+    if profiles.blank?
+      render json: {
+        error: __('There are currently no report profiles configured.'),
+      }
+      return
+    end
+
     render json: {
       config:   Report.config,
-      profiles: Report::Profile.list,
+      profiles: profiles,
     }
   end
 

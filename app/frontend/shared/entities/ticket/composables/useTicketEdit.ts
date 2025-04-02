@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { isEqual } from 'lodash-es'
 import { computed, ref, watch } from 'vue'
@@ -10,11 +10,15 @@ import type {
   FormSubmitData,
 } from '#shared/components/Form/types.ts'
 import { getNodeByName } from '#shared/components/Form/utils.ts'
+import { useCheckBodyAttachmentReference } from '#shared/composables/form/useCheckBodyAttachmentReference.ts'
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import { useTicketUpdateMutation } from '#shared/entities/ticket/graphql/mutations/update.api.ts'
-import type { TicketById } from '#shared/entities/ticket/types.ts'
-import type { TicketArticleFormValues } from '#shared/entities/ticket-article/action/plugins/types.ts'
+import type {
+  TicketArticleReceivedFormValues,
+  TicketById,
+  TicketUpdateFormData,
+} from '#shared/entities/ticket/types.ts'
 import type {
   TicketUpdateInput,
   TicketUpdateMetaInput,
@@ -22,16 +26,9 @@ import type {
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
-import type { PartialRequired } from '#shared/types/utils.ts'
 import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
 
 import type { ComputedRef, ShallowRef } from 'vue'
-
-type TicketArticleReceivedFormValues = PartialRequired<
-  TicketArticleFormValues,
-  // form always has these values
-  'articleType' | 'body' | 'internal'
->
 
 const TICKET_FORM_RELEVANT_KEYS = [
   'id',
@@ -150,8 +147,13 @@ export const useTicketEdit = (
     }
   }
 
+  const {
+    missingBodyAttachmentReference,
+    bodyAttachmentReferenceConfirmation,
+  } = useCheckBodyAttachmentReference()
+
   const editTicket = async (
-    formData: FormSubmitData,
+    formData: FormSubmitData<TicketUpdateFormData>,
     meta?: TicketUpdateMetaInput,
   ) => {
     if (!ticket.value || !form.value) return undefined
@@ -160,13 +162,25 @@ export const useTicketEdit = (
       formData.owner_id = 1
     }
 
-    const { internalObjectAttributeValues, additionalObjectAttributeValues } =
-      useObjectAttributeFormData(ticketObjectAttributesLookup.value, formData)
-
     const formArticle = formData.article as
       | TicketArticleReceivedFormValues
       | undefined
+
+    if (
+      formArticle &&
+      missingBodyAttachmentReference(
+        formArticle?.body,
+        formArticle?.attachments,
+      ) &&
+      (await bodyAttachmentReferenceConfirmation())
+    ) {
+      return undefined
+    }
+
     const article = processArticle(form.value.formId, formArticle)
+
+    const { internalObjectAttributeValues, additionalObjectAttributeValues } =
+      useObjectAttributeFormData(ticketObjectAttributesLookup.value, formData)
 
     const ticketMeta = meta || {}
 

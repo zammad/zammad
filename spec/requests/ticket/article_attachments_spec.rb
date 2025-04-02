@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -55,6 +55,8 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
           get "/api/v1/ticket_attachment/#{ticket2.id}/#{article1.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:ok)
           expect(response.body).to eq('some content')
+          # Ensure restrictive CSP for downloads.
+          expect(response.headers['Content-Security-Policy']).to eq("default-src 'none'")
 
           get "/api/v1/ticket_attachment/#{ticket2.id}/#{article2.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:forbidden)

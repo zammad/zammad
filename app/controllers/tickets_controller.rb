@@ -1,10 +1,9 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketsController < ApplicationController
   include CreatesTicketArticles
   include ClonesTicketArticleAttachments
   include ChecksUserAttributesByCurrentUserPermission
-  include TicketStats
   include CanPaginate
 
   prepend_before_action -> { authorize! }, only: %i[create import_example import_start ticket_customer ticket_history ticket_related ticket_recent ticket_merge ticket_split]
@@ -62,7 +61,7 @@ class TicketsController < ApplicationController
     end
 
     if response_all?
-      render json: ticket_all(ticket)
+      render json: Ticket::AssetsAll.new(current_user, ticket).all_assets
       return
     end
 
@@ -236,7 +235,7 @@ class TicketsController < ApplicationController
     end
 
     if response_all?
-      render json: ticket_all(ticket.reload), status: :created
+      render json: Ticket::AssetsAll.new(current_user, ticket.reload).all_assets, status: :created
       return
     end
 
@@ -300,7 +299,7 @@ class TicketsController < ApplicationController
     end
 
     if response_all?
-      render json: ticket_all(ticket.reload), status: :ok
+      render json: Ticket::AssetsAll.new(current_user, ticket.reload).all_assets, status: :ok
       return
     end
 
@@ -476,101 +475,8 @@ class TicketsController < ApplicationController
       raise __('Need user_id or organization_id as param')
     end
 
-    # lookup open user tickets
-    limit            = 100
-    assets           = {}
-
-    user_tickets = {}
-    if params[:user_id]
-      user = User.lookup(id: params[:user_id])
-      if !user
-        raise "No such user with id #{params[:user_id]}"
-      end
-
-      conditions = {
-        closed_ids: {
-          'ticket.state_id'    => {
-            operator: 'is',
-            value:    Ticket::State.by_category_ids(:closed),
-          },
-          'ticket.customer_id' => {
-            operator: 'is',
-            value:    user.id,
-          },
-        },
-        open_ids:   {
-          'ticket.state_id'    => {
-            operator: 'is',
-            value:    Ticket::State.by_category_ids(:open),
-          },
-          'ticket.customer_id' => {
-            operator: 'is',
-            value:    user.id,
-          },
-        },
-      }
-      conditions.each do |key, local_condition|
-        user_tickets[key] = ticket_ids_and_assets(local_condition, current_user, limit, assets)
-      end
-
-      # generate stats by user
-      condition = {
-        'tickets.customer_id' => user.id,
-      }
-      user_tickets[:volume_by_year] = ticket_stats_last_year(condition)
-
-    end
-
-    # lookup open org tickets
-    org_tickets = {}
-    organization_ids = Array(params[:organization_id])
-    if organization_ids.present?
-      organization_ids.each do |organization_id|
-        organization = Organization.lookup(id: organization_id)
-        if !organization
-          raise "No such organization with id #{organization_id}"
-        end
-      end
-
-      conditions = {
-        closed_ids: {
-          'ticket.state_id'        => {
-            operator: 'is',
-            value:    Ticket::State.by_category_ids(:closed),
-          },
-          'ticket.organization_id' => {
-            operator: 'is',
-            value:    organization_ids,
-          },
-        },
-        open_ids:   {
-          'ticket.state_id'        => {
-            operator: 'is',
-            value:    Ticket::State.by_category_ids(:open),
-          },
-          'ticket.organization_id' => {
-            operator: 'is',
-            value:    organization_ids,
-          },
-        },
-      }
-      conditions.each do |key, local_condition|
-        org_tickets[key] = ticket_ids_and_assets(local_condition, current_user, limit, assets)
-      end
-
-      # generate stats by org
-      condition = {
-        'tickets.organization_id' => organization_ids,
-      }
-      org_tickets[:volume_by_year] = ticket_stats_last_year(condition)
-    end
-
     # return result
-    render json: {
-      user:         user_tickets,
-      organization: org_tickets,
-      assets:       assets,
-    }
+    render json: Ticket::Stats.new(current_user: current_user, user_id: params[:user_id], organization_id: params[:organization_id], assets: {}).list_stats
   end
 
   # @path    [GET] /tickets/import_example
@@ -623,78 +529,4 @@ class TicketsController < ApplicationController
     )
     render json: result, status: :ok
   end
-
-  private
-
-  def ticket_all(ticket)
-
-    # get attributes to update
-    attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
-      current_user: current_user,
-      ticket:       ticket,
-      screen:       'edit',
-    )
-
-    # get related users
-    assets = attributes_to_change[:assets]
-    assets = ticket.assets(assets)
-
-    # get related users
-    article_ids = []
-    ticket.articles.each do |article|
-      next if !authorized?(article, :show?)
-
-      article_ids.push article.id
-      assets = article.assets(assets)
-    end
-
-    # get links
-    links = Link.list(
-      link_object:       'Ticket',
-      link_object_value: ticket.id,
-      user:              current_user,
-    )
-
-    assets = Link.reduce_assets(assets, links)
-
-    # get tags
-    tags = ticket.tag_list
-
-    # get time units
-    time_accountings = ticket.ticket_time_accounting.map { |row| row.slice(:id, :ticket_id, :ticket_article_id, :time_unit, :type_id) }
-
-    # get mentions
-    mentions = Mention.where(mentionable: ticket).reorder(created_at: :desc)
-    mentions.each do |mention|
-      assets = mention.assets(assets)
-    end
-
-    if (draft = ticket.shared_draft) && authorized?(draft, :show?)
-      assets = draft.assets(assets)
-    end
-
-    if Setting.get('checklist') && current_user.permissions?('ticket.agent')
-      ticket.checklist&.assets(assets)
-
-      ticket.referencing_checklists
-        .includes(:ticket)
-        .each do |elem|
-          elem.assets(assets)
-          elem.ticket.assets(assets) if elem.ticket.authorized_asset?
-        end
-    end
-
-    # return result
-    {
-      ticket_id:          ticket.id,
-      ticket_article_ids: article_ids,
-      assets:             assets,
-      links:              links,
-      tags:               tags,
-      mentions:           mentions.pluck(:id),
-      time_accountings:   time_accountings,
-      form_meta:          attributes_to_change[:form_meta],
-    }
-  end
-
 end

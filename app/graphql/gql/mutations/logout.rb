@@ -1,7 +1,9 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Logout < BaseMutation
+    include Gql::Mutations::Concerns::Logout::HandlesOidcAuthorization
+
     description 'End the current session'
 
     field :success, Boolean, null: false, description: 'Was the logout successful?'
@@ -18,14 +20,9 @@ module Gql::Mutations
     end
 
     def resolve(...)
-      # Special handling for SAML logout (we need to redirect to the ISP).
-      if saml_session?
-        begin
-          return saml_destroy
-        rescue => e
-          Rails.logger.error "SAML SLO failed: #{e.message}"
-        end
-      end
+      # Handling of third-party logouts (we need to redirect to the IDP).
+      return saml_destroy if saml_session?
+      return oidc_destroy if oidc_session?
 
       context[:controller].reset_session
       context[:current_user] = nil
@@ -36,6 +33,8 @@ module Gql::Mutations
 
     def saml_destroy
       { success: true, external_logout_url: saml_logout_url }
+    rescue => e
+      Rails.logger.error "SAML SLO failed: #{e.message}"
     end
 
     def saml_session?

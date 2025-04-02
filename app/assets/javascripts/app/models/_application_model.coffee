@@ -742,6 +742,7 @@ set new attributes of model (remove already available attributes)
   @_fillUp: (data, classNames = []) ->
 
     # fill up via relations
+    return data if !data
     return data if !App[@className].configure_attributes
     for attribute in App[@className].configure_attributes
 

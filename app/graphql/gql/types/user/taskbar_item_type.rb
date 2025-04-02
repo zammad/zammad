@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::User
   class TaskbarItemType < Gql::Types::BaseObject
@@ -67,7 +67,10 @@ module Gql::Types::User
       klass, id = @object.key.split('-', 2)
 
       # Ticket create is ...
-      return @object.state.merge({ uid: id }) if klass == 'TicketCreateScreen'
+      return @object.state.merge({ uid: id, type: 'TicketCreate' }) if klass == 'TicketCreateScreen'
+
+      # Search is ...
+      return @object.params.merge(@object.state).merge({ type: 'Search' }) if klass == 'Search'
 
       entity = klass.constantize.find(id)
       Pundit.authorize(context.current_user, entity, :show?)

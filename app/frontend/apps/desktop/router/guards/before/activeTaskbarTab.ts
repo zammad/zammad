@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { EnumTaskbarEntity } from '#shared/graphql/types.ts'
 import log from '#shared/utils/log.ts'
@@ -18,7 +18,8 @@ const activeTaskbarTab: NavigationGuard = async (
 ) => {
   if (
     !to.meta?.taskbarTabEntity ||
-    (!to.params.internalId && !to.params.tabId)
+    (typeof to.meta.isTaskbarTabPossible === 'function' &&
+      !to.meta.isTaskbarTabPossible(to))
   ) {
     if (to.meta?.requiresAuth) {
       // Reset the previously active tab state if the new route does not support the taskbar.
@@ -39,21 +40,17 @@ const activeTaskbarTab: NavigationGuard = async (
   const taskbarTypePlugin =
     taskbarTabStore.getTaskbarTabTypePlugin(taskbarTabEntityType)
 
-  const tabEntityInternalId = (to.params.internalId ||
-    to.params.tabId) as string
-
-  const taskbarTabEntityKey =
-    taskbarTypePlugin.buildEntityTabKey(tabEntityInternalId)
+  const taskbarTabEntityKey = taskbarTypePlugin.buildEntityTabKey(to)
 
   // TODO: instead of that I would only load the single item so that the page can already start working?
   if (taskbarTabStore.loading) {
     await taskbarTabStore.waitForTaskbarListLoaded()
   }
 
-  await taskbarTabStore.upsertTaskbarTab(
+  taskbarTabStore.upsertTaskbarTab(
     taskbarTabEntityType,
     taskbarTabEntityKey,
-    tabEntityInternalId,
+    to,
   )
 
   // Remember the entity key for the current taskbar tab,

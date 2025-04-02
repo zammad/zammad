@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class EmailHelper
   class Probe
@@ -52,12 +52,9 @@ class EmailHelper
           next if result_outbound[:result] != 'ok'
 
           return {
-            result:                       'ok',
-            content_messages:             result_inbound[:content_messages],
-            archive_possible:             result_inbound[:archive_possible],
-            archive_possible_is_fallback: result_inbound[:archive_possible_is_fallback],
-            archive_week_range:           result_inbound[:archive_week_range],
-            setting:                      settings,
+            result:           'ok',
+            content_messages: result_inbound[:content_messages],
+            setting:          settings,
           }
         end
       end
@@ -89,12 +86,9 @@ class EmailHelper
 
         next if result_inbound[:result] != 'ok'
 
-        success                     = true
-        result[:setting][:inbound]  = config
-        result[:content_messages]   = result_inbound[:content_messages]
-        result[:archive_possible]   = result_inbound[:archive_possible]
-        result[:archive_possible_is_fallback] = result_inbound[:archive_possible_is_fallback]
-        result[:archive_week_range] = result_inbound[:archive_week_range]
+        success                    = true
+        result[:setting][:inbound] = config
+        result[:content_messages]  = result_inbound[:content_messages]
 
         break
       end
@@ -148,7 +142,7 @@ class EmailHelper
       adapter = params[:adapter].downcase
 
       # validate adapter
-      if !EmailHelper.available_driver[:inbound][adapter.to_sym]
+      if !probeable_driver? adapter, :inbound
         return {
           result:  'failed',
           message: "Unknown adapter '#{adapter}'",
@@ -160,7 +154,7 @@ class EmailHelper
       begin
         driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
         driver_instance = driver_class.new
-        result_inbound  = driver_instance.fetch(params[:options], nil, 'check')
+        result_inbound  = driver_instance.check_configuration(params[:options])
       rescue => e
         Rails.logger.debug { e }
 
@@ -183,7 +177,7 @@ class EmailHelper
       adapter = params[:adapter].downcase
 
       # validate adapter
-      if !EmailHelper.available_driver[:outbound][adapter.to_sym]
+      if !probeable_driver? adapter, :outbound
         return {
           result:  'failed',
           message: "Unknown adapter '#{adapter}'",
@@ -321,6 +315,22 @@ class EmailHelper
       else
         config[:options][:ssl_verify] ||= false
       end
+    end
+
+    # Returns all probeable drivers. Which are not limited to classic email drivers available for email setup.
+    # Emailhelper.available_driver returns drivers available for generic email driver setup only.
+    # So it needs to be extended with other drivers here
+    def self.all_probeable_drivers
+      EmailHelper
+        .available_driver
+        .tap do |elem|
+          elem[:inbound][:microsoft_graph_inbound] = true
+          elem[:outbound][:microsoft_graph_outbound] = true
+        end
+    end
+
+    def self.probeable_driver?(name, direction)
+      all_probeable_drivers[direction.to_sym].key? name.to_sym
     end
   end
 

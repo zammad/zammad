@@ -1,11 +1,12 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
 
   # omniauth
-  match '/auth/:provider/callback',         to: 'sessions#create_omniauth',      via: %i[post get puts delete]
-  match '/auth/failure',                    to: 'sessions#failure_omniauth',     via: %i[post get]
+  match '/auth/:provider/callback',                to: 'sessions#create_omniauth',  via: %i[post get puts delete]
+  match '/auth/failure',                           to: 'sessions#failure_omniauth', via: %i[post get]
+  match '/auth/openid_connect/backchannel_logout', to: 'sessions#oidc_bc_logout',   via: %i[post delete]
 
   # sso
   match '/auth/sso',                        to: 'sessions#create_sso',           via: %i[get post]

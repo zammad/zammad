@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { mountComponent } from '#cy/utils.ts'
 import { defineComponent, h, Fragment } from 'vue'

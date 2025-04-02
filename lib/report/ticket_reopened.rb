@@ -1,6 +1,6 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-class Report::TicketReopened < Report::Base
+class Report::TicketReopened < Report::BaseSql
 
 =begin
 
@@ -47,13 +47,7 @@ returns
         params[:range_end] = params[:range_start] + 1.minute
       end
 
-      without_merged_tickets = {
-        'ticket_state.name' => {
-          'operator' => 'is not',
-          'value'    => 'merged'
-        }
-      }
-      params[:selector].merge!(without_merged_tickets) # do not show merged tickets in reports
+      params[:selector].merge!(without_merged_tickets_selector) # do not show merged tickets in reports
       count = history_count(
         object:    'Ticket',
         type:      'updated',

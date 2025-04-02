@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsWhatsappController < ApplicationController
   skip_before_action :verify_csrf_token, only: %i[verify_webhook perform_webhook]

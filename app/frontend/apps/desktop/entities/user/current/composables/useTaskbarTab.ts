@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { isEqual } from 'lodash-es'
 import { storeToRefs } from 'pinia'
@@ -109,18 +109,26 @@ export const useTaskbarTab = (context?: Ref<TaskbarTabContext>) => {
     )
   }
 
+  const currentTaskbarTabUpdate = (
+    taskbarTab: UserTaskbarTab,
+    state?: Record<string, unknown>,
+  ) => {
+    if (!currentTaskbarTabId.value) return
+
+    updateTaskbarTab(currentTaskbarTabId.value, taskbarTab, state)
+  }
+
   watch(
     () =>
       currentTaskbarTab.value &&
       taskbarTabContexts.value[currentTaskbarTab.value.tabEntityKey]
         ?.formIsDirty,
     (isDirty) => {
-      if (isDirty === undefined || !currentTaskbarTab.value?.taskbarTabId)
-        return
+      if (isDirty === undefined || !currentTaskbarTab.value) return
 
       if (currentTaskbarTab.value.dirty === isDirty) return
 
-      updateTaskbarTab(currentTaskbarTab.value.taskbarTabId, {
+      currentTaskbarTabUpdate({
         ...currentTaskbarTab.value,
         dirty: isDirty,
       })
@@ -139,6 +147,7 @@ export const useTaskbarTab = (context?: Ref<TaskbarTabContext>) => {
     currentTaskbarTabId,
     currentTaskbarTabFormId,
     currentTaskbarTabNewArticlePresent,
+    currentTaskbarTabUpdate,
     currentTaskbarTabDelete,
   }
 }

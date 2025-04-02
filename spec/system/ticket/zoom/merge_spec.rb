@@ -1,15 +1,19 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe 'Ticket zoom > Merge action', type: :system do
   describe 'ticket merge action' do
     context 'when source ticket is merged to target ticket' do
-      let(:source_ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
-      let(:target_ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+      let(:group)         { Group.find_by(name: 'Users') }
+      let(:customer)      { create(:customer) }
+      let(:source_ticket) { create(:ticket, group:, customer:) }
+      let(:target_ticket) { create(:ticket, group:, customer:) }
       let(:search_term)   { target_ticket.number }
 
       before do
+        source_ticket && target_ticket
+
         visit "#ticket/zoom/#{source_ticket.id}"
       end
 
@@ -23,6 +27,8 @@ RSpec.describe 'Ticket zoom > Merge action', type: :system do
 
             # trigger the paste event to replace the ticket hook, if present
             execute_script('$("input[name=\"target_ticket_number\"]").trigger("paste")')
+
+            expect(page).to have_no_css('.js-pager')
 
             click('.js-submit')
           end

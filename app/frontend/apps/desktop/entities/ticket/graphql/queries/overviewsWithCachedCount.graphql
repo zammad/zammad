@@ -1,0 +1,13 @@
+query overviewsWithCachedCount(
+  $ignoreUserConditions: Boolean!
+  $filterOverviewIds: [ID!]
+  $cacheTtl: Int!
+) {
+  ticketOverviews(
+    filterOverviewIds: $filterOverviewIds
+    ignoreUserConditions: $ignoreUserConditions
+  ) {
+    id
+    cachedTicketCount(cacheTtl: $cacheTtl)
+  }
+}

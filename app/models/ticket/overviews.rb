@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Ticket::Overviews
 =begin
@@ -11,6 +11,10 @@ certain overviews by user
 
   result = Ticket::Overviews.all(current_user: User.find(3), links: ['all_unassigned', 'my_assigned'])
 
+include additional overviews by ignoring user conditions
+
+  result = Ticket::Overviews.all(current_user: User.find(3), ignore_user_conditions: true)
+
 returns
 
   result = [overview1, overview2]
@@ -18,7 +22,7 @@ returns
 =end
 
   def self.all(data)
-    Ticket::OverviewsPolicy::Scope.new(data[:current_user], Overview).resolve
+    Ticket::OverviewsPolicy::Scope.new(data[:current_user], Overview).resolve(ignore_user_conditions: data[:ignore_user_conditions])
       .where({ link: data[:links] }.compact)
       .distinct
       .reorder(:prio, :name)
@@ -123,18 +127,24 @@ returns
   end
 
   def self.tickets_for_overview(overview, user, order_by: nil, order_direction: nil)
-    db_query_params = _db_query_params(overview, user, order_by: order_by, order_direction: order_direction)
+    order_clause = [{
+      column:    order_by || overview.order[:by],
+      direction: order_direction || overview.order[:direction],
+    }]
 
-    scope = TicketPolicy::OverviewScope
-    if overview.condition['ticket.mention_user_ids'].present?
-      scope = TicketPolicy::ReadScope
+    if overview.group_by.present?
+      order_clause.unshift({
+                             column:    overview.group_by,
+                             direction: overview.group_direction || 'ASC'
+                           })
     end
-    scope.new(user).resolve
-      .distinct
-      .where(db_query_params.query_condition, *db_query_params.bind_condition)
-      .joins(db_query_params.tables)
-      .reorder(Arel.sql("#{db_query_params.order_by} #{db_query_params.direction}"))
-      .limit(limit_per_overview)
+
+    Ticket.raw_selectors(overview.condition, {
+                           access:       overview.condition.to_s.include?('ticket.mention_user_ids') ? 'read' : 'overview',
+                           current_user: user,
+                           order_by:     order_clause,
+                           locale:       user.preferences['locale'] || Locale.default,
+                         })
   end
 
   DB_QUERY_PARAMS = Struct.new(:query_condition, :bind_condition, :tables, :order_by, :direction)

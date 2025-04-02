@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Validation for email addresses
 
@@ -23,18 +23,22 @@ class EmailAddressValidation
   # @return [true]  if email address has valid format
   # @return [false] if email address has no valid format
   def valid?(check_mx: false)
-    host_validation_type = check_mx ? :mx : :syntax
-
-    EmailAddressValidator.valid? email_address, host_validation: host_validation_type
+    valid!(check_mx:)
+  rescue InvalidEmailAddressError
+    false
   end
 
   def valid!(check_mx: false)
-    raise InvalidEmailAddressError if !valid?(check_mx:)
+    error_message = EmailAddressValidator.error email_address, host_validation: check_mx ? :mx : :syntax
+    return true if error_message.blank?
+
+    raise InvalidEmailAddressError, error_message
   end
 
   class InvalidEmailAddressError < StandardError
-    def initialize
-      super(__('The email address is invalid.'))
+    def initialize(message = '')
+      super("The email address is invalid: #{message}")
     end
   end
+
 end

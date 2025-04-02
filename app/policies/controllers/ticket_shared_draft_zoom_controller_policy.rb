@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::TicketSharedDraftZoomControllerPolicy < Controllers::ApplicationControllerPolicy
   def show?
@@ -27,6 +27,6 @@ class Controllers::TicketSharedDraftZoomControllerPolicy < Controllers::Applicat
     ticket_id = record.params[:ticket_id]
     ticket    = Ticket.find ticket_id
 
-    TicketPolicy.new(user, ticket).update?
+    TicketPolicy.new(user, ticket).agent_update_access?
   end
 end

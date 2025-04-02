@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -6,8 +6,8 @@ RSpec.describe Gql::Subscriptions::User::Current::TwoFactorUpdates, type: :graph
 
   let(:subscription) do
     <<~QUERY
-      subscription userCurrentTwoFactorUpdates($userId: ID!) {
-        userCurrentTwoFactorUpdates(userId: $userId) {
+      subscription userCurrentTwoFactorUpdates {
+        userCurrentTwoFactorUpdates {
           configuration {
             recoveryCodesExist
             enabledAuthenticationMethods {
@@ -22,13 +22,12 @@ RSpec.describe Gql::Subscriptions::User::Current::TwoFactorUpdates, type: :graph
   end
   let(:mock_channel) { build_mock_channel }
   let(:target)       { create(:user) }
-  let(:variables)    { { userId: gql.id(target) } }
 
   context 'when user is authenticated, but has no permission', authenticated_as: :agent do
     let(:agent) { create(:agent, roles: []) }
 
     before do
-      gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+      gql.execute(subscription, context: { channel: mock_channel })
     end
 
     it_behaves_like 'graphql responds with error if unauthenticated'
@@ -48,7 +47,7 @@ RSpec.describe Gql::Subscriptions::User::Current::TwoFactorUpdates, type: :graph
 
     context 'with not activated two factor method' do
       it 'subscribes' do
-        gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+        gql.execute(subscription, context: { channel: mock_channel })
         expect(gql.result.data).to eq(result)
       end
     end
@@ -69,17 +68,8 @@ RSpec.describe Gql::Subscriptions::User::Current::TwoFactorUpdates, type: :graph
       end
 
       it 'configuration includes enabled two factor methods' do
-        gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+        gql.execute(subscription, context: { channel: mock_channel })
         expect(gql.result.data).to eq(result)
-      end
-    end
-
-    context 'when subscribing for other users' do
-      let(:variables) { { userId: gql.id(create(:user)) } }
-
-      it 'does not subscribe but returns an authorization error' do
-        gql.execute(subscription, variables: variables, context: { channel: mock_channel })
-        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
       end
     end
   end

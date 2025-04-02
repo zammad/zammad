@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { onKeyDown, useEventListener, whenever } from '@vueuse/core'
@@ -214,7 +214,7 @@ const leftgradientvalue = computed(() => classes.actionBar.leftGradient.left)
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .Menubar {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
@@ -225,7 +225,9 @@ const leftgradientvalue = computed(() => classes.actionBar.leftGradient.left)
 }
 
 .ShadowGradient {
-  @apply absolute h-full w-8;
+  position: absolute;
+  height: 100%;
+  width: 2rem;
 }
 
 .ShadowGradient::before {
@@ -257,13 +259,19 @@ const leftgradientvalue = computed(() => classes.actionBar.leftGradient.left)
 .color-indicator {
   --color-indicator-background: transparent;
 
-  @apply relative;
+  position: relative;
 
   &::before {
     content: '';
     background: var(--color-indicator-background) !important;
-
-    @apply absolute bottom-1 left-1/2 h-0.5 w-1/3 -translate-x-1/2 rounded-full bg-black;
+    color: var(--color-black);
+    position: absolute;
+    bottom: 0.25rem;
+    left: 50%;
+    height: 0.125rem;
+    width: 33.333333%;
+    transform: translateX(-50%);
+    border-radius: 100%;
   }
 }
 </style>

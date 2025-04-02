@@ -33,7 +33,6 @@
     - !reference [.services, selenium-chrome]
     - !reference [.services, imap]
     - !reference [.services, redis]
-    - !reference [.services, memcached]
 
 .template_browser-core_firefox:
   extends:
@@ -45,7 +44,6 @@
     - !reference [.services, selenium-firefox]
     - !reference [.services, imap]
     - !reference [.services, redis]
-    - !reference [.services, memcached]
 
 .template_browser-core_capybara:
   stage: browser
@@ -54,32 +52,22 @@
     - .tags_docker_low_concurrency
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
-    - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration --profile 10 spec/system
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration -t ~searchindex --profile 10 spec/system
 
 .template_browser-core_capybara_chrome:
   extends:
     - .template_browser-core_capybara
     - .variables_selenium_chrome
-    - .variables_proxy
   services:
     - !reference [.services, postgresql]
-    - !reference [.services, elasticsearch]
     - !reference [.services, selenium-chrome]
-    - !reference [.services, imap]
     - !reference [.services, redis]
-    - !reference [.services, memcached]
-    - !reference [.services, proxy]
 
 .template_browser-core_capybara_firefox:
   extends:
     - .template_browser-core_capybara
     - .variables_selenium_firefox
-    - .variables_proxy
   services:
     - !reference [.services, postgresql]
-    - !reference [.services, elasticsearch]
     - !reference [.services, selenium-firefox]
-    - !reference [.services, imap]
     - !reference [.services, redis]
-    - !reference [.services, memcached]
-    - !reference [.services, proxy]

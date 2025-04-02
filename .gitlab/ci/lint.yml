@@ -28,6 +28,17 @@
     - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | egrep -v "/vendor|node_modules/")
   after_script: []
 
+'lint: markdown':
+  stage: lint
+  image:
+    name: davidanson/markdownlint-cli2:latest
+    entrypoint: [""]
+  cache: []
+  before_script: []
+  script:
+    - markdownlint-cli2 '*.md' '**/*.md' '#node_modules'
+  after_script: []
+
 'lint: i18n & rails':
   extends:
     - .template_lint_rails
@@ -63,9 +74,8 @@
     - bundle exec .dev/rubocop/validate_todos.rb
     - bundle exec rubocop --parallel
     - echo "bundler-audit security check…"
-    - gem install bundler-audit
-    - bundle-audit update
-    - bundle-audit
+    - gem exec bundle-audit update
+    - gem exec bundle-audit
     - echo "Brakeman security check…"
     - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
     - echo "Checking if yard can generate documentation…"

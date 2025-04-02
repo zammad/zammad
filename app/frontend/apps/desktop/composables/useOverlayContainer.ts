@@ -1,6 +1,7 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { last, noop } from 'lodash-es'
+import SparkMD5 from 'spark-md5'
 import {
   computed,
   defineAsyncComponent,
@@ -13,7 +14,7 @@ import {
   type Component,
   type Ref,
 } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, type RouteLocationNormalizedLoadedGeneric } from 'vue-router'
 
 import {
   destroyComponent,
@@ -48,6 +49,21 @@ export interface OverlayContainerMeta {
   options: Map<string, OverlayContainerOptions>
   opened: Ref<Set<string>>
   lastFocusedElements: Record<string, HTMLElement>
+}
+
+export const getRouteIdentifier = (
+  route: RouteLocationNormalizedLoadedGeneric,
+) => {
+  if (route.meta.pageKey) return route.meta.pageKey
+
+  // If no params exists, just use the name.
+  if (!route.params || !Object.keys(route.params).length) {
+    return route.name ? String(route.name) : route.path
+  }
+
+  const paramHash = SparkMD5.hash(JSON.stringify(route.params))
+
+  return `${String(route.name)}_${paramHash}`
 }
 
 const overlayContainerMeta: Record<OverlayContainerType, OverlayContainerMeta> =
@@ -202,7 +218,9 @@ export const useOverlayContainer = (
 
   const route = useRoute()
 
-  const currentName = options.global ? name : `${name}_${route.path}`
+  const currentName = options.global
+    ? name
+    : `${name}_${getRouteIdentifier(route)}`
 
   overlayContainerMeta[type].options.set(currentName, options)
 

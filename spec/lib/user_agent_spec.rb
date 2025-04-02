@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'rack/handler/puma'
@@ -78,7 +78,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
       end
     end
 
-    shared_examples 'successful post/put request' do
+    shared_examples 'successful post/put/patch request' do
       include_examples 'successful request with json body'
     end
 
@@ -114,17 +114,11 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
       end
     end
 
-    shared_examples 'ftp requests' do
-      it 'returns a response' do
-        expect(response).to be_success
-        expect(response.code).to eq(code)
-        expect(response.body).to match(expected_body)
-      end
-    end
-
     describe '#get' do
       context 'without http basic auth' do
-        subject(:response) { described_class.get(request_url) }
+        subject(:response) { described_class.get(request_url, {}, options) }
+
+        let(:options) { {} }
 
         context 'with code 200' do
           let(:code)          { '200' }
@@ -154,6 +148,29 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
           end
 
           include_examples 'successful get request'
+        end
+
+        context 'with code 301' do
+          let(:code)          { '200' }
+          let(:content_type)  { 'application/json; charset=utf-8' }
+          let(:request_url)   { "#{host}/test/redirect" }
+          let(:expected_body) do
+            {
+              'method'                 => 'get',
+              'submitted'              => 'abc',
+              'content_type_requested' => nil,
+            }
+          end
+
+          include_examples 'successful redirect request'
+        end
+
+        context 'with code 301, but suppressed redirection' do
+          let(:code)          { 0 }
+          let(:request_url)   { "#{host}/test/redirect" }
+          let(:options)       { { do_not_follow_redirects: true } }
+
+          include_examples 'unsuccessful request without body'
         end
 
         context 'with code 404' do
@@ -278,7 +295,9 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
 
     describe '#post' do
       context 'without http basic auth' do
-        subject(:response) { described_class.post(request_url, request_params) }
+        subject(:response) { described_class.post(request_url, request_params, request_options) }
+
+        let(:request_options) { {} }
 
         context 'with code 201' do
           let(:code)           { '201' }
@@ -288,11 +307,29 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
             {
               'method'                 => 'post',
               'submitted'              => 'some value',
+              'body'                   => ['submitted=some+value'],
               'content_type_requested' => 'application/x-www-form-urlencoded',
             }
           end
 
-          include_examples 'successful post/put request'
+          include_examples 'successful post/put/patch request'
+        end
+
+        context 'with raw body' do
+          let(:code) { '201' }
+          let(:request_url)     { "#{host}/test/post/1" }
+          let(:request_params)  { {} }
+          let(:request_options) { { send_as_raw_body: 'raw body' } }
+          let(:expected_body) do
+            {
+              'method'                 => 'post',
+              'submitted'              => nil,
+              'body'                   => ['raw body'],
+              'content_type_requested' => 'application/x-www-form-urlencoded',
+            }
+          end
+
+          include_examples 'successful post/put/patch request'
         end
 
         context 'with code 404' do
@@ -325,7 +362,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
             }
           end
 
-          include_examples 'successful post/put request'
+          include_examples 'successful post/put/patch request'
         end
 
         context 'with code 401' do
@@ -359,7 +396,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
             }
           end
 
-          include_examples 'successful post/put request'
+          include_examples 'successful post/put/patch request'
         end
 
         context 'with code 401' do
@@ -407,7 +444,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
             }
           end
 
-          include_examples 'successful post/put request'
+          include_examples 'successful post/put/patch request'
         end
       end
     end
@@ -429,7 +466,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
             }
           end
 
-          include_examples 'successful post/put request'
+          include_examples 'successful post/put/patch request'
         end
 
         context 'with code 404' do
@@ -464,7 +501,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
             }
           end
 
-          include_examples 'successful post/put request'
+          include_examples 'successful post/put/patch request'
         end
 
         context 'with code 401' do
@@ -498,7 +535,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
             }
           end
 
-          include_examples 'successful post/put request'
+          include_examples 'successful post/put/patch request'
         end
 
         context 'with code 401' do
@@ -510,6 +547,34 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
 
           include_examples 'unsuccessful get/post/put/delete request'
         end
+      end
+    end
+
+    describe '#patch' do
+      subject(:response) { described_class.patch(request_url, request_params) }
+
+      context 'with code 200' do
+        let(:code)           { '200' }
+        let(:request_url)    { "#{host}/test/patch/1" }
+        let(:request_params) { { submitted: 'some value' } }
+
+        let(:expected_body) do
+          {
+            'method'                 => 'patch',
+            'submitted'              => 'some value',
+            'content_type_requested' => 'application/x-www-form-urlencoded',
+          }
+        end
+
+        include_examples 'successful post/put/patch request'
+      end
+
+      context 'with code 404' do
+        let(:code)           { '404' }
+        let(:request_url)    { "#{host}/test/not_existing" }
+        let(:request_params) { { submitted: 'some value' } }
+
+        include_examples 'unsuccessful request with body'
       end
     end
 
@@ -602,88 +667,6 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
           let(:expected_body)  { "HTTP Token: Access denied.\n" }
 
           include_examples 'unsuccessful get/post/put/delete request'
-        end
-      end
-    end
-
-    describe '#request' do
-      context 'without http basic auth' do
-        subject(:response) { described_class.request(request_url) }
-
-        context 'with code 200' do
-          let(:code)          { '200' }
-          let(:content_type)  { 'application/json; charset=utf-8' }
-          let(:request_url)   { "#{host}/test/redirect" }
-          let(:expected_body) do
-            {
-              'method'                 => 'get',
-              'submitted'              => 'abc',
-              'content_type_requested' => nil,
-            }
-          end
-
-          include_examples 'successful redirect request'
-        end
-      end
-
-      context 'with http basic auth' do
-        subject(:response) do
-          described_class.request(request_url, {
-                                    user:     'basic_auth_user',
-                                    password: password,
-                                  })
-        end
-
-        context 'with code 200' do
-          let(:code)          { '200' }
-          let(:request_url)   { "#{host}/test_basic_auth/redirect" }
-          let(:password)      { 'test123' }
-          let(:expected_body) do
-            {
-              'method'                 => 'get',
-              'submitted'              => 'abc',
-              'content_type_requested' => nil,
-            }
-          end
-
-          include_examples 'successful redirect request'
-        end
-
-        context 'with code 401' do
-          let(:code)          { '401' }
-          let(:request_url)   { "#{host}/test_basic_auth/redirect" }
-          let(:password)      { 'test<>123' }
-          let(:expected_body) { "HTTP Basic: Access denied.\n" }
-
-          include_examples 'unsuccessful get/post/put/delete request'
-        end
-      end
-
-      context 'when ftp', integration: true, required_envs: ['FTP_URL'] do
-        subject(:response) do
-          described_class.request(request_url)
-        end
-
-        context 'with code 200' do
-          let(:code)          { '200' }
-          let(:request_url)   { "#{ENV['FTP_URL']}/zammad.txt" }
-          let(:expected_body) { %r{zammad}i }
-
-          include_examples 'ftp requests'
-        end
-
-        context 'with code 550' do
-          let(:code)          { '550' }
-          let(:request_url)   { "#{ENV['FTP_URL']}/nonexisting.txt" }
-
-          include_examples 'unsuccessful request without body'
-        end
-
-        context 'with a not existing URL' do
-          let(:code)          { 0 }
-          let(:request_url)   { 'http://not.existing.host.tld/test.php' }
-
-          include_examples 'unsuccessful request without body'
         end
       end
     end

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { ref, nextTick, watch } from 'vue'
@@ -38,7 +38,7 @@ const redirect = async (route: RouteLocationRaw) => {
 </script>
 
 <template>
-  <div class="flex h-full min-h-screen flex-col items-center px-6 pb-4 pt-6">
+  <div class="flex h-full min-h-screen flex-col items-center px-6 pt-6 pb-4">
     <main data-test-id="loginAfterAuth" class="m-auto w-full max-w-md">
       <div class="flex grow flex-col justify-center">
         <div v-if="currentPlugin" class="my-5 grow">

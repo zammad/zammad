@@ -1,5 +1,5 @@
 class System extends App.ControllerTabs
-  @requiredPermission: 'admin.setting_system'
+  @requiredPermission: 'admin.system'
   header: __('System')
   constructor: ->
     super
@@ -16,4 +16,4 @@ class System extends App.ControllerTabs
     @tabs.push { name: __('Frontend'),   'target': 'ui',       controller: App.SettingsArea, params: { area: 'System::UI' } }
     @render()
 
-App.Config.set('SettingSystem', { prio: 1400, parent: '#settings', name: __('System'), target: '#settings/system', controller: System, permission: ['admin.setting_system'] }, 'NavBarAdmin')
+App.Config.set('SettingSystem', { prio: 1400, parent: '#settings', name: __('System'), target: '#settings/system', controller: System, permission: ['admin.system'] }, 'NavBarAdmin')

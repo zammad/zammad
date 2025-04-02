@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Import::Freshdesk::SubSequence::Generic < Sequencer::Unit::Base
 
@@ -53,7 +53,7 @@ class Sequencer::Unit::Import::Freshdesk::SubSequence::Generic < Sequencer::Unit
   end
 
   def iteration_should_stop?
-    return true if result[:action] == :failed || result[:action] == :skipped
+    return true if %i[failed skipped].include?(result[:action])
     return true if result[:response].header['link'].blank?
 
     false

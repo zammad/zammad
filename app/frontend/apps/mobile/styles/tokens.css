@@ -1,0 +1,41 @@
+/* stylelint-disable custom-property-empty-line-before */
+
+@theme {
+  --color-pink: #ea4d84;
+  --color-pink-bright: #ff006b;
+
+  --color-black: #191919;
+  --color-black-full: #000;
+
+  --color-white: #fff;
+
+  --color-gray: #999;
+  --color-gray-100: #d1d1d1;
+  --color-gray-150: #d8d8d8;
+  --color-gray-200: #656567;
+  --color-gray-300: #4c4c4d;
+  --color-gray-400: #323234;
+  --color-gray-500: #282829;
+  --color-gray-600: #262627;
+
+  --color-gray-highlight: #99999926;
+  --color-gray-light: #25262d99;
+
+  --color-blue: #23a2cd;
+  --color-blue-dark: #045972;
+  --color-blue-highlight: #23a2cd19;
+
+  --color-yellow: #ffce33;
+  --color-yellow-highlight: #ffce331a;
+  --color-yellow-inactive: #a38629;
+
+  --color-red: #e54011;
+  --color-red-highlight: #e540111a;
+  --color-red-bright: #ff4008;
+  --color-red-dark: #261f1d;
+
+  --color-green: #36af6a;
+  --color-green-highlight: #38ad691a;
+
+  --color-orange: #f39804;
+}

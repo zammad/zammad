@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { cloneDeep, isEqual } from 'lodash-es'
 import { computed, reactive, toRef, watch } from 'vue'
@@ -255,7 +255,7 @@ const ensureGranularOrFullAccess = (
       >
         <template #label>
           <CommonLabel
-            class="uppercase text-gray-300 dark:text-neutral-400"
+            class="text-gray-300! uppercase dark:text-neutral-400!"
             size="small"
           >
             {{ $t(groupAccess.label) }}

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -49,7 +49,7 @@ const classMap = getAvatarClasses()
 
 <template>
   <span
-    class="relative flex shrink-0 select-none items-center justify-center rounded-full bg-cover bg-center"
+    class="relative flex shrink-0 items-center justify-center rounded-full bg-cover bg-center select-none"
     :class="[`size-${size}`, classMap.base]"
     :style="{
       backgroundImage: image ? `url(${image})` : undefined,
@@ -79,52 +79,72 @@ const classMap = getAvatarClasses()
   </span>
 </template>
 
+Sure, here is the refactored style using native CSS: ```css
 <style scoped>
 .size-xs {
-  @apply h-6 w-6 text-xs leading-6;
+  height: 1.5rem;
+  width: 1.5rem;
+  font-size: 0.75rem;
+  line-height: 1.5rem;
+}
 
-  .vip {
-    @apply -translate-y-3;
-  }
+.size-xs .vip {
+  transform: translateY(-0.75rem);
 }
 
 .size-small {
-  @apply h-8 w-8 text-xs leading-8;
+  height: 2rem;
+  width: 2rem;
+  font-size: 0.75rem;
+  line-height: 2rem;
+}
 
-  .vip {
-    @apply -translate-y-4;
-  }
+.size-small .vip {
+  transform: translateY(-1rem);
 }
 
 .size-medium {
-  @apply h-10 w-10 text-base leading-10;
+  height: 2.5rem;
+  width: 2.5rem;
+  font-size: 1rem;
+  line-height: 2.5rem;
+}
 
-  .vip {
-    @apply -translate-y-5;
-  }
+.size-medium .vip {
+  transform: translateY(-1.25rem);
 }
 
 .size-normal {
-  @apply h-14 w-14 text-2xl leading-[5rem];
+  height: 3.5rem;
+  width: 3.5rem;
+  font-size: 1.5rem;
+  line-height: 5rem;
+}
 
-  .vip {
-    @apply -translate-y-[1.85rem];
-  }
+.size-normal .vip {
+  transform: translateY(-1.85rem);
 }
 
 .size-large {
-  @apply h-20 w-20 text-4xl leading-[5rem];
+  height: 5rem;
+  width: 5rem;
+  font-size: 2.25rem;
+  line-height: 5rem;
+}
 
-  .vip {
-    @apply -translate-y-[2.65rem];
-  }
+.size-large .vip {
+  transform: translateY(-2.65rem);
 }
 
 .size-xl {
-  @apply h-36 w-36 text-6xl leading-[5rem];
+  height: 9rem;
+  width: 9rem;
+  font-size: 3.75rem;
+  line-height: 5rem;
+}
 
-  .vip {
-    @apply -translate-y-[4.85rem];
-  }
+.size-xl .vip {
+  transform: translateY(-4.85rem);
 }
 </style>
+```

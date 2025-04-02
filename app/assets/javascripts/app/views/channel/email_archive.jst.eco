@@ -1,0 +1,12 @@
+<div>
+  <div class="alert alert--danger hide" role="alert"></div>
+  <div class="alert alert--warning js-archiveBeforeAlert hide" role="alert">
+    <%- @T('You have selected a cut-off time in the future. Be aware that all emails (including future ones) are going to be archived until the selected time is reached.') %>
+  </div>
+  <% if @content_messages: %>
+    <p><%- @T('%s email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.', @content_messages) %></p>
+  <% end %>
+  <p><%- @T('You can import some of your emails as an "archive", which means that no notifications are sent and the tickets will be in a target state that you define.') %></p>
+  <p><%- @T('You can find archived emails in Zammad anytime using the search function, like for any other ticket.') %></p>
+  <div class="js-archiveSettings"></div>
+</div>

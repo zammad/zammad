@@ -1,7 +1,7 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRefs, useSlots } from 'vue'
+import { computed, type SetupContext, toRefs, useSlots } from 'vue'
 
 import type { CommonPopoverInstance } from '#shared/components/CommonPopover/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -25,7 +25,12 @@ const { items, entity } = toRefs(props)
 
 const { filteredMenuItems } = usePopoverMenu(items, entity)
 
-const slots = useSlots()
+/**
+ * Workaround to satisfy linter
+ * @bug https://github.com/vuejs/language-tools/issues/5082
+ * Wait to be closed
+ * */
+const slots: SetupContext['slots'] = useSlots()
 
 const showHeaderLabel = computed(() => {
   if (!filteredMenuItems.value && !slots.default) return false
@@ -58,7 +63,7 @@ const getHoverFocusStyles = (variant?: Variant) => {
 </script>
 
 <template>
-  <section class="min-w-58 flex max-w-64 flex-col gap-0.5">
+  <section class="flex max-w-64 min-w-58 flex-col gap-0.5">
     <div
       v-if="showHeaderLabel"
       role="heading"
@@ -68,7 +73,7 @@ const getHoverFocusStyles = (variant?: Variant) => {
       <slot name="header">
         <CommonLabel
           size="small"
-          class="line-clamp-1 text-stone-200 dark:text-neutral-500"
+          class="line-clamp-1 text-stone-200! dark:text-neutral-500!"
           >{{ i18n.t(headerLabel) }}
         </CommonLabel>
       </slot>
@@ -85,7 +90,7 @@ const getHoverFocusStyles = (variant?: Variant) => {
             >
               <CommonLabel
                 size="small"
-                class="line-clamp-1 px-2 text-stone-200 dark:text-neutral-500"
+                class="line-clamp-1 px-2 text-stone-200! dark:text-neutral-500!"
                 role="heading"
                 aria-level="3"
                 >{{ item.groupLabel }}</CommonLabel
@@ -100,6 +105,7 @@ const getHoverFocusStyles = (variant?: Variant) => {
                     :variant="subItem.variant"
                     :link="subItem.link"
                     :icon="subItem.icon"
+                    :icon-class="subItem.iconClass"
                     :label-placeholder="subItem.labelPlaceholder"
                     @click="onClickItem($event, subItem)"
                   />
@@ -128,6 +134,7 @@ const getHoverFocusStyles = (variant?: Variant) => {
                   :variant="item.variant"
                   :link="item.link"
                   :icon="item.icon"
+                  :icon-class="item.iconClass"
                   :label-placeholder="item.labelPlaceholder"
                   @click="onClickItem($event, item)"
                 />

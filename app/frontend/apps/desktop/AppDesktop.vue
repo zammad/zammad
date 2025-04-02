@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { onBeforeMount, onBeforeUnmount, watch } from 'vue'
@@ -20,6 +20,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import emitter from '#shared/utils/emitter.ts'
 
 import { initializeConfirmationDialog } from '#desktop/components/CommonConfirmationDialog/initializeConfirmationDialog.ts'
+import { useTicketOverviewsStore } from '#desktop/entities/ticket/stores/ticketOverviews.ts'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
 const router = useRouter()
@@ -72,6 +73,7 @@ watch(
     if (!newValue || oldValue) return
 
     useUserCurrentTaskbarTabsStore()
+    useTicketOverviewsStore()
     initializeDefaultObjectAttributes()
   },
   { immediate: true },

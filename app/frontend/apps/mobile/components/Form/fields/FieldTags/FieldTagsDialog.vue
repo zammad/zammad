@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { watchIgnorable } from '@vueuse/shared'
@@ -178,7 +178,7 @@ const processSearchKeydown = (event: KeyboardEvent) => {
         v-for="option of filteredTags"
         :id="`${name}-${option}`"
         :key="option"
-        class="focus:bg-blue-highlight flex w-full items-center px-4 focus:outline-none"
+        class="focus:bg-blue-highlight flex w-full items-center px-4 focus:outline-hidden"
         role="option"
         aria-setsize="-1"
         :aria-posinset="sortedOptions.indexOf(option) + 1"

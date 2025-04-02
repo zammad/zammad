@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class MacroPolicy < ApplicationPolicy
   def show?
@@ -33,6 +33,6 @@ class MacroPolicy < ApplicationPolicy
 
     return true if group_ids.blank?
 
-    group_ids.intersect? user.group_ids
+    group_ids.intersect?(user.group_ids_access('read'))
   end
 end

@@ -1,84 +1,87 @@
 query search(
   $search: String!
-  $onlyIn: EnumSearchableModels
+  $onlyIn: EnumSearchableModels!
   $limit: Int = 30
 ) {
   search(search: $search, onlyIn: $onlyIn, limit: $limit) {
-    ... on Ticket {
-      id
-      internalId
-      title
-      number
-      state {
-        id
-        name
-      }
-      priority {
-        name
-        defaultCreate
-        uiColor
-      }
-      customer {
+    totalCount
+    items {
+      ... on Ticket {
         id
         internalId
-        fullname
-      }
-      updatedAt
-      updatedBy {
-        id
-        fullname
-      }
-      stateColorCode
-    }
-    ... on User {
-      id
-      internalId
-      firstname
-      lastname
-      image
-      active
-      outOfOffice
-      outOfOfficeStartAt
-      outOfOfficeEndAt
-      vip
-      organization {
-        id
-        internalId
-        name
-      }
-      updatedAt
-      updatedBy {
-        id
-        fullname
-      }
-      ticketsCount {
-        open
-        closed
-      }
-    }
-    ... on Organization {
-      id
-      internalId
-      members(first: 2) {
-        edges {
-          node {
-            id
-            fullname
-          }
+        title
+        number
+        state {
+          id
+          name
         }
-        totalCount
+        priority {
+          name
+          defaultCreate
+          uiColor
+        }
+        customer {
+          id
+          internalId
+          fullname
+        }
+        updatedAt
+        updatedBy {
+          id
+          fullname
+        }
+        stateColorCode
       }
-      active
-      name
-      vip
-      updatedAt
-      updatedBy {
+      ... on User {
         id
-        fullname
+        internalId
+        firstname
+        lastname
+        image
+        active
+        outOfOffice
+        outOfOfficeStartAt
+        outOfOfficeEndAt
+        vip
+        organization {
+          id
+          internalId
+          name
+        }
+        updatedAt
+        updatedBy {
+          id
+          fullname
+        }
+        ticketsCount {
+          open
+          closed
+        }
       }
-      ticketsCount {
-        open
-        closed
+      ... on Organization {
+        id
+        internalId
+        members(first: 2) {
+          edges {
+            node {
+              id
+              fullname
+            }
+          }
+          totalCount
+        }
+        active
+        name
+        vip
+        updatedAt
+        updatedBy {
+          id
+          fullname
+        }
+        ticketsCount {
+          open
+          closed
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
@@ -160,7 +160,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
         />
         <CommonIcon
           v-if="option.children && !valueLookup[option.value]"
-          class="shrink-0 fill-stone-200 hover:fill-black focus:outline-none focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+          class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
           :aria-label="i18n.t('Toggle Group')"
           :name="collapseLookup[option.value] ? 'chevron-up' : 'chevron-down'"
           size="xs"

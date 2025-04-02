@@ -1,0 +1,79 @@
+/* @docs https://tailwindcss.com/docs/theme theme: */
+
+/* stylelint-disable custom-property-empty-line-before */
+@theme {
+  --color-alpha-900: #000a;
+  --color-black: #000;
+  --color-white: #fff;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #e5e5e5;
+  --color-neutral-200: #e3e3e3;
+  --color-neutral-300: #dcdcdc;
+  --color-neutral-400: #d1d1d1;
+  --color-neutral-500: #999;
+  --color-neutral-950: #191919;
+
+  --color-gray-100: #585856;
+  --color-gray-200: #535355;
+  --color-gray-300: #434141;
+  --color-gray-400: #3f3f41;
+  --color-gray-500: #323234;
+  --color-gray-600: #2c2c2d;
+  --color-gray-700: #262627;
+  --color-gray-800: #212122;
+  --color-gray-900: #202021;
+
+  --color-stone-200: #a0a3a6;
+  --color-stone-400: #6f7071;
+  --color-stone-500: #4b5058;
+  --color-stone-700: #383b41;
+
+  --color-blue-50: #f9fafb;
+  --color-blue-100: #e5f0f5;
+  --color-blue-200: #edf1f2;
+  --color-blue-300: #d4e2e9;
+  --color-blue-400: #c9e1ea;
+  --color-blue-500: #c0dde6;
+  --color-blue-600: #7fd4f1;
+  --color-blue-700: #49a9ca;
+  --color-blue-800: #23a2cd;
+  --color-blue-900: #045972;
+  --color-blue-950: #063849;
+
+  --color-green-100: #eff0f1;
+  --color-green-200: #bcced2;
+  --color-green-300: #bbe0cb;
+  --color-green-400: #38ad69;
+  --color-green-500: #36af6a;
+  --color-green-900: #07341a;
+
+  --color-yellow-50: #fff6da;
+  --color-yellow-200: #ffd44c;
+  --color-yellow-300: #ffce33;
+  --color-yellow-500: #faab00;
+  --color-yellow-600: #f39804;
+  --color-yellow-700: #f38612;
+  --color-yellow-800: #4a3300;
+  --color-yellow-900: #453914;
+
+  --color-red-50: #faefd6;
+  --color-red-300: #f35912;
+  --color-red-400: #e9613a;
+  --color-red-500: #e54011;
+  --color-red-600: #86270c;
+  --color-red-900: #220c06;
+  --color-pink-100: #efd9d2;
+  --color-pink-300: #ea4d84;
+  --color-pink-500: #ff006b;
+
+  --width-150: 600px;
+
+  --min-width-58: 232px;
+  --min-width-150: 600px;
+
+  --max-width: 600px;
+
+  --grid-template-columns-2-uneven: repeat(2, minmax(0, 1fr));
+
+  --z-index-60: 60;
+}

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/examples/pagination_examples'
@@ -156,6 +156,56 @@ RSpec.describe 'Manage > Webhook', type: :system do
           custom_payload:     nil,
         )
       end
+    end
+  end
+
+  context 'when cloning an existing webhook' do
+    let!(:webhook)       { create(:mattermost_webhook) }
+    let(:custom_payload) { JSON.pretty_generate(Webhook::PreDefined::Mattermost.new.custom_payload) }
+
+    before do
+      visit '/#manage/webhook'
+
+      within :active_content do
+        row = find("tr[data-id='#{webhook.id}']")
+        row.find('.js-action').click
+        row.find('.js-clone').click
+      end
+    end
+
+    it 'supports pre-defined webhooks (#5524)' do
+      in_modal do
+        expect(page).to have_field('Name', with: 'Clone: Mattermost Notifications')
+        expect(page).to have_select('Pre-defined Webhook', text: 'Mattermost Notifications', disabled: :all)
+        expect(page).to have_field('Messaging Username', with: webhook.preferences['pre_defined_webhook']['messaging_username'])
+        expect(page).to have_field('Messaging Channel', with: webhook.preferences['pre_defined_webhook']['messaging_channel'])
+        expect(page).to have_field('Messaging Icon URL', with: webhook.preferences['pre_defined_webhook']['messaging_icon_url'])
+        expect(page).to have_field('Custom Payload', checked: false, visible: :all)
+        expect(page).to have_field('custom_payload', with: custom_payload, disabled: :all, visible: :all)
+        expect(page).to have_field('Note', with: 'Pre-defined webhook for Mattermost Notifications.')
+
+        fill_in 'Endpoint', with: 'https://example.com/mattermost_endpoint'
+        fill_in 'Messaging Username', with: 'username'
+        fill_in 'Messaging Channel', with: '#channel'
+        fill_in 'Messaging Icon URL', with: 'https://example.com/logo.png'
+
+        click_on 'Submit'
+      end
+
+      expect(Webhook.last).to have_attributes(
+        name:                     'Clone: Mattermost Notifications',
+        pre_defined_webhook_type: 'Mattermost',
+        customized_payload:       false,
+        custom_payload:           nil,
+        note:                     'Pre-defined webhook for Mattermost Notifications.',
+        preferences:              include(
+          pre_defined_webhook: include(
+            messaging_username: 'username',
+            messaging_channel:  '#channel',
+            messaging_icon_url: 'https://example.com/logo.png',
+          ),
+        ),
+      )
     end
   end
 

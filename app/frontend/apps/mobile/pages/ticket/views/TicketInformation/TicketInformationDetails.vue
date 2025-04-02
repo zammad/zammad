@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 /* eslint-disable vue/attribute-hyphenation */
@@ -140,7 +140,7 @@ const hasEscalation = computed(() => {
   <FormKit
     v-if="ticketFormGroupNode?.context?.state.dirty"
     wrapper-class="mt-4 mb-4 flex grow justify-center items-center"
-    input-class="py-2 px-4 w-full h-14 text-base !text-red-bright formkit-variant-primary:bg-red-dark rounded-xl select-none"
+    input-class="py-2 px-4 w-full h-14 text-base text-red-bright! formkit-variant-primary:bg-red-dark rounded-xl select-none"
     type="button"
     name="discardTicketInformation"
     @click="discardTicketEditDialog"
@@ -152,13 +152,7 @@ const hasEscalation = computed(() => {
     v-if="!isTicketEditable && ticket"
     :object="ticket"
     :attributes="objectAttributes"
-    :skip-attributes="['title']"
-    :accessors="{
-      state_id: 'state.name',
-      priority_id: 'priority.name',
-      owner_id: 'owner.fullname',
-      group_id: 'group.name',
-    }"
+    :skip-attributes="['title', 'customer_id', 'organization_id']"
   />
 
   <TicketObjectAttributes v-if="isTicketAgent && ticket" :ticket="ticket" />
@@ -205,10 +199,10 @@ const hasEscalation = computed(() => {
       :variants="variants"
       :disabled="isSubscriptionLoading"
       :outer-class="{
-        '!px-3': true,
+        'px-3!': true,
         'border-b border-white/10': subscribersWithoutMe.length,
       }"
-      wrapper-class="!px-0"
+      wrapper-class="px-0!"
       @input-raw="handleToggleInput"
     >
       <template #label="context">

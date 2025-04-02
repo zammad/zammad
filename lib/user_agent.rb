@@ -1,324 +1,43 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'net/http'
 require 'net/https'
-require 'net/ftp'
 
 class UserAgent
 
-=begin
-
-get http/https calls
-
-  result = UserAgent.get('http://host/some_dir/some_file?param1=123')
-
-  result = UserAgent.get(
-    'http://host/some_dir/some_file?param1=123',
-    {
-      param1: 'some value',
-    },
-    {
-      open_timeout: 4,
-      read_timeout: 10,
-      verify_ssl:   true,
-      user:         'http basic auth username',
-      password:     'http basic auth password',
-      bearer_token: 'bearer token authentication',
-    },
-  )
-
-returns
-
-  result.body # as response
-
-get json object
-
-  result = UserAgent.get(
-    'http://host/some_dir/some_file?param1=123',
-    {},
-    {
-      json: true,
-    }
-  )
-
-returns
-
-  result.data # as json object
-
-=end
-
-  def self.get(url, params = {}, options = {}, count = 10)
-    # Any params must be added to the URL for GET requests.
-    uri  = parse_uri(url, params)
-    http = get_http(uri, options)
-
-    # prepare request
-    request = Net::HTTP::Get.new(uri)
-
-    # set headers
-    request = set_headers(request, options)
-
-    # http basic auth (if needed)
-    request = set_basic_auth(request, options)
-
-    # bearer token auth (if needed)
-    request = set_bearer_token_auth(request, options)
-
-    # add signature
-    request = set_signature(request, options)
-
-    # start http call
-    begin
-      total_timeout = options[:total_timeout] || 60
-
-      handled_open_timeout(options[:open_socket_tries]) do
-        Timeout.timeout(total_timeout) do
-          response = http.request(request)
-          return process(request, response, uri, count, params, options)
-        end
-      end
-    rescue => e
-      log(url, request, nil, options)
-      Result.new(
-        error:   e.inspect,
-        success: false,
-        code:    0,
-      )
-    end
+  # Make HTTP request via GET method
+  #
+  # @see .make_connection
+  def self.get(...)
+    make_connection(:get, ...)
   end
 
-=begin
-
-post http/https calls
-
-  result = UserAgent.post(
-    'http://host/some_dir/some_file',
-    {
-      param1: 1,
-      param2: 2,
-    },
-    {
-      open_timeout: 4,
-      read_timeout: 10,
-      verify_ssl:   true,
-      user:         'http basic auth username',
-      password:     'http basic auth password',
-      bearer_token: 'bearer token authentication',
-      total_timeout: 60,
-    },
-  )
-
-returns
-
-  result # result object
-
-=end
-
-  def self.post(url, params = {}, options = {}, count = 10)
-    uri  = parse_uri(url)
-    http = get_http(uri, options)
-
-    # prepare request
-    request = Net::HTTP::Post.new(uri)
-
-    # set headers
-    request = set_headers(request, options)
-
-    # set params
-    request = set_params(request, params, options)
-
-    # http basic auth (if needed)
-    request = set_basic_auth(request, options)
-
-    # bearer token auth (if needed)
-    request = set_bearer_token_auth(request, options)
-
-    # add signature
-    request = set_signature(request, options)
-
-    # start http call
-    begin
-      total_timeout = options[:total_timeout] || 60
-
-      handled_open_timeout(options[:open_socket_tries]) do
-        Timeout.timeout(total_timeout) do
-          response = http.request(request)
-          return process(request, response, uri, count, params, options)
-        end
-      end
-    rescue => e
-      log(url, request, nil, options)
-      Result.new(
-        error:   e.inspect,
-        success: false,
-        code:    0,
-      )
-    end
+  # Make HTTP request via POST method
+  #
+  # @see .make_connection
+  def self.post(...)
+    make_connection(:post, ...)
   end
 
-=begin
-
-put http/https calls
-
-  result = UserAgent.put(
-    'http://host/some_dir/some_file',
-    {
-      param1: 1,
-      param2: 2,
-    },
-    {
-      open_timeout: 4,
-      read_timeout: 10,
-      verify_ssl:   true,
-      user:         'http basic auth username',
-      password:     'http basic auth password',
-      bearer_token: 'bearer token authentication',
-    },
-  )
-
-returns
-
-  result # result object
-
-=end
-
-  def self.put(url, params = {}, options = {}, count = 10)
-    uri  = parse_uri(url)
-    http = get_http(uri, options)
-
-    # prepare request
-    request = Net::HTTP::Put.new(uri)
-
-    # set headers
-    request = set_headers(request, options)
-
-    # set params
-    request = set_params(request, params, options)
-
-    # http basic auth (if needed)
-    request = set_basic_auth(request, options)
-
-    # bearer token auth (if needed)
-    request = set_bearer_token_auth(request, options)
-
-    # add signature
-    request = set_signature(request, options)
-
-    # start http call
-    begin
-      total_timeout = options[:total_timeout] || 60
-
-      handled_open_timeout(options[:open_socket_tries]) do
-        Timeout.timeout(total_timeout) do
-          response = http.request(request)
-          return process(request, response, uri, count, params, options)
-        end
-      end
-    rescue => e
-      log(url, request, nil, options)
-      Result.new(
-        error:   e.inspect,
-        success: false,
-        code:    0,
-      )
-    end
+  # Make HTTP request via PATCH method
+  #
+  # @see .make_connection
+  def self.patch(...)
+    make_connection(:patch, ...)
   end
 
-=begin
-
-delete http/https calls
-
-  result = UserAgent.delete(
-    'http://host/some_dir/some_file',
-    {
-      open_timeout: 4,
-      read_timeout: 10,
-      verify_ssl:   true,
-      user:         'http basic auth username',
-      password:     'http basic auth password',
-      bearer_token: 'bearer token authentication',
-    },
-  )
-
-returns
-
-  result # result object
-
-=end
-
-  def self.delete(url, params = {}, options = {}, count = 10)
-    uri  = parse_uri(url)
-    http = get_http(uri, options)
-
-    # prepare request
-    request = Net::HTTP::Delete.new(uri)
-
-    # set headers
-    request = set_headers(request, options)
-
-    # http basic auth (if needed)
-    request = set_basic_auth(request, options)
-
-    # bearer token auth (if needed)
-    request = set_bearer_token_auth(request, options)
-
-    # add signature
-    request = set_signature(request, options)
-
-    # start http call
-    begin
-      total_timeout = options[:total_timeout] || 60
-      handled_open_timeout(options[:open_socket_tries]) do
-        Timeout.timeout(total_timeout) do
-          response = http.request(request)
-          return process(request, response, uri, count, params, options)
-        end
-      end
-    rescue => e
-      log(url, request, nil, options)
-      Result.new(
-        error:   e.inspect,
-        success: false,
-        code:    0,
-      )
-    end
+  # Make HTTP request via PUT method
+  #
+  # @see .make_connection
+  def self.put(...)
+    make_connection(:put, ...)
   end
 
-=begin
-
-perform get http/https/ftp calls
-
-  result = UserAgent.request('ftp://host/some_dir/some_file.bin')
-
-  result = UserAgent.request('http://host/some_dir/some_file.bin')
-
-  result = UserAgent.request('https://host/some_dir/some_file.bin')
-
-  # get request
-  result = UserAgent.request(
-    'http://host/some_dir/some_file?param1=123',
-    {
-      open_timeout: 4,
-      read_timeout: 10,
-    },
-  )
-
-returns
-
-  result # result object
-
-=end
-
-  def self.request(url, options = {})
-
-    uri = parse_uri(url)
-    case uri.scheme.downcase
-    when %r{ftp}
-      ftp(uri, options)
-    when %r{http|https}
-      get(url, {}, options)
-    end
-
+  # Make HTTP request via DELETE method
+  #
+  # @see .make_connection
+  def self.delete(...)
+    make_connection(:delete, ...)
   end
 
   def self.get_http(uri, options)
@@ -386,9 +105,13 @@ returns
     end
   end
 
-  def self.parse_uri(url, params = {})
+  def self.parse_uri(url, params = {}, method = nil)
     uri = URI.parse(url)
-    uri.query = [uri.query, URI.encode_www_form(params)].join('&') if params.present?
+
+    if method == :get && params.present?
+      uri.query = [uri.query, URI.encode_www_form(params)].join('&')
+    end
+
     uri
   end
 
@@ -517,7 +240,13 @@ returns
         header:  response.each_header.to_h,
       )
     when Net::HTTPRedirection
-      raise __('Too many redirections for the original URL, halting.') if count <= 0
+      if options[:do_not_follow_redirects]
+        raise __('The server returned a redirect response, but the current operation does not allow redirects.')
+      end
+
+      if count <= 0
+        raise __('Too many redirections for the original URL, halting.')
+      end
 
       url = response['location']
       return get(url, params, options, count - 1)
@@ -539,51 +268,6 @@ returns
     raise "Unable to process http call '#{response.inspect}'"
   end
 
-  def self.ftp(uri, options)
-    host       = uri.host
-    filename   = File.basename(uri.path)
-    remote_dir = File.dirname(uri.path)
-
-    temp_file = Tempfile.new("download-#{filename}")
-    temp_file.binmode
-
-    begin
-      Net::FTP.open(host) do |ftp|
-        ftp.passive = true
-        if options[:user] && options[:password]
-          ftp.login(options[:user], options[:password])
-        else
-          ftp.login
-        end
-        ftp.chdir(remote_dir) if remote_dir != '.'
-
-        begin
-          ftp.getbinaryfile(filename, temp_file)
-        rescue => e
-          return Result.new(
-            error:   e.inspect,
-            success: false,
-            code:    '550',
-          )
-        end
-      end
-    rescue => e
-      return Result.new(
-        error:   e.inspect,
-        success: false,
-        code:    0,
-      )
-    end
-
-    contents = temp_file.read
-    temp_file.close
-    Result.new(
-      body:    contents,
-      success: true,
-      code:    '200',
-    )
-  end
-
   def self.handled_open_timeout(tries)
     tries ||= 1
 
@@ -591,6 +275,89 @@ returns
       yield
     rescue Net::OpenTimeout
       raise if (index + 1) == tries
+    end
+  end
+
+  # Base method for making connection
+  #
+  # @param method [Symbol] HTTP request method style to use. Must be Net::HTTP::Class
+  # @param url [String] full URL to request
+  # @param params [Hash] to add either to GET URL or submit as POST-style data
+  # @param options [Hash]
+  # @option options [String] :send_as_raw_body to submit as raw POST-style request data body
+  # @option options [Integer] :total_timeout of connection
+  # @option options [Integer] :open_socket_tries count to retry connection
+  # @option options [Boolean] :verify_ssl
+  # @option options [Hash] :headers to apply to request
+  # @option options [String] :signature_token to set as X-Hub-Sighature header
+  # @option options [Boolean] :json is POST-style data parameters posted as JSON and response shall be parsed as JSON
+  # @option options [Boolean] :jsonParseDisable disable response parsing as JSON of :json is enabled
+  # @option options [String] :user for basic authentication
+  # @option options [String] :password for basic authentication
+  # @option options [String] :bearer_token for token authentication
+  # @option options [Hash] :log enable logging
+  # @option options [String] :proxy address
+  # @option options [String] :proxy_no list of address to skip proxy for
+  # @option options [String] :proxy_username
+  # @option options [String] :proxy_password
+  # @option options [Integer] :open_timeout
+  # @option options [Integer] :read_timeout
+  # @option options [Boolean] :do_not_follow_redirects
+  # @option log [String] :facility is sub-key as in options[:log][:facility] providing name to use when logging in HttpLog
+  # @param count [Integer] of redirects. Counts towards zero and then aborts
+  #
+  # @example
+  #
+  # result = UserAgent.make_connection(:get, 'http://host/some_dir/some_file?param1=123',
+  #   { param1: 'some value' } , { option: value })
+  # result.data => { parsed: 'json' }
+  #
+  # @return [Result]
+  def self.make_connection(method, url, params = {}, options = {}, count = 10)
+    uri  = parse_uri(url, params, method)
+    http = get_http(uri, options)
+
+    # prepare request
+    request = Net::HTTP.const_get(method.capitalize).new(uri)
+
+    # set headers
+    request = set_headers(request, options)
+
+    # set params for non-get requests
+    if method != :get
+      request = set_params(request, params, options)
+    end
+
+    # http basic auth (if needed)
+    request = set_basic_auth(request, options)
+
+    # bearer token auth (if needed)
+    request = set_bearer_token_auth(request, options)
+
+    # add signature
+    request = set_signature(request, options)
+
+    # start http call
+    begin
+      total_timeout = options[:total_timeout] || 60
+
+      handled_open_timeout(options[:open_socket_tries]) do
+        Timeout.timeout(total_timeout) do
+          response = if (send_as_raw_body = options[:send_as_raw_body])
+                       http.request(request, send_as_raw_body)
+                     else
+                       http.request(request)
+                     end
+          return process(request, response, uri, count, params, options)
+        end
+      end
+    rescue => e
+      log(url, request, nil, options)
+      Result.new(
+        error:   e.inspect,
+        success: false,
+        code:    0,
+      )
     end
   end
 

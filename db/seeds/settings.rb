@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 Setting.create_if_not_exists(
   title:       __('Application secret'),
@@ -178,6 +178,29 @@ Setting.create_if_not_exists(
     permission: ['admin.system'],
   },
   frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('Language Detection Service'),
+  name:        'language_detection_article',
+  area:        'Ticket::LanguageDetection',
+  description: __('Defines the backend service for ticket article language detection.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'language_detection_article',
+        tag:     'select',
+        options: {
+          ''    => '-',
+          'cld' => 'Compact Language Detector (CLD)', # rubocop:disable Zammad/DetectTranslatableString
+        },
+      },
+    ],
+  },
+  state:       '',
+  preferences: {},
+  frontend:    false
 )
 Setting.create_if_not_exists(
   title:       __('Timezone'),
@@ -1946,7 +1969,7 @@ Setting.create_if_not_exists(
           false => 'no',
         },
         default: true,
-        help:    __('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!'),
+        help:    __('Verification of the TLS connection to the IDP SSO target URL. Only relevant during setting up SAML authentication.'),
       },
       {
         display: __('Signing & Encrypting'),
@@ -2000,6 +2023,110 @@ Setting.create_if_not_exists(
       'Setting::Validation::Saml::TLS',
       'Setting::Validation::Saml::Security',
     ],
+  },
+  frontend:    false
+)
+
+Setting.create_if_not_exists(
+  title:       __('Authentication via %s'),
+  name:        'auth_openid_connect',
+  area:        'Security::ThirdPartyAuthentication',
+  description: __('Enables user authentication via %s.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'auth_openid_connect',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller:       'SettingsAreaSwitch',
+    sub:              ['auth_openid_connect_credentials'],
+    title_i18n:       [__('OpenID Connect')],
+    description_i18n: [__('OpenID Connect')],
+    permission:       ['admin.security'],
+  },
+  state:       false,
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('OpenID Connect Options'),
+  name:        'auth_openid_connect_credentials',
+  area:        'Security::ThirdPartyAuthentication::OpenIDConnect',
+  description: __('Enables user authentication via OpenID Connect.'),
+  options:     {
+    form: [
+      {
+        display:     __('Display name'),
+        null:        true,
+        name:        'display_name',
+        tag:         'input',
+        placeholder: __('OpenID Connect'),
+      },
+      {
+        display:     __('Identifier'),
+        null:        true,
+        name:        'identifier',
+        tag:         'input',
+        required:    true,
+        placeholder: '',
+      },
+      {
+        display:     __('Issuer'),
+        null:        true,
+        name:        'issuer',
+        tag:         'input',
+        placeholder: __('https://example.com'),
+        required:    true,
+      },
+      {
+        display:     __('UID Field'),
+        null:        true,
+        name:        'uid_field',
+        tag:         'input',
+        placeholder: 'sub',
+        help:        __('Field that uniquely identifies the user. If unset, "sub" is used.'),
+      },
+      {
+        display:     __('Scopes'),
+        null:        true,
+        name:        'scope',
+        tag:         'input',
+        placeholder: 'openid email profile',
+        help:        __('Scopes that are included, separated by a single space character. If unset, "openid email profile" is used.'),
+      },
+      {
+        display:   __('PKCE'),
+        null:      true,
+        default:   true,
+        name:      'pkce',
+        tag:       'select',
+        options:   {
+          true  => 'yes',
+          false => 'no',
+        },
+        translate: true,
+        help:      __('Proof Key for Code Exchange is currently only supporting SHA256 as code challenge method.'),
+      },
+      {
+        display:  __('Your callback URL'),
+        null:     true,
+        name:     'callback_url',
+        tag:      'auth_provider',
+        provider: 'auth_openid_connect',
+      },
+    ],
+  },
+  state:       {},
+  preferences: {
+    permission: ['admin.security'],
   },
   frontend:    false
 )
@@ -3064,7 +3191,7 @@ Setting.create_if_not_exists(
   },
   state:       '110',
   preferences: {
-    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    false
 )
@@ -3085,7 +3212,7 @@ Setting.create_if_not_exists(
   },
   state:       'RE',
   preferences: {
-    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    false
 )
@@ -3107,7 +3234,7 @@ Setting.create_if_not_exists(
   },
   state:       'FWD',
   preferences: {
-    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    false
 )
@@ -3135,7 +3262,7 @@ Setting.create_if_not_exists(
   },
   state:       'AgentNameSystemAddressName',
   preferences: {
-    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    true
 )
@@ -3157,7 +3284,7 @@ Setting.create_if_not_exists(
   },
   state:       'via',
   preferences: {
-    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    true
 )
@@ -3207,7 +3334,7 @@ Setting.create_if_not_exists(
   state:       10,
   preferences: {
     online_service_disable: true,
-    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    false
 )
@@ -3236,7 +3363,7 @@ Setting.create_if_not_exists(
   },
   state:       ['subject_references'],
   preferences: {
-    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    false
 )
@@ -3264,7 +3391,7 @@ Setting.create_if_not_exists(
   },
   state:       [],
   preferences: {
-    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    false
 )
@@ -3290,7 +3417,7 @@ Setting.create_if_not_exists(
   },
   state:       true,
   preferences: {
-    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    false
 )
@@ -3317,7 +3444,7 @@ Setting.create_if_not_exists(
   state:       true,
   preferences: {
     online_service_disable: true,
-    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    false
 )
@@ -3340,7 +3467,7 @@ Setting.create_if_not_exists(
   state:       '#{config.product_name} <noreply@#{config.fqdn}>', # rubocop:disable Lint/InterpolationCheck
   preferences: {
     online_service_disable: true,
-    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    false
 )
@@ -3363,7 +3490,7 @@ Setting.create_if_not_exists(
   state:       '(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?',
   preferences: {
     online_service_disable: true,
-    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+    permission:             ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365', 'admin.channel_microsoft_graph'],
   },
   frontend:    false
 )
@@ -5496,6 +5623,35 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Ticket Overview Query Polling'),
+  name:        'ui_ticket_overview_query_polling',
+  area:        'UI::TicketOverview::QueryPolling',
+  description: __('System-wide configuration of the query polling mechanism for ticket overviews.'),
+  options:     {},
+  state:       {
+    enabled:    true,
+    page_size:  30,
+    background: {
+      calculation_count: 3,
+      interval_sec:      10,
+      cache_ttl_sec:     10,
+    },
+    foreground: {
+      interval_sec:  5,
+      cache_ttl_sec: 5,
+    },
+    counts:     {
+      interval_sec:  60,
+      cache_ttl_sec: 60,
+    },
+  },
+  preferences: {
+    permission: ['admin.ui'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       __('S/MIME integration'),
   name:        'smime_integration',
   area:        'Integration::Switch',
@@ -5828,4 +5984,13 @@ Setting.create_if_not_exists(
   state:       !Rails.env.test?,
   preferences: { online_service_disable: true },
   frontend:    false
+)
+
+Setting.create_if_not_exists(
+  title:       __('UI Desktop Beta Switch'),
+  name:        'ui_desktop_beta_switch',
+  area:        'UI::Desktop',
+  description: __('Allow users to switch automatically to the new desktop UI.'),
+  state:       false,
+  frontend:    true,
 )

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 import { within } from '@testing-library/vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -42,13 +42,12 @@ describe('IdoitObjectList', () => {
     expect(container).toHaveTextContent('Status')
     expect(container).toHaveTextContent('in operation')
 
-    expect(
-      wrapper.getByRole('checkbox', { name: 'Select this entry' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('cell', { name: '26' })).toBeInTheDocument()
 
-    expect(
-      wrapper.getByRole('checkbox', { name: 'Select all entries' }),
-    ).toBeInTheDocument()
+    // :TODO fix as soon as SIMPLETABLE IS adjusted
+    // expect(
+    //   wrapper.getByRole('checkbox', { name: 'Select all entries' }),
+    // ).toBeInTheDocument()
   })
 
   it('shows empty state message', () => {

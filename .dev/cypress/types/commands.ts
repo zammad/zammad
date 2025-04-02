@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -8,11 +8,9 @@ declare global {
        * Simulates a paste event.
        * Modified from https://gist.github.com/nickytonline/bcdef8ef00211b0faf7c7c0e7777aaf6
        *
-       * @param subject A jQuery context representing a DOM element.
-       * @param pasteOptions Set of options for a simulated paste event.
        * @param pasteOptions.pastePayload Simulated data that is on the clipboard.
        * @param pasteOptions.pasteFormat The format of the simulated paste payload. Default value is 'text'.
-       * @param pasteOptions.files A list of assisiated file, if any
+       * @param pasteOptions.files A list of assisted file, if any
        *
        * @returns The subject parameter.
        *
@@ -21,6 +19,7 @@ declare global {
        *   pasteType: 'application/json',
        *   pastePayload: {hello: 'yolo'},
        * });
+       * @param options
        */
       paste(options: {
         pastePayload?: string

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -23,6 +23,33 @@ RSpec.describe Channel::Driver::Sendmail do
       content = File.read(file)
       expect(content).to match(%r{#{body}})
       expect(content).to match(%r{#{address}})
+    end
+  end
+
+  context 'with regular Sendmail usage' do
+    let(:address) { Faker::Internet.email }
+    let(:body)    { Faker::Lorem.sentence(word_count: 3) }
+
+    let(:mocked_sendmail) do
+      instance_double(IO).tap do |dbl|
+        allow(dbl).to receive(:puts)
+        allow(dbl).to receive(:flush)
+      end
+    end
+
+    around do |example|
+      ENV['ZAMMAD_MAIL_PRETEND_NOT_TEST'] = '1'
+      example.run
+      ENV.delete('ZAMMAD_MAIL_PRETEND_NOT_TEST')
+    end
+
+    it 'sends mail', :aggregate_failures do
+      allow_any_instance_of(Mail::Sendmail).to receive(:popen).and_yield(mocked_sendmail)
+
+      described_class.new.deliver({}, { to: address, from: address, body: body })
+
+      expect(mocked_sendmail).to have_received(:puts).with(include(address).and(include(body)))
+      expect(mocked_sendmail).to have_received(:flush)
     end
   end
 end

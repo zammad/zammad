@@ -1,4 +1,6 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+
+import redirectGuard from '#shared/router/guards/before/redirect.ts'
 
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -8,16 +10,7 @@ const route: RouteRecordRaw[] = [
     name: 'Home',
     props: true,
     component: () => import('./views/Home.vue'),
-    beforeEnter(to) {
-      const location = to.hash && to.hash.slice(1)
-
-      if (!location) return true
-
-      const route = Router.resolve(location)
-      const path = route.name === 'Error' ? '/' : `/${location}`
-
-      return { path, replace: true }
-    },
+    beforeEnter: redirectGuard,
     meta: {
       title: __('Home'),
       requiresAuth: true,

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef, watch, nextTick, onMounted } from 'vue'
@@ -9,8 +9,6 @@ import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import { type ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { textToHtml } from '#shared/utils/helpers.ts'
-
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 interface Props {
   article: TicketArticle
@@ -41,6 +39,13 @@ const body = computed(() => {
   return props.article.bodyWithUrls
 })
 
+const showAuthorInformation = computed(() => {
+  const author = props.article.author.fullname // `-` => system message
+  return (
+    !props.showMetaInformation && author !== '-' && (author?.length ?? 0) > 0
+  )
+})
+
 const { setupLinksHandlers } = useHtmlLinks('/desktop')
 const { populateInlineImages } = useHtmlInlineImages(
   toRef(props, 'inlineImages'),
@@ -68,23 +73,27 @@ onMounted(() => {
 
 <template>
   <div
-    class="Content -:pt-9 -:p-3 relative transition-[padding]"
+    class="Content relative p-3 transition-[padding]"
     :class="[
       bodyClasses,
       {
-        'pt-3': showMetaInformation,
+        'pt-3!': showMetaInformation,
+        'pt-9!': showAuthorInformation,
       },
     ]"
   >
     <div
-      v-if="!showMetaInformation"
+      v-if="showAuthorInformation"
       class="absolute top-3 flex w-full px-3 ltr:left-0 rtl:right-0"
+      role="group"
+      aria-describedby="author-name-and-creation-date"
     >
+      <p id="author-name-and-creation-date" class="sr-only">
+        {{ $t('Author name and article creation date') }}
+      </p>
+
       <CommonLabel class="font-bold" size="small" variant="neutral">
-        {{
-          article.author.fullname ||
-          `${article.author.firstname} ${article.author.lastname}`
-        }}
+        {{ article.author.fullname }}
       </CommonLabel>
 
       <CommonDateTime
@@ -99,7 +108,7 @@ onMounted(() => {
       class="overflow-hidden text-sm"
     >
       <!--    eslint-disable vue/no-v-html-->
-      <div v-html="body" />
+      <div class="inner-article-body" v-html="body" />
     </div>
     <div
       v-if="hasShowMore"
@@ -107,20 +116,49 @@ onMounted(() => {
       :class="{
         BubbleGradient: hasShowMore && !shownMore,
       }"
-    ></div>
-    <CommonButton
+    />
+    <CommonLink
       v-if="hasShowMore"
-      class="!p-0 !outline-transparent"
+      class="mb-1 inline-block! outline-transparent! hover:no-underline! focus-visible:outline-blue-800!"
+      role="button"
+      link="#"
       size="medium"
       @click.prevent="toggleShowMore"
       @keydown.enter.prevent="toggleShowMore"
     >
       {{ shownMore ? $t('See less') : $t('See more') }}
-    </CommonButton>
+    </CommonLink>
   </div>
 </template>
 
 <style scoped>
+.inner-article-body {
+  word-break: normal;
+  overflow-wrap: anywhere;
+
+  /*
+   * TODO: Consider extending this rule to other elements.
+   *
+   * Relevant elements include:
+   * - img, svg, canvas, audio, iframe, embed, object
+   *
+   * These elements inherit a `display: block` style from the root stylesheet.
+   */
+  &:deep(img, svg) {
+    display: inline;
+  }
+
+  /* Wrap long lines in code blocks. */
+  &:deep(code) {
+    white-space: pre-wrap;
+  }
+
+  /* Strip inline color styles in dark mode. */
+  [data-theme='dark'] &:deep(*[style*='color']) {
+    color: inherit !important;
+  }
+}
+
 .BubbleGradient::before {
   content: '';
   position: absolute;
@@ -132,21 +170,18 @@ onMounted(() => {
 }
 
 .Content--agent .BubbleGradient::before {
-  background: linear-gradient(rgba(255, 255, 255, 0), theme('colors.white'));
+  background: linear-gradient(rgba(255, 255, 255, 0), var(--color-white));
 }
 
 [data-theme='dark'] .Content--agent .BubbleGradient::before {
-  background: linear-gradient(rgba(255, 255, 255, 0), theme('colors.gray.400'));
+  background: linear-gradient(rgba(255, 255, 255, 0), var(--color-gray-400));
 }
 
 .Content--customer .BubbleGradient::before {
-  background: linear-gradient(rgba(255, 255, 255, 0), theme('colors.blue.100'));
+  background: linear-gradient(rgba(255, 255, 255, 0), var(--color-blue-100));
 }
 
 [data-theme='dark'] .Content--customer .BubbleGradient::before {
-  background: linear-gradient(
-    rgba(255, 255, 255, 0),
-    theme('colors.stone.500')
-  );
+  background: linear-gradient(rgba(255, 255, 255, 0), var(--color-stone-500));
 }
 </style>

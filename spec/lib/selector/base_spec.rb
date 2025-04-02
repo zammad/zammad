@@ -1,12 +1,15 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Selector::Base, searchindex: true do
-  let(:agent)    { create(:agent, groups: [Group.first]) }
-  let(:ticket_1) { create(:ticket, title: 'bli', group: Group.first) }
-  let(:ticket_2) { create(:ticket, title: 'bla', group: Group.first) }
-  let(:ticket_3) { create(:ticket, title: 'blub', group: Group.first) }
+  let(:default_organization) { create(:organization) }
+  let(:agent)                { create(:agent, groups: [Group.first]) }
+  let(:agent_owner)          { create(:agent, groups: [Group.first], organization: default_organization) }
+  let(:default_customer)     { create(:customer, organization: default_organization) }
+  let(:ticket_1)             { create(:ticket, title: 'bli', group: Group.first, owner: agent_owner, customer: default_customer) }
+  let(:ticket_2)             { create(:ticket, title: 'bla', group: Group.first, owner: agent_owner, customer: default_customer) }
+  let(:ticket_3)             { create(:ticket, title: 'blub', group: Group.first, owner: agent_owner, customer: default_customer) }
 
   before do
     Ticket.destroy_all
@@ -345,6 +348,126 @@ RSpec.describe Selector::Base, searchindex: true do
 
     result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
     expect(result[:count]).to eq(3)
+  end
+
+  it 'does support owner_id is not_set pre_condition', :aggregate_failures do
+    condition = {
+      operator:   'AND',
+      conditions: [
+        {
+          pre_condition: 'not_set',
+          name:          'ticket.owner_id',
+          operator:      'is',
+          value:         [],
+        },
+      ]
+    }
+
+    count, = Ticket.selectors(condition, { current_user: agent })
+    expect(count).to eq(0)
+
+    result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+    expect(result[:count]).to eq(0)
+  end
+
+  it 'does support owner_id is not not_set pre_condition', :aggregate_failures do
+    condition = {
+      operator:   'AND',
+      conditions: [
+        {
+          pre_condition: 'not_set',
+          name:          'ticket.owner_id',
+          operator:      'is not',
+          value:         [],
+        },
+      ]
+    }
+
+    count, = Ticket.selectors(condition, { current_user: agent })
+    expect(count).to eq(3)
+
+    result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+    expect(result[:count]).to eq(3)
+  end
+
+  it 'does support owner is current_user.id pre_condition', :aggregate_failures do
+    condition = {
+      operator:   'AND',
+      conditions: [
+        {
+          pre_condition: 'current_user.id',
+          name:          'ticket.owner_id',
+          operator:      'is',
+          value:         [],
+        },
+      ]
+    }
+
+    count, = Ticket.selectors(condition, { current_user: agent_owner })
+    expect(count).to eq(3)
+
+    result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent_owner })
+    expect(result[:count]).to eq(3)
+  end
+
+  it 'does support owner is current_user.id pre_condition but user has none', :aggregate_failures do
+    condition = {
+      operator:   'AND',
+      conditions: [
+        {
+          pre_condition: 'current_user.id',
+          name:          'ticket.owner_id',
+          operator:      'is',
+          value:         [],
+        },
+      ]
+    }
+
+    count, = Ticket.selectors(condition, { current_user: agent })
+    expect(count).to eq(0)
+
+    result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+    expect(result[:count]).to eq(0)
+  end
+
+  it 'does support owner is current_user.organization_id pre_condition', :aggregate_failures do
+    condition = {
+      operator:   'AND',
+      conditions: [
+        {
+          pre_condition: 'current_user.organization_id',
+          name:          'ticket.organization_id',
+          operator:      'is',
+          value:         [],
+        },
+      ]
+    }
+
+    count, = Ticket.selectors(condition, { current_user: agent_owner })
+    expect(count).to eq(3)
+
+    result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent_owner })
+    expect(result[:count]).to eq(3)
+  end
+
+  it 'does support owner is current_user.organization_id pre_condition but user has none', :aggregate_failures do
+    condition = {
+      operator:   'AND',
+      conditions: [
+        {
+          pre_condition: 'current_user.organization_id',
+          name:          'ticket.organization_id',
+          operator:      'is',
+          value:         [],
+        },
+      ]
+    }
+
+    count, = Ticket.selectors(condition, { current_user: agent })
+    expect(count).to eq(0)
+
+    result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+    expect(result[:count]).to eq(0)
   end
 
   describe 'Report profile terminates with error if today is used as timestamp for condition #4901' do

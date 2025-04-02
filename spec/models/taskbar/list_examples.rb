@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'Taskbar::List' do
   let(:user) { create(:user) }
@@ -56,13 +56,13 @@ RSpec.shared_examples 'Taskbar::List' do
     end
 
     it 'do not trigger other subscriptions', aggregate_failures: true do
-      allow(Gql::Subscriptions::TicketLiveUserUpdates).to receive(:trigger)
+      allow(Gql::Subscriptions::Ticket::LiveUserUpdates).to receive(:trigger)
       allow(Gql::Subscriptions::User::Current::TaskbarItemUpdates).to receive(:trigger)
       allow(Gql::Subscriptions::User::Current::TaskbarItemStateUpdates).to receive(:trigger)
 
       described_class.reorder_list(user, target_order)
 
-      expect(Gql::Subscriptions::TicketLiveUserUpdates).not_to have_received(:trigger)
+      expect(Gql::Subscriptions::Ticket::LiveUserUpdates).not_to have_received(:trigger)
       expect(Gql::Subscriptions::User::Current::TaskbarItemUpdates).not_to have_received(:trigger)
       expect(Gql::Subscriptions::User::Current::TaskbarItemStateUpdates).not_to have_received(:trigger)
     end
@@ -76,7 +76,7 @@ RSpec.shared_examples 'Taskbar::List' do
 
       expect(Gql::Subscriptions::User::Current::TaskbarItem::ListUpdates)
         .to have_received(:trigger)
-        .with(nil, arguments: { user_id: user.to_global_id.to_s, app: 'test' })
+        .with(nil, arguments: { app: 'test' }, scope: user.id)
     end
   end
 end

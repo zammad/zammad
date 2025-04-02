@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
@@ -187,7 +187,7 @@ const onContextClick = () => {
     </div>
     <div class="Border">
       <div
-        class="content flex flex-col overflow-hidden rounded-3xl px-4 pb-3 pt-2"
+        class="content flex flex-col overflow-hidden rounded-3xl px-4 pt-2 pb-3"
         :class="[bubbleClasses, colorClasses]"
       >
         <div
@@ -214,7 +214,7 @@ const onContextClick = () => {
         ></div>
         <div
           v-if="attachments.length"
-          class="mb-2 mt-1"
+          class="mt-1 mb-2"
           :class="colorsClasses.top"
         >
           <div class="py-1 text-xs" :class="colorsClasses.amount">
@@ -305,14 +305,16 @@ const onContextClick = () => {
 
 <style scoped>
 .Content {
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 .Article:not(.Internal) {
   &.Right .Content,
   &.Left .Content {
     :deep(a) {
-      @apply text-black underline;
+      color: var(--color-black);
+      text-decoration: underline;
     }
   }
 }
@@ -328,14 +330,11 @@ const onContextClick = () => {
 }
 
 .Right:not(.Internal) .BubbleGradient::before {
-  background: linear-gradient(
-    rgba(255, 255, 255, 0),
-    theme('colors.blue.DEFAULT')
-  );
+  background: linear-gradient(rgba(255, 255, 255, 0), var(--color-blue));
 }
 
 .Left:not(.Internal) .BubbleGradient::before {
-  background: linear-gradient(rgba(255, 255, 255, 0), theme('colors.white'));
+  background: linear-gradient(rgba(255, 255, 255, 0), var(--color-white));
 }
 
 .Border {
@@ -345,10 +344,10 @@ const onContextClick = () => {
 .Internal .Border {
   background: repeating-linear-gradient(
     45deg,
-    theme('colors.blue.DEFAULT'),
-    theme('colors.blue.DEFAULT') 5px,
-    theme('colors.blue.dark') 5px,
-    theme('colors.blue.dark') 10px
+    var(--color-blue),
+    var(--color-blue) 5px,
+    var(--color-blue-dark) 5px,
+    var(--color-blue-dark) 10px
   );
   background-size: 14px 14px;
   background-position: -1px;
@@ -358,9 +357,6 @@ const onContextClick = () => {
 }
 
 .Internal .BubbleGradient::before {
-  background: linear-gradient(
-    rgba(255, 255, 255, 0),
-    theme('colors.black.DEFAULT')
-  );
+  background: linear-gradient(rgba(255, 255, 255, 0), var(--color-black));
 }
 </style>

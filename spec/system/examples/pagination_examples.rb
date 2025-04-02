@@ -1,6 +1,6 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, klass:, path:, sort_by: :name, create_params: {}, main_column: :name|
+RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, klass:, path:, create_params: {}, main_column: :name|
   let(:create_params) { create_params }
   let(:model)         { model }
   let(:klass)         { klass }
@@ -12,8 +12,18 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
     true
   end
 
-  def offset_first_of_page(page, entries_per_page)
-    (entries_per_page * (page - 1)) + 1
+  def current_first_row
+    page.first('.js-tableBody tr:first-child td').text.strip
+  end
+
+  def current_last_row
+    page.first('.js-tableBody tr:last-child td').text.strip
+  end
+
+  def wait_until_first_and_last_changed(first_row, last_row)
+    wait.until do
+      first_row != current_first_row && last_row != current_last_row
+    end
   end
 
   before do
@@ -21,47 +31,47 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
   end
 
   it 'does paginate' do
-    entries_per_page = page.all('.js-tableBody tr').count
+    page.all('.js-tableBody tr').count
 
     expect(page).to have_css('.js-pager')
-
-    class_page1 = base_scope.reorder(sort_by => :asc, id: :asc).offset(offset_first_of_page(1, entries_per_page)).first
-    expect(page).to have_text(class_page1.send(main_column))
     expect(page).to have_css('.js-page.btn--active', text: '1')
     expect(page).to have_no_css('.js-tableBody table-draggable')
 
+    first_row = current_first_row
+    last_row  = current_last_row
     page.first('.js-page', text: '2').click
 
-    class_page2 = base_scope.reorder(sort_by => :asc, id: :asc).offset(offset_first_of_page(2, entries_per_page)).first
-    expect(page).to have_text(class_page2.send(main_column))
     expect(page).to have_css('.js-page.btn--active', text: '2')
     expect(page).to have_no_css('.js-tableBody table-draggable')
+    wait_until_first_and_last_changed(first_row, last_row)
 
+    first_row = current_first_row
+    last_row  = current_last_row
     page.first('.js-page', text: '3').click
 
-    class_page3 = base_scope.reorder(sort_by => :asc, id: :asc).offset(offset_first_of_page(3, entries_per_page)).first
-    expect(page).to have_text(class_page3.send(main_column))
     expect(page).to have_css('.js-page.btn--active', text: '3')
     expect(page).to have_no_css('.js-tableBody table-draggable')
+    wait_until_first_and_last_changed(first_row, last_row)
 
+    first_row = current_first_row
+    last_row  = current_last_row
     page.first('.js-page', text: '4').click
 
-    class_page4 = base_scope.reorder(sort_by => :asc, id: :asc).offset(offset_first_of_page(4, entries_per_page)).first
-    expect(page).to have_text(class_page4.send(main_column))
     expect(page).to have_css('.js-page.btn--active', text: '4')
     expect(page).to have_no_css('.js-tableBody table-draggable')
+    wait_until_first_and_last_changed(first_row, last_row)
 
     page.first('.js-page', text: '1').click
 
     page.first(".js-tableHead[data-column-key=#{main_column}]").click
-    class_page1 = base_scope.reorder(main_column => :asc, id: :asc).offset(offset_first_of_page(1, entries_per_page)).first
-    expect(page).to have_text(class_page1.send(main_column))
     expect(page).to have_css('.js-page.btn--active', text: '1')
     expect(page).to have_no_css('.js-tableBody table-draggable')
 
+    first_row = current_first_row
+    last_row  = current_last_row
     page.first(".js-tableHead[data-column-key=#{main_column}]").click
-    class_last = base_scope.reorder(main_column => :desc, id: :asc).offset(offset_first_of_page(1, entries_per_page)).first
-    expect(page).to have_text(class_last.send(main_column))
+
+    wait_until_first_and_last_changed(first_row, last_row)
   end
 
   context 'when search is enabled' do
@@ -71,15 +81,17 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
 
     it 'does filter results with the search bar' do
       page.find('.js-search').fill_in with: base_scope.last.try(main_column)
-      wait.until { page.all('.js-tableBody tr').count == 1 }
+      expect(page).to have_css('.js-tableBody tr', count: 1)
 
       # does stay after reload
       refresh
-      wait.until { page.find('.js-search').present? && page.all('.js-tableBody tr').count == 1 }
+      expect(page).to have_css('.js-search')
+      expect(page).to have_css('.js-tableBody tr', count: 1)
 
       # remove filter
-      page.find('.js-search').fill_in with: '', fill_options: { clear: :backspace }
-      wait.until { page.all('.js-tableBody tr').count != 1 }
+      page.find('.js-search').fill_in with: ' '
+
+      expect(page).to have_css('.js-tableBody tr', count: 50)
     end
 
     context 'when ES is enabled', authenticated_as: :authenticate, searchindex: true do

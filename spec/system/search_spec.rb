@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -337,6 +337,39 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
         end
       end
     end
+  end
+
+  # https://github.com/zammad/zammad/issues/5505
+  context 'when tickets are ordered by grroups' do
+    let(:agent) { create(:agent, groups: Group.all) }
+    let(:authenticate_user) { agent }
+
+    let(:ticket_3) { create(:ticket, title: 'Testing Ticket 3', group: group_1) }
+    let(:ticket_4) { create(:ticket, title: 'Testing Ticket 4', group: group_2) }
+    let(:ticket_5) { create(:ticket, title: 'Testing Ticket 5', group: group_1) }
+    let(:ticket_6) { create(:ticket, title: 'Testing Ticket 6', group: group_2) }
+
+    before do
+      ticket_4 && ticket_5 && ticket_6 && ticket_3
+
+      searchindex_model_reload([Ticket, Organization, User])
+      fill_in id: 'global-search', with: 'Testing'
+      click_on 'Show Search Details'
+
+      find('[data-tab-content=Ticket]').click
+    end
+
+    it 'sorts correctly' do
+      # bug is most visible in descending order
+      find('.table-column-title', text: 'GROUP').click
+      find('.table-column-title', text: 'GROUP').click
+
+      actual_ids   = all('.js-tableBody tr.item').map { |row| row['data-id'].to_i }
+      expected_ids = [ticket_6, ticket_4, ticket_2, ticket_3, ticket_5, ticket_1].map(&:id)
+
+      expect(actual_ids).to eq(expected_ids)
+    end
+
   end
 
   context 'Organization members' do
@@ -726,40 +759,196 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     let(:all_zammad_customers)        { User.where('email LIKE ?', '%zammad%') }
     let(:all_zammad_customers_sorted) { all_zammad_customers.reorder(:login) }
 
-    before do
-      new_customers
-      visit '#search/zammad'
+    context 'with many customers' do
+      before do
+        new_customers
+        visit '#search/zammad'
+      end
+
+      it 'shows 50 on first page and remaining on second page' do
+        expect(page).to have_css('.tab[data-tab-content=User] .tab-badge', text: all_zammad_customers.count)
+
+        click '.tab[data-tab-content=User]'
+
+        expect(page).to have_css('.js-tableBody tr', count: 50)
+
+        page.first('.js-page', text: '2').click
+
+        expect(page).to have_css('.js-tableBody tr', count: all_zammad_customers.count % 50)
+      end
+
+      it 'sorts correctly across pages' do
+        click '.tab[data-tab-content=User]'
+
+        first('.js-sort').click
+
+        expect(page).to have_css('.js-tableBody tr:first-child',
+                                 text: all_zammad_customers_sorted.first.login)
+
+        first('.js-sort').click
+
+        expect(page).to have_css('.js-tableBody tr:first-child',
+                                 text: all_zammad_customers_sorted.last.login)
+
+        first('.js-page', text: '2').click
+
+        expect(page).to have_css('.js-tableBody tr:last-child',
+                                 text: all_zammad_customers_sorted.first.login)
+      end
     end
 
-    it 'shows 50 on first page and remaining on second page' do
-      expect(page).to have_css('.tab[data-tab-content=User] .tab-badge', text: all_zammad_customers.count)
+    context 'when many tickets exist too' do
+      let(:new_tickets) do
+        Array.new(55).map.with_index do |_elem, i|
+          t = create(:ticket, group: Ticket.find(1).group, title: "Ticket #{i} zammad")
+          create(:ticket_article, ticket: t)
+        end
+      end
 
-      click '.tab[data-tab-content=User]'
+      let(:all_zammad_tickets)         { Ticket.where('title LIKE ?', '%ammad%') }
+      let(:all_zammad_tickets_default) { all_zammad_tickets.reorder('updated_at desc').to_a }
+      let(:all_zammad_tickets_sorted)  { all_zammad_tickets.reorder(:title).to_a }
 
-      expect(page).to have_css('.js-tableBody tr', count: 50)
+      before do
+        new_tickets
+        visit '#search/ammad'
+      end
 
-      page.first('.js-page', text: '2').click
+      it 'keeps pagination and sorting when switching taskbars' do
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_default.first.title)
 
-      expect(page).to have_css('.js-tableBody tr', count: all_zammad_customers.count % 50)
-    end
+        all('.js-sort')[2].click
 
-    it 'sorts correctly across pages' do
-      click '.tab[data-tab-content=User]'
+        expect(page).to have_css('.table-sort-arrow')
 
-      first('.js-sort').click
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_sorted.first.title)
 
-      expect(page).to have_css('.js-tableBody tr:first-child',
-                               text: all_zammad_customers_sorted.first.login)
+        first('.js-page', text: '2').click
 
-      first('.js-sort').click
+        expect(page).to have_css('.js-tableBody tr:last-child', text: all_zammad_tickets_sorted.last.title)
+        expect(page).to have_css('.js-page.btn--active', text: 2)
 
-      expect(page).to have_css('.js-tableBody tr:first-child',
-                               text: all_zammad_customers_sorted.last.login)
+        click_on('Dashboard')
 
-      first('.js-page', text: '2').click
+        all_zammad_tickets_sorted.last.destroy!
+        browser_travel_to 1.hour.from_now
 
-      expect(page).to have_css('.js-tableBody tr:last-child',
-                               text: all_zammad_customers_sorted.first.login)
+        find('a[href="#search"]').click
+
+        expect(page).to have_css('.table-sort-arrow')
+        expect(page).to have_css('.js-page.btn--active', text: 2)
+        expect(page).to have_css('.js-tableBody tr:last-child', text: all_zammad_tickets_sorted.second_to_last.title)
+      end
+
+      it 'keeps background tab pagination and sorting when switching taskbars' do
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_default.first.title)
+
+        all('.js-sort')[2].click
+        expect(page).to have_css('.table-sort-arrow')
+        first('.js-page', text: '2').click
+        expect(page).to have_css('.js-page.btn--active', text: 2)
+        expect(page).to have_css('.js-tableBody tr:last-child', text: all_zammad_tickets_sorted.last.title)
+
+        click '.tab[data-tab-content=User]'
+
+        click_on('Dashboard')
+
+        all_zammad_tickets_sorted.last.destroy!
+        browser_travel_to 1.hour.from_now
+
+        find('a[href="#search"]').click
+
+        click '.tab[data-tab-content=Ticket]'
+
+        expect(page).to have_css('.table-sort-arrow')
+        expect(page).to have_css('.js-page.btn--active', text: 2)
+        expect(page).to have_css('.js-tableBody tr:last-child', text: all_zammad_tickets_sorted.second_to_last.title)
+      end
+
+      it 'updates tab without sorting or pagination' do
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_default.first.title)
+
+        click_on('Dashboard')
+
+        all_zammad_tickets_default.first.destroy!
+        browser_travel_to 1.hour.from_now
+
+        find('a[href="#search"]').click
+
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_default.second.title)
+      end
+
+      it 'updates background tab without sorting or pagination' do
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_default.first.title)
+
+        click '.tab[data-tab-content=User]'
+
+        click_on('Dashboard')
+
+        all_zammad_tickets_default.first.destroy!
+        browser_travel_to 1.hour.from_now
+
+        find('a[href="#search"]').click
+
+        click '.tab[data-tab-content=Ticket]'
+
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_default.second.title)
+      end
+
+      it 'keeps pagination and sorting when switching taskbars and there is no enough content anymore' do
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_default.first.title)
+
+        all('.js-sort')[2].click
+
+        expect(page).to have_css('.table-sort-arrow')
+
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_sorted.first.title)
+
+        first('.js-page', text: '2').click
+
+        expect(page).to have_css('.js-tableBody tr:last-child', text: all_zammad_tickets_sorted.last.title)
+        expect(page).to have_css('.js-page.btn--active', text: 2)
+
+        click_on('Dashboard')
+
+        all_zammad_tickets_sorted.last(10).each(&:destroy!)
+        browser_travel_to 1.hour.from_now
+
+        find('a[href="#search"]').click
+
+        expect(page).to have_no_css('.table-sort-arrow')
+        expect(page).to have_no_css('.js-page.btn--active', text: 2)
+        expect(page).to have_no_css('.js-page.btn--active', text: 1)
+        expect(page).to have_css('.js-page.btn', text: 1)
+
+        first('.js-page', text: '1').click
+        expect(page).to have_css('.table-sort-arrow')
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_sorted.first.title)
+      end
+
+      it 'keeps pagination and sorting after bulk form update' do
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_default.first.title)
+
+        all('.js-sort')[2].click
+
+        expect(page).to have_css('.table-sort-arrow')
+
+        expect(page).to have_css('.js-tableBody tr:first-child', text: all_zammad_tickets_sorted.first.title)
+
+        first('.js-page', text: '2').click
+
+        find('.js-tableBody tr:last-child td.table-checkbox').check('bulk', allow_label_click: true)
+
+        find('select[name=owner_id]').find('option:nth-child(2)').select_option
+        click '.js-confirm'
+        click '.js-submit'
+
+        expect(page).to have_text('Bulk action executed!')
+
+        expect(page).to have_css('.table-sort-arrow')
+        expect(page).to have_css('.js-page.btn--active', text: 2)
+        expect(page).to have_css('.js-tableBody tr:last-child', text: all_zammad_tickets_sorted.last.title)
+      end
     end
   end
 end

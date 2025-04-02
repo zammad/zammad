@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -49,7 +49,7 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
 
       find_button('Go back').click
 
-      wait_for_gql('shared/entities/ticket/graphql/queries/ticket/overviews.graphql')
+      wait_for_gql('apps/mobile/entities/ticket/graphql/queries/overviews.graphql')
 
       expect_current_route '/tickets/view/all_open'
 

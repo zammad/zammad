@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import {
@@ -434,7 +434,7 @@ const goToChildPage = ({
             >
               <CommonLabel
                 v-if="isChildPage"
-                class="text-blue-800 hover:text-black focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800 dark:hover:text-white"
+                class="text-blue-800! hover:text-black! focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800! dark:hover:text-white!"
                 :aria-label="$t('Back to previous page')"
                 :prefix-icon="
                   locale.localeData?.dir === 'rtl'
@@ -458,7 +458,7 @@ const goToChildPage = ({
                   v-for="action of dropdownActions"
                   :key="action.key"
                   :prefix-icon="action.icon"
-                  class="text-blue-800 hover:text-black focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800 dark:hover:text-white"
+                  class="text-blue-800! hover:text-black! focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800! dark:hover:text-white!"
                   size="small"
                   role="button"
                   tabindex="0"

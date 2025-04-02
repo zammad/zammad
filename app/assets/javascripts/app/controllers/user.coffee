@@ -27,6 +27,7 @@ class User extends App.ControllerSubContent
           container: @el.closest('.content')
         )
       defaultSortBy: 'created_at'
+      defaultOrder: 'DESC'
       searchBar: true
       searchQuery: @search_query
       filterMenu: [

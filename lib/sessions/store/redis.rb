@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Sessions::Store::Redis
   SESSIONS_KEY = 'sessions'.freeze
@@ -7,7 +7,7 @@ class Sessions::Store::Redis
   NODES_KEY = 'nodes'.freeze
 
   def initialize
-    @redis = Redis.new(driver: :hiredis)
+    @redis = Zammad::Service::Redis.new
   end
 
   def create(client_id, data)

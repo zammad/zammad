@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import {
@@ -999,12 +999,143 @@ describe('Ticket detail view', () => {
         ).not.toBeInTheDocument()
       })
     })
+
+    it('shows alert for missing attachments', async () => {
+      mockTicketQuery({
+        ticket: createDummyTicket({
+          group: {
+            id: convertToGraphQLId('Group', 1),
+            emailAddress: {
+              name: 'Zammad Helpdesk',
+              emailAddress: 'zammad@localhost',
+            },
+          },
+          articleType: 'email',
+          defaultPolicy: {
+            update: true,
+            agentReadAccess: true,
+          },
+        }),
+      })
+
+      mockTicketArticlesQuery({
+        articles: {
+          totalCount: 1,
+          edges: [
+            {
+              node: createDummyArticle({
+                articleType: 'email',
+                internal: false,
+              }),
+            },
+          ],
+        },
+      })
+
+      mockFormUpdaterQuery({
+        formUpdater: {
+          fields: {
+            group_id: {
+              options: [
+                {
+                  value: 1,
+                  label: 'Users',
+                },
+                {
+                  value: 2,
+                  label: 'test group',
+                },
+              ],
+            },
+            owner_id: {
+              options: [
+                {
+                  value: 3,
+                  label: 'Test Admin Agent',
+                },
+              ],
+            },
+            state_id: {
+              options: [
+                {
+                  value: 4,
+                  label: 'closed',
+                },
+                {
+                  value: 2,
+                  label: 'open',
+                },
+                {
+                  value: 6,
+                  label: 'pending close',
+                },
+                {
+                  value: 3,
+                  label: 'pending reminder',
+                },
+              ],
+            },
+            pending_time: {
+              show: false,
+            },
+            priority_id: {
+              options: [
+                {
+                  value: 1,
+                  label: '1 low',
+                },
+                {
+                  value: 2,
+                  label: '2 normal',
+                },
+                {
+                  value: 3,
+                  label: '3 high',
+                },
+              ],
+            },
+          },
+          flags: {
+            newArticlePresent: false,
+          },
+        },
+      })
+
+      const view = await visitView('/tickets/1')
+
+      const articles = await view.findAllByRole('article')
+
+      await view.events.click(
+        await within(articles[0]).findByRole('button', { name: 'Reply' }),
+      )
+
+      await view.events.type(
+        view.getByRole('textbox', { name: 'Text' }),
+        'Reply. Check attachment.',
+      )
+
+      await getNode('form-ticket-edit')?.settled
+
+      await view.events.click(view.getByRole('button', { name: 'Update' }))
+
+      const dialog = await view.findByRole('dialog', {
+        name: 'Confirmation',
+      })
+      expect(dialog).toBeInTheDocument()
+
+      const dialogView = within(dialog)
+      expect(
+        dialogView.getByText(
+          'Did you plan to include attachments with this message?',
+        ),
+      ).toBeInTheDocument()
+    })
   })
 
   it('should reset form after ticket updates', async () => {
     const ticket = createDummyTicket({
       state: {
-        id: convertToGraphQLId('Ticket::State', 2),
+        id: convertToGraphQLId('Ticket::State', 3),
         name: 'open',
         stateType: {
           id: convertToGraphQLId('TicketStateType', 2),
@@ -1106,6 +1237,12 @@ describe('Ticket detail view', () => {
       },
     })
 
-    expect(view.getByLabelText('Group')).toHaveTextContent('Users')
+    const attributesContainer = view.getByTestId('ticket-attributes')
+
+    await waitFor(() =>
+      expect(
+        within(attributesContainer).getByLabelText('Group'),
+      ).toHaveTextContent('Users'),
+    )
   })
 })

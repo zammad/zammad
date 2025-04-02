@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { escapeRegExp } from 'lodash-es'
@@ -191,7 +191,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
       :class="{
         'px-6': !context.noFiltering,
       }"
-      class="focus:bg-blue-highlight flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white focus:outline-none"
+      class="focus:bg-blue-highlight flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white focus:outline-hidden"
       tabindex="0"
       role="button"
       :aria-label="$t('Back to previous page')"
@@ -227,7 +227,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
           'px-6': !context.noFiltering,
           'pointer-events-none': option.disabled,
         }"
-        class="focus:bg-blue-highlight relative flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white focus:outline-none"
+        class="focus:bg-blue-highlight relative flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white focus:outline-hidden"
         tabindex="0"
         role="option"
         :aria-selected="

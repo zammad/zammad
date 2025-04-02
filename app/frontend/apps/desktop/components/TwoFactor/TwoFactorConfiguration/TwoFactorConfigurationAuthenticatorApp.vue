@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import QRCode from 'qrcode'
@@ -18,13 +18,17 @@ import { useUserCurrentTwoFactorInitiateMethodConfigurationQuery } from '#shared
 import UserError from '#shared/errors/UserError.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import { usePasswordCheckTwoFactor } from '#desktop/entities/two-factor-configuration/composables/usePasswordCheckTwoFactor.ts'
 
-import type { TwoFactorConfigurationComponentProps } from '../types.ts'
+import type { TwoFactorConfigurationComponentPropsWithRequiredToken } from '../types.ts'
+import type { ApolloError } from '@apollo/client/errors'
 
-const props = defineProps<TwoFactorConfigurationComponentProps>()
+const props =
+  defineProps<TwoFactorConfigurationComponentPropsWithRequiredToken>()
 
 const { twoFactorMethodLookup } = useTwoFactorPlugins()
 const twoFactorPlugin = twoFactorMethodLookup[props.type]
@@ -35,12 +39,27 @@ const initiationQuery = new QueryHandler(
   useUserCurrentTwoFactorInitiateMethodConfigurationQuery(
     {
       methodName: twoFactorPlugin.name,
+      token: props.token,
     },
     {
       fetchPolicy: 'no-cache',
     },
   ),
 )
+
+const { redirectToPasswordCheck } = usePasswordCheckTwoFactor(
+  props.formSubmitCallback,
+)
+
+initiationQuery.onError((error: ApolloError) => {
+  if (
+    error?.graphQLErrors?.[0]?.extensions?.type !==
+    'Gql::Concerns::HandlesPasswordRevalidationToken::InvalidTokenError'
+  )
+    return
+
+  redirectToPasswordCheck()
+})
 
 const initiationResult = initiationQuery.result()
 
@@ -55,11 +74,26 @@ const { form, formSetErrors } = useForm()
 
 const mutateMethodConfiguration = new MutationHandler(
   useUserCurrentTwoFactorVerifyMethodConfigurationMutation(),
+  {
+    errorShowNotification: false,
+    errorCallback: (error) => {
+      if (error.type === GraphQLErrorTypes.UnknownError) {
+        redirectToPasswordCheck()
+        return false
+      }
+
+      return true
+    },
+  },
 )
 
 const verifyMethodConfiguration = async (securityCode: string) => {
+  // TODO: Redirect to the password check step.
+  if (!props.token) return
+
   return mutateMethodConfiguration.send({
     methodName: twoFactorPlugin.name,
+    token: props.token,
     payload: securityCode,
     configuration: {
       ...initiationResult.value
@@ -98,17 +132,19 @@ const submitForm = async ({
     }
 
     props.formSubmitCallback?.({})
-  } catch {
-    formSetErrors(
-      new UserError([
-        {
-          field: 'securityCode',
-          message: __(
-            'Invalid security code! Please try again with a new code.',
-          ),
-        },
-      ]),
-    )
+  } catch (error) {
+    if (error instanceof UserError) {
+      formSetErrors(
+        new UserError([
+          {
+            field: 'securityCode',
+            message: __(
+              'Invalid security code! Please try again with a new code.',
+            ),
+          },
+        ]),
+      )
+    }
   }
 }
 
@@ -237,7 +273,7 @@ defineExpose({
             <div
               v-show="showSecretOverlay"
               id="qr-code-secret-overlay"
-              class="absolute bottom-0 left-0 right-0 top-0 flex flex-col items-center justify-center gap-1.5 rounded-lg bg-black bg-opacity-90"
+              class="bg-opacity-90 absolute top-0 right-0 bottom-0 left-0 flex flex-col items-center justify-center gap-1.5 rounded-lg bg-black"
               role="presentation"
             >
               <span
@@ -275,7 +311,7 @@ defineExpose({
             type="text"
             :placeholder="$t('Security Code')"
             aria-labelledby="security-code-description"
-            required
+            validation="required"
           />
         </Form>
       </li>

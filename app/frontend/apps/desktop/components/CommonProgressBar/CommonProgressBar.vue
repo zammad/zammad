@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 export interface Props {
@@ -20,25 +20,37 @@ defineProps<Props>()
 </template>
 
 <style scoped>
+[data-them='dark'] .progress {
+  background-color: var(--color-gray-700);
+
+  &:indeterminate::-moz-progress-bar {
+    background-color: var(--color-gray-700);
+  }
+}
+
 .progress {
-  @apply h-2 overflow-clip rounded-2xl bg-blue-200 dark:bg-gray-700;
+  height: 0.5rem;
+  overflow: clip;
+  border-radius: 1rem;
+  background-color: var(--color-blue-200);
 
   &::-moz-progress-bar {
-    @apply rounded-none bg-blue-800;
+    border-radius: 0;
+    background-color: var(--color-blue-800);
   }
 
   &::-webkit-progress-bar {
-    @apply rounded-2xl;
+    border-radius: 1rem;
   }
 
   &::-webkit-progress-value {
-    @apply rounded-none bg-blue-800;
-
+    border-radius: 0;
+    background-color: var(--color-blue-800);
     transition: width 1s;
   }
 
   &:indeterminate {
-    --progress-color: theme(colors.blue.800);
+    --progress-color: var(--color-blue-800);
   }
 
   &:indeterminate {
@@ -55,8 +67,7 @@ defineProps<Props>()
   }
 
   &:indeterminate::-moz-progress-bar {
-    @apply bg-blue-200 dark:bg-gray-700;
-
+    background-color: var(--color-blue-200);
     background-image: repeating-linear-gradient(
       90deg,
       var(--progress-color) -1%,

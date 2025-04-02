@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
@@ -15,6 +15,6 @@ defineProps<Props>()
     <CommonLabel v-if="message">
       {{ $t(message) }}
     </CommonLabel>
-    <CommonLoader class="mb-3 mt-5" loading />
+    <CommonLoader class="mt-5 mb-3" loading />
   </div>
 </template>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -11,8 +11,6 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationInbound, typ
           success
           mailboxStats {
             contentMessages
-            archivePossible
-            archiveWeekRange
           }
           errors {
             message
@@ -38,10 +36,11 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationInbound, typ
 
   let(:variables)           { { 'inboundConfiguration' => failing_configuration } }
   let(:probe_full_response) { nil }
+  let(:error)               { nil }
 
   before do
     allow(EmailHelper::Probe).to receive(:inbound).and_return(probe_full_response) if probe_full_response
-    allow_any_instance_of(Channel::Driver::Imap).to receive(:fetch).and_raise(Errno::EHOSTUNREACH)
+    allow_any_instance_of(Channel::Driver::Imap).to receive(:check_configuration).and_raise(error) if error
     gql.execute(query, variables: variables)
   end
 
@@ -49,15 +48,13 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationInbound, typ
     let(:admin) { create(:admin) }
 
     context 'with successful probe' do
-      let(:probe_full_response) { { result: 'ok', content_messages: 23, archive_possible: true, archive_week_range: 2 } }
+      let(:probe_full_response) { { result: 'ok', content_messages: 23 } }
 
       let(:expected_result) do
         {
           'success'      => true,
           'mailboxStats' => {
-            'contentMessages'  => 23,
-            'archivePossible'  => true,
-            'archiveWeekRange' => 2,
+            'contentMessages' => 23,
           },
           'errors'       => nil,
         }
@@ -69,11 +66,12 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationInbound, typ
     end
 
     context 'with failed probe' do
+      let(:error) { SocketError.new('getaddrinfo: nodename nor servname provided, or not known') }
       let(:expected_result) do
         {
           'success'      => false,
           'mailboxStats' => nil,
-          'errors'       => [{ 'field' => 'inbound.host', 'message' => 'There is no route to this host.' }],
+          'errors'       => [{ 'field' => 'inbound.host', 'message' => 'The hostname could not be found.' }],
         }
       end
 

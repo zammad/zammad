@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'lib/validations/object_manager/attribute_validator/backend_examples'
@@ -38,8 +38,8 @@ RSpec.describe Validations::ObjectManager::AttributeValidator::FuturePast do
     end
   end
 
-  it_behaves_like 'data_option validator', data_option: :future, value: Time.current.tomorrow.midnight
-  it_behaves_like 'data_option validator', data_option: :past, value: Time.current.yesterday.midnight
+  it_behaves_like 'data_option validator', data_option: :future, value: 1.week.from_now
+  it_behaves_like 'data_option validator', data_option: :past, value: 1.week.ago
 
   context 'when validation should not be performed' do
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class User
   module Assets
@@ -45,26 +45,6 @@ returns
       accounts = assets_accounts
       if accounts.present?
         local_attributes['accounts'] = accounts
-      end
-
-      # get roles
-      local_attributes['role_ids']&.each do |role_id|
-        next if data[:Role] && data[:Role][role_id]
-
-        role = Role.lookup(id: role_id)
-        next if !role
-
-        data = role.assets(data)
-      end
-
-      # get groups
-      local_attributes['group_ids']&.each_key do |group_id|
-        next if data[:Group] && data[:Group][group_id]
-
-        group = Group.lookup(id: group_id)
-        next if !group
-
-        data = group.assets(data)
       end
 
       # get organizations

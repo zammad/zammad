@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -26,7 +26,7 @@ const { updateTitle } = useTicketEditTitle(ticketId)
 <template>
   <div
     v-if="ticket"
-    class="-:gap-4 grid grid-cols-[max-content_1fr]"
+    class="grid grid-cols-[max-content_1fr] gap-4"
     :class="{ 'items-center gap-3': hideDetails }"
   >
     <div class="flex" :class="{ 'mt-1': !hideDetails }">

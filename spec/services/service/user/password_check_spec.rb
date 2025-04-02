@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -10,24 +10,24 @@ RSpec.describe Service::User::PasswordCheck do
   context 'with empty password' do
     let(:password) { nil }
 
-    it 'returns false' do
-      expect(service.execute).to be_falsey
+    it 'returns false for success and does not include token' do
+      expect(service.execute).to include(success: false).and(not_include(:token))
     end
   end
 
   context 'with wrong password' do
     let(:password) { 'nah' }
 
-    it 'returns false' do
-      expect(service.execute).to be_falsey
+    it 'returns false for success and does not include token' do
+      expect(service.execute).to include(success: false).and(not_include(:token))
     end
   end
 
   context 'with correct password' do
     let(:password) { 'lorem' }
 
-    it 'returns true' do
-      expect(service.execute).to be_truthy
+    it 'returns true for success and includes a token' do
+      expect(service.execute).to include(success: true, token: be_a(String))
     end
   end
 end

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref, watch } from 'vue'
 
@@ -64,8 +64,9 @@ export const useEmailChannelConfiguration = (
   const stepTitle = computed(() => {
     switch (activeStep.value) {
       case 'inbound':
-      case 'inbound-messages':
         return __('Email Inbound')
+      case 'inbound-messages':
+        return __('Archive Emails')
       case 'outbound':
         return __('Email Outbound')
       default:
@@ -108,6 +109,7 @@ export const useEmailChannelConfiguration = (
         ...inboundConfiguration,
         archive: true,
         archiveBefore: metaInformationInbound.value.archiveBefore,
+        archiveStateId: metaInformationInbound.value.archiveStateId,
       }
     }
 
@@ -281,8 +283,7 @@ export const useEmailChannelConfiguration = (
 
           if (
             mailboxStats?.contentMessages &&
-            mailboxStats?.contentMessages > 0 &&
-            !data.keepOnServer
+            mailboxStats?.contentMessages > 0
           ) {
             updateMetaInformationInbound(mailboxStats, 'outbound')
             setActiveStep('inbound-messages')
@@ -302,7 +303,9 @@ export const useEmailChannelConfiguration = (
   ) => {
     if (metaInformationInbound.value && data.archive) {
       metaInformationInbound.value.archive = true
-      metaInformationInbound.value.archiveBefore = new Date().toISOString()
+      metaInformationInbound.value.archiveBefore = data.archive_before as string
+      metaInformationInbound.value.archiveStateId =
+        data.archive_state_id as number
     }
 
     if (metaInformationInbound.value?.nextAction === 'outbound') {

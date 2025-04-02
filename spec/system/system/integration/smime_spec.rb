@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -46,8 +46,8 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
 
     it 'adding of multiple certificates at once' do
       multiple_certificates = [
-        Rails.root.join('spec/fixtures/files/smime/ChainCA.crt').read,
-        Rails.root.join('spec/fixtures/files/smime/SenderCA.crt').read,
+        Rails.root.join('spec/fixtures/files/smime/alice@acme.corp+encrypt.crt').read,
+        Rails.root.join('spec/fixtures/files/smime/smimedouble@example.com.crt').read,
       ].join
 
       # add cert
@@ -56,9 +56,8 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
       click '.js-submit'
 
       # wait for ajax
-      expect(page).to have_text('IntermediateCA')
-      expect(page).to have_text('RootCA')
-      expect(page).to have_text('SenderCA')
+      expect(page).to have_text('alice@acme.corp')
+      expect(page).to have_text('smimedouble@example.com')
     end
   end
 

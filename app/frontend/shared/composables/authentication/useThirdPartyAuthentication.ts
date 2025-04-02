@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
@@ -85,6 +85,13 @@ export const useThirdPartyAuthentication = () => {
         enabled: !!config.value.auth_sso,
         icon: 'sso',
         url: '/auth/sso',
+      },
+      {
+        name: EnumAuthenticationProvider.OpenidConnect,
+        label: i18n.t('OpenID Connect'),
+        enabled: !!config.value.auth_openid_connect,
+        icon: 'openid-connect',
+        url: '/auth/openid_connect',
       },
     ]
   })

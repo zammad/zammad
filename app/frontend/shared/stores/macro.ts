@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { without } from 'lodash-es'
 import { defineStore } from 'pinia'
@@ -35,19 +35,44 @@ export const useMacroStore = defineStore('macro', () => {
   )
 
   macroSubscription.onResult((data) => {
-    if (!data.data?.macrosUpdate.macroUpdated) return
+    const macroId = data.data?.macrosUpdate.macroId
+    const groupIds = data.data?.macrosUpdate.groupIds
+    const removeMacroId = data.data?.macrosUpdate.removeMacroId
 
-    const refetchFor: Record<string, boolean> = {}
+    if (!macroId && !removeMacroId) return
+
+    const refetchFor: Set<ID | ID[]> = new Set()
 
     queryByUsageKey.forEach((query) => {
-      const { groupId } = toValue(query.operationResult.variables) ?? {}
+      const macros = query.operationResult.result.value?.macros
+
+      if (
+        !macros ||
+        (removeMacroId && !macros.find((macro) => macro.id === removeMacroId))
+      )
+        return
+
+      const { groupIds: inputGroupIds } =
+        toValue(query.operationResult.variables) ?? {}
 
       // Skip refetching of duplicate queries with the same group ID.
-      if (!groupId || refetchFor[groupId]) return
+      if (!inputGroupIds || refetchFor.has(inputGroupIds)) return
+
+      if (
+        groupIds &&
+        groupIds.length &&
+        !groupIds.some((id) =>
+          Array.isArray(inputGroupIds)
+            ? inputGroupIds.includes(id)
+            : inputGroupIds === id,
+        ) &&
+        !macros.find((macro) => macro.id === macroId)
+      )
+        return
 
       query.refetch()
 
-      refetchFor[groupId] = true
+      refetchFor.add(inputGroupIds)
     })
   })
 

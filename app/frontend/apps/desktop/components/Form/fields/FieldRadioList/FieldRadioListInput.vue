@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
@@ -64,19 +64,19 @@ const selectOption = (option: RadioListOption, event?: Event) => {
         :id="`radio_list_radio_${context.id}_${option.value}`"
         size="small"
         tabindex="0"
-        class="formkit-disabled:pointer-events-none formkit-invalid:outline-red-500 dark:hover:formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:-outline-offset-1 formkit-errors:outline-red-500 dark:hover:formkit-errors:outline-red-500 shrink-0 self-start rounded-full focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-blue-800 group-hover:outline group-hover:outline-1 group-hover:-outline-offset-1 group-hover:outline-blue-600 group-hover:focus:outline-blue-800 dark:group-hover:outline-blue-900 dark:group-hover:focus:outline-blue-800"
+        class="formkit-disabled:pointer-events-none formkit-invalid:outline-red-500 dark:hover:formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:-outline-offset-1 formkit-errors:outline-red-500 dark:hover:formkit-errors:outline-red-500 shrink-0 self-start rounded-full group-hover:outline group-hover:outline-1 group-hover:-outline-offset-1 group-hover:outline-blue-600 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-blue-800 group-hover:focus:outline-blue-800 dark:group-hover:outline-blue-900 dark:group-hover:focus:outline-blue-800"
         :name="option.value == localValue ? 'radio-yes' : 'radio-no'"
         @keydown.space.prevent="selectOption(option)"
       />
 
       <div class="flex flex-col" tabindex="-1">
-        <CommonLabel class="text-black dark:text-white">
+        <CommonLabel class="text-black! dark:text-white!">
           {{ $t(option.label) }}
         </CommonLabel>
 
         <CommonLabel
           v-if="option.description"
-          class="text-stone-200 dark:text-neutral-500"
+          class="text-stone-200! dark:text-neutral-500!"
         >
           {{ $t(option.description) }}
         </CommonLabel>

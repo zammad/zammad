@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/concerns/can_perform_changes_examples'
@@ -615,6 +615,33 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
     end
   end
 
+  context 'with a "ticket.subscribe" trigger for non-agent user', current_user_id: 1 do
+    let(:user) { create(:customer) }
+
+    let(:perform) do
+      { 'ticket.subscribe' => { 'pre_condition' => 'current_user.id', 'value' => '', 'value_completion' => '' } }
+    end
+
+    it 'does not subscribe customer to ticket' do
+      object.perform_changes(performable, 'trigger', object, user.id)
+
+      expect(Mention.exists?(mentionable: object, user: user)).to be false
+    end
+
+    context 'with specific user' do
+      let(:customer) { create(:customer) }
+      let(:perform) do
+        { 'ticket.subscribe' => { 'pre_condition' => 'specific', 'value' => customer.id, 'value_completion' => '' } }
+      end
+
+      it 'does not subscribe specific customer to ticket' do
+        object.perform_changes(performable, 'trigger', object, user.id)
+
+        expect(Mention.exists?(mentionable: object, user: customer)).to be false
+      end
+    end
+  end
+
   context 'with a "ticket.subscribe" trigger', current_user_id: 1 do
     let(:user) { create(:agent, groups: [group]) }
 
@@ -628,6 +655,14 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
       expect(Mention.last).to have_attributes(
         mentionable: object,
         user:        user,
+      )
+
+      expect(History.last).to have_attributes(
+        o_id:            Mention.last.id,
+        related_o_id:    object.id,
+        sourceable_type: 'Trigger',
+        sourceable_id:   performable.id,
+        sourceable_name: performable.name,
       )
     end
 
@@ -668,6 +703,13 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
       object.perform_changes(performable, 'trigger', object, user.id)
 
       expect(Mention).not_to exist(mention.id)
+      expect(History.last).to have_attributes(
+        o_id:            mention.id,
+        related_o_id:    object.id,
+        sourceable_type: 'Trigger',
+        sourceable_id:   performable.id,
+        sourceable_name: performable.name,
+      )
     end
 
     context 'with specific user' do
@@ -691,6 +733,14 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
         expect { object.perform_changes(performable, 'trigger', object, user.id) }
           .to change { object.mentions.exists? }
           .to false
+
+        expect(History.last).to have_attributes(
+          o_id:            other_mention.id,
+          related_o_id:    object.id,
+          sourceable_type: 'Trigger',
+          sourceable_id:   performable.id,
+          sourceable_name: performable.name,
+        )
       end
     end
   end

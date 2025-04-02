@@ -1,0 +1,10 @@
+subscription userCurrentOverviewOrderingUpdates($ignoreUserConditions: Boolean!) {
+  userCurrentOverviewOrderingUpdates(ignoreUserConditions: $ignoreUserConditions) {
+    overviews {
+      id
+      name
+      organizationShared
+      outOfOffice
+    }
+  }
+}

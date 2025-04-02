@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class ExternalCredential::Exchange
 
@@ -215,4 +215,13 @@ class ExternalCredential::Exchange
     JSON.parse(Base64.decode64(split)).symbolize_keys
   end
 
+  def self.update_client_secret(previous_client_secret, current_client_secret)
+    config = Setting.get('exchange_oauth')
+    return true if config.blank?
+    return true if config['client_secret'].blank? || config['client_secret'] != previous_client_secret
+
+    Setting.set('exchange_oauth', config.merge(client_secret: current_client_secret))
+
+    true
+  end
 end

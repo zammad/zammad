@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
@@ -123,7 +123,7 @@ defineExpose({ hasLinks })
         <div v-for="(type, idx) in linkTypesWithLinks" :key="type.id">
           <CommonLabel
             size="small"
-            class="text-stone-200 dark:text-neutral-500"
+            class="text-stone-200! dark:text-neutral-500!"
           >
             {{ $t(type.label) }}
           </CommonLabel>
@@ -134,15 +134,15 @@ defineExpose({ hasLinks })
             class="group/link relative flex items-center"
           >
             <CommonTicketLabel
-              class="h-12 items-center"
+              class="h-12 items-center!"
               :ticket="link.item as TicketById"
-              :classes="{ indicator: 'mt-0', label: 'mt-0 line-clamp-1' }"
+              :classes="{ indicator: 'mt-0!', label: 'mt-0! line-clamp-1!' }"
             />
             <CommonButton
               v-if="isTicketEditable"
               :aria-label="$t('Delete this link')"
               :class="{ 'opacity-0 transition-opacity': !isTouchDevice }"
-              class="text-white focus:opacity-100 group-hover/link:opacity-100"
+              class="text-white group-hover/link:opacity-100 focus:opacity-100"
               icon="x-lg"
               size="small"
               variant="remove"

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::Checklist::TitleUpdate < Ticket::Checklist::Base
@@ -10,7 +10,7 @@ module Gql::Mutations
     field :checklist, Gql::Types::ChecklistType, null: true, description: 'Created checklist'
 
     def authorized?(checklist:, title: '')
-      Pundit.authorize(context.current_user, checklist, :update?)
+      pundit_authorized?(checklist, :update?)
     end
 
     def resolve(checklist:, title: '')

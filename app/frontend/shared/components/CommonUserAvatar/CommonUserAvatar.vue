@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -146,7 +146,7 @@ const indicatorSize = computed(() => indicatorSizes[props.size])
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative h-fit">
     <CommonAvatar
       :initials="initials"
       :size="size"
@@ -160,7 +160,7 @@ const indicatorSize = computed(() => indicatorSizes[props.size])
     <div
       v-if="indicator"
       v-tooltip="indicatorLabel"
-      class="absolute bottom-0 end-0 flex translate-y-1 items-center justify-center rounded-full bg-blue-200 p-[3px] outline outline-1 -outline-offset-1 outline-neutral-100 ltr:translate-x-2 rtl:-translate-x-2 dark:bg-gray-700 dark:outline-gray-900"
+      class="absolute end-0 bottom-0 flex translate-y-1 items-center justify-center rounded-full bg-blue-200 p-[3px] outline-1 -outline-offset-1 outline-neutral-100 ltr:translate-x-2 rtl:-translate-x-2 dark:bg-gray-700 dark:outline-gray-900"
     >
       <CommonIcon
         :class="indicatorClass"

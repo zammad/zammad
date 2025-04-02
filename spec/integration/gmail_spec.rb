@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 RSpec.describe 'Gmail XOAUTH2', integration: true, required_envs: %w[GMAIL_REFRESH_TOKEN GMAIL_CLIENT_ID GMAIL_CLIENT_SECRET GMAIL_USER], retry: 5, retry_wait: 30.seconds do # rubocop:disable RSpec/DescribeClass

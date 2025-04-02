@@ -47,9 +47,11 @@ class App.UserProfileActionRow extends App.ControllerObserverActionRow
           msg:       App.i18n.translateContent('Email sent to "%s". Please let the user verify their email account.', user.email)
           removeAll: true
       error: (data, status, xhr) =>
+        details = data.responseJSON || {}
+
         @notify
           type:      'error'
-          msg:       App.i18n.translateContent('Failed to send email to "%s". Please contact an administrator.', user.email)
+          msg:       details.error_human || details.error || __('Failed to send email to "%s". Please contact an administrator.', user.email)
           removeAll: true
     )
 

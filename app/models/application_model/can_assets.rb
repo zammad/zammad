@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationModel::CanAssets
   extend ActiveSupport::Concern
@@ -63,10 +63,21 @@ get assets and record_ids of selector
 =end
 
   def assets_of_selector(selector, assets = {})
-    send(selector)
-      .each_with_object(assets) do |(item, content), memo|
-        assets_of_single_selector(item, content, memo)
+    value = send(selector)
+    return assets if value.blank?
+
+    assets_of_selector_deep(Selector::Base.migrate_selector(value), assets)
+    assets
+  end
+
+  def assets_of_selector_deep(value, assets = {})
+    value[:conditions].each do |item|
+      if item[:conditions].nil?
+        assets_of_single_selector(item, assets)
+      else
+        assets_of_selector_deep(item, assets)
       end
+    end
   end
 
   def assets_added_to?(data)
@@ -75,17 +86,17 @@ get assets and record_ids of selector
 
   private
 
-  def assets_of_single_selector(item, content, assets = {})
-    area, key = item.split('.')
+  def assets_of_single_selector(item, assets = {})
+    area, key = item[:name].split('.')
     return if !key
     return if %w[ticket_customer ticket_owner].include?(area)
 
     area = 'user' if %w[customer session].include? area
 
     attribute_ref_class, item_ids = if area == 'notification'
-                                      notifications_assets_data(content)
+                                      notifications_assets_data(item)
                                     else
-                                      non_notifications_assets_data(area, key, content)
+                                      non_notifications_assets_data(area, key, item)
                                     end
 
     return if !attribute_ref_class

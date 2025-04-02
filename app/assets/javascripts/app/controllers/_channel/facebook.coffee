@@ -246,4 +246,4 @@ class AccountEdit extends App.ControllerModal
         @el.find('.alert').removeClass('hidden').text(data.error || __('The changes could not be saved.'))
     )
 
-App.Config.set('Facebook', { prio: 5100, name: __('Facebook'), parent: '#channels', target: '#channels/facebook', controller: ChannelFacebook, permission: ['admin.channel_facebook'] }, 'NavBarAdmin')
+App.Config.set('Facebook', { prio: 5400, name: __('Facebook'), parent: '#channels', target: '#channels/facebook', controller: ChannelFacebook, permission: ['admin.channel_facebook'] }, 'NavBarAdmin')

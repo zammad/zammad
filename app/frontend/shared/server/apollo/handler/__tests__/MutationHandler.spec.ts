@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { useMutation } from '@vue/apollo-composable'
 
@@ -162,9 +162,12 @@ describe('MutationHandler', () => {
 
       const mutationHandlerObject = new MutationHandler(sampleMutation())
 
-      await expect(mutationHandlerObject.send()).rejects.toEqual(
-        userErrorObject,
-      )
+      await expect(mutationHandlerObject.send()).rejects.toMatchObject({
+        message: userErrorObject.message,
+        errors: userErrorObject.errors,
+        generalErrors: userErrorObject.generalErrors,
+        fieldErrors: userErrorObject.fieldErrors,
+      })
     })
   })
 

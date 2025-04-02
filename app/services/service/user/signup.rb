@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::Signup < Service::Base
 
@@ -16,6 +16,8 @@ class Service::User::Signup < Service::Base
   end
 
   def execute
+    ensure_not_import_mode!
+
     Service::CheckFeatureEnabled.new(name: 'user_create_account').execute
 
     if resend
@@ -43,6 +45,19 @@ class Service::User::Signup < Service::Base
     )
 
     true
+  end
+
+  def ensure_not_import_mode!
+    return if !Setting.get('import_mode')
+
+    message = if resend
+                __('Could not send user verification email because import_mode setting is on.')
+              else
+                __('Could not create user and send verification email because import_mode setting is on.')
+              end
+
+    Rails.logger.error message
+    raise Exceptions::UnprocessableEntity, message
   end
 
   class TokenGenerationError < StandardError

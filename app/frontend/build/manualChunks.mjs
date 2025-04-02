@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { splitVendorChunk } from 'vite'
 
@@ -24,6 +24,11 @@ const matchers = [
     chunk: 'apollo',
   },
   {
+    vendor: true,
+    matcher: (id) => id.includes('@vuepic/vue-datepicker'),
+    chunk: 'datepicker',
+  },
+  {
     vendor: false,
     matcher: (id) => id.includes('frontend/shared/server'),
     chunk: 'apollo',
@@ -32,6 +37,11 @@ const matchers = [
     vendor: true,
     matcher: (id) => id.includes('node_modules/lodash-es'),
     chunk: 'lodash',
+  },
+  {
+    vendor: true,
+    matcher: (id) => id.includes('node_modules/date-fns'),
+    chunk: 'date',
   },
   {
     vendor: true,

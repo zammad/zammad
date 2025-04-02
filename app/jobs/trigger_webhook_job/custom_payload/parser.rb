@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module TriggerWebhookJob::CustomPayload::Parser
   # This module is used to scan, collect all replacment variables within a

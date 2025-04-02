@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -269,6 +269,63 @@ RSpec.describe 'Report', searchindex: true, type: :request do
       expect(json_response['data']['count::created']).to eq([0, 0, 8, 2, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::closed']).to eq([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       expect(json_response['data']['count::backlog']).to eq([0, 0, 7, 2, 0, 0, 0, 0, 0, 0, 0, 0])
+    end
+  end
+
+  describe 'Reporting Profile - query does not support [owner_id] #5462' do
+    let(:user_report_profile)         { create(:report_profile, condition: { 'ticket.owner_id'=>{ 'operator' => 'is', 'pre_condition' => 'current_user.id', 'value' => [], 'value_completion' => '' } }) }
+    let(:user_report_profile_unset)   { create(:report_profile, condition: { 'ticket.owner_id'=>{ 'operator' => 'is', 'pre_condition' => 'not_set', 'value' => [], 'value_completion' => '' } }) }
+    let(:organization_report_profile) { create(:report_profile, condition: { 'ticket.organization_id'=>{ 'operator' => 'is', 'pre_condition' => 'current_user.organization_id', 'value' => [], 'value_completion' => '' } }) }
+
+    it 'does generate reports with current user condition' do
+      authenticated_as(admin)
+      get '/api/v1/reports/sets', params: {
+        'metric'                  => 'count',
+        'year'                    => 2025,
+        'month'                   => 1,
+        'week'                    => 3,
+        'day'                     => 15,
+        'timeRange'               => 'year',
+        'profiles'                => {
+          user_report_profile.id.to_s => true
+        },
+        'downloadBackendSelected' => 'count::created'
+      }, as: :json
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'does generate reports with current user unset condition' do
+      authenticated_as(admin)
+      get '/api/v1/reports/sets', params: {
+        'metric'                  => 'count',
+        'year'                    => 2025,
+        'month'                   => 1,
+        'week'                    => 3,
+        'day'                     => 15,
+        'timeRange'               => 'year',
+        'profiles'                => {
+          user_report_profile_unset.id.to_s => true
+        },
+        'downloadBackendSelected' => 'count::created'
+      }, as: :json
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'does generate reports with current organization condition' do
+      authenticated_as(admin)
+      get '/api/v1/reports/sets', params: {
+        'metric'                  => 'count',
+        'year'                    => 2025,
+        'month'                   => 1,
+        'week'                    => 3,
+        'day'                     => 15,
+        'timeRange'               => 'year',
+        'profiles'                => {
+          organization_report_profile.id.to_s => true
+        },
+        'downloadBackendSelected' => 'count::created'
+      }, as: :json
+      expect(response).to have_http_status(:ok)
     end
   end
 end

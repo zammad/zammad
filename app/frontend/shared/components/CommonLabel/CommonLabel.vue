@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import type { Sizes } from './types.ts'
@@ -8,7 +8,7 @@ export interface Props {
   iconColor?: string
   prefixIcon?: string
   suffixIcon?: string
-  tag?: 'span' | 'p' | 'h2' | 'h3'
+  tag?: 'span' | 'p' | 'h2' | 'h3' | 'div'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -36,7 +36,7 @@ const iconClassMap = {
 <template>
   <component
     :is="tag"
-    class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 -:inline-flex items-center justify-start"
+    class="inline-flex items-center justify-start gap-1 text-gray-100 dark:text-neutral-400"
     :class="fontSizeClassMap[props.size]"
     data-test-id="common-label"
   >

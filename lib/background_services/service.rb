@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Base class for background services
 class BackgroundServices::Service
@@ -43,6 +43,11 @@ class BackgroundServices::Service
   def run
     self.class.run_in_service_context do
       launch
+    rescue => e
+      # Intercept any exceptions, log them and rethrow to make sure they can be acted upon.
+      Rails.logger.error { "#{self.class.name}#run() raised an error:" }
+      Rails.logger.error { e }
+      raise e
     end
   end
 

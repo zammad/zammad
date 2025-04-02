@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
@@ -19,7 +19,7 @@ const { hasError, signingMessage, encryptionMessage, retrySecurityProcess } =
 </script>
 
 <template>
-  <CommonAlert v-if="hasError" class="-:rounded-none" variant="warning">
+  <CommonAlert v-if="hasError" class="rounded-none" variant="warning">
     <div>
       <h2>{{ $t('Security Error') }}</h2>
       <p v-if="signingMessage">{{ $t('Sign:') }} {{ signingMessage }}</p>
@@ -30,7 +30,7 @@ const { hasError, signingMessage, encryptionMessage, retrySecurityProcess } =
         {{ $t('No security information available.') }}
       </p>
       <CommonButton
-        class="!p-0 !text-current underline hover:outline-transparent dark:hover:outline-transparent"
+        class="p-0! text-current! underline hover:outline-transparent dark:hover:outline-transparent"
         size="medium"
         transparent-background
         @click="retrySecurityProcess"

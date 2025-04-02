@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useLazyQuery } from '@vue/apollo-composable'
@@ -547,7 +547,7 @@ useFormBlock(
         aria-haspopup="menu"
         :aria-expanded="expanded"
         :name="context.node.name"
-        class="formkit-disabled:pointer-events-none flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-none dark:text-white"
+        class="formkit-disabled:pointer-events-none flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-hidden dark:text-white"
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled"
         :aria-describedby="context.describedBy"
@@ -594,7 +594,7 @@ useFormBlock(
                   getSelectedOptionLabel(selectedValue) ||
                   i18n.t('%s (unknown)', selectedValue.toString())
                 "
-                class="line-clamp-3 whitespace-pre-wrap break-words"
+                class="line-clamp-3 break-words whitespace-pre-wrap"
               >
                 {{
                   getSelectedOptionLabel(selectedValue) ||
@@ -603,7 +603,7 @@ useFormBlock(
               </span>
               <CommonIcon
                 :aria-label="i18n.t('Unselect Option')"
-                class="shrink-0 fill-stone-200 hover:fill-black focus:outline-none focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+                class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
                 name="x-lg"
                 size="xs"
                 role="button"
@@ -665,7 +665,7 @@ useFormBlock(
                 getSelectedOptionLabel(currentValue) ||
                 i18n.t('%s (unknown)', currentValue.toString())
               "
-              class="line-clamp-3 whitespace-pre-wrap break-words"
+              class="line-clamp-3 break-words whitespace-pre-wrap"
             >
               {{
                 getSelectedOptionLabel(currentValue) ||
@@ -677,7 +677,7 @@ useFormBlock(
         <CommonIcon
           v-if="context.clearable && hasValue && !context.disabled"
           :aria-label="i18n.t('Clear Selection')"
-          class="shrink-0 fill-stone-200 hover:fill-black focus:outline-none focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+          class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
           name="x-lg"
           size="xs"
           role="button"

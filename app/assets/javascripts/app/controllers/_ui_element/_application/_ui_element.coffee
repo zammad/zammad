@@ -93,6 +93,13 @@ class App.UiElement.ApplicationUiElement
     else
       @getConfigOptionList(attribute)
 
+  @getRelationOptionListSearchParams: (attribute) ->
+    result =
+      sortBy: attribute.sortBy
+    if attribute.filter && _.isArray(attribute.filter) && attribute.tag is 'select'
+      result.translate = attribute.translate
+    result
+
   @getRelationOptionList: (attribute, params) ->
 
     # build options list based on relation
@@ -101,6 +108,7 @@ class App.UiElement.ApplicationUiElement
 
     attribute.options = []
     list              = []
+    searchParams      = @getRelationOptionListSearchParams(attribute)
     if attribute.filter
 
       App.Log.debug 'ControllerForm', '_getRelationOptionList:filter', attribute.filter
@@ -109,7 +117,7 @@ class App.UiElement.ApplicationUiElement
       if typeof attribute.filter is 'function'
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-function'
 
-        all = App[ attribute.relation ].search(sortBy: attribute.sortBy)
+        all = App[ attribute.relation ].search(searchParams)
 
         list = attribute.filter(all, 'collection', params)
 
@@ -120,7 +128,7 @@ class App.UiElement.ApplicationUiElement
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data', filter
 
         # check all records
-        for record in App[ attribute.relation ].search(sortBy: attribute.sortBy)
+        for record in App[ attribute.relation ].search(searchParams)
 
           # check all filter attributes
           for key in filter
@@ -139,7 +147,7 @@ class App.UiElement.ApplicationUiElement
           filter.push(params[ attribute.name ])
 
         # check all records
-        for record in App[ attribute.relation ].search(sortBy: attribute.sortBy, translate: attribute.translate)
+        for record in App[ attribute.relation ].search(searchParams)
 
           # check all filter attributes
           for key in filter
@@ -152,18 +160,33 @@ class App.UiElement.ApplicationUiElement
       # no data filter matched
       else
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data no filter matched'
-        list = App[ attribute.relation ].search(sortBy: attribute.sortBy)
+        list = App[ attribute.relation ].search(searchParams)
     else
       App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-no filter defined'
-      list = App[ attribute.relation ].search(sortBy: attribute.sortBy)
+      list = App[ attribute.relation ].search(searchParams)
 
     # Turn on attribute translation if configured for the relation object.
-    attribute.translate = App[ attribute.relation ].configure_translate
+    if 'configure_translate' in App[attribute.relation]
+      attribute.translate = App[attribute.relation].configure_translate
 
     App.Log.debug 'ControllerForm', '_getRelationOptionList', attribute, list
 
+    if @isTreeRelation(attribute)
+      @setTreeRelationData(list, attribute)
+
     # build options list
     @buildOptionList(list, attribute)
+
+  @hasActiveChildren: (attribute, children, filter = undefined) ->
+    return false if !children
+
+    for row in children
+      return true if row.active && (!filter || _.contains(filter, row.id.toString()))
+
+      childrenActive = @hasActiveChildren(attribute, attribute.tree_children[row.id.toString()], filter)
+      return true if childrenActive
+
+    return false
 
   @buildOptionListRow: (attribute, item) ->
 
@@ -175,7 +198,7 @@ class App.UiElement.ApplicationUiElement
 
     hasActiveChildren = false
     if @isTreeRelation(attribute)
-      hasActiveChildren = _.some(item.all_children(), (obj) -> obj.active)
+      hasActiveChildren = @hasActiveChildren(attribute, attribute.tree_children[item.id.toString()])
 
     # if active or if active doesn't exist
     return if !item.active && activeSupport && !isSelected && !hasActiveChildren
@@ -227,6 +250,26 @@ class App.UiElement.ApplicationUiElement
       attribute.options = attribute.filter(attribute.options, attribute)
     else if (@isTreeRelation(attribute) || !attribute.relation) && attribute.filter && _.isArray(attribute.filter)
       @filterOptionArray(attribute)
+
+    # make sure only available values are set. For the tree selects
+    # we want also to render values which are not selectable but rendered as disabled
+    # e.g. child nodes where the parent node is disabled. Because of this we need
+    # to make sure to not render these values as selected
+    values = @optionSelectableValues(attribute.options)
+    if attribute.multiple
+      attribute.value = _.intersection(attribute.value, values)
+    else if !_.contains(values, attribute.value)
+      attribute.value = ''
+
+  @optionSelectableValues: (values) ->
+    result = []
+    for option in values
+      continue if option.inactive
+      continue if !_.isEmpty(option.disabled)
+
+      result.push(option.value.toString())
+      result = result.concat(@optionSelectableValues(option.children)) if _.isArray(option.children)
+    result
 
   @filterOptionArray: (attribute) ->
     result = []
@@ -340,3 +383,12 @@ class App.UiElement.ApplicationUiElement
     return false if !attribute.relation
     return false if !_.find(App[attribute.relation].configure_attributes, (attr) -> attr.name is 'parent_id')
     return true
+
+  @setTreeRelationData: (list, attribute) ->
+    tree_children = {}
+    for row in list
+      parent_id = row.parent_id?.toString() || '-NONE-'
+      tree_children[parent_id] ||= []
+      tree_children[parent_id].push(row)
+
+    attribute.tree_children = tree_children

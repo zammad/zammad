@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { type FormKitNode } from '@formkit/core'
 
@@ -22,7 +22,7 @@ export const filesSizeError = (node: FormKitNode) => {
           node.emit('prop:validationVisibility', FormValidationVisibility.Live)
         }
 
-        node.on('commit', ({ payload, origin: node }) => {
+        commitEventListener = node.on('commit', ({ payload, origin: node }) => {
           if (!node.context?.allowedFiles) return
           const isValid = validateFileSize(
             node,

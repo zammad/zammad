@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -9,22 +9,10 @@ describe Ticket::SharedDraftZoomPolicy do
   let(:record) { create(:ticket_shared_draft_zoom, ticket: ticket) }
   let(:user)   { create(:agent) }
 
-  shared_examples 'access allowed' do
-    it { is_expected.to be_update }
-    it { is_expected.to be_show }
-    it { is_expected.to be_destroy }
-  end
-
-  shared_examples 'access denied' do
-    it { is_expected.not_to be_update }
-    it { is_expected.not_to be_show }
-    it { is_expected.not_to be_destroy }
-  end
-
   context 'when user has no tickets access' do
     let(:user) { create(:customer) }
 
-    include_examples 'access denied'
+    it { is_expected.to forbid_actions(:update, :show, :destroy) }
   end
 
   context 'when user has ticket access' do
@@ -33,7 +21,7 @@ describe Ticket::SharedDraftZoomPolicy do
         user.user_groups.create! group: ticket.group, access: :full
       end
 
-      include_examples 'access allowed'
+      it { is_expected.to permit_actions(:update, :show, :destroy) }
     end
 
     context 'when user has read-only access to the ticket' do
@@ -41,7 +29,7 @@ describe Ticket::SharedDraftZoomPolicy do
         user.user_groups.create! group: ticket.group, access: :read
       end
 
-      include_examples 'access denied'
+      it { is_expected.to forbid_actions(:update, :show, :destroy) }
     end
 
     context 'when user has no access to the ticket' do
@@ -49,7 +37,13 @@ describe Ticket::SharedDraftZoomPolicy do
         user.user_groups.create! group: create(:group), access: :full
       end
 
-      include_examples 'access denied'
+      it { is_expected.to forbid_actions(:update, :show, :destroy) }
+    end
+
+    context 'when user is customer of the ticket' do
+      let(:user) { ticket.customer }
+
+      it { is_expected.to forbid_actions(:update, :show, :destroy) }
     end
   end
 end

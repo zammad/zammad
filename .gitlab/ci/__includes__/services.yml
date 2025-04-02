@@ -38,10 +38,6 @@
     IDOIT_API_ENDPOINT: 'http://ci-service-idoit:80'
     IDOIT_API_TOKEN: 'admin'
 
-.variables_ftp:
-  variables:
-    FTP_URL: 'ftp://ci-service-ftp'
-
 .variables_auth:
   variables:
     KEYCLOAK_BASE_URL: 'http://ci-service-auth:8080'
@@ -111,10 +107,6 @@
   idoit:
     name: $CI_REGISTRY/docker/zammad-idoit:stable
     alias: ci-service-idoit
-
-  ftp:
-    name: $CI_REGISTRY/docker/zammad-ftp:stable
-    alias: ci-service-ftp
 
   ldap:
     name: $CI_REGISTRY/docker/zammad-ldap:stable

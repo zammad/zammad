@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -40,7 +40,7 @@ const email = computed(() => getEmailAddress(props.context.article))
 
 <template>
   <div class="flex gap-2">
-    <CommonLabel v-if="name" class="text-black dark:text-white">{{
+    <CommonLabel v-if="name" class="text-black! dark:text-white!">{{
       $t(name)
     }}</CommonLabel>
     <CommonLabel v-if="email && email !== '-' && email !== name">{{

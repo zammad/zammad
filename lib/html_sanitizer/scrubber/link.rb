@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class HtmlSanitizer
   module Scrubber
@@ -84,7 +84,7 @@ class HtmlSanitizer
         return if !node.is_a?(Nokogiri::XML::Text)
         return if node.content.blank?
         return if node.content.exclude?(':')
-        return if node.ancestors.map(&:name).intersection(%w[a pre]).any?
+        return if node.ancestors.map(&:name).intersect?(%w[a pre])
 
         URI.extract(node.content, LINKABLE_URL_SCHEMES)
           .map { |u| u.sub(%r{[,.]$}, '') } # URI::extract captures trailing dots/commas

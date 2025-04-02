@@ -18,6 +18,10 @@ export const UserCurrentTaskbarItemAttributesFragmentDoc = gql`
       title
       createArticleTypeKey
     }
+    ... on UserTaskbarItemEntitySearch {
+      query
+      model
+    }
     ... on User {
       id
       internalId

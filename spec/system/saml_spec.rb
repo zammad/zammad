@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -51,6 +51,11 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
     logout
     expect_current_route 'login'
     find_by_id('app')
+  end
+
+  def check_mobile_logout_saml
+    find('.pf-v5-c-masthead__content .pf-v5-c-menu-toggle.pf-m-plain').click
+    expect(page).to have_text('Sign out')
   end
 
   # TODO: Should be replaced with tests for the new desktop-view (or the test in general should be removed outside of selenium).
@@ -146,7 +151,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       visit saml_realm_zammad_accounts
 
       click_on 'John Doe'
-      find('a', text: 'Sign out').click
+      find('span', text: 'Sign out', class: 'pf-v5-c-menu__item-text').click
 
       visit '/'
       expect(page).to have_current_route('login')
@@ -216,8 +221,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
         login_saml(app: 'mobile')
 
         visit saml_realm_zammad_accounts
-        click_on 'Actions'
-        expect(page).to have_text('Sign out')
+        check_mobile_logout_saml
       end
     end
 
@@ -253,8 +257,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
         login_saml(app: 'mobile')
 
         visit saml_realm_zammad_accounts
-        click_on 'Actions'
-        expect(page).to have_text('Sign out')
+        check_mobile_logout_saml
       end
     end
 
@@ -274,8 +277,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
         end
 
         visit saml_realm_zammad_accounts
-        click_on 'Actions'
-        expect(page).to have_text('Sign out')
+        check_mobile_logout_saml
       end
     end
 

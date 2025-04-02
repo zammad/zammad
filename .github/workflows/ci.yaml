@@ -47,7 +47,21 @@ jobs:
           key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
       - name: Pre
         run: .github/workflows/ci/pre.sh
+      - name: Cache ESLint
+        id: cache-eslint
+        uses: actions/cache@v4
+        with:
+          path: tmp/eslintcache.js
+          key: ${{ runner.os }}-cache-eslint-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Lint
         run: .github/workflows/ci/lint.sh
+      - name: Markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: |
+            *.md
+            **/*.md
+            #node_modules
+            #vendor
       - name: Test
         run: .github/workflows/ci/test.sh

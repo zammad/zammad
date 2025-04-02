@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed } from 'vue'
 
@@ -45,7 +45,7 @@ export const useObjectLinks = (
       objectId: objectId.value,
       targetType,
     },
-    updateQuery: (prev, { subscriptionData }) => {
+    updateQuery: (_, { subscriptionData }) => {
       if (!subscriptionData.data?.linkUpdates.links) {
         return null as unknown as LinkListQuery
       }

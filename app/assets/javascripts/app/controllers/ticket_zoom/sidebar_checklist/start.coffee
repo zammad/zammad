@@ -6,7 +6,8 @@ class App.SidebarChecklistStart extends App.Controller
 
   constructor: ->
     super
-    @subscribeId = App.ChecklistTemplate.subscribe(@render, initFetch: true)
+    @subscribeId = App.ChecklistTemplate.subscribe(@render)
+    @render()
 
   release: =>
     App.ChecklistTemplate.unsubscribe(@subscribeId)

@@ -54,13 +54,19 @@ class App.TwoFactorConfigurationModalRecoveryCodes extends App.TwoFactorConfigur
 
   fetchRecoveryCodes: =>
     @ajax(
-      id:      'two_factor_authentication_method_configuration'
-      type:    'POST'
-      url:     "#{@apiPath}/users/two_factor_recovery_codes_generate"
+      id: 'two_factor_recovery_codes_generate'
+      type: 'POST'
+      url: "#{@apiPath}/users/two_factor/recovery_codes_generate"
+      data: JSON.stringify(token: @token)
+      processData: true
       success: @didFetch
     )
 
-  didFetch: (recovery_codes) ->
+  didFetch: (recovery_codes) =>
+    if recovery_codes?.invalid_password_token
+      @invalidPasswordToken()
+      return
+
     content = $(App.view('widget/two_factor_configuration/recovery_codes')(
       recovery_codes: recovery_codes
     ))

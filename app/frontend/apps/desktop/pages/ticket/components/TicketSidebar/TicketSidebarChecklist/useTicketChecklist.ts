@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type ComputedRef } from 'vue'
 
@@ -35,7 +35,7 @@ export const useTicketChecklist = (
     variables: {
       ticketId: ticketId.value,
     },
-    updateQuery: (prev, { subscriptionData }) => {
+    updateQuery: (_, { previousData, subscriptionData }) => {
       if (
         !subscriptionData.data.ticketChecklistUpdates.ticketChecklist &&
         !subscriptionData.data.ticketChecklistUpdates.removedTicketChecklist
@@ -46,7 +46,7 @@ export const useTicketChecklist = (
       const { ticketChecklist } = subscriptionData.data.ticketChecklistUpdates
 
       // When a complete checklist was removed, we need to update the result.
-      if (!ticketChecklist || prev.ticketChecklist === null) {
+      if (!ticketChecklist || previousData?.ticketChecklist === null) {
         return {
           ticketChecklist,
         }

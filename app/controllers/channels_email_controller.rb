@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsEmailController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -81,7 +81,7 @@ class ChannelsEmailController < ApplicationController
     return if params[:channel_id] && !check_access(params[:channel_id])
 
     # connection test
-    result = EmailHelper::Probe.inbound(params)
+    result = EmailHelper::Probe.inbound(params.permit!.to_h)
 
     # check account duplicate
     return if account_duplicate?({ setting: { inbound: params } }, params[:channel_id])
@@ -133,6 +133,9 @@ class ChannelsEmailController < ApplicationController
         status_in:    'ok',
         status_out:   'ok',
       )
+
+      handle_group_email_address(channel)
+
       render json: result
       return
     end
@@ -143,6 +146,7 @@ class ChannelsEmailController < ApplicationController
       group:                  ::Group.find(params[:group_id]),
       email_address:          email,
       email_realname:         params[:meta][:realname],
+      group_email_address:    handle_group_email_address?,
     )
 
     render json: result
@@ -173,6 +177,9 @@ class ChannelsEmailController < ApplicationController
     channel = Channel.find_by(id: params[:id], area: 'Email::Account')
     channel.group_id = params[:group_id]
     channel.save!
+
+    handle_group_email_address(channel)
+
     render json: {}
   end
 
@@ -238,5 +245,23 @@ class ChannelsEmailController < ApplicationController
     return true if channel.preferences && !channel.preferences[:online_service_disable]
 
     raise Exceptions::Forbidden
+  end
+
+  def handle_group_email_address(channel)
+    return if !handle_group_email_address?
+
+    if params[:group_email_address_id]
+      email_address = EmailAddress.find(params[:group_email_address_id])
+    end
+
+    Service::Channel::Email::UpdateDestinationGroupEmail.new(
+      group:         Group.find(params[:group_id]),
+      channel:       channel,
+      email_address:,
+    ).execute
+  end
+
+  def handle_group_email_address?
+    ActiveModel::Type::Boolean.new.cast params[:group_email_address]
   end
 end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Whatsapp::Webhook::Message::Location < Whatsapp::Webhook::Message
   OSM_MARKER_URL = 'https://www.openstreetmap.org/?mlat=%s&mlon=%s#map=17/%s/%s'.freeze

@@ -1,16 +1,19 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-import { getAllByRole } from '@testing-library/vue'
+import { getAllByRole, waitFor } from '@testing-library/vue'
 
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import {
   EnumSecurityStateType,
   type TicketArticleSecurityState,
 } from '#shared/graphql/types.ts'
 
+import { ticketArticleObjectAttributes } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
 import { defaultArticles } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
 
 import ArticleMetadata from '../ArticleMetadataDialog.vue'
@@ -22,7 +25,15 @@ const getAddress = (raw: string) => ({
 })
 
 describe('visuals for metadata', () => {
-  it('renders article metadata', () => {
+  it('renders article metadata', async () => {
+    mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(() => {
+      return {
+        data: {
+          objectManagerFrontendAttributes: ticketArticleObjectAttributes(),
+        },
+      }
+    })
+
     const createdAt = new Date(2022, 1, 1, 0, 0, 0, 0).toISOString()
 
     const article: TicketArticle = {
@@ -39,6 +50,7 @@ describe('visuals for metadata', () => {
       type: {
         name: 'email',
       },
+      detectedLanguage: 'de',
       createdAt,
       preferences: {
         links: [
@@ -79,6 +91,15 @@ describe('visuals for metadata', () => {
     expect(view.getByRole('region', { name: 'Created' })).toHaveTextContent(
       /2022-02-01 00:00$/,
     )
+
+    // FIXME: The content does not get replaced with the associated option,
+    //   even though the correct object attribute is loaded.
+    await waitFor(() => {
+      expect(
+        view.getByRole('region', { name: 'Detected language' }),
+      ).toHaveTextContent(/German$/)
+    })
+
     const channel = view.getByRole('region', { name: 'Channel' })
     expect(channel).toHaveTextContent(/email/)
     expect(view.getByIconName('mail')).toBeInTheDocument()

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 ENV['RAILS_ENV'] = 'test'
 # rubocop:disable Lint/NonLocalExitFromIterator, Style/GuardClause, Lint/MissingCopEnableDirective
@@ -87,7 +87,16 @@ class TestCase < ActiveSupport::TestCase
           'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
         },
         # Disable shared memory usage as it does not really provide a performance gain but cause resource limit issues in CI.
-        args:             %w[--enable-logging --v=1 --disable-dev-shm-usage --disable-search-engine-choice-screen],
+        #   https://peter.sh/experiments/chromium-command-line-switches/
+        args:             %w[
+          --enable-logging
+          --v=1
+          --disable-component-update
+          --disable-dev-shm-usage
+          --disable-features=OptimizationGuideModelDownloading,OptimizationHintsFetching,OptimizationTargetPrediction,OptimizationHints
+          --disable-search-engine-choice-screen
+          --no-first-run
+        ],
         # Disable the "Chrome is being controlled by automated test software." info bar.
         exclude_switches: ['enable-automation'],
       )
@@ -102,6 +111,12 @@ class TestCase < ActiveSupport::TestCase
 
   def browser_instance
     @browsers ||= {}
+
+    # `clear_local_storage` and `clear_session_storage` are deprecated in Selenium, but Capybara still uses them.
+    #   For now, we can ignore these warnings.
+    # https://github.com/teamcapybara/capybara/issues/2779
+    Selenium::WebDriver.logger.ignore(:clear_local_storage, :clear_session_storage)
+
     if ENV['REMOTE_URL'].blank?
       local_browser = Selenium::WebDriver.for(browser.to_sym, options: browser_options)
       @browsers[local_browser.hash] = local_browser
@@ -2565,7 +2580,7 @@ wait untill text in selector disabppears
     await_empty_ajax_queue(params)
 
     # do not stay on tab
-    if params[:task_type] == 'closeTab' || params[:task_type] == 'closeNextInOverview'
+    if %w[closeTab closeNextInOverview].include?(params[:task_type])
       sleep 1
       return
     end

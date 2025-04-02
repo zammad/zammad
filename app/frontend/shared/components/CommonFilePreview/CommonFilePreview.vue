@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -87,7 +87,7 @@ const classMap = getFilePreviewClasses()
 
 <template>
   <div
-    class="group/file-preview flex w-full items-center gap-2 outline-none"
+    class="group/file-preview flex w-full items-center gap-2 outline-hidden"
     :class="[classMap.wrapper, wrapperClass]"
   >
     <button
@@ -114,7 +114,7 @@ const classMap = getFilePreviewClasses()
     <Component
       :is="componentType"
       v-tooltip="ariaLabel"
-      class="flex w-full select-none items-center gap-2 overflow-hidden text-left outline-none"
+      class="flex w-full items-center gap-2 overflow-hidden text-left outline-hidden select-none"
       :class="{
         'cursor-pointer': componentType !== 'div',
         [classMap.link]: true,
@@ -160,7 +160,7 @@ const classMap = getFilePreviewClasses()
       :class="{
         'opacity-0 transition-opacity': !isTouchDevice,
       }"
-      class="focus:opacity-100 group-hover/file-preview:opacity-100"
+      class="group-hover/file-preview:opacity-100 focus:opacity-100"
       type="button"
       icon="remove-attachment"
       :aria-label="i18n.t('Remove %s', file.name)"

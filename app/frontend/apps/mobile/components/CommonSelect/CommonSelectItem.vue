@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -43,7 +43,7 @@ const label = computed(() => {
     }"
     tabindex="0"
     :aria-selected="selected"
-    class="focus:bg-blue-highlight flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white first:rounded-t-xl last:rounded-b-xl focus:outline-none"
+    class="focus:bg-blue-highlight flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white first:rounded-t-xl last:rounded-b-xl focus:outline-hidden"
     role="option"
     :data-value="option.value"
     @click="select(option)"

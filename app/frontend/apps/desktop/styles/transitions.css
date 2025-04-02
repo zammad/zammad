@@ -1,96 +1,82 @@
-.fade {
-  &-enter-active,
-  &-leave-active {
-    transition: opacity 0.3s ease;
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-  }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
 }
 
-.fade-absolute {
-  &-enter-active,
-  &-leave-active {
-    transition: opacity 0.3s ease;
-  }
-
-  &-enter-from,
-  &-leave-to {
-    position: absolute;
-    opacity: 0;
-  }
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
-.fade-up {
-  &-enter-active,
-  &-leave-active {
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s ease-in-out;
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-    transform: translateY(0.3rem);
-  }
+.fade-absolute-enter-active,
+.fade-absolute-leave-active {
+  transition: opacity 0.3s ease;
 }
 
-.fade-move {
-  &-enter-active,
-  &-move,
-  &-leave-active {
-    transition: opacity 0.5s ease;
-  }
-
-  &-leave-active {
-    position: absolute;
-    top: -100%; /*  Add overflow clip on parent to hide elements */
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-  }
+.fade-absolute-enter-from,
+.fade-absolute-leave-to {
+  position: absolute;
+  opacity: 0;
 }
 
-.collapse {
-  &-enter-active,
-  &-leave-active {
-    transition:
-      height 0.2s ease-in-out,
-      opacity 0.2s ease;
-    overflow: hidden;
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-  }
+.fade-up-enter-active,
+.fade-up-leave-active {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease-in-out;
 }
 
-.pseudo-transition {
-  &-enter-active,
-  &-leave-active {
-    transition: transform 0.3s ease;
-  }
-
-  &-enter-from,
-  &-leave-to {
-    transform: translateY(0);
-  }
+.fade-up-enter-from,
+.fade-up-leave-to {
+  opacity: 0;
+  transform: translateY(0.3rem);
 }
 
-.slide-down {
-  &-enter-active,
-  &-leave-active {
-    transition: transform 0.2s ease;
-  }
+.fade-move-enter-active,
+.fade-move-move,
+.fade-move-leave-active {
+  transition: opacity 0.5s ease;
+}
 
-  &-enter-from,
-  &-leave-to {
-    transform: translateY(-100%);
-  }
+.fade-move-leave-active {
+  position: absolute;
+  top: -100%; /*  Add overflow clip on parent to hide elements */
+}
+
+.fade-move-enter-from,
+.fade-move-leave-to {
+  opacity: 0;
+}
+
+.collapse-enter-active,
+.collapse-leave-active {
+  transition:
+    height 0.2s ease-in-out,
+    opacity 0.2s ease;
+  overflow: hidden;
+}
+
+.collapse-enter-from,
+.collapse-leave-to {
+  opacity: 0;
+}
+
+.pseudo-transition-enter-active,
+.pseudo-transition-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.pseudo-transition-enter-from,
+.pseudo-transition-leave-to {
+  transform: translateY(0);
+}
+
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: transform 0.2s ease;
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+  transform: translateY(-100%);
 }

@@ -18,6 +18,10 @@ class App.TwoFactorConfigurationModalAuthenticatorApp extends App.TwoFactorConfi
     $('.modal .js-submit').prop('disabled', true)
 
     callback = (data) =>
+      if data?.invalid_password_token
+        @invalidPasswordToken()
+        return
+
       @config = data.configuration
 
       content = $(App.view('widget/two_factor_configuration/authenticator_app')(
@@ -56,10 +60,12 @@ class App.TwoFactorConfigurationModalAuthenticatorApp extends App.TwoFactorConfi
 
   fetchInitialConfiguration: (callback) =>
     @ajax(
-      id:      'two_factor_authentication_method_initiate_configuration'
-      type:    'GET'
-      url:     "#{@apiPath}/users/two_factor_authentication_method_initiate_configuration/#{@method.key}"
-      success: callback
+      id:          'two_factor_authentication_method_initiate_configuration'
+      type:        'POST'
+      url:         "#{@apiPath}/users/two_factor/authentication_method_initiate_configuration/#{@method.key}"
+      data:        JSON.stringify(token: @token)
+      processData: true
+      success:     callback
     )
 
   onSubmit: (e) =>
@@ -72,6 +78,7 @@ class App.TwoFactorConfigurationModalAuthenticatorApp extends App.TwoFactorConfi
 
     data = JSON.stringify(
       method: @method.key
+      token: @token
       payload: params.payload
       configuration: @config
     )
@@ -81,10 +88,14 @@ class App.TwoFactorConfigurationModalAuthenticatorApp extends App.TwoFactorConfi
     @ajax
       id: 'two_factor_verify_configuration'
       type: 'POST'
-      url: "#{@apiPath}/users/two_factor_verify_configuration"
+      url: "#{@apiPath}/users/two_factor/verify_configuration"
       data: data
       processData: true
       success: (data, status, xhr) =>
+        if data?.invalid_password_token
+          @invalidPasswordToken()
+          return
+
         if data?.verified
           @finalizeConfigurationWizard(data)
           return

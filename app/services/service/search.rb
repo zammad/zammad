@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Search < Service::BaseWithCurrentUser
   Result = Struct.new(:result, :sorting) do
@@ -23,7 +23,7 @@ class Service::Search < Service::BaseWithCurrentUser
     @options = options
       .compact_blank
       .with_defaults(limit: 10) # limit can be overriden
-      .merge!(with_total_count: true, full: true) # those options are mandatory
+      .merge!(with_total_count: true, full: true) # those options are mandatory; :only_total_count can still be passed and will override
   end
 
   def execute
@@ -55,9 +55,9 @@ class Service::Search < Service::BaseWithCurrentUser
       .search_by_index(query, model.name, options)
       .tap do |result|
         next if result.blank?
+        next if !result[:object_metadata] # in case of :only_total_count
 
-        result[:objects] = result[:object_metadata]
-          .map { |elem| model.lookup(id: elem[:id]) }
+        result[:objects] = model.where_ordered_ids(result[:object_metadata].pluck(:id))
       end
   end
 end

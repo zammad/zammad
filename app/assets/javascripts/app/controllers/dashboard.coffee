@@ -52,21 +52,26 @@ class App.Dashboard extends App.Controller
     preferences = @Session.get('preferences')
     @clueAccess = false
 
-    # If and only if the initial clue has been already completed by the user, show the one about new keyboard shortcuts.
+    # If the initial clue has been already completed by the user, show the rest of the clues.
     if preferences['intro']
-      return if preferences['keyboard_shortcuts_clues']
+      for clue in _.sortBy(App.Config.get('Clues'), 'prio')
+        continue if preferences[clue.preference_key] # skip already completed clues
+        continue if clue.config_key and not App.Config.get(clue.config_key) # skip clues about inactive features
+        continue if clue.permission and not _.every(clue.permission, (permission) -> App.User.current()?.permission(permission)) # skip clues without required permissions
 
-      new App.KeyboardShortcutsClues(
-        appEl: @appEl
-        onComplete: =>
-          App.Ajax.request(
-            id:          'preferences'
-            type:        'PUT'
-            url:         "#{@apiPath}/users/preferences"
-            data:        JSON.stringify(keyboard_shortcuts_clues: true)
-            processData: true
-          )
-      )
+        new clue.controller(
+          appEl: @appEl
+          onComplete: =>
+            App.Ajax.request(
+              id:          'preferences'
+              type:        'PUT'
+              url:         "#{@apiPath}/users/preferences"
+              data:        JSON.stringify("#{clue.preference_key}": true)
+              processData: true
+            )
+        )
+
+        return # show only one clue at a time
 
       return
 

@@ -6,9 +6,10 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserCurrentTwoFactorRemoveMethodCredentialsDocument = gql`
-    mutation userCurrentTwoFactorRemoveMethodCredentials($methodName: String!, $credentialId: String!) {
+    mutation userCurrentTwoFactorRemoveMethodCredentials($methodName: String!, $token: String!, $credentialId: String!) {
   userCurrentTwoFactorRemoveMethodCredentials(
     methodName: $methodName
+    token: $token
     credentialId: $credentialId
   ) {
     success

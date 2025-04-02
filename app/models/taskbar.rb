@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Taskbar < ApplicationModel
   include ChecksClientNotification
@@ -25,9 +25,9 @@ class Taskbar < ApplicationModel
 
   before_create   :update_last_contact, :update_preferences_infos
   before_update   :update_last_contact, :update_preferences_infos
-
   after_update    :notify_clients
-  after_destroy   :update_preferences_infos, :notify_clients
+  after_destroy :update_preferences_infos, :notify_clients
+  after_commit :update_related_taskbars
 
   association_attributes_ignored :user
 
@@ -45,6 +45,29 @@ class Taskbar < ApplicationModel
   }
 
   scope :app, ->(app) { where(app:) }
+
+  # Returns IDs of objects referenced by the taskbars.
+  # Works on scopes, relations etc.
+  #
+  # @return [Hash{Symbol=>Array<Integer>}] of arrays of object IDs
+  #
+  # @example
+  #
+  # user.taskbars.to_object_ids # => { user_ids: [1, 2, 3], organization_ids: [1, 2, 3], ticket_ids: [1, 2, 3] }
+  #
+  def self.to_object_ids
+    all.each_with_object({ user_ids: [], organization_ids: [], ticket_ids: [] }) do |elem, memo|
+      case elem.params
+      in { user_id: }
+        memo[:user_ids] << user_id.to_i
+      in { organization_id: }
+        memo[:organization_ids] << organization_id.to_i
+      in { ticket_id: }
+        memo[:ticket_ids] << ticket_id.to_i
+      else
+      end
+    end
+  end
 
   def self.taskbar_entities
     @taskbar_entities ||= begin
@@ -123,6 +146,14 @@ class Taskbar < ApplicationModel
     !!preferences[:dirty] != !!preferences_previously_was[:dirty]
   end
 
+  def collect_related_tasks
+    related_taskbars.map(&:preferences_task_info)
+      .tap { |arr| arr.push(preferences_task_info) if !destroyed? }
+      .each_with_object({}) { |elem, memo| reduce_related_tasks(elem, memo) }
+      .values
+      .sort_by { |elem| elem[:id] || Float::MAX } # sort by IDs to pass old tests
+  end
+
   private
 
   def update_last_contact
@@ -158,18 +189,8 @@ class Taskbar < ApplicationModel
     preferences = self.preferences || {}
     preferences[:tasks] = collect_related_tasks
 
-    update_related_taskbars(preferences)
-
     # remember preferences for current taskbar
     self.preferences = preferences if !destroyed?
-  end
-
-  def collect_related_tasks
-    related_taskbars.map(&:preferences_task_info)
-      .tap { |arr| arr.push(preferences_task_info) if !destroyed? }
-      .each_with_object({}) { |elem, memo| reduce_related_tasks(elem, memo) }
-      .values
-      .sort_by { |elem| elem[:id] || Float::MAX } # sort by IDs to pass old tests
   end
 
   def changed_only_prio?
@@ -187,15 +208,12 @@ class Taskbar < ApplicationModel
     memo[key] = elem
   end
 
-  def update_related_taskbars(preferences)
-    related_taskbars.each do |taskbar|
-      taskbar.with_lock do
-        taskbar.preferences = preferences
-        taskbar.local_update = true
-        taskbar.skip_item_trigger = true
-        taskbar.save!
-      end
-    end
+  def update_related_taskbars
+    return if key == 'Search'
+    return if local_update
+    return if changed_only_prio?
+
+    TaskbarUpdateRelatedTasksJob.perform_later(related_taskbars.map(&:id))
   end
 
   def notify_clients

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import useFingerprint from '#shared/composables/useFingerprint.ts'
@@ -17,7 +17,7 @@ const { fingerprint } = useFingerprint()
 </script>
 
 <template>
-  <section class="mb-16 mt-4 w-full max-w-md" data-test-id="loginThirdParty">
+  <section class="mt-4 mb-16 w-full max-w-md" data-test-id="loginThirdParty">
     <p class="p-3 text-center">
       {{
         $c.user_show_password_login
@@ -29,13 +29,13 @@ const { fingerprint } = useFingerprint()
       <form
         v-for="provider of props.providers"
         :key="provider.name"
-        class="min-w-1/2 flex grow"
+        class="flex min-w-1/2 grow"
         method="post"
         :action="`${provider.url}?fingerprint=${fingerprint}`"
       >
         <input type="hidden" name="authenticity_token" :value="csrfToken" />
         <button
-          class="m-1 flex h-14 w-full cursor-pointer select-none items-center justify-center rounded-xl bg-gray-600 px-4 py-2 text-white"
+          class="m-1 flex h-14 w-full cursor-pointer items-center justify-center rounded-xl bg-gray-600 px-4 py-2 text-white select-none"
         >
           <CommonIcon
             :name="provider.icon"

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { ref, computed, useTemplateRef } from 'vue'
@@ -49,6 +49,7 @@ const headerTitle = computed(() => {
 
 const state = ref<TwoFactorConfigurationType>('password_check')
 const componentOptions = ref<ObjectLike>()
+const token = ref()
 
 const { twoFactorMethodLookup } = useTwoFactorPlugins()
 
@@ -71,6 +72,7 @@ const handleActionPayload = (payload: TwoFactorConfigurationActionPayload) => {
   }
 
   state.value = payload.nextState
+  token.value = payload.token
   componentOptions.value = payload.options
 }
 
@@ -96,6 +98,7 @@ const onFooterButtonAction = () => {
       :is="activeComponent"
       ref="active-component"
       :type="type"
+      :token="token"
       :options="componentOptions"
       :form-submit-callback="handleActionPayload"
       :success-callback="successCallback"

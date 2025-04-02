@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # This type counts user or organization tickets accessible to *current user*
 # It is very similar to what TicketUserTicketCounterJob does but not the same!

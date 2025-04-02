@@ -1,8 +1,9 @@
-@config './tailwind.mobile.js';
+/* stylelint-disable import-notation */
+@import 'tailwindcss';
+@import './tokens.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@plugin '@formkit/themes/tailwindcss';
+@plugin '../../../build/zammadTailwindPlugin.js';
 
 @layer base {
   html {
@@ -69,20 +70,16 @@
 @layer components {
   .absolute-floating-input:focus-within label,
   .absolute-floating-input.formkit-outer[data-populated] label {
-    @apply -translate-y-2 opacity-75 ltr:translate-x-[2px] ltr:scale-75 rtl:pb-0 rtl:pt-5 rtl:text-xs;
+    @apply -translate-y-2 scale-75 opacity-75 ltr:translate-x-[2px] rtl:pt-5 rtl:pb-0 rtl:text-xs;
   }
 
   .floating-input.formkit-outer[data-populated] label {
-    @apply text-xs opacity-75;
+    @apply scale-100! text-xs opacity-75;
   }
 
   .floating-textarea:focus-within label,
   .floating-textarea.formkit-outer[data-populated] label {
-    @apply translate-y-0 text-xs opacity-75;
-  }
-
-  .required::after {
-    @apply text-yellow inline-block font-extrabold content-['•'] ltr:ml-1 rtl:mr-1;
+    @apply translate-y-0! text-xs! opacity-75!;
   }
 
   .form-group {
@@ -106,7 +103,7 @@
 
     .formkit-outer:not(:last-child) {
       > :last-child {
-        @apply border-b border-white/10;
+        @apply border-b border-[rgba(255,255,255,0.1)];
       }
     }
   }
@@ -137,7 +134,7 @@
     ul {
       @apply pb-2;
 
-      padding-inline-start: theme('spacing.2');
+      padding-inline-start: 0.5rem;
       list-style-position: inside;
 
       p {
@@ -146,15 +143,15 @@
     }
 
     h1 {
-      @apply mb-1 mt-2 text-2xl font-bold;
+      @apply mt-2 mb-1 text-2xl font-bold;
     }
 
     h2 {
-      @apply mb-1 mt-2 text-xl font-bold;
+      @apply mt-2 mb-1 text-xl font-bold;
     }
 
     h3 {
-      @apply mb-1 mt-2 text-lg font-bold;
+      @apply mt-2 mb-1 text-lg font-bold;
     }
 
     a {
@@ -182,27 +179,23 @@
 
   .file-list.bottom-gradient::before {
     bottom: 1.25rem;
-    background: linear-gradient(
-      rgba(255, 255, 255, 0),
-      theme('colors.gray.500')
-    );
+    background: linear-gradient(rgba(255, 255, 255, 0), var(--color-gray-500));
   }
 
   .file-list.top-gradient::before {
     top: 0;
-    background: linear-gradient(
-      theme('colors.gray.500'),
-      rgba(255, 255, 255, 0)
-    );
+    background: linear-gradient(var(--color-gray-500), rgba(255, 255, 255, 0));
   }
 }
 
-@layer utilities {
-  .pb-safe {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
 
-  .mb-safe {
-    margin-bottom: env(safe-area-inset-bottom);
-  }
+@utility mb-safe {
+  margin-bottom: env(safe-area-inset-bottom);
+}
+
+@utility required {
+  @apply after:text-yellow after:ms-1 after:inline-block after:font-extrabold after:content-['•'];
 }

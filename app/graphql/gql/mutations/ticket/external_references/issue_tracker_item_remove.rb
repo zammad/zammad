@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::ExternalReferences::IssueTrackerItemRemove < BaseMutation
@@ -11,7 +11,7 @@ module Gql::Mutations
     field :success, Boolean, description: 'Was the mutation successful?'
 
     def authorized?(ticket:, issue_tracker_link:, issue_tracker_type:)
-      Pundit.authorize(context.current_user, ticket, :agent_update_access?)
+      pundit_authorized?(ticket, :agent_update_access?)
     end
 
     def resolve(ticket:, issue_tracker_link:, issue_tracker_type:)

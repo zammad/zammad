@@ -1,0 +1,8 @@
+<p>
+  <% if @emailAddress: %>
+    <%- @T('The email address |%s| is already in use by another account.', @emailAddress) %><br><br>
+  <% else: %>
+    <%- @T('The specified email address is already in use by another account.') %><br><br>
+  <% end %>
+  <%- @T('Please add an account with a different mailbox or consider removing the duplicate first.') %>
+</p>

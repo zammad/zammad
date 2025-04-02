@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -60,6 +60,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'ui_sidebar_open_ticket_indicator_colored',
           'ui_table_group_by_show_count',
           'ui_ticket_overview_ticket_limit',
+          'ui_ticket_overview_query_polling',
           'ui_task_mananger_max_task_count',
           'user_create_account',
           'session_timeout',
@@ -223,6 +224,8 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'ticket_organization_reassignment',
           'checklist',
           'auto_shutdown',
+          'language_detection_article',
+          'ui_desktop_beta_switch',
         ]
       end
 

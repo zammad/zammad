@@ -1,11 +1,12 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
   class User::Current::TaskbarItemUpdates < BaseSubscription
 
     description 'Changes to the list of taskbar items of the currently logged-in user'
 
-    argument :user_id, GraphQL::Types::ID, loads: Gql::Types::UserType, description: 'Filter by user'
+    subscription_scope :current_user_id
+
     argument :app, Gql::Types::Enum::TaskbarAppType, description: 'Filter by app'
 
     field :add_item, Gql::Types::User::TaskbarItemType, description: 'A new taskbar item needs to be added to the list'
@@ -26,17 +27,11 @@ module Gql::Subscriptions
       end
 
       def pull_trigger(item, payload)
-        user_id = Gql::ZammadSchema.id_from_internal_id(::User, item.user_id)
-
-        trigger(payload, arguments: { user_id:, app: item.app })
+        trigger(payload, arguments: { app: item.app }, scope: item.user_id)
       end
     end
 
-    def authorized?(user:, app:)
-      user == context.current_user
-    end
-
-    def update(user:, app:)
+    def update(app:)
       object
     end
 

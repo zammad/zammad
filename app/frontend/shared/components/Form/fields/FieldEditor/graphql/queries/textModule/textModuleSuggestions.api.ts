@@ -6,8 +6,13 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TextModuleSuggestionsDocument = gql`
-    query textModuleSuggestions($query: String!, $limit: Int, $ticketId: ID, $customerId: ID) {
-  textModuleSuggestions(query: $query, limit: $limit) {
+    query textModuleSuggestions($query: String!, $limit: Int, $ticketId: ID, $customerId: ID, $groupId: ID) {
+  textModuleSuggestions(
+    query: $query
+    groupId: $groupId
+    ticketId: $ticketId
+    limit: $limit
+  ) {
     id
     name
     keywords

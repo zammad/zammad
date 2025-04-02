@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -6,12 +6,14 @@ RSpec.describe Channel::Filter::ImportArchive, performs_jobs: true do
 
   let!(:agent1) { create(:agent, groups: Group.all) }
 
+  let(:state_id) { Ticket::State.by_category(:closed).first.id }
+
   let(:channel_as_model) do
-    Channel.new(options: { inbound: { options: { archive: true } } })
+    Channel.new(options: { inbound: { options: { archive: true, archive_state_id: state_id } } })
   end
 
   let(:channel_as_hash) do
-    { options: { inbound: { options: { archive: true } } } }
+    { options: { inbound: { options: { archive: true, archive_state_id: state_id } } } }
   end
 
   let(:mail001) do
@@ -38,9 +40,22 @@ RSpec.describe Channel::Filter::ImportArchive, performs_jobs: true do
   end
 
   shared_examples 'import archive base checks' do |ticket_create_date, article_create_date, article_count|
-    it 'checks if the state is closed' do
-      ticket1_p, _article1_p, _user1_p = email_parse_mail001
-      expect(ticket1_p.state.name).to eq('closed')
+    context 'when state_id is missing' do
+      let(:state_id) { nil }
+
+      it 'checks if the state defaults to closed' do
+        ticket1_p, _article1_p, _user1_p = email_parse_mail001
+        expect(ticket1_p.state.name).to eq('closed')
+      end
+    end
+
+    context 'when state_id is set to selected state' do
+      let(:state_id) { Ticket::State.by_category(:open).first.id }
+
+      it 'checks if the state matches the selected state' do
+        ticket1_p, _article1_p, _user1_p = email_parse_mail001
+        expect(ticket1_p).to have_attributes(state_id:)
+      end
     end
 
     it 'checks if the article got created' do
@@ -108,7 +123,7 @@ RSpec.describe Channel::Filter::ImportArchive, performs_jobs: true do
 
     context 'when initial ticket (import before outdated)' do
       let(:channel_as_model) do
-        Channel.new(options: { inbound: { options: { archive: true, archive_before: '2012-03-04 00:00:00' } } })
+        Channel.new(options: { inbound: { options: { archive: true, archive_state_id: state_id, archive_before: '2012-03-04 00:00:00' } } })
       end
 
       include_examples 'notification sent checks', 1
@@ -116,23 +131,7 @@ RSpec.describe Channel::Filter::ImportArchive, performs_jobs: true do
 
     context 'when initial ticket (import before matched)' do
       let(:channel_as_model) do
-        Channel.new(options: { inbound: { options: { archive: true, archive_before: '2012-05-04 00:00:00' } } })
-      end
-
-      include_examples 'notification sent checks', 0
-    end
-
-    context 'when initial ticket (import till outdated)' do
-      let(:channel_as_model) do
-        Channel.new(options: { inbound: { options: { archive: true, archive_till: 1.day.ago.to_s } } })
-      end
-
-      include_examples 'notification sent checks', 1
-    end
-
-    context 'when initial ticket (import till matched)' do
-      let(:channel_as_model) do
-        Channel.new(options: { inbound: { options: { archive: true, archive_till: 1.day.from_now.to_s } } })
+        Channel.new(options: { inbound: { options: { archive: true, archive_state_id: state_id, archive_before: '2012-05-04 00:00:00' } } })
       end
 
       include_examples 'notification sent checks', 0
@@ -140,7 +139,7 @@ RSpec.describe Channel::Filter::ImportArchive, performs_jobs: true do
 
     context 'when initial ticket (import before outdated) with channel hash' do
       let(:channel_as_hash) do
-        { options: { inbound: { options: { archive: true, archive_before: '2012-03-04 00:00:00' } } } }
+        { options: { inbound: { options: { archive: true, archive_state_id: state_id, archive_before: '2012-03-04 00:00:00' } } } }
       end
 
       include_examples 'notification sent checks', 1, true
@@ -148,23 +147,7 @@ RSpec.describe Channel::Filter::ImportArchive, performs_jobs: true do
 
     context 'when initial ticket (import before matched) with channel hash' do
       let(:channel_as_hash) do
-        { options: { inbound: { options: { archive: true, archive_before: '2012-05-04 00:00:00' } } } }
-      end
-
-      include_examples 'notification sent checks', 0, true
-    end
-
-    context 'when initial ticket (import till outdated) with channel hash' do
-      let(:channel_as_hash) do
-        { options: { inbound: { options: { archive: true, archive_till: 1.day.ago.to_s } } } }
-      end
-
-      include_examples 'notification sent checks', 1, true
-    end
-
-    context 'when initial ticket (import till matched) with channel hash' do
-      let(:channel_as_hash) do
-        { options: { inbound: { options: { archive: true, archive_till: 1.day.from_now.to_s } } } }
+        { options: { inbound: { options: { archive: true, archive_state_id: state_id, archive_before: '2012-05-04 00:00:00' } } } }
       end
 
       include_examples 'notification sent checks', 0, true

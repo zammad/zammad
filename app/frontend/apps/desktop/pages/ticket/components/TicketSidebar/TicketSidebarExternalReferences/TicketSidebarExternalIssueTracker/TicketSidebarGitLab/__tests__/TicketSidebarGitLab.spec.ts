@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 import { vi } from 'vitest'
@@ -12,16 +12,20 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumTicketExternalReferencesIssueTrackerItemState } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
+import gitlabPlugin from '#desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts'
 import TicketSidebarGitLab from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue'
 import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 import { waitForTicketExternalReferencesIssueTrackerItemAddMutationCalls } from '#desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIssueTrackerItemAdd.mocks.ts'
 import { waitForTicketExternalReferencesIssueTrackerItemRemoveMutationCalls } from '#desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIssueTrackerItemRemove.mocks.ts'
-import { mockTicketExternalReferencesIssueTrackerItemListQuery } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIssueTrackerList.mocks.ts'
+import {
+  mockTicketExternalReferencesIssueTrackerItemListQuery,
+  mockTicketExternalReferencesIssueTrackerItemListQueryError,
+} from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIssueTrackerList.mocks.ts'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 
 // INFO: Import as relative to avoid vite import error if it gets imported before TicketSidebarGitLab
-import gitLabPlugin from '../../../../plugins/gitlab.ts'
 
 vi.mock('#shared/server/apollo/client.ts', () => ({
   getApolloClient: () => ({
@@ -92,7 +96,7 @@ const renderGitLabSidebar = (
   return renderComponent(TicketSidebarGitLab, {
     props: {
       sidebar: 'gitlab',
-      sidebarPlugin: gitLabPlugin,
+      sidebarPlugin: gitlabPlugin,
       selected: true,
       context: {
         screenType: TicketSidebarScreenType.TicketDetailView,
@@ -127,7 +131,7 @@ describe('TicketSidebarGitLab', () => {
     const wrapper = renderComponent(TicketSidebarGitLab, {
       props: {
         sidebar: 'gitlab',
-        sidebarPlugin: gitLabPlugin,
+        sidebarPlugin: gitlabPlugin,
         selected: true,
         context: {
           screenType: TicketSidebarScreenType.TicketCreate,
@@ -303,6 +307,63 @@ describe('TicketSidebarGitLab', () => {
     expect(
       wrapper.queryByRole('button', { name: 'Unlink issue' }),
     ).not.toBeInTheDocument()
+
+    expect(
+      wrapper.queryByRole('button', { name: 'Action menu button' }),
+    ).not.toBeInTheDocument()
+  })
+})
+
+describe('errors', () => {
+  it('shows an generic error message if query fails due failure of GitLab api', async () => {
+    mockApplicationConfig({
+      gitlab_integration: true,
+    })
+
+    mockTicketExternalReferencesIssueTrackerItemListQueryError(
+      'GitLab request failed. Please have a look at the log file for details',
+      {
+        type: GraphQLErrorTypes.UnknownError,
+      },
+    )
+
+    const wrapper = renderComponent(TicketSidebarGitLab, {
+      props: {
+        sidebar: 'gitlab',
+        sidebarPlugin: gitlabPlugin,
+        selected: true,
+        context: {
+          screenType: TicketSidebarScreenType.TicketDetailView,
+          formValues: {},
+          toggleCollapse: () => {},
+          isCollapsed: false,
+          ticket: computed(() =>
+            createDummyTicket({
+              externalReferences: {
+                gitlab: [
+                  // 'https://git.zammad.com/zammad/zammad/-/issues/123',
+                  // 'https://git.zammad.com/zammad/zammad/-/issues/124',
+                ],
+              },
+            }),
+          ),
+          isTicketEditable: true,
+        },
+      },
+      global: {
+        stubs: {
+          teleport: true,
+        },
+      },
+      flyout: true,
+      form: true,
+      router: true,
+      store: true,
+    })
+
+    expect(await wrapper.findByRole('alert')).toHaveTextContent(
+      'Error fetching information from GitLab. Please contact your administrator.',
+    )
 
     expect(
       wrapper.queryByRole('button', { name: 'Action menu button' }),

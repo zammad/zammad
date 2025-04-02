@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -124,11 +124,7 @@ describe('Ticket detail: sidebar - online notifications', () => {
 
     const list = await view.findByRole('region', { name: 'Notifications' })
 
-    await view.events.click(
-      within(list).getByRole('link', {
-        name: 'Avatar (Admin Foo) Admin Foo updated ticket Test 2024-11-18 16:28',
-      }),
-    )
+    await view.events.click(within(list).getByRole('link'))
 
     const calls = await waitForOnlineNotificationSeenMutationCalls()
 

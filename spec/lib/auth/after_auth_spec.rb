@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -31,6 +31,10 @@ RSpec.describe Auth::AfterAuth do
 
       it 'returns the after auth type' do
         expect(described_class.run(customer, session)).to eq({ type: 'TwoFactorConfiguration', data: {} })
+      end
+
+      it 'issues a password revalidation token on initial login' do
+        expect(described_class.run(customer, session, options: { initial: true })).to include({ type: 'TwoFactorConfiguration', data: { token: be_a(String) } })
       end
     end
   end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Ticket::Assets
   extend ActiveSupport::Concern
@@ -32,7 +32,6 @@ returns
 
     data[ app_model ][ id ] = attributes_with_association_ids
 
-    group.assets(data)
     organization&.assets(data)
     assets_user(data)
 

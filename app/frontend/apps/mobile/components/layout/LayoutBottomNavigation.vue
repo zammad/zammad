@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
@@ -54,13 +54,13 @@ const notificationCount = computed(() => {
       </CommonLink>
       <CommonLink
         link="/account"
-        class="group flex-1"
+        class="group flex flex-1 justify-center"
         exact-active-class="user-active"
       >
         <CommonUserAvatar
           v-if="user"
           :entity="user"
-          class="group-[.user-active]:ring-blue inline-flex group-[.user-active]:ring-2"
+          class="group-[.user-active]:ring-blue group-[.user-active]:rounded-full group-[.user-active]:ring-2"
           size="small"
           personal
         />

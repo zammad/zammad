@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 require 'system/examples/core_workflow_examples'
 require 'system/examples/text_modules_examples'
 
-RSpec.describe 'Ticket Create', type: :system do
+RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
 
   context 'when calling without session' do
     describe 'redirect to' do
@@ -229,8 +229,8 @@ RSpec.describe 'Ticket Create', type: :system do
     end
   end
 
-  describe 'object manager attributes default date', time_zone: 'Europe/London' do
-    before :all do # rubocop:disable RSpec/BeforeAfterAll
+  describe 'object manager attributes default date', authenticated_as: :authenticate, db_strategy: :reset do
+    def authenticate
       screens = {
         'create_top' => {
           '-all-' => {
@@ -241,11 +241,8 @@ RSpec.describe 'Ticket Create', type: :system do
 
       create(:object_manager_attribute_date, name: 'date_test', display: 'date_test', default: 24, screens: screens)
       create(:object_manager_attribute_datetime, name: 'datetime_test', display: 'datetime_test', default: 100, screens: screens)
-      ObjectManager::Attribute.migration_execute # rubocop:disable Zammad/ExistsDbStrategy
-    end
-
-    after :all do # rubocop:disable RSpec/BeforeAfterAll
-      ObjectManager::Attribute.where(name: %i[date_test datetime_test]).destroy_all
+      ObjectManager::Attribute.migration_execute
+      true
     end
 
     before do
@@ -1084,7 +1081,7 @@ RSpec.describe 'Ticket Create', type: :system do
     end
   end
 
-  describe 'Ticket templates are missing pending till option #4318', time_zone: 'Europe/London' do
+  describe 'Ticket templates are missing pending till option #4318' do
 
     shared_examples 'check datetime field' do
 

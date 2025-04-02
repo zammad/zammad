@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
@@ -36,7 +36,7 @@ const handleLinkClick = (notification: OnlineNotification) => {
       <component
         :is="link ? 'CommonLink' : 'div'"
         v-if="builder"
-        class="group/link grid grid-cols-[1fr_auto] grid-rows-[auto_auto] gap-x-2 hover:no-underline"
+        class="group/link grid grid-cols-[1fr_auto] grid-rows-[auto_auto] gap-x-2 hover:no-underline!"
         :class="{
           'opacity-30': notification.seen,
         }"
@@ -62,13 +62,13 @@ const handleLinkClick = (notification: OnlineNotification) => {
         <CommonLabel
           :id="`notification-${notification.id}`"
           tag="p"
-          class="inline text-lg leading-5 text-black dark:text-white"
+          class="inline! text-lg leading-5 text-black dark:text-white"
           :class="{ 'group-hover/link:underline': notification.createdBy }"
           v-html="markup(message)"
         />
 
         <CommonDateTime
-          class="row-2 col-start-2 text-xs text-gray-100 dark:text-neutral-500"
+          class="col-start-2 row-2 text-xs text-gray-100 dark:text-neutral-500"
           :date-time="notification.createdAt"
           type="relative"
         />
@@ -77,7 +77,7 @@ const handleLinkClick = (notification: OnlineNotification) => {
       <CommonButton
         :aria-labelledby="`notification-${notification.id}`"
         :aria-description="$t('Remove Notification')"
-        class="opacity-0 focus-visible:opacity-100 group-hover:opacity-100"
+        class="opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
         icon="x-lg"
         variant="remove"
         @click="$emit('remove', notification)"

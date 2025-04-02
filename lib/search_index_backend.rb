@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class SearchIndexBackend
 
@@ -314,6 +314,10 @@ remove whole data from index
     }
   ]
 
+  result = SearchIndexBackend.search('Nicole', 'User', only_total_count: true)
+
+  { :total_count => 1 }
+
 =end
 
   def self.search(query, index, options = {})
@@ -337,6 +341,31 @@ remove whole data from index
 @param options [Hash] search options (see build_query)
 
 @return search result
+
+  result = SearchIndexBackend.search_by_index('Nicole', 'User', only_total_count: true)
+
+  { :total_count => 1 }
+
+  result = SearchIndexBackend.search_by_index('Nicole', 'User', with_total_count: true)
+
+  {
+    :total_count => 1,
+    :object_metadata => [
+      {
+        :id => "2",
+        :type => "User"
+      }
+    ]
+  }
+
+  result = SearchIndexBackend.search_by_index('Nicole', 'User')
+
+  [
+    {
+      :id => "2",
+      :type => "User"
+    }
+  ]
 
 =end
 
@@ -836,7 +865,7 @@ helper method for making HTTP calls and raising error if response was not succes
       properties: {}
     }
 
-    store_columns = %w[preferences data]
+    store_columns = %w[preferences data condition condition_selected condition_saved perform options view order match timeplan]
 
     # for elasticsearch 6.x and later
     string_type = 'text'
@@ -855,7 +884,7 @@ helper method for making HTTP calls and raising error if response was not succes
         result[:properties][key] = {
           type: 'integer',
         }
-      elsif value.type == :datetime || value.type == :date
+      elsif value.type == :datetime || value.type == :date # rubocop:disable Style/MultipleComparison
         result[:properties][key] = {
           type: 'date',
         }
@@ -877,6 +906,23 @@ helper method for making HTTP calls and raising error if response was not succes
       elsif value.type == :decimal
         result[:properties][key] = {
           type: 'float',
+        }
+      elsif value.type == :jsonb
+        result[:properties][key] = {
+          properties: {
+            label: {
+              type:   string_type,
+              fields: {
+                keyword: string_raw
+              }
+            },
+            value: {
+              type:   string_type,
+              fields: {
+                keyword: string_raw
+              }
+            }
+          }
         }
       end
     end

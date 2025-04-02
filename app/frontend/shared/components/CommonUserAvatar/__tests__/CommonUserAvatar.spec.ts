@@ -1,9 +1,10 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { useDateFormat } from '@vueuse/shared'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
+import logo from '#shared/components/CommonUserAvatar/assets/logo.svg'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
 import { SYSTEM_USER_ID } from '#shared/utils/constants.ts'
@@ -72,8 +73,7 @@ describe('CommonUserAvatar', () => {
     const avatar = view.getByTestId('common-avatar')
 
     expect(avatar).toHaveStyle({
-      backgroundImage:
-        'url(/app/frontend/shared/components/CommonUserAvatar/assets/logo.svg)',
+      backgroundImage: `url(/${logo})`,
     })
   })
 

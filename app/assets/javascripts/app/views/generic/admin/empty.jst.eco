@@ -1,5 +1,6 @@
 <p><%- @T(@explanation) %></p>
 
+<div class="js-pager"></div>
 <table class="table table--placeholder">
   <thead><tr><th><%- @T('No Entries') %>
 </table>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module CanSearch
   extend ActiveSupport::Concern
@@ -213,7 +213,7 @@ returns
       elsif params[:with_total_count].present?
         if params[:full].present?
           return {
-            objects:     object_ids.map { |id| lookup(id: id) },
+            objects:     where_ordered_ids(object_ids),
             total_count: object_count
           }
         end
@@ -223,7 +223,7 @@ returns
           total_count: object_count
         }
       elsif params[:full].present?
-        object_ids.map { |id| lookup(id: id) }
+        where_ordered_ids(object_ids)
       else
         object_ids
       end
@@ -295,6 +295,19 @@ returns
 
     def sql_helper
       @sql_helper ||= ::SqlHelper.new(object: self)
+    end
+
+    #
+    # Returns a relation with objects referenced by the ids in their original order.
+    #
+    def where_ordered_ids(ids)
+      order_by = case ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
+                 when 'postgresql'
+                   "array_position(ARRAY[#{ids.join(',')}], id)"
+                 when 'mysql2'
+                   "FIELD(id, #{ids.join(',')})"
+                 end
+      where(id: ids).reorder(Arel.sql(order_by))
     end
   end
 end

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -12,8 +12,8 @@ import openExternalLink from '#shared/utils/openExternalLink.ts'
 
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
-import type { TableHeader } from '#desktop/components/CommonSimpleTable/types.ts'
+import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
+import type { TableSimpleHeader } from '#desktop/components/CommonTable/types'
 import { useCalendarIcsFileEventsQuery } from '#desktop/entities/calendar/ics-file/graphql/queries/events.api.ts'
 
 interface Props {
@@ -32,7 +32,7 @@ const calendarEventsQuery = new QueryHandler(
 const calendarEventsQueryResult = calendarEventsQuery.result()
 const calendarEventsQueryLoading = calendarEventsQuery.loading()
 
-const tableHeaders: TableHeader[] = [
+const tableHeaders: TableSimpleHeader[] = [
   {
     key: 'summary',
     label: __('Event Summary'),
@@ -95,6 +95,7 @@ const downloadCalendar = () => {
   >
     <CommonLoader :loading="calendarEventsQueryLoading">
       <CommonSimpleTable
+        :caption="__('Preview Calendar')"
         class="mb-4 w-full"
         :headers="tableHeaders"
         :items="tableItems"

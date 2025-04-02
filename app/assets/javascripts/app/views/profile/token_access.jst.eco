@@ -31,7 +31,7 @@
         <td><%= token.name %></td>
         <td><% if token.preferences && token.preferences.permission: %><%= token.preferences.permission.join(', ') %><% end %></td>
         <td><%- @humanTime(token.created_at) %></td>
-        <td><%- @Tdate(token.expires_at) %></td>
+        <td><%- @humanTime(token.expires_at) %></td>
         <td><%- @humanTime(token.last_used_at) %></td>
         <td class="settings-list-controls">
           <div class="settings-list-control js-delete" data-token-id="<%- token.id %>" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></div>

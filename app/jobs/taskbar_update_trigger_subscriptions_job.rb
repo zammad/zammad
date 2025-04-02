@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # This job retrieves all taskbars associated with the specified taskbar key and activates the related update subscription.
 # This allows for updates to taskbar entries, such as cases where a user may lose permissions for a ticket.

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, watch } from 'vue'
@@ -19,6 +19,7 @@ import type {
   EmailOutboundData,
   EmailInboundMessagesData,
 } from '#desktop/entities/channel-email/types/email-inbound-outbound.ts'
+import { useArchiveBeforeWarningHandler } from '#desktop/form/composables/useArchiveBeforeWarningHandler.ts'
 import { useSSLVerificationWarningHandler } from '#desktop/form/composables/useSSLVerificationWarningHandler.ts'
 
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
@@ -222,6 +223,10 @@ const emailConfigurationCheck = computed(() => {
         ref="formEmailInboundMessages"
         data-test-id="channel-email-inbound-messages"
         form-class="mb-2.5"
+        :handlers="[useArchiveBeforeWarningHandler()]"
+        :form-updater-id="
+          EnumFormUpdaterId.FormUpdaterUpdaterGuidedSetupEmailArchive
+        "
         :schema="emailInboundMessageSchema"
         :schema-data="emailInboundMessageSchemaData"
         @submit="

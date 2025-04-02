@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class ObjectManager::Attribute::DataOptionValidator < ActiveModel::Validator
   VALIDATE_INTEGER_MIN    = -2_147_483_647

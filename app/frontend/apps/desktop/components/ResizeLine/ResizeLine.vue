@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 <script lang="ts" setup>
 import { useEventListener } from '@vueuse/core'
 import { computed, readonly, ref } from 'vue'
@@ -91,15 +91,30 @@ defineExpose({
 })
 </script>
 <template>
-  <div class="hover-area" :class="[`hover-area--${props.orientation}`]">
+  <div
+    class="flex justify-center opacity-0 focus-within:opacity-100 hover:opacity-100"
+    :class="
+      {
+        horizontal: 'h-[12px] w-full',
+        vertical: 'h-full w-[12px]',
+      }[orientation]
+    "
+  >
     <button
       ref="resizeLine"
       v-tooltip="!disabled ? label : undefined"
       :aria-describedby="id"
       :disabled="disabled"
       tabindex="0"
-      class="line"
-      :class="[{ '!bg-blue-800': resizing }, buttonClass]"
+      class="not-disabled:bg-neutral-500 focus-within:bg-blue-800! not-disabled:hover:bg-blue-600 focus:outline-hidden disabled:pointer-events-none not-disabled:dark:bg-gray-200 not-disabled:dark:hover:bg-blue-900"
+      :class="[
+        { 'bg-blue-800!': resizing },
+        {
+          horizontal: 'h-1 w-full enabled:cursor-row-resize!',
+          vertical: 'h-full w-1 enabled:cursor-col-resize!',
+        }[orientation],
+        buttonClass,
+      ]"
       @mousedown="handleMousedown"
       @blur="resizing = false"
       @touchstart="handleTouchstart"
@@ -118,37 +133,3 @@ defineExpose({
     />
   </div>
 </template>
-
-<style scoped>
-.line {
-  @apply focus:outline-none;
-
-  &:focus-within {
-    background-color: theme('colors.blue.800') !important;
-  }
-}
-
-.hover-area {
-  @apply flex justify-center opacity-0 focus-within:opacity-100 hover:opacity-100;
-
-  .line:not(:disabled) {
-    @apply bg-neutral-500 hover:bg-blue-600 dark:bg-gray-200 dark:hover:bg-blue-900;
-  }
-
-  &--horizontal {
-    @apply -:w-full h-[12px];
-
-    .line {
-      @apply h-1 w-full enabled:cursor-row-resize;
-    }
-  }
-
-  &--vertical {
-    @apply -:h-full w-[12px];
-
-    .line {
-      @apply h-full w-1 enabled:cursor-col-resize;
-    }
-  }
-}
-</style>

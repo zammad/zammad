@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -62,7 +62,14 @@ describe('NotificationPopover', () => {
       },
     })
 
-    const wrapper = renderComponent(NotificationPopover, { router: true })
+    const wrapper = renderComponent(NotificationPopover, {
+      router: true,
+      props: {
+        loading: false,
+        hasUnseenNotification: true,
+        notificationList: [node],
+      },
+    })
 
     await wrapper.events.click(
       await wrapper.findByRole('button', { name: 'mark all as read' }),
@@ -76,21 +83,14 @@ describe('NotificationPopover', () => {
   })
 
   it('removes a notification', async () => {
-    mockOnlineNotificationsQuery({
-      onlineNotifications: {
-        edges: [
-          {
-            node,
-          },
-        ],
-        pageInfo: {
-          endCursor: 'Nw',
-          hasNextPage: false,
-        },
+    const wrapper = renderComponent(NotificationPopover, {
+      router: true,
+      props: {
+        loading: false,
+        hasUnseenNotification: true,
+        notificationList: [node],
       },
     })
-
-    const wrapper = renderComponent(NotificationPopover, { router: true })
 
     const list = await wrapper.findByRole('list')
 

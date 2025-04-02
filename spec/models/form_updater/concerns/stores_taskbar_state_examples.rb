@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'FormUpdater::StoresTaskbarState' do |taskbar_key:, taskbar_callback:, store_state_collect_group_key:, store_state_group_keys:|
   context 'when storing taskbar state' do

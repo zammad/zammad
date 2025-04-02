@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -65,7 +65,9 @@ describe('Ticket detail view - draft handling', () => {
       })
 
       mockTicketQuery({
-        ticket: createDummyTicket(),
+        ticket: createDummyTicket({
+          defaultPolicy: { update: true, agentReadAccess: false },
+        }),
       })
 
       const view = await visitView('/tickets/1')

@@ -86,4 +86,5 @@ fragment ticketArticleAttributes on TicketArticle {
   mediaErrorState {
     error
   }
+  detectedLanguage
 }

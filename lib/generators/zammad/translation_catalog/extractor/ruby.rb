@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Zammad::TranslationCatalog::Extractor::Ruby < Zammad::TranslationCatalog::Extractor::Base
   REMOVE_DOC_COMMENTS_REGEX = %r{^=begin.*?^=end}mx

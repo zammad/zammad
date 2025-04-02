@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -11,6 +11,7 @@ RSpec.describe Gql::Mutations::User::Current::PasswordCheck, type: :graphql do
       mutation userCurrentPasswordCheck($password: String!) {
         userCurrentPasswordCheck(password: $password) {
           success
+          token
           errors {
             message
             field
@@ -32,8 +33,8 @@ RSpec.describe Gql::Mutations::User::Current::PasswordCheck, type: :graphql do
 
   context 'when user is authenticated', authenticated_as: :user do
     context 'when password is correct' do
-      it 'returns success' do
-        expect(gql.result.data).to include('success' => be_truthy)
+      it 'returns true for success and includes a token' do
+        expect(gql.result.data).to include('success' => true, 'token' => be_a(String))
       end
     end
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { storeToRefs } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
@@ -7,10 +7,10 @@ import type {
   ChangedFieldFunction,
   FormFieldValue,
 } from '#shared/components/Form/types.ts'
+import { getTicketNumberWithHook } from '#shared/entities/ticket/composables/getTicketNumber.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import type { TicketRelationAndRecentListItem } from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/types.ts'
-import { getTicketNumberWithHook } from '#desktop/pages/ticket/composables/getTicketNumber.ts'
 
 export const useTargetTicketOptions = (
   onChangedField: ChangedFieldFunction,

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <template>
   <div
@@ -6,11 +6,11 @@
     role="status"
     aria-live="polite"
     :aria-label="$t('Has update')"
-  ></div>
+  />
 </template>
 
 <style scoped>
 .router-link-active > * > .indicator {
-  @apply bg-white;
+  background-color: var(--color-white);
 }
 </style>

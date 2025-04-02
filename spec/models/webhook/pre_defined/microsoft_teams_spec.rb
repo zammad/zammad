@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -42,7 +42,7 @@ RSpec.describe 'Webhook > MS Teams', integration: true, performs_jobs: true, req
         facility:  'webhook',
         method:    'POST',
         url:       ENV['MS_TEAMS_CI_WEBHOOK_URL'],
-        status:    200.to_s,
+        status:    202.to_s,
       )
     end
   end

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -28,7 +28,7 @@ describe('CommonTicketPriorityIndicator.vue', () => {
       },
     })
 
-    expect(view.getByText('1 low')).toHaveClass('common-badge-info')
+    expect(view.getByText('1 low')).toHaveClass('common-badge-tertiary')
   })
 
   it('renders high priority correctly', () => {
@@ -52,7 +52,7 @@ describe('CommonTicketPriorityIndicator.vue', () => {
       },
     })
 
-    expect(view.getByText('2 normal')).toHaveClass('common-badge-warning')
+    expect(view.getByText('2 normal')).toHaveClass('common-badge-info')
   })
 
   it('supports accessibility features', () => {

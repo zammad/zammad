@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::TwoFactor::Base < Service::Base
   attr_reader :user, :method_name
@@ -27,6 +27,12 @@ class Service::User::TwoFactor::Base < Service::Base
   end
 
   def user_preference
+    return if !client_safe_config?
+
     @user_preference ||= method&.user_two_factor_preference
+  end
+
+  def client_safe_config?
+    !method.without_client_config?
   end
 end

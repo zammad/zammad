@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Rubocop does not like :: prefix, but Yard throws an error parsing without it
 class Ticket::PerformChanges::Action < ::PerformChanges::Action # rubocop:disable Style/RedundantConstantBase

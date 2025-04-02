@@ -14,7 +14,7 @@
     <% end %>
     <div class="modal-control">
       <% if @position+1 is @max: %>
-        <div class="btn btn--text js-next"><% if @max > 1: %><%- @T('Finish') %><% else: %><%- @T('Got it!') %><% end %></div>
+        <div class="btn btn--text js-next"><% if @max > 1: %><%- @T('Finish') %><% else: %><%- @T('Got it') %><% end %></div>
       <% else: %>
         <div class="btn btn--text js-next"><%- @T( 'Next' ) %></div>
       <% end %>

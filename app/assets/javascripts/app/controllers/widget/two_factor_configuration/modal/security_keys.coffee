@@ -13,6 +13,10 @@ class App.TwoFactorConfigurationModalSecurityKeys extends App.TwoFactorConfigura
     $('.modal .js-submit').prop('disabled', true)
 
     callback = (data) =>
+      if data?.invalid_password_token
+        @invalidPasswordToken()
+        return
+
       @config      = data?.configuration or {}
       @credentials = @config?.credentials or []
 
@@ -31,11 +35,13 @@ class App.TwoFactorConfigurationModalSecurityKeys extends App.TwoFactorConfigura
 
   fetchExistingSecurityKeys: (callback) =>
     @ajax(
-      id:      'two_factor_authentication_method_configuration'
-      type:    'GET'
-      url:     "#{@apiPath}/users/two_factor_authentication_method_configuration/security_keys"
-      success: callback
-      error:   callback
+      id:          'two_factor_authentication_method_configuration'
+      type:        'POST'
+      url:         "#{@apiPath}/users/two_factor/authentication_method_configuration/security_keys"
+      data:        JSON.stringify(token: @token)
+      processData: true
+      success:     callback
+      error:       callback
     )
 
   renderTable: =>
@@ -74,15 +80,22 @@ class App.TwoFactorConfigurationModalSecurityKeys extends App.TwoFactorConfigura
     )
 
   removeSecurityKey: (id) =>
-    data = { credential_id: id }
+    data = {
+      credential_id: id
+      token: @token
+    }
 
     @ajax(
-      id:          'two_factor_authentication_method_configuration'
+      id:          'two_factor_authentication_remove_credentials'
       type:        'DELETE'
-      url:         "#{@apiPath}/users/two_factor_authentication_remove_credentials/security_keys"
+      url:         "#{@apiPath}/users/two_factor/authentication_remove_credentials/security_keys"
       data:        JSON.stringify(data)
       processData: true
-      success: =>
+      success: (data) =>
+        if data?.invalid_password_token
+          @invalidPasswordToken()
+          return
+
         # Refresh the table in the password profile screen.
         @successCallback()
 
@@ -98,6 +111,7 @@ class App.TwoFactorConfigurationModalSecurityKeys extends App.TwoFactorConfigura
     @next(
       container: @container
       successCallback: @successCallback
+      token: @token
     )
 
     # We are not calling `super`, since we do not want to call success callback yet.
@@ -138,6 +152,7 @@ class App.TwoFactorConfigurationModalSecurityKeyConfig extends App.TwoFactorConf
       container: @container
       nickname: params.nickname
       successCallback: @successCallback
+      token: @token
     )
 
     # We are not calling `super`, since we do not want to call success callback yet.
@@ -161,6 +176,10 @@ class App.TwoFactorConfigurationModalSecurityKeyRegister extends App.TwoFactorCo
     $('.modal .js-loading').removeClass('hide')
 
     callback = (data) =>
+      if data?.invalid_password_token
+        @invalidPasswordToken()
+        return
+
       @config = data.configuration
 
       content = $(App.view('widget/two_factor_configuration/security_keys/register')())
@@ -174,10 +193,12 @@ class App.TwoFactorConfigurationModalSecurityKeyRegister extends App.TwoFactorCo
 
   fetchInitialConfiguration: (callback) =>
     @ajax(
-      id:      'two_factor_authentication_method_initiate_configuration'
-      type:    'GET'
-      url:     "#{@apiPath}/users/two_factor_authentication_method_initiate_configuration/#{@method.key}"
-      success: callback
+      id:          'two_factor_authentication_method_initiate_configuration'
+      type:        'POST'
+      url:         "#{@apiPath}/users/two_factor/authentication_method_initiate_configuration/#{@method.key}"
+      data:        JSON.stringify(token: @token)
+      processData: true
+      success:     callback
     )
 
   showError: (message = __('Security key setup failed.')) =>
@@ -202,6 +223,7 @@ class App.TwoFactorConfigurationModalSecurityKeyRegister extends App.TwoFactorCo
       .then((publicKeyCredential) =>
         data = JSON.stringify(
           method: @method.key
+          token: @token
           payload:
             credential: publicKeyCredential
             challenge:  @config.challenge
@@ -211,10 +233,14 @@ class App.TwoFactorConfigurationModalSecurityKeyRegister extends App.TwoFactorCo
         @ajax
           id: 'two_factor_verify_configuration'
           type: 'POST'
-          url: "#{@apiPath}/users/two_factor_verify_configuration"
+          url: "#{@apiPath}/users/two_factor/verify_configuration"
           data: data
           processData: true
           success: (data, status, xhr) =>
+            if data?.invalid_password_token
+              @invalidPasswordToken()
+              return
+
             if data?.verified
               @finalizeConfigurationWizard(data)
               return

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Package < ApplicationModel
   @@root = Rails.root.to_s # rubocop:disable Style/ClassVars
@@ -184,7 +184,7 @@ subsequently in a separate step.
         FileUtils.mkdir_p(dest.to_s)
       end
 
-      if File.file?(entry.to_s) && (File.file?(dest.to_s) && !File.symlink?(dest.to_s))
+      if File.file?(entry.to_s) && File.file?(dest.to_s) && !File.symlink?(dest.to_s)
         backup_file = "#{dest}.link_backup"
         if File.exist?(backup_file)
           raise "Can't link #{entry} -> #{dest}, destination and .link_backup already exists!"

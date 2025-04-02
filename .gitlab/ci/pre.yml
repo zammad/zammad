@@ -20,7 +20,7 @@
   stage: pre
   cache: []
   rules:
-    - if: $CI_COMMIT_REF_NAME =~ /^(private|cherry-pick-|renovate|dependabot)/
+    - if: $CI_COMMIT_REF_NAME =~ /^(private|cherry-pick-|revert-|renovate|dependabot)/
       when: never
     - when: always
   before_script:

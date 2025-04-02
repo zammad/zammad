@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import type {
@@ -15,6 +15,7 @@ export interface ObjectAttribute extends ObjectManagerFrontendAttribute {
     translate?: boolean
     permission?: string | string[]
     relation?: string
+    belongs_to?: string
     [index: string]: JsonValue | undefined
   }
 }
@@ -27,7 +28,7 @@ export interface EntityStaticObjectAttributes {
 export interface ObjectAttributesObject {
   attributes: ComputedRef<ObjectAttribute[]>
   screens: ComputedRef<Record<string, string[]>>
-  attributesLookup: ComputedRef<Map<string, ObjectManagerFrontendAttribute>>
+  attributesLookup: ComputedRef<Map<string, ObjectAttribute>>
   formFieldAttributesLookup: ComputedRef<Map<string, FormSchemaField>>
   loading: Ref<boolean>
 }

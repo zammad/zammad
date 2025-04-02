@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -18,18 +18,17 @@ import { i18n } from '#shared/i18n/index.ts'
 import { ErrorRouteType, redirectErrorRoute } from '#shared/router/error.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 import { ErrorStatusCodes } from '#shared/types/error.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
+import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
 import type {
-  TableHeader,
+  TableSimpleHeader,
   TableItem,
-} from '#desktop/components/CommonSimpleTable/types.ts'
+} from '#desktop/components/CommonTable/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useCheckTokenAccess } from '../composables/permission/useCheckTokenAccess.ts'
@@ -54,8 +53,6 @@ defineOptions({
   },
 })
 
-const session = useSessionStore()
-
 const { breadcrumbItems } = useBreadcrumb(__('Token Access'))
 
 const newAccessTokenFlyout = useFlyout({
@@ -76,10 +73,7 @@ accessTokenListQuery.subscribeToMore<
   UserCurrentAccessTokenUpdatesSubscription
 >({
   document: UserCurrentAccessTokenUpdatesDocument,
-  variables: {
-    userId: session.user?.id || '',
-  },
-  updateQuery: (prev, { subscriptionData }) => {
+  updateQuery: (_, { subscriptionData }) => {
     if (!subscriptionData.data?.userCurrentAccessTokenUpdates.tokens) {
       return null as unknown as UserCurrentAccessTokenListQuery
     }
@@ -91,7 +85,7 @@ accessTokenListQuery.subscribeToMore<
   },
 })
 
-const tableHeaders: TableHeader[] = [
+const tableHeaders: TableSimpleHeader[] = [
   {
     key: 'name',
     label: __('Name'),
@@ -217,7 +211,7 @@ const helpText = computed(() => [
           :headers="tableHeaders"
           :items="currentAccessTokens"
           :actions="tableActions"
-          :aria-label="$t('Personal Access Tokens')"
+          :caption="$t('Personal Access Tokens')"
           class="min-w-150"
         >
           <template #item-suffix-name="{ item }">

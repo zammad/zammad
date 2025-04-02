@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -69,6 +69,27 @@ RSpec.describe Service::User::Signup do
     end
   end
 
+  shared_examples 'raising error if import mode is on' do
+    context 'when in import mode' do
+      before { Setting.set('import_mode', true) }
+
+      it 'raises an error' do
+        expect { service.execute }
+          .to raise_error(Exceptions::UnprocessableEntity, message)
+      end
+
+      it 'adds message to the log' do
+        allow(Rails.logger).to receive(:error)
+
+        service.execute rescue nil # rubocop:disable Style/RescueModifier
+
+        expect(Rails.logger)
+          .to have_received(:error)
+          .with(message)
+      end
+    end
+  end
+
   describe '#execute' do
     context 'with disabled user signup' do
       before do
@@ -80,6 +101,10 @@ RSpec.describe Service::User::Signup do
 
     context 'with valid user data' do
       it_behaves_like 'returning success', with_new_user: true
+
+      it_behaves_like 'raising error if import mode is on' do
+        let(:message) { 'Could not create user and send verification email because import_mode setting is on.' }
+      end
     end
 
     context 'with invalid user data' do
@@ -106,6 +131,10 @@ RSpec.describe Service::User::Signup do
 
         it_behaves_like 'returning success', with_existing_user: true
       end
+
+      it_behaves_like 'raising error if import mode is on' do
+        let(:message) { 'Could not create user and send verification email because import_mode setting is on.' }
+      end
     end
 
     context 'when resending verification email' do
@@ -122,6 +151,10 @@ RSpec.describe Service::User::Signup do
         let(:verified) { true }
 
         it_behaves_like 'returning success', with_existing_user: true, with_resend: true
+      end
+
+      it_behaves_like 'raising error if import mode is on' do
+        let(:message) { 'Could not send user verification email because import_mode setting is on.' }
       end
     end
   end

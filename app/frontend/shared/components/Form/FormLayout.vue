@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -22,16 +22,16 @@ const columnClass = computed(() => {
   </fieldset>
 </template>
 
-<style lang="postcss">
+<style>
 fieldset.column-1 > .formkit-outer {
-  @apply w-full;
+  width: 100%;
 }
 
 fieldset.column-2 > .formkit-outer {
-  @apply w-1/2;
+  width: 50%;
 }
 
 fieldset.column-2 > .formkit-outer:first-child {
-  @apply pr-3;
+  padding-right: 0.75rem;
 }
 </style>

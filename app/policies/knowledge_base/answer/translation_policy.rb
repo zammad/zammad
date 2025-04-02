@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Answer::TranslationPolicy < ApplicationPolicy
   delegate :show?, to: :parent_answer_policy

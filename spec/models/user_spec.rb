@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
@@ -1335,6 +1335,15 @@ RSpec.describe User, type: :model do
 
         it_behaves_like 'sanitizing user name attributes', 'Dummy R: Berlin', 'Mail'
       end
+    end
+  end
+
+  describe 'Performance: Remove assets which are present in collection assets #5495' do
+    let!(:user) { create(:user, groups: create_list(:group, 5)) }
+
+    it 'does not deliver global assets' do
+      expect(user.groups).to be_present
+      expect(user.assets({}).deep_symbolize_keys.keys).not_to include(:TicketPriority, :Role, :TicketState, :Group)
     end
   end
 end

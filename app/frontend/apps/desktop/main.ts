@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { createApp } from 'vue'
 
@@ -10,6 +10,7 @@ import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
 import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
 import { initializeAbstracts } from '#shared/initializer/initializeAbstracts.ts'
 import initializeStoreSubscriptions from '#shared/initializer/storeSubscriptions.ts'
+import { setCurrentRouter } from '#shared/router/router.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import initializeStore from '#shared/stores/index.ts'
@@ -37,9 +38,13 @@ export const mountApp = async () => {
   setCurrentApp(app)
 
   initializeAppName('desktop')
-
   initializeApolloClient(app)
+
   const router = initializeRouter(app)
+
+  // Remember the initialized router.
+  setCurrentRouter(router)
+
   initializeStore(app)
   initializeDesktopIcons()
   initializeForm(app)

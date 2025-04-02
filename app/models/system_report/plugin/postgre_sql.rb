@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class SystemReport::Plugin::PostgreSql < SystemReport::Plugin
   DESCRIPTION = __('PostgresSQL server version').freeze

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class GraphqlController < ApplicationController
   # Handled in the GraphQL processing, not on controller level.
@@ -49,10 +49,11 @@ class GraphqlController < ApplicationController
   def context
     # context must be kept in sync with GraphqlChannel!
     {
-      sid:          session.id,
-      current_user: current_user,
+      sid:             session.id,
+      current_user:    current_user,
+      current_user_id: current_user&.id,
       # :controller is used by login/logout mutations and MUST NOT be used otherwise.
-      controller:   self,
+      controller:      self,
     }
   end
 

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script lang="ts" setup>
 import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar'
@@ -60,7 +60,7 @@ const actions: MenuItem[] = [
         :entity="organization as AvatarOrganization"
         size="normal"
       />
-      <CommonLabel size="large" class="dark:text-white"
+      <CommonLabel size="large" class="dark:text-white!"
         >{{ organization.name }}
       </CommonLabel>
     </CommonLink>

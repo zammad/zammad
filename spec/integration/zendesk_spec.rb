@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -52,14 +52,14 @@ RSpec.describe 'Zendesk import', db_strategy: :reset, integration: true, require
           'total'       => 2,
         },
         'Tickets'       => {
-          'skipped'     => 67,
+          'skipped'     => 0,
           'created'     => 144,
-          'updated'     => 1,
+          'updated'     => 3,
           'unchanged'   => 0,
           'failed'      => 0,
           'deactivated' => 0,
-          'sum'         => 212,
-          'total'       => 212,
+          'sum'         => 147,
+          'total'       => 147,
         },
       }
     end

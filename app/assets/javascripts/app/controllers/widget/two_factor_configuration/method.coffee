@@ -13,15 +13,23 @@ class App.TwoFactorConfigurationMethod extends App.Controller
     #   and bind the cancel handler to return back to after auth modal.
     if params.mode is 'after_auth'
       @passwordCheck = false
+
+      data = _.extend(
+        {},
+        token: params.token
+      )
+
       modalOptions = _.extend(
         {},
         modalOptions,
+        data,
         backdrop: 'static'
         buttonClose: false
         buttonCancel: __('Go Back')
         keyboard: false
         onCancel: ->
           new App.AfterAuthTwoFactorConfiguration(
+            data: data
             noFadeTransition: true
           )
       )

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class PermissionSwitchToLabelDescription < ActiveRecord::Migration[7.0]
   def change
@@ -25,7 +25,9 @@ class PermissionSwitchToLabelDescription < ActiveRecord::Migration[7.0]
   end
 
   def change_single_permission_wording(permission_name, new_values, index)
-    permission = Permission.find_by! name: permission_name
+    permission = Permission.find_by(name: permission_name)
+    return if permission.nil?
+
     permission.label = new_values[:label]
     permission.description = new_values[:description]
     permission.preferences.delete :translations

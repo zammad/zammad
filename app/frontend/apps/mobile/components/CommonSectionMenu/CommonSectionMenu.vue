@@ -1,7 +1,7 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { computed, useSlots, type SetupContext } from 'vue'
 
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -42,7 +42,7 @@ const itemsWithPermission = computed(() => {
   })
 })
 
-const slots = useSlots()
+const slots: SetupContext['slots'] = useSlots()
 
 const hasHelp = computed(() => slots.help || props.help)
 const showLabel = computed(() => {

@@ -1,10 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
-
-Rails.root.glob('lib/omniauth/*').each do |file|
-  if File.file?(file)
-    require file
-  end
-end
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 Rails.application.config.middleware.use OmniAuth::Builder do
 
@@ -46,6 +40,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
   # SAML database connect
   provider :saml_database
+
+  provider :oidc_database
 end
 
 # This fixes issue #1642 and is required for setups in which Zammad is used

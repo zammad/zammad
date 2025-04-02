@@ -1,6 +1,7 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises, mount } from '@vue/test-utils'
+import SparkMD5 from 'spark-md5'
 import { useRoute, type RouteLocationNormalizedLoadedGeneric } from 'vue-router'
 
 import {
@@ -10,6 +11,7 @@ import {
 
 import {
   getOverlayContainerMeta,
+  getRouteIdentifier,
   useOverlayContainer,
 } from '../useOverlayContainer.ts'
 
@@ -55,6 +57,10 @@ describe('use dialog usage', () => {
       },
       {
         path: '/example',
+        meta: {
+          requiresAuth: true,
+          requiredPermission: null,
+        },
       },
     )
 
@@ -67,6 +73,10 @@ describe('use dialog usage', () => {
       },
       {
         path: '/example',
+        meta: {
+          requiresAuth: true,
+          requiredPermission: null,
+        },
       },
     )
 
@@ -79,6 +89,10 @@ describe('use dialog usage', () => {
       },
       {
         path: '/example',
+        meta: {
+          requiresAuth: true,
+          requiredPermission: null,
+        },
       },
     )
   })
@@ -92,20 +106,25 @@ describe('use dialog usage', () => {
         })
       },
       {
+        name: 'Example',
         path: '/example',
+        meta: {
+          requiresAuth: true,
+          requiredPermission: null,
+        },
       },
     )
     const { options } = getOverlayContainerMeta('dialog')
 
     expect(options.size).toBe(1)
-    expect(options.has('name_/example')).toBe(true)
+    expect(options.has('name_Example')).toBe(true)
 
     vm.unmount()
 
     await flushPromises()
 
     expect(options.size).toBe(0)
-    expect(options.has('name_/example')).toBe(false)
+    expect(options.has('name_Example')).toBe(false)
   })
 
   test('opens and closes dialog', async () => {
@@ -121,7 +140,12 @@ describe('use dialog usage', () => {
         })
       },
       {
+        name: 'Example',
         path: '/example',
+        meta: {
+          requiresAuth: true,
+          requiredPermission: null,
+        },
       },
     )
 
@@ -131,10 +155,10 @@ describe('use dialog usage', () => {
 
     expect(dialog.isOpened.value).toBe(true)
     expect(component).toHaveBeenCalled()
-    expect(opened.value.has('name_/example')).toBe(true)
+    expect(opened.value.has('name_Example')).toBe(true)
     expect(pushComponent).toHaveBeenCalledWith(
       'dialog',
-      'name_/example',
+      'name_Example',
       expect.anything(),
       {},
     )
@@ -142,8 +166,8 @@ describe('use dialog usage', () => {
     await dialog.close()
 
     expect(dialog.isOpened.value).toBe(false)
-    expect(opened.value.has('name_/example')).toBe(false)
-    expect(destroyComponent).toHaveBeenCalledWith('dialog', 'name_/example')
+    expect(opened.value.has('name_Example')).toBe(false)
+    expect(destroyComponent).toHaveBeenCalledWith('dialog', 'name_Example')
   })
 
   test('prefetch starts loading', async () => {
@@ -158,7 +182,12 @@ describe('use dialog usage', () => {
         })
       },
       {
+        name: 'Example',
         path: '/example',
+        meta: {
+          requiresAuth: true,
+          requiredPermission: null,
+        },
       },
     )
 
@@ -182,7 +211,12 @@ describe('use dialog usage', () => {
         })
       },
       {
+        name: 'Example',
         path: '/example',
+        meta: {
+          requiresAuth: true,
+          requiredPermission: null,
+        },
       },
     )
 
@@ -194,5 +228,56 @@ describe('use dialog usage', () => {
     await flyout.close()
 
     expect(afterClose).toHaveBeenCalled()
+  })
+})
+
+describe('getRouteIdentifier', () => {
+  test('returns only the name if pageKey is not set and no params are present', () => {
+    const route = {
+      name: 'Example',
+      path: '/example',
+      params: {},
+      meta: {
+        requiresAuth: true,
+        requiredPermission: null,
+      },
+      redirectedFrom: undefined,
+    } as unknown as RouteLocationNormalizedLoadedGeneric
+
+    expect(getRouteIdentifier(route)).toBe('Example')
+  })
+
+  test('returns pageKey if set', () => {
+    const route = {
+      name: 'Example',
+      path: '/example',
+      params: {},
+      meta: {
+        pageKey: 'ExamplePage',
+        requiresAuth: true,
+        requiredPermission: null,
+      },
+      matched: [],
+      redirectedFrom: undefined,
+    } as unknown as RouteLocationNormalizedLoadedGeneric
+
+    expect(getRouteIdentifier(route)).toBe('ExamplePage')
+  })
+
+  test('creates hash from params', () => {
+    const route = {
+      name: 'Ticket',
+      path: '/ticket/123',
+      params: { internalId: '123' },
+      meta: {
+        requiresAuth: true,
+        requiredPermission: null,
+      },
+      redirectedFrom: undefined,
+    } as unknown as RouteLocationNormalizedLoadedGeneric
+
+    const result = getRouteIdentifier(route)
+    const expectedHash = SparkMD5.hash(JSON.stringify(route.params))
+    expect(result).toBe(`Ticket_${expectedHash}`)
   })
 })

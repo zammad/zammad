@@ -241,6 +241,15 @@ $(function() {
         'Your Message…': 'Ваше сообщение…',
         'Your Name': 'Ваше имя',
       },
+      'sk': {
+        'Attachments': 'Prílohy',
+        'Email': 'E-mail',
+        'Message': 'Správa',
+        'Name': 'Meno',
+        'Your Email': 'Váš e-mail',
+        'Your Message…': 'Vaša správa…',
+        'Your Name': 'Vaše meno',
+      },
       'sr': {
         'Attachments': 'Прилози',
         'Email': 'Имејл',

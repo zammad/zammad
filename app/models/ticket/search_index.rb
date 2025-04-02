@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Ticket::SearchIndex
   extend ActiveSupport::Concern
@@ -113,6 +113,10 @@ module Ticket::SearchIndex
       article_attributes['body'] = article_attributes['body'].html2text
     end
 
+    if article_attributes['detected_language']
+      article_attributes['detected_language_name'] = LanguageDetectionHelper.display_value(article_attributes['detected_language'])
+    end
+
     article_attributes
   end
 
@@ -123,5 +127,4 @@ module Ticket::SearchIndex
       '_content' => Base64.encode64(attachment.content).delete("\n"),
     }
   end
-
 end

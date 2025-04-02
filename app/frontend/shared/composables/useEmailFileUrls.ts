@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { find } from 'lodash-es'
 import { computed, type Ref, type MaybeRef, toValue } from 'vue'

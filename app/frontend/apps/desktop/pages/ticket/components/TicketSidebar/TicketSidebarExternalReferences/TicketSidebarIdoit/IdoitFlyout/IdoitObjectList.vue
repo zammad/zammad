@@ -1,11 +1,11 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
+import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
 import type {
-  TableHeader,
+  TableSimpleHeader,
   TableItem,
-} from '#desktop/components/CommonSimpleTable/types.ts'
+} from '#desktop/components/CommonTable/types'
 
 interface Props {
   items: TableItem[]
@@ -13,7 +13,7 @@ interface Props {
 
 defineProps<Props>()
 
-const headers: TableHeader[] = [
+const headers: TableSimpleHeader[] = [
   { key: 'idoitObjectId', label: 'ID', truncate: true },
   {
     key: 'title',
@@ -26,8 +26,10 @@ const headers: TableHeader[] = [
 </script>
 
 <template>
+  <!-- TODO: Set needed props to disable infinite scrolling etc. -->
   <CommonSimpleTable
     v-if="items.length"
+    :caption="$t('Idoit objects')"
     :items="items"
     :headers="headers"
     has-checkbox-column

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import { within } from '@testing-library/vue'
@@ -450,5 +450,37 @@ describe('Ticket detail view', () => {
         'true',
       )
     })
+  })
+
+  it('displays the checklist sidebar when it was previously collapsed and another right sidebar tab was active.', async () => {
+    mockApplicationConfig({ checklist: true })
+
+    mockTicketQuery({
+      ticket: createDummyTicket({
+        checklist: {
+          id: convertToGraphQLId('Checklist', 5),
+          completed: false,
+          incomplete: 3,
+          total: 4,
+          complete: 1,
+        },
+      }),
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await view.events.click(view.getByRole('button', { name: 'Ticket' }))
+
+    expect(
+      view.getByRole('heading', { name: 'Ticket', level: 2 }),
+    ).toBeInTheDocument()
+
+    await view.events.click(
+      view.getByRole('button', { name: 'Open Checklist' }),
+    )
+
+    expect(
+      await view.findByRole('heading', { name: 'Checklist', level: 2 }),
+    ).toBeInTheDocument()
   })
 })

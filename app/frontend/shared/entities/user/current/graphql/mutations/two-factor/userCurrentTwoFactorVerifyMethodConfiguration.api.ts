@@ -6,9 +6,10 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserCurrentTwoFactorVerifyMethodConfigurationDocument = gql`
-    mutation userCurrentTwoFactorVerifyMethodConfiguration($methodName: EnumTwoFactorAuthenticationMethod!, $payload: JSON!, $configuration: JSON!) {
+    mutation userCurrentTwoFactorVerifyMethodConfiguration($methodName: EnumTwoFactorAuthenticationMethod!, $token: String!, $payload: JSON!, $configuration: JSON!) {
   userCurrentTwoFactorVerifyMethodConfiguration(
     methodName: $methodName
+    token: $token
     payload: $payload
     configuration: $configuration
   ) {

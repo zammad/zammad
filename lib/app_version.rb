@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class AppVersion
 
@@ -58,6 +58,7 @@ returns
     Rails.logger.debug { "Starting maintenance thread for #{process_name} (#{Process.pid})" }
     Thread.new do
       Thread.current.abort_on_exception = true
+      Thread.current.name = 'app version monitoring'
 
       loop do
         if restart_required?(initial_app_version)
@@ -99,7 +100,7 @@ returns
   private_class_method :restart_required?
 
   def self.redis
-    self._redis ||= ::Redis.new(driver: :hiredis, url: ENV['REDIS_URL'].presence || 'redis://localhost:6379')
+    self._redis ||= Zammad::Service::Redis.new
   end
   private_class_method :redis
 end

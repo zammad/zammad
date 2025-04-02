@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   module OTRS
@@ -68,6 +68,7 @@ module Import
       (1..thread_count).each do |thread|
 
         threads[thread] = Thread.new do
+          Thread.current.name = "OTRS import thread #{thread}"
 
           # In some environments the Model.reset_column_information
           # is not reflected to threads. So an import error message appears.

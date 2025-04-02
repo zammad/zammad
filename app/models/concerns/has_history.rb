@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module HasHistory
   extend ActiveSupport::Concern
@@ -165,7 +165,6 @@ returns
 =end
 
   def history_log(type, user_id, attributes = {})
-
     attributes.merge!(
       o_id:                   self['id'],
       history_type:           type,
@@ -177,7 +176,9 @@ returns
       created_at:             updated_at,
     ).merge!(history_log_attributes)
 
-    attributes[:sourceable] = @history_changes_source.try(:delete, attributes[:history_attribute]) || @history_changes_source.try(:delete, "#{attributes[:history_attribute]}_id") || @history_changes_source&.dig(type)
+    if attributes[:sourceable].blank?
+      attributes[:sourceable] = @history_changes_source.try(:delete, attributes[:history_attribute]) || @history_changes_source.try(:delete, "#{attributes[:history_attribute]}_id") || @history_changes_source&.dig(type)
+    end
 
     History.add(attributes)
   end

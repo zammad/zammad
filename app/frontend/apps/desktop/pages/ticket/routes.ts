@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { EnumTaskbarEntity } from '#shared/graphql/types.ts'
 
@@ -10,12 +10,17 @@ const route: RouteRecordRaw[] = [
     name: 'TicketCreate',
     props: true,
     component: () => import('./views/TicketCreate.vue'),
-    alias: ['/ticket/create/:tabId?', '/ticket/create/:pathMatch(.*)*'],
+    alias: [
+      '/ticket/create/:tabId?',
+      '/ticket/create/id/:tabId?',
+      '/ticket/create/:pathMatch(.*)*',
+    ],
     meta: {
       title: __('New Ticket'),
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       taskbarTabEntity: EnumTaskbarEntity.TicketCreate,
+      isTaskbarTabPossible: (route) => !!route.params.tabId,
       level: 2,
     },
   },
@@ -30,6 +35,7 @@ const route: RouteRecordRaw[] = [
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       taskbarTabEntity: EnumTaskbarEntity.TicketZoom,
+      isTaskbarTabPossible: (route) => !!route.params.internalId,
       messageForbidden: __('You have insufficient rights to view this ticket.'),
       messageNotFound: __(
         'Ticket with specified ID was not found. Try checking the URL for errors.',

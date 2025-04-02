@@ -40,6 +40,7 @@ class App.ControllerTabs extends App.Controller
       addTab: @addTab
       headerSwitchName: @headerSwitchName
       headerSwitchChecked: @headerSwitchChecked
+      alert: @alert
     )
 
     # insert content

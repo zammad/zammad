@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/sendMail
+    body:
+      encoding: US-ASCII
+      string: RGF0ZTogVHVlLCAwNyBKYW4gMjAyNSAwOTo0MToxMCArMDEwMA0KVG86IGRldmVsb3BtZW50QHphbW1hZHRlc3Rpbmcub25taWNyb3NvZnQuY29tDQpNZXNzYWdlLUlEOiA8Njc3Y2U4YTY4ODFjNV85NjM3MjQ2ODQ1OGRATWFjQm9va1Byby5mcml0ei5ib3gubWFpbD4NClN1YmplY3Q6IENJIHRlc3QgZm9yIENoYW5uZWw6OkRyaXZlcjo6TWljcm9zb2Z0R3JhcGhPdXRib3VuZA0KTWltZS1WZXJzaW9uOiAxLjANCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsNCiBjaGFyc2V0PVVURi04DQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiA3Yml0DQoNClRlc3QgZW1haWw=
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Content-Type:
+      - text/plain
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Cache-Control:
+      - private
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 1a245635-0246-4d9c-837e-b9e914b65163
+      Client-Request-Id:
+      - 1a245635-0246-4d9c-837e-b9e914b65163
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Poland Central","Slice":"E","Ring":"2","ScaleUnit":"001","RoleInstance":"WA2PEPF00000386"}}'
+      Date:
+      - Tue, 07 Jan 2025 08:41:10 GMT
+      Content-Length:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Tue, 07 Jan 2025 08:41:10 GMT
+recorded_with: VCR 6.3.1

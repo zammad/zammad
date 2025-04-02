@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Import::Exchange::FolderContacts::DryRunPayload < Sequencer::Unit::Import::Common::ImportJob::Payload::ToAttribute
 

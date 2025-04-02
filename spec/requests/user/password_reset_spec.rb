@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -14,6 +14,15 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
     it 'returns success' do
       post api_v1_users_password_reset_path, params: { username: create(:user).login }
       expect(response).to have_http_status(:ok)
+    end
+  end
+
+  context 'when import_mode is on' do
+    before { Setting.set('import_mode', true) }
+
+    it 'returns failure' do
+      post api_v1_users_password_reset_path, params: { username: create(:user).login }, as: :json
+      expect(json_response).to include('error_human' => 'The email could not be sent to the user because import_mode setting is on.')
     end
   end
 

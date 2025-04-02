@@ -1,14 +1,9 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
-import { TicketSharedDraftStartListDocument } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartList.api.ts'
-import { TicketSharedDraftStartUpdateByGroupDocument } from '#shared/entities/ticket-shared-draft-start/graphql/subscriptions/ticketSharedDraftStartUpdateByGroup.api.ts'
+import { mockTicketSharedDraftStartListQueryError } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartList.mocks.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import { TicketSidebarScreenType } from '../../../../types/sidebar.ts'
@@ -21,16 +16,10 @@ import TicketSidebarSharedDraftStart from '../TicketSidebarSharedDraftStart.vue'
 //   in order to cover the expected behavior.
 describe('TicketSidebarSharedDraftStart.vue', () => {
   it('hides sidebar when shared draft feature is inactive', async () => {
-    mockGraphQLSubscription(TicketSharedDraftStartUpdateByGroupDocument)
-
-    mockGraphQLApi(TicketSharedDraftStartListDocument).willFailWithError([
-      {
-        message: 'Shared drafts are not activated for the selected group',
-        extensions: {
-          type: GraphQLErrorTypes.UnknownError,
-        },
-      },
-    ])
+    mockTicketSharedDraftStartListQueryError(
+      'Shared drafts are not activated for the selected group',
+      { type: GraphQLErrorTypes.UnknownError },
+    )
 
     const wrapper = renderComponent(TicketSidebarSharedDraftStart, {
       props: {

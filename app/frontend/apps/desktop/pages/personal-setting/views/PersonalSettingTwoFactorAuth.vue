@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, watch } from 'vue'
@@ -129,9 +129,10 @@ const submitTwoFactorMethodRemoval = async (entity?: ObjectLike) => {
 
   return twoFactorConfigurationFlyout.open({
     type: 'removal_confirmation',
-    successCallback: async () => {
+    successCallback: async ({ token }: { token: string }) => {
       const data = await removeTwoFactorMethod.send({
         methodName: entity.name,
+        token,
       })
 
       if (data?.userCurrentTwoFactorRemoveMethod?.success) {

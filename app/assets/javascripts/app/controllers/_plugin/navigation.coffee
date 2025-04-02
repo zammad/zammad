@@ -172,6 +172,53 @@ class Navigation extends App.Controller
         type:      'personal'
       )
 
+    @renderDesktopBetaSwitch()
+    @controllerBind('ui:beta:saved', @renderDesktopBetaSwitch)
+
+  renderDesktopBetaSwitch: =>
+    if not App.DesktopBetaSwitch.isSwitchVisible()
+      @$('.navbar-desktop-beta-switch').hide()
+
+      return
+
+    content = @$('.navbar-desktop-beta-switch').html App.view('navigation/desktop-beta-switch')()
+
+    content.find('.dismiss-button')
+      .off('click.dismiss_button')
+      .on('click.dismiss_button', (e) ->
+        e.preventDefault()
+
+        return if not App.DesktopBetaSwitch.dismissSwitch()
+
+        content.hide()
+
+        new App.ControllerConfirm(
+          head: __('Help')
+          message: __('You can switch between the old and the New BETA UI at any moment in the Profile > New BETA UI section.')
+          buttonClass: 'btn--success'
+          buttonCancel: false
+          buttonSubmit: __('Got it')
+        )
+      )
+
+    content.find('.js-switchControl').replaceWith App.UiElement.switch.render(
+      name: 'desktop_beta_switch'
+      display: __('Try NEW BETA UI')
+    )
+
+    content.find('input[name="desktop_beta_switch"]')
+      .off('change.desktop_beta_switch')
+      .on('change.desktop_beta_switch', (e) =>
+        @delay(=>
+          @preventDefaultAndStopPropagation(e)
+          return if not e.target.checked
+          return if not App.DesktopBetaSwitch.activateSwitch()
+          App.DesktopBetaSwitch.navigateToDesktop()
+        , 250)
+      )
+
+    content.show()
+
   renderResult: (result = {}) =>
     @removePopovers()
 

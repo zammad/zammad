@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
@@ -7,8 +7,8 @@ import { toRef } from 'vue'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
-import type { TableHeader } from '#desktop/components/CommonSimpleTable/types.ts'
+import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
+import type { TableSimpleHeader } from '#desktop/components/CommonTable/types.ts'
 
 import {
   NotificationMatrixColumnKey,
@@ -24,7 +24,7 @@ const context = toRef(props, 'context')
 
 const { localValue } = useValue(context)
 
-const tableHeaders: TableHeader[] = [
+const tableHeaders: TableSimpleHeader[] = [
   {
     key: 'name',
     label: __('Name'),
@@ -34,28 +34,28 @@ const tableHeaders: TableHeader[] = [
     path: NotificationMatrixPathKey.Criteria,
     label: __('My tickets'),
     alignContent: 'center',
-    columnClass: 'w-20',
+    headerClass: 'w-20',
   },
   {
     key: NotificationMatrixColumnKey.NotAssigned,
     path: NotificationMatrixPathKey.Criteria,
     label: __('Not assigned'),
     alignContent: 'center',
-    columnClass: 'w-20',
+    headerClass: 'w-20',
   },
   {
     key: NotificationMatrixColumnKey.SubscribedTickets,
     path: NotificationMatrixPathKey.Criteria,
     label: __('Subscribed tickets'),
     alignContent: 'center',
-    columnClass: 'w-20',
+    headerClass: 'w-20',
   },
   {
     key: NotificationMatrixColumnKey.AllTickets,
     path: NotificationMatrixPathKey.Criteria,
     label: __('All tickets'),
     alignContent: 'center',
-    columnClass: 'w-20',
+    headerClass: 'w-20',
     columnSeparator: true,
   },
   {
@@ -63,7 +63,7 @@ const tableHeaders: TableHeader[] = [
     path: NotificationMatrixPathKey.Channel,
     label: __('Also notify via email'),
     alignContent: 'center',
-    columnClass: 'w-20',
+    headerClass: 'w-20',
   },
 ]
 
@@ -127,6 +127,7 @@ const updateValue = (
     v-bind="context.attrs"
   >
     <CommonSimpleTable
+      :caption="__('Notifications matrix')"
       class="mb-4 w-full"
       :headers="tableHeaders"
       :items="tableItems"

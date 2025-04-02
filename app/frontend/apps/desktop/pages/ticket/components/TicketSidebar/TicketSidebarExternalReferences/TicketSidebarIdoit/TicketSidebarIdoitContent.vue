@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { isEqual } from 'lodash-es'
@@ -41,7 +41,7 @@ const persistentStates = defineModel<ObjectLike>({ required: true })
 
 const skipNextObjectUpdate = ref(false)
 
-const { open, name: FLYOUT_NAME } = useFlyout({
+const { open } = useFlyout({
   name: 'idoit',
   component: () => import('./IdoitFlyout.vue'),
 })
@@ -138,7 +138,6 @@ const addObjects = async (formData: FormDataRecords) => {
 
 const openFlyout = () =>
   open({
-    name: FLYOUT_NAME,
     objectIds: props.objectIds,
     ticketId: props.ticketId,
     onSubmit: addObjects,

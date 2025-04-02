@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -59,6 +59,40 @@ describe MacroPolicy do
       let(:groups) { [create(:group)] }
 
       it { is_expected.to forbid_actions(:show, :create, :update, :destroy) }
+    end
+
+    context "when macro has group user has 'read' access to" do
+      context 'when roles are used' do
+        let(:groups) do
+          group = create(:group)
+
+          role = create(:role, :agent)
+          role.group_ids_access_map = { group.id => 'read' }
+          role.save!
+
+          user.roles = [role]
+          user.save!
+
+          [group]
+        end
+
+        it { is_expected.to permit_action(:show) }
+        it { is_expected.to forbid_actions(:create, :update, :destroy) }
+      end
+
+      context 'when groups are used' do
+        let(:groups) do
+          group = create(:group)
+
+          user.group_ids_access_map = { group.id => 'read' }
+          user.save!
+
+          [group]
+        end
+
+        it { is_expected.to permit_action(:show) }
+        it { is_expected.to forbid_actions(:create, :update, :destroy) }
+      end
     end
   end
 

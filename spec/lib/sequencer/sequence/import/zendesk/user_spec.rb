@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'zendesk_api'
@@ -58,6 +58,7 @@ RSpec.describe Sequencer::Sequence::Import::Zendesk::User, db_strategy: :reset, 
             'custom_dropdown' => '2',
             'lieblingstier'   => 'Hundä',
             'test::example'   => '1',
+            'phone'           => '1234',
           }
         }.merge(merge_resource)
       )
@@ -87,6 +88,7 @@ RSpec.describe Sequencer::Sequence::Import::Zendesk::User, db_strategy: :reset, 
           'custom_dropdown' => 'custom_dropdown',
           'lieblingstier'   => 'lieblingstier',
           'test::example'   => 'test_example',
+          'phone'           => 'phone',
         }
       }
     end

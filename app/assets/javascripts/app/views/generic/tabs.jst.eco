@@ -16,6 +16,11 @@
   </div>
   <% end %>
 </div>
+<% if @alert: %>
+<div class="alert alert--<%= @alert.variant %>">
+  <%- @alert.message %>
+</div>
+<% end %>
 <div class="page-content">
   <% if @tabs.length > 1: %>
     <ul class="nav nav-tabs" role="tablist">

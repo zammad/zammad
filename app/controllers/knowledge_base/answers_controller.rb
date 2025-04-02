@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::AnswersController < KnowledgeBase::BaseController
   include HasPublishing
@@ -21,7 +21,11 @@ class KnowledgeBase::AnswersController < KnowledgeBase::BaseController
 
     if params[:include_contents].present?
       content_ids = params[:include_contents].split(',')
-      contents    = KnowledgeBase::Answer::Translation::Content.where id: content_ids
+
+      contents = KnowledgeBase::Answer::Translation::Content
+        .joins(:translation)
+        .where(knowledge_base_answer_translations: { answer_id: object.id })
+        .where(id: content_ids)
 
       assets = ApplicationModel::CanAssets.reduce contents, assets
     end

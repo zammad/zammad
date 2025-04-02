@@ -8,20 +8,18 @@
     </tr>
   <% else: %>
     <tr>
-      <th width="55%"><%- @T('Subject') %>
-      <th width="10%"><%- @T('Hash') %>
-      <th width="10%"><%- @T('Fingerprint') %>
-      <th width="10%"><%- @T('Created') %>
-      <th width="10%"><%- @T('Expires') %>
+      <th width="50%"><%- @T('Email addresses') %>
+      <th width="15%"><%- @T('Usage') %>
+      <th width="15%"><%- @T('Valid from') %>
+      <th width="15%"><%- @T('Expires at') %>
       <th width="5%"><%- @T('Actions') %>
   </thead>
   <tbody>
     <% for cert in @certs: %>
       <tr data-id="<%= cert.id %>">
-        <td><%= cert.subject %>
+        <td><%= cert.subject_alternative_name || '-' %>
           <% if cert.private_key: %><br><i><%- @T('Including private key.') %></i><% end %>
-        <td><%= cert.doc_hash %>
-        <td title="<%= cert.fingerprint %>"><%= cert.fingerprint.substr(1, 10) %>...
+        <td><%= cert.usage.map((usage) => @T(usage)).join(' & ') || '-' %>
         <td><%- @datetime(cert.not_before_at) %>
         <td><%- @datetime(cert.not_after_at) %>
         <td>

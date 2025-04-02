@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, nextTick, ref, toRef } from 'vue'
@@ -170,7 +170,7 @@ setupMissingOrDisabledOptionHandling()
       ref="outputElement"
       role="combobox"
       :name="context.node.name"
-      class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-none"
+      class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-hidden"
       tabindex="0"
       :aria-labelledby="`label-${context.id}`"
       :aria-disabled="context.disabled ? 'true' : undefined"

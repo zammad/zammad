@@ -187,7 +187,7 @@ class ChannelEmailAccountOverview extends App.Controller
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     item = App.Channel.find(id)
-    new ChannelEmailEdit(
+    new ChannelGroupEdit(
       container: @el.closest('.content')
       item: item
       callback: @load
@@ -250,8 +250,9 @@ class ChannelEmailAccountOverview extends App.Controller
     id = $(e.target).closest('.action').data('id')
     @navigate "#channels/microsoft365/#{id}"
 
+class ChannelGroupEdit extends App.ControllerModal
+  @include App.DestinationGroupEmailAddressesMixin
 
-class ChannelEmailEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -259,14 +260,18 @@ class ChannelEmailEdit extends App.ControllerModal
 
   content: =>
     configureAttributesBase = [
-      { name: 'group_id', display: __('Destination Group'), tag: 'tree_select', null: false, relation: 'Group', nulloption: true, filter: { active: true } },
+      { name: 'group_id',               display: __('Destination Group'), tag: 'tree_select', null: false, relation: 'Group', filter: { active: true } },
+      { name: 'group_email_address_id', display: __('Destination group > Sending email address'), tag: 'select', options: @emailAddressOptions(@item.id, @item.group_id), note: __("This will adjust the corresponding setting of the destination group within the group management. A group's email address determines which address should be used for outgoing mails, e.g. when an agent is composing an email or a trigger is sending an auto-reply.") },
     ]
+
     @form = new App.ControllerForm(
       model:
         configure_attributes: configureAttributesBase
         className: ''
       params: @item
+      handlers: [@destinationGroupEmailAddressFormHandler(@item)]
     )
+
     @form.form
 
   onSubmit: (e) =>
@@ -282,6 +287,8 @@ class ChannelEmailEdit extends App.ControllerModal
       @log 'error', errors
       @formValidate(form: e.target, errors: errors)
       return false
+
+    @processDestinationGroupEmailAddressParams(params)
 
     # disable form
     @formDisable(e)
@@ -303,6 +310,8 @@ class ChannelEmailEdit extends App.ControllerModal
     )
 
 class ChannelEmailAccountWizard extends App.ControllerWizardModal
+  @include App.DestinationGroupEmailAddressesMixin
+
   elements:
     '.modal-body': 'body'
   events:
@@ -379,17 +388,20 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
 
     # base
     configureAttributesBase = [
-      { name: 'realname', display: __('Organization & Department Name'), tag: 'input',  type: 'text', limit: 160, null: false, placeholder: __('Organization Support'), autocomplete: 'off' },
-      { name: 'email',    display: __('Email'),    tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'off' },
-      { name: 'password', display: __('Password'), tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
-      { name: 'group_id', display: __('Destination Group'), tag: 'tree_select', null: false, relation: 'Group', nulloption: true },
+      { name: 'realname',               display: __('Organization & Department Name'), tag: 'input',  type: 'text', limit: 160, null: false, placeholder: __('Organization Support'), autocomplete: 'off' },
+      { name: 'email',                  display: __('Email'),    tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'off' },
+      { name: 'password',               display: __('Password'), tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
+      { name: 'group_id',               display: __('Destination Group'), tag: 'tree_select', null: false, relation: 'Group', filter: { active: true } },
+      { name: 'group_email_address_id', display: __('Destination group > Sending email address'), tag: 'select', null: false, options: @emailAddressOptions(@channel?.id, @channel?.group_id), note: __("This will adjust the corresponding setting of the destination group within the group management. A group's email address determines which address should be used for outgoing mails, e.g. when an agent is composing an email or a trigger is sending an auto-reply.") },
     ]
+
     @formMeta = new App.ControllerForm(
       el:    @$('.base-settings'),
       model:
         configure_attributes: configureAttributesBase
         className: ''
       params: @account.meta
+      handlers: [@destinationGroupEmailAddressFormHandler()]
     )
 
     # outbound
@@ -406,8 +418,12 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
     )
     @toggleOutboundAdapter()
 
-    # inbound
+    @initializeInboundForm(@account)
+
+  initializeInboundForm: (params) =>
     configureAttributesInbound = [
+      { name: 'group_id',                display: __('Destination Group'), tag: 'tree_select', null: false, relation: 'Group', filter: { active: true } },
+      { name: 'group_email_address_id',  display: __('Destination group > Sending email address'), tag: 'select', null: false, options: @emailAddressOptions(@channel?.id, @channel?.group_id), note: __("This will adjust the corresponding setting of the destination group within the group management. A group's email address determines which address should be used for outgoing mails, e.g. when an agent is composing an email or a trigger is sending an auto-reply.") },
       { name: 'adapter',                 display: __('Type'),     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound, translate: true },
       { name: 'options::host',           display: __('Host'),     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',           display: __('User'),     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off' },
@@ -419,14 +435,12 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       { name: 'options::keep_on_server', display: __('Keep messages on server'), tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false, item_class: 'formGroup--halfSize' },
     ]
 
+    # If email inbound form is opened from the new email wizard, show additional fields on top.
     if !@channel
-      #Email Inbound form opened from new email wizard, show full settings
       configureAttributesInbound = [
         { name: 'options::realname', display: __('Organization & Department Name'), tag: 'input',  type: 'text', limit: 160, null: false, placeholder: __('Organization Support'), autocomplete: 'off' },
         { name: 'options::email',    display: __('Email'),    tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'off' },
-        { name: 'options::group_id', display: __('Destination Group'), tag: 'select', null: false, relation: 'Group', nulloption: true },
       ].concat(configureAttributesInbound)
-
 
     showHideFolder = (params, attribute, attributes, classname, form, ui) ->
       return if !params
@@ -437,23 +451,39 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       ui.hide('options::folder')
       ui.hide('options::keep_on_server')
 
-    form = new App.ControllerForm(
-      el:    @$('.base-inbound-settings'),
+    @form = new App.ControllerForm(
+      elReplace: @$('.base-inbound-settings'),
       model:
         configure_attributes: configureAttributesInbound
         className: ''
-      params: @account.inbound
+      params: _.extend(
+        params.inbound or {
+          options:
+            user: params.email
+            password: params.password
+            email: params.email
+            realname: params.realname
+        }
+        group_id: params?.meta?.group_id or params.group_id or @channel?.group_id
+        group_email_address_id: params?.meta?.group_email_address_id or params.group_email_address_id
+      )
       handlers: [
-        showHideFolder,
+        showHideFolder
+        @destinationGroupEmailAddressFormHandler(@channel)
       ]
     )
-    @toggleInboundAdapter()
 
-    form.el.find("select[name='options::ssl']").off('change').on('change', (e) ->
+    @toggleInboundAdapter()
+    @toggleInboundPort()
+
+  toggleInboundPort: =>
+    form = @$('.base-inbound-settings')
+
+    form.find("select[name='options::ssl']").off('change').on('change', (e) ->
       if $(e.target).val() is 'ssl'
-        form.el.find("[name='options::port']").val('993')
+        form.find("[name='options::port']").val('993')
       else if $(e.target).val() is 'off'
-        form.el.find("[name='options::port']").val('143')
+        form.find("[name='options::port']").val('143')
     )
 
   toggleInboundAdapter: =>
@@ -537,7 +567,20 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
 
   probeBasedOnIntro: (e) =>
     e.preventDefault()
+
+    # get params
     params = @formParam(e.target)
+
+    if not $(e.currentTarget).hasClass('js-expert')
+
+      # validate form
+      errors = @formMeta.validate(params)
+
+      # show errors in form
+      if errors
+        @log 'error', errors
+        @formValidate(form: e.target, errors: errors)
+        return false
 
     # remember account settings
     @account.meta = params
@@ -547,23 +590,21 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       params.channel_id = @channel.id
 
     if $(e.currentTarget).hasClass('js-expert')
+      @initializeInboundForm(params)
       @showSlide('js-inbound')
-      @$('.js-inbound [name="options::user"]').val(params.email)
-      @$('.js-inbound [name="options::password"]').val(params.password)
-      @$('.js-inbound [name="options::email"]').val(params.email)
-      @$('.js-inbound [name="options::realname"]').val(params.realname)
-      @$('.js-inbound [name="options::group_id"]').val(params.group_id)
       return
 
     @disable(e)
     @$('.js-probe .js-email').text(params.email)
     @showSlide('js-probe')
 
+    data = _.pick(params, 'email', 'password')
+
     @ajax(
       id:   'email_probe'
       type: 'POST'
       url:  "#{@apiPath}/channels_email_probe"
-      data: JSON.stringify(params)
+      data: JSON.stringify(data)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
@@ -571,9 +612,8 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
             for key, value of data.setting
               @account[key] = value
 
-          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
-            @probeInboundMessagesFound(data, true)
-            @probeInboundArchive(data)
+          if data.content_messages
+            @probeInboundArchive(data, true)
           else
             @verify(@account)
 
@@ -581,13 +621,9 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
           @showSlide('js-intro')
           @showAlert('js-intro', __('Account already exists!'))
         else
+          @initializeInboundForm(params)
           @showSlide('js-inbound')
           @showAlert('js-inbound', __('The server settings could not be automatically detected. Please configure them manually.'))
-          @$('.js-inbound [name="options::user"]').val(@account['meta']['email'])
-          @$('.js-inbound [name="options::password"]').val(@account['meta']['password'])
-          @$('.js-inbound [name="options::email"]').val(@account['meta']['email'])
-          @$('.js-inbound [name="options::realname"]').val(@account['meta']['realname'])
-          @$('.js-inbound [name="options::group_id"]').val(@account['meta']['group_id'])
 
         @enable(e)
       error: =>
@@ -601,13 +637,25 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
     # get params
     params = @formParam(e.target)
 
+    # validate form
+    errors = @form.validate(params)
+
+    # show errors in form
+    if errors
+      @log 'error', errors
+      @formValidate(form: e.target, errors: errors)
+      return false
+
     if params.options && params.options.password is @passwordPlaceholder
       params.options.password = @inboundPassword
 
     # Update meta as the one from AttributesBase could be outdated
     @account.meta.realname = params.options.realname
     @account.meta.email = params.options.email
-    @account.meta.group_id = params.options.group_id
+    @account.meta.group_id = params.group_id
+    @account.meta.group_email_address_id = params.group_email_address_id
+    delete params.group_id
+    delete params.group_email_address_id
 
     # let backend know about the channel
     if @channel
@@ -629,8 +677,7 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
           # remember account settings
           @account.inbound = params
 
-          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
-            @probeInboundMessagesFound(data)
+          if data.content_messages or @channel
             @probeInboundArchive(data)
           else
             @showSlide('js-outbound')
@@ -658,68 +705,103 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
         @enable(e)
     )
 
-  probeInboundMessagesFound: (data, verify) =>
-    message = App.i18n.translateContent('%s email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.', data.content_messages)
-    @$('.js-inbound-acknowledge .js-messageFound').html(message)
-
-    if !verify
-      @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
-      @$('.js-inbound-acknowledge .js-next').off('click.verify')
+  probeInboundArchive: (data, verify = false) =>
+    if data.content_messages
+      message = App.i18n.translateContent('%s email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.', data.content_messages)
+      @$('.js-inbound-acknowledge .js-messageFound').html(message)
     else
-      @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
-      @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')
-      @$('.js-inbound-acknowledge .js-next').off('click.verify').on('click.verify', (e) =>
-        e.preventDefault()
-        @verify(@account)
-      )
+      @$('.js-inbound-acknowledge .js-messageFound').remove()
+
     @showSlide('js-inbound-acknowledge')
 
-  probeInboundArchive: (data) =>
-    if data.archive_possible isnt true
-      @$('.js-archiveMessage').addClass('hide')
-      return
+    targetStateTypeIds = _.map(
+      App.TicketStateType.search(filter:
+        name: ['closed', 'open', 'new']
+      ),
+      (stateType) -> stateType.id
+    )
 
-    @$('.js-archiveMessage').removeClass('hide')
+    targetStateOptions = _.map(
+      App.TicketState.search(filter:
+        state_type_id: targetStateTypeIds
+        active: true
+      ),
+      (targetState) ->
+        value: targetState.id
+        name: targetState.name
+    )
 
-    if data.archive_possible_is_fallback is true
-      message = App.i18n.translateContent('Since the mail server does not support sorting messages by date, it was not possible to detect if there is any mail older than %s weeks in the connected mailbox. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', data.archive_week_range)
-    else
-      message = App.i18n.translateContent('In addition, emails were found in your mailbox that are older than %s weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', data.archive_week_range)
-    @$('.js-inbound-acknowledge .js-archiveMessageCount').html(message)
+    stateTypeClosed = App.TicketStateType.findByAttribute('name', 'closed')
+    targetStateDefault = App.TicketState.findByAttribute('state_type_id', stateTypeClosed.id)
 
     configureAttributesAcknowledge = [
-      {
-        name: 'archive'
-        tag: 'boolean'
-        null: true
-        default: no
-        options: {
-          true: 'archive'
-          false: 'regular'
-        }
-        translate: true
-      },
+      { name: 'archive', display: __('Archive emails'), tag: 'switch', label_class: 'hidden', default: true },
+      { name: 'archive_before', display: __('Archive cut-off time'), tag: 'datetime', null: false, help: __('Emails before the cut-off time are imported as archived tickets. Emails after the cut-off time are imported as regular tickets.') },
+      { name: 'archive_state_id', display: __('Archive ticket target state'), tag: 'select', null: true, options: targetStateOptions, default: targetStateDefault.id },
     ]
 
-    new App.ControllerForm(
-      elReplace: @$('.js-importTypeSelect'),
+    options =
+      archive_before: @channel?.options.inbound.options.archive_before
+      archive_state_id: if @channel?.options.inbound.options.archive_state_id then parseInt(@channel.options.inbound.options.archive_state_id, 10)
+
+    # Honour the archive flag, if channel is already configured.
+    options.archive = @channel.options?.inbound?.options?.archive or false if @channel
+
+    form = new App.ControllerForm(
+      elReplace: @$('.js-archiveSettings'),
       model:
         configure_attributes: configureAttributesAcknowledge
         className: ''
-      noFieldset: true
+      handlers: [
+        App.FormHandlerChannelAccountArchiveMode.run
+        App.FormHandlerChannelAccountArchiveBefore.run
+      ]
+      params: options
     )
-    @$('.js-importTypeSelect select[name=archive]').on('change', (e) =>
-      value                      = $(e.target).val()
+
+    verifyCallback = =>
+      if !verify
+        @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
+        @$('.js-inbound-acknowledge .js-next').off('click.verify')
+      else
+        @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
+        @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')
+        @$('.js-inbound-acknowledge .js-next').off('click.verify').on('click.verify', (e) =>
+          e.preventDefault()
+          @verify(@account)
+        )
+
+    @$('.js-inbound-acknowledge .js-next').off('click.continue').on('click.continue', (e) =>
+      e.preventDefault()
+
+      # get params
+      params = @formParam(e.target)
+
+      # validate form
+      errors = form.validate(params)
+
+      # show errors in form
+      if errors
+        @log 'error', errors
+        @formValidate(form: @$('.js-archiveSettings'), errors: errors)
+        return false
+
       @account.inbound         ||= {}
       @account.inbound.options ||= {}
-      if value is 'true'
-        @account.inbound.options.archive        = true
-        @account.inbound.options.archive_before = (new Date()).toISOString()
-      else
-        delete @account.inbound.options.archive
-        delete @account.inbound.options.archive_before
+      @account.inbound.options = _.extend(@account.inbound.options, params)
+
+      verifyCallback()
     )
-    @$('.js-importTypeSelect select[name=archive]').trigger('change')
+
+    @$('.js-inbound-acknowledge .js-skip').off('click.skip').on('click.skip', (e) =>
+      e.preventDefault()
+
+      @account.inbound         ||= {}
+      @account.inbound.options ||= {}
+      @account.inbound.options = _.extend(@account.inbound.options, options)
+
+      verifyCallback()
+    )
 
   probleOutbound: (e) =>
     e.preventDefault()
@@ -778,25 +860,40 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
   verify: (account, count = 0) =>
     @showSlide('js-verify')
 
+    # use jquery instead of ._clone() because we need a deep copy of the obj
+    params = $.extend({}, account)
+
     # let backend know about the channel
     if @channel
-      account.channel_id = @channel.id
+      params.channel_id = @channel.id
 
-    if account.meta.group_id
-      account.group_id = account.meta.group_id
-    else if @channel.group_id
-      account.group_id = @channel.group_id
+    if params.meta?.group_id
+      params.group_id = params.meta.group_id
+    else if @channel?.group_id
+      params.group_id = @channel.group_id
 
-    if !account.email && @channel
+    # Copy group email address parameter from meta key to the root.
+    if not _.isUndefined(params.meta?.group_email_address_id)
+      params.group_email_address = params.meta.group_email_address_id isnt 'false'
+
+      if params.group_email_address and params.meta.group_email_address_id isnt 'true'
+        params.group_email_address_id = params.meta.group_email_address_id
+
+    if !params.email && @channel
       email_addresses = App.EmailAddress.search(filter: { channel_id: @channel.id })
       if email_addresses && email_addresses[0]
-        account.email = email_addresses[0].email
+        params.email = email_addresses[0].email
+
+    if params.inbound?.options?.password is @passwordPlaceholder
+      params.inbound.options.password = @inboundPassword
+    if params.outbound?.options?.password is @passwordPlaceholder
+      params.outbound.options.password = @outboundPassword
 
     @ajax(
       id:   'email_verify'
       type: 'POST'
       url:  "#{@apiPath}/channels_email_verify"
-      data: JSON.stringify(account)
+      data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
@@ -811,8 +908,10 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
               @showAlert('js-verify', data.message_human || data.message)
               @delay(
                 =>
-                  @showSlide('js-intro')
-                  @showAlert('js-intro', __('Email sending and receiving could not be verified. Please check your settings.'))
+                  nextSlide = if @channel then 'js-inbound' else 'js-intro'
+
+                  @showSlide(nextSlide)
+                  @showAlert(nextSlide, __('Email sending and receiving could not be verified. Please check your settings.'))
 
                 2300
               )
@@ -821,6 +920,8 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
                 @account.subject = data.subject
               @verify(@account, count + 1)
       error: =>
+        nextSlide = if @channel then 'js-inbound' else 'js-intro'
+
         @showSlide('js-intro')
         @showAlert('js-intro', __('Email sending and receiving could not be verified. Please check your settings.'))
     )

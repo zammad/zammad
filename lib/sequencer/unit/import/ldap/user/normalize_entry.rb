@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Import::Ldap::User::NormalizeEntry < Sequencer::Unit::Base
   uses :resource

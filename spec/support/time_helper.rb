@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module TimeHelperCache
   %w[travel travel_to freeze_time travel_back].each do |method_name|
@@ -15,8 +15,14 @@ module TimeHelperCache
 
   # Similar to #travel_to, but fakes browser (frontend) time.
   # Useful when testing time that is generated in frontend
+  #
+  # KeyUp event is triggered to update activity timestamp in the frontend.
+  # Otherwise Capybara session may get logged out.
+  # @see app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee`)
   def browser_travel_to(time)
-    execute_script "window.clock = sinon.useFakeTimers({now: new Date(#{time.to_i * 1_000}), toFake: ['Date']})"
+    target_time = time.to_i * 1_000
+    execute_script "App.Plugin.instance().backend.session_timeout.lastEvent = #{target_time}"
+    execute_script "window.clock = sinon.useFakeTimers({now: new Date(#{target_time}), toFake: ['Date']})"
   end
 
   # Reimplementation of `setMonth(month[, date])` from the ECMAScript specification.

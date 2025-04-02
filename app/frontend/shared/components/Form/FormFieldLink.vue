@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { getFieldLinkClasses } from './initializeFieldLinkClasses.ts'
@@ -26,7 +26,7 @@ const classMap = getFieldLinkClasses()
   <div :class="classMap.container">
     <div
       :class="classMap.base"
-      class="flex h-full items-center focus:outline-none"
+      class="flex h-full items-center focus:outline-hidden"
     >
       <CommonLink
         v-if="link"

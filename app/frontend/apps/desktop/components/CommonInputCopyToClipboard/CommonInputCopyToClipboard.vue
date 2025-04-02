@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
@@ -30,7 +30,7 @@ const { copyToClipboard } = useCopyToClipboard()
     readonly
   >
     <template #link="context">
-      <div class="mb-0.5 ms-2 flex h-full items-center">
+      <div class="ms-2 mb-0.5 flex h-full items-center">
         <CommonButton
           prefix-icon="files"
           size="medium"

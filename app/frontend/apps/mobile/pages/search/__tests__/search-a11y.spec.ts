@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { axe } from 'vitest-axe'
 
@@ -13,7 +13,7 @@ describe('testing search a11y', () => {
   let mockSearchApi: MockGraphQLInstance
 
   beforeEach(() => {
-    mockSearchApi = mockSearchOverview([])
+    mockSearchApi = mockSearchOverview({ totalCount: 0, items: [] })
     mockPermissions(['ticket.agent'])
   })
 

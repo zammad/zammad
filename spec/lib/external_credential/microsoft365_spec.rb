@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -131,7 +131,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
         it 'generates a link to an error dialog & does not update the channel' do
           link_account_response = described_class.link_account(request_token, authorization_payload.merge(channel_id: existing_channel.id))
 
-          expect(link_account_response).to eq("#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/microsoft365/error/user_mismatch")
+          expect(link_account_response).to eq("#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/microsoft365/error/user_mismatch/channel/#{existing_channel.id}")
 
           expect(existing_channel.reload.options.dig(:inbound, :options, :user)).to eq('zammad@outlook.com')
           expect(existing_channel.reload.options.dig(:outbound, :options, :user)).to eq('zammad@outlook.com')
@@ -370,6 +370,43 @@ RSpec.describe ExternalCredential::Microsoft365 do
     it 'extracts user information from id_token' do
       info = described_class.user_info(id_token)
       expect(info[:email]).to eq(email_address)
+    end
+  end
+
+  describe '.update_client_secret' do
+    let(:channel) do
+      ENV['MICROSOFT365_USER'] = 'zammad@outlook.com'
+      ENV['MICROSOFT365_CLIENT_ID']     = 'id1337'
+      ENV['MICROSOFT365_CLIENT_SECRET'] = 'dummy'
+      ENV['MICROSOFT365_CLIENT_TENANT'] = 'xxx'
+
+      create(:microsoft365_channel)
+    end
+
+    let(:external_credential) { create(:external_credential, name: provider, credentials: { client_id: 'id1337', client_secret: 'dummy' }) }
+
+    context 'when client_secret was updated' do
+      context 'when secret is different' do
+        before do
+          channel.options[:auth][:client_secret] = 'dummy-other'
+          channel.save!
+        end
+
+        it 'does not update the channel' do
+          external_credential.update!(credentials: { client_id: 'id1337', client_secret: 'dummy-new' })
+
+          expect(channel.reload.options[:auth][:client_secret]).to eq('dummy-other')
+        end
+      end
+
+      context 'when secret is the same' do
+        it 'updates the setting' do
+          channel
+          external_credential.update!(credentials: { client_id: 'id1337', client_secret: 'dummy-new' })
+
+          expect(channel.reload.options[:auth][:client_secret]).to eq('dummy-new')
+        end
+      end
     end
   end
 end

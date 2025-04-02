@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
@@ -55,7 +55,7 @@ const startSetup = (type: EnumSystemSetupInfoType) => {
     >
 
     <template v-if="!systemSetupInfoStore.systemSetupAlreadyStarted">
-      <div class="mb-14 mt-10 text-center">
+      <div class="mt-10 mb-14 text-center">
         <CommonButton
           type="submit"
           variant="primary"

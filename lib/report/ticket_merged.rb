@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Report::TicketMerged < Report::Base
 
@@ -69,6 +69,9 @@ class Report::TicketMerged < Report::Base
   end
 
   def self.query_params(params)
+    state_type = Ticket::StateType.lookup(name: 'merged')
+    state      = Ticket::State.lookup(state_type_id: state_type.id)
+
     {
       object:    'Ticket',
       type:      'updated',
@@ -76,7 +79,7 @@ class Report::TicketMerged < Report::Base
       start:     params[:range_start],
       end:       params[:range_end],
       selector:  params[:selector],
-      id_to:     Ticket::State.lookup(name: 'merged').id,
+      id_to:     state.id,
     }
   end
 end

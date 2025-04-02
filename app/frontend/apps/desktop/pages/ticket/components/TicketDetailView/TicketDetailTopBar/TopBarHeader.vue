@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -49,7 +49,7 @@ const detailViewActiveClasses = computed(() => {
 
 <template>
   <header
-    class="-:p-3 -:relative z-10 grid border-b border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500"
+    class="relative z-10 grid border-b border-neutral-100 bg-neutral-50 p-3 dark:border-gray-900 dark:bg-gray-500"
     :class="detailViewActiveClasses"
   >
     <CommonBreadcrumb

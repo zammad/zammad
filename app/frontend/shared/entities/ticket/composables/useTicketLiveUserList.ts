@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { type Ref, type ComputedRef } from 'vue'
 import { ref } from 'vue'
@@ -62,7 +62,6 @@ export const useTicketLiveUserList = (
   const liveUserSubscription = new SubscriptionHandler(
     useTicketLiveUserUpdatesSubscription(
       () => ({
-        userId,
         key: `Ticket-${ticketInternalId.value}`,
         app,
       }),

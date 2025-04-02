@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -29,7 +29,7 @@ RSpec.describe Service::User::AccessToken::Create do
       name:        name,
       action:      'api',
       persistent:  true,
-      expires_at:  expires_at,
+      expires_at:  Time.use_zone(Setting.get('timezone_default')) { expires_at.beginning_of_day },
       preferences: include(permission: permission)
     )
   end

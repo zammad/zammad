@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   ApolloClient,
@@ -31,6 +31,7 @@ import { noop } from 'lodash-es'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import createCache from '#shared/server/apollo/cache.ts'
+import type { GraphQLErrorTypes } from '#shared/types/error.ts'
 import type { CacheInitializerModules } from '#shared/types/server/apollo/client.ts'
 import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
 
@@ -198,6 +199,24 @@ export const waitForGraphQLMockCalls = <T>(
   })
 }
 
+export const mockGraphQLResultWithError = <T extends Record<string, any>>(
+  document: DocumentNode,
+  message: string,
+  extensions: { type: GraphQLErrorTypes },
+) => {
+  const key = requestToKey(document)
+  const error = new GraphQLError(message, {
+    extensions,
+  })
+  const result = { data: null, errors: [error] }
+  const calls = mockCalls.get(key) || []
+  calls.push({ document, result, variables: {} })
+  mockCalls.set(key, calls)
+  return {
+    waitForCalls: () => waitForGraphQLMockCalls<T>(document),
+  }
+}
+
 export type MockDefaultsValue<T, V = Record<string, never>> =
   | DeepPartial<T>
   | ((variables: V) => DeepPartial<T>)
@@ -329,6 +348,16 @@ class MockLink extends ApolloLink {
           console.error(err)
         }
         throw err
+      }
+
+      // Return operation errors if they got set we're assuming one error per operation
+      const calls = mockCalls.get(queryKey) || []
+
+      const errorCall = calls.find((call) => call.result.errors)
+      if (errorCall) {
+        observer.next(cloneDeep(errorCall.result))
+        observer.complete()
+        return noop
       }
 
       if (operation === OperationTypeNode.SUBSCRIPTION) {

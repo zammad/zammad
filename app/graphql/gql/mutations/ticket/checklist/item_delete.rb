@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::Checklist::ItemDelete < Ticket::Checklist::Base
@@ -10,7 +10,7 @@ module Gql::Mutations
     field :success, Boolean, description: 'Was the mutation succcessful?'
 
     def authorized?(checklist:, checklist_item:)
-      Pundit.authorize(context.current_user, checklist_item, :destroy?)
+      pundit_authorized?(checklist_item, :destroy?)
     end
 
     def resolve(checklist:, checklist_item:)

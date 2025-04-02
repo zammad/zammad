@@ -50,16 +50,6 @@ class App.Group extends App.Model
   signature_id_is_display_warning: (signature_id) ->
     !App.Signature.find(signature_id).active
 
-  all_children: ->
-    result     = []
-    check_next = [@]
-    while check_next.length > 0
-      parent_ids = _.map(check_next, (group) -> group.id)
-      children     = _.filter(App.Group.all(), (group) -> _.contains(parent_ids, group.parent_id))
-      result     = result.concat(children)
-      check_next = children
-    result
-
   displayName: =>
     name = @name || @name_last || '-'
     name.replaceAll('::', ' › ')

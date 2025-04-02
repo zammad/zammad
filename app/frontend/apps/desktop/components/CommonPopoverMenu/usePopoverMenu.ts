@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { inject, computed, provide } from 'vue'
 
@@ -11,8 +11,7 @@ import type {
   MenuItem,
   MenuItems,
   UsePopoverMenuReturn,
-} from '#desktop/components/CommonPopoverMenu/types.ts'
-
+} from './types.ts'
 import type { Ref } from 'vue'
 
 const POPOVER_MENU_SYMBOL = Symbol('popover-menu')

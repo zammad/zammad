@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -38,7 +38,7 @@ const { currentViewTitle } = useTicketCreateTitle(
     v-if="taskbarTabLink"
     ref="tabLinkInstance"
     v-tooltip="currentViewTitle"
-    class="flex grow gap-2 rounded-md px-2 py-3 hover:no-underline focus-visible:rounded-md focus-visible:outline-none group-hover/tab:bg-blue-600 group-hover/tab:dark:bg-blue-900"
+    class="flex grow gap-2 rounded-md px-2 py-3 group-hover/tab:bg-blue-600 hover:no-underline! focus-visible:rounded-md focus-visible:outline-hidden group-hover/tab:dark:bg-blue-900"
     :class="{
       ['!bg-blue-800 text-white']: taskbarTabActive,
     }"
@@ -46,9 +46,9 @@ const { currentViewTitle } = useTicketCreateTitle(
     internal
   >
     <CommonIcon
-      class="-:text-stone-200 -:dark:text-neutral-500 shrink-0 group-focus-visible/link:text-white"
+      class="shrink-0 text-stone-200 group-focus-visible/link:text-white dark:text-neutral-500"
       :class="{
-        '!text-white': taskbarTabActive,
+        'text-white!': taskbarTabActive,
       }"
       name="pencil"
       size="small"
@@ -56,9 +56,9 @@ const { currentViewTitle } = useTicketCreateTitle(
     />
 
     <CommonLabel
-      class="-:text-gray-300 -:dark:text-neutral-400 block truncate group-hover/tab:text-white group-focus-visible/link:text-white"
+      class="block! truncate text-gray-300 group-hover/tab:text-white group-focus-visible/link:text-white dark:text-neutral-400"
       :class="{
-        '!text-white': taskbarTabActive,
+        'text-white!': taskbarTabActive,
       }"
     >
       {{ currentViewTitle }}

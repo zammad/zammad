@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Only load gems for asset compilation if they are needed to avoid
 #   having unneeded runtime dependencies like NodeJS.

@@ -1,6 +1,9 @@
 {
   "private": true,
   "description": "Zammad Customer Chat Javascript Widget",
+  "pnpm": {
+    "neverBuiltDependencies": []
+  },
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",

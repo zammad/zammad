@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
@@ -42,9 +42,9 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
     id="user-menu"
     ref="popoverTarget"
     v-tooltip="user?.fullname || user?.email || $t('User menu')"
-    class="-:outline-transparent hover:-:outline-blue-900 rounded-full outline outline-2 focus-visible:outline-blue-800 hover:focus-visible:outline-blue-800"
+    class="rounded-full outline-2 outline-transparent hover:outline-blue-900 focus-visible:outline-blue-800 hover:focus-visible:outline-blue-800"
     :class="{
-      'outline-blue-800 hover:outline-blue-800': popoverIsOpen,
+      'outline-blue-800! hover:outline-blue-800!': popoverIsOpen,
     }"
     :aria-label="user?.fullname || user?.email || $t('User menu')"
     aria-controls="user-menu-popover"

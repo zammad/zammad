@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module KnowledgeBaseBreadcrumbHelper
   def render_breadcrumb_if_needed(knowledge_base, object, alternative)

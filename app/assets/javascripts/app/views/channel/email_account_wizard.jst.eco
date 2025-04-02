@@ -15,7 +15,7 @@
     </div>
     <div class="modal-footer">
         <div class="modal-leftFooter">
-          <button class="btn btn--text btn--secondary align-left js-expert"><%- @T('Experts') %></button>
+          <button class="btn btn--text btn--secondary align-left js-expert" type="button"><%- @T('Experts') %></button>
         </div>
         <div class="modal-rightFooter">
           <button class="btn btn--primary align-right js-submit"><%- @T('Connect') %></button>
@@ -106,33 +106,25 @@
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
       </div>
-      <h1 class="modal-title"><%- @T('Email Inbound') %></h1>
+      <h1 class="modal-title"><%- @T('Archive Emails') %></h1>
     </div>
     <div class="modal-body">
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
-        <p class="js-messageFound"><%- @T('%s email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.', 'x') %></p>
-
-        <div class="js-archiveMessage">
-          <p class="js-archiveMessageCount"><%- @T('In addition, emails were found in your mailbox that are older than %s weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', 'x') %></p>
-
-          <p><%- @T('Should the emails from this mailbox be imported as an archive or as regular emails?') %></p>
-
-          <ul>
-            <li><%- @T('Import as archive: |No notifications are sent|, the |tickets are closed|, and original timestamps are used. You can still find them in Zammad using the search.') %></li>
-            <li><%- @T('Import as regular: |Notifications are sent| and the |tickets are open| - you can find the tickets in the overview of open tickets.') %></li>
-          </ul>
-
-          <p class="js-importType">
-            Import as: <span class="js-importTypeSelect"></span>
-          </p>
+        <div class="alert alert--warning js-archiveBeforeAlert hide" role="alert">
+          <%- @T('You have selected a cut-off time in the future. Be aware that all emails (including future ones) are going to be archived until the selected time is reached.') %>
         </div>
+        <p class="js-messageFound"></p>
+        <p><%- @T('You can import some of your emails as an "archive", which means that no notifications are sent and the tickets will be in a target state that you define.') %></p>
+        <p><%- @T('You can find archived emails in Zammad anytime using the search function, like for any other ticket.') %></p>
+        <div class="js-archiveSettings"></div>
         <div class="inbound-acknowledge-settings"></div>
       </div>
     </div>
     <div class="modal-footer">
-      <div class="modal-rightFooter">
-      <a class="btn btn--text btn--secondary js-goToSlide js-back align-left" data-slide="js-inbound"><%- @T('Go Back') %></a>
+      <div class="modal-rightFooter align-left">
+        <a class="btn btn--text btn--secondary js-goToSlide js-back" data-slide="js-inbound"><%- @T('Go Back') %></a>
+        <button class="btn btn--text btn--subtle js-goToSlide js-skip" data-slide="js-outbound"><%- @T('Skip') %></button>
       </div>
       <div class="modal-rightFooter">
         <button class="btn btn--primary js-goToSlide js-next align-right js-submit" data-slide="js-outbound"><%- @T('Continue') %></button>

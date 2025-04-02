@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'ApplicationModel::ChecksImport' do
   describe '#id (for referential integrity during (e.g. OTRS/Zendesk/Freshdesk) import)' do

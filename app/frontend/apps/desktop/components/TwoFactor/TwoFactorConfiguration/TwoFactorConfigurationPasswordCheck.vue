@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -56,15 +56,19 @@ const headerIcon = computed(() => {
 const footerActionOptions = computed(() => {
   let actionLabel = __('Next')
   let variant = 'primary'
+  let cancelLabel
 
   if (props.type === 'removal_confirmation') {
     actionLabel = __('Remove')
     variant = 'danger'
   }
 
+  if (props.type === 'method_list') cancelLabel = __('Cancel & Sign Out')
+
   return {
     actionLabel,
     actionButton: { variant, type: 'submit' },
+    cancelLabel,
     form: form.value,
   }
 })
@@ -72,14 +76,27 @@ const footerActionOptions = computed(() => {
 const submitForm = async (formData: FormSubmitData<Record<string, string>>) => {
   return passwordCheckMutation
     .send({ password: formData.password })
-    .then(() => {
+    .then((data) => {
+      if (
+        !data?.userCurrentPasswordCheck?.success ||
+        !data?.userCurrentPasswordCheck?.token
+      )
+        return
+
       if (props.type === 'removal_confirmation') {
-        props.successCallback?.()
+        props.successCallback?.({
+          token: data.userCurrentPasswordCheck.token,
+        })
+
         props.formSubmitCallback?.({})
+
         return
       }
 
-      props.formSubmitCallback?.({ nextState: props.type })
+      props.formSubmitCallback?.({
+        nextState: props.type,
+        token: data.userCurrentPasswordCheck.token,
+      })
     })
 }
 

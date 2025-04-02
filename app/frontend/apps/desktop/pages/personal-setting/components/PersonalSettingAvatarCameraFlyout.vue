@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useUserMedia, usePermission } from '@vueuse/core'
@@ -126,7 +126,7 @@ const captureImage = () => {
     @action="$emit('avatar-captured', image)"
     @close="stop"
   >
-    <div class="flex flex-col items-center gap-6 pb-10 pt-12">
+    <div class="flex flex-col items-center gap-6 pt-12 pb-10">
       <canvas
         v-show="image"
         class="h-64 min-h-64 w-64 min-w-64 rounded-full border border-black dark:border-white"

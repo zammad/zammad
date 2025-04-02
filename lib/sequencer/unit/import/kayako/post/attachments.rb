@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Import::Kayako::Post::Attachments < Sequencer::Unit::Base
   include ::Sequencer::Unit::Import::Kayako::Requester
@@ -44,6 +44,7 @@ class Sequencer::Unit::Import::Kayako::Post::Attachments < Sequencer::Unit::Base
   def download_threads
     resource['attachments'].map do |attachment|
       Thread.new do
+        Thread.current.name = 'kayako attachments download'
         sync(attachment)
       end
     end

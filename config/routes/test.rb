@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 if !Rails.env.production?
   Zammad::Application.routes.draw do
@@ -13,6 +13,7 @@ if !Rails.env.production?
     match 'test/redirect',          to: 'user_agent_test#redirect', via: :get
     match 'test/post/:sec',         to: 'user_agent_test#post',     via: :post
     match 'test/put/:sec',          to: 'user_agent_test#put',      via: :put
+    match 'test/patch/:sec',        to: 'user_agent_test#patch',    via: :patch
     match 'test/delete/:sec',       to: 'user_agent_test#delete',   via: :delete
 
     # user agent tests with basic auth

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 // We have this unit test case because we currently don't run E2E tests for HTTPS methods.
 // If we start doing that, we can remove this test case.

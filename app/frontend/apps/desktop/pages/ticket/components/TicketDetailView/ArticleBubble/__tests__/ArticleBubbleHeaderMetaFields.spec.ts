@@ -1,5 +1,6 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
 import { expect } from 'vitest'
 
 import {
@@ -119,6 +120,20 @@ describe('ArticleBubbleMetaFields', () => {
         'href',
         '/api/vuejs.org/',
       )
+    })
+
+    it('displays detected language name if available', async () => {
+      const wrapper = renderWrapper('web', {
+        articleData: {
+          detectedLanguage: 'de',
+        },
+      })
+
+      expect(wrapper.getByText('Detected language')).toBeInTheDocument()
+
+      await waitFor(() => {
+        expect(wrapper.getByText('German')).toBeInTheDocument()
+      })
     })
   })
 })

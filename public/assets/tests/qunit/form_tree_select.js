@@ -710,6 +710,46 @@ QUnit.test("[Core Workflow] Remove option does not work with tree select node th
   el.append(element)
 });
 
+QUnit.test("[Core Workflow] Remove option does not work with tree select node that has relation #4407", assert => {
+  $('#forms').append('<hr><h1>Remove option does not work with tree select node that has relation #4407 form8</h1><form id="form8_2"></form>')
+  var el = $('#form8_2')
+
+  App.Group.configure_attributes.push({ name: 'parent_id', display: 'Parent Group', tag: 'tree_select', relation: 'group' })
+
+  App.Group.refresh([
+    {
+      id: 1,
+      name: 'group 1',
+      name_last: 'group 1',
+    },
+    {
+      id: 2,
+      name: 'group 1',
+      name_last: 'group 2',
+    },
+  ])
+
+  attribute = {
+    "name": "ts4407_2",
+    "display": "ts4407_2",
+    "tag": "tree_select",
+    "null": true,
+    "nulloption": true,
+    "translate": true,
+    "relation": "Group",
+    "filter": ['', '1'],
+    "value": 1,
+  }
+
+  element = App.UiElement.tree_select.render(attribute)
+
+  assert.equal(true, element.find("[data-value='1'] span.searchableSelect-option-text").length == 1)
+  assert.equal(true, element.find("[data-value='2'] span.searchableSelect-option-text").length == 0)
+  assert.equal(true, element.find(".js-input").val() == 'group 1')
+
+  el.append(element)
+});
+
 QUnit.test("Escaping of values works just fine", assert => {
   $('#forms').append('<hr><h1>Escaping of values works just fine form9</h1><form id="form9"></form>')
   var el = $('#form9')

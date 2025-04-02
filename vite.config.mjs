@@ -1,14 +1,17 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 /* eslint-disable security/detect-non-literal-fs-filename */
 
 import { createRequire } from 'module'
-import { defineConfig } from 'vite'
-import VuePlugin from '@vitejs/plugin-vue'
-import { VitePWA } from 'vite-plugin-pwa'
-import { resolve, dirname } from 'node:path'
 import { readFileSync } from 'node:fs'
+import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { homedir } from 'os'
+
+import VuePlugin from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite'
+import { VitePWA } from 'vite-plugin-pwa'
+import tailwindcss from '@tailwindcss/vite'
+
 import svgIconsPlugin from './app/frontend/build/iconsPlugin.mjs'
 import ManualChunksPlugin from './app/frontend/build/manualChunks.mjs'
 import tsconfig from './tsconfig.base.json' with { type: 'json' }
@@ -17,16 +20,7 @@ const dir = dirname(fileURLToPath(import.meta.url))
 
 const SSL_PATH = resolve(homedir(), '.local/state/localhost.rb')
 
-const isEnvBooleanSet = (value) => {
-  if (value === 'true' || value === '1') {
-    return true;
-  }
-  else if (value === 'false' || value === '0') {
-    return false;
-  }
-
-  return false;
-}
+const isEnvBooleanSet = (value) => ['true', '1'].includes(value)
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default defineConfig(({ mode, command }) => {
@@ -36,6 +30,7 @@ export default defineConfig(({ mode, command }) => {
   const require = createRequire(import.meta.url)
 
   const plugins = [
+    tailwindcss(),
     VuePlugin({
       template: {
         compilerOptions: {
@@ -116,7 +111,9 @@ export default defineConfig(({ mode, command }) => {
       },
     },
     define: {
-      VITE_TEST_MODE: isEnvBooleanSet(process.env.VITEST) || isEnvBooleanSet(process.env.VITE_TEST_MODE),
+      VITE_TEST_MODE:
+        isEnvBooleanSet(process.env.VITEST) ||
+        isEnvBooleanSet(process.env.VITE_TEST_MODE),
     },
     test: {
       globals: true,
@@ -129,7 +126,11 @@ export default defineConfig(({ mode, command }) => {
       testTimeout: isEnvBooleanSet(process.env.CI) ? 30_000 : 5_000,
       unstubGlobals: true,
       onConsoleLog(log) {
-        if (log.includes('Not implemented: navigation') || log.includes('<Suspense> is an experimental feature')) return false
+        if (
+          log.includes('Not implemented: navigation') ||
+          log.includes('<Suspense> is an experimental feature')
+        )
+          return false
       },
     },
     plugins,

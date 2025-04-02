@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -135,5 +135,30 @@ describe('breadcrumb', () => {
     })
 
     expect(view.getByText('trailing slot')).toBeInTheDocument()
+  })
+
+  it('supports setting an item to isActive', () => {
+    const view = renderComponent(CommonBreadcrumb, {
+      props: {
+        items: [
+          {
+            label: 'Dashboard',
+            route: '/',
+          },
+          {
+            label: 'Settings',
+            isActive: true,
+          },
+        ],
+      },
+      slots: {
+        trailing: 'trailing slot',
+      },
+      router: true,
+    })
+
+    expect(
+      view.getByRole('heading', { name: 'Settings', level: 1 }),
+    ).toHaveClass('text-black dark:text-white')
   })
 })

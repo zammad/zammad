@@ -187,9 +187,8 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
             for key, value of data.setting
               @account[key] = value
 
-          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
-            @probeInboundMessagesFound(data, true)
-            @probeInboundArchive(data)
+          if data.content_messages
+            @probeInboundArchive(data, true)
           else
             @verify(@account)
 
@@ -229,8 +228,7 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
           # remember account settings
           @account.inbound = params
 
-          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
-            @probeInboundMessagesFound(data, false)
+          if data.content_messages
             @probeInboundArchive(data)
           else
             @showSlide('js-outbound')
@@ -257,68 +255,88 @@ class GettingStartedChannelEmail extends App.ControllerWizardFullScreen
         @enable(e)
     )
 
-  probeInboundMessagesFound: (data, verify) =>
-    message = App.i18n.translateContent('%s email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.', data.content_messages)
-    @$('.js-inbound-acknowledge .js-messageFound').html(message)
-
-    if !verify
-      @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
-      @$('.js-inbound-acknowledge .js-next').off('click.verify')
+  probeInboundArchive: (data, verify) =>
+    if data.content_messages
+      message = App.i18n.translateContent('%s email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.', data.content_messages)
+      @$('.js-inbound-acknowledge .js-messageFound').html(message)
     else
-      @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
-      @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')
-      @$('.js-inbound-acknowledge .js-next').off('click.verify').on('click.verify', (e) =>
-        e.preventDefault()
-        @verify(@account)
-      )
+      @$('.js-inbound-acknowledge .js-messageFound').remove()
+
     @showSlide('js-inbound-acknowledge')
 
-  probeInboundArchive: (data) =>
-    if data.archive_possible isnt true
-      @$('.js-archiveMessage').addClass('hide')
-      return
+    targetStateTypeIds = _.map(
+      App.TicketStateType.search(filter:
+        name: ['closed', 'open', 'new']
+      ),
+      (stateType) -> stateType.id
+    )
 
-    @$('.js-archiveMessage').removeClass('hide')
+    targetStateOptions = _.map(
+      App.TicketState.search(filter:
+        state_type_id: targetStateTypeIds
+        active: true
+      ),
+      (targetState) ->
+        value: targetState.id
+        name: targetState.name
+    )
 
-    if data.archive_possible_is_fallback is true
-      message = App.i18n.translateContent('Since the mail server does not support sorting messages by date, it was not possible to detect if there is any mail older than %s weeks in the connected mailbox. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', data.archive_week_range)
-    else
-      message = App.i18n.translateContent('In addition, emails were found in your mailbox that are older than %s weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', data.archive_week_range)
-    @$('.js-inbound-acknowledge .js-archiveMessageCount').html(message)
+    stateTypeClosed = App.TicketStateType.findByAttribute('name', 'closed')
+    targetStateDefault = App.TicketState.findByAttribute('state_type_id', stateTypeClosed.id)
 
     configureAttributesAcknowledge = [
-      {
-        name: 'archive'
-        tag: 'boolean'
-        null: true
-        default: no
-        options: {
-          true: 'archive'
-          false: 'regular'
-        }
-        translate: true
-      },
+      { name: 'archive', display: __('Archive emails'), tag: 'switch', label_class: 'hidden', default: true },
+      { name: 'archive_before', display: __('Archive cut-off time'), tag: 'datetime', null: false, help: __('Emails before the cut-off time are imported as archived tickets. Emails after the cut-off time are imported as regular tickets.') },
+      { name: 'archive_state_id', display: __('Archive ticket target state'), tag: 'select', null: true, options: targetStateOptions, default: targetStateDefault.id },
     ]
 
-    new App.ControllerForm(
-      elReplace: @$('.js-importTypeSelect'),
+    form = new App.ControllerForm(
+      elReplace: @$('.js-archiveSettings'),
       model:
         configure_attributes: configureAttributesAcknowledge
         className: ''
-      noFieldset: true
+      handlers: [
+        App.FormHandlerChannelAccountArchiveMode.run
+        App.FormHandlerChannelAccountArchiveBefore.run
+      ]
     )
-    @$('.js-importTypeSelect select[name=archive]').on('change', (e) =>
-      value                      = $(e.target).val()
+
+    @$('.js-inbound-acknowledge .js-next').off('click.continue').on('click.continue', (e) =>
+      e.preventDefault()
+
+      # get params
+      params = @formParam(e.target)
+
+      # validate form
+      errors = form.validate(params)
+
+      # show errors in form
+      if errors
+        @log 'error', errors
+        @formValidate(form: @$('.js-archiveSettings'), errors: errors)
+        return false
+
       @account.inbound         ||= {}
       @account.inbound.options ||= {}
-      if value is 'true'
-        @account.inbound.options.archive        = true
-        @account.inbound.options.archive_before = (new Date()).toISOString()
+
+      if params.archive
+        @account.inbound.options = _.extend(@account.inbound.options, params)
       else
         delete @account.inbound.options.archive
         delete @account.inbound.options.archive_before
+        delete @account.inbound.options.archive_state_id
+
+      if !verify
+        @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
+        @$('.js-inbound-acknowledge .js-next').off('click.verify')
+      else
+        @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
+        @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')
+        @$('.js-inbound-acknowledge .js-next').off('click.verify').on('click.verify', (e) =>
+          e.preventDefault()
+          @verify(@account)
+        )
     )
-    @$('.js-importTypeSelect select[name=archive]').trigger('change')
 
   probleOutbound: (e) =>
     e.preventDefault()

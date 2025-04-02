@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'mobile app: article security' do |integration:, ticket_create: false|
   let(:security_name) { integration == :pgp ? 'pgp' : 'smime' }

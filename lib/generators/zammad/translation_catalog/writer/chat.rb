@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Zammad::TranslationCatalog::Writer::Chat < Zammad::TranslationCatalog::Writer::Base
 
@@ -56,9 +56,7 @@ class Zammad::TranslationCatalog::Writer::Chat < Zammad::TranslationCatalog::Wri
   end
 
   def translations(sources, locale)
-    string_map = Translation.cached_strings_for_locale(locale).select do |source, _entry|
-      sources.include?(source)
-    end.transform_values(&:translation)
+    string_map = Translation.cached_strings_for_locale(locale).slice(*sources).transform_values(&:translation)
 
     # Add strings that might be missing from translation file.
     (sources - string_map.keys).each do |missing_source|

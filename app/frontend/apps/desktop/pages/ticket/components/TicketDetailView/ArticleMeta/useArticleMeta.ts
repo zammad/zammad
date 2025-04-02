@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type Ref } from 'vue'
 
@@ -7,6 +7,7 @@ import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 
 import { lookupArticlePlugin } from '#desktop/pages/ticket/components/TicketDetailView/article-type/index.ts'
 import ArticleMetaFieldAddress from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaAddress.vue'
+import ArticleMetaFieldDetectedLanguage from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaDetectedLanguage.vue'
 import type { ChannelMetaField } from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/types.ts'
 
 const getNestedProperty = (article: TicketArticle, nestedKeys: string[]) => {
@@ -95,6 +96,13 @@ export const useArticleMeta = (article: Ref<TicketArticle>) => {
         show: () =>
           !!(article.value.cc?.parsed?.[0]?.name || article.value.cc?.raw),
         order: 350,
+      },
+      {
+        label: __('Detected language'),
+        name: 'detectedLanguage',
+        component: ArticleMetaFieldDetectedLanguage,
+        show: () => !!article.value.detectedLanguage?.length,
+        order: 375,
       },
       {
         label: __('Channel'),

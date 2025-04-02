@@ -92,10 +92,11 @@
 - `assets/wrench.svg`
 - `assets/x-circle.svg`
 - `assets/x-lg.svg`
+- `assets/x.svg`
 
   - Author: The Bootstrap Authors
   - License: MIT
-  - URL: https://github.com/twbs/icons
+  - URL: <https://github.com/twbs/icons>
 
 - `assets/crown.svg`
 
@@ -105,49 +106,53 @@
 - `assets/github.svg`
 
   - Author: GitHub
-  - URL: https://github.com/logos
+  - URL: <https://github.com/logos>
 
 - `assets/gitlab.svg`
 
   - Author: GitLab
-  - URL: https://about.gitlab.com/press/press-kit/
-  - URL: https://github.com/logos
+  - URL: <https://about.gitlab.com/press/press-kit/>
+  - URL: <https://github.com/logos>
 
 - `assets/google.svg`
 
   - Author: Google
-  - URL: https://about.google/brand-resource-center/
+  - URL: <https://about.google/brand-resource-center/>
 
 - `assets/facebook.svg`
 
   - Author: Facebook
-  - URL: https://www.facebook.com/brand/resources/facebookapp/logo
+  - URL: <https://www.facebook.com/brand/resources/facebookapp/logo>
 
 - `assets/linkedin.svg`
 
   - Author: LinkedIn
-  - URL: https://brand.linkedin.com/downloads
+  - URL: <https://brand.linkedin.com/downloads>
 
 - `assets/microsoft.svg`
 
   - Author: Microsoft
-  - URL: https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks
+  - URL: <https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks>
+
+- `assets/openid-connect.svg`
+  - Author: OpenID
+  - URL: <https://openid.net>
 
 - `assets/saml.svg`
 
   - Author: OASIS
-  - URL: https://saml.xml.org/wiki/saml-logos
+  - URL: <https://saml.xml.org/wiki/saml-logos>
 
 - `assets/sina-weibo.svg`
 
   - Author: Sina Weibo
-  - URL: https://weibo.com
+  - URL: <https://weibo.com>
 
 - `assets/twitter.svg`
 
   - Author: Twitter
-  - URL: https://about.twitter.com/en/who-we-are/brand-toolkit
+  - URL: <https://about.twitter.com/en/who-we-are/brand-toolkit>
 
 - `assets/whatsapp.svg`
   - Author: Meta
-  - URL: https://about.meta.com/uk/brand/resources/whatsapp/whatsapp-brand/
+  - URL: <https://about.meta.com/uk/brand/resources/whatsapp/whatsapp-brand/>

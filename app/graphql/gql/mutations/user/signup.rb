@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Signup < BaseMutation
@@ -19,14 +19,15 @@ module Gql::Mutations
     end
 
     def resolve(input:)
-      signup = Service::User::Signup.new(user_data: input.to_h)
-      begin
-        signup.execute
-      rescue PasswordPolicy::Error => e
-        return error_response({ message: e.message, field: 'password' })
-      end
+      Service::User::Signup
+        .new(user_data: input.to_h)
+        .execute
 
       { success: true }
+    rescue PasswordPolicy::Error => e
+      error_response({ message: e.message, field: 'password' })
+    rescue Exceptions::UnprocessableEntity => e
+      error_response({ message: e.message })
     end
   end
 end

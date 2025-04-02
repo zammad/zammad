@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { fireEvent } from '@testing-library/vue'
 import { beforeEach, describe, expect } from 'vitest'
@@ -168,5 +168,22 @@ describe('LayoutSidebar', () => {
         'rtl:translate-x-1/2',
       ])
     })
+
+    test.each(['primary', 'secondary', undefined])(
+      `supports %s background variant prop`,
+      async (variant) => {
+        await view.rerender({ backgroundVariant: variant })
+
+        const aside = view.getByRole('complementary')
+
+        if (variant === 'secondary') {
+          expect(aside).toHaveClass('bg-blue-50 dark:bg-gray-800')
+        } else if (variant === 'primary') {
+          expect(aside).toHaveClass('bg-neutral-950')
+        } else {
+          expect(aside).toHaveClass('bg-neutral-950') // default as primary
+        }
+      },
+    )
   })
 })

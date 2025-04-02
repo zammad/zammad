@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, type HTMLAttributes } from 'vue'
@@ -36,7 +36,7 @@ const iconProps = computed<IconProps | null>(() => {
     :is="link ? 'CommonLink' : 'button'"
     :link="link"
     :external="link && linkExternal"
-    class="cursor-pointer border-b border-white/10 px-3 first:pt-1 last:border-0 last:pb-1"
+    class="cursor-pointer border-b border-[rgba(255,255,255,0.1)] px-3 first:pt-1 last:border-0 last:pb-1"
     data-test-id="section-menu-link"
   >
     <div
@@ -70,7 +70,7 @@ const iconProps = computed<IconProps | null>(() => {
       >
         <slot name="right">{{ information && i18n.t(`${information}`) }}</slot>
         <CommonIcon
-          class="text-white ltr:-mr-2 ltr:ml-2 rtl:-ml-2 rtl:mr-2"
+          class="text-white ltr:-mr-2 ltr:ml-2 rtl:mr-2 rtl:-ml-2"
           :name="`chevron-${
             locale.localeData?.dir === 'rtl' ? 'left' : 'right'
           }`"

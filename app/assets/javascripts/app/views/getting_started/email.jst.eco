@@ -81,28 +81,16 @@
 
   <form class="setup wizard hide js-inbound-acknowledge">
     <div class="wizard-slide">
-      <h2><%- @T('Email Inbound') %></h2>
+      <h2><%- @T('Archive Emails') %></h2>
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
-        <div class="alert alert--warning js-sslVerifyAlert hide" role="alert">
-          <%- @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
+        <div class="alert alert--warning js-archiveBeforeAlert hide" role="alert">
+          <%- @T('You have selected a cut-off time in the future. Be aware that all emails (including future ones) are going to be archived until the selected time is reached.') %>
         </div>
-        <p class="js-messageFound"><%- @T('%s email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.', 'x') %></p>
-
-        <div class="js-archiveMessage">
-          <p class="js-archiveMessageCount"><%- @T('In addition, emails were found in your mailbox that are older than %s weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', 'x') %></p>
-
-          <p><%- @T('Should the emails from this mailbox be imported as an archive or as regular emails?') %></p>
-
-          <ul>
-            <li><%- @T('Import as archive: |No notifications are sent|, the |tickets are closed|, and original timestamps are used. You can still find them in Zammad using the search.') %></li>
-            <li><%- @T('Import as regular: |Notifications are sent| and the |tickets are open| - you can find the tickets in the overview of open tickets.') %></li>
-          </ul>
-
-          <p class="js-importType">
-            Import as: <span class="js-importTypeSelect"></span>
-          </p>
-        </div>
+        <p class="js-messageFound"></p>
+        <p><%- @T('You can import some of your emails as an "archive", which means that no notifications are sent and the tickets will be in a target state that you define.') %></p>
+        <p><%- @T('You can find archived emails in Zammad anytime using the search function, like for any other ticket.') %></p>
+        <div class="js-archiveSettings"></div>
         <div class="inbound-acknowledge-settings"></div>
       </div>
       <div class="wizard-controls center">

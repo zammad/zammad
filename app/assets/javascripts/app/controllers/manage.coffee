@@ -11,6 +11,9 @@ class ManageRouter extends App.ControllerPermanent
     # check authentication
     @authenticateCheckRedirect()
 
+    if params.search_query
+      params.search_query = decodeURIComponent(params.search_query)
+
     App.TaskManager.execute(
       key:        'Manage'
       controller: 'Manage'
@@ -26,6 +29,8 @@ App.Config.set('manage/:target/:page/:search_query', ManageRouter, 'Routes')
 App.Config.set('settings/:target', ManageRouter, 'Routes')
 App.Config.set('channels/:target', ManageRouter, 'Routes')
 App.Config.set('channels/:target/error/:error_code', ManageRouter, 'Routes')
+App.Config.set('channels/:target/error/:error_code/channel/:channel_id', ManageRouter, 'Routes')
+App.Config.set('channels/:target/error/:error_code/param/:param', ManageRouter, 'Routes')
 App.Config.set('channels/:target/:channel_id', ManageRouter, 'Routes')
 App.Config.set('system/:target', ManageRouter, 'Routes')
 App.Config.set('system/:target/:integration', ManageRouter, 'Routes')

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -35,6 +35,12 @@ export interface Props {
   showInlineHelp?: boolean
   showSidebar?: boolean
   noPadding?: boolean
+  /**
+   * Removes padding from main container
+   * Applies padding to breadcrumb container
+   * ⚠️ Set manually the padding to the default slot container p-4
+   */
+  contentPadding?: boolean
   /**
    * Disables the vertical scroll on the main element
    */
@@ -80,7 +86,7 @@ const { durations } = useTransitionConfig()
 <template>
   <div class="flex h-full max-h-screen flex-col">
     <div
-      class="grid h-full overflow-y-auto duration-100"
+      class="grid h-full duration-100"
       :class="{
         'transition-none': noTransition,
         'max-h-[calc(100%-3.5rem)]': $slots.bottomBar,
@@ -90,7 +96,7 @@ const { durations } = useTransitionConfig()
     >
       <LayoutMain
         ref="layout-main"
-        :no-padding="noPadding"
+        :no-padding="noPadding || contentPadding"
         :no-scrollable="noScrollable"
         :background-variant="backgroundVariant"
       >
@@ -100,7 +106,12 @@ const { durations } = useTransitionConfig()
           :class="contentAlignmentClass"
           :style="{ maxWidth }"
         >
-          <div v-if="breadcrumbItems" class="flex items-center justify-between">
+          <div
+            v-if="breadcrumbItems"
+            data-test-id="wrapper-breadcrumb"
+            class="flex min-h-13 items-center justify-between"
+            :class="{ 'px-4 pt-4': contentPadding }"
+          >
             <CommonBreadcrumb :items="breadcrumbItems" />
             <div
               v-if="$slots.headerRight || helpText || $slots.helpPage"
@@ -142,9 +153,9 @@ const { durations } = useTransitionConfig()
         :min-width="minSidebarWidth"
         no-padding
         no-scroll
-        class="bg-neutral-50 dark:bg-gray-500"
+        class="bg-neutral-50! dark:bg-gray-500!"
         :class="{
-          'max-h-[calc(100dvh-3.5rem)]': $slots.bottomBar,
+          'max-h-[calc(100dvh-3.5rem)]!': $slots.bottomBar,
         }"
         @collapse="collapseSidebar"
         @expand="expandSidebar"

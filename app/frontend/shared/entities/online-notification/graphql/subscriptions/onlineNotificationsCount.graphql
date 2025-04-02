@@ -1,5 +1,5 @@
-subscription onlineNotificationsCount($userId: ID!) {
-  onlineNotificationsCount(userId: $userId) {
+subscription onlineNotificationsCount {
+  onlineNotificationsCount {
     unseenCount
   }
 }

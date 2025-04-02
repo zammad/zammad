@@ -68,15 +68,21 @@ class App.TicketCreate extends App.Controller
     if @ticket_id && @article_id
       @split = "/#{@ticket_id}/#{@article_id}"
 
-    @ajax(
-      type: 'GET'
-      url:  "#{@apiPath}/ticket_create"
-      processData: true
-      success: (data, status, xhr) =>
-        App.Collection.loadAssets(data.assets)
-        @formMeta = data.form_meta
-        @buildScreen(params)
-    )
+    fetchSuccess = (data) =>
+      App.Collection.loadAssets(data.assets)
+      @formMeta = data.form_meta
+      @buildScreen(params)
+
+    initCreate = App.TaskbarInit.ticket_create()
+    if params.init && initCreate
+      fetchSuccess(initCreate)
+    else
+      @ajax(
+        type: 'GET'
+        url:  "#{@apiPath}/ticket_create"
+        processData: true
+        success: fetchSuccess
+      )
 
     # rerender view, e. g. on langauge change
     @controllerBind('ui:rerender', =>

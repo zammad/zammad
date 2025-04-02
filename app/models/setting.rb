@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Class variables are used here as performance optimization.
 # Technically it is not thread-safe, but it never caused issues.
@@ -151,6 +151,11 @@ reload config settings
       end
 
       @@raw.each do |key, value|
+        if key == 'notification_sender'
+          @@current[key] = sanitize_notification_sender value
+          next
+        end
+
         @@current[key] = interpolate_value value
       end
     end
@@ -170,6 +175,24 @@ reload config settings
     end
   end
   private_class_method :interpolate_value
+
+  def self.sanitize_notification_sender(input)
+    return input if !input.is_a? String
+
+    input.gsub(%r{\#\{config\.(.+?)\}}) do
+      placeholder = @@raw[$1].to_s
+
+      case $1
+      when 'fqdn'
+        placeholder = placeholder.sub(%r{:\d+$}, '') # strip port from fqdn
+      when 'product_name'
+        placeholder = "\"#{placeholder.gsub(%r{"}, "''")}\"" # quote and replace double quotes
+      end
+
+      placeholder
+    end
+  end
+  private_class_method :sanitize_notification_sender
 
   # set initial value in state_initial
   def set_initial

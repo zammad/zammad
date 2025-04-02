@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { without } from 'lodash-es'
 import { defineStore } from 'pinia'
@@ -45,7 +45,7 @@ export const useTicketTemplateStore = defineStore('ticketTemplate', () => {
     variables: {
       onlyActive: true,
     },
-    updateQuery: (prev, { subscriptionData }) => {
+    updateQuery: (_, { subscriptionData }) => {
       if (!subscriptionData.data?.templateUpdates.templates) {
         return null as unknown as TemplatesQuery
       }

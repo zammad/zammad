@@ -1,5 +1,5 @@
-subscription userCurrentAvatarUpdates($userId: ID!) {
-  userCurrentAvatarUpdates(userId: $userId) {
+subscription userCurrentAvatarUpdates {
+  userCurrentAvatarUpdates {
     avatars {
       id
       default

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -22,7 +22,7 @@ const renderHeaderWarning = (
 }
 
 describe('ArticleBubbleSecurityStatusBar', () => {
-  it('does not display anything if is no security info', () => {
+  it('does not display icons for signing/encryption', () => {
     const wrapper = renderHeaderWarning(createDummyArticle())
 
     expect(wrapper.queryByRole('list')).not.toBeInTheDocument()
@@ -34,7 +34,6 @@ describe('ArticleBubbleSecurityStatusBar', () => {
     )
 
     expect(wrapper.queryByIconName('patch-check')).toBeInTheDocument()
-    expect(wrapper.queryByIconName('unlock')).toBeInTheDocument()
   })
 
   it('displays icons for encryption success', () => {
@@ -42,7 +41,17 @@ describe('ArticleBubbleSecurityStatusBar', () => {
       createDummyArticle({ securityState: { encryptionSuccess: true } }),
     )
 
-    expect(wrapper.queryByIconName('patch-x')).toBeInTheDocument()
+    expect(wrapper.queryByIconName('lock')).toBeInTheDocument()
+  })
+
+  it('displays icons for signing + encryption success', () => {
+    const wrapper = renderHeaderWarning(
+      createDummyArticle({
+        securityState: { signingSuccess: true, encryptionSuccess: true },
+      }),
+    )
+
+    expect(wrapper.queryByIconName('patch-check')).toBeInTheDocument()
     expect(wrapper.queryByIconName('lock')).toBeInTheDocument()
   })
 })

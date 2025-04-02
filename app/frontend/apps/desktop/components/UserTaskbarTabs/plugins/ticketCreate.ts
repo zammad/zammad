@@ -1,7 +1,9 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-import { EnumTaskbarEntity } from '#shared/graphql/types.ts'
-import type { ObjectWithUid } from '#shared/types/utils.ts'
+import {
+  EnumTaskbarEntity,
+  type UserTaskbarItemEntityTicketCreate,
+} from '#shared/graphql/types.ts'
 
 import type { UserTaskbarTabPlugin } from '#desktop/components/UserTaskbarTabs/types.ts'
 
@@ -10,14 +12,10 @@ import TicketCreate from '../Ticket/TicketCreate.vue'
 export default <UserTaskbarTabPlugin>{
   type: EnumTaskbarEntity.TicketCreate,
   component: TicketCreate,
-  buildEntityTabKey: (entityInternalId: string) =>
-    `TicketCreateScreen-${entityInternalId}`,
-  buildTaskbarTabParams: (entityInternalId: string) => {
-    return {
-      id: entityInternalId,
-    }
-  },
-  buildTaskbarTabLink: (entity?: ObjectWithUid) => {
+  buildEntityTabKey: (route) => `TicketCreateScreen-${route.params.tabId}`,
+  buildTaskbarTabEntityId: (route) => route.params.tabId,
+  buildTaskbarTabParams: (route) => ({ id: route.params.tabId }),
+  buildTaskbarTabLink: (entity?: UserTaskbarItemEntityTicketCreate) => {
     if (!entity?.uid) return
     return `/tickets/create/${entity.uid}`
   },

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types
   class TicketType < BaseObject
@@ -14,6 +14,12 @@ module Gql::Types
     #   check that they always have 'read' permissions as well, as that is logicaly
     #   included in 'overview'.
     def self.scope_items(items, ctx)
+      # special handling for GraphQL fragment cache value
+      return items if items.is_a?(GraphQL::Execution::Interpreter::RawValue)
+
+      # special handling for Array values - scoping was done before
+      return items if items.is_a?(Array)
+
       TicketPolicy::ReadScope.new(ctx.current_user, items).resolve
     end
 
@@ -41,6 +47,7 @@ module Gql::Types
     field :first_response_in_min, Integer
     field :first_response_diff_in_min, Integer
     field :close_at, GraphQL::Types::ISO8601DateTime
+    field :last_close_at, GraphQL::Types::ISO8601DateTime
     field :close_escalation_at, GraphQL::Types::ISO8601DateTime
     field :close_in_min, Integer
     field :close_diff_in_min, Integer
@@ -56,7 +63,7 @@ module Gql::Types
     field :initial_channel, Gql::Types::Enum::Channel::AreaType, description: 'The initial channel of the ticket.'
 
     # field :create_article_sender_id, Integer
-    # field :article_count, Integer, description: "Count of ticket articles that were not sent by 'System'."
+    field :article_count, Integer, description: "Count of ticket articles that were not sent by 'System'."
     # field :type, String
     field :preferences, GraphQL::Types::JSON
 

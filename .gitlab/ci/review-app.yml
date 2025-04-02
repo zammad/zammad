@@ -52,7 +52,7 @@
       echo -e "\\e[0Ksection_start:`date +%s`:docker_build[collapsed=true]\\r\\e[0Kdocker build"
       if [ ! "${SKIP_DOCKER_BUILD}" ]
       then
-        docker build --pull --no-cache -t $IMAGE_URL .
+        docker build --pull --no-cache --build-arg COMMIT_SHA=${CI_COMMIT_SHORT_SHA} -t $IMAGE_URL .
         docker push $IMAGE_URL
       fi
       echo -e "\\e[0Ksection_end:`date +%s`:docker_build\\r\\e[0K"
@@ -268,7 +268,7 @@ review-app:stop:
     - echo "Stop review app…"
     - !reference [.review_app_scripts, delete_vhost_config]
     - !reference [.review_app_scripts, reload_nginx]
-    - ${DOCKER_COMPOSE_COMMAND} down
+    - ${DOCKER_COMPOSE_COMMAND} down --timeout 0 --volumes
   environment:
     action: stop
 

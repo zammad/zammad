@@ -1,9 +1,9 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 import { beforeEach, expect } from 'vitest'
 
-import createArticle from '#tests/graphql/factories/TicketArticle.ts'
+import createArticle from '#tests/graphql/factories/types/TicketArticle.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 

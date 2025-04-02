@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 if Rails.application.config.cache_store.first.eql? :mem_cache_store
   Rails.logger.info 'Using memcached as Rails cache store.'

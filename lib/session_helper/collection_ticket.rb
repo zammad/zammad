@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module SessionHelper::CollectionTicket
 
@@ -34,24 +34,22 @@ module SessionHelper::CollectionTicket
     end
 
     if user.permissions?(['ticket.agent', 'admin.channel_email'])
-
-      collections[ Macro.to_app_model ] = []
-      Macro.all.each do |item|
-        assets = item.assets(assets)
-      end
       collections[ TextModule.to_app_model ] = []
-      TextModule.all.each do |item|
+      TextModulePolicy::Scope.new(user, TextModule).resolve.each do |item|
         assets = item.assets(assets)
       end
 
-      collections[ Signature.to_app_model ] = []
-      Signature.all.each do |item|
-        assets = item.assets(assets)
-      end
-
-      collections[ EmailAddress.to_app_model ] = []
-      EmailAddress.all.each do |item|
-        assets = item.assets(assets)
+      [
+        Macro,
+        Signature,
+        EmailAddress,
+        Template,
+        Ticket::SharedDraftStart,
+      ].each do |klass|
+        collections[ klass.to_app_model ] = []
+        klass.all.each do |item|
+          assets = item.assets(assets)
+        end
       end
     end
     [collections, assets]

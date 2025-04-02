@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -85,57 +85,49 @@ const discardImage = () => {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');
 }
 
-:deep(.cropper) {
-  &__image {
-    opacity: 1;
+:deep(.cropper__image) {
+  opacity: 1;
+}
+
+:deep(.cropper-stencil__preview) {
+  &::after,
+  &::before {
+    content: '';
+    opacity: 0;
+    transition: opacity 0.25s;
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &::after {
+    border-left: solid 1px var(--color-white);
+    border-right: solid 1px var(--color-white);
+    width: 33%;
+    height: 100%;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0;
+  }
+
+  &::before {
+    border-top: solid 1px var(--color-white);
+    border-bottom: solid 1px var(--color-white);
+    height: 33%;
+    width: 100%;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 0;
   }
 }
 
-:deep(.cropper-stencil) {
-  &__preview {
-    &::after,
-    &::before {
-      content: '';
-      opacity: 0;
-      transition: opacity 0.25s;
-      position: absolute;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    &::after {
-      border-left: solid 1px white;
-      border-right: solid 1px white;
-      width: 33%;
-      height: 100%;
-      transform: translateX(-50%);
-      left: 50%;
-      top: 0;
-    }
-
-    &::before {
-      border-top: solid 1px white;
-      border-bottom: solid 1px white;
-      height: 33%;
-      width: 100%;
-      transform: translateY(-50%);
-      top: 50%;
-      left: 0;
-    }
-  }
-
-  &--dragging {
-    :deep(.cropper-stencil__preview) {
-      &::after,
-      &::before {
-        opacity: 0.4;
-      }
-    }
-  }
+:deep(.cropper-stencil--dragging .cropper-stencil__preview::after),
+:deep(.cropper-stencil--dragging .cropper-stencil__preview::before) {
+  opacity: 0.4;
 }
 
 :deep(.cropper-line) {
-  border-color: rgba(white, 0.8);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
 :deep(.cropper-handler) {
@@ -150,47 +142,47 @@ const discardImage = () => {
   left: auto;
   height: 4px;
   width: 4px;
+}
 
-  &--west-north,
-  &--east-south,
-  &--west-south,
-  &--east-north {
-    display: block;
-    height: 16px;
-    width: 16px;
-    background: none;
-  }
+:deep(.cropper-handler--west-north),
+:deep(.cropper-handler--east-south),
+:deep(.cropper-handler--west-south),
+:deep(.cropper-handler--east-north) {
+  display: block;
+  height: 16px;
+  width: 16px;
+  background: none;
+}
 
-  &--west-north {
-    border-left: solid 2px white;
-    border-top: solid 2px white;
-    top: 7px;
-    left: 7px;
-  }
+:deep(.cropper-handler--west-north) {
+  border-left: solid 2px var(--color-white);
+  border-top: solid 2px var(--color-white);
+  top: 7px;
+  left: 7px;
+}
 
-  &--east-south {
-    border-right: solid 2px white;
-    border-bottom: solid 2px white;
-    top: -7px;
-    left: -7px;
-  }
+:deep(.cropper-handler--east-south) {
+  border-right: solid 2px var(--color-white);
+  border-bottom: solid 2px var(--color-white);
+  top: -7px;
+  left: -7px;
+}
 
-  &--west-south {
-    border-left: solid 2px white;
-    border-bottom: solid 2px white;
-    top: -7px;
-    left: 7px;
-  }
+:deep(.cropper-handler--west-south) {
+  border-left: solid 2px var(--color-white);
+  border-bottom: solid 2px var(--color-white);
+  top: -7px;
+  left: 7px;
+}
 
-  &--east-north {
-    border-right: solid 2px white;
-    border-top: solid 2px white;
-    top: 7px;
-    left: -7px;
-  }
+:deep(.cropper-handler--east-north) {
+  border-right: solid 2px var(--color-white);
+  border-top: solid 2px var(--color-white);
+  top: 7px;
+  left: -7px;
+}
 
-  &--hover {
-    opacity: 1;
-  }
+:deep(.cropper-handler--hover) {
+  opacity: 1;
 }
 </style>

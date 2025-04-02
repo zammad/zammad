@@ -1,5 +1,5 @@
-subscription userCurrentTwoFactorUpdates($userId: ID!) {
-  userCurrentTwoFactorUpdates(userId: $userId) {
+subscription userCurrentTwoFactorUpdates {
+  userCurrentTwoFactorUpdates {
     configuration {
       recoveryCodesExist
       enabledAuthenticationMethods {

@@ -21,7 +21,6 @@ rspec:integration:
     - .job_rules_integration
     - .variables_proxy
     - .variables_mattermost
-    - .variables_ftp
     - .variables_s3
   allow_failure: true
   services:
@@ -31,7 +30,6 @@ rspec:integration:
     - !reference [.services, redis]
     - !reference [.services, memcached]
     - !reference [.services, proxy]
-    - !reference [.services, ftp]
     - !reference [.services, mattermost]
     - !reference [.services, ldap]
     - !reference [.services, s3]

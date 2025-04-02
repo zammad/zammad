@@ -1,11 +1,12 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useActiveElement } from '@vueuse/core'
 import { computed, useTemplateRef, watch } from 'vue'
 
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
-import { useCollapseHandler } from '#desktop/components/CollapseButton/composables/useCollapseHandler.ts'
+import type { CollapseOptions } from '#desktop/components/CollapseButton/types.ts'
+import { useCollapseHandler } from '#desktop/components/CollapseButton/useCollapseHandler.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
 import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
@@ -35,10 +36,12 @@ interface Props {
     collapseButton?: string
   }
   rememberCollapse?: boolean
+  backgroundVariant?: 'primary' | 'secondary'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   position: SidebarPosition.Start,
+  backgroundVariant: 'primary',
   hideButtonWhenCollapsed: false,
 })
 
@@ -51,7 +54,9 @@ const emit = defineEmits<{
   expand: [boolean]
 }>()
 
-const collapseOptions: { storageKey?: string } = {}
+const collapseOptions: CollapseOptions = {
+  name: props.name,
+}
 
 if (props.rememberCollapse)
   collapseOptions.storageKey = `${props.name}-sidebar-collapsed`
@@ -60,6 +65,16 @@ const { toggleCollapse, isCollapsed } = useCollapseHandler(
   emit,
   collapseOptions,
 )
+
+const backgroundVariantClass = computed(() => {
+  switch (props.backgroundVariant) {
+    case 'secondary':
+      return 'bg-blue-50 dark:bg-gray-800'
+    case 'primary':
+    default:
+      return 'bg-neutral-950'
+  }
+})
 
 // a11y keyboard navigation // TS: Does not infer type for some reason?
 const resizeLineInstance =
@@ -112,11 +127,14 @@ const collapseButtonClass = computed(() => {
 <template>
   <aside
     :id="id"
-    class="-:bg-neutral-950 -:max-h-screen relative flex flex-col overflow-y-clip border-neutral-100 dark:border-gray-900"
-    :class="{
-      'py-3': isCollapsed && !noPadding,
-      'border-s': position === SidebarPosition.End,
-    }"
+    class="relative flex max-h-screen flex-col overflow-y-clip border-neutral-100 dark:border-gray-900"
+    :class="[
+      {
+        'py-3': isCollapsed && !noPadding,
+        'border-s': position === SidebarPosition.End,
+      },
+      backgroundVariantClass,
+    ]"
   >
     <CommonButton
       v-if="iconCollapsed && isCollapsed"
@@ -134,6 +152,10 @@ const collapseButtonClass = computed(() => {
         'px-3 py-2.5': !isCollapsed && !noPadding,
         'overflow-y-hidden': noScroll,
         'overflow-y-auto': !noScroll,
+        'border-e border-neutral-100 dark:border-gray-900':
+          backgroundVariant === 'secondary' && SidebarPosition.Start,
+        'border-s border-neutral-100 dark:border-gray-900':
+          backgroundVariant === 'secondary' && SidebarPosition.End,
       }"
     >
       <slot v-bind="{ isCollapsed, toggleCollapse }" />

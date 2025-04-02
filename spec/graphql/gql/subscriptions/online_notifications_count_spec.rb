@@ -1,16 +1,15 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::OnlineNotificationsCount, authenticated_as: :agent, type: :graphql do
   let(:agent)        { create(:agent) }
   let(:notification) { create(:online_notification, user_id: agent.id) }
-  let(:variables)    { { userId: gql.id(user) } }
   let(:mock_channel) { build_mock_channel }
   let(:subscription) do
     <<~QUERY
-      subscription onlineNotificationsCount($userId: ID!) {
-        onlineNotificationsCount(userId: $userId) {
+      subscription onlineNotificationsCount {
+        onlineNotificationsCount {
           unseenCount
         }
       }
@@ -19,7 +18,7 @@ RSpec.describe Gql::Subscriptions::OnlineNotificationsCount, authenticated_as: :
 
   before do
     notification
-    gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+    gql.execute(subscription, context: { channel: mock_channel })
   end
 
   context 'with an agent' do
@@ -42,14 +41,6 @@ RSpec.describe Gql::Subscriptions::OnlineNotificationsCount, authenticated_as: :
         notification.update! seen: true
 
         expect(mock_channel.mock_broadcasted_first.data).to include('unseenCount' => 0)
-      end
-    end
-
-    context 'with not matching user' do
-      let(:user) { create(:agent) }
-
-      it 'raises authorization error' do
-        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
       end
     end
   end

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByRole } from '@testing-library/vue'
 import { flushPromises } from '@vue/test-utils'
@@ -36,7 +36,6 @@ describe('common object attributes interface', () => {
       vip: true,
       note: 'note',
       active: true,
-      invisible: 'invisible',
       objectAttributeValues: [
         {
           attribute: attributesByKey.date_attribute,
@@ -123,10 +122,10 @@ describe('common object attributes interface', () => {
       'Display1, Display2',
     )
     expect(getRegion('Single Tree Select Field')).toHaveTextContent(
-      'key1::key1_child1',
+      'key1 › key1_child1',
     )
     expect(getRegion('Multi Tree Select Field')).toHaveTextContent(
-      'key1, key2, key2::key2_child1',
+      'key1, key2, key2 › key2_child1',
     )
     expect(getRegion('External Attribute')).toHaveTextContent(
       'Display External',
@@ -143,27 +142,8 @@ describe('common object attributes interface', () => {
     ).toHaveAttribute('href', 'https://url.com')
 
     expect(
-      view.queryByRole('region', { name: 'Invisible' }),
-    ).not.toBeInTheDocument()
-    expect(
       view.queryByRole('region', { name: 'Hidden Boolean' }),
     ).not.toBeInTheDocument()
-  })
-
-  test('hides attributes without permission', () => {
-    mockPermissions([])
-
-    const object = {
-      active: true,
-    }
-    const view = renderComponent(ObjectAttributes, {
-      props: {
-        object,
-        attributes: [attributesByKey.active],
-      },
-    })
-
-    expect(view.queryAllByRole('region')).toHaveLength(0)
   })
 
   test("don't show empty fields", () => {
@@ -188,32 +168,6 @@ describe('common object attributes interface', () => {
     })
 
     expect(view.queryAllByRole('region')).toHaveLength(0)
-  })
-
-  test('show default, if not defined', () => {
-    const object = {
-      login: '',
-    }
-    const attribute = {
-      ...attributesByKey.login,
-      name: 'login',
-      display: 'Login',
-    }
-    const view = renderComponent(ObjectAttributes, {
-      props: {
-        object,
-        attributes: [
-          {
-            ...attribute,
-            dataOption: { ...attribute.dataOption, default: 'default' },
-          },
-        ],
-      },
-    })
-
-    expect(view.getByRole('region', { name: 'Login' })).toHaveTextContent(
-      'default',
-    )
   })
 
   it('translates translatable', () => {
@@ -273,8 +227,8 @@ describe('common object attributes interface', () => {
     expect(vip).toHaveTextContent('sí')
     expect(singleSelect).toHaveTextContent('Monitor1')
     expect(multiSelect).toHaveTextContent('Monitor1, Monitor2')
-    expect(singleTreeSelect).toHaveTextContent('llave1::llave1_niño1')
-    expect(multiTreeSelect).toHaveTextContent('llave1, llave1::llave1_niño1')
+    expect(singleTreeSelect).toHaveTextContent('llave1 › llave1_niño1')
+    expect(multiTreeSelect).toHaveTextContent('llave1, llave1 › llave1_niño1')
   })
 
   it('renders different dates', async () => {

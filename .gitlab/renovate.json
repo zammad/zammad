@@ -1,8 +1,8 @@
 {
   "enabledManagers": ["bundler", "npm", "github-actions"],
-  "lockFileMaintenance": {"enabled": false},
+  "lockFileMaintenance": { "enabled": false },
   "packageRules": [
-    {"matchCategories": ["ci"], "assignees": ["mg"]},
+    { "matchCategories": ["ci"], "assignees": ["mg"] },
     {
       "matchCategories": ["ruby"],
       "assignees": ["mg"],
@@ -93,12 +93,18 @@
     {
       "matchCategories": ["js"],
       "matchPackageNames": ["pinia", "/^@vue/", "/^vue/"],
-      "excludePackageNames": ["@vue/eslint-config-prettier", "@vue/eslint-config-typescript"],
+      "excludePackageNames": [
+        "@vue/eslint-config-prettier",
+        "@vue/eslint-config-typescript"
+      ],
       "groupName": "Vue packages",
       "groupSlug": "vue"
     },
     {
-      "matchPackageNames": ["@vue/eslint-config-prettier", "@vue/eslint-config-typescript"],
+      "matchPackageNames": [
+        "@vue/eslint-config-prettier",
+        "@vue/eslint-config-typescript"
+      ],
       "groupName": "Vue ESLint Configs",
       "groupSlug": "vue-eslint-configs"
     },

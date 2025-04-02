@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -93,7 +93,7 @@ describe('TicketSimpleData', () => {
     })
 
     await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Select table row' }),
+      wrapper.getByRole('row', { description: 'Select table row' }),
     )
 
     expect(wrapper.emitted('click-ticket')).toStrictEqual([[ticket]])
@@ -117,9 +117,9 @@ describe('TicketSimpleData', () => {
     })
 
     expect(
-      wrapper.getByRole('button', { name: 'Select table row' }),
+      wrapper.getByRole('row', { description: 'Select table row' }),
     ).toHaveClass(
-      'odd:bg-blue-200 odd:dark:bg-gray-700 !bg-blue-800 group focus-visible:outline-transparent cursor-pointer active:bg-blue-800 active:dark:bg-blue-800 focus-visible:bg-blue-800 focus-visible:dark:bg-blue-900 focus-within:text-white hover:bg-blue-600 dark:hover:bg-blue-900',
+      'odd:bg-blue-200 odd:dark:bg-gray-700 group focus-visible:outline-transparent cursor-pointer active:bg-blue-800 active:dark:bg-blue-800 focus-visible:bg-blue-800 focus-visible:dark:bg-blue-900 focus-within:text-white hover:bg-blue-600 dark:hover:bg-blue-900',
     )
   })
 })

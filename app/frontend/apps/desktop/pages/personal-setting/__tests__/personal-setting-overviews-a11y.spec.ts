@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { axe } from 'vitest-axe'
 
@@ -10,7 +10,7 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { mockUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentOverviewList.mocks.ts'
 
-const userCurrentOverviewList = [
+const userCurrentTicketOverviews = [
   {
     id: convertToGraphQLId('Overview', 1),
     name: 'Open Tickets',
@@ -35,7 +35,7 @@ describe('personal settings for token access', () => {
   })
 
   it('has no accessibility violations', async () => {
-    mockUserCurrentOverviewListQuery({ userCurrentOverviewList })
+    mockUserCurrentOverviewListQuery({ userCurrentTicketOverviews })
 
     const view = await visitView('/personal-setting/ticket-overviews')
 

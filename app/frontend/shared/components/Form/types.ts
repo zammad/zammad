@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
 import type {
@@ -184,19 +184,18 @@ export type FormSchemaNode =
   | FormSchemaFieldsForObjectAttributeScreen
   | string
 
-export interface ReactiveFormSchemData {
-  fields: Record<
-    string,
-    {
-      show: boolean
-      staticCondition: boolean
-      updateFields: boolean
-      props: Except<
-        SetOptional<FormSchemaField, 'type'>,
-        'show' | 'props' | 'updateFields' | 'relation'
-      >
-    }
+export interface ReactiveFormSchemaDataField {
+  show: boolean
+  staticCondition: boolean
+  updateFields: boolean
+  props: Except<
+    SetOptional<FormSchemaField, 'type'>,
+    'show' | 'props' | 'updateFields' | 'relation'
   >
+}
+
+export interface ReactiveFormSchemData {
+  fields: Record<string, ReactiveFormSchemaDataField>
   flags: Record<string, boolean>
 
   [index: string]: unknown

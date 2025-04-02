@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   module OTRS
@@ -13,6 +13,7 @@ module Import
 
         # start thread to observe current state
         status_update_thread = Thread.new do
+          Thread.current.name = 'OTRS import status update'
           loop do
             result = {
               data:   current_state,

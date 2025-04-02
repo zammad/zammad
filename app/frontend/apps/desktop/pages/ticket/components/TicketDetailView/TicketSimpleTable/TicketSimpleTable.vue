@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
@@ -7,12 +7,12 @@ import { computed } from 'vue'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
+import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
 import type {
-  TableHeader,
+  TableSimpleHeader,
   TableItem,
-} from '#desktop/components/CommonSimpleTable/types.ts'
-import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue'
+} from '#desktop/components/CommonTable/types'
+import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicatorIcon.vue'
 import type { TicketRelationAndRecentListItem } from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/types.ts'
 
 interface Props {
@@ -27,7 +27,7 @@ const emit = defineEmits<{
 
 const { config } = storeToRefs(useApplicationStore())
 
-const headers: TableHeader[] = [
+const headers: TableSimpleHeader[] = [
   { key: 'state', label: '', truncate: true, type: 'link' },
   {
     key: 'number',
@@ -53,9 +53,8 @@ const items = computed<Array<TableItem>>(() =>
     key: ticket.id,
     number: {
       link: `/tickets/${ticket.internalId}`,
-      text: ticket.number,
+      label: ticket.number,
       internal: true,
-      openInNewTab: true,
     },
     organization: ticket.organization,
     title: ticket.title,
@@ -72,11 +71,12 @@ const handleRowClick = (row: TableItem) => {
 
 <template>
   <section>
-    <CommonLabel class="mb-2" tag="h3">{{ label }}</CommonLabel>
-
+    <!-- TODO: Set needed props to disable infinite scrolling etc. -->
     <CommonSimpleTable
       ref="simple-table"
       class="w-full"
+      :caption="label"
+      show-caption
       :headers="headers"
       :items="items"
       :selected-row-id="selectedTicketId"
@@ -84,7 +84,7 @@ const handleRowClick = (row: TableItem) => {
     >
       <template #column-cell-createdAt="{ item, isRowSelected }">
         <CommonDateTime
-          class="-:text-gray-100 -:dark:text-neutral-400 group-hover:text-black group-focus-visible:text-white group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
+          class="text-gray-100 group-hover:text-black group-focus-visible:text-white group-active:text-white dark:text-neutral-400 group-hover:dark:text-white group-active:dark:text-white"
           :class="{ 'text-black dark:text-white': isRowSelected }"
           :date-time="item['createdAt'] as string"
           type="absolute"

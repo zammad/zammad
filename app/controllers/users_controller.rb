@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class UsersController < ApplicationController
   include ChecksUserAttributesByCurrentUserPermission
@@ -411,19 +411,14 @@ curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H 
   def password_reset_send
     raise Exceptions::UnprocessableEntity, 'username param needed!' if params[:username].blank?
 
-    send = Service::User::PasswordReset::Deprecated::Send.new(username: params[:username])
-
-    begin
-      send.execute
-    rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
-      raise Exceptions::UnprocessableEntity, e.message
-    rescue Service::User::PasswordReset::Send::EmailError
-      render json: { message: 'failed' }, status: :ok
-      return
-    end
+    Service::User::PasswordReset::Deprecated::Send
+      .new(username: params[:username])
+      .execute
 
     # Result is always positive to avoid leaking of existing user accounts.
     render json: { message: 'ok' }, status: :ok
+  rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
+    raise Exceptions::UnprocessableEntity, e.message
   end
 
 =begin
@@ -540,7 +535,7 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
 
     password_check = Service::User::PasswordCheck.new(user: current_user, password: params[:password])
 
-    render json: { success: password_check.execute }, status: :ok
+    render json: password_check.execute, status: :ok
   end
 
 =begin
@@ -765,9 +760,10 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     Avatar.remove_one('User', current_user.id, params[:id])
 
     # update user link
-    avatar = Avatar.get_default('User', current_user.id)
-    user = User.find(current_user.id)
-    user.update!(image: avatar.store_hash)
+    if (avatar = Avatar.get_default('User', current_user.id))
+      user = User.find(current_user.id)
+      user.update!(image: avatar.store_hash)
+    end
 
     render json: {}, status: :ok
   end

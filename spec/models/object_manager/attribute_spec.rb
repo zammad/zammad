@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -60,11 +60,17 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Name attribute is a reserved word')
     end
 
-    %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp url icon initials avatar permission validate subscribe unsubscribe translate search _type _doc _id id action].each do |reserved_word|
+    ObjectManager::Attribute::RESERVED_NAMES.each do |reserved_word|
       it "rejects Zammad reserved word '#{reserved_word}'" do
-        expect do
-          described_class.add attributes_for :object_manager_attribute_text, name: reserved_word
-        end.to raise_error(ActiveRecord::RecordInvalid, %r{is a reserved word})
+        expect { described_class.add attributes_for :object_manager_attribute_text, name: reserved_word }.to raise_error(ActiveRecord::RecordInvalid, %r{is a reserved word})
+      end
+    end
+
+    ObjectManager::Attribute::RESERVED_NAMES_PER_MODEL.each do |object, reserved_names|
+      reserved_names.each do |reserved_word|
+        it "rejects Zammad reserved word '#{reserved_word}' for model '#{object}'" do
+          expect { described_class.add attributes_for :object_manager_attribute_text, name: reserved_word, object_name: object }.to raise_error(ActiveRecord::RecordInvalid, %r{is a reserved word})
+        end
       end
     end
 

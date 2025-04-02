@@ -1,9 +1,9 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
 
 defineProps<{
-  data?: unknown
+  data?: { token?: string }
 }>()
 
 defineEmits<{

@@ -4,19 +4,15 @@ import gql from 'graphql-tag';
 export const OverviewAttributesFragmentDoc = gql`
     fragment overviewAttributes on Overview {
   id
+  internalId
   name
   link
   prio
+  groupBy
   orderBy
   orderDirection
-  viewColumns {
-    key
-    value
-  }
-  orderColumns {
-    key
-    value
-  }
+  organizationShared
+  outOfOffice
   active
   ticketCount @include(if: $withTicketCount)
 }

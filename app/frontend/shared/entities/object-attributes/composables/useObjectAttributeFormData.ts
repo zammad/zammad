@@ -1,7 +1,8 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type {
   FormFieldValue,
+  FormSubmitData,
   FormValues,
 } from '#shared/components/Form/types.ts'
 import type { ObjectAttributeValueInput } from '#shared/graphql/types.ts'
@@ -11,9 +12,9 @@ import { camelize, toClassName } from '#shared/utils/formatter.ts'
 import type { ObjectAttribute } from '../types/store.ts'
 import type { Primitive } from 'type-fest'
 
-export const useObjectAttributeFormData = (
+export const useObjectAttributeFormData = <T = FormValues>(
   objectAttributes: Map<string, ObjectAttribute>,
-  values: FormValues,
+  values: FormSubmitData<T>,
 ) => {
   const internalObjectAttributeValues: Record<string, FormFieldValue> = {}
   const additionalObjectAttributeValues: ObjectAttributeValueInput[] = []
@@ -39,7 +40,7 @@ export const useObjectAttributeFormData = (
 
   Object.keys(values).forEach((fieldName) => {
     const objectAttribute = objectAttributes.get(fieldName)
-    const value = values[fieldName]
+    const value = values[fieldName] as FormFieldValue
 
     if (!objectAttribute || value === undefined) return
 

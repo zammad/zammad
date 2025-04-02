@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Trigger GraphQL subscriptions on user changes.
 module OnlineNotification::TriggersSubscriptions
@@ -9,8 +9,6 @@ module OnlineNotification::TriggersSubscriptions
   end
 
   def trigger_subscriptions
-    Gql::Subscriptions::OnlineNotificationsCount
-      .trigger(user,
-               arguments: { user_id: Gql::ZammadSchema.id_from_object(user) })
+    Gql::Subscriptions::OnlineNotificationsCount.trigger(user, scope: user.id)
   end
 end

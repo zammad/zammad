@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -51,7 +51,7 @@ const { isTouchDevice } = useTouchDevice()
       size="small"
       variant="remove"
       :class="{
-        'opacity-0 focus-visible:opacity-100 group-hover:opacity-100':
+        'opacity-0 group-hover:opacity-100 focus-visible:opacity-100':
           !isTouchDevice,
       }"
       @click="$emit('remove', { id })"

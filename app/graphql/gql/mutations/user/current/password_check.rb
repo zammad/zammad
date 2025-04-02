@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::PasswordCheck < BaseMutation
@@ -9,6 +9,7 @@ module Gql::Mutations
     argument :password, String, required: true, description: 'Password to check'
 
     field :success, Boolean, description: 'This indicates if given password matches current user password'
+    field :token, String, description: 'One-time token which should be included in a subsequent request (where applicable)'
 
     def self.authorize(_obj, ctx)
       ctx.current_user.permissions?('user_preferences.password')
@@ -19,15 +20,15 @@ module Gql::Mutations
     end
 
     def resolve(password:)
-      success = Service::User::PasswordCheck
+      password_check = Service::User::PasswordCheck
         .new(user: context.current_user, password:)
         .execute
 
-      if !success
+      if !password_check[:success]
         return error_response({ field: :password, message: __('The provided password is incorrect.') })
       end
 
-      { success: }
+      password_check
     end
   end
 end

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -16,23 +16,20 @@ import type {
 import { i18n } from '#shared/i18n/index.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
+import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
 import type {
-  TableHeader,
+  TableSimpleHeader,
   TableItem,
-} from '#desktop/components/CommonSimpleTable/types.ts'
+} from '#desktop/components/CommonTable/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 import { useUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCurrentDeviceDelete.api.ts'
 import { useUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.api.ts'
 import { UserCurrentDevicesUpdatesDocument } from '../graphql/subscriptions/userCurrentDevicesUpdates.api.ts'
-
-const session = useSessionStore()
 
 const { breadcrumbItems } = useBreadcrumb(__('Devices'))
 
@@ -49,10 +46,7 @@ deviceListQuery.subscribeToMore<
   UserCurrentDevicesUpdatesSubscription
 >({
   document: UserCurrentDevicesUpdatesDocument,
-  variables: {
-    userId: session.user?.id || '',
-  },
-  updateQuery: (prev, { subscriptionData }) => {
+  updateQuery: (_, { subscriptionData }) => {
     if (!subscriptionData.data?.userCurrentDevicesUpdates.devices) {
       return null as unknown as UserCurrentDeviceListQuery
     }
@@ -97,7 +91,7 @@ const confirmDeleteDevice = async (device: UserDevice) => {
   if (confirmed) deleteDevice(device)
 }
 
-const tableHeaders: TableHeader[] = [
+const tableHeaders: TableSimpleHeader[] = [
   {
     key: 'name',
     label: __('Name'),
@@ -156,6 +150,7 @@ const helpText = computed(() =>
     <CommonLoader :loading="deviceListQueryLoading">
       <div class="mb-4">
         <CommonSimpleTable
+          :caption="$t('Used devices')"
           :headers="tableHeaders"
           :items="currentDevices"
           :actions="tableActions"

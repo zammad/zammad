@@ -1,0 +1,10 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('New Beta UI') %></h1>
+  </div>
+</div>
+<div class="page-content">
+  <div class="js-switchControl"></div>
+  <div class="spacer"></div>
+  <div class="js-checkboxControl"></div>
+</div>

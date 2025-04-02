@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Translation < ApplicationModel
   include Translation::SynchronizesFromPo
@@ -86,6 +86,42 @@ translate strings in Ruby context, e. g. for notifications
 
 =begin
 
+translate multiple strings at the same time
+
+  translated = Translation.translate_all('de-de', 'closed', 'open', 'new')
+
+=end
+
+  # Translate multiple strings in bulk
+  #
+  # @param locale [String] locale code
+  # @param [*Array<String>] *args is the list of translations
+  #
+  # @return [Hash{String => String}]
+  #
+  # @example
+  #
+  # Translation.translate_all('de-de', 'closed', 'open', 'new') # {"closed"=>"geschlossen", "open"=>"offen", "new"=>"neu"}
+  #
+  def self.translate_all(locale, *args)
+    sources = args.map { |arg| arg.is_a?(Array) ? arg[0] : arg }
+
+    translations = where(locale: locale, source: sources)
+                     .pluck(:source, :target)
+                     .each_with_object({}) do |(source, target), hash|
+                       hash[source] = target
+                     end
+
+    args.each_with_object({}) do |arg, memo|
+      (source, placeholders) = arg.is_a?(Array) ? [arg[0], arg.drop(1)] : [arg]
+      translation = translations[source].presence || source
+
+      memo[source] = translation % placeholders
+    end
+  end
+
+=begin
+
 find a translation record for a given locale and source string. 'find_by' might not be enough,
 because it could produce wrong matches on case insensitive MySQL databases.
 
@@ -102,7 +138,7 @@ because it could produce wrong matches on case insensitive MySQL databases.
 
 =begin
 
-translate timestampes in ruby context, e. g. for notifications
+translate timestamps in ruby context, e. g. for notifications
 
   translated = Translation.timestamp('de-de', 'Europe/Berlin', '2018-10-10T10:00:00Z0')
 

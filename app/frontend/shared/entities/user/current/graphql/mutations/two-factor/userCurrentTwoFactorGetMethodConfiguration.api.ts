@@ -6,8 +6,11 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserCurrentTwoFactorGetMethodConfigurationDocument = gql`
-    query userCurrentTwoFactorGetMethodConfiguration($methodName: String!) {
-  userCurrentTwoFactorGetMethodConfiguration(methodName: $methodName)
+    query userCurrentTwoFactorGetMethodConfiguration($methodName: String!, $token: String!) {
+  userCurrentTwoFactorGetMethodConfiguration(
+    methodName: $methodName
+    token: $token
+  )
 }
     `;
 export function useUserCurrentTwoFactorGetMethodConfigurationQuery(variables: Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables | VueCompositionApi.Ref<Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables> | ReactiveFunction<Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>> = {}) {

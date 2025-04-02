@@ -194,9 +194,9 @@ PreDefinedWebhookMixin =
     # Make a deep clone of the pre-defined webhook field definition.
     attrs = $.extend(true, [], App[@genericObject].configure_attributes)
 
-    # Process edit forms conditionally, in case we are dealing with a pre-defined webhook.
+    # Process edit and clone forms conditionally, in case we are dealing with a pre-defined webhook.
     if not @preDefinedWebhook and @item?.pre_defined_webhook_type
-      @preDefinedWebhook = App.PreDefinedWebhook.find(@item.pre_defined_webhook_type)
+      @preDefinedWebhook = App.PreDefinedWebhook.findByAttribute(name: @item.pre_defined_webhook_type)
 
     # Add pre-defined webhook fields as additional attributes.
     if @preDefinedWebhook
@@ -211,6 +211,12 @@ PreDefinedWebhookMixin =
         attrs = attrs.concat @preDefinedWebhookAttributes()
 
     { configure_attributes: attrs }
+
+  # Inject the pre-defined webhook data into the edit and clone form.
+  contentFormParams: ->
+    return if not @item
+
+    $.extend(true, @item, { custom_payload: @preDefinedWebhook?.custom_payload if not @item.customized_payload })
 
 WebhookSslVerifyAlertMixin =
   events:
@@ -259,11 +265,20 @@ class EditWebhook extends App.ControllerGenericEdit
 
     setTimeout (=> @handleSslVerifyAlert()), 0
 
-  # Inject the pre-defined webhook data into the form.
-  contentFormParams: ->
-    $.extend(true, @item, { custom_payload: @preDefinedWebhook?.custom_payload if not @item.customized_payload })
-
 class NewWebhook extends App.ControllerGenericNew
+  @include PreDefinedWebhookMixin
   @include WebhookSslVerifyAlertMixin
+
+  shown: false
+
+  constructor: ->
+    super
+
+    App.PreDefinedWebhook.subscribe(@render, initFetch: true)
+
+  render: ->
+    super
+
+    setTimeout (=> @handleSslVerifyAlert()), 0
 
 App.Config.set('Webhook', { prio: 3350, name: __('Webhook'), parent: '#manage', target: '#manage/webhook', controller: Index, permission: ['admin.webhook'] }, 'NavBarAdmin')

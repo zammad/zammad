@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 // import of these files takes 2.5 seconds for each test file!
 // need to optimize this somehow
@@ -42,6 +42,7 @@ import { buildFormKitPluginConfig } from '#shared/form/index.ts'
 import { i18n } from '#shared/i18n.ts'
 import applicationConfigPlugin from '#shared/plugins/applicationConfigPlugin.ts'
 import tooltip from '#shared/plugins/directives/tooltip/index.ts'
+import { setCurrentRouter } from '#shared/router/router.ts'
 import { initializeWalker } from '#shared/router/walker.ts'
 import type { AppName } from '#shared/types/app.ts'
 import type { FormFieldTypeImportModules } from '#shared/types/form.ts'
@@ -236,6 +237,13 @@ const initializeRouter = (
         template: 'Error page',
       },
     },
+    {
+      name: 'search',
+      path: '/search/:searchTerm?',
+      component: {
+        template: 'search',
+      },
+    },
   ]
 
   // Use only the default routes, if nothing was given.
@@ -250,11 +258,7 @@ const initializeRouter = (
 
   routerBeforeGuards?.forEach((guard) => router.beforeEach(guard))
 
-  Object.defineProperty(globalThis, 'Router', {
-    value: router,
-    writable: true,
-    configurable: true,
-  })
+  setCurrentRouter(router)
 
   ensureRouterSpy()
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FieldResolverModule } from '#shared/entities/object-attributes/types/resolver.ts'
 import { camelize } from '#shared/utils/formatter.ts'

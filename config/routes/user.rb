@@ -1,19 +1,30 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
 
   # two-factor
-  match api_path + '/users/:id/two_factor_remove_authentication_method',                     to: 'user/two_factors#two_factor_remove_authentication_method',                 via: :delete
-  match api_path + '/users/:id/two_factor_remove_all_authentication_methods',                to: 'user/two_factors#two_factor_remove_all_authentication_methods',            via: :delete
-  match api_path + '/users/:id/two_factor_enabled_authentication_methods',                   to: 'user/two_factors#two_factor_enabled_authentication_methods',               via: :get
-  match api_path + '/users/two_factor_personal_configuration',                               to: 'user/two_factors#two_factor_personal_configuration',                       via: :get
-  match api_path + '/users/two_factor_authentication_method_initiate_configuration/:method', to: 'user/two_factors#two_factor_authentication_method_initiate_configuration', via: :get
-  match api_path + '/users/two_factor_authentication_method_configuration/:method',          to: 'user/two_factors#two_factor_authentication_method_configuration',          via: :get
-  match api_path + '/users/two_factor_authentication_remove_credentials/:method',            to: 'user/two_factors#two_factor_authentication_remove_credentials',             via: :delete
-  match api_path + '/users/two_factor_verify_configuration',                                 to: 'user/two_factors#two_factor_verify_configuration',                         via: :post
-  match api_path + '/users/two_factor_default_authentication_method',                        to: 'user/two_factors#two_factor_default_authentication_method',                via: :post
-  match api_path + '/users/two_factor_recovery_codes_generate',                              to: 'user/two_factors#two_factor_recovery_codes_generate',                      via: :post
+  scope Rails.configuration.api_path do
+    resource 'admin_two_factors', path: '/users/:id/admin_two_factor', controller: 'user/admin_two_factors', only: [] do
+      delete :remove_authentication_method
+      delete :remove_all_authentication_methods
+      get :enabled_authentication_methods
+    end
+
+    resource 'two_factors', path: '/users/two_factor', controller: 'user/two_factors', only: [] do
+      get :personal_configuration
+
+      post 'authentication_method_initiate_configuration/:method', to: 'authentication_method_initiate_configuration'
+      post 'authentication_method_configuration/:method', to: 'authentication_method_configuration'
+      post :enabled_authentication_methods
+      post :verify_configuration
+      post :default_authentication_method
+      post :recovery_codes_generate
+
+      delete :remove_authentication_method
+      delete 'authentication_remove_credentials/:method', to: 'authentication_remove_credentials'
+    end
+  end
 
   # users
   match api_path + '/users/search',                to: 'users#search',                via: %i[get post option]

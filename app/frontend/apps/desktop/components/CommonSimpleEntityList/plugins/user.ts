@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import UserEntity from '#desktop/components/CommonSimpleEntityList/entity/UserEntity.vue'
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'

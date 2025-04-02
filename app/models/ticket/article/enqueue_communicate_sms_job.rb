@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Schedules a backgrond communication job for new SMS articles.
 module Ticket::Article::EnqueueCommunicateSmsJob

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
@@ -194,7 +194,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
         ></div>
         <div class="select-dialog relative m-auto">
           <div
-            class="flex min-w-[294px] max-w-[90vw] flex-col items-start rounded-xl bg-gray-400/80 backdrop-blur-[15px]"
+            class="flex max-w-[90vw] min-w-[294px] flex-col items-start rounded-xl bg-gray-400/80 backdrop-blur-[15px]"
           >
             <div
               ref="dialog"
@@ -222,39 +222,35 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
 </template>
 
 <style scoped>
-.v-enter-active {
-  .select-overlay,
-  .select-dialog {
-    @apply duration-300 ease-out;
-  }
+.v-enter-active .select-overlay,
+.v-enter-active .select-dialog {
+  transition: all 300ms ease-out;
 }
 
-.v-leave-active {
-  .select-overlay,
-  .select-dialog {
-    @apply duration-200 ease-in;
-  }
+.v-leave-active .select-overlay,
+.v-leave-active .select-dialog {
+  transition: all 200ms ease-in;
 }
 
-.v-enter-to,
-.v-leave-from {
-  .select-dialog {
-    @apply scale-100 opacity-100;
-  }
-
-  .select-overlay {
-    @apply opacity-60;
-  }
+.v-enter-to .select-dialog,
+.v-leave-from .select-dialog {
+  transform: scale(1);
+  opacity: 1;
 }
 
-.v-enter-from,
-.v-leave-to {
-  .select-dialog {
-    @apply scale-95 opacity-0;
-  }
+.v-enter-to .select-overlay,
+.v-leave-from .select-overlay {
+  opacity: 0.6;
+}
 
-  .select-overlay {
-    @apply opacity-0;
-  }
+.v-enter-from .select-dialog,
+.v-leave-to .select-dialog {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.v-enter-from .select-overlay,
+.v-leave-to .select-overlay {
+  opacity: 0;
 }
 </style>

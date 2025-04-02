@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
@@ -1747,7 +1747,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full'))
-          .to contain_exactly(1, [ticket_mentions].to_a)
+          .to contain_exactly(1, [ticket_mentions])
       end
 
       it 'pre condition is not specific' do
@@ -1876,7 +1876,7 @@ RSpec.describe Ticket, type: :model do
       end
 
       it 'verify count of attributes' do
-        expect(ticket.send(:search_index_article_attributes, ticket_article).count).to eq 20
+        expect(ticket.send(:search_index_article_attributes, ticket_article).count).to eq 21
       end
 
       it 'verify from' do
@@ -2051,6 +2051,15 @@ RSpec.describe Ticket, type: :model do
 
     it 'does ignore references' do
       expect(ticket.get_references([articles.last.message_id])).not_to include(articles.last.message_id)
+    end
+  end
+
+  describe 'Performance: Remove assets which are present in collection assets #5495' do
+    let!(:ticket) { create(:ticket) }
+
+    it 'does not deliver global assets' do
+      expect(ticket.group).to be_present
+      expect(ticket.assets({}).deep_symbolize_keys.keys).not_to include(:TicketPriority, :Role, :TicketState, :Group)
     end
   end
 end

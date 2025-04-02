@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { ObjectManagerFrontendAttributesPayload } from '#shared/graphql/types.ts'
 
@@ -99,6 +99,9 @@ export default (): ObjectManagerFrontendAttributesPayload => ({
         edit: {
           null: false,
         },
+        overview_bulk: {
+          null: true,
+        },
       },
       __typename: 'ObjectManagerFrontendAttribute',
     },
@@ -127,6 +130,9 @@ export default (): ObjectManagerFrontendAttributesPayload => ({
           item_class: 'column',
         },
         edit: {
+          null: true,
+        },
+        overview_bulk: {
           null: true,
         },
       },
@@ -159,6 +165,9 @@ export default (): ObjectManagerFrontendAttributesPayload => ({
           null: false,
           filter: [2, 3, 4, 7],
         },
+        overview_bulk: {
+          null: true,
+        },
       },
       __typename: 'ObjectManagerFrontendAttribute',
     },
@@ -182,6 +191,9 @@ export default (): ObjectManagerFrontendAttributesPayload => ({
         },
         edit: {
           null: false,
+        },
+        overview_bulk: {
+          null: true,
         },
       },
       __typename: 'ObjectManagerFrontendAttribute',
@@ -208,6 +220,9 @@ export default (): ObjectManagerFrontendAttributesPayload => ({
         },
         edit: {
           null: false,
+        },
+        overview_bulk: {
+          null: true,
         },
       },
       __typename: 'ObjectManagerFrontendAttribute',

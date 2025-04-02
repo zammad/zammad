@@ -1,23 +1,16 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationController::HasDownload
   extend ActiveSupport::Concern
 
-  included do
-    around_action do |_controller, block|
+  def send_data(...)
+    super
+    set_null_csp
+  end
 
-      subscriber = proc do
-        policy = ActionDispatch::ContentSecurityPolicy.new
-        policy.default_src :none
-        request.content_security_policy = policy
-      end
-
-      ActiveSupport::Notifications.subscribed(subscriber, 'send_file.action_controller') do
-        ActiveSupport::Notifications.subscribed(subscriber, 'send_data.action_controller') do
-          block.call
-        end
-      end
-    end
+  def send_file(...)
+    super
+    set_null_csp
   end
 
   private
@@ -36,5 +29,9 @@ module ApplicationController::HasDownload
     return disposition if valid_disposition.include?(disposition)
 
     raise Exceptions::Forbidden, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
+  end
+
+  def set_null_csp
+    request.content_security_policy = ActionDispatch::ContentSecurityPolicy.new.tap { |p| p.default_src :none }
   end
 end

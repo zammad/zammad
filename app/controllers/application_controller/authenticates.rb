@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationController::Authenticates
   extend ActiveSupport::Concern
@@ -53,7 +53,9 @@ module ApplicationController::Authenticates
         raise Exceptions::Forbidden, 'API password access disabled!'
       end
 
-      auth = Auth.new(username, password)
+      # Disable 2FA for iCal and calendar subscriptions
+      only_verify_password = %w[/ical /calendar_subscriptions].any? { |path| request.path.start_with?(path) }
+      auth = Auth.new(username, password, only_verify_password:)
 
       begin
         auth.valid!
@@ -85,10 +87,7 @@ module ApplicationController::Authenticates
         token.last_used_at = Time.zone.now
         token.save!
 
-        if token.expires_at &&
-           Time.zone.today >= token.expires_at
-          raise Exceptions::NotAuthorized, __('Not authorized (token expired)!')
-        end
+        raise Exceptions::NotAuthorized, __('Not authorized (token expired)!') if token.expired?
 
         @_token = token # remember for Pundit authorization / permit!
       end

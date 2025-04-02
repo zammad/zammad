@@ -2,4 +2,8 @@
   <%- @T('The entered user for reauthentication differs from the user that was used for setting up your Microsoft365 channel initially.') %><br><br>
   <%- @T('To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication process was aborted.') %><br><br>
   <%- @T('Please start the reauthentication again and enter the correct credentials.') %>
+  <% if @item?.options.inbound?.options?.user: %>
+    <br><br>
+    <%- @T('Current User') %>: <strong><%= @item.options.inbound.options.user %></strong>
+  <% end %>
 </p>

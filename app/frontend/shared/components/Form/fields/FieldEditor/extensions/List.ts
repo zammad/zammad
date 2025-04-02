@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import Blockquote from '@tiptap/extension-blockquote'
 import CharacterCount from '@tiptap/extension-character-count'
@@ -8,7 +8,7 @@ import Link from '@tiptap/extension-link'
 import Paragraph from '@tiptap/extension-paragraph'
 import Table from '@tiptap/extension-table'
 import TableCell from '@tiptap/extension-table-cell'
-import TableHeader from '@tiptap/extension-table-header'
+import TableSimpleHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 import TextStyle from '@tiptap/extension-text-style'
 import Underline from '@tiptap/extension-underline'
@@ -121,7 +121,7 @@ export const getHtmlExtensions = (): Extensions => [
     allowTableNodeSelection: true,
   }),
   TableRow,
-  TableHeader,
+  TableSimpleHeader,
   TableCell,
   TextStyle,
   Underline,

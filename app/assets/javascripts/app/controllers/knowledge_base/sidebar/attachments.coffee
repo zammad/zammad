@@ -29,6 +29,13 @@ class App.KnowledgeBaseSidebarAttachments extends App.Controller
       attachments: @object.attachments
     )
 
+    @renderDragAndDropIfNeeded()
+
+  renderDragAndDropIfNeeded: ->
+    return if @dragAndDropRendered
+
+    @dragAndDropRendered = true
+
     html5Upload.initialize(
       uploadUrl:              @object.generateURL('attachments')
       dropContainer:          @el.get(0)

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
 
@@ -13,6 +13,7 @@ export default <PersonalSettingPlugin>{
   },
   route: {
     path: 'linked-accounts',
+    alias: '/profile/linked',
     name: 'PersonalSettingLinkedAccounts',
     component: () => import('../../PersonalSettingLinkedAccounts.vue'),
     level: 2,

@@ -1,12 +1,13 @@
 FROM node:20-bookworm-slim AS node
-RUN npm -g install pnpm
+RUN npm -g install corepack && corepack enable pnpm
 RUN rm /usr/local/bin/yarn /usr/local/bin/yarnpkg
 
 
-FROM ruby:3.2.4-slim-bookworm AS builder
+FROM ruby:3.2.8-slim-bookworm AS builder
 ARG DEBIAN_FRONTEND=noninteractive
 ARG RAILS_ENV=production
 ARG ZAMMAD_DIR=/opt/zammad
+ARG COMMIT_SHA
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/bin /usr/local/bin
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
@@ -17,7 +18,7 @@ RUN contrib/docker/setup.sh builder
 
 # note: zammad is currently incompatible to alpine because of:
 # https://github.com/docker-library/ruby/issues/113
-FROM ruby:3.2.4-slim-bookworm
+FROM ruby:3.2.8-slim-bookworm
 ARG DEBIAN_FRONTEND=noninteractive
 ARG ZAMMAD_USER=zammad
 ENV RAILS_ENV=production

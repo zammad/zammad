@@ -1,6 +1,9 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-class ExternalCredential::Google
+class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
+  def self.channel_area
+    'Google::Account'.freeze
+  end
 
   def self.app_verify(params)
     request_account_to_link(params, false)
@@ -281,5 +284,4 @@ class ExternalCredential::Google
 
     JSON.parse(Base64.decode64(split)).symbolize_keys
   end
-
 end

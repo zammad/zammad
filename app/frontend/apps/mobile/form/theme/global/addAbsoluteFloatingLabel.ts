@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type { Classes } from '#shared/form/plugins/utils.ts'
 import { clean, extendClasses } from '#shared/form/plugins/utils.ts'
@@ -15,7 +15,7 @@ export const addAbsoluteFloatingLabel = (classes: Classes = {}) => {
     block: 'flex',
     // text-base ensures there is no zoom when you click on the input on iOS
     input: clean(
-      `formkit-populated:pt-8 formkit-label-hidden:pt-2 h-14 w-full border-none bg-transparent text-base placeholder:text-transparent focus-within:pt-8 focus:outline-none`,
+      `formkit-populated:pt-8 formkit-label-hidden:pt-2 h-14 w-full border-none bg-transparent text-base placeholder:text-transparent focus-within:pt-8 focus:outline-hidden`,
     ),
     label: clean(
       `pointer-events-none absolute top-0 h-14 origin-left px-2 py-4 text-base transition-all duration-100 ease-in-out ltr:left-0 rtl:right-0`,

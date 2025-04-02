@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -57,6 +57,33 @@ RSpec.describe 'Report', searchindex: true, type: :system do
       click '.label-text', text: report_profile.name
 
       expect(page).to have_no_css('.modal')
+    end
+  end
+
+  describe 'delete reporting profile with id=1 #5463' do
+    context 'when report profiles are not present', authenticated_as: :authenticate do
+      def authenticate
+        Report::Profile.destroy_all
+        true
+      end
+
+      it 'does show a message that no report profiles are given' do
+        visit 'report'
+        expect(page).to have_text('There are currently no report profiles configured.')
+      end
+    end
+
+    context 'when selected report profile is replaced with a new one' do
+      it 'does clear the session storage cache and selects the new report profile' do
+        visit 'report'
+        expect(page).to have_text(Report::Profile.first.name)
+        click ".js-dataDownloadBackendSelector[data-backend='count::closed']"
+        Report::Profile.first.destroy
+        new_report_profile = create(:report_profile)
+        refresh
+        expect(page).to have_text(new_report_profile.name)
+        expect(page).to have_no_text('The report could not be generated')
+      end
     end
   end
 end

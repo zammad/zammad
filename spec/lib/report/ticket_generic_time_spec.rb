@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'lib/report_examples'
@@ -7,29 +7,12 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
   include_examples 'with report examples'
 
   describe '.aggs' do
-    it 'gets monthly aggregated results by created_at' do
+    it 'gets monthly aggregated results by created_at excluding merged tickets' do
       result = described_class.aggs(
         range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         interval:    'month', # year, quarter, month, week, day, hour, minute, second
         selector:    {}, # ticket selector to get only a collection of tickets
-        params:      { field: 'created_at' },
-      )
-
-      expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 1, 0]
-    end
-
-    it 'gets monthly aggregated results by created_at not merged' do
-      result = described_class.aggs(
-        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
-        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
-        interval:    'month', # year, quarter, month, week, day, hour, minute, second
-        selector:    {
-          'state' => {
-            'operator' => 'is not',
-            'value'    => 'merged'
-          }
-        },
         params:      { field: 'created_at' },
       )
 
@@ -223,27 +206,11 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
   end
 
   describe '.items' do
-    it 'gets items in year range by created_at' do
+    it 'gets items in year range by created_at excluding merged tickets' do
       result = described_class.items(
         range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         selector:    {}, # ticket selector to get only a collection of tickets
-        params:      { field: 'created_at' },
-      )
-
-      expect(result).to match_tickets ticket_7, ticket_6, ticket_5, ticket_4, ticket_3, ticket_2, ticket_1
-    end
-
-    it 'gets items in year range by created_at not merged' do
-      result = described_class.items(
-        range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
-        range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
-        selector:    {
-          'state' => {
-            'operator' => 'is not',
-            'value'    => 'merged'
-          }
-        },
         params:      { field: 'created_at' },
       )
 

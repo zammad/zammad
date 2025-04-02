@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # This customization removes the tagged logging functionality in favour of logging exception backtraces via the Rails.logger.
 # Zammad uses Logger::Formatter which partly provides the functionality to log exceptions if given.

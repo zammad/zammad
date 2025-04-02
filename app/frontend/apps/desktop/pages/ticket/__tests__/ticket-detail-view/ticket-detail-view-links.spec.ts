@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -64,7 +64,9 @@ describe('Ticket detail view links', () => {
     expect(view.getByText('Recently Viewed Tickets')).toBeInTheDocument()
     expect(view.getByText('Foo Car')).toBeInTheDocument()
 
-    const rows = view.getAllByLabelText('Select table row')
+    const rows = view.getAllByRole('row', {
+      description: 'Select table row',
+    })
 
     mockLinkAddMutation({
       linkAdd: {

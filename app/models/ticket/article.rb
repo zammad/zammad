@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::Article < ApplicationModel
   include HasDefaultModelUserRelations
@@ -37,6 +37,7 @@ class Ticket::Article < ApplicationModel
   belongs_to :sender,     class_name: 'Ticket::Article::Sender', optional: true
   belongs_to :origin_by,  class_name: 'User', optional: true
 
+  before_validation :detect_language, on: :create
   before_validation :check_mentions, on: :create
   before_validation :check_email_recipient_validity, if: :check_email_recipient_raises_error
   before_create :check_subject, :check_body, :check_message_id_md5
@@ -77,6 +78,12 @@ class Ticket::Article < ApplicationModel
     return true if message_id.blank?
 
     self.message_id_md5 = Digest::MD5.hexdigest(message_id.to_s)
+  end
+
+  def detect_language
+    return if Setting.get('language_detection_article').blank?
+
+    self.detected_language = LanguageDetectionHelper.detect(body.html2text)
   end
 
 =begin
@@ -392,13 +399,14 @@ returns
     email_article_type = Ticket::Article::Type.lookup(name: 'email')
     return if type_id != email_article_type.id
 
-    # ... and if recipient is valid.
-    recipient = begin
-      Mail::Address.new(to).address
-    rescue Mail::Field::FieldError
-      # no-op
+    # ... and if recipients are valid.
+    recipients = begin
+      Mail::AddressList.new(to).addresses
+    rescue Mail::Field::ParseError
+      nil
     end
-    return if EmailAddressValidation.new(recipient).valid?
+
+    return if recipients.present? && recipients.all? { |recipient| EmailAddressValidation.new(recipient.address).valid? }
 
     raise Exceptions::InvalidAttribute.new('email_recipient', __('Sending an email without a valid recipient is not possible.'))
   end

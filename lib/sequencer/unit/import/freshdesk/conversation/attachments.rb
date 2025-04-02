@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Import::Freshdesk::Conversation::Attachments < Sequencer::Unit::Base
   prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
@@ -43,6 +43,7 @@ class Sequencer::Unit::Import::Freshdesk::Conversation::Attachments < Sequencer:
   def download_threads
     resource['attachments'].map do |attachment|
       Thread.new do
+        Thread.current.name = 'freshdesk attachment download'
         sync(attachment)
       end
     end

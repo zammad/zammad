@@ -1,0 +1,52 @@
+---
+########################################
+# Remaining difference to zammad-org:
+# MD033 disabled for zammad-org, but no need to disable it here
+########################################
+
+# Default state for all rules
+default: true
+
+# MD004/ul-style : Unordered list style : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md004.md
+MD004:
+  # List style
+  style: "dash"
+
+# MD013/line-length : Line length : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md013.md
+MD013:
+  # Number of characters
+  line_length: 120
+  # Exclude code blocks
+  code_blocks: false
+  # Exclude tables
+  tables: false
+
+# MD024/no-duplicate-heading : Multiple headings with the same content : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md024.md
+MD024:
+  # Only check sibling headings
+  siblings_only: true
+
+# MD025/single-title/single-h1 : Multiple top-level headings in the same document : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md025.md
+MD025:
+  # RegExp for matching title in front matter
+  front_matter_title: false
+
+# MD046/code-block-style : Code block style : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md046.md
+MD046:
+  # Block style
+  style: "fenced"
+
+# MD048/code-fence-style : Code fence style : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md048.md
+MD048:
+  # Code fence style
+  style: "backtick"
+
+# MD049/emphasis-style : Emphasis style : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md049.md
+MD049:
+  # Emphasis style
+  style: "underscore"
+
+# MD050/strong-style : Strong style : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md050.md
+MD050:
+  # Strong style
+  style: "asterisk"

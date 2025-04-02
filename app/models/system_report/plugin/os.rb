@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class SystemReport::Plugin::Os < SystemReport::Plugin
   OS_RELEASE_FILE = '/etc/os-release'.freeze

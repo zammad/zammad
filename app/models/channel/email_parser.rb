@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # encoding: utf-8
 
@@ -183,7 +183,7 @@ returns
     end
 
     # check ignore header
-    if mail[:'x-zammad-ignore'] == 'true' || mail[:'x-zammad-ignore'] == true
+    if ['true', true].include?(mail[:'x-zammad-ignore'])
       Rails.logger.info "ignored email with msgid '#{mail[:message_id]}' from '#{mail[:from]}' because of x-zammad-ignore header"
 
       return [{}, nil, nil, mail]
@@ -822,7 +822,7 @@ returns
         filename = if mail_local[:subject].present?
                      "#{mail_local[:subject]}.eml"
                    elsif headers_store['Content-Description'].present?
-                     "#{headers_store['Content-Description']}.eml".to_s.force_encoding('utf-8')
+                     "#{headers_store['Content-Description']}.eml".force_encoding('utf-8')
                    else
                      'Mail.eml'
                    end
@@ -873,7 +873,7 @@ returns
         next if !content_type.match?(%r{^#{Regexp.quote(type)}}i)
 
         filename = if headers_store['Content-Description'].present?
-                     "#{headers_store['Content-Description']}.#{ext[0]}".to_s.force_encoding('utf-8')
+                     "#{headers_store['Content-Description']}.#{ext[0]}".force_encoding('utf-8')
                    else
                      "#{ext[1]}.#{ext[0]}"
                    end

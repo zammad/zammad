@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { animations, parents, updateConfig } from '@formkit/drag-and-drop'
@@ -143,6 +143,7 @@ const getTaskbarTabComponent = (tabEntityKey: string) => {
 
 const getTaskbarTabLink = (tabEntityKey: string) => {
   const taskbarTab = taskbarTabListByTabEntityKey.value[tabEntityKey]
+
   if (!taskbarTab) return
 
   const plugin = getTaskbarTabTypePlugin(taskbarTab.type)
@@ -186,7 +187,7 @@ const getTaskbarTabDirtyFlag = (tabEntityKey: string) => {
 </script>
 
 <template>
-  <CommonLoader :loading="loading">
+  <CommonLoader no-transition :loading="loading">
     <div
       v-if="hasTaskbarTabs"
       class="-m-1 flex flex-col overflow-y-hidden py-2"
@@ -195,7 +196,7 @@ const getTaskbarTabDirtyFlag = (tabEntityKey: string) => {
         <CommonPopover
           id="user-taskbar-tabs-popover"
           ref="popover"
-          class="min-w-52 max-w-64"
+          class="max-w-64 min-w-52"
           :owner="popoverTarget"
           orientation="autoHorizontal"
           placement="start"
@@ -262,7 +263,7 @@ const getTaskbarTabDirtyFlag = (tabEntityKey: string) => {
                 :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
                 :taskbar-tab-link="getTaskbarTabLink(tabEntityKey)"
                 :class="{
-                  'group/link rounded-none focus-visible:bg-blue-800 focus-visible:outline-0 group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px]':
+                  'group/link rounded-none group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px] focus-visible:bg-blue-800 focus-visible:outline-0':
                     collapsed,
                   'active:cursor-grabbing': !collapsed,
                 }"

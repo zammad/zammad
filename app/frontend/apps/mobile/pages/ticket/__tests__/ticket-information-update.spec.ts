@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 
@@ -27,10 +27,6 @@ vi.hoisted(() => {
   const now = new Date(2022, 1, 1, 0, 0, 0, 0)
   vi.setSystemTime(now)
 })
-
-// Vitest has a bug where vi.hoisted is not hoisted if there is no vi.mock
-// TODO: remove when updating to Vitest 1.0
-vi.mock('./non-existing.js')
 
 const visitTicketInformation = async (ticket?: TicketQuery) => {
   mockPermissions(['ticket.agent'])
@@ -100,6 +96,8 @@ const visitTicketInformation = async (ticket?: TicketQuery) => {
 describe('updating ticket information', () => {
   it('shows confirm popup, when leaving', async () => {
     const { view } = await visitTicketInformation()
+
+    expect(await view.findByText('#610001')).toBeInTheDocument()
 
     await getNode('form-ticket-edit')?.settled
 

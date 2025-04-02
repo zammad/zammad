@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'CanPerformChanges', :aggregate_failures do |object_name:, data_privacy_deletion_task: true|
   describe '#perform_changes' do

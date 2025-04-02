@@ -87,7 +87,6 @@ class ChannelWhatsapp extends App.ControllerSubContent
       id:   'whatsapp_disable'
       type: 'POST'
       url:  "#{@apiPath}/channels/admin/whatsapp/#{id}/disable"
-      data: JSON.stringify(id: id)
       processData: true
       success: =>
         @load()
@@ -284,7 +283,7 @@ class WhatsappAccountWebhookModal extends App.ControllerModal
     @copyToClipboardWithTooltip(value, e.target,'.modal-body', true)
 
 App.Config.set('Whatsapp', {
-  prio: 5100,
+  prio: 5600,
   name: __('WhatsApp'),
   parent: '#channels',
   target: '#channels/whatsapp',

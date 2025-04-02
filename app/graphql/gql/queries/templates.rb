@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class Templates < BaseQuery
@@ -14,7 +14,8 @@ module Gql::Queries
     end
 
     def resolve(only_active:)
-      only_active ? Template.active : Template.all
+      templates = only_active ? Template.active : Template.all
+      templates.sorted
     end
   end
 end

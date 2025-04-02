@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require_relative 'test_flags'
 
@@ -345,7 +345,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     element.find('[aria-label*="Open the months overlay"]').click
     element.find('.dp__overlay_col', text: date.strftime('%b')).click
 
-    id = date.strftime('%Y-%m-%d')
+    id = date.strftime('dp-%Y-%m-%d')
     element.find_by_id(id).click # rubocop:disable Rails/DynamicFindBy
 
     if desktop_view?

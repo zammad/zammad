@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 Zammad::Application.routes.draw do
 
@@ -33,7 +33,9 @@ Zammad::Application.routes.draw do
 
           member do
             get :server_snippets
-            patch :activate, :deactivate, :update_menu_items
+            patch :activate
+            patch :deactivate
+            patch :update_menu_items
           end
         end
 
@@ -50,7 +52,8 @@ Zammad::Application.routes.draw do
                              except:     %i[new edit] do
 
         member do
-          patch :reorder_categories, :reorder_answers
+          patch :reorder_categories
+          patch :reorder_answers
 
           resource :permissions, controller: 'knowledge_base/permissions', only: %i[update show]
 

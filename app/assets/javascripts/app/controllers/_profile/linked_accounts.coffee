@@ -111,4 +111,9 @@ App.Config.set('auth_provider_all', {
     name:   __('SSO')
     config: 'auth_sso'
     class:  'sso'
+  openid_connect:
+    url:    '/auth/openid_connect'
+    name:   __('OpenID Connect')
+    config: 'auth_openid_connect'
+    class:  'openid-connect'
 })

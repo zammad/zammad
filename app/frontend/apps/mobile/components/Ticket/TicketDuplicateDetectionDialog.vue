@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import type { TicketDuplicateDetectionItem } from '#shared/entities/ticket/types.ts'
@@ -19,7 +19,7 @@ defineProps<{
     no-autofocus
   >
     <div class="w-full p-4">
-      <p class="mb-3 whitespace-pre-wrap break-words">
+      <p class="mb-3 break-words whitespace-pre-wrap">
         {{ $c.ticket_duplicate_detection_body }}
       </p>
       <CommonLink
@@ -34,7 +34,7 @@ defineProps<{
             <div class="flex-1 truncate text-sm">
               <span>#{{ number }}</span>
               <span
-                class="mb-1 line-clamp-3 whitespace-normal text-lg font-bold leading-5"
+                class="mb-1 line-clamp-3 text-lg leading-5 font-bold whitespace-normal"
               >
                 {{ title }}
               </span>

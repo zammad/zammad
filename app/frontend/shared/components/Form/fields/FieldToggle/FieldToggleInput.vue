@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, nextTick, toRef, watch } from 'vue'
@@ -112,7 +112,7 @@ const classMap = getToggleClasses()
     :id="context.id"
     type="button"
     role="switch"
-    class="formkit-disabled:pointer-events-none relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 ease-in-out"
+    class="formkit-disabled:pointer-events-none relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full"
     :class="[
       context.classes.input,
       classMap.track,

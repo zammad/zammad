@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Public::AnswersController < KnowledgeBase::Public::BaseController
 
@@ -17,7 +17,7 @@ class KnowledgeBase::Public::AnswersController < KnowledgeBase::Public::BaseCont
 
     @alternative = find_answer(answers, params[:answer], locale: false)
 
-    raise ActiveRecord::RecordNotFound if !@alternative&.translations&.any? # rubocop:disable Style/InverseMethods
+    raise ActiveRecord::RecordNotFound if !@alternative&.translations&.any?
 
     @object_locales = @alternative.translations.map { |x| x.kb_locale.system_locale }
 

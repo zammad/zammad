@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 
@@ -22,6 +22,7 @@ import { ConfigUpdatesDocument } from '#shared/graphql/subscriptions/configUpdat
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
+import { UserCurrentRecentViewUpdatesDocument } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentRecentViewUpdates.api.ts'
 import { UserCurrentTaskbarItemListUpdatesDocument } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemListUpdates.api.ts'
 import { UserCurrentTaskbarItemUpdatesDocument } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.api.ts'
 
@@ -42,6 +43,7 @@ beforeEach(() => {
   mockGraphQLSubscription(UserCurrentTaskbarItemUpdatesDocument)
   mockGraphQLSubscription(UserCurrentTaskbarItemListUpdatesDocument)
   mockGraphQLSubscription(OnlineNotificationsCountDocument)
+  mockGraphQLSubscription(UserCurrentRecentViewUpdatesDocument)
 })
 
 describe('testing login maintenance mode', () => {

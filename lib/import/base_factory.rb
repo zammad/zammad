@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   module BaseFactory
@@ -6,12 +6,15 @@ module Import
 
     def import_action(records, *)
       pre_import_hook(records, *)
+
       import_loop(records, *) do |record|
         next if skip?(record, *)
 
         backend_instance = create_instance(record, *)
         post_import_hook(record, backend_instance, *)
       end
+    ensure
+      post_all_import_hook
     end
 
     def import(_records, *)
@@ -21,6 +24,8 @@ module Import
     def pre_import_hook(_records, *); end
 
     def post_import_hook(_record, _backend_instance, *); end
+
+    def post_all_import_hook; end
 
     def backend_class(_record, *)
       "Import::#{module_name}".constantize

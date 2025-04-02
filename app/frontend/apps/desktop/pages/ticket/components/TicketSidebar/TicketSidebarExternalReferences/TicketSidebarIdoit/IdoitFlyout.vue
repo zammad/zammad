@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
@@ -14,14 +14,13 @@ import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import type { TableItem } from '#desktop/components/CommonSimpleTable/types.ts'
+import type { TableItem } from '#desktop/components/CommonTable/types'
 import IdoitObjectList from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue'
 import type { FormDataRecords } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/types.ts'
 import { AutocompleteSearchIdoitObjectTypesDocument } from '#desktop/pages/ticket/graphql/queries/autocompleteSearchIdoitObjectTypes.api.ts'
 import { useTicketExternalReferencesIdoitObjectSearchQuery } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIdoitObjectSearch.api.ts'
 
 interface Props {
-  name: string
   objectIds: number[]
   onSubmit: (formData: FormDataRecords) => Promise<unknown>
   icon: string
@@ -34,6 +33,8 @@ const { form, values, updateFieldValues, onChangedField, formSetErrors } =
 
 const FETCH_LIMIT = 10
 const FETCH_DEBOUNCE = 300
+
+const flyoutName = 'idoit'
 
 const objectSearchQuery = new QueryHandler(
   useTicketExternalReferencesIdoitObjectSearchQuery(
@@ -169,7 +170,7 @@ const isValid = computed(
 const submitObjects = async (data: FormDataRecords) => {
   await props.onSubmit(data)
 
-  return () => closeFlyout(props.name)
+  return () => closeFlyout(flyoutName)
 }
 </script>
 
@@ -177,7 +178,7 @@ const submitObjects = async (data: FormDataRecords) => {
   <CommonFlyout
     :header-icon="icon"
     :header-title="__('i-doit: Link objects')"
-    :name="name"
+    :name="flyoutName"
     no-close-on-action
     :footer-action-options="{
       actionLabel: $t('Link Objects'),

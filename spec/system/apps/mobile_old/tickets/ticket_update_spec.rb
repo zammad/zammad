@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/apps/mobile_old/examples/core_workflow_examples'
 
-RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agent, type: :system do
+RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agent, time_zone: 'Europe/London', type: :system do
   let(:group)    { Group.find_by(name: 'Users') }
   let(:group_2)  { create(:group, name: 'Group 2') }
   let(:owner)    { User.find_by(email: 'agent1@example.com') }
@@ -126,7 +126,7 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
         expect(ticket.owner.id).to be(1)
       end
 
-      it 'changing ticket state to pending requires pending time', time_zone: 'Europe/London' do
+      it 'changing ticket state to pending requires pending time' do
         visit "/tickets/#{ticket.id}/information"
 
         wait_for_form_to_settle('form-ticket-edit')

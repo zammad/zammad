@@ -1,0 +1,44 @@
+query quickSearch($search: String!, $limit: Int = 10) {
+  quickSearchOrganizations: search(
+    search: $search
+    onlyIn: Organization
+    limit: $limit
+  ) {
+    totalCount
+    items {
+      ... on Organization {
+        id
+        internalId
+        name
+        active
+      }
+    }
+  }
+  quickSearchTickets: search(search: $search, onlyIn: Ticket, limit: $limit) {
+    totalCount
+    items {
+      ... on Ticket {
+        id
+        internalId
+        title
+        number
+        state {
+          id
+          name
+        }
+        stateColorCode
+      }
+    }
+  }
+  quickSearchUsers: search(search: $search, onlyIn: User, limit: $limit) {
+    totalCount
+    items {
+      ... on User {
+        id
+        internalId
+        fullname
+        active
+      }
+    }
+  }
+}

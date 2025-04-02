@@ -60,3 +60,17 @@ class App.TwoFactorConfigurationModal extends App.ControllerModal
       removeAll: true
 
     @successCallback() if @successCallback
+
+  invalidPasswordToken: =>
+    @close()
+
+    @notify(
+      type:      'error'
+      msg:       __('Invalid password revalidation token, please confirm your password again.')
+      removeAll: true
+    )
+
+    new App["TwoFactorConfigurationMethod#{@method.identifier}"](
+      container: @container
+      successCallback: @successCallback
+    )

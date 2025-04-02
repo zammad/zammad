@@ -1,44 +1,42 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::ExecuteLockedBlock < Service::Base
-  REDIS_URL = ENV['REDIS_URL'].presence || 'redis://localhost:6379'
 
   attr_reader :resource, :ttl, :redis_url
 
-  def self.locked?(resource, redis_url: REDIS_URL)
-    dlm = Redlock::Client.new(redis_url)
+  def self.locked?(resource)
+    dlm = Redlock::Client.new
     dlm.locked?(resource)
   end
 
-  def self.locked!(resource, redis_url: REDIS_URL)
-    raise(ExecuteLockedBlockError) if locked?(resource, redis_url: redis_url)
+  def self.locked!(resource)
+    raise(ExecuteLockedBlockError) if locked?(resource)
   end
 
-  def self.lock(resource, ttl, redis_url: REDIS_URL)
-    dlm = Redlock::Client.new(redis_url)
+  def self.lock(resource, ttl)
+    dlm = Redlock::Client.new
     dlm.lock(resource, ttl)
   end
 
-  def self.unlock(lock_info, redis_url: REDIS_URL)
-    dlm = Redlock::Client.new(redis_url)
+  def self.unlock(lock_info)
+    dlm = Redlock::Client.new
     dlm.unlock(lock_info)
   end
 
-  def self.extend(lock_info, redis_url: REDIS_URL)
-    dlm = Redlock::Client.new(redis_url)
+  def self.extend(lock_info)
+    dlm = Redlock::Client.new
     dlm.lock(nil, nil, extend: lock_info)
   end
 
-  def initialize(resource, ttl, redis_url: REDIS_URL)
+  def initialize(resource, ttl)
     super()
 
     @resource = resource
     @ttl = ttl
-    @redis_url = redis_url
   end
 
   def execute(&)
-    dlm = Redlock::Client.new(redis_url)
+    dlm = Redlock::Client.new
     dlm.lock(resource, ttl, &)
   end
 

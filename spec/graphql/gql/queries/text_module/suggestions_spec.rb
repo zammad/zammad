@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -30,7 +30,7 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
     let(:query) do
       <<~QUERY
         query textModuleSuggestions($query: String!, $limit: Int, $ticketId: ID, $customerId: ID, $userId: ID, $groupId: ID, $organizationId: ID)  {
-          textModuleSuggestions(query: $query, limit: $limit) {
+          textModuleSuggestions(query: $query, ticketId: $ticketId, limit: $limit) {
             name
             keywords
             content
@@ -47,23 +47,34 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
       gql.execute(query, variables: variables)
     end
 
-    context 'without limit' do
-      it 'finds all text modules with permission' do
-        expect(gql.result.data.length).to eq(3)
+    context 'with a ticket' do
+      it 'calls text modules scope wih read context' do
+        expect_any_instance_of(TextModulePolicy::Scope)
+          .to receive(:resolve)
+          .with(context: :read)
+          .and_call_original
+
+        gql.execute(query, variables: variables)
       end
     end
 
-    context 'with inactive text modules' do
-      let(:limit) do
-        text_modules.each do |tm|
-          tm.active = false
-          tm.save!
-        end
-        nil
-      end
+    context 'without a ticket' do
+      let(:variables) { { query: query_string, limit: limit, customerId: gql.id(customer), userId: gql.id(user), groupId: gql.id(group), organizationId: gql.id(organization) } }
 
-      it 'finds none' do
-        expect(gql.result.data.length).to eq(0)
+      it 'calls text modules scope wih create context' do
+        expect_any_instance_of(TextModulePolicy::Scope)
+          .to receive(:resolve)
+          .with(context: :create)
+          .and_call_original
+
+        gql.execute(query, variables: variables)
+      end
+    end
+
+    context 'without limit' do
+
+      it 'finds all text modules with permission' do
+        expect(gql.result.data.length).to eq(3)
       end
     end
 

@@ -1,0 +1,362 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders
+    body:
+      encoding: UTF-8
+      string: '{"displayName":"<FOLDER_NAME>"}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Location:
+      - https://graph.microsoft.com/v1.0/users('<MICROSOFT365_USER>')/mailFolders('AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNAAuAAAAAABBJBhdnFEgRIS3TNP8V1P4AQD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAA=')
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 60f20eb6-d4e6-46fa-9de7-af1e836f3592
+      Client-Request-Id:
+      - 60f20eb6-d4e6-46fa-9de7-af1e836f3592
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"000","RoleInstance":"FR1PEPF000007A5"}}'
+      Date:
+      - Wed, 15 Jan 2025 15:55:31 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''<MICROSOFT365_USER_ESCAPED>'')/mailFolders/$entity","id":"AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNAAuAAAAAABBJBhdnFEgRIS3TNP8V1P4AQD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAA=","displayName":"<FOLDER_NAME>","parentFolderId":"AQMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMgAxZDkwMTQALgAAA0EkGF2cUSBEhLdM0-xXU-gBAP3M-qaOKN1Dhv_QLQN2fLQAAAIBCAAAAA==","childFolderCount":0,"unreadItemCount":0,"totalItemCount":0,"sizeInBytes":0,"isHidden":false}'
+  recorded_at: Wed, 15 Jan 2025 15:55:31 GMT
+- request:
+    method: post
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNAAuAAAAAABBJBhdnFEgRIS3TNP8V1P4AQD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAA=/messages
+    body:
+      encoding: UTF-8
+      string: '{"subject":"CI test for Channel::Driver::MicrosoftGraphInbound","body":{"content":"Test
+        email"},"from":{"emailAddress":{"address":"from@example.com"}},"toRecipients":[{"emailAddress":{"address":"test@example.com"}}]}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Location:
+      - https://graph.microsoft.com/v1.0/users('<MICROSOFT365_USER>')/messages('AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNABGAAAAAABBJBhdnFEgRIS3TNP8V1P4BwD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAD9zP6mjijdQ4b-kC0Ddny0AABZpkfdAAA=')
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 20d3fcfc-e71a-41e0-a50f-71e99c6f5244
+      Client-Request-Id:
+      - 20d3fcfc-e71a-41e0-a50f-71e99c6f5244
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"000","RoleInstance":"FR1PEPF0000136E"}}'
+      Date:
+      - Wed, 15 Jan 2025 15:55:31 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''<MICROSOFT365_USER_ESCAPED>'')/mailFolders(''AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNAAuAAAAAABBJBhdnFEgRIS3TNP8V1P4AQD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAA%3D'')/messages/$entity","@odata.etag":"W/\"CQAAABYAAAD9zP6mjijdQ4b/kC0Ddny0AABZjg1x\"","id":"AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNABGAAAAAABBJBhdnFEgRIS3TNP8V1P4BwD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAD9zP6mjijdQ4b-kC0Ddny0AABZpkfdAAA=","createdDateTime":"2025-01-15T15:55:31Z","lastModifiedDateTime":"2025-01-15T15:55:31Z","changeKey":"CQAAABYAAAD9zP6mjijdQ4b/kC0Ddny0AABZjg1x","categories":[],"receivedDateTime":"2025-01-15T15:55:31Z","sentDateTime":"2025-01-15T15:55:31Z","hasAttachments":false,"internetMessageId":"<BE1P281MB16330047C95E6D2DACB327A4BD192@BE1P281MB1633.DEUP281.PROD.OUTLOOK.COM>","subject":"CI
+        test for Channel::Driver::MicrosoftGraphInbound","bodyPreview":"Test email","importance":"normal","parentFolderId":"AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNAAuAAAAAABBJBhdnFEgRIS3TNP8V1P4AQD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAA=","conversationId":"AAQkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNAAQAKtukJ6pcbxNjYDz6iGOd7k=","conversationIndex":"AQHbZ2Xoq26QnqlxvE2NgPPqIY53uQ==","isDeliveryReceiptRequested":false,"isReadReceiptRequested":false,"isRead":true,"isDraft":true,"webLink":"https://outlook.office365.com/owa/?ItemID=AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNABGAAAAAABBJBhdnFEgRIS3TNP8V1P4BwD9zP6mjijdQ4b%2FkC0Ddny0AABZpZsxAAD9zP6mjijdQ4b%2FkC0Ddny0AABZpkfdAAA%3D&exvsurl=1&viewmodel=ReadMessageItem","inferenceClassification":"focused","body":{"contentType":"text","content":"Test
+        email"},"sender":{"emailAddress":{"name":"from@example.com","address":"from@example.com"}},"from":{"emailAddress":{"name":"from@example.com","address":"from@example.com"}},"toRecipients":[{"emailAddress":{"name":"test@example.com","address":"test@example.com"}}],"ccRecipients":[],"bccRecipients":[],"replyTo":[],"flag":{"flagStatus":"notFlagged"}}'
+  recorded_at: Wed, 15 Jan 2025 15:55:32 GMT
+- request:
+    method: get
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNAAuAAAAAABBJBhdnFEgRIS3TNP8V1P4AQD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAA=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 998ef624-ec88-421f-b3cb-0f148cb6cdf4
+      Client-Request-Id:
+      - 998ef624-ec88-421f-b3cb-0f148cb6cdf4
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"002","RoleInstance":"FR3PEPF00000310"}}'
+      Date:
+      - Wed, 15 Jan 2025 15:55:31 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''<MICROSOFT365_USER_ESCAPED>'')/mailFolders/$entity","id":"AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNAAuAAAAAABBJBhdnFEgRIS3TNP8V1P4AQD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAA=","displayName":"<FOLDER_NAME>","parentFolderId":"AQMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMgAxZDkwMTQALgAAA0EkGF2cUSBEhLdM0-xXU-gBAP3M-qaOKN1Dhv_QLQN2fLQAAAIBCAAAAA==","childFolderCount":0,"unreadItemCount":0,"totalItemCount":1,"sizeInBytes":2598,"isHidden":false}'
+  recorded_at: Wed, 15 Jan 2025 15:55:32 GMT
+- request:
+    method: get
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/messages/?$count=true&$filter=(parentFolderId%20eq%20%27AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNAAuAAAAAABBJBhdnFEgRIS3TNP8V1P4AQD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAA=%27)&$orderby=receivedDateTime%20ASC&$select=id&top=1000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 596f7a2f-ea3b-4c45-8ac2-fc1a2050b5b9
+      Client-Request-Id:
+      - 596f7a2f-ea3b-4c45-8ac2-fc1a2050b5b9
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"002","RoleInstance":"FR3PEPF000006E7"}}'
+      Date:
+      - Wed, 15 Jan 2025 15:55:31 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''<MICROSOFT365_USER_ESCAPED>'')/messages(id)","@odata.count":1,"value":[{"@odata.etag":"W/\"CQAAABYAAAD9zP6mjijdQ4b/kC0Ddny0AABZjg1x\"","id":"AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNABGAAAAAABBJBhdnFEgRIS3TNP8V1P4BwD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAD9zP6mjijdQ4b-kC0Ddny0AABZpkfdAAA="}]}'
+  recorded_at: Wed, 15 Jan 2025 15:55:32 GMT
+- request:
+    method: get
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/messages/AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNABGAAAAAABBJBhdnFEgRIS3TNP8V1P4BwD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAD9zP6mjijdQ4b-kC0Ddny0AABZpkfdAAA=/?$expand=singleValueExtendedProperties($filter=Id%20eq%20%27LONG%200x0E08%27)&$select=internetMessageHeaders
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false;
+        charset=utf-8
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - c199c558-99bc-4759-ae6e-4f7e08e81203
+      Client-Request-Id:
+      - c199c558-99bc-4759-ae6e-4f7e08e81203
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"002","RoleInstance":"FR3PEPF00000311"}}'
+      Date:
+      - Wed, 15 Jan 2025 15:55:31 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''<MICROSOFT365_USER_ESCAPED>'')/messages(internetMessageHeaders,singleValueExtendedProperties())/$entity","@odata.etag":"W/\"CQAAABYAAAD9zP6mjijdQ4b/kC0Ddny0AABZjg1x\"","id":"AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNABGAAAAAABBJBhdnFEgRIS3TNP8V1P4BwD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAD9zP6mjijdQ4b-kC0Ddny0AABZpkfdAAA=","singleValueExtendedProperties":[{"id":"Long
+        0xe08","value":"2598"}]}'
+  recorded_at: Wed, 15 Jan 2025 15:55:32 GMT
+- request:
+    method: get
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/messages/AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNABGAAAAAABBJBhdnFEgRIS3TNP8V1P4BwD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAD9zP6mjijdQ4b-kC0Ddny0AABZpkfdAAA=/$value
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 8e1b27b2-a1e3-40bb-b662-d276bb1615a4
+      Client-Request-Id:
+      - 8e1b27b2-a1e3-40bb-b662-d276bb1615a4
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"002","RoleInstance":"FR3PEPF00000163"}}'
+      Date:
+      - Wed, 15 Jan 2025 15:55:31 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: "From: \"from@example.com\" <from@example.com>\r\nTo: \"test@example.com\"
+        <test@example.com>\r\nSubject: CI test for Channel::Driver::MicrosoftGraphInbound\r\nThread-Topic:
+        CI test for Channel::Driver::MicrosoftGraphInbound\r\nThread-Index: AQHbZ2Xoq26QnqlxvE2NgPPqIY53uQ==\r\nX-MS-Exchange-MessageSentRepresentingType:
+        1\r\nDate: Wed, 15 Jan 2025 15:55:31 +0000\r\nMessage-ID:\r\n\t<BE1P281MB16330047C95E6D2DACB327A4BD192@BE1P281MB1633.DEUP281.PROD.OUTLOOK.COM>\r\nContent-Language:
+        en-US\r\nX-MS-Has-Attach:\r\nX-MS-TNEF-Correlator:\r\nX-MS-Exchange-Organization-RecordReviewCfmType:
+        0\r\nContent-Type: text/plain; charset=\"us-ascii\"\r\nMIME-Version: 1.0\r\n\r\nTest
+        email\r\n"
+  recorded_at: Wed, 15 Jan 2025 15:55:32 GMT
+- request:
+    method: delete
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/messages/AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNABGAAAAAABBJBhdnFEgRIS3TNP8V1P4BwD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAD9zP6mjijdQ4b-kC0Ddny0AABZpkfdAAA=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Cache-Control:
+      - private
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - ba1a961f-b289-41e0-9219-f5b1c7f8a064
+      Client-Request-Id:
+      - ba1a961f-b289-41e0-9219-f5b1c7f8a064
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"002","RoleInstance":"FR3PEPF00000165"}}'
+      Date:
+      - Wed, 15 Jan 2025 15:55:32 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 15 Jan 2025 15:55:33 GMT
+- request:
+    method: delete
+    uri: https://graph.microsoft.com/v1.0/users/<MICROSOFT365_USER>/mailFolders/AAMkAGQ5NTM0M2I0LWMxMjUtNGFlZi04ZmRiLTU4MWIyMjFkOTAxNAAuAAAAAABBJBhdnFEgRIS3TNP8V1P4AQD9zP6mjijdQ4b-kC0Ddny0AABZpZsxAAA=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.microsoft.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MICROSOFTGRAPH_ACCESS_TOKEN>
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Cache-Control:
+      - private
+      Strict-Transport-Security:
+      - max-age=31536000
+      Request-Id:
+      - 2897d381-1892-45f4-befe-37655c1447a3
+      Client-Request-Id:
+      - 2897d381-1892-45f4-befe-37655c1447a3
+      X-Ms-Ags-Diagnostic:
+      - '{"ServerInfo":{"DataCenter":"Germany West Central","Slice":"E","Ring":"4","ScaleUnit":"004","RoleInstance":"FR2PEPF000003B9"}}'
+      Date:
+      - Wed, 15 Jan 2025 15:55:32 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 15 Jan 2025 15:55:33 GMT
+recorded_with: VCR 6.3.1

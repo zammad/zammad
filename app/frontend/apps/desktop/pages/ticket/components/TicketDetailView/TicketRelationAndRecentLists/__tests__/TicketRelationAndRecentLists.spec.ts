@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -35,16 +35,14 @@ describe('TicketSimpleTableWrapper', () => {
     })
 
     expect(
-      await wrapper.findByRole('heading', {
+      await wrapper.findByRole('table', {
         name: 'Recent Customer Tickets',
-        level: 3,
       }),
     ).toBeInTheDocument()
 
     expect(
-      wrapper.getByRole('heading', {
+      wrapper.getByRole('table', {
         name: 'Recently Viewed Tickets',
-        level: 3,
       }),
     ).toBeInTheDocument()
 

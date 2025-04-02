@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 Permission.create_if_not_exists(
   name:        'admin',
@@ -157,6 +157,12 @@ Permission.create_if_not_exists(
   preferences: { prio: 1250 }
 )
 Permission.create_if_not_exists(
+  name:        'admin.channel_microsoft_graph',
+  label:       __('Microsoft Graph'),
+  description: __('Manage Microsoft Graph mail channel of your system.'),
+  preferences: { prio: 1255 }
+)
+Permission.create_if_not_exists(
   name:        'admin.channel_twitter',
   label:       __('Twitter'),
   description: __('Manage Twitter channel of your system.'),
@@ -187,7 +193,7 @@ Permission.create_if_not_exists(
   preferences: { prio: 1300 }
 )
 Permission.create_if_not_exists(
-  name:        'admin.setting_system',
+  name:        'admin.system',
   label:       __('System'),
   description: __('Manage core system settings.'),
   preferences: { prio: 1310 }
@@ -483,6 +489,16 @@ Permission.create_if_not_exists(
   preferences:  {
     prio:     1700,
     required: ['ticket.agent'],
+  },
+  allow_signup: true,
+)
+
+Permission.create_if_not_exists(
+  name:         'user_preferences.beta_ui_switch',
+  label:        __('New Beta UI Switch'),
+  description:  __('Manage access to new beta UI switch.'),
+  preferences:  {
+    prio: 1710,
   },
   allow_signup: true,
 )

@@ -2,10 +2,8 @@
 
 ## Supported Versions
 
-| Version  | Supported          |
-| -------- | ------------------ |
-| 6.4.x    | :white_check_mark: |
-| <= 6.3.x | :x:                |
+Security fixes are provided for the [current stable version of Zammad](https://zammad.com/releases) only.
+Any older version is not supported and needs to be updated first before reporting security issues.
 
 ## Reporting a Vulnerability
 
@@ -22,10 +20,10 @@ security advisory.
 
 ### Reporting Process Overview
 
-- Potential security issues can be reported via security@zammad.com.
+- Potential security issues can be reported via [security@zammad.com](mailto:security@zammad.com).
 - We evaluate them and provide timely feedback to the reporter.
-- There may be security releases created if needed, e.g. https://zammad.com/en/releases/6-3-1.
-- We publish security advisories for every acknowledged issue, like https://zammad.com/en/advisories/zaa-2024-04.
+- There may be security releases created if needed, e.g. [Zammad 6.3.1](https://zammad.com/en/releases/6-3-1).
+- We publish security advisories for every acknowledged issue, like [ZAA-2024-04](https://zammad.com/en/advisories/zaa-2024-04).
 - After their publication, we request CVE identifiers to be assigned to the advisories.
 
 ### Rewards
@@ -44,7 +42,9 @@ With this, you can also locally reproduce the results.
 
 ### Dependency Management
 
-We use renovate bot to keep our Ruby and JS dependencies up-to-date by automatic merge requests in our internal GitLab. This config is not visible in our source code, but you can see frequent commits from it in our history, like [this one](https://github.com/zammad/zammad/commit/a61b205e4ba41fca1ec7c85323ec6045fc3672e5).
+We use renovate bot to keep our Ruby and JS dependencies up-to-date by automatic merge requests in our internal GitLab.
+This config is not visible in our source code, but you can see frequent commits from it in our history, like
+[this one](https://github.com/zammad/zammad/commit/a61b205e4ba41fca1ec7c85323ec6045fc3672e5).
 
 ### Dependency Security Analysis
 

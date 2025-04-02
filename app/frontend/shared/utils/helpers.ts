@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import linkifyStr from 'linkify-string'
 import { isEqual } from 'lodash-es'
@@ -13,7 +13,7 @@ export const truthy = <T>(value: Maybe<T>): value is IsTruthy<T> => {
 }
 
 export const edgesToArray = <T>(
-  object?: Maybe<{ edges?: { node: T }[] }>,
+  object?: Maybe<{ edges?: Maybe<{ node: T }[]> }>,
 ): T[] => {
   return object?.edges?.map((edge) => edge.node) || []
 }
@@ -70,7 +70,7 @@ export const textTruncate = (text: string, length = 100) => {
 export const debouncedQuery = <A extends unknown[], R>(
   fn: (...args: A) => Promise<R>,
   defaultValue: R,
-  delay = 200,
+  delay = 400,
 ) => {
   let timeout: number | undefined
   let lastResolve: (() => void) | null = null

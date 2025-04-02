@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # Trigger GraphQL subscriptions on token changes.
 module Token::TriggersSubscriptions
@@ -13,11 +13,6 @@ module Token::TriggersSubscriptions
   def trigger_user_subscription
     return if !visible_in_frontend?
 
-    Gql::Subscriptions::User::Current::AccessTokenUpdates.trigger(
-      nil,
-      arguments: {
-        user_id: Gql::ZammadSchema.id_from_internal_id('User', user_id)
-      }
-    )
+    Gql::Subscriptions::User::Current::AccessTokenUpdates.trigger(nil, scope: user_id)
   end
 end

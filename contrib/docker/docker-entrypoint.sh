@@ -10,7 +10,6 @@ set -e
 : "${ELASTICSEARCH_SCHEMA:=http}"
 : "${ELASTICSEARCH_NAMESPACE:=zammad}"
 : "${ELASTICSEARCH_REINDEX:=true}"
-: "${ELASTICSEARCH_SSL_VERIFY:=true}"
 : "${NGINX_PORT:=8080}"
 : "${NGINX_CLIENT_MAX_BODY_SIZE:=50M}"
 : "${NGINX_SERVER_NAME:=_}"
@@ -30,16 +29,21 @@ set -e
 : "${ZAMMAD_RAILSSERVER_PORT:=3000}"
 : "${ZAMMAD_WEBSOCKET_HOST:=zammad-websocket}"
 : "${ZAMMAD_WEBSOCKET_PORT:=6042}"
+
+# Support both ZAMMAD_WEB_CONCURRENCY (as recommended by the Zammad docker stack & documentation)
+#   and WEB_CONCURRENCY (Zammad and Rails default).
 : "${ZAMMAD_WEB_CONCURRENCY:=0}"
+: "${WEB_CONCURRENCY:=${ZAMMAD_WEB_CONCURRENCY}}"
+export WEB_CONCURRENCY
 
 ESCAPED_POSTGRESQL_PASS=$(echo "$POSTGRESQL_PASS" | sed -e 's/[\/&]/\\&/g')
 export DATABASE_URL="postgres://${POSTGRESQL_USER}:${ESCAPED_POSTGRESQL_PASS}@${POSTGRESQL_HOST}:${POSTGRESQL_PORT}/${POSTGRESQL_DB}${POSTGRESQL_OPTIONS}"
 
 function check_zammad_ready {
   # Verify that migrations have been ran and seeds executed to process ENV vars like FQDN correctly.
-  until bundle exec rails r 'ActiveRecord::Migration.check_all_pending!; Locale.any? || raise' &> /dev/null; do
+  until bundle exec rails r 'ActiveRecord::Migration.check_all_pending!; Translation.any? || raise' &> /dev/null; do
     echo "waiting for init container to finish install or update..."
-    sleep 5
+    sleep 2
   done
 }
 
@@ -48,17 +52,17 @@ if [ "$1" = 'zammad-init' ]; then
   # install / update zammad
   until (echo > /dev/tcp/"${POSTGRESQL_HOST}"/"${POSTGRESQL_PORT}") &> /dev/null; do
     echo "waiting for postgresql server to be ready..."
-    sleep 5
+    sleep 1
   done
 
   # check if database exists / update to new version
   echo "initialising / updating database..."
   if ! (bundle exec rails r 'puts User.any?' 2> /dev/null | grep -q true); then
     if [ "${POSTGRESQL_DB_CREATE}" == "true" ]; then
-      bundle exec rake db:create
+      bundle exec rake db:create db:migrate db:seed
+    else
+      bundle exec rake db:migrate db:seed
     fi
-    bundle exec rake db:migrate
-    bundle exec rake db:seed
 
     # create autowizard.json on first install
     if base64 -d <<< "${AUTOWIZARD_JSON}" &>> /dev/null; then
@@ -72,11 +76,8 @@ if [ "$1" = 'zammad-init' ]; then
     echo Executing migrations...
     bundle exec rake db:migrate
 
-    echo Synchronizing locales...
-    bundle exec rails r "Locale.sync"
-
-    echo Synchronizing translations...
-    bundle exec rails r "Translation.sync"
+    echo Synchronizing locales and translations...
+    bundle exec rails r "Locale.sync; Translation.sync"
   fi
 
   # es config
@@ -84,29 +85,23 @@ if [ "$1" = 'zammad-init' ]; then
   if [ "${ELASTICSEARCH_ENABLED}" == "false" ]; then
     bundle exec rails r "Setting.set('es_url', '')"
   else
-    bundle exec rails r "Setting.set('es_url', '${ELASTICSEARCH_SCHEMA}://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}')"
-
-    bundle exec rails r "Setting.set('es_index', '${ELASTICSEARCH_NAMESPACE}')"
+    bundle exec rails r "Setting.set('es_url', '${ELASTICSEARCH_SCHEMA}://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}'); Setting.set('es_index', '${ELASTICSEARCH_NAMESPACE}')"
 
     if [ -n "${ELASTICSEARCH_USER}" ] && [ -n "${ELASTICSEARCH_PASS}" ]; then
-      bundle exec rails r "Setting.set('es_user', \"${ELASTICSEARCH_USER}\")"
-      bundle exec rails r "Setting.set('es_password', \"${ELASTICSEARCH_PASS}\")"
+      bundle exec rails r "Setting.set('es_user', \"${ELASTICSEARCH_USER}\"); Setting.set('es_password', \"${ELASTICSEARCH_PASS}\")"
     fi
 
     until (echo > /dev/tcp/"${ELASTICSEARCH_HOST}/${ELASTICSEARCH_PORT}") &> /dev/null; do
-      echo "zammad railsserver waiting for elasticsearch server to be ready..."
-      sleep 5
+      echo "zammad-init waiting for elasticsearch server to be ready…"
+      sleep 1
     done
 
-    if [ "${ELASTICSEARCH_SSL_VERIFY}" == "false" ]; then
-      SSL_SKIP_VERIFY="-k"
-    else
-      SSL_SKIP_VERIFY=""
-    fi
-
     if [ "${ELASTICSEARCH_REINDEX}" == "true" ]; then
-      if ! curl -s "${SSL_SKIP_VERIFY}" "${ELASTICSEARCH_SCHEMA}://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}/_cat/indices" | grep -q zammad; then
-        echo "rebuilding es searchindex..."
+      if bundle exec rails r "SearchIndexBackend.index_exists?('Ticket') || exit(1)"
+      then
+        echo "Elasticsearch index exists, no automatic reindexing is needed."
+      else
+        echo "Elasticsearch index does not exist yet, create it now…"
         bundle exec rake zammad:searchindex:rebuild
       fi
     fi
@@ -150,10 +145,10 @@ elif [ "$1" = 'zammad-nginx' ]; then
 elif [ "$1" = 'zammad-railsserver' ]; then
   check_zammad_ready
 
-  echo "starting railsserver... with WEB_CONCURRENCY=${ZAMMAD_WEB_CONCURRENCY}"
+  echo "starting railsserver... with WEB_CONCURRENCY=${WEB_CONCURRENCY}"
 
   #shellcheck disable=SC2101
-  exec bundle exec puma -b tcp://[::]:"${ZAMMAD_RAILSSERVER_PORT}" -w "${ZAMMAD_WEB_CONCURRENCY}" -e "${RAILS_ENV}"
+  exec bundle exec puma -b tcp://[::]:"${ZAMMAD_RAILSSERVER_PORT}" -e "${RAILS_ENV}"
 
 # zammad-scheduler
 elif [ "$1" = 'zammad-scheduler' ]; then

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 # In previous versions of Zammad we used Delayed::Job exclusively
 # for performing background jobs. Delayed::Job was therefore in

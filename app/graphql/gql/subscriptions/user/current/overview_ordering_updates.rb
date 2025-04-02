@@ -1,29 +1,29 @@
-# Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
   class User::Current::OverviewOrderingUpdates < BaseSubscription
 
-    argument :user_id, GraphQL::Types::ID, 'ID of the user to receive overview sorting updates for', loads: Gql::Types::UserType
-
     description 'Updates to account overview sorting records'
 
-    field :overviews, [Gql::Types::OverviewType], null: true, description: 'List of overview sortings for the user'
+    subscription_scope :current_user_id
 
-    def authorized?(user:)
-      context.current_user.permissions?('user_preferences.overview_sorting') && user.id == context.current_user.id
-    end
+    argument :ignore_user_conditions, Boolean, description: 'Include additional overviews by ignoring user conditions'
 
-    def update(user:)
-      { overviews: Service::User::Overview::List.new(user).execute }
+    field :overviews, [Gql::Types::OverviewType], null: true, description: 'List of sorted overviews for the user'
+
+    def update(ignore_user_conditions:)
+      { overviews: Service::User::Overview::List.new(context.current_user, ignore_user_conditions:).execute }
     end
 
     def self.trigger_by(user)
-      trigger(
-        nil,
-        arguments: {
-          user_id: Gql::ZammadSchema.id_from_object(user)
-        }
-      )
+
+      [true, false].each do |ignore_user_conditions|
+        trigger(
+          nil,
+          arguments: { ignore_user_conditions: },
+          scope:     user.id
+        )
+      end
     end
   end
 end

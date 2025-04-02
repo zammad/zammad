@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 import { beforeAll } from 'vitest'
 import { h } from 'vue'
 
@@ -144,5 +144,44 @@ describe('LayoutContent', () => {
     expect(wrapper.getByTestId('layout-wrapper')).toHaveStyle({
       maxWidth: '600px',
     })
+  })
+
+  it('allows removing the padding', () => {
+    const wrapper = renderLayoutContent(
+      {
+        default: () => 'Hello Test World!',
+      },
+      { breadcrumbItems, noPadding: true },
+    )
+
+    expect(wrapper.html()).not.includes('p-4')
+  })
+
+  it('allows setting the padding on the content container', () => {
+    const wrapper = renderLayoutContent(
+      {
+        default: () => h('h2', { class: 'px-4 pb-4' }, 'Hello Test World!'),
+      },
+      { breadcrumbItems, contentPadding: true },
+    )
+
+    expect(wrapper.html()).not.includes('p-4')
+
+    expect(wrapper.getByTestId('wrapper-breadcrumb')).toHaveClass('px-4 pt-4')
+
+    expect(
+      wrapper.getByRole('heading', { name: 'Hello Test World!' }),
+    ).toHaveClass('px-4 pb-4')
+  })
+
+  it('prevents component to be scrollable', () => {
+    const wrapper = renderLayoutContent(
+      {
+        default: () => 'Hello Test World!',
+      },
+      { breadcrumbItems, noScrollable: true },
+    )
+
+    expect(wrapper.html()).not.includes('overflow-y-auto')
   })
 })

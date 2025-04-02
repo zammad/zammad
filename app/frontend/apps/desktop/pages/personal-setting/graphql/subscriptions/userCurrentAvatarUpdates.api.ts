@@ -6,8 +6,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserCurrentAvatarUpdatesDocument = gql`
-    subscription userCurrentAvatarUpdates($userId: ID!) {
-  userCurrentAvatarUpdates(userId: $userId) {
+    subscription userCurrentAvatarUpdates {
+  userCurrentAvatarUpdates {
     avatars {
       id
       default
@@ -20,7 +20,7 @@ export const UserCurrentAvatarUpdatesDocument = gql`
   }
 }
     `;
-export function useUserCurrentAvatarUpdatesSubscription(variables: Types.UserCurrentAvatarUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.UserCurrentAvatarUpdatesSubscriptionVariables> | ReactiveFunction<Types.UserCurrentAvatarUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>(UserCurrentAvatarUpdatesDocument, variables, options);
+export function useUserCurrentAvatarUpdatesSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>> = {}) {
+  return VueApolloComposable.useSubscription<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>(UserCurrentAvatarUpdatesDocument, {}, options);
 }
 export type UserCurrentAvatarUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>;

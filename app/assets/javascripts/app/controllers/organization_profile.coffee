@@ -1,6 +1,7 @@
 class App.OrganizationProfile extends App.Controller
   constructor: (params) ->
     super
+    @init = params.init
 
     # fetch new data if needed
     App.Organization.full(@organization_id, @render)
@@ -67,6 +68,7 @@ class App.OrganizationProfile extends App.Controller
     new App.TicketStats(
       el:           elLocal.find('.js-ticket-stats')
       organization: organization
+      init: @init
     )
 
     @html elLocal

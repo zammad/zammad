@@ -8,7 +8,7 @@
     - !reference [.scripts, pnpm_install_eslint_plugin_zammad]
   script:
     # Only run one worker to avoid load peaks affecting other jobs.
-    - pnpm test -- --min-workers=1 --max-workers=1 --shard $VITEST_SHARD
+    - pnpm test --min-workers=1 --max-workers=1 --shard $VITEST_SHARD
     # Stop here, except on the first shard.
     - "[[ $VITEST_SHARD = 1/* ]] || exit 0"
     - echo "Also test eslint-plugin-zammad…"

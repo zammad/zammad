@@ -1,18 +1,21 @@
-// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import type {
   EnumTaskbarEntity,
   EnumTaskbarEntityAccess,
   Scalars,
+  TaskbarItemEntity,
 } from '#shared/graphql/types.ts'
-import type { ObjectWithId, ObjectWithUid } from '#shared/types/utils.ts'
 
 import type { TaskbarTabContext } from '#desktop/entities/user/current/types.ts'
 
 import type { DocumentNode } from 'graphql'
 import type { Component } from 'vue'
+import type { RouteLocationNormalizedGeneric } from 'vue-router'
 
-export interface UserTaskbarTab<T = Maybe<ObjectWithId | ObjectWithUid>> {
+export type UserTaskbarTabEntity = Partial<TaskbarItemEntity> | null
+
+export interface UserTaskbarTab<T = UserTaskbarTabEntity> {
   type: EnumTaskbarEntity
   entity?: T
   entityAccess?: Maybe<EnumTaskbarEntityAccess>
@@ -27,26 +30,27 @@ export interface UserTaskbarTab<T = Maybe<ObjectWithId | ObjectWithUid>> {
   notify?: boolean
 }
 
-export interface UserTaskbarTabEntityProps<T = ObjectWithId> {
+export interface UserTaskbarTabEntityProps<T = UserTaskbarTabEntity> {
   taskbarTab: UserTaskbarTab<T>
   taskbarTabLink?: string
   context?: TaskbarTabContext
 }
 
-export interface UserTaskbarTabPlugin {
+export interface UserTaskbarTabPlugin<T = UserTaskbarTabEntity> {
   type: EnumTaskbarEntity
   component: Component
   entityType?: string
   entityDocument?: DocumentNode
-  buildEntityTabKey: (entityInternalId: string | number) => string
-  buildTaskbarTabParams: <T = Record<string, unknown>>(
-    entityInternalId: string | number,
-  ) => T
-  buildTaskbarTabLink?: (
-    entity?: ObjectWithId | ObjectWithUid | null,
-    entityKey?: string,
+  buildEntityTabKey: (route: RouteLocationNormalizedGeneric) => string
+  buildTaskbarTabEntityId: (
+    route: RouteLocationNormalizedGeneric,
   ) => string | undefined
+  buildTaskbarTabParams: <T = Record<string, unknown>>(
+    route: RouteLocationNormalizedGeneric,
+  ) => T
+  buildTaskbarTabLink?: (entity?: T, entityKey?: string) => string | undefined
   confirmTabRemove?: boolean
+  touchExistingTab?: boolean
 }
 
 export interface BackRoute {

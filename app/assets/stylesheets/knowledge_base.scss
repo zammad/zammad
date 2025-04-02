@@ -114,6 +114,7 @@ h1 {
   font-weight: normal;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated */
   word-break: break-word;
 
   &:first-child {
@@ -249,6 +250,7 @@ b {
 
 .header {
   background: $light-bg;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
   border-bottom: 1px solid $dark-border;
   position: relative;
   padding: 0.3em 0 0.9em;
@@ -328,6 +330,7 @@ b {
       font-size: inherit;
       font-family: inherit;
       background: white;
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
       border: 1px solid $border;
       border-radius: 999px;
 
@@ -540,6 +543,7 @@ b {
     padding-top: 11px;
     padding-bottom: 11px;
     display: flex;
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     border-bottom: 1px solid $border;
   }
 }
@@ -648,6 +652,7 @@ b {
   padding: 1em;
   margin-top: 2.05em;
   color: $subtle-color;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
   border: 1px dashed $dark-border;
   border-radius: 3px;
 }
@@ -1019,7 +1024,7 @@ b {
   }
 
   td {
-    text-align: '.' center;
+    text-align: center;
   }
 
   table col {
@@ -1064,6 +1069,7 @@ b {
   padding: 2rem 0 2rem 4rem;
   margin: 2rem 0;
   list-style: none;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
   border-top: 1px solid $border;
   position: relative;
 
@@ -1119,6 +1125,7 @@ b {
 
 .attachment {
   text-decoration: none;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
   border-bottom: 1px solid $border;
   display: block;
   padding: 0.5rem 0.8rem;
@@ -1148,6 +1155,7 @@ b {
 
 .footer {
   margin-top: auto;
+  /* stylelint-disable-next-line declaration-property-value-no-unknown */
   border-top: 1px solid $dark-border;
   background: $light-bg;
   color: hsl(210, 8%, 50%);
@@ -1192,7 +1200,7 @@ b {
 .not-published-note {
   margin: 0.1em 0 0;
   font-size: 0.65em;
-  color: hsl(0, 0, 50%);
+  color: hsl(0, 0%, 50%);
 }
 
 .btn {
