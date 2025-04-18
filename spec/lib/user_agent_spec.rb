@@ -5,7 +5,7 @@ require 'rack/handler/puma'
 
 # this cop is disabled to speed up testing by avoiding the overhead of multiple requests
 
-RSpec.describe UserAgent, :aggregate_failures do
+RSpec.describe UserAgent, :aggregate_failures, integration: true do
   include ZammadSpecSupportRequest
 
   def host_with_port
