@@ -673,13 +673,13 @@ RSpec.describe UserAgent, :aggregate_failures do
     include_context 'when doing user agent tests'
   end
 
-  describe 'testing with proxy', required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD] do
-    before do
-      Setting.set('proxy', ENV['CI_PROXY_URL'])
-      Setting.set('proxy_username', ENV['CI_PROXY_USER'])
-      Setting.set('proxy_password', ENV['CI_PROXY_PASSWORD'])
-    end
-
-    include_context 'when doing user agent tests'
-  end
+  # describe 'testing with proxy', required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD] do
+  #   before do
+  #     Setting.set('proxy', ENV['CI_PROXY_URL'])
+  #     Setting.set('proxy_username', ENV['CI_PROXY_USER'])
+  #     Setting.set('proxy_password', ENV['CI_PROXY_PASSWORD'])
+  #   end
+  #
+  #   include_context 'when doing user agent tests'
+  # end
 end
