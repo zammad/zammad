@@ -12,7 +12,12 @@ RSpec.describe UserAgent, :aggregate_failures do
     'http://localhost:3000'
   end
 
-  puma_thread = nil
+  def ssl_host_with_port
+    'https://localhost:3001'
+  end
+
+  puma_thread     = nil
+  ssl_puma_thread = nil
 
   # we need a running web server, otherwise the requests will fail
   before :all do # rubocop:disable RSpec/BeforeAfterAll
@@ -30,22 +35,38 @@ RSpec.describe UserAgent, :aggregate_failures do
       Rack::Handler::Puma.run app, Port: 3000
     end
 
+    localhost_authority = Localhost::Authority.new('localhost', issuer: nil)
+    localhost_authority.save # make sure the certificate is created
+
+    ssl_puma_thread = Thread.new do
+      app = Rack::Builder.new do
+        map '/' do
+          run Rails.application
+        end
+      end.to_app
+
+      Rack::Handler::Puma.run app, Port: 3001, Host: "ssl://0.0.0.0?key=#{localhost_authority.key_path}&cert=#{localhost_authority.certificate_path}"
+    end
+
     sleep 0.25
 
     # wait for server to start
-    server_started = false
+    server_started     = false
+    ssl_server_started = false
 
     10.times do
       next if server_started
 
-      server_started = system("curl -sSf #{host_with_port} > /dev/null")
+      server_started     = system("curl -sSf #{host_with_port} > /dev/null")
+      ssl_server_started = system("curl -sSfk #{ssl_host_with_port} > /dev/null")
 
-      sleep 0.2 if !server_started
+      sleep 0.2 if !server_started || !ssl_server_started
     end
   end
 
   after :all do # rubocop:disable RSpec/BeforeAfterAll
     puma_thread.kill
+    ssl_puma_thread.kill
   end
 
   shared_context 'when doing user agent tests' do
@@ -667,19 +688,74 @@ RSpec.describe UserAgent, :aggregate_failures do
         end
       end
     end
+
+    describe 'ssl verification' do
+      let(:url)   { "#{ssl_host_with_port}/test/get/1?submitted=123" }
+
+      context 'without self-signed certificate present' do
+        context 'with verify_ssl: true' do
+          it 'UserAgent fails' do
+            expect(described_class.get(url, {}, { verify_ssl: true })).to have_attributes(
+              success?: be_falsey,
+              error:    include('certificate verify failed (self-signed certificate)'),
+            )
+          end
+        end
+
+        context 'without verify_ssl' do
+          it 'UserAgent fails' do
+            expect(described_class.get(url, {})).to have_attributes(
+              success?: be_falsey,
+              error:    include('certificate verify failed (self-signed certificate)'),
+            )
+          end
+        end
+
+        context 'with verify_ssl: false' do
+          it 'UserAgent succeeds' do
+            expect(described_class.get(url, {}, { verify_ssl: false })).to be_success
+          end
+        end
+      end
+
+      context 'with self-signed certificate present' do
+        before do
+          localhost_authority = Localhost::Authority.new('localhost', issuer: nil)
+          create(:ssl_certificate, certificate: File.read(localhost_authority.certificate_path))
+        end
+
+        context 'with verify_ssl: true' do
+          it 'UserAgent succeeds' do
+            expect(described_class.get(url, {}, { verify_ssl: true })).to be_success
+          end
+        end
+
+        context 'without verify_ssl: true' do
+          it 'UserAgent succeeds' do
+            expect(described_class.get(url)).to be_success
+          end
+        end
+
+        context 'with verify_ssl: false' do
+          it 'UserAgent succeeds' do
+            expect(described_class.get(url, {}, { verify_ssl: false })).to be_success
+          end
+        end
+      end
+    end
   end
 
   describe 'testing without proxy' do
     include_context 'when doing user agent tests'
   end
 
-  # describe 'testing with proxy', required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD] do
-  #   before do
-  #     Setting.set('proxy', ENV['CI_PROXY_URL'])
-  #     Setting.set('proxy_username', ENV['CI_PROXY_USER'])
-  #     Setting.set('proxy_password', ENV['CI_PROXY_PASSWORD'])
-  #   end
-  #
-  #   include_context 'when doing user agent tests'
-  # end
+  describe 'testing with proxy', integration: true, required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD] do
+    before do
+      Setting.set('proxy', ENV['CI_PROXY_URL'])
+      Setting.set('proxy_username', ENV['CI_PROXY_USER'])
+      Setting.set('proxy_password', ENV['CI_PROXY_PASSWORD'])
+    end
+
+    include_context 'when doing user agent tests'
+  end
 end
