@@ -758,4 +758,48 @@ RSpec.describe UserAgent, :aggregate_failures do
 
     include_context 'when doing user agent tests'
   end
+
+  describe 'proxy settings' do
+    context 'when enabled' do
+      before do
+        Setting.set('proxy', 'http://proxy.example.com:8080')
+        Setting.set('proxy_username', 'proxy_user')
+        Setting.set('proxy_password', 'proxy_password')
+      end
+
+      it 'calls Net::HTTP::Proxy' do
+        allow(Net::HTTP).to receive(:Proxy).and_call_original
+
+        described_class.get(host_with_port)
+
+        expect(Net::HTTP).to have_received(:Proxy)
+      end
+
+      it 'does not call Net::HTTP directly' do
+        allow(Net::HTTP).to receive(:new).and_call_original
+
+        described_class.get(host_with_port)
+
+        expect(Net::HTTP).not_to have_received(:new)
+      end
+    end
+
+    context 'when disabled' do
+      it 'calls Net::HTTP directly' do
+        allow(Net::HTTP).to receive(:new).and_call_original
+
+        described_class.get(host_with_port)
+
+        expect(Net::HTTP).to have_received(:new)
+      end
+
+      it 'does not call Net::HTTP::Proxy' do
+        allow(Net::HTTP).to receive(:Proxy).and_call_original
+
+        described_class.get(host_with_port)
+
+        expect(Net::HTTP).not_to have_received(:Proxy)
+      end
+    end
+  end
 end
