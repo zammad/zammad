@@ -1,53 +1,34 @@
-# Welcome to Zammad
+# Take Home Notes
 
-Are you juggling countless customer inquiries across multiple channels?
-Struggling to keep your support team on the same page?
-Or spending more time managing your helpdesk than delivering exceptional support to your customers?
+## Assumptions
 
-Zammad is your Swiss Army knife - a web-based, open-source helpdesk and customer support platform
-packed with features to streamline customer communication across channels like email, chat, telephone and social media.
+The instructions state `Build a lightweight widget in the dashboard that shows all tickets created by today.`
 
-## The Software
+- This would imply I should be adding a widget here: <http://localhost:3000/#dashboard>
+- However the link for for dashboard on the doc leads here: <http://localhost:3000/desktop>
+- Normally I'd ask clarifying questions, but as this is the long easter weekend I cannot
+- As this is designed to show my skills, I will complete both tasks:
+  - a ticket counter for today's tickets in the dashboard with icon
+  - a list view for today's tickets in desktop
+- The phrasing `created by today` could also mean a few different things. I will display all tickets created today
 
-The Zammad software is and will stay open source. It is licensed under the GNU AGPLv3.
-The source code is [available on GitHub](https://github.com/zammad/zammad) and owned by
-the [Zammad Foundation](https://zammad-foundation.org/), which is independent of commercial
-providers such as Zammad GmbH.
+## What would I do with more time
 
-## The Company - Zammad GmbH
+- Change the color on the calendar icon from blue to green
+- Perhaps change the icon to red if the amount of tickets submitted today is above the daily average
+  - This will indicate if there are issues affecting many users
+- Have all tests be successful
+  - There are failures not related to my changes (WhatsApp, Zoom, Mailers)
+  - If I had more time I'd fully configure the app and stub out API calls I do not have access to
+  - I would solve the HashAlignment issue covered below
 
-The development of Zammad is carried out by the [amazing team of people](https://zammad.com/en/company)
-at [Zammad GmbH](https://zammad.com/) in collaboration with the community.
-We love to create open source software for you. If you want to ensure the Zammad software
-has a bright and sustainable future, consider becoming a Zammad customer!
+## Issues
 
-> Are you tired of complex setup, configuration, backup and update tasks? Let us handle this stuff for you! 🚀
->
-> The easiest and often most cost-effective way to operate Zammad is [our cloud service](https://zammad.com/en/pricing).
-> Give it a try with a [free trial instance](https://zammad.com/en/getting-started)!
-
-## Status
-
-- Toolchain: [![CI](https://github.com/zammad/zammad/workflows/CI/badge.svg)](https://github.com/zammad/zammad/actions/workflows/ci.yaml)
-  [![docker-release workflow](https://github.com/zammad/zammad/workflows/docker-release/badge.svg)](https://github.com/zammad/zammad/actions/workflows/docker-release.yaml)
-  [![documentation status](https://readthedocs.org/projects/zammad/badge/)](https://docs.zammad.org)
-- Docker container images: [![Docker images for Zammad](https://img.shields.io/badge/version-stable-blue.svg)](https://hub.docker.com/r/zammad/zammad-docker-compose)
-  [![Dockerhub Pulls](https://badgen.net/docker/pulls/zammad/zammad-docker-compose?icon=docker&label=pulls)](https://hub.docker.com/r/zammad/zammad-docker-compose/)
-- Helm chart for Kubernetes: [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/zammad)](https://artifacthub.io/packages/helm/zammad/zammad)
-  [![Release downloads](https://img.shields.io/github/downloads/zammad/zammad-helm/total.svg)](https://github.com/zammad/zammad-helm/releases)
-- Download DEB/RPM: [![binary packages for Zammad stable](https://img.shields.io/badge/Branch-stable-blue.svg)](https://packager.io/gh/zammad/zammad/refs/stable)
-  [![binary packages for Zammad develop](https://img.shields.io/badge/Branch-develop-lightgrey.svg)](https://packager.io/gh/zammad/zammad/refs/develop)
-- License: [![AGPL license](https://img.shields.io/badge/License-AGPL%203.0-brightgreen.svg)](https://github.com/zammad/zammad/blob/develop/LICENSE)
-
-## Further Information
-
-- [Installing & Getting Started](https://docs.zammad.org)
-- [Screenshots](https://zammad.org/screenshots)
-- [Developer Manual](/doc/developer_manual/index.md)
-- [REST API](https://docs.zammad.org/en/latest/api/intro.html)
-- For reporting security vulnerabilities, please see [our security policy](SECURITY.md).
-- [Contributing](https://zammad.org/participate)
-
-Thanks! ❤️ ❤️ ❤️
-
- Your Zammad Team
+- There is no pleasing RuboCop sometimes. These 3 lines will not pass:
+  - `db/migrate/20250419125210_add_all_tickets_to_overview.rb:16`
+  - `lib/stats/ticket_created_today.rb:17`
+  - `lib/stats/ticket_created_today.rb:18`
+- I settled for keeping the codebase consistent to match these existing functions:
+  - `db/migrate/20170910000002_out_of_office2.rb:27`
+  - `/lib/stats/ticket_escalation.rb:33`
+  

@@ -2050,7 +2050,7 @@ msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:21
+#: app/policies/pundit_policy.rb:18
 #: lib/user_context.rb:26
 msgid "Authentication required"
 msgstr ""
@@ -2448,6 +2448,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:112
 msgid "CMDB to document complex relations of your network components."
+msgstr ""
+
+#: app/assets/javascripts/app/views/dashboard/stats/ticket_created_today.jst.eco:3
+msgid "CREATED TODAY"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:73
@@ -2882,7 +2886,7 @@ msgstr ""
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:94
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:95
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent/TicketSummaryCreateChecklist.vue:65
 msgid "Checklist item successfully added."
 msgstr ""
@@ -4059,6 +4063,10 @@ msgstr ""
 msgid "Cut"
 msgstr ""
 
+#: app/assets/javascripts/app/views/dashboard/stats/ticket_created_today.jst.eco:12
+msgid "Daily average: %s"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:39
 msgid "Dark"
@@ -4355,6 +4363,7 @@ msgstr ""
 msgid "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 
+#: db/migrate/20250419153119_add_stats_ticket_created_today_to_settings.rb:12
 #: db/seeds/settings.rb:5498
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr ""
@@ -7659,6 +7668,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee:9
 msgid "How many of your tickets have been re-opened after being marked “closed”?"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_created_today.coffee:8
+msgid "How many tickets were created today?"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb:78
@@ -13074,7 +13087,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1158
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1160
 msgid "Saving failed."
 msgstr ""
 
@@ -14348,6 +14361,7 @@ msgstr ""
 msgid "State Icon"
 msgstr ""
 
+#: db/migrate/20250419153119_add_stats_ticket_created_today_to_settings.rb:9
 #: db/seeds/settings.rb:5495
 msgid "Stats Backend"
 msgstr ""
@@ -16935,6 +16949,10 @@ msgstr ""
 msgid "Tickets of User"
 msgstr ""
 
+#: app/assets/javascripts/app/views/dashboard/stats/ticket_created_today.jst.eco:11
+msgid "Tickets today: %s"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:10
 msgid "Tickets with \"%s\""
 msgstr ""
@@ -17562,11 +17580,11 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:142
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:143
 msgid "Unable to add all checklist items."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:99
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:100
 msgid "Unable to add checklist item."
 msgstr ""
 

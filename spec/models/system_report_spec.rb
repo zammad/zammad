@@ -213,6 +213,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'Stats::TicketWaitingTime',
           'Stats::TicketEscalation',
           'Stats::TicketChannelDistribution',
+          'Stats::TicketCreatedToday',
           'Stats::TicketLoadMeasure',
           'Stats::TicketInProcess',
           'Stats::TicketReopen',

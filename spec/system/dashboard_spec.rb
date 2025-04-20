@@ -14,6 +14,7 @@ RSpec.describe 'Dashboard', type: :system do
     expect(page).to have_css('.ticket_load_measure > div > div.stat-title', text: %r{Assigned}i)
     expect(page).to have_css('.ticket_in_process > div > div.stat-title', text: %r{My tickets in process}i)
     expect(page).to have_css('.ticket_reopen > div > div.stat-title', text: %r{Reopening rate}i)
+    expect(page).to have_css('.ticket_created_today > div > div.stat-title', text: %r{Created Today}i)
   end
 
   context 'when customer role is named different', authenticated_as: :authenticate do

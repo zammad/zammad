@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+
 class AddAllTicketsToOverview < ActiveRecord::Migration[7.2]
   def change
     # return if it's a new setup
@@ -9,11 +11,11 @@ class AddAllTicketsToOverview < ActiveRecord::Migration[7.2]
       name:          'All Tickets Created Today',
       link:          'all_created_today',
       prio:          1,
-      role_ids:  [overview_role.id],
-      condition: {
-        'ticket.created_at' => {
+      role_ids:      [overview_role.id],
+      condition:     {
+        'ticket.created_at'                     => {
           operator: 'after (absolute)',
-          value: Date.today.midnight.iso8601,
+          value:    Time.zone.today.midnight.iso8601,
         },
       },
       order:         {
@@ -29,6 +31,5 @@ class AddAllTicketsToOverview < ActiveRecord::Migration[7.2]
       updated_by_id: 1,
       created_by_id: 1,
     )
-
   end
 end

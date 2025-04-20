@@ -1,0 +1,13 @@
+<div class="stat-widget vertical">
+  <div class="stat-title">
+    <%- @T('CREATED TODAY') %>
+    <div class="stat-icon-help js-stat-help" title="<%- @Ti(@StatsTicketCreatedToday.description) %>" data-placement="bottom">
+      <%- @Icon('help') %>
+    </div>
+  </div>
+  <div class="stat-graphic">
+    <%- @Icon("file-calendar", "stat-calendar-icon") %>
+  </div>
+  <div class="stat-label"><%- @T('Tickets today: %s', @StatsTicketCreatedToday.tickets_today) %></div>
+  <div class="stat-detail"><%- @T('Daily average: %s', @StatsTicketCreatedToday.daily_average) %></div>
+</div>
