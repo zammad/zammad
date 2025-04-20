@@ -20,6 +20,9 @@ RSpec.describe 'Profile > Overviews', type: :system do
 
     # go to ticket overviews and verify
     expect_default_ticket_overview
+
+    # check that the new overview "All Tickets Created Today" is shown
+    expect(page).to have_text('All Tickets Created Today')
   end
 
   it 'shows the out of office replacement overview (#5458)' do
