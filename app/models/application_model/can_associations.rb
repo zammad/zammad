@@ -361,7 +361,6 @@ returns
         data[key.to_sym] = value
       end
 
-      data.symbolize_keys!
       available_attributes = attribute_names
       reflect_on_all_associations.map do |assoc|
 
