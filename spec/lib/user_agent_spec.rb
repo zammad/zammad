@@ -8,12 +8,16 @@ require 'rack/handler/puma'
 RSpec.describe UserAgent, :aggregate_failures do
   include ZammadSpecSupportRequest
 
-  def host_with_port
-    'http://localhost:3000'
+  def base_host
+    ENV['CI'] ? 'build' : 'localhost'
   end
 
-  def ssl_host_with_port
-    'https://localhost:3001'
+  def host
+    "http://#{base_host}:3000"
+  end
+
+  def ssl_host
+    "https://#{base_host}:3001"
   end
 
   puma_thread     = nil
@@ -57,8 +61,8 @@ RSpec.describe UserAgent, :aggregate_failures do
     10.times do
       next if server_started
 
-      server_started     = system("curl -sSf #{host_with_port} > /dev/null")
-      ssl_server_started = system("curl -sSfk #{ssl_host_with_port} > /dev/null")
+      server_started     = system("curl -sSf #{host}/test/get_accepted/1 > /dev/null")
+      ssl_server_started = system("curl -sSfk #{ssl_host}/test/get_accepted/1 > /dev/null")
 
       sleep 0.2 if !server_started || !ssl_server_started
     end
@@ -70,8 +74,6 @@ RSpec.describe UserAgent, :aggregate_failures do
   end
 
   shared_context 'when doing user agent tests' do
-    let(:host) { host_with_port }
-
     shared_examples 'successful request' do
       it 'returns a response' do
         expect(response).to be_success
@@ -690,7 +692,7 @@ RSpec.describe UserAgent, :aggregate_failures do
     end
 
     describe 'ssl verification' do
-      let(:url)   { "#{ssl_host_with_port}/test/get/1?submitted=123" }
+      let(:url)   { "#{ssl_host}/test/get/1?submitted=123" }
 
       context 'without self-signed certificate present' do
         context 'with verify_ssl: true' do
@@ -749,6 +751,8 @@ RSpec.describe UserAgent, :aggregate_failures do
     include_context 'when doing user agent tests'
   end
 
+  # Tests connectivity via a proxy.
+  # Proxy is available in integration pipeline only.
   describe 'testing with proxy', integration: true, required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD] do
     before do
       Setting.set('proxy', ENV['CI_PROXY_URL'])
@@ -759,7 +763,27 @@ RSpec.describe UserAgent, :aggregate_failures do
     include_context 'when doing user agent tests'
   end
 
+  # Tests mocked proxy functionality in general.
+  # Integration pipeline is optional and CI still passes if it fails.
+  # This ensures that broken proxy functionality is easier to spot.
   describe 'proxy settings' do
+    before do
+      allow(Net::HTTP).to receive(:Proxy).and_return(klass_dbl)
+    end
+
+    let(:klass_dbl) do
+      class_double('Net::HTTP::Proxy').tap do |class_double| # rubocop:disable RSpec/VerifiedDoubleReference
+        allow(class_double).to receive(:new).and_return(instance_dbl)
+      end
+    end
+
+    let(:instance_dbl) do
+      instance_double(Net::HTTP).tap do |instance_double|
+        allow(instance_double)
+          .to receive_messages(:open_timeout= => nil, :read_timeout= => nil, :request => nil)
+      end
+    end
+
     context 'when enabled' do
       before do
         Setting.set('proxy', 'http://proxy.example.com:8080')
@@ -770,33 +794,37 @@ RSpec.describe UserAgent, :aggregate_failures do
       it 'calls Net::HTTP::Proxy' do
         allow(Net::HTTP).to receive(:Proxy).and_call_original
 
-        described_class.get(host_with_port)
+        described_class.get('http://example.com')
 
         expect(Net::HTTP).to have_received(:Proxy)
       end
 
       it 'does not call Net::HTTP directly' do
-        allow(Net::HTTP).to receive(:new).and_call_original
+        described_class.get('http://example.com')
 
-        described_class.get(host_with_port)
+        expect(klass_dbl).to have_received(:new)
+      end
 
-        expect(Net::HTTP).not_to have_received(:new)
+      it 'does not call Net::HTTTP::Proxy if local-like address given' do
+        allow(Net::HTTP).to receive(:Proxy).and_call_original
+
+        described_class.get('http://localhost:3000')
+
+        expect(Net::HTTP).not_to have_received(:Proxy)
       end
     end
 
     context 'when disabled' do
       it 'calls Net::HTTP directly' do
-        allow(Net::HTTP).to receive(:new).and_call_original
+        described_class.get(host)
 
-        described_class.get(host_with_port)
-
-        expect(Net::HTTP).to have_received(:new)
+        expect(klass_dbl).not_to have_received(:new)
       end
 
       it 'does not call Net::HTTP::Proxy' do
         allow(Net::HTTP).to receive(:Proxy).and_call_original
 
-        described_class.get(host_with_port)
+        described_class.get('http://example.com')
 
         expect(Net::HTTP).not_to have_received(:Proxy)
       end
