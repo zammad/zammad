@@ -8,8 +8,9 @@ require 'rack/handler/puma'
 RSpec.describe UserAgent, :aggregate_failures do
   include ZammadSpecSupportRequest
 
+  # using def instead of let to make it available in before(:all)
   def base_host
-    ENV['CI'] ? 'build' : 'localhost'
+    'localhost'
   end
 
   def host
@@ -21,59 +22,65 @@ RSpec.describe UserAgent, :aggregate_failures do
   end
 
   puma_thread     = nil
+  puma_server     = nil
   ssl_puma_thread = nil
-
-  # we need a running web server, otherwise the requests will fail
-  before :all do # rubocop:disable RSpec/BeforeAfterAll
-    ENV['CI_BASIC_AUTH_USER']     = 'basic_auth_user'
-    ENV['CI_BASIC_AUTH_PASSWORD'] = 'test123'
-    ENV['CI_BEARER_TOKEN']        = 'test_bearer_123'
-
-    puma_thread = Thread.new do
-      app = Rack::Builder.new do
-        map '/' do
-          run Rails.application
-        end
-      end.to_app
-
-      Rack::Handler::Puma.run app, Port: 3000
-    end
-
-    localhost_authority = Localhost::Authority.new(base_host, issuer: nil)
-    localhost_authority.save # make sure the certificate is created
-
-    ssl_puma_thread = Thread.new do
-      app = Rack::Builder.new do
-        map '/' do
-          run Rails.application
-        end
-      end.to_app
-
-      Rack::Handler::Puma.run app, Port: 3001, Host: "ssl://0.0.0.0?key=#{localhost_authority.key_path}&cert=#{localhost_authority.certificate_path}"
-    end
-
-    sleep 0.25
-
-    # wait for server to start
-    server_started     = false
-    ssl_server_started = false
-
-    10.times do
-      next if server_started
-
-      server_started     = system("curl -sSf #{host}/test/get_accepted/1 > /dev/null")
-      ssl_server_started = system("curl -sSfk #{ssl_host}/test/get_accepted/1 > /dev/null")
-
-      sleep 0.2 if !server_started || !ssl_server_started
-    end
-  end
-
-  after :all do # rubocop:disable RSpec/BeforeAfterAll
-    puma_thread.kill
-    ssl_puma_thread.kill
-  end
+  ssl_puma_server = nil
 
   shared_context 'when doing user agent tests' do
+    # A running web server is needed. Otherwise the requests will fail.
+    # Starting inside share context to allow different hostnames for direct and proxy requests.
+    before :all do # rubocop:disable RSpec/BeforeAfterAll
+      ENV['CI_BASIC_AUTH_USER']     = 'basic_auth_user'
+      ENV['CI_BASIC_AUTH_PASSWORD'] = 'test123'
+      ENV['CI_BEARER_TOKEN']        = 'test_bearer_123'
+
+      puma_thread = Thread.new do
+        app = Rack::Builder.new do
+          map '/' do
+            run Rails.application
+          end
+        end.to_app
+
+        Rack::Handler::Puma.run app, Port: 3000 do |s|
+          puma_server = s
+        end
+
+      end
+
+      localhost_authority = Localhost::Authority.new(base_host, issuer: nil)
+      localhost_authority.save # make sure the certificate is created
+
+      ssl_puma_thread = Thread.new do
+        app = Rack::Builder.new do
+          map '/' do
+            run Rails.application
+          end
+        end.to_app
+
+        Rack::Handler::Puma.run app, Port: 3001, Host: "ssl://0.0.0.0?key=#{localhost_authority.key_path}&cert=#{localhost_authority.certificate_path}" do |s|
+          ssl_puma_server = s
+        end
+      end
+
+      sleep 0.25
+
+      10.times do
+        server_started     = system("curl -sSf #{host}/test/get_accepted/1 > /dev/null")
+        ssl_server_started = system("curl -sSfk #{ssl_host}/test/get_accepted/1 > /dev/null")
+
+        break if server_started && ssl_server_started
+
+        sleep 0.2
+      end
+    end
+
+    after :all do # rubocop:disable RSpec/BeforeAfterAll
+      puma_server.stop
+      ssl_puma_server.stop
+      puma_thread.join
+      ssl_puma_thread.join
+    end
+
     shared_examples 'successful request' do
       it 'returns a response' do
         expect(response).to be_success
@@ -754,7 +761,16 @@ RSpec.describe UserAgent, :aggregate_failures do
   # Tests connectivity via a proxy.
   # Proxy is available in integration pipeline only.
   describe 'testing with proxy', integration: true, required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD] do
+    # Localhost does not work with proxy.
+    # build works in Zammad integration pipeline only.
+    # Edit this to match your environment when running locally
+    # or edit /etc/hosts accordingly.
+    def base_host
+      'build'
+    end
+
     before do
+      Setting.set('proxy_no', '')
       Setting.set('proxy', ENV['CI_PROXY_URL'])
       Setting.set('proxy_username', ENV['CI_PROXY_USER'])
       Setting.set('proxy_password', ENV['CI_PROXY_PASSWORD'])
