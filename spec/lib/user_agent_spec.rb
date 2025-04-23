@@ -62,8 +62,6 @@ RSpec.describe UserAgent, :aggregate_failures do
         end
       end
 
-      sleep 0.25
-
       10.times do
         server_started     = system("curl -sSf #{host}/test/get_accepted/1 > /dev/null")
         ssl_server_started = system("curl -sSfk #{ssl_host}/test/get_accepted/1 > /dev/null")
@@ -821,7 +819,7 @@ RSpec.describe UserAgent, :aggregate_failures do
         expect(klass_dbl).to have_received(:new)
       end
 
-      it 'does not call Net::HTTTP::Proxy if local-like address given' do
+      it 'does not call Net::HTTP::Proxy if local-like address given' do
         allow(Net::HTTP).to receive(:Proxy).and_call_original
 
         described_class.get('http://localhost:3000')
