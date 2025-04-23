@@ -8,6 +8,12 @@ require 'rack/handler/puma'
 RSpec.describe UserAgent, :aggregate_failures do
   include ZammadSpecSupportRequest
 
+  before :all do # rubocop:disable RSpec/BeforeAfterAll
+    ENV['CI_BASIC_AUTH_USER']     = 'basic_auth_user'
+    ENV['CI_BASIC_AUTH_PASSWORD'] = 'test123'
+    ENV['CI_BEARER_TOKEN']        = 'test_bearer_123'
+  end
+
   # using def instead of let to make it available in before(:all)
   def base_host
     'localhost'
@@ -21,64 +27,43 @@ RSpec.describe UserAgent, :aggregate_failures do
     "https://#{base_host}:3001"
   end
 
-  puma_thread     = nil
-  puma_server     = nil
-  ssl_puma_thread = nil
-  ssl_puma_server = nil
-
-  shared_context 'when doing user agent tests' do
-    # A running web server is needed. Otherwise the requests will fail.
-    # Starting inside share context to allow different hostnames for direct and proxy requests.
-    before :all do # rubocop:disable RSpec/BeforeAfterAll
-      ENV['CI_BASIC_AUTH_USER']     = 'basic_auth_user'
-      ENV['CI_BASIC_AUTH_PASSWORD'] = 'test123'
-      ENV['CI_BEARER_TOKEN']        = 'test_bearer_123'
-
-      puma_thread = Thread.new do
-        app = Rack::Builder.new do
-          map '/' do
-            run Rails.application
-          end
-        end.to_app
-
-        Rack::Handler::Puma.run app, Port: 3000 do |s|
-          puma_server = s
-        end
-
-      end
-
+  def start_server(with_ssl: nil)
+    if with_ssl.present?
       localhost_authority = Localhost::Authority.new(base_host, issuer: nil)
       localhost_authority.save # make sure the certificate is created
 
-      ssl_puma_thread = Thread.new do
-        app = Rack::Builder.new do
-          map '/' do
-            run Rails.application
-          end
-        end.to_app
+      puma_host = "ssl://0.0.0.0?key=#{localhost_authority.key_path}&cert=#{localhost_authority.certificate_path}"
+    end
 
-        Rack::Handler::Puma.run app, Port: 3001, Host: "ssl://0.0.0.0?key=#{localhost_authority.key_path}&cert=#{localhost_authority.certificate_path}" do |s|
-          ssl_puma_server = s
+    port = with_ssl.present? ? 3001 : 3000
+
+    @puma_thread = Thread.new do
+      app = Rack::Builder.new do
+        map '/' do
+          run Rails.application
         end
-      end
+      end.to_app
 
-      10.times do
-        server_started     = system("curl -sSf #{host}/test/get_accepted/1 > /dev/null")
-        ssl_server_started = system("curl -sSfk #{ssl_host}/test/get_accepted/1 > /dev/null")
-
-        break if server_started && ssl_server_started
-
-        sleep 0.2
+      Rack::Handler::Puma.run app, Port: port, Host: puma_host do |s|
+        @puma_server = s
       end
     end
 
-    after :all do # rubocop:disable RSpec/BeforeAfterAll
-      puma_server.stop
-      ssl_puma_server.stop
-      puma_thread.join
-      ssl_puma_thread.join
-    end
+    check_host = with_ssl.present? ? ssl_host : host
 
+    10.times do
+      break if system("curl -sSfk #{check_host}/test/get_accepted/1 > /dev/null")
+
+      sleep 0.2
+    end
+  end
+
+  def stop_server
+    @puma_server.stop # rubocop:disable RSpec/InstanceVariable
+    @puma_thread.join # rubocop:disable RSpec/InstanceVariable
+  end
+
+  shared_context 'when doing user agent tests' do
     shared_examples 'successful request' do
       it 'returns a response' do
         expect(response).to be_success
@@ -139,613 +124,633 @@ RSpec.describe UserAgent, :aggregate_failures do
       end
     end
 
-    describe '#get' do
-      context 'without http basic auth' do
-        subject(:response) { described_class.get(request_url, {}, options) }
+    context 'with an insecure connection' do
+      before :all do # rubocop:disable RSpec/BeforeAfterAll
+        start_server
+      end
 
-        let(:options) { {} }
+      after :all do # rubocop:disable RSpec/BeforeAfterAll
+        stop_server
+      end
 
-        context 'with code 200' do
-          let(:code)          { '200' }
-          let(:content_type)  { 'application/json; charset=utf-8' }
-          let(:request_url)   { "#{host}/test/get/1?submitted=123" }
-          let(:expected_body) do
-            {
-              'method'                 => 'get',
-              'submitted'              => '123',
-              'content_type_requested' => nil,
-            }
+      describe '#get' do
+        context 'without http basic auth' do
+          subject(:response) { described_class.get(request_url, {}, options) }
+
+          let(:options) { {} }
+
+          context 'with code 200' do
+            let(:code)          { '200' }
+            let(:content_type)  { 'application/json; charset=utf-8' }
+            let(:request_url)   { "#{host}/test/get/1?submitted=123" }
+            let(:expected_body) do
+              {
+                'method'                 => 'get',
+                'submitted'              => '123',
+                'content_type_requested' => nil,
+              }
+            end
+
+            include_examples 'successful get request'
           end
 
-          include_examples 'successful get request'
-        end
+          context 'with code 202' do
+            let(:code)         { '202' }
+            let(:content_type) { 'application/json; charset=utf-8' }
+            let(:request_url)  { "#{host}/test/get_accepted/1?submitted=123" }
+            let(:expected_body) do
+              {
+                'method'                 => 'get',
+                'submitted'              => '123',
+                'content_type_requested' => nil,
+              }
+            end
 
-        context 'with code 202' do
-          let(:code)         { '202' }
-          let(:content_type) { 'application/json; charset=utf-8' }
-          let(:request_url)  { "#{host}/test/get_accepted/1?submitted=123" }
-          let(:expected_body) do
-            {
-              'method'                 => 'get',
-              'submitted'              => '123',
-              'content_type_requested' => nil,
-            }
+            include_examples 'successful get request'
           end
 
-          include_examples 'successful get request'
-        end
+          context 'with code 301' do
+            let(:code)          { '200' }
+            let(:content_type)  { 'application/json; charset=utf-8' }
+            let(:request_url)   { "#{host}/test/redirect" }
+            let(:expected_body) do
+              {
+                'method'                 => 'get',
+                'submitted'              => 'abc',
+                'content_type_requested' => nil,
+              }
+            end
 
-        context 'with code 301' do
-          let(:code)          { '200' }
-          let(:content_type)  { 'application/json; charset=utf-8' }
-          let(:request_url)   { "#{host}/test/redirect" }
-          let(:expected_body) do
-            {
-              'method'                 => 'get',
-              'submitted'              => 'abc',
-              'content_type_requested' => nil,
-            }
+            include_examples 'successful redirect request'
           end
 
-          include_examples 'successful redirect request'
+          context 'with code 301, but suppressed redirection' do
+            let(:code)          { 0 }
+            let(:request_url)   { "#{host}/test/redirect" }
+            let(:options)       { { do_not_follow_redirects: true } }
+
+            include_examples 'unsuccessful request without body'
+          end
+
+          context 'with code 404' do
+            let(:code)        { '404' }
+            let(:request_url) { "#{host}/test/not_existing" }
+
+            include_examples 'unsuccessful request with body'
+          end
         end
 
-        context 'with code 301, but suppressed redirection' do
-          let(:code)          { 0 }
-          let(:request_url)   { "#{host}/test/redirect" }
-          let(:options)       { { do_not_follow_redirects: true } }
+        context 'with http basic auth' do
+          subject(:response) do
+            described_class.get(request_url, {}, {
+                                  user:     'basic_auth_user',
+                                  password: password,
+                                })
+          end
+
+          context 'with code 200' do
+            let(:code)          { '200' }
+            let(:content_type)  { 'application/json; charset=utf-8' }
+            let(:request_url)   { "#{host}/test_basic_auth/get/1?submitted=123" }
+            let(:password)      { 'test123' }
+            let(:expected_body) do
+              {
+                'method'                 => 'get',
+                'submitted'              => '123',
+                'content_type_requested' => nil,
+              }
+            end
+
+            include_examples 'successful get request'
+          end
+
+          context 'with code 401' do
+            let(:code)          { '401' }
+            let(:request_url)   { "#{host}/test_basic_auth/get/1?submitted=123" }
+            let(:password)      { 'test<>123' }
+            let(:expected_body) { "HTTP Basic: Access denied.\n" }
+
+            include_examples 'unsuccessful get/post/put/delete request'
+          end
+        end
+
+        context 'with bearer token auth' do
+          subject(:response) do
+            described_class.get(request_url, {}, {
+                                  bearer_token: bearer_token,
+                                })
+          end
+
+          context 'with code 200' do
+            let(:code)          { '200' }
+            let(:content_type)  { 'application/json; charset=utf-8' }
+            let(:request_url)   { "#{host}/test_bearer_auth/get/1?submitted=123" }
+            let(:bearer_token)  { 'test_bearer_123' }
+            let(:expected_body) do
+              {
+                'method'                 => 'get',
+                'submitted'              => '123',
+                'content_type_requested' => nil,
+              }
+            end
+
+            include_examples 'successful get request'
+          end
+
+          context 'with code 401' do
+            let(:code)          { '401' }
+            let(:request_url)   { "#{host}/test_bearer_auth/get/1?submitted=123" }
+            let(:bearer_token)  { 'wrong_test_bearer' }
+            let(:expected_body) { "HTTP Token: Access denied.\n" }
+
+            include_examples 'unsuccessful get/post/put/delete request'
+          end
+        end
+
+        context 'when timeouts are raised' do
+          subject(:response) do
+            described_class.get(request_url, {}, {
+                                  open_timeout: 0,
+                                  read_timeout: 0,
+                                })
+          end
+
+          let(:request_url) { "#{host}/test/get/1?submitted=123" }
+          let(:code)        { 0 }
 
           include_examples 'unsuccessful request without body'
         end
 
-        context 'with code 404' do
-          let(:code)        { '404' }
-          let(:request_url) { "#{host}/test/not_existing" }
+        context 'with content type set to json' do
+          subject(:response) { described_class.get(request_url, request_params, request_options) }
 
-          include_examples 'unsuccessful request with body'
-        end
-      end
+          context 'with code 200' do
+            let(:code)            { '200' }
+            let(:content_type)    { 'application/json; charset=utf-8' }
+            let(:request_url)     { "#{host}/test/get/1" }
+            let(:request_params)  { { submitted: 'some value' } }
+            let(:request_options) { { json: true } }
+            let(:expected_body) do
+              {
+                'method'                 => 'get',
+                'content_type_requested' => nil,
+                'submitted'              => 'some value',
+              }
+            end
 
-      context 'with http basic auth' do
-        subject(:response) do
-          described_class.get(request_url, {}, {
-                                user:     'basic_auth_user',
-                                password: password,
-                              })
-        end
-
-        context 'with code 200' do
-          let(:code)          { '200' }
-          let(:content_type)  { 'application/json; charset=utf-8' }
-          let(:request_url)   { "#{host}/test_basic_auth/get/1?submitted=123" }
-          let(:password)      { 'test123' }
-          let(:expected_body) do
-            {
-              'method'                 => 'get',
-              'submitted'              => '123',
-              'content_type_requested' => nil,
-            }
+            include_examples 'successful get request'
           end
 
-          include_examples 'successful get request'
-        end
+          context 'with code 404' do
+            let(:code)            { '404' }
+            let(:request_url)     { "#{host}/test/not_existing" }
+            let(:request_params)  { { submitted: { key: 'some value' } } }
+            let(:request_options) { { json: true } }
 
-        context 'with code 401' do
-          let(:code)          { '401' }
-          let(:request_url)   { "#{host}/test_basic_auth/get/1?submitted=123" }
-          let(:password)      { 'test<>123' }
-          let(:expected_body) { "HTTP Basic: Access denied.\n" }
-
-          include_examples 'unsuccessful get/post/put/delete request'
+            include_examples 'unsuccessful request with body'
+          end
         end
       end
 
-      context 'with bearer token auth' do
-        subject(:response) do
-          described_class.get(request_url, {}, {
-                                bearer_token: bearer_token,
-                              })
-        end
+      describe '#post' do
+        context 'without http basic auth' do
+          subject(:response) { described_class.post(request_url, request_params, request_options) }
 
-        context 'with code 200' do
-          let(:code)          { '200' }
-          let(:content_type)  { 'application/json; charset=utf-8' }
-          let(:request_url)   { "#{host}/test_bearer_auth/get/1?submitted=123" }
-          let(:bearer_token)  { 'test_bearer_123' }
-          let(:expected_body) do
-            {
-              'method'                 => 'get',
-              'submitted'              => '123',
-              'content_type_requested' => nil,
-            }
+          let(:request_options) { {} }
+
+          context 'with code 201' do
+            let(:code)           { '201' }
+            let(:request_url)    { "#{host}/test/post/1" }
+            let(:request_params) { { submitted: 'some value' } }
+            let(:expected_body) do
+              {
+                'method'                 => 'post',
+                'submitted'              => 'some value',
+                'body'                   => ['submitted=some+value'],
+                'content_type_requested' => 'application/x-www-form-urlencoded',
+              }
+            end
+
+            include_examples 'successful post/put/patch request'
           end
 
-          include_examples 'successful get request'
-        end
+          context 'with raw body' do
+            let(:code) { '201' }
+            let(:request_url)     { "#{host}/test/post/1" }
+            let(:request_params)  { {} }
+            let(:request_options) { { send_as_raw_body: 'raw body' } }
+            let(:expected_body) do
+              {
+                'method'                 => 'post',
+                'submitted'              => nil,
+                'body'                   => ['raw body'],
+                'content_type_requested' => 'application/x-www-form-urlencoded',
+              }
+            end
 
-        context 'with code 401' do
-          let(:code)          { '401' }
-          let(:request_url)   { "#{host}/test_bearer_auth/get/1?submitted=123" }
-          let(:bearer_token)  { 'wrong_test_bearer' }
-          let(:expected_body) { "HTTP Token: Access denied.\n" }
-
-          include_examples 'unsuccessful get/post/put/delete request'
-        end
-      end
-
-      context 'when timeouts are raised' do
-        subject(:response) do
-          described_class.get(request_url, {}, {
-                                open_timeout: 0,
-                                read_timeout: 0,
-                              })
-        end
-
-        let(:request_url) { "#{host}/test/get/1?submitted=123" }
-        let(:code)        { 0 }
-
-        include_examples 'unsuccessful request without body'
-      end
-
-      context 'with content type set to json' do
-        subject(:response) { described_class.get(request_url, request_params, request_options) }
-
-        context 'with code 200' do
-          let(:code)            { '200' }
-          let(:content_type)    { 'application/json; charset=utf-8' }
-          let(:request_url)     { "#{host}/test/get/1" }
-          let(:request_params)  { { submitted: 'some value' } }
-          let(:request_options) { { json: true } }
-          let(:expected_body) do
-            {
-              'method'                 => 'get',
-              'content_type_requested' => nil,
-              'submitted'              => 'some value',
-            }
+            include_examples 'successful post/put/patch request'
           end
 
-          include_examples 'successful get request'
-        end
+          context 'with code 404' do
+            let(:code)           { '404' }
+            let(:request_url)    { "#{host}/test/not_existing" }
+            let(:request_params) { { submitted: 'some value' } }
 
-        context 'with code 404' do
-          let(:code)            { '404' }
-          let(:request_url)     { "#{host}/test/not_existing" }
-          let(:request_params)  { { submitted: { key: 'some value' } } }
-          let(:request_options) { { json: true } }
-
-          include_examples 'unsuccessful request with body'
-        end
-      end
-    end
-
-    describe '#post' do
-      context 'without http basic auth' do
-        subject(:response) { described_class.post(request_url, request_params, request_options) }
-
-        let(:request_options) { {} }
-
-        context 'with code 201' do
-          let(:code)           { '201' }
-          let(:request_url)    { "#{host}/test/post/1" }
-          let(:request_params) { { submitted: 'some value' } }
-          let(:expected_body) do
-            {
-              'method'                 => 'post',
-              'submitted'              => 'some value',
-              'body'                   => ['submitted=some+value'],
-              'content_type_requested' => 'application/x-www-form-urlencoded',
-            }
+            include_examples 'unsuccessful request with body'
           end
-
-          include_examples 'successful post/put/patch request'
         end
 
-        context 'with raw body' do
-          let(:code) { '201' }
-          let(:request_url)     { "#{host}/test/post/1" }
-          let(:request_params)  { {} }
-          let(:request_options) { { send_as_raw_body: 'raw body' } }
-          let(:expected_body) do
-            {
-              'method'                 => 'post',
-              'submitted'              => nil,
-              'body'                   => ['raw body'],
-              'content_type_requested' => 'application/x-www-form-urlencoded',
-            }
-          end
-
-          include_examples 'successful post/put/patch request'
-        end
-
-        context 'with code 404' do
-          let(:code)           { '404' }
-          let(:request_url)    { "#{host}/test/not_existing" }
-          let(:request_params) { { submitted: 'some value' } }
-
-          include_examples 'unsuccessful request with body'
-        end
-      end
-
-      context 'with http basic auth' do
-        subject(:response) do
-          described_class.post(request_url, request_params, {
-                                 user:     'basic_auth_user',
-                                 password: password,
-                               })
-        end
-
-        context 'with code 201' do
-          let(:code)           { '201' }
-          let(:request_url)    { "#{host}/test_basic_auth/post/1" }
-          let(:request_params) { { submitted: 'some value' } }
-          let(:password)       { 'test123' }
-          let(:expected_body) do
-            {
-              'method'                 => 'post',
-              'submitted'              => 'some value',
-              'content_type_requested' => 'application/x-www-form-urlencoded',
-            }
-          end
-
-          include_examples 'successful post/put/patch request'
-        end
-
-        context 'with code 401' do
-          let(:code)           { '401' }
-          let(:request_url)    { "#{host}/test_basic_auth/post/1" }
-          let(:request_params) { { submitted: 'some value' } }
-          let(:password)       { 'test<>123' }
-          let(:expected_body)  { "HTTP Basic: Access denied.\n" }
-
-          include_examples 'unsuccessful get/post/put/delete request'
-        end
-      end
-
-      context 'with bearer token auth' do
-        subject(:response) do
-          described_class.post(request_url, request_params, {
-                                 bearer_token: bearer_token,
-                               })
-        end
-
-        context 'with code 201' do
-          let(:code) { '201' }
-          let(:request_url)    { "#{host}/test_bearer_auth/post/1" }
-          let(:request_params) { { submitted: 'some value' } }
-          let(:bearer_token)   { 'test_bearer_123' }
-          let(:expected_body) do
-            {
-              'method'                 => 'post',
-              'submitted'              => 'some value',
-              'content_type_requested' => 'application/x-www-form-urlencoded',
-            }
-          end
-
-          include_examples 'successful post/put/patch request'
-        end
-
-        context 'with code 401' do
-          let(:code) { '401' }
-          let(:request_url)    { "#{host}/test_bearer_auth/post/1" }
-          let(:request_params) { { submitted: 'some value' } }
-          let(:bearer_token)   { 'wrong_test_bearer' }
-          let(:expected_body)  { "HTTP Token: Access denied.\n" }
-
-          include_examples 'unsuccessful get/post/put/delete request'
-        end
-      end
-
-      context 'when timeouts are raised' do
-        subject(:response) do
-          described_class.post(request_url, request_params, {
-                                 open_timeout: 0,
-                                 read_timeout: 0,
-                               })
-        end
-
-        let(:request_url) { "#{host}/test/post/1" }
-        let(:request_params) { { submitted: 'timeout' } }
-        let(:code)           { 0 }
-
-        include_examples 'unsuccessful request without body'
-      end
-
-      context 'with content type set to json' do
-        subject(:response) { described_class.post(request_url, request_params, request_options) }
-
-        context 'with code 201' do
-          let(:code)            { '201' }
-          let(:content_type)    { 'application/json; charset=utf-8' }
-          let(:request_url)     { "#{host}/test/post/1" }
-          let(:request_params)  { { submitted: { key: 'some value' } } }
-          let(:request_options) { { json: true } }
-          let(:expected_body) do
-            {
-              'method'                 => 'post',
-              'content_type_requested' => 'application/json',
-              'submitted'              => {
-                'key' => 'some value',
-              },
-            }
-          end
-
-          include_examples 'successful post/put/patch request'
-        end
-      end
-    end
-
-    describe '#put' do
-      subject(:response) { described_class.put(request_url, request_params) }
-
-      context 'without http basic auth' do
-        context 'with code 200' do
-          let(:code)           { '200' }
-          let(:request_url)    { "#{host}/test/put/1" }
-          let(:request_params) { { submitted: 'some value' } }
-
-          let(:expected_body) do
-            {
-              'method'                 => 'put',
-              'submitted'              => 'some value',
-              'content_type_requested' => 'application/x-www-form-urlencoded',
-            }
-          end
-
-          include_examples 'successful post/put/patch request'
-        end
-
-        context 'with code 404' do
-          let(:code)           { '404' }
-          let(:request_url)    { "#{host}/test/not_existing" }
-          let(:request_params) { { submitted: 'some value' } }
-
-          include_examples 'unsuccessful request with body'
-        end
-      end
-
-      context 'with http basic auth' do
-        subject(:response) do
-          described_class.put(request_url, request_params, {
-                                user:     'basic_auth_user',
-                                password: password,
-                              })
-        end
-
-        let(:password)     { 'test123' }
-        let(:submit_value) { 'some value' }
-
-        context 'with code 200' do
-          let(:code)           { '200' }
-          let(:request_url)    { "#{host}/test_basic_auth/put/1" }
-          let(:request_params) { { submitted: 'some value' } }
-          let(:expected_body) do
-            {
-              'method'                 => 'put',
-              'submitted'              => 'some value',
-              'content_type_requested' => 'application/x-www-form-urlencoded',
-            }
-          end
-
-          include_examples 'successful post/put/patch request'
-        end
-
-        context 'with code 401' do
-          let(:code)           { '401' }
-          let(:request_url)    { "#{host}/test_basic_auth/put/1" }
-          let(:request_params) { { submitted: 'some value' } }
-          let(:password)       { 'test<>123' }
-          let(:expected_body)  { "HTTP Basic: Access denied.\n" }
-
-          include_examples 'unsuccessful get/post/put/delete request'
-        end
-      end
-
-      context 'with bearer token auth' do
-        subject(:response) do
-          described_class.put(request_url, request_params, {
-                                bearer_token: bearer_token,
-                              })
-        end
-
-        context 'with code 200' do
-          let(:code) { '200' }
-          let(:request_url)    { "#{host}/test_bearer_auth/put/1" }
-          let(:request_params) { { submitted: 'some value' } }
-          let(:bearer_token)   { 'test_bearer_123' }
-          let(:expected_body) do
-            {
-              'method'                 => 'put',
-              'submitted'              => 'some value',
-              'content_type_requested' => 'application/x-www-form-urlencoded',
-            }
-          end
-
-          include_examples 'successful post/put/patch request'
-        end
-
-        context 'with code 401' do
-          let(:code) { '401' }
-          let(:request_url)    { "#{host}/test_bearer_auth/put/1" }
-          let(:request_params) { { submitted: 'some value' } }
-          let(:bearer_token)   { 'wrong_test_bearer' }
-          let(:expected_body)  { "HTTP Token: Access denied.\n" }
-
-          include_examples 'unsuccessful get/post/put/delete request'
-        end
-      end
-    end
-
-    describe '#patch' do
-      subject(:response) { described_class.patch(request_url, request_params) }
-
-      context 'with code 200' do
-        let(:code)           { '200' }
-        let(:request_url)    { "#{host}/test/patch/1" }
-        let(:request_params) { { submitted: 'some value' } }
-
-        let(:expected_body) do
-          {
-            'method'                 => 'patch',
-            'submitted'              => 'some value',
-            'content_type_requested' => 'application/x-www-form-urlencoded',
-          }
-        end
-
-        include_examples 'successful post/put/patch request'
-      end
-
-      context 'with code 404' do
-        let(:code)           { '404' }
-        let(:request_url)    { "#{host}/test/not_existing" }
-        let(:request_params) { { submitted: 'some value' } }
-
-        include_examples 'unsuccessful request with body'
-      end
-    end
-
-    describe '#delete' do
-      context 'without http basic auth' do
-        subject(:response) { described_class.delete(request_url) }
-
-        context 'with code 200' do
-          let(:code)          { '200' }
-          let(:request_url)   { "#{host}/test/delete/1" }
-          let(:expected_body) do
-            {
-              'method'                 => 'delete',
-              'content_type_requested' => nil,
-            }
-          end
-
-          include_examples 'successful delete request'
-        end
-
-        context 'with code 404' do
-          let(:code)        { '404' }
-          let(:request_url) { "#{host}/test/not_existing" }
-
-          include_examples 'unsuccessful request with body'
-        end
-      end
-
-      context 'with http basic auth' do
-        subject(:response) do
-          described_class.delete(request_url, {}, {
+        context 'with http basic auth' do
+          subject(:response) do
+            described_class.post(request_url, request_params, {
                                    user:     'basic_auth_user',
                                    password: password,
                                  })
-        end
-
-        context 'with code 200' do
-          let(:code)          { '200' }
-          let(:content_type)  { 'application/json; charset=utf-8' }
-          let(:request_url)   { "#{host}/test_basic_auth/delete/1" }
-          let(:password)      { 'test123' }
-          let(:expected_body) do
-            {
-              'method'                 => 'delete',
-              'content_type_requested' => nil,
-            }
           end
 
-          include_examples 'successful delete request'
+          context 'with code 201' do
+            let(:code)           { '201' }
+            let(:request_url)    { "#{host}/test_basic_auth/post/1" }
+            let(:request_params) { { submitted: 'some value' } }
+            let(:password)       { 'test123' }
+            let(:expected_body) do
+              {
+                'method'                 => 'post',
+                'submitted'              => 'some value',
+                'content_type_requested' => 'application/x-www-form-urlencoded',
+              }
+            end
+
+            include_examples 'successful post/put/patch request'
+          end
+
+          context 'with code 401' do
+            let(:code)           { '401' }
+            let(:request_url)    { "#{host}/test_basic_auth/post/1" }
+            let(:request_params) { { submitted: 'some value' } }
+            let(:password)       { 'test<>123' }
+            let(:expected_body)  { "HTTP Basic: Access denied.\n" }
+
+            include_examples 'unsuccessful get/post/put/delete request'
+          end
         end
 
-        context 'with code 401' do
-          let(:code)          { '401' }
-          let(:request_url)   { "#{host}/test_basic_auth/delete/1" }
-          let(:password)      { 'test<>123' }
-          let(:expected_body) { "HTTP Basic: Access denied.\n" }
+        context 'with bearer token auth' do
+          subject(:response) do
+            described_class.post(request_url, request_params, {
+                                   bearer_token: bearer_token,
+                                 })
+          end
 
-          include_examples 'unsuccessful get/post/put/delete request'
+          context 'with code 201' do
+            let(:code) { '201' }
+            let(:request_url)    { "#{host}/test_bearer_auth/post/1" }
+            let(:request_params) { { submitted: 'some value' } }
+            let(:bearer_token)   { 'test_bearer_123' }
+            let(:expected_body) do
+              {
+                'method'                 => 'post',
+                'submitted'              => 'some value',
+                'content_type_requested' => 'application/x-www-form-urlencoded',
+              }
+            end
+
+            include_examples 'successful post/put/patch request'
+          end
+
+          context 'with code 401' do
+            let(:code) { '401' }
+            let(:request_url)    { "#{host}/test_bearer_auth/post/1" }
+            let(:request_params) { { submitted: 'some value' } }
+            let(:bearer_token)   { 'wrong_test_bearer' }
+            let(:expected_body)  { "HTTP Token: Access denied.\n" }
+
+            include_examples 'unsuccessful get/post/put/delete request'
+          end
+        end
+
+        context 'when timeouts are raised' do
+          subject(:response) do
+            described_class.post(request_url, request_params, {
+                                   open_timeout: 0,
+                                   read_timeout: 0,
+                                 })
+          end
+
+          let(:request_url) { "#{host}/test/post/1" }
+          let(:request_params) { { submitted: 'timeout' } }
+          let(:code)           { 0 }
+
+          include_examples 'unsuccessful request without body'
+        end
+
+        context 'with content type set to json' do
+          subject(:response) { described_class.post(request_url, request_params, request_options) }
+
+          context 'with code 201' do
+            let(:code)            { '201' }
+            let(:content_type)    { 'application/json; charset=utf-8' }
+            let(:request_url)     { "#{host}/test/post/1" }
+            let(:request_params)  { { submitted: { key: 'some value' } } }
+            let(:request_options) { { json: true } }
+            let(:expected_body) do
+              {
+                'method'                 => 'post',
+                'content_type_requested' => 'application/json',
+                'submitted'              => {
+                  'key' => 'some value',
+                },
+              }
+            end
+
+            include_examples 'successful post/put/patch request'
+          end
         end
       end
 
-      context 'with bearer token auth' do
-        subject(:response) do
-          described_class.delete(request_url, {}, {
-                                   bearer_token: bearer_token,
-                                 })
+      describe '#put' do
+        subject(:response) { described_class.put(request_url, request_params) }
+
+        context 'without http basic auth' do
+          context 'with code 200' do
+            let(:code)           { '200' }
+            let(:request_url)    { "#{host}/test/put/1" }
+            let(:request_params) { { submitted: 'some value' } }
+
+            let(:expected_body) do
+              {
+                'method'                 => 'put',
+                'submitted'              => 'some value',
+                'content_type_requested' => 'application/x-www-form-urlencoded',
+              }
+            end
+
+            include_examples 'successful post/put/patch request'
+          end
+
+          context 'with code 404' do
+            let(:code)           { '404' }
+            let(:request_url)    { "#{host}/test/not_existing" }
+            let(:request_params) { { submitted: 'some value' } }
+
+            include_examples 'unsuccessful request with body'
+          end
         end
 
+        context 'with http basic auth' do
+          subject(:response) do
+            described_class.put(request_url, request_params, {
+                                  user:     'basic_auth_user',
+                                  password: password,
+                                })
+          end
+
+          let(:password)     { 'test123' }
+          let(:submit_value) { 'some value' }
+
+          context 'with code 200' do
+            let(:code)           { '200' }
+            let(:request_url)    { "#{host}/test_basic_auth/put/1" }
+            let(:request_params) { { submitted: 'some value' } }
+            let(:expected_body) do
+              {
+                'method'                 => 'put',
+                'submitted'              => 'some value',
+                'content_type_requested' => 'application/x-www-form-urlencoded',
+              }
+            end
+
+            include_examples 'successful post/put/patch request'
+          end
+
+          context 'with code 401' do
+            let(:code)           { '401' }
+            let(:request_url)    { "#{host}/test_basic_auth/put/1" }
+            let(:request_params) { { submitted: 'some value' } }
+            let(:password)       { 'test<>123' }
+            let(:expected_body)  { "HTTP Basic: Access denied.\n" }
+
+            include_examples 'unsuccessful get/post/put/delete request'
+          end
+        end
+
+        context 'with bearer token auth' do
+          subject(:response) do
+            described_class.put(request_url, request_params, {
+                                  bearer_token: bearer_token,
+                                })
+          end
+
+          context 'with code 200' do
+            let(:code) { '200' }
+            let(:request_url)    { "#{host}/test_bearer_auth/put/1" }
+            let(:request_params) { { submitted: 'some value' } }
+            let(:bearer_token)   { 'test_bearer_123' }
+            let(:expected_body) do
+              {
+                'method'                 => 'put',
+                'submitted'              => 'some value',
+                'content_type_requested' => 'application/x-www-form-urlencoded',
+              }
+            end
+
+            include_examples 'successful post/put/patch request'
+          end
+
+          context 'with code 401' do
+            let(:code) { '401' }
+            let(:request_url)    { "#{host}/test_bearer_auth/put/1" }
+            let(:request_params) { { submitted: 'some value' } }
+            let(:bearer_token)   { 'wrong_test_bearer' }
+            let(:expected_body)  { "HTTP Token: Access denied.\n" }
+
+            include_examples 'unsuccessful get/post/put/delete request'
+          end
+        end
+      end
+
+      describe '#patch' do
+        subject(:response) { described_class.patch(request_url, request_params) }
+
         context 'with code 200' do
-          let(:code) { '200' }
-          let(:content_type)   { 'application/json; charset=utf-8' }
-          let(:request_url)    { "#{host}/test_bearer_auth/delete/1" }
+          let(:code)           { '200' }
+          let(:request_url)    { "#{host}/test/patch/1" }
           let(:request_params) { { submitted: 'some value' } }
-          let(:bearer_token)   { 'test_bearer_123' }
+
           let(:expected_body) do
             {
-              'method'                 => 'delete',
-              'content_type_requested' => nil,
+              'method'                 => 'patch',
+              'submitted'              => 'some value',
+              'content_type_requested' => 'application/x-www-form-urlencoded',
             }
           end
 
-          include_examples 'successful delete request'
+          include_examples 'successful post/put/patch request'
         end
 
-        context 'with code 401' do
-          let(:code) { '401' }
-          let(:request_url)    { "#{host}/test_bearer_auth/delete/1" }
+        context 'with code 404' do
+          let(:code)           { '404' }
+          let(:request_url)    { "#{host}/test/not_existing" }
           let(:request_params) { { submitted: 'some value' } }
-          let(:bearer_token)   { 'wrong_test_bearer' }
-          let(:expected_body)  { "HTTP Token: Access denied.\n" }
 
-          include_examples 'unsuccessful get/post/put/delete request'
+          include_examples 'unsuccessful request with body'
+        end
+      end
+
+      describe '#delete' do
+        context 'without http basic auth' do
+          subject(:response) { described_class.delete(request_url) }
+
+          context 'with code 200' do
+            let(:code)          { '200' }
+            let(:request_url)   { "#{host}/test/delete/1" }
+            let(:expected_body) do
+              {
+                'method'                 => 'delete',
+                'content_type_requested' => nil,
+              }
+            end
+
+            include_examples 'successful delete request'
+          end
+
+          context 'with code 404' do
+            let(:code)        { '404' }
+            let(:request_url) { "#{host}/test/not_existing" }
+
+            include_examples 'unsuccessful request with body'
+          end
+        end
+
+        context 'with http basic auth' do
+          subject(:response) do
+            described_class.delete(request_url, {}, {
+                                     user:     'basic_auth_user',
+                                     password: password,
+                                   })
+          end
+
+          context 'with code 200' do
+            let(:code)          { '200' }
+            let(:content_type)  { 'application/json; charset=utf-8' }
+            let(:request_url)   { "#{host}/test_basic_auth/delete/1" }
+            let(:password)      { 'test123' }
+            let(:expected_body) do
+              {
+                'method'                 => 'delete',
+                'content_type_requested' => nil,
+              }
+            end
+
+            include_examples 'successful delete request'
+          end
+
+          context 'with code 401' do
+            let(:code)          { '401' }
+            let(:request_url)   { "#{host}/test_basic_auth/delete/1" }
+            let(:password)      { 'test<>123' }
+            let(:expected_body) { "HTTP Basic: Access denied.\n" }
+
+            include_examples 'unsuccessful get/post/put/delete request'
+          end
+        end
+
+        context 'with bearer token auth' do
+          subject(:response) do
+            described_class.delete(request_url, {}, {
+                                     bearer_token: bearer_token,
+                                   })
+          end
+
+          context 'with code 200' do
+            let(:code) { '200' }
+            let(:content_type)   { 'application/json; charset=utf-8' }
+            let(:request_url)    { "#{host}/test_bearer_auth/delete/1" }
+            let(:request_params) { { submitted: 'some value' } }
+            let(:bearer_token)   { 'test_bearer_123' }
+            let(:expected_body) do
+              {
+                'method'                 => 'delete',
+                'content_type_requested' => nil,
+              }
+            end
+
+            include_examples 'successful delete request'
+          end
+
+          context 'with code 401' do
+            let(:code) { '401' }
+            let(:request_url)    { "#{host}/test_bearer_auth/delete/1" }
+            let(:request_params) { { submitted: 'some value' } }
+            let(:bearer_token)   { 'wrong_test_bearer' }
+            let(:expected_body)  { "HTTP Token: Access denied.\n" }
+
+            include_examples 'unsuccessful get/post/put/delete request'
+          end
         end
       end
     end
 
-    describe 'ssl verification' do
-      let(:url)   { "#{ssl_host}/test/get/1?submitted=123" }
-
-      context 'without self-signed certificate present' do
-        context 'with verify_ssl: true' do
-          it 'UserAgent fails' do
-            expect(described_class.get(url, {}, { verify_ssl: true })).to have_attributes(
-              success?: be_falsey,
-              error:    include('certificate verify failed (self-signed certificate)'),
-            )
-          end
-        end
-
-        context 'without verify_ssl' do
-          it 'UserAgent fails' do
-            expect(described_class.get(url, {})).to have_attributes(
-              success?: be_falsey,
-              error:    include('certificate verify failed (self-signed certificate)'),
-            )
-          end
-        end
-
-        context 'with verify_ssl: false' do
-          it 'UserAgent succeeds' do
-            expect(described_class.get(url, {}, { verify_ssl: false })).to be_success
-          end
-        end
+    context 'with a secure connection' do
+      before :all do # rubocop:disable RSpec/BeforeAfterAll
+        start_server(with_ssl: base_host)
       end
 
-      context 'with self-signed certificate present' do
-        before do
-          localhost_authority = Localhost::Authority.new(base_host, issuer: nil)
-          create(:ssl_certificate, certificate: File.read(localhost_authority.certificate_path))
-        end
+      after :all do # rubocop:disable RSpec/BeforeAfterAll
+        stop_server
+      end
 
-        context 'with verify_ssl: true' do
-          it 'UserAgent succeeds' do
-            expect(described_class.get(url, {}, { verify_ssl: true })).to be_success
+      describe 'ssl verification' do
+        let(:url)   { "#{ssl_host}/test/get/1?submitted=123" }
+
+        context 'without self-signed certificate present' do
+          context 'with verify_ssl: true' do
+            it 'UserAgent fails' do
+              expect(described_class.get(url, {}, { verify_ssl: true })).to have_attributes(
+                success?: be_falsey,
+                error:    include('certificate verify failed (self-signed certificate)'),
+              )
+            end
+          end
+
+          context 'without verify_ssl' do
+            it 'UserAgent fails' do
+              expect(described_class.get(url, {})).to have_attributes(
+                success?: be_falsey,
+                error:    include('certificate verify failed (self-signed certificate)'),
+              )
+            end
+          end
+
+          context 'with verify_ssl: false' do
+            it 'UserAgent succeeds' do
+              expect(described_class.get(url, {}, { verify_ssl: false })).to be_success
+            end
           end
         end
 
-        context 'without verify_ssl: true' do
-          it 'UserAgent succeeds' do
-            expect(described_class.get(url)).to be_success
+        context 'with self-signed certificate present' do
+          before do
+            localhost_authority = Localhost::Authority.new(base_host, issuer: nil)
+            create(:ssl_certificate, certificate: File.read(localhost_authority.certificate_path))
           end
-        end
 
-        context 'with verify_ssl: false' do
-          it 'UserAgent succeeds' do
-            expect(described_class.get(url, {}, { verify_ssl: false })).to be_success
+          context 'with verify_ssl: true' do
+            it 'UserAgent succeeds' do
+              expect(described_class.get(url, {}, { verify_ssl: true })).to be_success
+            end
+          end
+
+          context 'without verify_ssl: true' do
+            it 'UserAgent succeeds' do
+              expect(described_class.get(url)).to be_success
+            end
+          end
+
+          context 'with verify_ssl: false' do
+            it 'UserAgent succeeds' do
+              expect(described_class.get(url, {}, { verify_ssl: false })).to be_success
+            end
           end
         end
       end
