@@ -21,7 +21,8 @@ RUN contrib/docker/setup.sh builder
 FROM ruby:3.3.8-slim-bookworm
 ARG DEBIAN_FRONTEND=noninteractive
 ARG ZAMMAD_USER=zammad
-ENV RAILS_ENV=production
+ARG RAILS_ENV=production
+ENV RAILS_ENV=${RAILS_ENV}
 ENV RAILS_LOG_TO_STDOUT=true
 ENV ZAMMAD_DIR=/opt/zammad
 
@@ -30,6 +31,26 @@ COPY --from=builder ${ZAMMAD_DIR} .
 COPY --from=builder /usr/local/bundle /usr/local/bundle
 COPY --from=builder ${ZAMMAD_DIR}/contrib/docker/docker-entrypoint.sh /
 RUN contrib/docker/setup.sh runner
+
+RUN if [ "$RAILS_ENV" = "development" ]; then \
+  apt-get update && \
+  apt-get install -y --no-install-recommends \
+    nodejs \
+    npm \
+    curl \
+    ca-certificates \
+    git \
+    golang && \
+  npm install -g corepack && \
+  corepack enable && \
+  corepack prepare pnpm@10.9.0 --activate && \
+  mkdir -p /tmp/go/src/github.com/ddollar && \
+  git clone https://github.com/ddollar/forego.git /tmp/go/src/github.com/ddollar/forego && \
+  cd /tmp/go/src/github.com/ddollar/forego && \
+  GOPATH=/tmp/go GO111MODULE=off go build -o /usr/local/bin/forego && \
+  chmod +x /usr/local/bin/forego && \
+  rm -rf /tmp/go /var/lib/apt/lists/*; \
+fi
 
 USER zammad:zammad
 ENTRYPOINT ["/docker-entrypoint.sh"]

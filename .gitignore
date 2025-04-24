@@ -118,3 +118,13 @@ schema.graphql
 
 # Packages
 *.zpm
+
+# Environment
+.env
+
+# Shell history (local dev only)
+/.bash_history
+
+# Local config and state
+.cache
+.local

@@ -1,0 +1,65 @@
+services:
+  zammad-postgresql:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: zammad
+      POSTGRES_PASSWORD: zammad
+      POSTGRES_DB: zammad
+    volumes:
+      - zammad_pg_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  redis:
+    image: redis:7
+    volumes:
+      - zammad_redis_data:/data
+    ports:
+      - '6379:6379'
+
+  zammad-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.6
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 2g
+    ports:
+      - '9200:9200'
+    volumes:
+      - zammad_elasticsearch_data:/usr/share/elasticsearch/data
+      - ./es-plugins.sh:/usr/share/elasticsearch/plugins_install.sh
+    entrypoint: ["/bin/bash", "-c", "/usr/share/elasticsearch/plugins_install.sh && /usr/local/bin/docker-entrypoint.sh"]
+
+  zammad:
+    image: zammad-dev:latest
+    command: pnpm run dev
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:3000 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    build:
+      context: ..
+      args:
+        COMMIT_SHA: ${COMMIT_SHA:-dev}
+        RAILS_ENV: "development"
+    depends_on:
+      - zammad-postgresql
+      - redis
+      - zammad-elasticsearch
+    env_file: .env
+    ports:
+      - '3000:3000'
+      - '6042:6042'
+      - '3036:3036'
+    volumes:
+      - ..:/opt/zammad
+
+volumes:
+  zammad_pg_data:
+  zammad_redis_data:
+  zammad_elasticsearch_data:
