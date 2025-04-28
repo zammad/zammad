@@ -164,7 +164,7 @@ elif [ "$1" = 'zammad-websocket' ]; then
 
   echo "starting websocket server..."
 
-  exec bundle exec script/websocket-server.rb -b 0.0.0.0 -p "${ZAMMAD_WEBSOCKET_PORT}" start
+  exec bundle exec script/websocket-server.rb -b :: -p "${ZAMMAD_WEBSOCKET_PORT}" start
 
 # zammad-backup
 elif [ "$1" = 'zammad-backup' ]; then
