@@ -27,6 +27,25 @@ function demand_backup_conf () {
       echo "FULL_FS_DUMP is not set, falling back to 'yes' to produce a full backup."
     fi
   fi
+
+  # sane defaults for USE_PIGZ
+  if [ -z ${USE_PIGZ+x} ]; then
+    # Falling back to default behavior
+    USE_PIGZ='no'
+
+    if [ "${DEBUG}" == "yes" ]; then
+      echo "USE_PIGZ is not set, falling back to 'no' and will use good old gzip."
+    fi
+  fi
+
+  # set VARs related to USE_PIGZ
+  if [ "${USE_PIGZ}" == "yes" ]; then
+    declare -r GZIP_PROG="pigz"
+    declare -r TAR_GZIP_ARG="-I $GZIP_PROG"
+  else
+    declare -r GZIP_PROG="gzip"
+    declare -r TAR_GZIP_ARG="-z"
+  fi
 }
 
 function get_zammad_dir () {
