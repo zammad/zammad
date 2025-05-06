@@ -167,7 +167,7 @@ function backup_files () {
 
   if [ "${FULL_FS_DUMP}" == 'yes' ]; then
     echo " ... as full dump"
-    tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz\
+    tar -C / -c ${TAR_GZIP_ARG} -f ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz\
       --exclude='tmp' --exclude 'node_modules' --exclude '.git' --exclude '.yarn/cache' --exclude='config/database.yml' ${ZAMMAD_DIR#/}
 
     state=$?
@@ -193,7 +193,7 @@ function backup_files () {
       ZAMMAD_STORAGE_DIR="${ZAMMAD_DIR#/}/storage/"
     fi
 
-    tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_STORAGE_DIR}
+    tar -C / -c ${TAR_GZIP_ARG} -f ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_STORAGE_DIR}
 
     state=$?
   fi
@@ -469,7 +469,7 @@ function restore_zammad () {
 
 function restore_files () {
   echo "# Restoring Files"
-  tar -C / --overwrite -xzf ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
+  tar -C / --overwrite -x ${TAR_GZIP_ARG} -f ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
 
   state=$?
 
