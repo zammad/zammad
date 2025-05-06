@@ -226,7 +226,7 @@ EOT
 function backup_db () {
   if [ "${DB_ADAPTER}" == "mysql2" ]; then
     echo "creating mysql backup..."
-    mysqldump --opt --single-transaction ${DB_HOST:+--host $DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
+    mysqldump --opt --single-transaction ${DB_HOST:+--host $DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} | ${GZIP_PROG} > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
     ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz ${BACKUP_DIR}/latest_zammad_db.mysql.gz
   elif [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "creating postgresql backup..."
@@ -238,7 +238,7 @@ function backup_db () {
         ${DB_HOST:+--host $DB_HOST} \
         ${DB_PORT:+--port $DB_PORT} \
         --no-privileges --no-owner \
-        --compress 6 --file "${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz"
+        --compress 0 | ${GZIP_PROG} > "${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz"
 
     state=$?
 
