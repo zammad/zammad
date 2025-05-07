@@ -40,11 +40,11 @@ function demand_backup_conf () {
 
   # set VARs related to USE_PIGZ
   if [ "${USE_PIGZ}" == "yes" ]; then
-    declare -r GZIP_PROG="pigz"
-    declare -r TAR_GZIP_ARG="-I $GZIP_PROG"
+    GZIP_PROG="pigz"
+    TAR_GZIP_ARG="-I $GZIP_PROG"
   else
-    declare -r GZIP_PROG="gzip"
-    declare -r TAR_GZIP_ARG="-z"
+    GZIP_PROG="gzip"
+    TAR_GZIP_ARG="-z"
   fi
 }
 
