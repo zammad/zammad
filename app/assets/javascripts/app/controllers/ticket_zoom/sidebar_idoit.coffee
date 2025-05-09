@@ -9,7 +9,7 @@ class SidebarIdoit extends App.Controller
 
     @item = {
       name: 'idoit'
-      badgeIcon: 'printer'
+      badgeIcon: 'idoit'
       sidebarHead: __('i-doit')
       sidebarCallback: @showObjects
       sidebarActions: [
