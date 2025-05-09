@@ -17,35 +17,10 @@ returns
   def self.verify(method, api_token, endpoint, username, password, client_id = nil, verify_ssl: false)
     raise __("Invalid i-doit configuration (missing endpoint or api_token). username: #{username}, password: #{password}") if api_token.blank? || endpoint.blank?
 
-# method: 'cmdb.object_types'
-# api_token: @config.api_token
-# endpoint: @config.endpoint
-# username: @config.username
-# password: @config.password
-# client_id: @config.client_id
-# verify_ssl: @config.verify_ssl
-
     params = {
       apikey: api_token,
     }
 
-    #header = {
-    #  'Content-Type' => 'application/json',
-    #  'User-Agent'   => 'Idoit Client'
-    #}
-
-    ## Add Basic Auth header if username and password are provided
-    #if username && password
-    #  auth_token = Base64.strict_encode64("#{username}:#{password}")
-    #  header['Authorization'] = "Basic #{auth_token}"
-    #end
-
-    #auth = {}
-    #credentials = Base64.strict_encode64("#{username}:#{password}")
-    #auth['Authorization'] = "Basic #{credentials}"
-    #header = "Basic #{credentials}"
-
-# def self._query(method, params, url, verify_ssl: false)
     _query(method, username, password, params, _url_cleanup(endpoint), verify_ssl: verify_ssl)
   end
 
@@ -162,9 +137,9 @@ or with filter:
       },
     )
 
-    raise "Can't fetch objects from #{url}: Unable to parse response from server. Invalid JSON response. #{result.data}" if !result.success? && result.error =~ %r{JSON::ParserError:.+?\s+unexpected\s+token\s+at\s+'<!DOCTYPE\s+html}i
-    raise "Can't fetch object from #{url}: Unable to login using given credentials and apiKey. username: #{username}, password: #{password} , #{result.data}" if result.data['error'].present?
-    raise "Can't fetch objects from #{url}: #{result.error} #{result.data}" if !result.success?
+    raise "Can't fetch objects from #{url}: Unable to parse response from server. Invalid JSON response." if !result.success? && result.error =~ %r{JSON::ParserError:.+?\s+unexpected\s+token\s+at\s+'<!DOCTYPE\s+html}i
+    raise "Can't fetch object from #{url}: Unable to login using given credentials and apiKey." if result.data['error'].present?
+    raise "Can't fetch objects from #{url}: #{result.error}" if !result.success?
 
     # add link to idoit
     if result.data['result'].instance_of?(Array)
