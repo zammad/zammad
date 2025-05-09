@@ -14,14 +14,39 @@ returns
 
 =end
 
-  def self.verify(api_token, endpoint, _client_id = nil, verify_ssl: false)
-    raise __('Invalid i-doit configuration (missing endpoint or api_token).') if api_token.blank? || endpoint.blank?
+  def self.verify(method, api_token, endpoint, username, password, client_id = nil, verify_ssl: false)
+    raise __("Invalid i-doit configuration (missing endpoint or api_token). username: #{username}, password: #{password}") if api_token.blank? || endpoint.blank?
+
+# method: 'cmdb.object_types'
+# api_token: @config.api_token
+# endpoint: @config.endpoint
+# username: @config.username
+# password: @config.password
+# client_id: @config.client_id
+# verify_ssl: @config.verify_ssl
 
     params = {
       apikey: api_token,
     }
 
-    _query('cmdb.object_types', params, _url_cleanup(endpoint), verify_ssl: verify_ssl)
+    #header = {
+    #  'Content-Type' => 'application/json',
+    #  'User-Agent'   => 'Idoit Client'
+    #}
+
+    ## Add Basic Auth header if username and password are provided
+    #if username && password
+    #  auth_token = Base64.strict_encode64("#{username}:#{password}")
+    #  header['Authorization'] = "Basic #{auth_token}"
+    #end
+
+    #auth = {}
+    #credentials = Base64.strict_encode64("#{username}:#{password}")
+    #auth['Authorization'] = "Basic #{credentials}"
+    #header = "Basic #{credentials}"
+
+# def self._query(method, params, url, verify_ssl: false)
+    _query(method, username, password, params, _url_cleanup(endpoint), verify_ssl: verify_ssl)
   end
 
 =begin
@@ -86,7 +111,7 @@ or with filter:
 
 =end
 
-  def self.query(method, filter = {})
+  def self.query(method, username, password, filter = {})
     setting = Setting.get('idoit_config')
     raise __("The required field 'api_token' is missing from the config.") if setting[:api_token].blank?
     raise __("The required field 'endpoint' is missing from the config.") if setting[:endpoint].blank?
@@ -97,10 +122,23 @@ or with filter:
     if filter.present?
       params[:filter] = filter
     end
-    _query(method, params, _url_cleanup(setting[:endpoint]), verify_ssl: setting[:verify_ssl])
+
+    _query(method, username, password, params, _url_cleanup(setting[:endpoint]), verify_ssl: setting[:verify_ssl])
   end
 
-  def self._query(method, params, url, verify_ssl: false)
+  def self._query(method, username, password, params, url, verify_ssl: false)
+
+    header = {
+      'Content-Type' => 'application/json',
+      'User-Agent'   => 'Idoit Client'
+    }
+
+    # Add Basic Auth header if username and password are provided
+    if username && password
+      auth_token = Base64.strict_encode64("#{username}:#{password}")
+      header['Authorization'] = "Basic #{auth_token}"
+    end
+
     result = UserAgent.post(
       url,
       {
@@ -113,6 +151,7 @@ or with filter:
         id:      42,
       },
       {
+        headers:      header,
         verify_ssl:   verify_ssl,
         json:         true,
         open_timeout: 6,
@@ -123,9 +162,9 @@ or with filter:
       },
     )
 
-    raise "Can't fetch objects from #{url}: Unable to parse response from server. Invalid JSON response." if !result.success? && result.error =~ %r{JSON::ParserError:.+?\s+unexpected\s+token\s+at\s+'<!DOCTYPE\s+html}i
-    raise "Can't fetch object from #{url}: Unable to login using given credentials and apiKey." if result.data['error'].present?
-    raise "Can't fetch objects from #{url}: #{result.error}" if !result.success?
+    raise "Can't fetch objects from #{url}: Unable to parse response from server. Invalid JSON response. #{result.data}" if !result.success? && result.error =~ %r{JSON::ParserError:.+?\s+unexpected\s+token\s+at\s+'<!DOCTYPE\s+html}i
+    raise "Can't fetch object from #{url}: Unable to login using given credentials and apiKey. username: #{username}, password: #{password} , #{result.data}" if result.data['error'].present?
+    raise "Can't fetch objects from #{url}: #{result.error} #{result.data}" if !result.success?
 
     # add link to idoit
     if result.data['result'].instance_of?(Array)
