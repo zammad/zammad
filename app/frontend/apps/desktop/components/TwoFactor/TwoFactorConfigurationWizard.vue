@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { ref, computed, useTemplateRef } from 'vue'
 
+import { useForm } from '#shared/components/Form/useForm.ts'
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
@@ -49,6 +50,10 @@ const activeComponent = computed(() => {
   }
 })
 
+const form = computed(() => activeComponentInstance.value?.form)
+
+const { formNodeId, isDisabled: isFormDisabled } = useForm(form)
+
 const footerActionOptions = computed(() => ({
   hideActionButton:
     activeComponentInstance.value?.footerActionOptions?.hideActionButton,
@@ -62,7 +67,6 @@ const footerActionOptions = computed(() => ({
     __('Go Back'),
   cancelButton:
     activeComponentInstance.value?.footerActionOptions?.cancelButton,
-  form: activeComponentInstance.value?.footerActionOptions?.form,
 }))
 
 const handleActionPayload = (payload: TwoFactorConfigurationActionPayload) => {
@@ -77,7 +81,7 @@ const handleActionPayload = (payload: TwoFactorConfigurationActionPayload) => {
 }
 
 const onFooterButtonAction = () => {
-  if (activeComponentInstance.value?.footerActionOptions?.form) return
+  if (activeComponentInstance.value?.form) return
   activeComponentInstance.value
     ?.executeAction?.()
     .then((payload) => handleActionPayload(payload))
@@ -108,6 +112,8 @@ const cancel = () => {
   <div class="flex flex-col gap-3">
     <TwoFactorConfigurationWizardFooterActions
       v-bind="footerActionOptions"
+      :form-node-id="formNodeId"
+      :is-form-disabled="isFormDisabled"
       @action="onFooterButtonAction()"
       @cancel="cancel()"
     />

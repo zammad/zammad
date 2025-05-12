@@ -5,24 +5,37 @@ require 'rails_helper'
 RSpec.describe AI::Provider do
   subject(:ai_provider) do
     described_class.new(
-      prompt_system: 'Some test example in JSON format',
-      prompt_user:   'Nothing you need to do.',
-      config:        {
+      config: {
         provider: 'open_ai',
         token:    '123',
       },
     )
   end
 
-  describe '#process' do
+  describe '#ask' do
     it 'raises an error' do
-      expect { ai_provider.process }.to raise_error(RuntimeError, 'Not implemented')
+      expect do
+        ai_provider.ask(
+          prompt_system: Faker::Lorem.sentence,
+          prompt_user:   Faker::Lorem.sentence
+        )
+      end.to raise_error(RuntimeError, 'not implemented')
     end
   end
 
-  describe '.accessible!' do
+  describe '#embed' do
     it 'raises an error' do
-      expect { described_class.accessible! }.to raise_error(RuntimeError, 'Not implemented')
+      expect do
+        ai_provider.embed(
+          input: Faker::Lorem.sentence,
+        )
+      end.to raise_error(RuntimeError, 'not implemented')
+    end
+  end
+
+  describe '.ping!' do
+    it 'raises an error' do
+      expect { described_class.ping! }.to raise_error(RuntimeError, 'not implemented')
     end
   end
 
@@ -38,7 +51,7 @@ RSpec.describe AI::Provider do
     end
   end
 
-  describe '#handle_response' do
+  describe '#validate_response!' do
     let(:code)     { 0 }
     let(:success)  { nil }
     let(:response) { UserAgent::Result.new(code:, success:) }
@@ -48,12 +61,8 @@ RSpec.describe AI::Provider do
       let(:code) { 200 }
       let(:success) { true }
 
-      before do
-        allow(ai_provider).to receive(:handle_success).and_return(true)
-      end
-
       it 'returns the response content' do
-        expect(ai_provider.handle_response(response, provider)).to be(true)
+        expect { ai_provider.validate_response!(response) }.not_to raise_error
       end
     end
 
@@ -62,7 +71,7 @@ RSpec.describe AI::Provider do
       let(:success) { false }
 
       it "raises an error with message 'Invalid request - please check your input'" do
-        expect { ai_provider.handle_response(response, provider) }
+        expect { ai_provider.validate_response!(response) }
           .to raise_error(AI::Provider::ResponseError, 'Invalid request - please check your input')
       end
     end
@@ -72,7 +81,7 @@ RSpec.describe AI::Provider do
       let(:success) { false }
 
       it "raises an error with message 'Invalid API key - please check your configuration'" do
-        expect { ai_provider.handle_response(response, provider) }
+        expect { ai_provider.validate_response!(response) }
           .to raise_error(AI::Provider::ResponseError, 'Invalid API key - please check your configuration')
       end
     end
@@ -82,7 +91,7 @@ RSpec.describe AI::Provider do
       let(:success) { false }
 
       it "raises an error with message 'Payment required - please top up your account'" do
-        expect { ai_provider.handle_response(response, provider) }
+        expect { ai_provider.validate_response!(response) }
           .to raise_error(AI::Provider::ResponseError, 'Payment required - please top up your account')
       end
     end
@@ -92,7 +101,7 @@ RSpec.describe AI::Provider do
       let(:success) { false }
 
       it "raises an error with message 'Forbidden - you do not have permission to access this resource'" do
-        expect { ai_provider.handle_response(response, provider) }
+        expect { ai_provider.validate_response!(response) }
           .to raise_error(AI::Provider::ResponseError, 'Forbidden - you do not have permission to access this resource')
       end
     end
@@ -102,7 +111,7 @@ RSpec.describe AI::Provider do
       let(:success) { false }
 
       it "raises an error with message 'Rate limit exceeded - please wait a moment'" do
-        expect { ai_provider.handle_response(response, provider) }
+        expect { ai_provider.validate_response!(response) }
           .to raise_error(AI::Provider::ResponseError, 'Rate limit exceeded - please wait a moment')
       end
     end
@@ -112,7 +121,7 @@ RSpec.describe AI::Provider do
       let(:success) { false }
 
       it "raises an error with message 'API server error - please try again'" do
-        expect { ai_provider.handle_response(response, provider) }
+        expect { ai_provider.validate_response!(response) }
           .to raise_error(AI::Provider::ResponseError, 'API server error - please try again')
       end
     end
@@ -122,7 +131,7 @@ RSpec.describe AI::Provider do
       let(:success) { false }
 
       it "raises an error with message 'API server unavailable - please try again later'" do
-        expect { ai_provider.handle_response(response, provider) }
+        expect { ai_provider.validate_response!(response) }
           .to raise_error(AI::Provider::ResponseError, 'API server unavailable - please try again later')
       end
     end
@@ -132,7 +141,7 @@ RSpec.describe AI::Provider do
       let(:success) { false }
 
       it "raises an error with message 'API server unavailable - please try again later'" do
-        expect { ai_provider.handle_response(response, provider) }
+        expect { ai_provider.validate_response!(response) }
           .to raise_error(AI::Provider::ResponseError, 'API server unavailable - please try again later')
       end
     end
@@ -142,7 +151,7 @@ RSpec.describe AI::Provider do
       let(:success) { false }
 
       it "raises an error with message 'An unknown error occurred'" do
-        expect { ai_provider.handle_response(response, provider) }
+        expect { ai_provider.validate_response!(response) }
           .to raise_error(AI::Provider::ResponseError, 'An unknown error occurred')
       end
     end

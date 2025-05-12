@@ -1,4 +1,4 @@
 <div class="flex fullscreenMessage">
   <%- @Icon('diagonal-cross', 'icon-error') %>
-  <h2><%- @T('Oops.. I\'m sorry, but you have insufficient rights to open this %s.', @objectName ) %></h2>
+  <h2><%- @T('You are not authorized to open this %s.', @Tp(@objectName) ) %></h2>
 </div>

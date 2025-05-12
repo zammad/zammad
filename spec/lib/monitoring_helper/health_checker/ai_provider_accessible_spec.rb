@@ -34,14 +34,14 @@ RSpec.describe MonitoringHelper::HealthChecker::AIProviderAccessible, integratio
 
       context 'when AI provider is accessible' do
         it 'reports no issue' do
-          allow(AI::Provider::OpenAI).to receive(:accessible!).and_return(nil)
+          allow(AI::Provider::OpenAI).to receive(:ping!).and_return(nil)
           expect(instance.check_health.issues).to be_blank
         end
       end
 
       context 'when AI provider is not accessible' do
         it 'reports an issue' do
-          allow(AI::Provider::OpenAI).to receive(:accessible!).and_raise(AI::Provider::ResponseError)
+          allow(AI::Provider::OpenAI).to receive(:ping!).and_raise(AI::Provider::ResponseError)
           expect(instance.check_health.issues.first).to match('The AI Provider is not accessible.')
         end
       end

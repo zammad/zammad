@@ -346,13 +346,14 @@ FactoryBot.define do
             'options' => {
               'user'           => microsoft_user,
               'shared_mailbox' => microsoft_shared_mailbox,
-            }.merge(inbound_options),
+            }.compact.merge(inbound_options),
           },
           'outbound' => {
             'adapter' => 'microsoft_graph_outbound',
             'options' => {
-              'user' => microsoft_user,
-            },
+              'user'           => microsoft_user,
+              'shared_mailbox' => microsoft_shared_mailbox,
+            }.compact,
           },
           'auth'     => {
             'type'          => 'XOAUTH2',

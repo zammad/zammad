@@ -77,7 +77,7 @@ const handleActionPayload = (payload: TwoFactorConfigurationActionPayload) => {
 }
 
 const onFooterButtonAction = () => {
-  if (activeComponentInstance.value?.footerActionOptions?.form) return
+  if (activeComponentInstance.value?.form) return
   activeComponentInstance.value
     ?.executeAction?.()
     .then((payload) => handleActionPayload(payload))
@@ -88,6 +88,7 @@ const onFooterButtonAction = () => {
 <template>
   <CommonFlyout
     :header-title="headerTitle"
+    :form="activeComponentInstance?.form"
     :footer-action-options="activeComponentInstance?.footerActionOptions"
     :header-icon="activeComponentInstance?.headerIcon"
     :name="flyoutName"

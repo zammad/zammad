@@ -9,7 +9,9 @@ import { removeSignatureFromBody } from '#shared/utils/dom.ts'
 
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 
-export const useTicketSharedDraft = () => {
+export const useTicketSharedDraft = (
+  setSkipNextStateUpdate?: (skip: boolean) => void,
+) => {
   const mapSharedDraftParams = (ticketId: string, form?: FormRef) => {
     const {
       article: newArticle,
@@ -54,6 +56,7 @@ export const useTicketSharedDraft = () => {
         draftType === 'start'
           ? useTicketSharedDraftStartDeleteMutation
           : useTicketSharedDraftZoomDeleteMutation,
+      setSkipNextStateUpdate,
     })
   }
 

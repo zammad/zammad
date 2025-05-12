@@ -17,17 +17,19 @@ class ExternalCredential::MicrosoftGraph < ExternalCredential::MicrosoftBase
     {
       adapter: 'microsoft_graph_inbound',
       options: {
-        user: user_data[:preferred_username],
-      }.merge(account_data[:shared_mailbox].present? ? { shared_mailbox: account_data[:shared_mailbox] } : {}),
+        user:           user_data[:preferred_username],
+        shared_mailbox: account_data[:shared_mailbox],
+      }.compact_blank,
     }
   end
 
-  def self.channel_options_outbound(user_data)
+  def self.channel_options_outbound(user_data, account_data)
     {
       adapter: 'microsoft_graph_outbound',
       options: {
-        user: user_data[:preferred_username],
-      }
+        user:           user_data[:preferred_username],
+        shared_mailbox: account_data[:shared_mailbox],
+      }.compact_blank,
     }
   end
 end

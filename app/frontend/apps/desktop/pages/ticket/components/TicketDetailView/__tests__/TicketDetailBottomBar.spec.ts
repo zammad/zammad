@@ -40,6 +40,7 @@ const renderTicketDetailBottomBar = (props?: Partial<Props>) =>
       liveUserList: [],
       ticketId: ticket.id,
       isTicketAgent: true,
+      setSkipNextStateUpdate: vi.fn(),
       ...props,
     },
     store: true,

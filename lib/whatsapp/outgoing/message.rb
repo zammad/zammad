@@ -18,7 +18,7 @@ class Whatsapp::Outgoing::Message < Whatsapp::Client
 
   def handle_response(response:)
     {
-      id: response.data.messages.first.id,
+      id: response.messages.first.id,
     }
   end
 end

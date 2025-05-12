@@ -59,15 +59,15 @@ RSpec.describe Whatsapp::Webhook::Message::Audio, :aggregate_failures, current_u
       let(:valid_checksum) { Digest::SHA2.new(256).hexdigest(media_content) }
 
       let(:internal_response1) do
-        Struct.new(:data, :error).new(Struct.new(:url, :mime_type, :sha256).new(url, mime_type, valid_checksum), nil)
+        Struct.new(:url, :mime_type, :sha256).new(url, mime_type, valid_checksum)
       end
 
       let(:internal_response2) do
-        Struct.new(:data, :error).new(Struct.new(:success).new(true), nil)
+        Struct.new(:success).new(true)
       end
 
       before do
-        allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:media).and_return(internal_response1)
+        allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:get).and_return(internal_response1)
         allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:download).and_return(internal_response2)
 
         allow_any_instance_of(Whatsapp::Incoming::Media).to receive(:with_tmpfile).and_yield(media_file)

@@ -61,12 +61,12 @@ const submitLink = async (data: SubmitData) => {
     :header-title="label"
     :name="name"
     no-close-on-action
+    :form="form"
     :footer-action-options="{
       actionButton: {
         type: 'submit',
       },
       actionLabel: $t('Link Issue'),
-      form: form,
     }"
   >
     <Form

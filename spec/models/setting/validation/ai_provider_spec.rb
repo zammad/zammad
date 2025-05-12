@@ -14,7 +14,7 @@ RSpec.describe Setting::Validation::AIProvider do
 
   context 'with unsupported provider' do
     it 'raises error' do
-      expect { Setting.set(setting_name, { 'provider' => 'unsupported' }) }.to raise_error(ActiveRecord::RecordInvalid)
+      expect { Setting.set(setting_name, 'unsupported') }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 

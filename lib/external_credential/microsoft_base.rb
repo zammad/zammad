@@ -13,11 +13,11 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     raise NotImplementedError
   end
 
-  def self.channel_options_inbound(user_data)
+  def self.channel_options_inbound(user_data, account_data)
     raise NotImplementedError
   end
 
-  def self.channel_options_outbound(user_data)
+  def self.channel_options_outbound(user_data, account_data)
     raise NotImplementedError
   end
 
@@ -83,7 +83,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
 
     channel_options = {
       inbound:  channel_options_inbound(user_data, account_data),
-      outbound: channel_options_outbound(user_data),
+      outbound: channel_options_outbound(user_data, account_data),
       auth:     response.merge(
         provider:      provider_name,
         type:          'XOAUTH2',

@@ -4,7 +4,7 @@ import { describe } from 'vitest'
 import { ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import {
@@ -17,11 +17,7 @@ import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 describe('CommonSimpleEntityList', () => {
   describe('Entity Types', () => {
     it('renders a list of users', async () => {
-      mockUserCurrent({
-        permissions: {
-          names: ['ticket.agent'],
-        },
-      })
+      mockPermissions(['ticket.agent'])
 
       const wrapper = renderComponent(CommonSimpleEntityList, {
         router: true,

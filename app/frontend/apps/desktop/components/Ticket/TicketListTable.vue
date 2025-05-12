@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 
+import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
 import ObjectAttributeContent from '#shared/components/ObjectAttributes/ObjectAttribute.vue'
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
 import type { TicketByList } from '#shared/entities/ticket/types.ts'
@@ -36,6 +37,14 @@ const { goToItem, goToItemLinkColumn, loadMore, resort, storageKeyId } =
 const { config } = storeToRefs(useApplicationStore())
 
 const { bulkEditActive, checkedTicketIds } = useTicketBulkEdit()
+
+const userPopoverSlots: {
+  slotName: string
+  ticketAttribute: keyof TicketByList
+}[] = [
+  { slotName: 'column-cell-customer_id', ticketAttribute: 'customer' },
+  { slotName: 'column-cell-owner_id', ticketAttribute: 'owner' },
+]
 </script>
 
 <template>
@@ -122,8 +131,18 @@ const { bulkEditActive, checkedTicketIds } = useTicketBulkEdit()
           }"
         />
       </template>
-      <template #column-cell-customer_id="{ item, isRowSelected, attribute }">
-        <UserPopoverWithTrigger :user="(item as TicketByList).customer" no-link>
+      <template
+        v-for="{ slotName, ticketAttribute } in userPopoverSlots"
+        :key="slotName"
+        #[slotName]="{ item, isRowSelected, attribute }"
+      >
+        {{ item[attribute] }}
+        <UserPopoverWithTrigger
+          :popover-config="{ orientation: 'left' }"
+          :user="(item as TicketByList)[ticketAttribute] as AvatarUser"
+          class="outline-none!"
+          no-link
+        >
           <CommonLabel
             class="block! shrink-0 truncate outline-offset-0! group-hover:text-black! group-hover:dark:text-white!"
             :class="{

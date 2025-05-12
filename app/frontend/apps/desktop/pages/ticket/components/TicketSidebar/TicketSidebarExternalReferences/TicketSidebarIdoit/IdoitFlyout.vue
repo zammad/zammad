@@ -180,13 +180,13 @@ const submitObjects = async (data: FormDataRecords) => {
     :header-title="__('i-doit: Link objects')"
     :name="flyoutName"
     no-close-on-action
+    :form="form"
     :footer-action-options="{
       actionLabel: $t('Link Objects'),
       actionButton: {
         type: 'submit',
         disabled: !isValid,
       },
-      form,
     }"
   >
     <Form

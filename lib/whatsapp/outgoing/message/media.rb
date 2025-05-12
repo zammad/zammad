@@ -30,8 +30,9 @@ class Whatsapp::Outgoing::Message::Media < Whatsapp::Outgoing::Message
     media_id = upload(store:, mime_type:)
     response = send(:"deliver_#{media_type}", media_id:, caption:)
 
-    handle_error(response:)
     handle_response(response:)
+  rescue WhatsappSdk::Api::Responses::HttpResponseError => e
+    handle_error(response: e)
   end
 
   private
@@ -49,10 +50,10 @@ class Whatsapp::Outgoing::Message::Media < Whatsapp::Outgoing::Message
 
       response = medias_api.upload(sender_id: phone_number_id.to_i, file_path: file.path, type: mime_type)
 
-      handle_error(response:)
-
-      response.data.id
+      response.id
     end
+  rescue WhatsappSdk::Api::Responses::HttpResponseError => e
+    handle_error(response: e)
   end
 
   def deliver_audio(media_id:, caption:)

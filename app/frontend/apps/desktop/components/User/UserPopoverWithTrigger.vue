@@ -22,12 +22,21 @@ export interface Props {
   triggerClass?: string
   noLink?: boolean
   noFocusStyling?: boolean
+  noHoverStyling?: boolean
 }
 
 const props = defineProps<Props>()
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 defineSlots<{
-  default(props: { isOpen?: boolean | undefined; popoverId?: string }): never
+  default(props: {
+    isOpen?: boolean | undefined
+    popoverId?: string
+    hasOpenViaLongClick?: boolean
+  }): never
 }>()
 
 const userInternalId = computed(() => getIdFromGraphQLId(props.user.id))
@@ -50,6 +59,7 @@ const isSystemUser = computed(() => {
       !$slots?.default?.() ? 'rounded-full! focus-visible:outline-2!' : '',
       triggerClass ?? '',
     ]"
+    :no-hover-styling="noHoverStyling"
     :no-focus-styling="noFocusStyling"
     :trigger-link="!noLink ? `/user/profile/${userInternalId}` : undefined"
     :trigger-link-active-class="
@@ -57,10 +67,14 @@ const isSystemUser = computed(() => {
         ? 'outline-2! outline-offset-1! outline-blue-800! hover:outline-blue-800!'
         : ''
     "
-    v-bind="popoverConfig"
+    v-bind="{ ...popoverConfig, ...$attrs }"
   >
-    <template #popover-content="{ popoverId }">
-      <UserPopover :id="popoverId" :user-avatar="user" />
+    <template #popover-content="{ popoverId, hasOpenedViaLongClick }">
+      <UserPopover
+        :id="popoverId"
+        :user-avatar="user"
+        :has-open-via-long-click="hasOpenedViaLongClick"
+      />
     </template>
 
     <template #default="slotProps">

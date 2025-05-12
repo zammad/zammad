@@ -1,4 +1,4 @@
 <div class="flex fullscreenMessage">
   <%- @Icon('diagonal-cross', 'icon-error') %>
-  <h2>Oops.. I'm sorry, but you have insufficient rights to open this ticket.</h2>
+  <h2>You are not authorized to open this ticket.</h2>
 </div>

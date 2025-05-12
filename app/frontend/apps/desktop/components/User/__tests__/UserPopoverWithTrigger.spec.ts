@@ -3,7 +3,7 @@
 import { within } from '@testing-library/vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import {
   mockUserQuery,
@@ -79,11 +79,7 @@ const renderUserPopover = (
     user: props?.user ?? dummyUser,
   })
 
-  mockUserCurrent({
-    permissions: {
-      names: [isAgent ? 'ticket.agent' : 'ticket.customer'],
-    },
-  })
+  mockPermissions([isAgent ? 'ticket.agent' : 'ticket.customer'])
 
   return renderComponent(UserPopoverWithTrigger, {
     props: {

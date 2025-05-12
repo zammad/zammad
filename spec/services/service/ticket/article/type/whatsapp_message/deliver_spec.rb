@@ -79,7 +79,7 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
       context 'with all needed meta data' do
         let(:message_id) { "wamid.#{Faker::Crypto.unique.sha1}==" }
         let(:internal_response) do
-          Struct.new(:data, :error).new(Struct.new(:messages).new([Struct.new(:id).new(message_id)]), nil)
+          Struct.new(:messages).new([Struct.new(:id).new(message_id)])
         end
 
         shared_examples 'successful delivery' do
@@ -103,8 +103,8 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
 
         context 'with an media whatsapp article (image)' do
           let(:media_id)                { Faker::Number.unique.number(digits: 15) }
-          let(:internal_response_media) { Struct.new(:data, :error).new(Struct.new(:id).new(media_id), nil) }
-          let(:internal_response)       { Struct.new(:data, :error).new(Struct.new(:messages).new([Struct.new(:id).new(message_id)]), nil) }
+          let(:internal_response_media) { Struct.new(:id).new(media_id) }
+          let(:internal_response)       { Struct.new(:messages).new([Struct.new(:id).new(message_id)]) }
 
           before do
             create(

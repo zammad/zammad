@@ -25,7 +25,7 @@ RSpec.describe Whatsapp::Outgoing::Message::Text do
       let(:response)   { { id: message_id } }
 
       let(:internal_response) do
-        Struct.new(:data, :error).new(Struct.new(:messages).new([Struct.new(:id).new(message_id)]), nil)
+        Struct.new(:messages).new([Struct.new(:id).new(message_id)])
       end
 
       it 'returns sent message id' do
@@ -34,7 +34,15 @@ RSpec.describe Whatsapp::Outgoing::Message::Text do
     end
 
     context 'with unsuccessful response' do
-      let(:internal_response) { Struct.new(:data, :error, :raw_response).new(nil, Struct.new(:message).new('error message'), '{}') }
+      before do
+        exception = WhatsappSdk::Api::Responses::HttpResponseError.new(
+          body:        Struct.new(:error).new({ 'message' => 'error message' }),
+          http_status: 500,
+        )
+        allow_any_instance_of(WhatsappSdk::Api::Messages).to receive(:send_text).and_raise(exception)
+      end
+
+      let(:internal_response) { nil }
 
       it 'raises an error' do
         expect { instance.deliver(body:) }.to raise_error(Whatsapp::Client::CloudAPIError, 'error message')

@@ -19,7 +19,7 @@
           <form id="login" class="js-form">
             <% if @item.errorMessage: %>
               <div class="alert alert--danger" role="alert">
-                <%= @item.errorMessage %>
+                <%- @item.errorMessage %>
               </div>
             <% end %>
 

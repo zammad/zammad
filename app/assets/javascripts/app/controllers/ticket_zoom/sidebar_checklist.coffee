@@ -1,16 +1,29 @@
 class SidebarChecklist extends App.Controller
   constructor: ->
     super
-
     @changeable = @ticket.userGroupAccess('change')
 
     @controllerBind('ui::ticket::checklistSidebar::showLoader', =>
       @widget.showLoader() if typeof @widget?.showLoader is 'function'
     )
 
+    @controllerBind('config_update', @configHasChanged)
+
   release: =>
     super
     @unsubscribe()
+
+  sidebarItem: =>
+    return if !App.Config.get('checklist')
+    return if @ticket.currentView() != 'agent'
+
+    @item = {
+      name: 'checklist'
+      badgeCallback: @badgeRender
+      sidebarHead: __('Checklist')
+      sidebarCallback: @showChecklist
+      sidebarActions: @sidebarActions()
+    }
 
   sidebarActions: =>
     result = []
@@ -29,6 +42,11 @@ class SidebarChecklist extends App.Controller
 
     result
 
+  configHasChanged: (config) =>
+    return if config.name isnt 'checklist'
+
+    App.Event.trigger('ui::ticket::sidebarRerender', { taskKey: @taskKey })
+
   renameChecklist: =>
     @widget?.onTitleChange()
 
@@ -40,23 +58,10 @@ class SidebarChecklist extends App.Controller
           done: =>
             @widget = new App.SidebarChecklistStart(el: @elSidebar, parentVC: @)
         )
-        @ticket.checklist_id = undefined
     )
 
   renderActions: =>
     @parentSidebar.sidebarActionsRender('checklist', @sidebarActions())
-
-  sidebarItem: =>
-    return if !App.Config.get('checklist')
-    return if @ticket.currentView() != 'agent'
-
-    @item = {
-      name: 'checklist'
-      badgeCallback: @badgeRender
-      sidebarHead: __('Checklist')
-      sidebarCallback: @showChecklist
-      sidebarActions: @sidebarActions()
-    }
 
   subscribe: =>
     @unsubscribe()

@@ -3,6 +3,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
+
+import UserPopoverWithTrigger from '#desktop/components/User/UserPopoverWithTrigger.vue'
+
 import type { QuickSearchPluginProps } from '../../types.ts'
 
 const props = defineProps<QuickSearchPluginProps>()
@@ -11,12 +15,10 @@ const isUserInactive = computed(() => !props.item?.active)
 </script>
 
 <template>
-  <CommonLink
-    v-tooltip="item.fullname"
+  <UserPopoverWithTrigger
     class="group/item flex grow gap-2 rounded-md px-2 py-3 text-neutral-400 hover:bg-blue-900 hover:no-underline!"
-    :link="`/users/${item.internalId}`"
+    :user="item as AvatarUser"
     :aria-description="isUserInactive ? $t('User is inactive.') : undefined"
-    internal
   >
     <CommonIcon
       class="shrink-0 text-neutral-500"
@@ -32,5 +34,5 @@ const isUserInactive = computed(() => !props.item?.active)
     >
       {{ item.fullname }}
     </CommonLabel>
-  </CommonLink>
+  </UserPopoverWithTrigger>
 </template>

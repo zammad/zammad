@@ -150,8 +150,8 @@ describe('QuickSearchResultList', async () => {
           {
             __typename: 'User',
             active: false,
-            id: convertToGraphQLId('User', 1),
-            internalId: 1,
+            id: convertToGraphQLId('User', 2),
+            internalId: 2,
             fullname: 'User 1',
           },
         ],

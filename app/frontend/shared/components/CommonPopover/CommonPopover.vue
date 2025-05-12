@@ -24,6 +24,7 @@ import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { getPopoverClasses } from '#shared/initializer/initializePopover.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
+import emitter from '#shared/utils/emitter.ts'
 import stopEvent from '#shared/utils/events.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
@@ -370,6 +371,10 @@ onMounted(() => {
   testFlags.set(
     props.id ? `common-popover.mounted-${props.id}` : 'common-popover.mounted',
   )
+})
+
+emitter.on('close-popover', () => {
+  if (showPopover.value) closePopover()
 })
 </script>
 

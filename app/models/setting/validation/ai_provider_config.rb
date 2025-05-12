@@ -41,7 +41,7 @@ class Setting::Validation::AIProviderConfig < Setting::Validation::Base
   def accessible
     provider_class = AI::Provider.by_name(provider)
 
-    provider_class.accessible!(value)
+    provider_class.ping!(value)
 
     nil
   rescue => e

@@ -3,12 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe AI::Provider::ZammadAI, required_envs: %w[ZAMMAD_AI_TOKEN ZAMMAD_AI_API_URL], use_vcr: true do
-  subject(:ai_provider) do
-    described_class.new(
-      prompt_system: 'This is a connection test. Return "true" in unprettified JSON if you got the message.',
-      prompt_user:   'Return true.',
-    )
-  end
+  subject(:ai_provider) { described_class.new(options: { json_response: true }) }
+
+  let(:prompt_system) { '' }
+  let(:prompt_user)   { 'This is a connection test. Return in unprettified JSON \'{ "connected": "true" }\' if you got the message.' }
 
   before do
     Setting.set('ai_provider', 'zammad_ai')
@@ -18,7 +16,7 @@ RSpec.describe AI::Provider::ZammadAI, required_envs: %w[ZAMMAD_AI_TOKEN ZAMMAD_
   end
 
   it 'does exchange data with ZammadAI endpoint' do
-    expect(ai_provider.request).to include('true')
+    expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
   end
 
   context 'when API is faulty' do
@@ -31,7 +29,9 @@ RSpec.describe AI::Provider::ZammadAI, required_envs: %w[ZAMMAD_AI_TOKEN ZAMMAD_
         )
       )
 
-      expect { ai_provider.request }.to raise_error(AI::Provider::ResponseError, 'Invalid request - please check your input')
+      expect do
+        ai_provider.ask(prompt_system:, prompt_user:)
+      end.to raise_error(AI::Provider::ResponseError, 'Invalid request - please check your input')
     end
   end
 end

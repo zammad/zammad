@@ -2463,7 +2463,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     it 'does fail properly for ticket numbers which are not found' do
       visit '#ticket/zoom/number/123456789'
-      expect(page).to have_text("I can't find this Ticket")
+      expect(page).to have_text('The requested Ticket could not be found.')
     end
   end
 

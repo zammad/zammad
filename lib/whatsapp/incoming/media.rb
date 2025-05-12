@@ -25,25 +25,25 @@ class Whatsapp::Incoming::Media < Whatsapp::Client
   private
 
   def retrieve_metadata(media_id:)
-    response = medias_api.media(media_id:)
-
-    handle_error(response:)
+    response = medias_api.get(media_id:)
 
     {
-      url:        response.data.url,
-      media_type: response.data.mime_type,
-      sha256:     response.data.sha256,
+      url:        response.url,
+      media_type: response.mime_type,
+      sha256:     response.sha256,
     }
+  rescue WhatsappSdk::Api::Responses::HttpResponseError => e
+    handle_error(response: e)
   end
 
   def retrieve_content(url:, media_type:)
     with_tmpfile(prefix: 'whatsapp-media-download') do |file|
-      response = medias_api.download(url:, file_path: file.path, media_type:)
-
-      handle_error(response:)
+      medias_api.download(url:, file_path: file.path, media_type:)
 
       file.read
     end
+  rescue WhatsappSdk::Api::Responses::HttpResponseError => e
+    handle_error(response: e)
   end
 
   def valid_checksum?(content, sha256)

@@ -12,10 +12,9 @@ class Whatsapp::Account::PhoneNumbers < Whatsapp::Client
   end
 
   def all
-
     raise ArgumentError, __("The required parameter 'business_id' is missing.") if business_id.nil?
 
-    phone_numbers = phone_numbers_api.registered_numbers(business_id.to_i).data&.phone_numbers
+    phone_numbers = phone_numbers_api.list(business_id.to_i).records
 
     return [] if phone_numbers.nil?
 
@@ -25,10 +24,12 @@ class Whatsapp::Account::PhoneNumbers < Whatsapp::Client
         format('%{name} (%{number})', name: phone_number.verified_name, number: phone_number.display_phone_number),
       ]
     end
+  rescue WhatsappSdk::Api::Responses::HttpResponseError => e
+    handle_error(response: e)
   end
 
   def get(id)
-    phone_number = phone_numbers_api.registered_number(id.to_i).data
+    phone_number = phone_numbers_api.get(id.to_i)
 
     return if phone_number.nil?
 
@@ -36,5 +37,7 @@ class Whatsapp::Account::PhoneNumbers < Whatsapp::Client
       name:         phone_number.verified_name,
       phone_number: phone_number.display_phone_number
     }
+  rescue WhatsappSdk::Api::Responses::HttpResponseError => e
+    handle_error(response: e)
   end
 end

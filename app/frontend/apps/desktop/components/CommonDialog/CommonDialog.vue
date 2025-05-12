@@ -1,16 +1,19 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onKeyUp } from '@vueuse/core'
-import { useTemplateRef, nextTick, onMounted, computed } from 'vue'
+import { computed, nextTick, onMounted, useTemplateRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
-import stopEvent from '#shared/utils/events.ts'
 import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
+import {
+  KeyboardKey,
+  type OrderKeyHandlerConfig,
+} from '#desktop/composables/useOrderedKeyboardEvents/types.ts'
+import { useKeyboardEventBus } from '#desktop/composables/useOrderedKeyboardEvents/useKeyboardEventBus.ts'
 import { getRouteIdentifier } from '#desktop/composables/useOverlayContainer.ts'
 
 import CommonDialogActionFooter, {
@@ -35,6 +38,7 @@ export interface Props {
   noAutofocus?: boolean
   fullscreen?: boolean
   global?: boolean
+  escapeConfig?: Pick<OrderKeyHandlerConfig, 'beforeHandlerRuns' | 'handler'>
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -70,18 +74,28 @@ const close = async (cancel?: boolean) => {
 
 const dialogId = `dialog-${props.name}`
 
-onKeyUp('Escape', (e) => {
-  stopEvent(e)
-  close()
-})
+const escapeConfig: OrderKeyHandlerConfig = {
+  handler: close,
+  key: dialogId,
+  beforeHandlerRuns: props.escapeConfig?.beforeHandlerRuns,
+}
+
+const { unsubscribeEvent, subscribeEvent } = useKeyboardEventBus(
+  KeyboardKey.Escape,
+  escapeConfig,
+)
+
+watch(isActive, (isActive) =>
+  isActive ? subscribeEvent(escapeConfig) : unsubscribeEvent(escapeConfig),
+)
 
 useTrapTab(dialogElement)
 
 onMounted(() => {
   if (props.noAutofocus) return
 
-  // Will try to find focusable element inside dialog main and footer content.
-  // If it won't find it, will try to find inside the header most likely will find "Close" button.
+  // Will try to find a focusable element inside dialog main and footer content.
+  // If it doesn't find it, will try to find inside the header most likely will find "Close" button.
   const firstFocusable =
     getFirstFocusableElement(contentElement.value) ||
     getFirstFocusableElement(footerElement.value) ||

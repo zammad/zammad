@@ -8,7 +8,7 @@ Please make sure that you setup your system correctly by following our
 We emphasize to set following environment variables for developing Zammad.
 
 - Out of the box, `rails db:seed` is _very_ slow, because it pulls a large library of user interface translations
-(in over thirty different languages) from a remote server.
+  (in over thirty different languages) from a remote server.
 
   To speed this up, use `$Z_LOCALES` to limit the set of downloaded translations.
 
@@ -32,8 +32,9 @@ git clone git@github.com:zammad/zammad.git
 
 ## Initializing Zammad
 
-After the installation of the correct Ruby version (see [**here**](../development_environment/index.md#rvm)), the
-following command can be used to install all Ruby dependencies:
+After the installation of the correct Ruby version
+(see [**RVM chapter**](../development_environment/how-to-set-up-a-development-environment.md#rvm)),
+the following command can be used to install all Ruby dependencies:
 
 ```sh
 bundle config set --local without 'mysql'

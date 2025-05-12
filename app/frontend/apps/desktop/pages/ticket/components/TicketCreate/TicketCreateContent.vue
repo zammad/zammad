@@ -318,6 +318,7 @@ const sidebarContext = computed<TicketSidebarContext>(() => ({
   form: form.value,
   formValues: values.value,
   currentTaskbarTabId,
+  setSkipNextStateUpdate,
 }))
 
 useProvideTicketSidebar(sidebarContext)

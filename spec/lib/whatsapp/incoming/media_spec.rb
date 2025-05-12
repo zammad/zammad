@@ -18,7 +18,7 @@ RSpec.describe Whatsapp::Incoming::Media do
     let(:media_id) { Faker::Number.unique.number(digits: 15) }
 
     before do
-      allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:media).and_return(internal_response1)
+      allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:get).and_return(internal_response1)
       allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:download).and_return(internal_response2)
     end
 
@@ -27,11 +27,11 @@ RSpec.describe Whatsapp::Incoming::Media do
       let(:mime_type) { 'image/jpeg' }
 
       let(:internal_response1) do
-        Struct.new(:data, :error).new(Struct.new(:url, :mime_type, :sha256).new(url, mime_type, valid_checksum), nil)
+        Struct.new(:url, :mime_type, :sha256).new(url, mime_type, valid_checksum)
       end
 
       let(:internal_response2) do
-        Struct.new(:data, :error).new(Struct.new(:success).new(true), nil)
+        Struct.new(:success).new(true)
       end
 
       before do
@@ -47,30 +47,44 @@ RSpec.describe Whatsapp::Incoming::Media do
       end
     end
 
-    context 'with unsuccessful response (1)' do
-      let(:internal_response1) { Struct.new(:data, :error, :raw_response).new(nil, Struct.new(:message).new('error message'), '{}') }
+    context 'with unsuccessful response' do
+      context 'when retreiving metadata fails' do
+        before do
+          exception = WhatsappSdk::Api::Responses::HttpResponseError.new(
+            body:        Struct.new(:error).new({ 'message' => 'error message' }),
+            http_status: 500,
+          )
+          allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:get).and_raise(exception)
+        end
 
-      let(:internal_response2) do
-        Struct.new(:data, :error).new(Struct.new(:success).new(true), nil)
+        let(:internal_response1) { nil }
+        let(:internal_response2) { nil }
+
+        it 'raises an error' do
+          expect { instance.download(media_id:) }.to raise_error(Whatsapp::Client::CloudAPIError)
+        end
       end
 
-      it 'raises an error' do
-        expect { instance.download(media_id:) }.to raise_error(Whatsapp::Client::CloudAPIError, 'error message')
-      end
-    end
+      context 'when retreiving media fails' do
+        before do
+          exception = WhatsappSdk::Api::Responses::HttpResponseError.new(
+            body:        Struct.new(:error).new({ 'message' => 'error message' }),
+            http_status: 500,
+          )
+          allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:download).and_raise(exception)
+        end
 
-    context 'with unsuccessful response (2)' do
-      let(:url)       { Faker::Internet.unique.url }
-      let(:mime_type) { 'image/jpeg' }
+        let(:url)       { Faker::Internet.unique.url }
+        let(:mime_type) { 'image/jpeg' }
 
-      let(:internal_response1) do
-        Struct.new(:data, :error).new(Struct.new(:url, :mime_type, :sha256).new(url, mime_type, valid_checksum), nil)
-      end
+        let(:internal_response1) do
+          Struct.new(:url, :mime_type, :sha256).new(url, mime_type, valid_checksum)
+        end
+        let(:internal_response2) { nil }
 
-      let(:internal_response2) { Struct.new(:data, :error, :raw_response).new(nil, Struct.new(:message).new('error message'), '{}') }
-
-      it 'raises an error' do
-        expect { instance.download(media_id:) }.to raise_error(Whatsapp::Client::CloudAPIError, 'error message')
+        it 'raises an error' do
+          expect { instance.download(media_id:) }.to raise_error(Whatsapp::Client::CloudAPIError)
+        end
       end
     end
 
@@ -79,11 +93,11 @@ RSpec.describe Whatsapp::Incoming::Media do
       let(:mime_type) { 'image/jpeg' }
 
       let(:internal_response1) do
-        Struct.new(:data, :error).new(Struct.new(:url, :mime_type, :sha256).new(url, mime_type, Faker::Crypto.unique.sha256), nil)
+        Struct.new(:url, :mime_type, :sha256).new(url, mime_type, Faker::Crypto.unique.sha256)
       end
 
       let(:internal_response2) do
-        Struct.new(:data, :error).new(Struct.new(:success).new(true), nil)
+        Struct.new(:success).new(true)
       end
 
       before do

@@ -12,11 +12,11 @@ module CanSelector
       end
 
       def calculate_sorting
-        raise __('Not implemented')
+        raise 'not implemented'
       end
 
       def self.applicable?(_input, _locale, _object)
-        raise __('Not implemented')
+        raise 'not implemented'
       end
 
       def self.column_name(column_or_input, object, fallback: nil)
@@ -30,7 +30,7 @@ module CanSelector
 
         return fallback if fallback && column_names.include?(fallback.to_s)
 
-        raise __('Unknown column given to sort by!')
+        raise __('The chosen sort column is unknown.')
       end
 
       def column

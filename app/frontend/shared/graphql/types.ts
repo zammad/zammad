@@ -4620,6 +4620,8 @@ export type TicketUpdateInput = {
   pendingTime?: InputMaybe<Scalars['ISO8601DateTime']['input']>;
   /** The priority of the ticket. */
   priorityId?: InputMaybe<Scalars['ID']['input']>;
+  /** The shared draft used to update this ticket. */
+  sharedDraftId?: InputMaybe<Scalars['ID']['input']>;
   /** The state of the ticket. */
   stateId?: InputMaybe<Scalars['ID']['input']>;
   /** The title of the ticket. */

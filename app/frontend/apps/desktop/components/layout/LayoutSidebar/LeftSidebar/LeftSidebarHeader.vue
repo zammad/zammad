@@ -1,6 +1,10 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { whenever } from '@vueuse/core'
+
+import emitter from '#shared/utils/emitter.ts'
+
 import OnlineNotification from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue'
 import QuickSearchInput from '#desktop/components/Search/QuickSearch/QuickSearchInput/QuickSearchInput.vue'
 
@@ -15,6 +19,13 @@ const searchValue = defineModel<string>('search', {
 const isSearchActive = defineModel<boolean>('search-active', {
   default: false,
 })
+
+whenever(
+  () => !isSearchActive.value,
+  () => {
+    emitter.emit('close-popover')
+  },
+)
 
 defineProps<Props>()
 </script>

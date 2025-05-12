@@ -4,13 +4,15 @@ class AI::Provider
   include Mixin::RequiredSubPaths
   include AI::Provider::Concerns::HandlesResponse
 
-  attr_reader :prompt_system, :prompt_user, :config, :options
+  DEFAULT_OPTIONS = {}.freeze
 
-  def initialize(prompt_system:, prompt_user:, config: {}, options: {})
-    @prompt_system = prompt_system
-    @prompt_user   = prompt_user
-    @config        = config.presence || Setting.get('ai_provider_config')
-    @options       = options.deep_symbolize_keys
+  EMBEDDING_SIZES = {}.freeze
+
+  attr_accessor :config, :options
+
+  def initialize(config: {}, options: {})
+    @config  = config.presence || Setting.get('ai_provider_config')
+    @options = self.class::DEFAULT_OPTIONS.merge(options.deep_symbolize_keys)
   end
 
   class << self
@@ -22,31 +24,38 @@ class AI::Provider
       "AI::Provider::#{name.classify}".safe_constantize
     end
 
-    def accessible!
-      raise 'Not implemented' # rubocop:disable Zammad/DetectTranslatableString
+    def ping!
+      raise 'not implemented'
     end
-
   end
 
-  def process
-    result = request
+  def ask(prompt_system:, prompt_user:)
+    result = chat(prompt_system:, prompt_user:)
+
+    return result if !options[:json_response]
 
     begin
-      return JSON.parse(result)
+      JSON.parse(result)
     rescue => e
       Rails.logger.error "Unable to parse JSON response: #{e.inspect}"
       Rails.logger.error "Response: #{result}"
 
       raise ResponseError, __('Unable to process response')
     end
+  end
 
-    result
+  def embed(input:)
+    embeddings(input:)
   end
 
   private
 
-  def request
-    raise 'Not implemented' # rubocop:disable Zammad/DetectTranslatableString
+  def chat(prompt_system:, prompt_user:)
+    raise 'not implemented'
+  end
+
+  def embeddings(input:)
+    raise 'not implemented'
   end
 
   class RequestError < StandardError; end

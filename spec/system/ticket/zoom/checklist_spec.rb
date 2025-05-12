@@ -38,6 +38,13 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
     click_on('Add empty checklist')
     expect(page).to have_no_button('Add empty checklist')
     wait.until { ticket.reload.checklist.present? }
+
+    wait.until do
+      item_field  = find('input[placeholder="Text or ticket identifier"]')
+      active_elem = page.evaluate_script('document.activeElement')
+
+      item_field == active_elem
+    end
   end
 
   it 'does show handle subscriptions for badge when sidebar is not opened' do

@@ -31,7 +31,10 @@ class AI::Service
       return result if result
     end
 
-    result = provider.process
+    current_prompt_system = @prompt_system || render_prompt(prompt_system)
+    current_prompt_user   = @prompt_user   || render_prompt(prompt_user)
+
+    result = provider.ask(prompt_system: current_prompt_system, prompt_user: current_prompt_user)
 
     save_cache(result) if cachable?
 
@@ -42,11 +45,7 @@ class AI::Service
 
   def provider
     @provider ||= AI::Provider.by_name(provider_name).new(
-      prompt_system: @prompt_system || render_prompt(prompt_system),
-      prompt_user:   @prompt_user   || render_prompt(prompt_user),
-      options:       options.merge({
-                                     service_name: self.class.name_service,
-                                   })
+      options: options.merge({ service_name: self.class.name_service, json_response: json_response? })
     )
   end
 
@@ -74,6 +73,10 @@ class AI::Service
 
   def cache_key
     nil
+  end
+
+  def json_response?
+    true
   end
 
   def options

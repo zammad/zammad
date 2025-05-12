@@ -9,31 +9,34 @@ class SidebarTicketSummary extends App.Controller
   constructor: ->
     super
 
-    @controllerBind('ui::ticket::summaryUpdate', @summaryLoaded)
-    @controllerBind('config_update', @configUpdate)
+    @controllerBind('config_update', @configHasChanged)
 
-  configUpdate: (config) =>
-    if config.name is 'ai_assistance_ticket_summary_config'
-      @parent.triggerArticleSummaryUpdate()
+    return if !@sidebarIsEnabled()
 
-  summaryLoaded: (payload) =>
-    return if !@elSidebar
-    return if payload.ticket_id isnt @ticket.id
+    @loadSummarization()
 
-    @showSummarization(payload)
+    # load new summary if it has changed
+    @controllerBind('ticket::summary::update', (data) =>
+      return if data.ticket_id.toString() isnt @ticket.id.toString()
+      return if data.locale isnt App.i18n.get()
 
-  getAvailableDisplayStructure: ->
-    config = App.Config.get('ai_assistance_ticket_summary_config')
+      if data.error
+        @renderSummarization(error: true)
+        return
 
-    if not App.Config.get('checklist')
-      @DISPLAY_STRUCTURE.find((item) -> item.key is 'suggestions').feature = undefined
+      @loadSummarization()
+    )
 
-    @DISPLAY_STRUCTURE.filter((item) -> !(item.key of config) or config[item.key] is true)
+    # check if new summary need ot get requested
+    @controllerBind('ui::ticket::load', (data) =>
+      return if data.ticket_id.toString() isnt @ticket.id.toString()
+      return if !@summaryReloadNeeded()
+
+      @loadSummarization()
+    )
 
   sidebarItem: =>
-    return if !App.Config.get('ai_assistance_ticket_summary')
-    return if !(@ticket and @ticket.currentView() is 'agent')
-    return if @ticket.state.state_type.name is 'merged'
+    return if !@sidebarIsEnabled()
 
     @item = {
       name:           'summary'
@@ -46,45 +49,110 @@ class SidebarTicketSummary extends App.Controller
     @item
 
   shown: =>
+
+    # trigger shown sidebar to hide ai banner
     App.Event.trigger('ui::ticket::summarySidebar::shown', { ticket_id: @ticket.id })
-    @showSummarization(@parent.ticketSummaryData)
+
+  sidebarIsEnabled: =>
+    return false if !App.Config.get('ai_provider')
+    return false if !App.Config.get('ai_assistance_ticket_summary')
+    return false if !(@ticket and @ticket.currentView() is 'agent')
+    return false if @ticket.state.state_type.name is 'merged'
+
+    true
 
   sidebarCallback: (el) =>
     @elSidebar = el
 
-  createChecklist: (callback) =>
+  configHasChanged: (config) =>
+    switch config.name
+      when 'ai_assistance_ticket_summary'
+        App.Event.trigger('ui::ticket::sidebarRerender', { taskKey: @taskKey })
+      when 'ai_assistance_ticket_summary_config'
+        @loadSummarization()
+      when 'checklist'
+        @renderSummarization({})
+
+  getAvailableDisplayStructure: ->
+    config = App.Config.get('ai_assistance_ticket_summary_config')
+    @DISPLAY_STRUCTURE.filter((item) -> !(item.key of config) or config[item.key] is true)
+
+  renderSummarization: (data) =>
+    if data
+      @summaryData = data
+    else
+      data = @summaryData
+
+    App.Event.trigger('ui::ticket::summaryUpdate', { ticket_id: @ticket.id, result: data.result })
+
+    return if !@elSidebar
+
+    noSummaryPossible = data.result && _.every(_.values(data.result), (item) -> item is null)
+
+    summarization = $(App.view('ticket_zoom/sidebar_ticket_summary')(
+      data:              data
+      noSummaryPossible: noSummaryPossible
+      checklist:         App.Config.get('checklist')
+      structure:         @getAvailableDisplayStructure()
+    ))
+
+    summarization
+      .on('click', '.js-retry', @retrySummarization)
+      .on('click', '.js-addChecklistItem', @convertFollowUpToChecklistItem)
+      .on('click', '.js-addAllToChecklist', @convertAllFollowUpsToChecklistItems)
+
+    @elSidebar.html(summarization)
+
+  retrySummarization: (e) =>
+    @preventDefaultAndStopPropagation(e)
+    @renderSummarization({})
+    @loadSummarization()
+
+  summaryReloadNeeded: =>
+    ticket = App.Ticket.find(@ticket.id)
+    ticketSummarizableArticleIds = @ticketSumarizableArticleIds(ticket.article_ids)
+
+    if @ticketSummarizableArticleIds && _.isEqual(@ticketSummarizableArticleIds, ticketSummarizableArticleIds)
+      return false
+
+    @ticketSummarizableArticleIds = ticketSummarizableArticleIds
+    true
+
+  ticketSumarizableArticleIds: (allArticleIds) ->
+    allArticleIds.filter (elem) ->
+      article = App.TicketArticle.find(elem)
+      sender  = App.TicketArticleSender.find(article.sender_id)
+
+      sender.name != 'System' && article.body?.length > 0
+
+  loadSummarization: =>
     @ajax(
-      id:   'checklist_ticket_create_empty'
-      type: 'POST'
-      url:  "#{@apiPath}/checklists"
-      data: JSON.stringify({ ticket_id: @ticket.id })
-      processData: true
-      success: callback
-      error: =>
-        @notify(
-          type: 'error'
-          msg: App.i18n.translateInline('Unable to create checklist.')
-        )
+      id:    "ticket-intelligence-enqueue-#{@taskKey}"
+      type:  'POST'
+      url:   "#{@apiPath}/tickets/#{@ticket.id}/enqueue_summarize"
+      success: (data, status, xhr) =>
+        @renderSummarization(data)
+
+      error: (xhr, status, error) ->
+        # show error toaster
     )
 
-  convertToChecklistItem: (event) =>
-    target = $(event.target).closest('.js-btn-add-checklist-item')
+  convertFollowUpToChecklistItem: (e) =>
+    target = $(e.target).closest('.js-addChecklistItem')
     return if !target
 
     text = $(target).data('content')
     checklistId = @ticket.checklist_id
 
-    if !checklistId
-      @createChecklist((data) =>
-        @ticket.checklist_id = data.id
-        @createChecklistItem(data.id, text)
-      )
+    if checklistId
+      @checklistItemCreate(checklistId, text)
     else
-      @createChecklistItem(checklistId, text)
+      @checklistItemCreate(null, text, @ticket.id)
 
-  createChecklistItem: (checklistId, text) =>
+  checklistItemCreate: (checklistId, text, ticketId) =>
     item = new App.ChecklistItem
     item.checklist_id = checklistId
+    item.ticket_id = ticketId
     item.text = text
 
     item.save(
@@ -101,30 +169,26 @@ class SidebarTicketSummary extends App.Controller
         )
     )
 
-  convertAllToChecklistItems: =>
+  convertAllFollowUpsToChecklistItems: =>
     checklistId = @ticket.checklist_id
 
-    itemData = _.map(@summaryItems.suggestions, (text) ->
+    itemData = _.map(@summaryData.result.suggestions, (text) ->
       text: text
       checked: false
     )
 
-    if !checklistId
-      checklist = new App.Checklist
-      checklist = @createChecklist((data) =>
-        @ticket.checklist_id = data.id
-        @createBulkChecklistItems(data.id, itemData)
-      )
+    if checklistId
+      @checklistItemsBulkCreate(checklistId, itemData)
     else
-      @createBulkChecklistItems(checklistId, itemData)
+      @checklistItemsBulkCreate(null, itemData, @ticket.id)
 
-  openChecklist: =>
+  checklistOpen: =>
     @elSidebar
       .closest('.content')
       .find(".tabsSidebar-tab[data-tab='checklist']:not(.active)")
       .click()
 
-  createBulkChecklistItems: (checklistId, items) =>
+  checklistItemsBulkCreate: (checklistId, items, ticketId) =>
     @ajax(
       id:   'checklist_ticket_create_bulk'
       type: 'POST'
@@ -132,40 +196,17 @@ class SidebarTicketSummary extends App.Controller
       processData: true
       data: JSON.stringify(
         checklist_id: checklistId
-        items: items
+        ticket_id:    ticketId
+        items:        items
       )
       success:  =>
         App.Event.trigger('ui::ticket::checklistSidebar::showLoader')
-        @openChecklist()
+        @checklistOpen()
       error: =>
         @notify(
           type: 'error'
           msg: App.i18n.translateInline('Unable to add all checklist items.')
         )
     )
-
-  showSummarization: (payload) =>
-    @summaryItems = payload?.data?.result
-
-    noSummaryPossible = @summaryItems and _.every(_.values(@summaryItems), (item) -> item is null)
-
-    summarization = $(App.view('ticket_zoom/sidebar_ticket_summary')(
-      data:              payload?.data,
-      noSummaryPossible: noSummaryPossible
-      structure:         @getAvailableDisplayStructure()
-    ))
-
-    @elSidebar.html(summarization)
-
-    @elSidebar.find('.js-retry').off('click.retry').on('click.retry', @retrySummarization)
-    @elSidebar.find('.js-btn-add-checklist-item').off('click.convert').on('click.convert', @convertToChecklistItem)
-    @elSidebar.find('.js-btn-ticket-summary-add-all-to-checklist').off('click.convert_all').on('click.convert_all', @convertAllToChecklistItems)
-
-  retrySummarization: (e) =>
-    @preventDefaultAndStopPropagation(e)
-
-    @showSummarization({})
-    @parent.triggerArticleSummaryUpdate()
-
 
 App.Config.set('350-TicketSummary', SidebarTicketSummary, 'TicketZoomSidebar')

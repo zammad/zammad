@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
@@ -51,11 +51,13 @@ const state = ref<'overview' | 'config' | 'register' | 'retry'>('overview')
 const footerActionOptions = computed(() => {
   let actionLabel
   let disabled = false
+  let type
   let variant
 
   switch (state.value) {
     case 'config':
       actionLabel = __('Next')
+      type = 'submit'
       variant = 'primary'
       break
     case 'register':
@@ -71,9 +73,10 @@ const footerActionOptions = computed(() => {
       actionLabel = __('Set Up')
       variant = 'submit'
   }
+
   return {
     actionLabel,
-    actionButton: { variant, disabled },
+    actionButton: { disabled, type, variant },
     cancelButton: { disabled },
   }
 })
@@ -359,6 +362,15 @@ const executeAction = async () => {
     case 'overview':
     default:
       state.value = 'config'
+
+      // FIXME: This is a hack to focus the nickname input field once the form is rendered.
+      //   It should be fixed by providing a dedicated API on the form, if possible.
+      nextTick(() => {
+        ;(
+          document.querySelector('input[name="nickname"]') as HTMLInputElement
+        )?.focus()
+      })
+
       break
   }
 
@@ -371,6 +383,7 @@ defineExpose({
   executeAction,
   headerSubtitle,
   headerIcon,
+  form,
   footerActionOptions,
 })
 </script>

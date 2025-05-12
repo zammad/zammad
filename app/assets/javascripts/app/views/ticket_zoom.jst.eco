@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="ticket-article"></div>
-      <div class="ticket-ai-summary-banner"></div>
+      <div class="js-ticketZoomBannerSummary ticket-ai-summary-banner"></div>
       <div class="article-new"></div>
     </div>
   </div>

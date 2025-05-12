@@ -24,6 +24,7 @@ import type {
   TicketUpdateMetaInput,
 } from '#shared/graphql/types.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
 import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
@@ -184,12 +185,22 @@ export const useTicketEdit = (
 
     const ticketMeta = meta || {}
 
+    let sharedDraftId
+
+    if (formData.shared_draft_id) {
+      sharedDraftId = convertToGraphQLId(
+        'Ticket::SharedDraftZoom',
+        formData.shared_draft_id as string | number,
+      )
+    }
+
     return mutationUpdate.send({
       ticketId: ticket.value.id,
       input: {
         ...internalObjectAttributeValues,
         objectAttributeValues: additionalObjectAttributeValues,
         article,
+        sharedDraftId,
       } as TicketUpdateInput,
       meta: ticketMeta,
     })

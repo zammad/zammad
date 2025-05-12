@@ -1,13 +1,18 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onBeforeUnmount, useTemplateRef, watch } from 'vue'
+import { useTemplateRef, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import emitter from '#shared/utils/emitter.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
+import {
+  KeyboardKey,
+  type OrderKeyHandlerConfig,
+} from '#desktop/composables/useOrderedKeyboardEvents/types.ts'
+import { useKeyboardEventBus } from '#desktop/composables/useOrderedKeyboardEvents/useKeyboardEventBus.ts'
 
 const searchValue = defineModel<string>()
 
@@ -26,24 +31,26 @@ const resetInput = () => {
   inputSearchInstance.value?.blur()
 }
 
-const handleEscapeKey = (event: KeyboardEvent) => {
-  if (event.code === 'Escape') resetInput()
-}
-
 const goToSearchView = () => {
   router.push({ name: 'search', params: { searchTerm: searchValue.value } })
   resetInput()
 }
 
-watch(isSearchActive, (isActive) =>
-  isActive
-    ? window.addEventListener('keydown', handleEscapeKey)
-    : window.removeEventListener('keydown', handleEscapeKey),
+const keyHandlerConfig: OrderKeyHandlerConfig = {
+  handler: resetInput,
+  key: 'quick-search-input',
+}
+
+const { subscribeEvent, unsubscribeEvent } = useKeyboardEventBus(
+  KeyboardKey.Escape,
+  keyHandlerConfig,
 )
 
-onBeforeUnmount(() => {
-  window.removeEventListener('keydown', handleEscapeKey)
-})
+watch(isSearchActive, (isActive) =>
+  isActive
+    ? subscribeEvent(keyHandlerConfig)
+    : unsubscribeEvent(keyHandlerConfig),
+)
 
 emitter.on('focus-quick-search-field', () => inputSearchInstance.value?.focus())
 emitter.on('reset-quick-search-field', () => resetInput())

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://ai.edenhofer.de/api/v1/me
+    uri: "<ZAMMAD_AI_API_URL>/api/v1/me"
     body:
       encoding: US-ASCII
       string: ''
@@ -25,7 +25,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 01 Apr 2025 09:34:06 GMT
+      - Thu, 17 Apr 2025 10:34:32 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -49,22 +49,22 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 9d18468f-1e8e-479b-a9b4-440bab6d1715
+      - f18b0ee9-c654-4c9c-81df-af080dd47fbc
       X-Runtime:
-      - '0.004142'
+      - '0.004129'
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
     body:
       encoding: ASCII-8BIT
       string: '{"current_user":{"id":9,"email":"bs@zammad.com","firstname":"Benjamin","lastname":"Scharf","active":true,"created_by_id":1,"created_at":"2025-03-24T09:40:16.024Z","updated_at":"2025-03-24T09:40:16.024Z","organization_id":2,"is_platform_admin":false,"is_organization_admin":false,"login_failed_count":null,"login_at":null}}'
-  recorded_at: Tue, 01 Apr 2025 09:34:06 GMT
+  recorded_at: Thu, 17 Apr 2025 10:34:32 GMT
 - request:
     method: post
-    uri: https://ai.edenhofer.de/api/v1/features/generic
+    uri: "<ZAMMAD_AI_API_URL>/api/v1/features/generic"
     body:
       encoding: UTF-8
-      string: '{"system_prompt":"This is a connection test. Return \"true\" in unprettified
-        JSON if you got the message.","prompt":"Return true."}'
+      string: '{"system_prompt":"","prompt":"This is a connection test. Return in
+        unprettified JSON ''{ \"connected\": \"true\" }'' if you got the message."}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -86,7 +86,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 01 Apr 2025 09:34:06 GMT
+      - Thu, 17 Apr 2025 10:34:35 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -106,17 +106,18 @@ http_interactions:
       Vary:
       - Accept
       Etag:
-      - W/"a5069a7bcfe2c841703c842a526087b0"
+      - W/"e019e23dddbce6e0d75148a9d8ddbe8c"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 4c839654-a29a-4cf9-884e-ca4e1fe5f780
+      - 2ed6e6d7-7f2c-4459-b6c4-ccdebdd041f2
       X-Runtime:
-      - '0.109846'
+      - '2.485251'
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
     body:
       encoding: ASCII-8BIT
-      string: '[{"model":"llama3.2-vision","created_at":"2025-04-01T09:34:06.604155995Z","response":"{\"true\"}","done":true,"done_reason":"stop","context":[128006,882,128007,271,2028,374,264,3717,1296,13,3494,330,1904,1,304,653,1762,5683,1908,4823,422,499,2751,279,1984,382,5715,837,13,128009,128006,78191,128007,271,5018,1904,9388],"total_duration":70429705,"load_duration":18429199,"prompt_eval_count":35,"prompt_eval_duration":11000000,"eval_count":4,"eval_duration":39000000,"uuid":"4c839654-a29a-4cf9-884e-ca4e1fe5f780"}]'
-  recorded_at: Tue, 01 Apr 2025 09:34:06 GMT
+      string: '[{"model":"llama3.2-vision","created_at":"2025-04-17T10:34:35.101494098Z","response":"{
+        \"connected\": \"true\" }","done":true,"done_reason":"stop","context":[128006,882,128007,271,2028,374,264,3717,1296,13,3494,304,653,1762,5683,1908,4823,11834,330,15647,794,330,1904,1,335,6,422,499,2751,279,1984,13,128009,128006,78191,128007,271,90,330,15647,794,330,1904,1,335],"total_duration":2354836516,"load_duration":2244066963,"prompt_eval_count":38,"prompt_eval_duration":29000000,"eval_count":9,"eval_duration":81000000,"uuid":"2ed6e6d7-7f2c-4459-b6c4-ccdebdd041f2"}]'
+  recorded_at: Thu, 17 Apr 2025 10:34:35 GMT
 recorded_with: VCR 6.3.1

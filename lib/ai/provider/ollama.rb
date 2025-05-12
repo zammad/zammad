@@ -1,19 +1,37 @@
 # Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class AI::Provider::Ollama < AI::Provider
-  def request
+
+  DEFAULT_OPTIONS = {
+    model:           'llama3.2',
+    temperature:     0.0,
+    embedding_model: 'all-minilm',
+  }.freeze
+
+  EMBEDDING_SIZES = {
+    'all-minilm'        => 384,
+    'nomic-embed-text'  => 768,
+    'mxbai-embed-large' => 1024,
+  }.freeze
+
+  def chat(prompt_system:, prompt_user:)
+    params = {
+      model:   options[:model],
+      system:  prompt_system,
+      prompt:  prompt_user,
+      stream:  false,
+      options: {
+        temperature: options[:temperature],
+      }
+    }
+
+    if options[:json_response]
+      params[:format] = 'json'
+    end
+
     response = UserAgent.post(
       "#{config[:url]}/api/generate",
-      {
-        model:   options[:model] || 'llama3.2',
-        system:  prompt_system,
-        prompt:  prompt_user,
-        stream:  false,
-        format:  'json',
-        options: {
-          temperature: options[:temperature] || 0.2,
-        }
-      },
+      params,
       {
         open_timeout:  4,
         read_timeout:  60,
@@ -26,10 +44,31 @@ class AI::Provider::Ollama < AI::Provider
       },
     )
 
-    handle_response(response, self.class)
+    data = validate_response!(response)
+    data['response']
   end
 
-  def self.accessible!(config)
+  def embeddings(input:)
+    response = UserAgent.post(
+      "#{config[:url]}/api/embed",
+      {
+        model: options[:embedding_model],
+        input: input,
+      },
+      {
+        open_timeout:  4,
+        read_timeout:  60,
+        verify_ssl:    true,
+        total_timeout: 60,
+        json:          true,
+      },
+    )
+
+    data = validate_response!(response)
+    data['response']['embeddings'].first
+  end
+
+  def self.ping!(config)
     response = UserAgent.get(
       config[:url],
       {},

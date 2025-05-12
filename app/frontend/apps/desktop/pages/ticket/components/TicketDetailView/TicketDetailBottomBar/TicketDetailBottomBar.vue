@@ -24,6 +24,7 @@ export interface Props {
   canUseDraft?: boolean
   sharedDraftId?: string | null
   liveUserList: TicketLiveAppUser[]
+  setSkipNextStateUpdate: (skip: boolean) => void
 }
 
 defineProps<Props>()
@@ -46,6 +47,7 @@ defineEmits<{
       v-if="hasAvailableDraft"
       :form="form"
       :shared-draft-id="sharedDraftId"
+      :set-skip-next-state-update="setSkipNextStateUpdate"
     />
   </div>
 

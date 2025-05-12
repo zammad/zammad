@@ -170,7 +170,6 @@ const authenticatorApps = [
 const footerActionOptions = computed(() => ({
   actionLabel: __('Set Up'),
   actionButton: { variant: 'submit', type: 'submit' },
-  form: form.value,
 }))
 
 const { copyToClipboard } = useCopyToClipboard()
@@ -214,6 +213,7 @@ initiationQuery.onResult(({ data }) => {
 defineExpose({
   headerSubtitle: computed(() => twoFactorPlugin.label),
   headerIcon: headerIcon.value,
+  form,
   footerActionOptions,
 })
 </script>

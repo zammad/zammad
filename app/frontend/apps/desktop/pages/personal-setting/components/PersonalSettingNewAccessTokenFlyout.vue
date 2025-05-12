@@ -118,7 +118,6 @@ const footerActionOptions = computed<ActionFooterOptions>(() => {
   return {
     actionLabel: __('Create'),
     actionButton: { variant: 'submit', type: 'submit' },
-    form: form.value,
   }
 })
 
@@ -130,6 +129,7 @@ const actionCloseFlyout = () => {
 <template>
   <CommonFlyout
     :header-title="__('New Personal Access Token')"
+    :form="form"
     :footer-action-options="footerActionOptions"
     header-icon="key"
     no-close-on-action

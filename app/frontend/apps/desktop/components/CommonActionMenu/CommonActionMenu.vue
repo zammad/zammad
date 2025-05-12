@@ -35,8 +35,6 @@ export interface Props {
   customMenuButtonLabel?: string
   defaultIcon?: string
   defaultButtonVariant?: ButtonVariant | 'neutral-light' | 'neutral-dark'
-  noPaddedDefaultButton?: boolean
-  noSmallRoundingDefaultButton?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -45,7 +43,6 @@ const props = withDefaults(defineProps<Props>(), {
   orientation: 'autoVertical',
   defaultButtonVariant: 'neutral',
   defaultIcon: 'three-dots-vertical',
-  noPaddedDefaultButton: true,
 })
 
 const { popover, isOpen: popoverIsOpen, popoverTarget, toggle } = usePopover()
@@ -67,17 +64,14 @@ const singleActionAriaLabel = computed(() => {
 })
 
 const buttonVariantClassExtension = computed(() => {
+  const outlineClass = 'outline-offset-0! hover:outline-none!'
   const hoverClass = 'dark:hover:border-blue-700! hover:border-blue-800!'
 
   if (props.defaultButtonVariant === 'neutral-dark')
-    return ` border! border-neutral-100! bg-neutral-50! hover:bg-white! hover:dark:bg-gray-500! text-gray-100! dark:border-gray-900! dark:bg-gray-500! dark:text-neutral-400! ${
-      popoverIsOpen.value ? 'border-transparent!' : hoverClass
-    }`
+    return `${outlineClass} border! border-neutral-100! bg-neutral-50! hover:bg-white! hover:dark:bg-gray-500! text-gray-100! dark:border-gray-900! dark:bg-gray-500! dark:text-neutral-400! ${hoverClass}`
 
   if (props.defaultButtonVariant === 'neutral-light')
-    return ` border! border-neutral-100! bg-blue-100! text-gray-100! dark:border-gray-900! dark:bg-stone-500! dark:text-neutral-400! ${
-      popoverIsOpen.value ? '' : hoverClass
-    }`
+    return `${outlineClass} border! border-neutral-100! bg-blue-100! text-gray-100! dark:border-gray-900! dark:bg-stone-500! dark:text-neutral-400! ${hoverClass}`
 
   return ''
 })
@@ -119,8 +113,8 @@ const variantClasses = computed(() => {
       <CommonButton
         v-else
         v-tooltip="$t(singleActionAriaLabel)"
-        class="rounded-xs p-0!"
-        :class="[variantClasses]"
+        class="outline-offset-0!"
+        :class="variantClasses"
         :size="buttonSize"
         :disabled="disabled"
         :aria-label="$t(singleActionAriaLabel)"
@@ -142,12 +136,15 @@ const variantClasses = computed(() => {
         :class="[
           {
             'outline! outline-blue-800!': popoverIsOpen,
-            'p-0': noPaddedDefaultButton,
-            'rounded-xs': !noSmallRoundingDefaultButton,
           },
           buttonVariantClassExtension,
         ]"
-        :variant="defaultButtonVariant as ButtonVariant"
+        :variant="
+          defaultButtonVariant !== 'neutral-dark' &&
+          defaultButtonVariant !== 'neutral-light'
+            ? defaultButtonVariant
+            : 'neutral'
+        "
         :size="buttonSize"
         :icon="defaultIcon"
         @click="toggle"

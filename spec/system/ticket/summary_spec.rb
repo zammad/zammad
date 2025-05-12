@@ -77,7 +77,15 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
             expect(find_all('button[aria-label="Add as checklist item"]').length).to eq(3)
             expect(page).to have_button 'Add all to checklist'
 
+            # Create the checklist & add the first item
             find_all('button[aria-label="Add as checklist item"]').first.click
+          end
+
+          expect(page).to have_text 'Checklist item successfully added.'
+
+          within '.sidebar[data-tab="summary"]' do
+            # Add to an existing checklist
+            find_all('button[aria-label="Add as checklist item"]')[1].click
           end
 
           expect(page).to have_text 'Checklist item successfully added.'
@@ -88,7 +96,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
 
           within '.sidebar[data-tab="checklist"]' do
             expect(page).to have_text 'Checklist'
-            expect(find_all('table tbody tr').length).to eq(4)
+            expect(find_all('table tbody tr').length).to eq(5)
           end
         end
 

@@ -56,5 +56,11 @@ RSpec.describe Setting::Validation::AIProviderConfig, required_envs: %w[OPEN_AI_
         expect { Setting.set(setting_name, { 'token' => ENV['OPEN_AI_TOKEN'] }) }.not_to raise_error
       end
     end
+
+    context 'with invalid token' do
+      it 'raises error' do
+        expect { Setting.set(setting_name, { 'token' => 'invalid_token' }) }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
   end
 end

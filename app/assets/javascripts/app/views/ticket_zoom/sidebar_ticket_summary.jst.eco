@@ -23,14 +23,14 @@
           <div class="ticket-summary-sidebar-item">
             <h3><%- @T(item.name) %></h4>
             <% if item.type is 'list': %>
-              <% if item?.feature is 'checklist': %>
+              <% if item?.feature is 'checklist' && @checklist: %>
                 <ul class="js-ticket-summary-list">
                   <% for localList in @data.result[item.value]: %>
                     <li class="ticket-summary-sidebar-list-item-action">
                       <span>
                         <%= localList %>
                       </span>
-                      <button class="btn btn--secondary btn--action btn--small js-btn-add-checklist-item" data-content="<%= localList %>" aria-label="<%- @T('Add as checklist item') %>" type="button">
+                      <button class="btn btn--secondary btn--action btn--small js-addChecklistItem btn--add-checklist-item" data-content="<%= localList %>" aria-label="<%- @T('Add as checklist item') %>" type="button">
                         <%- @Icon 'checkmark' %>
                         <span><%- @T('Add') %></span>
                       </button>
@@ -47,8 +47,8 @@
             <% else: %>
               <p><%= @data.result[item.value] %></p>
             <% end %>
-            <% if item?.feature is 'checklist': %>
-              <button class="btn btn--secondary btn--action btn--small js-btn-ticket-summary-add-all-to-checklist" type="button">
+            <% if item?.feature is 'checklist' && @checklist: %>
+              <button class="btn btn--secondary btn--action btn--small js-addAllToChecklist btn--add-all-to-checklist" type="button">
                 <%- @Icon 'double-checkmark' %>
                 <span><%- @T('Add all to checklist') %></span>
               </button>

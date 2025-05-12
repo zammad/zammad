@@ -2,8 +2,10 @@
 
 import '#tests/graphql/builders/mocks.ts'
 
-import renderComponent from '#tests/support/components/renderComponent.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+import renderComponent, {
+  initializePiniaStore,
+} from '#tests/support/components/renderComponent.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { useRecentSearches } from '#shared/composables/useRecentSearches.ts'
@@ -36,9 +38,9 @@ const renderQuickSearch = async (search: string = '') => {
   return wrapper
 }
 
-mockUserCurrent()
-
 describe('QuickSearch', () => {
+  initializePiniaStore()
+
   const { addSearch, removeSearch, clearSearches } = useRecentSearches()
 
   beforeEach(() => {
@@ -134,26 +136,27 @@ describe('QuickSearch', () => {
     const recentlyViewedItems = [
       {
         __typename: 'Ticket',
-        id: convertToGraphQLId('Ticket', 1),
+        id: convertToGraphQLId('Ticket', 2),
         title: 'Ticket 1',
         number: '1',
         stateColorCode: EnumTicketStateColorCode.Open,
       },
       {
         __typename: 'User',
-        id: convertToGraphQLId('User', 1),
-        internalId: 1,
+        id: convertToGraphQLId('User', 2),
+        internalId: 2,
         fullname: 'User 1',
       },
       {
         __typename: 'Organization',
-        id: convertToGraphQLId('Organization', 1),
-        internalId: 1,
+        id: convertToGraphQLId('Organization', 2),
+        internalId: 2,
         name: 'Organization 1',
       },
     ]
 
     it('displays recently viewed items', async () => {
+      mockPermissions(['ticket.agent'])
       mockUserCurrentRecentViewListQuery({
         userCurrentRecentViewList: recentlyViewedItems as Organization[],
       })

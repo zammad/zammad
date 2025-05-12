@@ -153,8 +153,6 @@ const actions = computed(() => {
 
     <CommonActionMenu
       class="flex!"
-      :no-padded-default-button="false"
-      no-small-rounding-default-button
       :entity="{ ticket, article }"
       button-size="medium"
       :placement="position === 'left' ? 'arrowStart' : 'arrowEnd'"

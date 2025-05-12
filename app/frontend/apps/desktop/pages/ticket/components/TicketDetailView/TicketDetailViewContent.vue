@@ -709,6 +709,7 @@ useResizeObserver(
         :has-available-draft="hasAvailableDraft"
         :live-user-list="liveUserList"
         :shared-draft-id="ticket?.sharedDraftZoomId"
+        :set-skip-next-state-update="setSkipNextStateUpdate"
         :ticket-id="ticketId"
         @submit="checkSubmitEditTicket"
         @discard="discardChanges"

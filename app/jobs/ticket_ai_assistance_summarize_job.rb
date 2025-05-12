@@ -29,7 +29,7 @@ class TicketAIAssistanceSummarizeJob < ApplicationJob
 
       # Trigger the update for the old stack
       Sessions.broadcast({
-                           event: 'ticketSummaryUpdate',
+                           event: 'ticket::summary::update',
                            data:  { ticket_id: ticket.id, locale: }
                          })
 
@@ -50,7 +50,7 @@ class TicketAIAssistanceSummarizeJob < ApplicationJob
 
     # Trigger the update for the old stack
     Sessions.broadcast({
-                         event: 'ticketSummaryUpdate',
+                         event: 'ticket::summary::update',
                          data:  { ticket_id: ticket.id, locale: }
                        })
   rescue => e
@@ -63,7 +63,7 @@ class TicketAIAssistanceSummarizeJob < ApplicationJob
 
     # Trigger the update for the old stack without real date (it will be refetched on frontend decision).
     Sessions.broadcast({
-                         event: 'ticketSummaryUpdate',
+                         event: 'ticket::summary::update',
                          data:  { ticket_id: ticket.id, locale:, error: true }
                        })
   end

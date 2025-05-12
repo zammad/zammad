@@ -3,7 +3,7 @@
 class AI::Provider::ZammadAI < AI::Provider
   ZAMMAD_AI_API_BASE_URL = 'https://ai.zammad.com'.freeze
 
-  def request
+  def chat(prompt_system:, prompt_user:)
     service_name = options[:service_name] || 'generic'
     response = UserAgent.post(
       "#{self.class.base_url(config)}/api/v1/features/#{service_name.underscore}",
@@ -24,10 +24,11 @@ class AI::Provider::ZammadAI < AI::Provider
       },
     )
 
-    handle_response(response, self.class)
+    data = validate_response!(response)
+    data.first['response']
   end
 
-  def self.accessible!(config)
+  def self.ping!(config)
     response = UserAgent.get(
       "#{base_url(config)}/api/v1/me",
       {},

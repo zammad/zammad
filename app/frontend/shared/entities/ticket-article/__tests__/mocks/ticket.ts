@@ -119,6 +119,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
   tags?: string[]
   externalReferences?: TicketQuery['ticket']['externalReferences']
   preferences?: TicketQuery['ticket']['preferences']
+  sharedDraftZoomId?: number
   // eslint-disable-next-line sonarjs/cognitive-complexity
 }): R => {
   return nullableMock({
@@ -168,5 +169,8 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
     mentions: options?.mentions || defaultMentions,
     checklist: options?.checklist || null,
     referencingChecklistTickets: options?.referencingChecklistTickets || [],
+    sharedDraftZoomId: options?.sharedDraftZoomId
+      ? convertToGraphQLId('Ticket::SharedDraftZoom', options.sharedDraftZoomId)
+      : null,
   }) as R
 }

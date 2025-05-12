@@ -4,13 +4,16 @@
   <h2><%- @T('Authentication') %></h2>
   <p><%- @T('Please select the authentication method that should be used to establish the connection to your Exchange server.') %></p>
 
-  <div class="input formGroup--halfSize formGroup--standalone">
-    <div class="controls controls--select">
-      <select name="authentication_method" class="form-control js-authentication-method">
-        <option value="basic"><%- @T('Basic Authentication') %></option>
-        <option value="oauth"><%- @T('OAuth') %></option>
-      </select>
-      <%- @Icon('arrow-down') %>
+    <div class="settings-entry" style="margin-bottom: 0;">
+      <div class="input form-group">
+        <div class="controls controls--select">
+          <select name="authentication_method" class="form-control js-authentication-method">
+            <option value="basic"><%- @T('Basic Authentication') %></option>
+            <option value="oauth"><%- @T('OAuth') %></option>
+          </select>
+          <%- @Icon('arrow-down') %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

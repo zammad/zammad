@@ -65,6 +65,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
       # Add notification for agent2 from article mention.
       perform_enqueued_jobs
 
+      # Switch to agent2
       using_session :agent2 do
         login(username: agent2.login, password: 'test')
 
@@ -143,8 +144,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
 
       wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
 
-      # TODO: check why this fails
-      # expect(page).to have_no_text('Draft Available')
+      expect(page).to have_no_text('Draft Available')
 
       expect(ticket.articles.count).to eq(4)
       expect(ticket.articles.last.body).to include('article text content - now with modification')

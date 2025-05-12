@@ -136,13 +136,13 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
   actionLabel: __('Account Time'),
   actionButton: { variant: 'submit', type: 'submit' },
   cancelLabel: __('Skip'),
-  form: form.value,
 }))
 </script>
 
 <template>
   <CommonFlyout
     :header-title="__('Time Accounting')"
+    :form="form"
     :footer-action-options="footerActionOptions"
     header-icon="stopwatch"
     :name="flyoutName"

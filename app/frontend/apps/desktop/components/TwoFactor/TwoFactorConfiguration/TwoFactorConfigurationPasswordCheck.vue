@@ -69,7 +69,6 @@ const footerActionOptions = computed(() => {
     actionLabel,
     actionButton: { variant, type: 'submit' },
     cancelLabel,
-    form: form.value,
   }
 })
 
@@ -104,6 +103,7 @@ defineExpose({
   headerSubtitle,
   headerIcon,
   footerActionOptions,
+  form,
 })
 </script>
 

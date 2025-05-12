@@ -11,7 +11,7 @@ class Whatsapp::Client
 
     raise ArgumentError, __("The required parameter 'access_token' is missing.") if access_token.nil?
 
-    @client = WhatsappSdk::Api::Client.new access_token
+    @client = WhatsappSdk::Api::Client.new(access_token)
   end
 
   def log_request(response: nil)
@@ -21,19 +21,19 @@ class Whatsapp::Client
   end
 
   def handle_error(response:)
-    return if !response.error
+    return if response.body.nil?
 
-    log_request response: response.raw_response
+    error = response.body['error']
+    return if error.nil?
 
-    message = response.error.message
+    log_request(response: response.body.inspect)
 
-    if response.error.respond_to?(:raw_data_response) &&
-       (details = response.error.raw_data_response&.dig('error_data', 'details'))
-
+    message = error['message']
+    if (details = error.dig('error_data', 'details'))
       message = "#{message}: #{details}"
     end
 
-    raise CloudAPIError.new(message, response.error)
+    raise CloudAPIError.new(message, response)
   end
 
   class CloudAPIError < StandardError
@@ -58,7 +58,8 @@ class Whatsapp::Client
         131_052, # Media download error
         131_053, # Media upload error
       ]
-      recoverable_errors.include?(original_error.code)
+
+      recoverable_errors.include?(original_error.error_info.code)
     end
   end
 

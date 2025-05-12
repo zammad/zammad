@@ -1,7 +1,12 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onClickOutside, onLongPress, useElementHover } from '@vueuse/core'
+import {
+  onClickOutside,
+  onLongPress,
+  useElementHover,
+  whenever,
+} from '@vueuse/core'
 import { computed, onDeactivated, onUnmounted, shallowRef, watch } from 'vue'
 
 import CommonPopover, {
@@ -14,6 +19,7 @@ interface Props extends Omit<CommonPopoverProps, 'owner'> {
   triggerLink?: string
   triggerLinkActiveClass?: string
   noFocusStyling?: boolean
+  noHoverStyling?: boolean
 }
 
 const props = defineProps<Props>()
@@ -76,6 +82,13 @@ watch(
   },
 )
 
+whenever(
+  () => !isOpen.value,
+  () => {
+    hasOpenedViaLongPress.value = false
+  },
+)
+
 onDeactivated(() => {
   if (isOpen.value) close()
 })
@@ -95,7 +108,12 @@ onUnmounted(() => {
     no-close-on-click-outside
     :owner="popoverTarget"
   >
-    <slot name="popover-content" :popover-id="uniqueId" :is-open="isOpen" />
+    <slot
+      name="popover-content"
+      :popover-id="uniqueId"
+      :is-open="isOpen"
+      :has-opened-via-long-click="hasOpenedViaLongPress"
+    />
   </CommonPopover>
 
   <component
@@ -110,15 +128,21 @@ onUnmounted(() => {
     class="group"
     :class="[
       {
-        [triggerLinkActiveClass ?? '']: isOpen,
+        [triggerLinkActiveClass ?? '']: isOpen && hasOpenedViaLongPress,
         'hover:no-underline!': triggerLink,
         'focus-visible:outline-1 focus-visible:outline-blue-800 hover:focus-visible:outline-blue-800':
           !noFocusStyling,
+        'outline-transparent!': noFocusStyling,
+        'hover:outline-1 hover:outline-blue-900': !noHoverStyling,
       },
     ]"
     @keydown.space.prevent="open"
     @click="hasOpenedViaLongPress && $event.preventDefault()"
   >
-    <slot :popover-id="uniqueId" :is-open="isOpen" />
+    <slot
+      :popover-id="uniqueId"
+      :is-open="isOpen"
+      :has-open-via-long-click="hasOpenedViaLongPress"
+    />
   </component>
 </template>

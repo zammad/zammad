@@ -108,6 +108,10 @@ export const useTicketEditForm = (
         name: 'isDefaultFollowUpStateSet',
       },
       {
+        type: 'hidden',
+        name: 'shared_draft_id',
+      },
+      {
         screen: 'edit',
         object: EnumObjectManagerObjects.Ticket,
       },

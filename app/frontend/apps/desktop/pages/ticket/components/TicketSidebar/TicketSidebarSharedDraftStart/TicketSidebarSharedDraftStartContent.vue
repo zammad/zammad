@@ -142,7 +142,9 @@ const updateSharedDraft = () => {
     })
 }
 
-const { openSharedDraftFlyout } = useTicketSharedDraft()
+const { openSharedDraftFlyout } = useTicketSharedDraft(
+  props.context.setSkipNextStateUpdate,
+)
 
 const openFlyout = (sharedDraftStartId: string) => {
   openSharedDraftFlyout('start', sharedDraftStartId, props.context.form)

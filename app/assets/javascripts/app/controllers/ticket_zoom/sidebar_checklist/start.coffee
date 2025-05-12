@@ -35,7 +35,7 @@ class App.SidebarChecklistStart extends App.Controller
       id:   'checklist_ticket_add_empty'
       type: 'POST'
       url:  "#{@apiPath}/checklists"
-      data: JSON.stringify({ ticket_id: @parentVC.ticket.id })
+      data: JSON.stringify({ ticket_id: @parentVC.ticket.id, create_first_item: true })
       processData: true
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)

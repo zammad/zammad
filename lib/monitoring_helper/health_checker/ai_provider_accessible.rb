@@ -12,7 +12,7 @@ module MonitoringHelper
         return if provider_config.blank?
 
         begin
-          AI::Provider.by_name(provider).accessible!(provider_config)
+          AI::Provider.by_name(provider).ping!(provider_config)
         rescue AI::Provider::ResponseError
           response.issues.push __('The AI Provider is not accessible.')
         end

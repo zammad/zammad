@@ -7303,7 +7303,7 @@ a.list-group-item.active > .badge,
         white-space: nowrap;
       }
 
-      .js-hide-banner {
+      .hide-banner {
         @include bidi-style(right, 5px, left, 5px);
 
         display: flex;
@@ -7370,12 +7370,12 @@ a.list-group-item.active > .badge,
     margin-bottom: 16px;
   }
 
-  .js-btn-add-checklist-item,
-  .js-btn-ticket-summary-add-all-to-checklist {
+  .btn--add-checklist-item,
+  .btn--add-all-to-checklist {
     display: flex;
   }
 
-  .js-btn-add-checklist-item {
+  .btn--add-checklist-item {
     margin-top: 4px;
 
     .icon-checkmark {
@@ -7383,7 +7383,7 @@ a.list-group-item.active > .badge,
     }
   }
 
-  .js-btn-ticket-summary-add-all-to-checklist {
+  .btn--add-all-to-checklist {
     align-self: flex-end;
   }
 }

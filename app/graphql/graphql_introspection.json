@@ -25601,6 +25601,16 @@
                 "ofType": null
               },
               "defaultValue": null
+            },
+            {
+              "name": "sharedDraftId",
+              "description": "The shared draft used to update this ticket.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
             }
           ],
           "interfaces": null,

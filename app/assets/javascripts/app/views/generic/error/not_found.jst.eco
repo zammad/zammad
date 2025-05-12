@@ -1,4 +1,4 @@
 <div class="flex fullscreenMessage">
   <%- @Icon('diagonal-cross', 'icon-error') %>
-  <h2><%- @T('Oops.. I\'m sorry, but I can\'t find this %s.', @objectName ) %></h2>
+  <h2><%- @T('The requested %s could not be found.', @Tp(@objectName) ) %></h2>
 </div>

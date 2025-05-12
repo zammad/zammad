@@ -1,15 +1,11 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { toRef } from 'vue'
-
-import { useForm } from '#shared/components/Form/useForm.ts'
-
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
-import type { ActionFooterOptions as Props } from './types.ts'
+import type { ActionFooterProps } from './types.ts'
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<ActionFooterProps>(), {
   actionLabel: __('Update'),
   cancelLabel: __('Cancel & Go Back'),
 })
@@ -18,8 +14,6 @@ const emit = defineEmits<{
   cancel: []
   action: []
 }>()
-
-const { isDisabled, formNodeId } = useForm(toRef(props, 'form'))
 
 const cancel = () => {
   emit('cancel')
@@ -34,8 +28,9 @@ const execute = () => {
   <div class="flex items-center justify-end gap-4">
     <CommonButton
       v-if="!hideCancelButton"
+      :key="formNodeId"
       size="large"
-      :disabled="isDisabled || cancelButton?.disabled"
+      :disabled="isFormDisabled || cancelButton?.disabled"
       :prefix-icon="cancelButton?.prefixIcon"
       :variant="cancelButton?.variant || 'secondary'"
       @click="cancel()"
@@ -44,8 +39,9 @@ const execute = () => {
     </CommonButton>
     <CommonButton
       v-if="!hideActionButton"
+      :key="formNodeId"
       size="large"
-      :disabled="isDisabled || actionButton?.disabled"
+      :disabled="isFormDisabled || actionButton?.disabled"
       :form="formNodeId"
       :type="actionButton?.type"
       :prefix-icon="actionButton?.prefixIcon"

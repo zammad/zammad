@@ -18,9 +18,9 @@ const variantClass = computed(() =>
 
 <template>
   <div class="flex flex-col" :class="variantClass">
-    <CommonLabel class="mb-3 block! text-black! dark:text-white!" tag="h3"
-      >{{ label }}
-    </CommonLabel>
+    <CommonLabel class="mb-3 block! text-black! dark:text-white!" tag="h3">{{
+      $t(label)
+    }}</CommonLabel>
     <ol
       v-if="Array.isArray(summary)"
       class="space-y-3 text-gray-100 dark:text-neutral-400"
@@ -35,7 +35,7 @@ const variantClass = computed(() =>
         <slot name="item-trailing" :content="content" />
       </li>
     </ol>
-    <CommonLabel v-else tag="p">{{ summary }} </CommonLabel>
+    <CommonLabel v-else tag="p">{{ summary }}</CommonLabel>
     <slot name="trailing" />
   </div>
 </template>

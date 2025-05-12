@@ -18,7 +18,7 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
 
   describe '#execute' do
     it 'updates a ticket with given metadata' do
-      service.execute(ticket: ticket, ticket_data:)
+      service.execute(ticket:, ticket_data:)
 
       expect(ticket)
         .to have_attributes(
@@ -30,12 +30,12 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
       allow_any_instance_of(TicketPolicy)
         .to receive(:follow_up?).and_return(false)
 
-      expect { service.execute(ticket: ticket, ticket_data:) }
+      expect { service.execute(ticket:, ticket_data:) }
         .to raise_error(Pundit::NotAuthorizedError)
     end
 
     it 'adds article when present' do
-      service.execute(ticket: ticket, ticket_data: ticket_data_with_article)
+      service.execute(ticket:, ticket_data: ticket_data_with_article)
 
       expect(Ticket.last.articles.last)
         .to have_attributes(
@@ -44,13 +44,13 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
     end
 
     it 'adds article accounted time to ticket' do
-      expect(service.execute(ticket: ticket, ticket_data: ticket_data_with_article).time_unit).to eq(2)
+      expect(service.execute(ticket:, ticket_data: ticket_data_with_article).time_unit).to eq(2)
     end
 
     it 'updates ticket with given macro' do
       macro = create(:macro, perform: { 'ticket.title' => { 'value' => new_title } })
 
-      service.execute(ticket: ticket, ticket_data:, macro:)
+      service.execute(ticket:, ticket_data:, macro:)
 
       expect(ticket)
         .to have_attributes(
@@ -63,13 +63,32 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
                        'article.note' => { 'body' => 'note body', 'internal' => 'true', 'subject' => 'test' }
                      })
 
-      service.execute(ticket: ticket, ticket_data: ticket_data_with_article, macro:)
+      service.execute(ticket:, ticket_data: ticket_data_with_article, macro:)
 
       expect(ticket.articles.reload)
         .to contain_exactly(
           have_attributes(body: new_body),
           have_attributes(body: 'note body'),
         )
+    end
+
+    describe 'shared draft handling' do
+      let(:shared_draft) { create(:ticket_shared_draft_zoom, ticket:) }
+
+      before { ticket_data[:shared_draft] = shared_draft }
+
+      it 'destroys given shared draft' do
+        service.execute(ticket:, ticket_data:)
+
+        expect(Ticket::SharedDraftZoom).not_to exist(shared_draft.id)
+      end
+
+      it 'raises error if shared draft group does not belong to the ticket' do
+        shared_draft.update! ticket: create(:ticket)
+
+        expect { service.execute(ticket:, ticket_data:) }
+          .to raise_error(Exceptions::UnprocessableEntity)
+      end
     end
   end
 end

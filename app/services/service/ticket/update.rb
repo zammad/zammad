@@ -20,6 +20,9 @@ class Service::Ticket::Update < Service::BaseWithCurrentUser
 
   def save_ticket!(ticket, ticket_data, article_data, macro)
     ticket.with_lock do
+
+      handle_shared_draft(ticket, ticket_data)
+
       if macro
         save_ticket_attributes_and_apply_macro!(ticket, ticket_data, article_data, macro)
       else
@@ -59,5 +62,17 @@ class Service::Ticket::Update < Service::BaseWithCurrentUser
 
   def validate!(user, ticket, ticket_data, article_data, skip_validators)
     Service::Ticket::Update::Validator.new(user:, ticket:, ticket_data:, article_data:, skip_validators:).validate!
+  end
+
+  def handle_shared_draft(ticket, ticket_data)
+    shared_draft = ticket_data.delete(:shared_draft)
+
+    return if !shared_draft
+
+    if shared_draft && shared_draft.ticket != ticket
+      raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+    end
+
+    shared_draft.destroy!
   end
 end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://ai.edenhofer.de/api/v1/me
+    uri: "<ZAMMAD_AI_API_URL>/api/v1/me"
     body:
       encoding: US-ASCII
       string: ''
@@ -25,7 +25,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 01 Apr 2025 09:34:06 GMT
+      - Thu, 17 Apr 2025 10:34:35 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -49,13 +49,13 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 5a862703-4471-47e2-8564-929445a66490
+      - 421d5d9d-b533-460f-b913-e9315d5cf62e
       X-Runtime:
-      - '0.003913'
+      - '0.021417'
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
     body:
       encoding: ASCII-8BIT
       string: '{"current_user":{"id":9,"email":"bs@zammad.com","firstname":"Benjamin","lastname":"Scharf","active":true,"created_by_id":1,"created_at":"2025-03-24T09:40:16.024Z","updated_at":"2025-03-24T09:40:16.024Z","organization_id":2,"is_platform_admin":false,"is_organization_admin":false,"login_failed_count":null,"login_at":null}}'
-  recorded_at: Tue, 01 Apr 2025 09:34:06 GMT
+  recorded_at: Thu, 17 Apr 2025 10:34:35 GMT
 recorded_with: VCR 6.3.1

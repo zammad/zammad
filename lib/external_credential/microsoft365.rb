@@ -30,7 +30,7 @@ class ExternalCredential::Microsoft365 < ExternalCredential::MicrosoftBase
     }
   end
 
-  def self.channel_options_outbound(user_data)
+  def self.channel_options_outbound(user_data, _account_data)
     {
       adapter: 'smtp',
       options: {

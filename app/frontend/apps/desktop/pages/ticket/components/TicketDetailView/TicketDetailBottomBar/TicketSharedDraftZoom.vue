@@ -6,12 +6,15 @@ import type { FormRef } from '#shared/components/Form/types.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useTicketSharedDraft } from '#desktop/pages/ticket/composables/useTicketSharedDraft.ts'
 
-defineProps<{
+const props = defineProps<{
   sharedDraftId?: string | null
   form?: FormRef
+  setSkipNextStateUpdate: (skip: boolean) => void
 }>()
 
-const { openSharedDraftFlyout } = useTicketSharedDraft()
+const { openSharedDraftFlyout } = useTicketSharedDraft(
+  props.setSkipNextStateUpdate,
+)
 </script>
 
 <template>

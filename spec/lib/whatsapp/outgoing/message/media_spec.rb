@@ -39,8 +39,8 @@ RSpec.describe Whatsapp::Outgoing::Message::Media do
     let(:store)              { create(:store, preferences: { 'Mime-Type' => mime_type }) }
     let(:media_id)           { Faker::Number.unique.number(digits: 15) }
     let(:message_id)         { "wamid.#{Faker::Crypto.unique.sha1}==" }
-    let(:internal_response1) { Struct.new(:data, :error).new(Struct.new(:id).new(media_id), nil) }
-    let(:internal_response2) { Struct.new(:data, :error).new(Struct.new(:messages).new([Struct.new(:id).new(message_id)]), nil) }
+    let(:internal_response1) { Struct.new(:id).new(media_id) }
+    let(:internal_response2) { Struct.new(:messages).new([Struct.new(:id).new(message_id)]) }
 
     before do
       allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:upload).and_return(internal_response1)
@@ -61,19 +61,40 @@ RSpec.describe Whatsapp::Outgoing::Message::Media do
       end
     end
 
-    context 'with unsuccessful response (1)' do
-      let(:internal_response1) { Struct.new(:data, :error, :raw_response).new(nil, Struct.new(:message).new('error message'), '{}') }
+    context 'with unsuccessful response' do
+      context 'when uploading media fails' do
+        before do
+          exception = WhatsappSdk::Api::Responses::HttpResponseError.new(
+            body:        Struct.new(:error).new({ 'message' => 'error message' }),
+            http_status: 500,
+          )
+          allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:upload).and_raise(exception)
+        end
 
-      it 'raises an error' do
-        expect { instance.deliver(store:) }.to raise_error(Whatsapp::Client::CloudAPIError, 'error message')
+        let(:internal_response1) { nil }
+        let(:internal_response2) { nil }
+
+        it 'raises an error' do
+          expect { instance.deliver(store:) }.to raise_error(Whatsapp::Client::CloudAPIError, 'error message')
+        end
       end
-    end
 
-    context 'with unsuccessful response (2)' do
-      let(:internal_response2) { Struct.new(:data, :error, :raw_response).new(nil, Struct.new(:message).new('error message'), '{}') }
+      context 'when sending message fails' do
+        before do
+          exception = WhatsappSdk::Api::Responses::HttpResponseError.new(
+            body:        Struct.new(:error).new({ 'message' => 'error message' }),
+            http_status: 500,
+          )
+          allow_any_instance_of(WhatsappSdk::Api::Messages).to receive(mock_method).and_raise(exception)
+        end
 
-      it 'raises an error' do
-        expect { instance.deliver(store:) }.to raise_error(Whatsapp::Client::CloudAPIError, 'error message')
+        let(:message_id)         { "wamid.#{Faker::Crypto.unique.sha1}==" }
+        let(:internal_response1) { Struct.new(:id).new(media_id) }
+        let(:internal_response2) { nil }
+
+        it 'raises an error' do
+          expect { instance.deliver(store:) }.to raise_error(Whatsapp::Client::CloudAPIError, 'error message')
+        end
       end
     end
   end

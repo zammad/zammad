@@ -32,6 +32,10 @@ class Controllers::ChecklistItemsControllerPolicy < Controllers::ApplicationCont
   private
 
   def checklist
+    if record.params[:ticket_id].present?
+      return Checklist.new(ticket: Ticket.lookup(id: record.params[:ticket_id]))
+    end
+
     Checklist.lookup(id: record.params[:checklist_id])
   end
 

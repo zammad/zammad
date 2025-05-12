@@ -74,7 +74,6 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
     type: 'submit',
   },
   actionLabel: __('Link'),
-  form: form.value,
 }))
 
 const { notify } = useNotifications()
@@ -157,6 +156,7 @@ const addLink = async (
     name="ticket-link"
     size="large"
     no-close-on-action
+    :form="form"
     :footer-action-options="footerActionOptions"
   >
     <div class="space-y-6">

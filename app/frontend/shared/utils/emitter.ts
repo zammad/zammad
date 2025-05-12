@@ -9,6 +9,7 @@ type Events = {
   'reset-quick-search-field': void
   'main-sidebar-transition': void
   'ticket-summary-generating': boolean
+  'close-popover': void
 }
 
 const emitter: Emitter<Events> = mitt<Events>()

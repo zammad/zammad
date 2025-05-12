@@ -85,7 +85,6 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
     type: 'submit',
   },
   actionLabel: __('Merge'),
-  form: form.value,
 }))
 </script>
 
@@ -95,6 +94,7 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
     header-icon="merge"
     size="large"
     no-close-on-action
+    :form="form"
     :footer-action-options="footerActionOptions"
     :name="fllyoutName"
   >
