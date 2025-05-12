@@ -38,6 +38,13 @@ function demand_backup_conf () {
     fi
   fi
 
+  if [ "${USE_PIGZ}" == "yes" ]; then
+    if [ ! $(command -v pigz) ]; then
+      echo "WARNING: USE_PIGZ is set to $USE_PIGZ, but pigz is not installed!"
+      USE_PIGZ="no"
+    fi
+  fi
+
   # set VARs related to USE_PIGZ
   if [ "${USE_PIGZ}" == "yes" ]; then
     GZIP_PROG="pigz"
