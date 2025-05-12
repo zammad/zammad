@@ -28,28 +28,17 @@ function demand_backup_conf () {
     fi
   fi
 
-  # sane defaults for USE_PIGZ
-  if [ -z ${USE_PIGZ+x} ]; then
-    # Falling back to default behavior
-    USE_PIGZ='no'
-
+  # set VARs related to gigz
+  if [ $(command -v pigz) ]; then
     if [ "${DEBUG}" == "yes" ]; then
-      echo "USE_PIGZ is not set, falling back to 'no' and will use good old gzip."
+      echo "pigz is available, so we will use it."
     fi
-  fi
-
-  if [ "${USE_PIGZ}" == "yes" ]; then
-    if [ ! $(command -v pigz) ]; then
-      echo "WARNING: USE_PIGZ is set to $USE_PIGZ, but pigz is not installed!"
-      USE_PIGZ="no"
-    fi
-  fi
-
-  # set VARs related to USE_PIGZ
-  if [ "${USE_PIGZ}" == "yes" ]; then
     GZIP_PROG="pigz"
     TAR_GZIP_ARG="-I $GZIP_PROG"
   else
+    if [ "${DEBUG}" == "yes" ]; then
+      echo "pigz is not available, so we will use good old gzip."
+    fi
     GZIP_PROG="gzip"
     TAR_GZIP_ARG="-z"
   fi
@@ -171,11 +160,6 @@ function check_empty_password () {
 
 function backup_files () {
   echo "creating file backup..."
-  if [ "${USE_PIGZ}" == "yes" ]; then
-    echo " ... using pigz"
-  else
-    echo " ... using gzip"
-  fi
 
   if [ "${FULL_FS_DUMP}" == 'yes' ]; then
     echo " ... as full dump"
