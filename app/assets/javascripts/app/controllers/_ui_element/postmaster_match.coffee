@@ -131,6 +131,10 @@ class App.UiElement.postmaster_match
             value:    'x-loop'
             name:     'X-Loop'
           },
+          {
+            value:    'Resent-To'
+            name:     'Resent-To'
+          },        
         ]
 
     groups
