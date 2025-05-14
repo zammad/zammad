@@ -64,11 +64,17 @@ class SidebarIdoit extends App.Controller
       return
 
     # ajax call to show items
+    @config = App.Setting.get('idoit_config')
     @ajax(
       id:    "idoit-#{@taskKey}"
       type:  'POST'
       url:   "#{@apiPath}/integration/idoit"
-      data:  JSON.stringify(method: 'cmdb.objects', filter: ids: @objectIds)
+      data:  JSON.stringify(
+        method: 'cmdb.objects',
+        username: @config.username,
+        password: @config.password,
+        filter: ids: @objectIds
+      )
       success: (data, status, xhr) =>
         if data.response
           @showList(data.response.result)
