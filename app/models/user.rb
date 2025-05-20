@@ -823,14 +823,8 @@ try to find correct name
     end
 
     # check if login already exists
-    base_login = login.downcase.strip
-
-    alternatives = [nil] + Array(1..20) + [ SecureRandom.uuid ]
-    alternatives.each do |suffix|
-      self.login = "#{base_login}#{suffix}"
-      exists = User.find_by(login: login)
-      return true if !exists || exists.id == id
-    end
+    exists = User.find_by(login: login)
+    return true if !exists || exists.id == id
 
     raise Exceptions::UnprocessableEntity, "Invalid user login generation for login #{login}!"
   end

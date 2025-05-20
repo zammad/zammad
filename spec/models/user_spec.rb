@@ -284,27 +284,8 @@ RSpec.describe User, type: :model do
         expect(new_agent.login).not_to end_with('1')
       end
 
-      it 'does number up agent logins (1)' do
-        new_agent = create(:agent, login: agent.login)
-        expect(new_agent.login).to eq("#{agent.login}1")
-      end
-
-      it 'does number up agent logins (5)' do
-        new_agent = create(:agent, login: agent.login)
-        4.times do
-          new_agent = create(:agent, login: agent.login)
-        end
-
-        expect(new_agent.login).to eq("#{agent.login}5")
-      end
-
-      it 'does backup with uuid in cases of many duplicates' do
-        new_agent = create(:agent, login: agent.login)
-        20.times do
-          new_agent = create(:agent, login: agent.login)
-        end
-
-        expect(new_agent.login.sub!(agent.login, '')).to be_a_uuid
+      it 'fails on duplicate login' do
+        expect { create(:agent, login: agent.login) }.to raise_error(Exceptions::UnprocessableEntity, "Invalid user login generation for login #{agent.login}!")
       end
     end
 
