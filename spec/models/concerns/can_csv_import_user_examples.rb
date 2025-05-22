@@ -160,7 +160,7 @@ RSpec.shared_examples 'CanCsvImport - User specific tests', :aggregate_failures 
         it 'does import users' do
           expect { result }.to change(User, :count).by(2)
           expect(first_user).to have_attributes(
-            login:     'user-simple-import1',
+            login:     'user-simple-IMPORT1',
             firstname: 'firstname-simple-import1',
             lastname:  'lastname-simple-import1',
             email:     'user-simple-import1@example.com',
@@ -177,7 +177,7 @@ RSpec.shared_examples 'CanCsvImport - User specific tests', :aggregate_failures 
           expect { second_result }.not_to change(User, :count)
 
           expect(first_user.reload).to have_attributes(
-            login:     'user-simple-import1',
+            login:     'user-simple-IMPORT1',
             firstname: 'firstname-simple-import1',
             lastname:  'lastname-simple-import1',
             email:     'user-simple-import1@example.com',

@@ -806,7 +806,6 @@ try to find correct name
   end
 
   def check_login
-
     # use email as login if not given
     if login.blank?
       self.login = email
@@ -825,6 +824,9 @@ try to find correct name
     # check if login already exists
     exists = User.find_by(login: login)
     return true if !exists || exists.id == id
+
+    # we leave the email uniqueness check for ensure_uniq_email
+    return true if email.present?
 
     raise Exceptions::UnprocessableEntity, "Invalid user login generation for login #{login}!"
   end

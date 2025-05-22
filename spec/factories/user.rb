@@ -7,7 +7,7 @@ FactoryBot.define do
       slug        { "#{firstname}.#{lastname}".parameterize }
     end
 
-    login            { slug }
+    sequence(:login) { |n| "#{slug}-#{n}" }
     firstname        { Faker::Name.unique.first_name }
     lastname         { Faker::Name.unique.last_name }
     sequence(:email) { |n| "#{slug}.#{n}@zammad.org" }

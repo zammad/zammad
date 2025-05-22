@@ -17,7 +17,7 @@ RSpec.describe 'Ticket', type: :request do
     create(:agent, groups: Group.all, firstname: 'Tickets', lastname: 'Agent')
   end
   let!(:agent_change_only) do
-    user = create(:agent, login: 'login2', groups: Group.all, firstname: 'Tickets', lastname: 'Agent')
+    user = create(:agent, groups: Group.all, firstname: 'Tickets', lastname: 'Agent')
     user.group_names_access_map = {
       ticket_group_without_create.name => %w[read change],
     }
@@ -2202,9 +2202,9 @@ RSpec.describe 'Ticket', type: :request do
   end
 
   describe 'mentions' do
-    let(:user1) { create(:agent, login: 'user1', groups: [ticket_group]) }
-    let(:user2) { create(:agent, login: 'user2', groups: [ticket_group]) }
-    let(:user3) { create(:agent, login: 'user3', groups: [ticket_group]) }
+    let(:user1) { create(:agent, groups: [ticket_group]) }
+    let(:user2) { create(:agent, groups: [ticket_group]) }
+    let(:user3) { create(:agent, groups: [ticket_group]) }
 
     def new_ticket_with_mentions(*user_ids)
       params = {
