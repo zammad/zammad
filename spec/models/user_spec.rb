@@ -285,7 +285,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'fails on duplicate login' do
-        expect { create(:agent, login: agent.login) }.to raise_error(Exceptions::UnprocessableEntity, "Invalid user login generation for login #{agent.login}!")
+        expect { create(:agent, email: nil, login: agent.login) }.to raise_error(Exceptions::UnprocessableEntity, "Invalid user login generation for login #{agent.login}!")
       end
     end
 
