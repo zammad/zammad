@@ -57,6 +57,8 @@ class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
           fqdn = domain
         end
       end
+      # remove :port, is not allowed by RFC 5321 / 4.1.1.1. EHLO/HELO
+      fqdn = fqdn.split(':').first
       options[:domain] = fqdn
     end
 
