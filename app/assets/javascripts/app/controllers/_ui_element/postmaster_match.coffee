@@ -134,7 +134,7 @@ class App.UiElement.postmaster_match
           {
             value:    'Resent-Bcc'
             name:     'Resent-Bcc'
-          },  
+          },
           {
             value:    'Resent-Cc'
             name:     'Resent-Cc'
