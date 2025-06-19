@@ -271,7 +271,7 @@ returns
           user_data[:telegram_username] = message_user[:username]
         end
       else
-        user_data[:note] = "Telegram ID: #{message_user[:id]}" 
+        user_data[:note] = "Telegram ID: #{message_user[:id]}"
       end
       user_data[:active]   = true
       user_data[:role_ids] = Role.signup_role_ids
