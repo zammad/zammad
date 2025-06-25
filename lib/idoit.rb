@@ -86,7 +86,7 @@ or with filter:
 
 =end
 
-  def self.query(method, username, password, filter = {})
+  def self.query(method, filter = {})
     setting = Setting.get('idoit_config')
     raise __("The required field 'api_token' is missing from the config.") if setting[:api_token].blank?
     raise __("The required field 'endpoint' is missing from the config.") if setting[:endpoint].blank?
@@ -98,7 +98,7 @@ or with filter:
       params[:filter] = filter
     end
 
-    _query(method, username, password, params, _url_cleanup(setting[:endpoint]), verify_ssl: setting[:verify_ssl])
+    _query(method, setting[:username], setting[:password], params, _url_cleanup(setting[:endpoint]), verify_ssl: setting[:verify_ssl])
   end
 
   def self._query(method, username, password, params, url, verify_ssl: false)

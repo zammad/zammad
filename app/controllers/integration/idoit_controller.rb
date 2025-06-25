@@ -19,7 +19,7 @@ class Integration::IdoitController < ApplicationController
   end
 
   def query
-    response = ::Idoit.query(params[:method], params[:username], params[:password], params[:filter])
+    response = ::Idoit.query(params[:method], params[:filter])
     render json: {
       result:   'ok',
       response: response,

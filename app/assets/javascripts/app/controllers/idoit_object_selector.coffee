@@ -6,16 +6,11 @@ class App.IdoitObjectSelector extends App.ControllerModal
   lastSearchTermEmpty: false
 
   content: ->
-    @config = App.Setting.get('idoit_config')
     @ajax(
       id:    'idoit-object-selector'
       type:  'POST'
       url:   "#{@apiPath}/integration/idoit"
-      data:  JSON.stringify(
-        method: 'cmdb.object_types',
-        username: @config.username,
-        password: @config.password
-      )
+      data:  JSON.stringify(method: 'cmdb.object_types')
       success: (data, status, xhr) =>
         if data.result is 'failed'
           @contentInline = data.message
@@ -50,7 +45,6 @@ class App.IdoitObjectSelector extends App.ControllerModal
     ''
 
   search: (filter) =>
-    @config = App.Setting.get('idoit_config')
     if _.isEmpty(filter.type) && _.isEmpty(filter.title)
       @lastSearchTermEmpty = true
       @renderResult()
@@ -66,12 +60,7 @@ class App.IdoitObjectSelector extends App.ControllerModal
       id:    'idoit-object-selector'
       type:  'POST'
       url:   "#{@apiPath}/integration/idoit"
-      data:  JSON.stringify(
-        method: 'cmdb.objects',
-        username: @config.username,
-        password: @config.password,
-        filter: filter
-      )
+      data:  JSON.stringify(method: 'cmdb.objects', filter: filter)
       success: (data, status, xhr) =>
         return if @lastSearchTermEmpty
         @renderResult(data.response.result)
