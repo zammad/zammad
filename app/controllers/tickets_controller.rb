@@ -530,3 +530,43 @@ class TicketsController < ApplicationController
     render json: result, status: :ok
   end
 end
+
+# GET /api/v1/tickets/todays
+def todays_tickets
+  today_start = Time.zone.now.beginning_of_day
+  today_end = Time.zone.now.end_of_day
+
+  tickets = TicketPolicy::ReadScope.new(current_user)
+                                   .resolve
+                                   .where(created_at: today_start..today_end)
+                                   .includes(:state, :priority, :customer, :owner, :group)
+                                   .reorder(created_at: :desc)
+                                   .limit(params[:limit]&.to_i || 50)
+
+  if response_expand?
+    result = tickets.map(&:attributes_with_association_names)
+    render json: result, status: :ok
+    return
+  end
+
+  if response_full?
+    assets = {}
+    ticket_ids = []
+    tickets.each do |ticket|
+      ticket_ids.push ticket.id
+      assets = ticket.assets(assets)
+    end
+
+    render json: {
+      record_ids:  ticket_ids,
+      assets:      assets,
+      total_count: tickets.count
+    }, status: :ok
+    return
+  end
+
+  render json: {
+    tickets:     tickets.map(&:attributes_with_association_ids),
+    total_count: tickets.count
+  }, status: :ok
+end

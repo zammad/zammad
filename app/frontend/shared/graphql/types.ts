@@ -2857,6 +2857,8 @@ export type Queries = {
   ticketsRecentByCustomer: Array<Ticket>;
   /** Fetch tickets recently viewed by the current user */
   ticketsRecentlyViewed: Array<Ticket>;
+  /** Fetch all tickets created today */
+  todaysTickets: Array<Ticket>;
   /** Translations for a given locale */
   translations?: Maybe<TranslationsPayload>;
   /** Fetch a user information by ID */
@@ -6025,6 +6027,11 @@ export type UserSignupVerifyMutationVariables = Exact<{
 
 
 export type UserSignupVerifyMutation = { __typename?: 'Mutations', userSignupVerify?: { __typename?: 'UserSignupVerifyPayload', session?: { __typename?: 'Session', id: string, afterAuth?: { __typename?: 'SessionAfterAuth', type: EnumAfterAuthType, data?: any | null } | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, messagePlaceholder?: Array<string> | null, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
+
+export type TodaysTicketsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TodaysTicketsQuery = { __typename?: 'Queries', todaysTickets: Array<{ __typename?: 'Ticket', id: string, number: string, title: string, stateColorCode: EnumTicketStateColorCode, createdAt: string, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string }, priority: { __typename?: 'TicketPriority', id: string, name: string, uiColor?: string | null }, customer: { __typename?: 'User', id: string, fullname?: string | null, email?: string | null }, owner: { __typename?: 'User', id: string, fullname?: string | null }, group: { __typename?: 'Group', id: string, name?: string | null } }> };
 
 export type GuidedSetupSetSystemInformationMutationVariables = Exact<{
   input: SystemInformation;
