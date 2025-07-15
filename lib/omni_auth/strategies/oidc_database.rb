@@ -4,24 +4,14 @@ class OmniAuth::Strategies::OidcDatabase < OmniAuth::Strategies::OpenIDConnect
   option :name, 'openid_connect'
 
   def self.setup
-    auth_openid_connect_credentials = Setting.get('auth_openid_connect_credentials') || {}
+    credentials = Setting.get('auth_openid_connect_credentials') || {}
 
-    http_type = Setting.get('http_type')
-    fqdn      = Setting.get('fqdn')
-
-    client_options = {
-      identifier:   auth_openid_connect_credentials['identifier'],
-      redirect_uri: "#{http_type}://#{fqdn}/auth/openid_connect/callback",
-    }
-
-    auth_openid_connect_credentials['scope'] = %i[openid email profile] if auth_openid_connect_credentials['scope'].blank?
-    auth_openid_connect_credentials['scope'] = auth_openid_connect_credentials['scope'].split.map(&:to_sym) if auth_openid_connect_credentials['scope'].is_a?(String)
-
-    auth_openid_connect_credentials.compact_blank.merge(
-      discovery:      true,
-      response_type:  :code,
-      pkce:           ActiveModel::Type::Boolean.new.cast(auth_openid_connect_credentials['pkce']),
-      client_options:,
+    credentials.compact_blank.merge(
+      response_type: :code,
+      discovery:      discovery?(credentials),
+      pkce:           pkce?(credentials),
+      scope:          scope(credentials),
+      client_options: client_options(credentials)
     )
   end
 
@@ -42,5 +32,55 @@ class OmniAuth::Strategies::OidcDatabase < OmniAuth::Strategies::OpenIDConnect
 
   def decode_logout_token(logout_token)
     decode_id_token(logout_token)
+  end
+
+  private_class_method
+
+  def self.discovery?(credentials)
+    ActiveModel::Type::Boolean.new.cast(credentials['discovery'])
+  end
+
+  def self.pkce?(credentials)
+    ActiveModel::Type::Boolean.new.cast(credentials['pkce'])
+  end
+
+  def self.scope(credentials)
+    raw = credentials['scope'].presence || %w[openid email profile]
+    raw = raw.split if raw.is_a?(String)
+    raw.map(&:to_sym)
+  end
+
+  def self.client_options(credentials)
+    opts = base_client_options(credentials)
+    # If discovery is enabled, we just return the base options
+    return opts if discovery?(credentials)
+    # If discovery is disabled, we need to merge the base options with the endpoint options
+    opts.merge(endpoint_client_options(credentials))
+  end
+
+  def self.base_client_options(credentials)
+    http_type = Setting.get('http_type')
+    fqdn = Setting.get('fqdn')
+    redirect_uri = "#{http_type}://#{fqdn}/auth/openid_connect/callback"
+    redirect_uri = "https://localhost:4000/auth/openid_connect/callback"
+    identifier, issuer = credentials.values_at('identifier', 'issuer')
+    { identifier:,  issuer:, redirect_uri: }
+  end
+
+  def self.endpoint_client_options(credentials)
+    # If the issuer is not set, we cannot extract the endpoints
+    return {} if credentials.blank? or credentials['issuer'].blank?
+    # Extract the scheme, user, host, and port from the issuer URL
+    # This is necessary to ensure we have the correct URL components for the client options
+    # The URI.split method returns an array with the following structure:
+    # [scheme, user, host, port, path, query, fragment].
+    #
+    # We only need the scheme, host, and port for the client options.
+    scheme, _user, host, port, *_ = URI.split(credentials['issuer'])
+
+    credentials
+      .slice('secret', 'authorization_endpoint', 'token_endpoint', 'userinfo_endpoint', 'jwks_uri')
+      .symbolize_keys
+      .merge({ scheme:, host:, port: })
   end
 end
