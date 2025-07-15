@@ -7,7 +7,7 @@ class OmniAuth::Strategies::OidcDatabase < OmniAuth::Strategies::OpenIDConnect
     credentials = Setting.get('auth_openid_connect_credentials') || {}
 
     credentials.compact_blank.merge(
-      response_type: :code,
+      response_type:  :code,
       discovery:      discovery?(credentials),
       pkce:           pkce?(credentials),
       scope:          scope(credentials),
@@ -34,8 +34,6 @@ class OmniAuth::Strategies::OidcDatabase < OmniAuth::Strategies::OpenIDConnect
     decode_id_token(logout_token)
   end
 
-  private_class_method
-
   def self.discovery?(credentials)
     ActiveModel::Type::Boolean.new.cast(credentials['discovery'])
   end
@@ -54,6 +52,7 @@ class OmniAuth::Strategies::OidcDatabase < OmniAuth::Strategies::OpenIDConnect
     opts = base_client_options(credentials)
     # If discovery is enabled, we just return the base options
     return opts if discovery?(credentials)
+
     # If discovery is disabled, we need to merge the base options with the endpoint options
     opts.merge(endpoint_client_options(credentials))
   end
@@ -63,19 +62,20 @@ class OmniAuth::Strategies::OidcDatabase < OmniAuth::Strategies::OpenIDConnect
     fqdn = Setting.get('fqdn')
     redirect_uri = "#{http_type}://#{fqdn}/auth/openid_connect/callback"
     identifier, issuer = credentials.values_at('identifier', 'issuer')
-    { identifier:,  issuer:, redirect_uri: }
+    { identifier:, issuer:, redirect_uri: }
   end
 
   def self.endpoint_client_options(credentials)
     # If the issuer is not set, we cannot extract the endpoints
-    return {} if credentials.blank? or credentials['issuer'].blank?
+    return {} if credentials.blank? || credentials['issuer'].blank?
+
     # Extract the scheme, user, host, and port from the issuer URL
     # This is necessary to ensure we have the correct URL components for the client options
     # The URI.split method returns an array with the following structure:
     # [scheme, user, host, port, path, query, fragment].
     #
     # We only need the scheme, host, and port for the client options.
-    scheme, _user, host, port, *_ = URI.split(credentials['issuer'])
+    scheme, _user, host, port, = URI.split(credentials['issuer'])
 
     credentials
       .slice('secret', 'authorization_endpoint', 'token_endpoint', 'userinfo_endpoint', 'jwks_uri')
