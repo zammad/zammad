@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+
 class OpenIdConnectManualSettings < ActiveRecord::Migration[7.2]
   def change
     # return if it's a new setup
@@ -7,7 +9,7 @@ class OpenIdConnectManualSettings < ActiveRecord::Migration[7.2]
     return if setting.nil?
 
     setting.options[:form].insert(3, {
-                                    display:   __('Discovery'),
+                                    display:   'Discovery',
                                     null:      true,
                                     default:   true,
                                     name:      'discovery',
@@ -17,57 +19,57 @@ class OpenIdConnectManualSettings < ActiveRecord::Migration[7.2]
                                       false => 'no',
                                     },
                                     translate: true,
-                                    help:      __('When activated, the issuer URL is used to discover the endpoints and keys. This option requires HTTPS (self-signed certificates are not supported).'),
+                                    help:      'When activated, the issuer URL is used to discover the endpoints and keys. This option requires HTTPS (self-signed certificates are not supported).',
                                   },
                                   {
-                                    display:     __('Secret'),
+                                    display:     'Secret',
                                     null:        true,
                                     name:        'secret',
                                     tag:         'input',
                                     required:    false,
                                     placeholder: '',
                                     translate:   true,
-                                    help:        __('This option is only required if discovery is disabled.'),
+                                    help:        'This option is only required if discovery is disabled.',
                                   },
                                   {
-                                    display:     __('Authorization endpoint'),
+                                    display:     'Authorization endpoint',
                                     null:        true,
                                     name:        'authorization_endpoint',
                                     tag:         'input',
-                                    placeholder: __('/authorize'),
+                                    placeholder: '/authorize',
                                     required:    false,
                                     translate:   true,
-                                    help:        __('This option is only required if discovery is disabled.'),
+                                    help:        'This option is only required if discovery is disabled.',
                                   },
                                   {
-                                    display:     __('Token endpoint'),
+                                    display:     'Token endpoint',
                                     null:        true,
                                     name:        'token_endpoint',
                                     tag:         'input',
-                                    placeholder: __('/token'),
+                                    placeholder: '/token',
                                     required:    false,
                                     translate:   true,
-                                    help:        __('This option is only required if discovery is disabled.'),
+                                    help:        'This option is only required if discovery is disabled.',
                                   },
                                   {
-                                    display:     __('Userinfo endpoint'),
+                                    display:     'Userinfo endpoint',
                                     null:        true,
                                     name:        'userinfo_endpoint',
                                     tag:         'input',
-                                    placeholder: __('/userinfo'),
+                                    placeholder: '/userinfo',
                                     required:    false,
                                     translate:   true,
-                                    help:        __('This option is only required if discovery is disabled.'),
+                                    help:        'This option is only required if discovery is disabled.',
                                   },
                                   {
-                                    display:     __('JWKS uri'),
+                                    display:     'JWKS uri',
                                     null:        true,
                                     name:        'jwks_uri',
                                     tag:         'input',
-                                    placeholder: __('https://example.com/jwks'),
+                                    placeholder: 'https://example.com/jwks',
                                     required:    false,
                                     translate:   true,
-                                    help:        __('This option is only required if discovery is disabled. As opposed to other endpoints, this one must include the full URL of the OIDC JSON web key (JWK) endpoint and not just the path.'),
+                                    help:        'This option is only required if discovery is disabled. As opposed to other endpoints, this one must include the full URL of the OIDC JSON web key (JWK) endpoint and not just the path.',
                                   })
 
     setting.save!
