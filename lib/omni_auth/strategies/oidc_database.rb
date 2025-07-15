@@ -62,7 +62,6 @@ class OmniAuth::Strategies::OidcDatabase < OmniAuth::Strategies::OpenIDConnect
     http_type = Setting.get('http_type')
     fqdn = Setting.get('fqdn')
     redirect_uri = "#{http_type}://#{fqdn}/auth/openid_connect/callback"
-    redirect_uri = "https://localhost:4000/auth/openid_connect/callback"
     identifier, issuer = credentials.values_at('identifier', 'issuer')
     { identifier:,  issuer:, redirect_uri: }
   end
