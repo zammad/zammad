@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class OpenIdConnectManualSettings < ActiveRecord::Migration[7.2]
-  def change
+  def up
     # return if it's a new setup
     return if !Setting.exists?(name: 'system_init_done')
 
