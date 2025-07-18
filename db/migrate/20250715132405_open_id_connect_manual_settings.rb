@@ -8,7 +8,8 @@ class OpenIdConnectManualSettings < ActiveRecord::Migration[7.2]
     setting = Setting.find_by(name: 'auth_openid_connect_credentials')
     return if setting.nil?
 
-    setting.options[:form].insert(3, {
+    insert_after_index = setting.options[:form].index { |f| f[:name] == 'issuer' }&.succ || 0
+    setting.options[:form].insert(insert_after_index, {
                                     display:   'Discovery',
                                     null:      true,
                                     default:   true,
