@@ -25,6 +25,9 @@
 # Dynamic environment config for Gitlab
 /.gitlab/environment.env
 
+# Local environment variables
+.env
+
 # Third-Party ------------------------------------------------------------------
 # The config files / dev tools listed below are optional
 # and may not be present on most users' machines

@@ -16,6 +16,7 @@ import type { SimpleTableProps, TableSimpleHeader, TableItem, TableItemLinkValue
 
 const props = withDefaults(defineProps<SimpleTableProps>(), {
   showCaption: false,
+  responsive: false,
 })
 
 defineEmits<{
@@ -59,145 +60,156 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
 </script>
 
 <template>
-  <table class="pb-3">
-    <TableCaption :show="showCaption">{{ caption }}</TableCaption>
-    <thead>
-      <tr>
-        <th
-          v-for="header in tableHeaders"
-          :key="header.key"
-          class="h-10 p-2.5 text-xs ltr:text-left rtl:text-right"
-          :class="[header.headerClass, header.columnSeparator && columnSeparatorClasses]"
-        >
-          <FormKit
-            v-if="hasCheckboxColumn && header.key === 'checkbox'"
-            name="checkbox-all-rows"
-            :aria-label="
-              allCheckboxRowsSelected ? $t('Deselect all entries') : $t('Select all entries')
-            "
-            type="checkbox"
-            :model-value="allCheckboxRowsSelected"
-            @update:model-value="selectAllRowCheckboxes"
-          />
-
-          <slot v-else :name="`column-header-${header.key}`" :header="header">
-            <CommonLabel
-              class="font-normal text-stone-200 dark:text-neutral-500"
-              :class="[
-                cellAlignmentClasses[header.alignContent || 'left'],
-                header.labelClass || '',
-              ]"
-              size="small"
-            >
-              {{ $t(header.label, ...(header.labelPlaceholder || [])) }}
-            </CommonLabel>
-          </slot>
-
-          <slot :name="`header-suffix-${header.key}`" :item="header" />
-        </th>
-        <th v-if="actions" class="h-10 w-0 p-2.5 text-center">
-          <CommonLabel class="font-normal text-stone-200! dark:text-neutral-500!" size="small"
-            >{{ $t('Actions') }}
-          </CommonLabel>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <TableRow
-        v-for="item in items"
-        :key="item.id"
-        :item="item"
-        :is-row-selected="!hasCheckboxColumn && item.id === props.selectedRowId"
-        :has-checkbox="hasCheckboxColumn"
-        v-on="rowHandlers"
-      >
-        <template #default="{ isRowSelected }">
-          <td
+  <div :class="responsive ? 'w-full overflow-x-auto' : ''">
+    <table :class="[responsive ? 'min-w-full table-auto lg:table-fixed' : '', 'pb-3']">
+      <TableCaption :show="showCaption">{{ caption }}</TableCaption>
+      <thead>
+        <tr>
+          <th
             v-for="header in tableHeaders"
-            :key="`${item.id}-${header.key}`"
-            class="h-10 p-2.5 text-sm"
+            :key="header.key"
             :class="[
+              responsive
+                ? 'h-10 p-1.5 sm:p-2.5 text-xs min-w-[100px] lg:w-auto'
+                : 'h-10 p-2.5 text-xs',
+              'ltr:text-left rtl:text-right',
+              header.headerClass,
               header.columnSeparator && columnSeparatorClasses,
-              cellAlignmentClasses[header.alignContent || 'left'],
-              {
-                'max-w-32 truncate text-black dark:text-white': header.truncate,
-              },
             ]"
           >
             <FormKit
               v-if="hasCheckboxColumn && header.key === 'checkbox'"
-              :key="`checkbox-${item.id}-${header.key}`"
-              :name="`checkbox-${item.id}`"
+              name="checkbox-all-rows"
               :aria-label="
-                hasCheckboxId(item.id) ? $t('Deselect this entry') : $t('Select this entry')
+                allCheckboxRowsSelected ? $t('Deselect all entries') : $t('Select all entries')
               "
               type="checkbox"
-              alternative-backrgound
-              :classes="{
-                decorator:
-                  'group-active:formkit-checked:border-white group-hover:dark:border-white group-hover:group-active:border-white group-hover:group-active:peer-hover:border-white group-hover:formkit-checked:border-black group-hover:dark:formkit-checked:border-white group-hover:dark:peer-hover:border-white  ltr:group-hover:dark:group-hover:peer-hover:formkit-checked:border-white ltr:group-hover:peer-hover:dark:border-white rtl:group-hover:peer-hover:dark:border-white ltr:group-hover:peer-hover:border-black rtl:group-hover:peer-hover:border-black  group-hover:border-black',
-                decoratorIcon:
-                  'group-active:formkit-checked:text-white group-hover:formkit-checked:text-black group-hover:formkit-checked:dark:text-white',
-              }"
-              :disabled="!!item.disabled"
-              :model-value="hasCheckboxId(item.id)"
-              @click="handleCheckboxUpdate(item)"
-              @keydown.enter="handleCheckboxUpdate(item)"
-              @keydown.space="handleCheckboxUpdate(item)"
+              :model-value="allCheckboxRowsSelected"
+              @update:model-value="selectAllRowCheckboxes"
             />
-            <slot
-              v-else
-              :name="`column-cell-${header.key}`"
-              :item="item"
-              :is-row-selected="isRowSelected"
-              :header="header"
-            >
-              <CommonLink
-                v-if="header.type === 'link'"
-                v-tooltip.truncate="getTooltipText(item, header)"
-                v-bind="item[header.key] as CommonLinkProps"
-                :class="{
-                  'ltr:text-black rtl:text-black dark:text-white': isRowSelected,
-                }"
-                class="truncate text-sm group-hover:text-black group-focus-visible:text-white group-active:text-white hover:no-underline! group-hover:dark:text-white"
-                @click.stop
-                @keydown.stop
-                >{{ (item[header.key] as TableItemLinkValue).label }}
-              </CommonLink>
+
+            <slot v-else :name="`column-header-${header.key}`" :header="header">
               <CommonLabel
-                v-else
-                v-tooltip.truncate="getTooltipText(item, header)"
-                class="inline! text-gray-100 group-hover:text-black group-focus-visible:text-white group-active:text-white dark:text-neutral-400 group-hover:dark:text-white"
+                class="font-normal text-stone-200 dark:text-neutral-500"
                 :class="[
-                  {
-                    'text-black dark:text-white': isRowSelected,
-                  },
+                  cellAlignmentClasses[header.alignContent || 'left'],
+                  header.labelClass || '',
                 ]"
+                size="small"
               >
-                <template v-if="!item[header.key]">-</template>
-                <component
-                  :is="getCellContentComponent(header.type)"
-                  v-else
-                  :value="item[header.key] as string"
-                  :is-row-selected="isRowSelected"
-                />
+                {{ $t(header.label, ...(header.labelPlaceholder || [])) }}
               </CommonLabel>
             </slot>
 
-            <slot :name="`item-suffix-${header.key}`" :item="item" />
-          </td>
-          <td v-if="actions" class="h-10 p-2.5 text-center">
-            <slot name="actions" v-bind="{ actions, item }">
-              <CommonActionMenu
-                class="flex items-center justify-center"
-                :actions="actions"
-                :entity="item"
-                button-size="medium"
+            <slot :name="`header-suffix-${header.key}`" :item="header" />
+          </th>
+          <th
+            v-if="actions"
+            :class="[responsive ? 'h-10 w-0 p-1.5 sm:p-2.5' : 'h-10 w-0 p-2.5', 'text-center']"
+          >
+            <CommonLabel class="font-normal text-stone-200! dark:text-neutral-500!" size="small"
+              >{{ $t('Actions') }}
+            </CommonLabel>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <TableRow
+          v-for="item in items"
+          :key="item.id"
+          :item="item"
+          :is-row-selected="!hasCheckboxColumn && item.id === props.selectedRowId"
+          :has-checkbox="hasCheckboxColumn"
+          v-on="rowHandlers"
+        >
+          <template #default="{ isRowSelected }">
+            <td
+              v-for="header in tableHeaders"
+              :key="`${item.id}-${header.key}`"
+              class="h-10 p-2.5 text-sm"
+              :class="[
+                header.columnSeparator && columnSeparatorClasses,
+                cellAlignmentClasses[header.alignContent || 'left'],
+                {
+                  'max-w-32 truncate text-black dark:text-white': header.truncate,
+                },
+              ]"
+            >
+              <FormKit
+                v-if="hasCheckboxColumn && header.key === 'checkbox'"
+                :key="`checkbox-${item.id}-${header.key}`"
+                :name="`checkbox-${item.id}`"
+                :aria-label="
+                  hasCheckboxId(item.id) ? $t('Deselect this entry') : $t('Select this entry')
+                "
+                type="checkbox"
+                alternative-backrgound
+                :classes="{
+                  decorator:
+                    'group-active:formkit-checked:border-white group-hover:dark:border-white group-hover:group-active:border-white group-hover:group-active:peer-hover:border-white group-hover:formkit-checked:border-black group-hover:dark:formkit-checked:border-white group-hover:dark:peer-hover:border-white  ltr:group-hover:dark:group-hover:peer-hover:formkit-checked:border-white ltr:group-hover:peer-hover:dark:border-white rtl:group-hover:peer-hover:dark:border-white ltr:group-hover:peer-hover:border-black rtl:group-hover:peer-hover:border-black  group-hover:border-black',
+                  decoratorIcon:
+                    'group-active:formkit-checked:text-white group-hover:formkit-checked:text-black group-hover:formkit-checked:dark:text-white',
+                }"
+                :disabled="!!item.disabled"
+                :model-value="hasCheckboxId(item.id)"
+                @click="handleCheckboxUpdate(item)"
+                @keydown.enter="handleCheckboxUpdate(item)"
+                @keydown.space="handleCheckboxUpdate(item)"
               />
-            </slot>
-          </td>
-        </template>
-      </TableRow>
-    </tbody>
-  </table>
+              <slot
+                v-else
+                :name="`column-cell-${header.key}`"
+                :item="item"
+                :is-row-selected="isRowSelected"
+                :header="header"
+              >
+                <CommonLink
+                  v-if="header.type === 'link'"
+                  v-tooltip.truncate="getTooltipText(item, header)"
+                  v-bind="item[header.key] as CommonLinkProps"
+                  :class="{
+                    'ltr:text-black rtl:text-black dark:text-white': isRowSelected,
+                  }"
+                  class="truncate text-sm group-hover:text-black group-focus-visible:text-white group-active:text-white hover:no-underline! group-hover:dark:text-white"
+                  @click.stop
+                  @keydown.stop
+                  >{{ (item[header.key] as TableItemLinkValue).label }}
+                </CommonLink>
+                <CommonLabel
+                  v-else
+                  v-tooltip.truncate="getTooltipText(item, header)"
+                  class="inline! text-gray-100 group-hover:text-black group-focus-visible:text-white group-active:text-white dark:text-neutral-400 group-hover:dark:text-white"
+                  :class="[
+                    {
+                      'text-black dark:text-white': isRowSelected,
+                    },
+                  ]"
+                >
+                  <template v-if="!item[header.key]">-</template>
+                  <component
+                    :is="getCellContentComponent(header.type)"
+                    v-else
+                    :value="item[header.key] as string"
+                    :is-row-selected="isRowSelected"
+                  />
+                </CommonLabel>
+              </slot>
+
+              <slot :name="`item-suffix-${header.key}`" :item="item" />
+            </td>
+            <td v-if="actions" class="h-10 p-2.5 text-center">
+              <slot name="actions" v-bind="{ actions, item }">
+                <CommonActionMenu
+                  class="flex items-center justify-center"
+                  :actions="actions"
+                  :entity="item"
+                  button-size="medium"
+                />
+              </slot>
+            </td>
+          </template>
+        </TableRow>
+      </tbody>
+    </table>
+  </div>
 </template>

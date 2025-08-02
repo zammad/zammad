@@ -15,6 +15,7 @@ import { EnumObjectManagerObjects, type TicketCreateInput } from '#shared/graphq
 import { isGraphQLId, convertToGraphQLId } from '#shared/graphql/utils.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
+import emitter from '#shared/utils/emitter.ts'
 import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
 
 import { useTicketCreateView } from './useTicketCreateView.ts'
@@ -155,6 +156,9 @@ export const useTicketCreate = (
       .then((result) => {
         if (result?.ticketCreate?.ticket) {
           notifySuccess()
+
+          // Emit event to trigger refresh of Today's Tickets table
+          emitter.emit('ticket-created')
 
           return () => {
             const ticket = result.ticketCreate?.ticket

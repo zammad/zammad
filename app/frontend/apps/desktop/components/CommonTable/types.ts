@@ -72,6 +72,11 @@ export interface SimpleTableProps extends BaseTableProps {
    * */
   selectedRowId?: string
   hasCheckboxColumn?: boolean
+  /**
+   * Enable responsive table behavior with horizontal scrolling and responsive padding
+   * @default false
+   * */
+  responsive?: boolean
 }
 
 export interface CellContentProps {

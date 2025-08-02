@@ -1,0 +1,10 @@
+query todaysTickets {
+  todaysTickets {
+    totalCount
+    edges {
+      node {
+        ...simpleTicketAttribute
+      }
+    }
+  }
+}

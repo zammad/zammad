@@ -16,11 +16,7 @@ const route: RouteRecordRaw[] = [
       order: 500,
     },
   },
-]
-
-// Temporary until we work on the dashboard
-if (import.meta.env.DEV || VITE_TEST_MODE) {
-  route.push({
+  {
     path: '/dashboard',
     name: 'Dashboard',
     alias: '/',
@@ -35,7 +31,7 @@ if (import.meta.env.DEV || VITE_TEST_MODE) {
       level: 1,
       permanentItem: true,
     },
-  })
-}
+  },
+]
 
 export default route
