@@ -18,6 +18,7 @@ class OmniAuth::Strategies::SamlDatabase < OmniAuth::Strategies::SAML
     config = auth_saml_credentials.compact_blank
       .merge(
         assertion_consumer_service_url: assertion_consumer_service_url,
+        attribute_service_name:         Setting.get('product_name'),
         sp_entity_id:                   entity_id,
         single_logout_service_url:      single_logout_service_url,
         idp_slo_session_destroy:        proc { |env, session| destroy_session(env, session) },
