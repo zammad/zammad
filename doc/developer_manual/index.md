@@ -6,6 +6,7 @@ it.
 ## Development Environment
 
 - [How to set up a development environment](development_environment/how-to-set-up-a-development-environment.md)
+- [How to set up a development environment using docker](development_environment/how-to-set-up-a-development-environment-using-docker.md)
 - [Getting started](development_environment/getting-started.md)
 - [Basic information](development_environment/basic-information.md)
 

@@ -62,9 +62,9 @@ if [ "$1" = 'zammad-init' ]; then
   echo "initialising / updating database..."
   if ! (bundle exec rails r 'puts User.any?' 2> /dev/null | grep -q true); then
     if [ "${POSTGRESQL_DB_CREATE}" == "true" ]; then
-      bundle exec rake db:create db:migrate db:seed
+      bundle exec rails db:create db:migrate db:seed
     else
-      bundle exec rake db:migrate db:seed
+      bundle exec rails db:migrate db:seed
     fi
 
     # create autowizard.json on first install
@@ -77,7 +77,7 @@ if [ "$1" = 'zammad-init' ]; then
     bundle exec rails r "Rails.cache.clear"
 
     echo Executing migrations...
-    bundle exec rake db:migrate
+    bundle exec rails db:migrate
 
     echo Synchronizing locales and translations...
     bundle exec rails r "Locale.sync; Translation.sync"
@@ -105,7 +105,7 @@ if [ "$1" = 'zammad-init' ]; then
         echo "Elasticsearch index exists, no automatic reindexing is needed."
       else
         echo "Elasticsearch index does not exist yet, create it now…"
-        bundle exec rake zammad:searchindex:rebuild
+        bundle exec rails zammad:searchindex:rebuild
       fi
     fi
   fi

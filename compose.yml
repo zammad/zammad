@@ -1,0 +1,174 @@
+name: zammad
+
+x-app: &app
+  image: zammad
+  build:
+    context: .
+    target: development
+    args:
+      COMMIT_SHA: ${COMMIT_SHA:-development}
+  environment:
+    RAILS_ENV: development
+    RACK_ENV: development
+    DATABASE_URL: postgres://zammad:zammad@postgres:5432/zammad_development
+    POSTGRESQL_HOST: postgres
+    POSTGRESQL_PORT: 5432
+    POSTGRESQL_USER: zammad
+    POSTGRESQL_PASS: zammad
+    POSTGRESQL_DB: zammad_development
+    POSTGRESQL_DB_CREATE: true
+    REDIS_URL: redis://redis:6379/0
+    ELASTICSEARCH_ENABLED: true
+    ELASTICSEARCH_HOST: elasticsearch
+    ELASTICSEARCH_PORT: 9200
+    ELASTICSEARCH_SCHEMA: http
+    ELASTICSEARCH_NAMESPACE: zammad
+    ELASTICSEARCH_REINDEX: true
+    RAILS_LOG_TO_STDOUT: true
+    SECRET_KEY_BASE: development_secret_key_base_change_in_production
+    HISTFILE: /data/.bash_history
+    MAILCATCHER_HOST: mailcatcher
+    ZAMMAD_RAILSSERVER_HOST: zammad-railsserver
+    ZAMMAD_RAILSSERVER_PORT: 3000
+    ZAMMAD_WEBSOCKET_HOST: zammad-websocket
+    ZAMMAD_WEBSOCKET_PORT: 6042
+    MEMCACHE_SERVERS: memcached:11211
+  env_file:
+    - .env
+  volumes:
+    - ./:/opt/zammad:cached
+    - cache:/opt/zammad/tmp/cache:delegated
+    - bundle:/usr/local/bundle:delegated
+    - node_modules:/opt/zammad/node_modules:delegated
+    - storage:/opt/zammad/storage:delegated
+    - data:/data:delegated
+  stdin_open: true
+  depends_on:
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+    elasticsearch:
+      condition: service_healthy
+
+services:
+  zammad-init:
+    <<: *app
+    command: zammad-init
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis: 
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+
+  zammad-railsserver:
+    <<: *app
+    ports:
+      - "${ZAMMAD_RAILS_PORT:-3000}:3000"
+    command: zammad-railsserver
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/v1/monitoring/health_check"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      zammad-init:
+        condition: service_completed_successfully
+
+  zammad-scheduler:
+    <<: *app
+    command: zammad-scheduler
+    depends_on:
+      zammad-init:
+        condition: service_completed_successfully
+
+  zammad-websocket:
+    <<: *app
+    ports:
+      - "${ZAMMAD_WEBSOCKET_PORT:-6042}:6042"
+    command: zammad-websocket
+    depends_on:
+      zammad-init:
+        condition: service_completed_successfully
+
+  postgres:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_USER: zammad
+      POSTGRES_PASSWORD: zammad
+      POSTGRES_DB: zammad_development
+      POSTGRES_HOST: 0.0.0.0
+    volumes:
+      - postgres:/var/lib/postgresql/data:cached
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -U zammad -d zammad_development"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+  memcached:
+    command: memcached -m 256M
+    image: memcached:1.6.38-alpine
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.4.2
+    volumes:
+      - redis:/data:delegated
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+    entrypoint: redis-server --appendonly yes
+    restart: always
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data:delegated
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    ports:
+      - "${ELASTICSEARCH_PORT:-9200}:9200"
+    
+  # mailcatcher:
+  #   image: dockage/mailcatcher
+  #   restart: on-failure:10
+  #   ports:
+  #     - "${MAILCATCHER_PORT:-1080}:1080"
+  #     - "${MAILCATCHER_SMTP_PORT:-1025}:1025"
+
+volumes:
+  postgres:
+  redis:
+  elasticsearch:
+  bundle:
+  node_modules:
+  storage:
+  data:
+  cache:
+
+

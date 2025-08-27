@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+touch .env
+docker compose run zammad-init pnpm install
+docker compose run zammad-init bundle install

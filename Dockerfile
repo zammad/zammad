@@ -29,6 +29,22 @@ FROM node:${NODE_VERSION}-bookworm-slim AS node
 RUN npm -g install corepack && corepack enable pnpm && \
     rm /usr/local/bin/yarn /usr/local/bin/yarnpkg
 
+FROM base AS development
+
+RUN unset BUNDLE_DEPLOYMENT
+RUN unset BUNDLE_WITHOUT
+
+# Install packages needed to build gems and node modules
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential git libimlib2-dev libpq-dev libyaml-dev && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Install JavaScript dependencies
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/bin /usr/local/bin
+
+ENTRYPOINT ["/opt/zammad/bin/docker-entrypoint"]
+
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
