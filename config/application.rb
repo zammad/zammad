@@ -22,6 +22,9 @@ module Zammad
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
 
+    # Set default locale to Persian.
+    config.i18n.default_locale = :fa
+
     Rails.autoloaders.each do |autoloader|
       autoloader.ignore            "#{config.root}/app/frontend"
       autoloader.do_not_eager_load "#{config.root}/lib/core_ext"
