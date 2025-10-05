@@ -36,16 +36,16 @@
 <div>
 Ticket: ##{ticket.number}<br>
 Title: #{ticket.title}<br>
-Group: <%= share.group_name %><br>
-Shared By: <%= share.shared_by_name %><br>
+Group: #{share.group_name}<br>
+Shared By: #{share.shared_by_name}<br>
 <% if share.message.present? %>
 Message: #{share.message}<br>
 <% end %>
 <% if share.expires_at.present? %>
-Expires: <%= share.expires_at %><br>
+Expires: #{share.expires_at}<br>
 <% end %>
 </div>
 <br>
 <div>
-  <a href="#{url}" target="zammad_app">View this in Zammad</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">View this in #{config.product_name}</a>
 </div>

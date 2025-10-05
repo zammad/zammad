@@ -40,15 +40,15 @@
 <div>
 Ticket: ##{ticket.number}<br>
 Title: #{ticket.title}<br>
-Status: <%= approval.status %><br>
-Priority: <%= approval.priority %><br>
-Requester: <%= approval.requester_name %><br>
-Approver: <%= approval.approver_name %><br>
+Status: #{approval.status}<br>
+Priority: #{approval.priority}<br>
+Requester: #{approval.requester_name}<br>
+Approver: #{approval.approver_name}<br>
 <% if approval.message.present? %>
 Message: #{approval.message}<br>
 <% end %>
 </div>
 <br>
 <div>
-  <a href="#{url}" target="zammad_app">View this in Zammad</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">View this in #{config.product_name}</a>
 </div>
