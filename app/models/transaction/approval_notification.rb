@@ -123,6 +123,22 @@ class Transaction::ApprovalNotification
     # ignore inactive users
     return if !user.active?
 
+    # check if today already notified (for specific notification types)
+    if %w[create update approve reject delete].include?(@item[:type])
+      identifier = user.email.presence || user.login
+      if identifier.present?
+        already_notified_cutoff = Time.use_zone(Setting.get('timezone_default')) { Time.current.beginning_of_day }
+
+        already_notified = History.where(
+          history_type_id:   History.type_lookup('notification').id,
+          history_object_id: History.object_lookup('Ticket').id,
+          o_id:              ticket.id
+        ).where('created_at > ?', already_notified_cutoff).exists?(['value_to LIKE ?', "%#{SqlHelper.quote_like(identifier)}(#{SqlHelper.quote_like(@item[:type])}:%"])
+      end
+
+      return if already_notified
+    end
+
     blocked_in_days = user.mail_delivery_failed_blocked_days
     if blocked_in_days.positive?
       Rails.logger.info "Send no approval notifications to #{user.email} because email is marked as mail_delivery_failed for #{blocked_in_days} day(s)"
@@ -193,11 +209,15 @@ class Transaction::ApprovalNotification
   def add_recipient_list_to_history(ticket, user, channels, type)
     return if channels.blank?
 
-    ticket.history_add(
-      'notification',
-      "Sent approval notification to #{user.email} (#{type})",
-      @item[:user_id] || 1,
-      true
+    identifier     = user.email.presence || user.login
+    recipient_list = "#{identifier}(#{type}:#{channels.join(',')})"
+
+    History.add(
+      o_id:           ticket.id,
+      history_type:   'notification',
+      history_object: 'Ticket',
+      value_to:       recipient_list,
+      created_by_id:  @item[:user_id] || 1
     )
   end
 
@@ -230,8 +250,9 @@ class Transaction::ApprovalNotification
       approval:     approval,
       recipient:    user,
       current_user: current_user,
-      action:       @item[:type].to_s,
+      changes:      human_changes(@item[:changes], ticket, user),
       reason:       recipients_reason[user.id],
+      action:       @item[:type].to_s,
       url:          ticket_url
     }
     
