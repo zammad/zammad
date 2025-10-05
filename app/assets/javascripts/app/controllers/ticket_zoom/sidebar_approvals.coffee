@@ -40,7 +40,6 @@ class SidebarApprovals extends App.Controller
       if @elSidebar && @elSidebar.length > 0 && @elSidebar.is(':visible')
         @proceedWithPanelSetup()
       else
-        console.warn "SidebarApprovals - sidebar not visible, retrying for ticket:", @ticket_id
         @delay =>
           @proceedWithPanelSetup()
         , 200, 'approval-panel-visibility-retry'
@@ -91,7 +90,8 @@ class SidebarApprovals extends App.Controller
             callback: @refreshApprovals
           )
         else
-          console.warn "SidebarApprovals - sidebar not visible, skipping widget creation for ticket:", current_ticket_id
+          # Widget creation will be retried by the delayed call above
+          null
       , 200, 'approval-widget-create-retry'
 
     @loadApprovalsForCheck()

@@ -12,13 +12,9 @@ class App.WidgetApprovals extends App.Controller
     @isLoadingApprovals = false
     @approvals = []
 
-    # Debug: log ticket_id for troubleshooting
-    console.log "WidgetApprovals constructor - ticket_id:", @ticket_id
-
     # Load ticket object for userGroupAccess method
     if @ticket_id
       @ticket = App.Ticket.findNative(@ticket_id) || App.Ticket.fullLocal(@ticket_id)
-      console.log "WidgetApprovals - loaded ticket:", @ticket?.id, "for approvals widget"
 
     @renderActions()
     
@@ -26,9 +22,7 @@ class App.WidgetApprovals extends App.Controller
     @controllerBind('Ticket:update Ticket:touch TicketApproval:create TicketApproval:update TicketApproval:destroy OnlineNotification::changed ui::ticket::sidebarRerender', (data) =>
       # Check if this event is for our ticket
       ticket_id = data?.id || data?.approval?.ticket_id || data?.ticket_id || data?.ticket?.id
-      console.log "WidgetApprovals event - extracted ticket_id:", ticket_id, "widget ticket_id:", @ticket_id, "data:", data
       if ticket_id && @ticket_id && ticket_id.toString() isnt @ticket_id.toString()
-        console.log "WidgetApprovals - ignoring event for different ticket"
         return
       
       # Refresh ticket object for updated permissions
@@ -72,22 +66,17 @@ class App.WidgetApprovals extends App.Controller
     @loadApprovalsFromAPI()
 
   loadApprovalsFromAPI: =>
-    console.log "WidgetApprovals loading approvals for ticket_id:", @ticket_id
     @ajax(
       id:          'load_approvals'
       type:        'GET'
       url:         "#{@apiPath}/tickets/#{@ticket_id}/approvals"
       processData: true
-      success:     (data, status, xhr) =>
-        console.log "WidgetApprovals loaded approvals:", data?.approvals?.length || 0, "for ticket:", @ticket_id
-        @renderApprovals(data, status, xhr)
+      success:     @renderApprovals
       error:       (xhr, status, error) =>
         # Ignore aborted requests
         unless status is 'abort'
-          console.error 'Failed to load approvals for ticket', @ticket_id, ':', status, error
-        @renderError(xhr, status, error)
+          @renderError(xhr, status, error)
       complete:    (xhr, status) =>
-        console.log "WidgetApprovals load complete for ticket", @ticket_id, "status:", status
         @isLoadingApprovals = false
         if status is 'abort'
           if (@loadRetryCount ? 0) < 3
@@ -139,8 +128,6 @@ class App.WidgetApprovals extends App.Controller
             ticket_id: @ticket_id
             current_user_id: current_user_id
           )
-        else
-          console.warn "WidgetApprovals render skipped - DOM not ready for ticket:", @ticket_id
       , 100, 'approval-render-retry'
 
   renderActions: =>

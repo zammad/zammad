@@ -40,7 +40,6 @@ class SidebarShares extends App.Controller
       if @elSidebar && @elSidebar.length > 0 && @elSidebar.is(':visible')
         @proceedWithPanelSetup()
       else
-        console.warn "SidebarShares - sidebar not visible, retrying for ticket:", @ticket_id
         @delay =>
           @proceedWithPanelSetup()
         , 200, 'share-panel-visibility-retry'
@@ -92,7 +91,8 @@ class SidebarShares extends App.Controller
             callback: @refreshShares
           )
         else
-          console.warn "SidebarShares - sidebar not visible, skipping widget creation for ticket:", current_ticket_id
+          # Widget creation will be retried by the delayed call above
+          null
       , 200, 'share-widget-create-retry'
     
     @delay =>

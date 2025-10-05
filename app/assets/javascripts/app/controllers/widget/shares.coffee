@@ -12,13 +12,9 @@ class App.WidgetShares extends App.Controller
     @isLoadingShares = false
     @shares = []
 
-    # Debug: log ticket_id for troubleshooting
-    console.log "WidgetShares constructor - ticket_id:", @ticket_id
-
     # Load ticket object for userGroupAccess method
     if @ticket_id
       @ticket = App.Ticket.findNative(@ticket_id) || App.Ticket.fullLocal(@ticket_id)
-      console.log "WidgetShares - loaded ticket:", @ticket?.id, "for shares widget"
 
     @renderActions()
     
@@ -26,9 +22,7 @@ class App.WidgetShares extends App.Controller
     @controllerBind('Ticket:update Ticket:touch TicketShare:create TicketShare:update TicketShare:destroy OnlineNotification::changed ui::ticket::sidebarRerender', (data) =>
       # Check if this event is for our ticket
       ticket_id = data?.id || data?.share?.ticket_id || data?.ticket_id || data?.ticket?.id
-      console.log "WidgetShares event - extracted ticket_id:", ticket_id, "widget ticket_id:", @ticket_id, "data:", data
       if ticket_id && @ticket_id && ticket_id.toString() isnt @ticket_id.toString()
-        console.log "WidgetShares - ignoring event for different ticket"
         return
       
       # Refresh ticket object for updated permissions
@@ -64,22 +58,17 @@ class App.WidgetShares extends App.Controller
     @loadSharesFromAPI()
 
   loadSharesFromAPI: =>
-    console.log "WidgetShares loading shares for ticket_id:", @ticket_id
     @ajax(
       id:          'load_shares'
       type:        'GET'
       url:         "#{@apiPath}/tickets/#{@ticket_id}/shares"
       processData: true
-      success:     (data, status, xhr) =>
-        console.log "WidgetShares loaded shares:", data?.shares?.length || 0, "for ticket:", @ticket_id
-        @renderShares(data, status, xhr)
+      success:     @renderShares
       error:       (xhr, status, error) =>
         # Ignore aborted requests
         unless status is 'abort'
-          console.error 'Failed to load shares for ticket', @ticket_id, ':', status, error
-        @renderError(xhr, status, error)
+          @renderError(xhr, status, error)
       complete:    (xhr, status) =>
-        console.log "WidgetShares load complete for ticket", @ticket_id, "status:", status
         @isLoadingShares = false
         if status is 'abort'
           if (@loadRetryCount ? 0) < 3
@@ -131,8 +120,6 @@ class App.WidgetShares extends App.Controller
             ticket_id: @ticket_id
             current_user_id: current_user_id
           )
-        else
-          console.warn "WidgetShares render skipped - DOM not ready for ticket:", @ticket_id
       , 100, 'share-render-retry'
 
   renderActions: =>
