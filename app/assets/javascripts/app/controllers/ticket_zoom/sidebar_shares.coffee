@@ -66,43 +66,22 @@ class SidebarShares extends App.Controller
     @createSharesWidget()
 
   createSharesWidget: =>
-    if @widget
-      @widget.destroy?()
+    @widget?.destroy?()
 
-    # Ensure we have a valid ticket_id
-    current_ticket_id = @ticket_ref?.id || @ticket?.id || @ticket_id
+    return unless @elSidebar && @elSidebar.length > 0
 
-    # Ensure sidebar element is visible before creating widget
-    if @elSidebar && @elSidebar.length > 0 && @elSidebar.is(':visible')
-      @widget = new App.WidgetShares(
-        el:       @elSidebar
-        ticket_id: current_ticket_id
-        parentVC: @
-        callback: @refreshShares
-      )
-    else
-      # Wait for sidebar to be visible before creating widget
-      @delay =>
-        if @elSidebar && @elSidebar.length > 0 && @elSidebar.is(':visible')
-          @widget = new App.WidgetShares(
-            el:       @elSidebar
-            ticket_id: current_ticket_id
-            parentVC: @
-            callback: @refreshShares
-          )
-        else
-          # Widget creation will be retried by the delayed call above
-          null
-      , 200, 'share-widget-create-retry'
-    
+    current_ticket_id = @ticket?.id || @ticket_id
+
+    @widget = new App.WidgetShares(
+      el:       @elSidebar
+      ticket_id: current_ticket_id
+      parentVC: @
+      callback: @refreshShares
+    )
+
     @delay =>
-      if @widget
-        @widget.reload()
-        @delay =>
-          if @widget && @widget.ensureDataLoaded
-            @widget.ensureDataLoaded()
-        , 500, 'share-ensure-data'
-    , 200, 'share-panel-show'
+      @widget?.reload()
+    , 0, 'share-initial-reload'
 
   reload: (args) =>
     if @widget && @widget.reload

@@ -68,46 +68,20 @@ class SidebarApprovals extends App.Controller
   createApprovalsWidget: =>
     @widget?.destroy?()
 
-    # Ensure we have a valid ticket_id
-    current_ticket_id = @ticket_ref?.id || @ticket?.id || @ticket_id
+    return unless @elSidebar && @elSidebar.length > 0
 
-    console.log "SidebarApprovals createApprovalsWidget for ticket:", current_ticket_id, "elSidebar exists:", !!@elSidebar, "visible:", @elSidebar?.is(':visible')
+    current_ticket_id = @ticket?.id || @ticket_id
 
-    # Ensure sidebar element is visible before creating widget
-    if @elSidebar && @elSidebar.length > 0 && @elSidebar.is(':visible')
-      console.log "SidebarApprovals creating widget for ticket:", current_ticket_id
-      @widget = new App.WidgetApprovals(
-        el:       @elSidebar
-        ticket_id: current_ticket_id
-        parentVC: @
-        callback: @refreshApprovals
-      )
-    else
-      console.log "SidebarApprovals sidebar not visible, scheduling widget creation for ticket:", current_ticket_id
-      # Wait for sidebar to be visible before creating widget
-      @delay =>
-        if @elSidebar && @elSidebar.length > 0 && @elSidebar.is(':visible')
-          console.log "SidebarApprovals retry creating widget for ticket:", current_ticket_id
-          @widget = new App.WidgetApprovals(
-            el:       @elSidebar
-            ticket_id: current_ticket_id
-            parentVC: @
-            callback: @refreshApprovals
-          )
-        else
-          console.warn "SidebarApprovals widget creation failed - sidebar not visible for ticket:", current_ticket_id
-      , 200, 'approval-widget-create-retry'
-
-    @loadApprovalsForCheck()
+    @widget = new App.WidgetApprovals(
+      el:       @elSidebar
+      ticket_id: current_ticket_id
+      parentVC: @
+      callback: @refreshApprovals
+    )
 
     @delay =>
-      if @widget
-        @widget.reload()
-        @delay =>
-          if @widget && @widget.ensureDataLoaded
-            @widget.ensureDataLoaded()
-        , 500, 'approval-ensure-data'
-    , 200, 'approval-panel-show'
+      @widget?.reload()
+    , 0, 'approval-initial-reload'
 
   reload: (args) =>
     if @widget && @widget.reload
@@ -129,20 +103,6 @@ class SidebarApprovals extends App.Controller
 
   refreshApprovals: =>
     @showPanel(@elSidebar) if @elSidebar
-
-  loadApprovalsForCheck: =>
-    return unless @ticket
-
-    @ajax(
-      id: 'load_approvals_for_check'
-      type: 'GET'
-      url: "#{@apiPath}/tickets/#{@ticket.id}/approvals"
-      processData: true
-      success: (data, status, xhr) =>
-        @approvals = data?.approvals || []
-      error: (xhr, status, error) =>
-        @approvals = []
-    )
 
   requestApproval: =>
     new App.TicketApprovalRequest(
