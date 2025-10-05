@@ -81,6 +81,10 @@ class App.WidgetShares extends App.Controller
     shares = data?.shares || []
     @lastShares = shares
     @loadRetryCount = 0
+    
+    # Refresh local collection with fresh data
+    App.TicketShare.refreshForTicket?(@ticket_id, data)
+    
     @render(@lastShares)
 
   renderError: (xhr, status, error) =>

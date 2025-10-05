@@ -89,6 +89,10 @@ class App.WidgetApprovals extends App.Controller
     approvals = data?.approvals || []
     @approvals = approvals
     @loadRetryCount = 0
+    
+    # Refresh local collection with fresh data
+    App.TicketApproval.refreshForTicket?(@ticket_id, data)
+    
     @render(@approvals)
 
   renderError: (xhr, status, error) =>

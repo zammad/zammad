@@ -54,3 +54,18 @@ class App.TicketShare extends App.Model
       @permissions.join(', ')
     else
       __('Full Access')
+
+  @refreshForTicket: (ticket_id, data) ->
+    return if !ticket_id
+    return if !data
+    
+    # Remove existing shares for this ticket
+    existing = @findByTicket(ticket_id)
+    for share in existing
+      share.destroy()
+    
+    # Add new shares from data
+    if data.shares and data.shares.length > 0
+      for share_data in data.shares
+        share = new @(share_data)
+        share.save()

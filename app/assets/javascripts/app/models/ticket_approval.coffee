@@ -77,3 +77,18 @@ class App.TicketApproval extends App.Model
       when 'approved' then __('Approved')
       when 'rejected' then __('Rejected')
       else @status
+
+  @refreshForTicket: (ticket_id, data) ->
+    return if !ticket_id
+    return if !data
+    
+    # Remove existing approvals for this ticket
+    existing = @findByTicket(ticket_id)
+    for approval in existing
+      approval.destroy()
+    
+    # Add new approvals from data
+    if data.approvals and data.approvals.length > 0
+      for approval_data in data.approvals
+        approval = new @(approval_data)
+        approval.save()
