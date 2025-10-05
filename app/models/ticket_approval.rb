@@ -1,16 +1,7 @@
 # Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketApproval < ApplicationModel
-  include HasObjectManagerAttributes
-  include HasSearchIndexBackend
-  include CanBeImported
   include HasHistory
-  include ChecksConditionValidation
-  include HasActivityStreamLog
-  include CanCsvImport
-  include HasCollectionUpdate
-  include HasTaskbars
-  include HasTags
 
   # associations
   belongs_to :ticket, class_name: 'Ticket'
@@ -125,29 +116,4 @@ class TicketApproval < ApplicationModel
     "Approval ##{id} for Ticket ##{ticket.number}"
   end
 
-  # search index
-  def search_index_attribute_lookup
-    attributes = super
-    attributes['ticket_number'] = ticket&.number
-    attributes['approver_name'] = approver_name
-    attributes['requester_name'] = requester_name
-    attributes['status'] = status
-    attributes['priority'] = priority
-    attributes
-  end
-
-  # activity stream
-  def activity_stream_permission
-    'ticket.agent'
-  end
-
-  def activity_stream_attributes
-    {
-      ticket_id: ticket_id,
-      approver_id: approver_id,
-      requester_id: requester_id,
-      status: status,
-      priority: priority
-    }
-  end
 end

@@ -1,16 +1,7 @@
 # Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketShare < ApplicationModel
-  include HasObjectManagerAttributes
-  include HasSearchIndexBackend
-  include CanBeImported
   include HasHistory
-  include ChecksConditionValidation
-  include HasActivityStreamLog
-  include CanCsvImport
-  include HasCollectionUpdate
-  include HasTaskbars
-  include HasTags
 
   # associations
   belongs_to :ticket, class_name: 'Ticket'
@@ -120,29 +111,4 @@ class TicketShare < ApplicationModel
     "Share ##{id} for Ticket ##{ticket.number} with #{group_name}"
   end
 
-  # search index
-  def search_index_attribute_lookup
-    attributes = super
-    attributes['ticket_number'] = ticket&.number
-    attributes['group_name'] = group_name
-    attributes['shared_by_name'] = shared_by_name
-    attributes['status'] = status
-    attributes['expires_at'] = expires_at
-    attributes
-  end
-
-  # activity stream
-  def activity_stream_permission
-    'ticket.agent'
-  end
-
-  def activity_stream_attributes
-    {
-      ticket_id: ticket_id,
-      group_id: group_id,
-      shared_by_id: shared_by_id,
-      status: status,
-      expires_at: expires_at
-    }
-  end
 end
