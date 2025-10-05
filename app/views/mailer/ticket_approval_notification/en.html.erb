@@ -100,7 +100,7 @@
           <%= self.T('Requester') %>
         </td>
         <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
-          <%= approval.requester %>
+          <%= approval.requester_name %>
         </td>
       </tr>
       <tr>
@@ -108,7 +108,7 @@
           <%= self.T('Approver') %>
         </td>
         <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
-          <%= approval.approver %>
+          <%= approval.approver_name %>
         </td>
       </tr>
       <% if approval.message.present? %>

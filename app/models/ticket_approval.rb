@@ -37,6 +37,9 @@ class TicketApproval < ApplicationModel
     self.priority ||= 'normal'
     self.created_at ||= Time.current
     self.updated_at ||= Time.current
+  rescue => e
+    Rails.logger.error "Failed to set defaults for TicketApproval: #{e.message}"
+    raise e
   end
 
   def create_history_entry
