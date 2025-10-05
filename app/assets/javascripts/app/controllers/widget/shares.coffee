@@ -63,7 +63,6 @@ class App.WidgetShares extends App.Controller
       @isLoadingShares = false
       return
 
-    console.log "WidgetShares loadShares called for ticket:", @ticket_id, "el exists:", !!@el, "el visible:", @el?.is(':visible')
     @loadSharesFromAPI()
 
   loadSharesFromAPI: =>
@@ -113,30 +112,11 @@ class App.WidgetShares extends App.Controller
     current_user = App.User.current()
     current_user_id = if current_user then String(current_user.id) else 'unknown'
 
-    console.log "WidgetShares render called for ticket:", @ticket_id, "shares:", shares?.length || 0, "el exists:", !!@el, "el visible:", @el?.is(':visible')
-
-    # Ensure DOM element is visible before rendering
-    if @el && @el.length > 0 && @el.is(':visible')
-      console.log "WidgetShares rendering to DOM for ticket:", @ticket_id
-      @html App.view('widget/shares')(
-        shares: shares
-        ticket_id: @ticket_id
-        current_user_id: current_user_id
-      )
-    else
-      console.log "WidgetShares DOM not ready for ticket:", @ticket_id, "scheduling retry"
-      # Schedule re-render when DOM is ready
-      @delay =>
-        if @el && @el.length > 0 && @el.is(':visible')
-          console.log "WidgetShares retry render for ticket:", @ticket_id
-          @html App.view('widget/shares')(
-            shares: shares
-            ticket_id: @ticket_id
-            current_user_id: current_user_id
-          )
-        else
-          console.warn "WidgetShares render failed - DOM not ready for ticket:", @ticket_id
-      , 100, 'share-render-retry'
+    @html App.view('widget/shares')(
+      shares: shares
+      ticket_id: @ticket_id
+      current_user_id: current_user_id
+    )
 
   renderActions: =>
     @parentVC?.parentSidebar?.sidebarActionsRender('shares', @parentVC?.item?.sidebarActions || [])
