@@ -185,6 +185,12 @@ class App.TicketZoom extends App.Controller
     # remember time_accountings
     @time_accountings = data.time_accountings
 
+    # remember approvals
+    @approvals = data.approvals
+
+    # remember shares
+    @shares = data.shares
+
     if draft = App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket_id
       draft.remove(clear: true)
 
@@ -679,6 +685,8 @@ class App.TicketZoom extends App.Controller
         mentions:         @mentions
         time_accountings: @time_accountings
         links:            @links
+        approvals:        @approvals
+        shares:           @shares
         parent:           @
       )
 
@@ -698,6 +706,8 @@ class App.TicketZoom extends App.Controller
         mentions:         @mentions
         time_accountings: @time_accountings
         links:            @links
+        approvals:        @approvals
+        shares:           @shares
       )
 
     if !@initDone

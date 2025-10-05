@@ -10,7 +10,13 @@ class App.WidgetApprovals extends App.Controller
     super
     @loadRetryCount = 0
     @isLoadingApprovals = false
-    @approvals = []
+
+    # Use passed data or initialize empty array
+    if @approvals
+      @approvals = @approvals
+      @render(@approvals)
+    else
+      @approvals = []
 
     # Load ticket object for userGroupAccess method
     if @ticket_id
@@ -33,15 +39,19 @@ class App.WidgetApprovals extends App.Controller
       @scheduleReload(300)
     )
     
-    # Periodic check to ensure data is loaded (fallback for missed events)
-    @delay =>
-      @ensureDataLoaded()
-    , 2000, 'approval-data-check'
-
-    @loadApprovals()
+    # Only load if no data was passed
+    unless @approvals && @approvals.length > 0
+      @delay =>
+        @ensureDataLoaded()
+      , 2000, 'approval-data-check'
+      @loadApprovals()
   # Standard reload method called by sidebar system
   reload: (args) =>
-    @loadApprovals()
+    if args?.approvals
+      @approvals = args.approvals
+      @render(@approvals)
+    else
+      @loadApprovals()
 
   # Fallback mechanism to ensure data loads
   ensureDataLoaded: =>

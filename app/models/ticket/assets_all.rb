@@ -51,6 +51,8 @@ class Ticket::AssetsAll
       tags:               tags,
       mentions:           mentions.pluck(:id),
       time_accountings:   time_accountings,
+      approvals:          approvals,
+      shares:             shares,
       form_meta:          attributes_to_change[:form_meta],
     }
   end
@@ -88,5 +90,31 @@ class Ticket::AssetsAll
 
   def mentions
     @mentions ||= ticket.mentions
+  end
+
+  def approvals
+    @approvals ||= begin
+      if ticket.respond_to?(:approvals)
+        ticket.approvals.map { |approval| approval.as_json(only: [:id, :ticket_id, :requester_id, :approver_id, :status, :priority, :message, :created_at, :updated_at]) }
+      else
+        []
+      end
+    rescue StandardError => e
+      Rails.logger.warn "Failed to load approvals for ticket #{ticket.id}: #{e.message}"
+      []
+    end
+  end
+
+  def shares
+    @shares ||= begin
+      if ticket.respond_to?(:shares)
+        ticket.shares.map { |share| share.as_json(only: [:id, :ticket_id, :group_id, :shared_by_id, :permissions, :message, :status, :created_at, :updated_at, :expires_at]) }
+      else
+        []
+      end
+    rescue StandardError => e
+      Rails.logger.warn "Failed to load shares for ticket #{ticket.id}: #{e.message}"
+      []
+    end
   end
 end

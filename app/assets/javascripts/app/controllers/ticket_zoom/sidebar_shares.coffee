@@ -73,15 +73,12 @@ class SidebarShares extends App.Controller
     current_ticket_id = @ticket?.id || @ticket_id
 
     @widget = new App.WidgetShares(
-      el:       @elSidebar
+      el:        @elSidebar
       ticket_id: current_ticket_id
-      parentVC: @
-      callback: @refreshShares
+      shares:    @shares
+      parentVC:  @
+      callback:  @refreshShares
     )
-
-    @delay =>
-      @widget?.reload()
-    , 0, 'share-initial-reload'
 
   reload: (args) =>
     if @widget && @widget.reload

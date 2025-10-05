@@ -7,10 +7,15 @@ class App.WidgetShares extends App.Controller
 
   constructor: ->
     super
-    @lastShares = []  # Initialize to prevent undefined errors
     @loadRetryCount = 0
     @isLoadingShares = false
-    @shares = []
+
+    # Use passed data or initialize empty array
+    if @shares
+      @lastShares = @shares
+      @render(@lastShares)
+    else
+      @lastShares = []
 
     # Load ticket object for userGroupAccess method
     if @ticket_id
@@ -33,15 +38,19 @@ class App.WidgetShares extends App.Controller
       @scheduleReload(300)
     )
 
-    # Periodic check to ensure data is loaded (fallback for missed events)
-    @delay =>
-      @ensureDataLoaded()
-    , 2000, 'share-data-check'
-
-    @loadShares()
+    # Only load if no data was passed
+    unless @shares && @shares.length > 0
+      @delay =>
+        @ensureDataLoaded()
+      , 2000, 'share-data-check'
+      @loadShares()
   # Standard reload method called by sidebar system
   reload: (args) =>
-    @loadShares()
+    if args?.shares
+      @lastShares = args.shares
+      @render(@lastShares)
+    else
+      @loadShares()
 
   # Fallback mechanism to ensure data loads
   ensureDataLoaded: =>
