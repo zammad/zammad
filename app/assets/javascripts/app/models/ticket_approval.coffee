@@ -94,9 +94,12 @@ class App.TicketApproval extends App.Model
           # Check if approval already exists to avoid duplicates
           existing_approval = @find(approval_data.id)
           if existing_approval
-            existing_approval.refresh(approval_data)
+            # Update existing approval without triggering refresh
+            existing_approval.attr(approval_data)
           else
+            # Create new approval without saving to server
             approval = new @(approval_data)
+            approval.save = -> # Override save to prevent server call
             approval.save()
     catch e
       console.warn "Failed to refresh approvals for ticket #{ticket_id}:", e

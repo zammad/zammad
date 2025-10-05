@@ -71,9 +71,12 @@ class App.TicketShare extends App.Model
           # Check if share already exists to avoid duplicates
           existing_share = @find(share_data.id)
           if existing_share
-            existing_share.refresh(share_data)
+            # Update existing share without triggering refresh
+            existing_share.attr(share_data)
           else
+            # Create new share without saving to server
             share = new @(share_data)
+            share.save = -> # Override save to prevent server call
             share.save()
     catch e
       console.warn "Failed to refresh shares for ticket #{ticket_id}:", e
