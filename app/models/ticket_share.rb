@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-class TicketShare < ApplicationRecord
+class TicketShare < ApplicationModel
   include HasObjectManagerAttributes
   include HasSearchIndexBackend
   include CanBeImported
