@@ -7,12 +7,12 @@ Approval request for ticket ##{ticket.number}
 <div>
 Ticket: ##{ticket.number}<br>
 Title: #{ticket.title}<br>
-Status: #{approval.status}<br>
-Priority: #{approval.priority}<br>
-Requester: #{approval.requester_name}<br>
-Approver: #{approval.approver_name}<br>
-<% if approval.message.present? %>
-Message: #{approval.message}<br>
+Status: #{@objects[:approval].status}<br>
+Priority: #{@objects[:approval].priority}<br>
+Requester: #{@objects[:approval].requester_name}<br>
+Approver: #{@objects[:approval].approver_name}<br>
+<% if @objects[:approval].message.present? %>
+Message: #{@objects[:approval].message}<br>
 <% end %>
 </div>
 <br>

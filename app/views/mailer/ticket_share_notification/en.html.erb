@@ -7,13 +7,13 @@ Ticket ##{ticket.number} shared with your group
 <div>
 Ticket: ##{ticket.number}<br>
 Title: #{ticket.title}<br>
-Group: #{share.group_name}<br>
-Shared By: #{share.shared_by_name}<br>
-<% if share.message.present? %>
-Message: #{share.message}<br>
+Group: #{@objects[:share].group_name}<br>
+Shared By: #{@objects[:share].shared_by_name}<br>
+<% if @objects[:share].message.present? %>
+Message: #{@objects[:share].message}<br>
 <% end %>
-<% if share.expires_at.present? %>
-Expires: #{share.expires_at}<br>
+<% if @objects[:share].expires_at.present? %>
+Expires: #{@objects[:share].expires_at}<br>
 <% end %>
 </div>
 <br>
