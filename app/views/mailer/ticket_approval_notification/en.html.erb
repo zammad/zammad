@@ -1,35 +1,40 @@
-<% case action.to_s %>
-<% when 'create' %>
-<%= self.T('Approval request for ticket #%s', ticket.number) %>
-<% when 'update' %>
-<%= self.T('Approval request updated for ticket #%s', ticket.number) %>
-<% when 'approve' %>
-<%= self.T('Ticket #%s approved', ticket.number) %>
-<% when 'reject' %>
-<%= self.T('Ticket #%s rejected', ticket.number) %>
-<% when 'delete' %>
-<%= self.T('Approval request deleted for ticket #%s', ticket.number) %>
-<% else %>
-<%= self.T('Approval notification for ticket #%s', ticket.number) %>
-<% end %>
+<% 
+  action_str = action.to_s
+  case action_str
+  when 'create'
+    subject = self.T('Approval request for ticket #%s', ticket.number)
+  when 'update'
+    subject = self.T('Approval request updated for ticket #%s', ticket.number)
+  when 'approve'
+    subject = self.T('Ticket #%s approved', ticket.number)
+  when 'reject'
+    subject = self.T('Ticket #%s rejected', ticket.number)
+  when 'delete'
+    subject = self.T('Approval request deleted for ticket #%s', ticket.number)
+  else
+    subject = self.T('Approval notification for ticket #%s', ticket.number)
+  end
+%><%= subject %>
 
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
   <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
     <h2 style="color: #333; margin: 0 0 10px 0;">
-      <% case action.to_s %>
-      <% when 'create' %>
-        <%= self.T('Approval Request') %>
-      <% when 'update' %>
-        <%= self.T('Approval Request Updated') %>
-      <% when 'approve' %>
-        <%= self.T('Ticket Approved') %>
-      <% when 'reject' %>
-        <%= self.T('Ticket Rejected') %>
-      <% when 'delete' %>
-        <%= self.T('Approval Request Deleted') %>
-      <% else %>
-        <%= self.T('Approval Notification') %>
-      <% end %>
+      <% 
+        case action.to_s
+        when 'create'
+          title = self.T('Approval Request')
+        when 'update'
+          title = self.T('Approval Request Updated')
+        when 'approve'
+          title = self.T('Ticket Approved')
+        when 'reject'
+          title = self.T('Ticket Rejected')
+        when 'delete'
+          title = self.T('Approval Request Deleted')
+        else
+          title = self.T('Approval Notification')
+        end
+      %><%= title %>
     </h2>
     
     <p style="color: #666; margin: 0;">
@@ -132,16 +137,18 @@
 
   <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; font-size: 12px; color: #666;">
     <p style="margin: 0;">
-      <% case action.to_s %>
-      <% when 'create' %>
-        <%= self.T('You have received an approval request for this ticket.') %>
-      <% when 'approve' %>
-        <%= self.T('Your approval request has been approved.') %>
-      <% when 'reject' %>
-        <%= self.T('Your approval request has been rejected.') %>
-      <% else %>
-        <%= self.T('This notification was sent regarding an approval request.') %>
-      <% end %>
+      <% 
+        case action.to_s
+        when 'create'
+          message = self.T('You have received an approval request for this ticket.')
+        when 'approve'
+          message = self.T('Your approval request has been approved.')
+        when 'reject'
+          message = self.T('Your approval request has been rejected.')
+        else
+          message = self.T('This notification was sent regarding an approval request.')
+        end
+      %><%= message %>
     </p>
     <p style="margin: 10px 0 0 0;">
       <%= self.T('You can manage your notification preferences in your user profile.') %>

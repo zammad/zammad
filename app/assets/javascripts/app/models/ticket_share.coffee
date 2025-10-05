@@ -59,13 +59,21 @@ class App.TicketShare extends App.Model
     return if !ticket_id
     return if !data
     
-    # Remove existing shares for this ticket
-    existing = @findByTicket(ticket_id)
-    for share in existing
-      share.destroy()
-    
-    # Add new shares from data
-    if data.shares and data.shares.length > 0
-      for share_data in data.shares
-        share = new @(share_data)
-        share.save()
+    try
+      # Remove existing shares for this ticket
+      existing = @findByTicket(ticket_id)
+      for share in existing
+        share.destroy()
+      
+      # Add new shares from data
+      if data.shares and data.shares.length > 0
+        for share_data in data.shares
+          # Check if share already exists to avoid duplicates
+          existing_share = @find(share_data.id)
+          if existing_share
+            existing_share.refresh(share_data)
+          else
+            share = new @(share_data)
+            share.save()
+    catch e
+      console.warn "Failed to refresh shares for ticket #{ticket_id}:", e

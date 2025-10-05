@@ -1,31 +1,36 @@
-<% case action.to_s %>
-<% when 'create' %>
-<%= self.T('Ticket #%s shared with your group', ticket.number) %>
-<% when 'update' %>
-<%= self.T('Ticket #%s share updated', ticket.number) %>
-<% when 'revoke' %>
-<%= self.T('Ticket #%s share revoked', ticket.number) %>
-<% when 'delete' %>
-<%= self.T('Ticket #%s share deleted', ticket.number) %>
-<% else %>
-<%= self.T('Ticket #%s share notification', ticket.number) %>
-<% end %>
+<% 
+  action_str = action.to_s
+  case action_str
+  when 'create'
+    subject = self.T('Ticket #%s shared with your group', ticket.number)
+  when 'update'
+    subject = self.T('Ticket #%s share updated', ticket.number)
+  when 'revoke'
+    subject = self.T('Ticket #%s share revoked', ticket.number)
+  when 'delete'
+    subject = self.T('Ticket #%s share deleted', ticket.number)
+  else
+    subject = self.T('Ticket #%s share notification', ticket.number)
+  end
+%><%= subject %>
 
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
   <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
     <h2 style="color: #333; margin: 0 0 10px 0;">
-      <% case action.to_s %>
-      <% when 'create' %>
-        <%= self.T('Ticket Shared with Your Group') %>
-      <% when 'update' %>
-        <%= self.T('Ticket Share Updated') %>
-      <% when 'revoke' %>
-        <%= self.T('Ticket Share Revoked') %>
-      <% when 'delete' %>
-        <%= self.T('Ticket Share Deleted') %>
-      <% else %>
-        <%= self.T('Ticket Share Notification') %>
-      <% end %>
+      <% 
+        case action.to_s
+        when 'create'
+          title = self.T('Ticket Shared with Your Group')
+        when 'update'
+          title = self.T('Ticket Share Updated')
+        when 'revoke'
+          title = self.T('Ticket Share Revoked')
+        when 'delete'
+          title = self.T('Ticket Share Deleted')
+        else
+          title = self.T('Ticket Share Notification')
+        end
+      %><%= title %>
     </h2>
     
     <p style="color: #666; margin: 0;">

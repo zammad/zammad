@@ -82,13 +82,21 @@ class App.TicketApproval extends App.Model
     return if !ticket_id
     return if !data
     
-    # Remove existing approvals for this ticket
-    existing = @findByTicket(ticket_id)
-    for approval in existing
-      approval.destroy()
-    
-    # Add new approvals from data
-    if data.approvals and data.approvals.length > 0
-      for approval_data in data.approvals
-        approval = new @(approval_data)
-        approval.save()
+    try
+      # Remove existing approvals for this ticket
+      existing = @findByTicket(ticket_id)
+      for approval in existing
+        approval.destroy()
+      
+      # Add new approvals from data
+      if data.approvals and data.approvals.length > 0
+        for approval_data in data.approvals
+          # Check if approval already exists to avoid duplicates
+          existing_approval = @find(approval_data.id)
+          if existing_approval
+            existing_approval.refresh(approval_data)
+          else
+            approval = new @(approval_data)
+            approval.save()
+    catch e
+      console.warn "Failed to refresh approvals for ticket #{ticket_id}:", e
