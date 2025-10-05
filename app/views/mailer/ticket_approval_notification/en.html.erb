@@ -1,4 +1,4 @@
-<% case action %>
+<% case action.to_s %>
 <% when 'create' %>
 <%= self.T('Approval request for ticket #%s', ticket.number) %>
 <% when 'update' %>
@@ -16,7 +16,7 @@
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
   <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
     <h2 style="color: #333; margin: 0 0 10px 0;">
-      <% case action %>
+      <% case action.to_s %>
       <% when 'create' %>
         <%= self.T('Approval Request') %>
       <% when 'update' %>
@@ -132,7 +132,7 @@
 
   <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; font-size: 12px; color: #666;">
     <p style="margin: 0;">
-      <% case action %>
+      <% case action.to_s %>
       <% when 'create' %>
         <%= self.T('You have received an approval request for this ticket.') %>
       <% when 'approve' %>
