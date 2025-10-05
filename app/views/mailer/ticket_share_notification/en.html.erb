@@ -2,115 +2,50 @@
   # Determine subject based on action
   case action.to_s
   when 'create'
-    subject = self.T('Ticket #%s shared with your group', ticket.number)
+    subject = "Ticket ##{ticket.number} shared with your group"
   when 'update'
-    subject = self.T('Ticket #%s share updated', ticket.number)
+    subject = "Ticket ##{ticket.number} share updated"
   when 'revoke'
-    subject = self.T('Ticket #%s share revoked', ticket.number)
+    subject = "Ticket ##{ticket.number} share revoked"
   when 'delete'
-    subject = self.T('Ticket #%s share deleted', ticket.number)
+    subject = "Ticket ##{ticket.number} share deleted"
   else
-    subject = self.T('Ticket #%s share notification', ticket.number)
+    subject = "Ticket ##{ticket.number} share notification"
   end
 %><%= subject %>
 
-<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-  <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-    <h2 style="color: #333; margin: 0 0 10px 0;">
-      <% 
-        case action.to_s
-        when 'create'
-          title = self.T('Ticket Shared with Your Group')
-        when 'update'
-          title = self.T('Ticket Share Updated')
-        when 'revoke'
-          title = self.T('Ticket Share Revoked')
-        when 'delete'
-          title = self.T('Ticket Share Deleted')
-        else
-          title = self.T('Ticket Share Notification')
-        end
-      %><%= title %>
-    </h2>
-    
-    <p style="color: #666; margin: 0;">
-      <%= self.T('Hello %s,', recipient.firstname) %>
-    </p>
-  </div>
-
-  <div style="background-color: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px;">
-    <h3 style="color: #333; margin: 0 0 15px 0;">
-      <%= self.T('Ticket Details') %>
-    </h3>
-    
-    <table style="width: 100%; border-collapse: collapse;">
-      <tr>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; width: 30%;">
-          <%= self.T('Ticket #') %>
-        </td>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
-          <%= ticket.number %>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold;">
-          <%= self.T('Title') %>
-        </td>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
-          <%= ticket.title %>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold;">
-          <%= self.T('Group') %>
-        </td>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
-          <%= share.group_name %>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold;">
-          <%= self.T('Shared By') %>
-        </td>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
-          <%= share.shared_by_name %>
-        </td>
-      </tr>
-      <% if share.message.present? %>
-      <tr>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; vertical-align: top;">
-          <%= self.T('Message') %>
-        </td>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
-          <%= simple_format(share.message) %>
-        </td>
-      </tr>
-      <% end %>
-      <% if share.expires_at.present? %>
-      <tr>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold;">
-          <%= self.T('Expires') %>
-        </td>
-        <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
-          <%= l(share.expires_at, format: :long) %>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-
-  <div style="text-align: center; margin: 20px 0;">
-    <a href="<%= url %>" style="background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;">
-      <%= self.T('View Ticket') %>
-    </a>
-  </div>
-
-  <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; font-size: 12px; color: #666;">
-    <p style="margin: 0;">
-      <%= self.T('This notification was sent because a ticket was shared with your group. Only agents and admins in the group receive access.') %>
-    </p>
-    <p style="margin: 10px 0 0 0;">
-      <%= self.T('You can manage your notification preferences in your user profile.') %>
-    </p>
-  </div>
+<div>Hi #{recipient.firstname},</div>
+<br>
+<div>
+<% 
+  case action.to_s
+  when 'create'
+    message = "Ticket ##{ticket.number} has been shared with your group."
+  when 'update'
+    message = "The share for ticket ##{ticket.number} has been updated."
+  when 'revoke'
+    message = "The share for ticket ##{ticket.number} has been revoked."
+  when 'delete'
+    message = "The share for ticket ##{ticket.number} has been deleted."
+  else
+    message = "This notification was sent regarding a ticket share for ##{ticket.number}."
+  end
+%><%= message %>
+</div>
+<br>
+<div>
+Ticket: ##{ticket.number}<br>
+Title: #{ticket.title}<br>
+Group: <%= share.group_name %><br>
+Shared By: <%= share.shared_by_name %><br>
+<% if share.message.present? %>
+Message: #{share.message}<br>
+<% end %>
+<% if share.expires_at.present? %>
+Expires: <%= share.expires_at %><br>
+<% end %>
+</div>
+<br>
+<div>
+  <a href="#{url}" target="zammad_app">View this in Zammad</a>
 </div>
