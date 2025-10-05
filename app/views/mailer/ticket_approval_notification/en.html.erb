@@ -69,16 +69,18 @@
           <%= self.T('Status') %>
         </td>
         <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
-          <% case approval.status %>
-          <% when 'pending' %>
-            <span style="color: #ffc107; font-weight: bold;"><%= self.T('Pending') %></span>
-          <% when 'approved' %>
-            <span style="color: #28a745; font-weight: bold;"><%= self.T('Approved') %></span>
-          <% when 'rejected' %>
-            <span style="color: #dc3545; font-weight: bold;"><%= self.T('Rejected') %></span>
-          <% else %>
-            <%= approval.status %>
-          <% end %>
+          <% 
+            case approval.status.to_s
+            when 'pending'
+              status_html = "<span style=\"color: #ffc107; font-weight: bold;\">#{self.T('Pending')}</span>"
+            when 'approved'
+              status_html = "<span style=\"color: #28a745; font-weight: bold;\">#{self.T('Approved')}</span>"
+            when 'rejected'
+              status_html = "<span style=\"color: #dc3545; font-weight: bold;\">#{self.T('Rejected')}</span>"
+            else
+              status_html = approval.status.to_s
+            end
+          %><%= status_html.html_safe %>
         </td>
       </tr>
       <tr>
@@ -86,18 +88,20 @@
           <%= self.T('Priority') %>
         </td>
         <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
-          <% case approval.priority %>
-          <% when 'low' %>
-            <span style="color: #6c757d;"><%= self.T('Low') %></span>
-          <% when 'normal' %>
-            <span style="color: #007bff;"><%= self.T('Normal') %></span>
-          <% when 'high' %>
-            <span style="color: #fd7e14;"><%= self.T('High') %></span>
-          <% when 'urgent' %>
-            <span style="color: #dc3545; font-weight: bold;"><%= self.T('Urgent') %></span>
-          <% else %>
-            <%= approval.priority %>
-          <% end %>
+          <% 
+            case approval.priority.to_s
+            when 'low'
+              priority_html = "<span style=\"color: #6c757d;\">#{self.T('Low')}</span>"
+            when 'normal'
+              priority_html = "<span style=\"color: #007bff;\">#{self.T('Normal')}</span>"
+            when 'high'
+              priority_html = "<span style=\"color: #fd7e14;\">#{self.T('High')}</span>"
+            when 'urgent'
+              priority_html = "<span style=\"color: #dc3545; font-weight: bold;\">#{self.T('Urgent')}</span>"
+            else
+              priority_html = approval.priority.to_s
+            end
+          %><%= priority_html.html_safe %>
         </td>
       </tr>
       <tr>
