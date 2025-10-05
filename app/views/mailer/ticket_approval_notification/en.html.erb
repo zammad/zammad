@@ -1,8 +1,40 @@
-Approval request for ticket ##{ticket.number}
+<% 
+  case @objects[:action]
+  when 'create'
+    subject = "Approval request for ticket ##{ticket.number}"
+  when 'update'
+    subject = "Approval request updated for ticket ##{ticket.number}"
+  when 'approve'
+    subject = "Ticket ##{ticket.number} approved"
+  when 'reject'
+    subject = "Ticket ##{ticket.number} rejected"
+  when 'delete'
+    subject = "Approval request deleted for ticket ##{ticket.number}"
+  else
+    subject = "Approval notification for ticket ##{ticket.number}"
+  end
+%><%= subject %>
 
 <div>Hi #{recipient.firstname},</div>
 <br>
-<div>You have received an approval request for ticket ##{ticket.number}.</div>
+<div>
+<% 
+  case @objects[:action]
+  when 'create'
+    message = "You have received an approval request for ticket ##{ticket.number}."
+  when 'update'
+    message = "The approval request for ticket ##{ticket.number} has been updated."
+  when 'approve'
+    message = "Your approval request for ticket ##{ticket.number} has been approved."
+  when 'reject'
+    message = "Your approval request for ticket ##{ticket.number} has been rejected."
+  when 'delete'
+    message = "The approval request for ticket ##{ticket.number} has been deleted."
+  else
+    message = "This notification was sent regarding an approval request for ticket ##{ticket.number}."
+  end
+%><%= message %>
+</div>
 <br>
 <div>
 Ticket: ##{ticket.number}<br>
