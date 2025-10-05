@@ -122,12 +122,26 @@ class App.WidgetApprovals extends App.Controller
     # Render the full template with real data
     current_user = App.User.current()
     current_user_id = if current_user then String(current_user.id) else 'unknown'
-    
-    @html App.view('widget/approvals')(
-      approvals: approvals
-      ticket_id: @ticket_id
-      current_user_id: current_user_id
-    )
+
+    # Ensure DOM element is visible before rendering
+    if @el && @el.length > 0 && @el.is(':visible')
+      @html App.view('widget/approvals')(
+        approvals: approvals
+        ticket_id: @ticket_id
+        current_user_id: current_user_id
+      )
+    else
+      # Schedule re-render when DOM is ready
+      @delay =>
+        if @el && @el.length > 0 && @el.is(':visible')
+          @html App.view('widget/approvals')(
+            approvals: approvals
+            ticket_id: @ticket_id
+            current_user_id: current_user_id
+          )
+        else
+          console.warn "WidgetApprovals render skipped - DOM not ready for ticket:", @ticket_id
+      , 100, 'approval-render-retry'
 
   renderActions: =>
     @parentVC?.parentSidebar?.sidebarActionsRender('approvals', @parentVC?.item?.sidebarActions || [])

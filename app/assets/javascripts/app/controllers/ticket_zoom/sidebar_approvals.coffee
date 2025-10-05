@@ -7,6 +7,9 @@ class SidebarApprovals extends App.Controller
     @taskKey = @options.taskKey || @taskKey
     @ticket_id = @options.ticket_id || @ticket?.id || @ticket_id
 
+    # Store ticket reference for later use
+    @ticket_ref = @ticket
+
   sidebarItem: =>
     return if !@canSeeAgentView()
     return if !(@permissionCheck('ticket.agent') or @permissionCheck('admin.*') or @hasShareAccess())
@@ -32,6 +35,18 @@ class SidebarApprovals extends App.Controller
   showPanel: (el) =>
     @elSidebar = el
 
+    # Ensure sidebar is visible before proceeding
+    @delay =>
+      if @elSidebar && @elSidebar.length > 0 && @elSidebar.is(':visible')
+        @proceedWithPanelSetup()
+      else
+        console.warn "SidebarApprovals - sidebar not visible, retrying for ticket:", @ticket_id
+        @delay =>
+          @proceedWithPanelSetup()
+        , 200, 'approval-panel-visibility-retry'
+    , 50, 'approval-panel-visibility-check'
+
+  proceedWithPanelSetup: =>
     if @ticket_id
       @ticket = App.Ticket.fullLocal(@ticket_id) || @ticket
       unless @ticket
@@ -54,12 +69,30 @@ class SidebarApprovals extends App.Controller
   createApprovalsWidget: =>
     @widget?.destroy?()
 
-    @widget = new App.WidgetApprovals(
-      el:       @elSidebar
-      ticket_id: @ticket?.id || @ticket_id
-      parentVC: @
-      callback: @refreshApprovals
-    )
+    # Ensure we have a valid ticket_id
+    current_ticket_id = @ticket_ref?.id || @ticket?.id || @ticket_id
+
+    # Ensure sidebar element is visible before creating widget
+    if @elSidebar && @elSidebar.length > 0 && @elSidebar.is(':visible')
+      @widget = new App.WidgetApprovals(
+        el:       @elSidebar
+        ticket_id: current_ticket_id
+        parentVC: @
+        callback: @refreshApprovals
+      )
+    else
+      # Wait for sidebar to be visible before creating widget
+      @delay =>
+        if @elSidebar && @elSidebar.length > 0 && @elSidebar.is(':visible')
+          @widget = new App.WidgetApprovals(
+            el:       @elSidebar
+            ticket_id: current_ticket_id
+            parentVC: @
+            callback: @refreshApprovals
+          )
+        else
+          console.warn "SidebarApprovals - sidebar not visible, skipping widget creation for ticket:", current_ticket_id
+      , 200, 'approval-widget-create-retry'
 
     @loadApprovalsForCheck()
 

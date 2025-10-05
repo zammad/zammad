@@ -114,12 +114,26 @@ class App.WidgetShares extends App.Controller
     # Render the full template with real data
     current_user = App.User.current()
     current_user_id = if current_user then String(current_user.id) else 'unknown'
-    
-    @html App.view('widget/shares')(
-      shares: shares
-      ticket_id: @ticket_id
-      current_user_id: current_user_id
-    )
+
+    # Ensure DOM element is visible before rendering
+    if @el && @el.length > 0 && @el.is(':visible')
+      @html App.view('widget/shares')(
+        shares: shares
+        ticket_id: @ticket_id
+        current_user_id: current_user_id
+      )
+    else
+      # Schedule re-render when DOM is ready
+      @delay =>
+        if @el && @el.length > 0 && @el.is(':visible')
+          @html App.view('widget/shares')(
+            shares: shares
+            ticket_id: @ticket_id
+            current_user_id: current_user_id
+          )
+        else
+          console.warn "WidgetShares render skipped - DOM not ready for ticket:", @ticket_id
+      , 100, 'share-render-retry'
 
   renderActions: =>
     @parentVC?.parentSidebar?.sidebarActionsRender('shares', @parentVC?.item?.sidebarActions || [])
