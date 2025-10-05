@@ -1,36 +1,8 @@
-<% 
-  case @objects[:action]
-  when 'create'
-    subject = "Ticket ##{ticket.number} shared with your group"
-  when 'update'
-    subject = "Ticket ##{ticket.number} share updated"
-  when 'revoke'
-    subject = "Ticket ##{ticket.number} share revoked"
-  when 'delete'
-    subject = "Ticket ##{ticket.number} share deleted"
-  else
-    subject = "Ticket ##{ticket.number} share notification"
-  end
-%><%= subject %>
+Ticket ##{ticket.number} shared with your group
 
 <div>Hi #{recipient.firstname},</div>
 <br>
-<div>
-<% 
-  case @objects[:action]
-  when 'create'
-    message = "Ticket ##{ticket.number} has been shared with your group."
-  when 'update'
-    message = "The share for ticket ##{ticket.number} has been updated."
-  when 'revoke'
-    message = "The share for ticket ##{ticket.number} has been revoked."
-  when 'delete'
-    message = "The share for ticket ##{ticket.number} has been deleted."
-  else
-    message = "This notification was sent regarding a ticket share for ##{ticket.number}."
-  end
-%><%= message %>
-</div>
+<div>Ticket ##{ticket.number} has been shared with your group.</div>
 <br>
 <div>
 Ticket: ##{ticket.number}<br>

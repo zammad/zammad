@@ -289,7 +289,10 @@ class App.TicketZoom extends App.Controller
       return unless ticket_id?.toString() is @ticket_id?.toString()
       # Trigger sidebar rerender for approval/share widgets
       @delay =>
-        App.Event.trigger('ui::ticket::sidebarRerender')
+        App.Event.trigger('ui::ticket::sidebarRerender',
+          taskKey:  @taskKey
+          ticket_id: @ticket_id
+        )
       , 300, 'sidebar-rerender-article-action'
     )
 

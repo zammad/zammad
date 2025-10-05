@@ -3,6 +3,10 @@ class SidebarApprovals extends App.Controller
     super
     @last_can_share = null
 
+    # Ensure taskKey and ticket_id are available for event filtering
+    @taskKey = @options.taskKey || @taskKey
+    @ticket_id = @options.ticket_id || @ticket_id
+
   sidebarItem: =>
     return if !@canSeeAgentView()
     return if !(@permissionCheck('ticket.agent') or @permissionCheck('admin.*') or @hasShareAccess())
@@ -81,7 +85,7 @@ class SidebarApprovals extends App.Controller
     if @last_can_share isnt current_can_share
       @last_can_share = current_can_share
       @delay =>
-        taskKey = @parentVC?.taskKey || @taskKey
+        taskKey = @taskKey
         if taskKey
           App.Event.trigger('ui::ticket::sidebarRerender', { taskKey: taskKey, ticket_id: @ticket?.id || @ticket_id })
       , 300, 'update-approvals-actions'
