@@ -4,8 +4,8 @@ class SidebarShares extends App.Controller
     @last_can_share = null
 
   sidebarItem: =>
-    return if @ticket.currentView() isnt 'agent'
-    return unless @permissionCheck('ticket.agent') or @permissionCheck('admin.*') or @hasShareAccess()
+    return if !@canSeeAgentView()
+    return if !(@permissionCheck('ticket.agent') or @permissionCheck('admin.*') or @hasShareAccess())
 
     @item = {
       name: 'shares'
@@ -119,6 +119,10 @@ class SidebarShares extends App.Controller
     
     # User is the ticket owner or in the ticket's group
     true
+
+  canSeeAgentView: =>
+    return if !@ticket || !@ticket.currentView
+    return @ticket.currentView() == 'agent'
 
   hasShareAccess: =>
     return false unless @ticket

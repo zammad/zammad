@@ -211,7 +211,10 @@ class App.TicketZoom extends App.Controller
 
     # Trigger sidebar rerender to update approval/share widgets
     @delay =>
-      App.Event.trigger('ui::ticket::sidebarRerender')
+      App.Event.trigger('ui::ticket::sidebarRerender',
+        taskKey:  @taskKey
+        ticket_id: @ticket_id
+      )
     , 200, 'trigger-sidebar-rerender'
 
     # Listen for real-time approval/share changes to update UI permissions
@@ -228,7 +231,10 @@ class App.TicketZoom extends App.Controller
           App.Ticket.refresh([ticketData]) if ticketData?
           @ticket = App.Ticket.findNative(@ticket_id)
           # Trigger sidebar rerender for approval/share widgets
-          App.Event.trigger('ui::ticket::sidebarRerender')
+          App.Event.trigger('ui::ticket::sidebarRerender',
+            taskKey:  @taskKey
+            ticket_id: @ticket_id
+          )
         error: =>
           console.error 'Failed to refresh ticket data for permissions'
       )
@@ -247,7 +253,10 @@ class App.TicketZoom extends App.Controller
           App.Ticket.refresh([ticketData]) if ticketData?
           @ticket = App.Ticket.findNative(@ticket_id)
           # Trigger sidebar rerender for approval/share widgets
-          App.Event.trigger('ui::ticket::sidebarRerender')
+          App.Event.trigger('ui::ticket::sidebarRerender',
+            taskKey:  @taskKey
+            ticket_id: @ticket_id
+          )
         error: =>
           console.error 'Failed to refresh ticket data for permissions'
       )
@@ -265,7 +274,10 @@ class App.TicketZoom extends App.Controller
           App.Ticket.refresh([ticketData]) if ticketData?
           @ticket = App.Ticket.findNative(@ticket_id)
           # Trigger sidebar rerender
-          App.Event.trigger('ui::ticket::sidebarRerender')
+          App.Event.trigger('ui::ticket::sidebarRerender',
+            taskKey:  @taskKey
+            ticket_id: @ticket_id
+          )
         error: =>
           console.error 'Failed to refresh ticket data after article change'
       )
