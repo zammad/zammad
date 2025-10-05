@@ -73,11 +73,12 @@ class SidebarApprovals extends App.Controller
     current_ticket_id = @ticket?.id || @ticket_id
 
     @widget = new App.WidgetApprovals(
-      el:         @elSidebar
-      ticket_id:  current_ticket_id
-      approvals:  @approvals
-      parentVC:   @
-      callback:   @refreshApprovals
+      el:          @elSidebar
+      object_type: 'Ticket'
+      object:      @ticket
+      approvals:   @approvals
+      parentVC:    @
+      callback:    @refreshApprovals
     )
 
   reload: (args) =>

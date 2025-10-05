@@ -187,9 +187,11 @@ class App.TicketZoom extends App.Controller
 
     # remember approvals
     @approvals = data.approvals
+    console.log "TicketZoom: Loaded approvals data for ticket #{@ticket_id}:", @approvals?.length || 0
 
     # remember shares
     @shares = data.shares
+    console.log "TicketZoom: Loaded shares data for ticket #{@ticket_id}:", @shares?.length || 0
 
     if draft = App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket_id
       draft.remove(clear: true)

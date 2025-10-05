@@ -12,15 +12,23 @@ class App.WidgetApprovals extends App.Controller
     @isLoadingApprovals = false
 
     # Use passed data or initialize empty array
-    if @approvals
+    if @approvals && @approvals.length > 0
+      console.log "WidgetApprovals: Using passed data for ticket #{@object?.id || @ticket_id}, approvals:", @approvals.length
       @approvals = @approvals
       @render(@approvals)
     else
+      console.log "WidgetApprovals: No data passed for ticket #{@object?.id || @ticket_id}, will fetch"
       @approvals = []
 
-    # Load ticket object for userGroupAccess method
-    if @ticket_id
+    # Use the ticket object passed from sidebar (like core widgets)
+    # Fallback to ticket_id for backwards compatibility
+    if @object && @object.id
+      @ticket = @object
+      @ticket_id = @object.id
+      @key = "approvals::#{@object_type}::#{@object.id}"
+    else if @ticket_id
       @ticket = App.Ticket.findNative(@ticket_id) || App.Ticket.fullLocal(@ticket_id)
+      @key = "approvals::Ticket::#{@ticket_id}"
 
     @renderActions()
     

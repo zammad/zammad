@@ -11,15 +11,23 @@ class App.WidgetShares extends App.Controller
     @isLoadingShares = false
 
     # Use passed data or initialize empty array
-    if @shares
+    if @shares && @shares.length > 0
+      console.log "WidgetShares: Using passed data for ticket #{@object?.id || @ticket_id}, shares:", @shares.length
       @lastShares = @shares
       @render(@lastShares)
     else
+      console.log "WidgetShares: No data passed for ticket #{@object?.id || @ticket_id}, will fetch"
       @lastShares = []
 
-    # Load ticket object for userGroupAccess method
-    if @ticket_id
+    # Use the ticket object passed from sidebar (like core widgets)
+    # Fallback to ticket_id for backwards compatibility
+    if @object && @object.id
+      @ticket = @object
+      @ticket_id = @object.id
+      @key = "shares::#{@object_type}::#{@object.id}"
+    else if @ticket_id
       @ticket = App.Ticket.findNative(@ticket_id) || App.Ticket.fullLocal(@ticket_id)
+      @key = "shares::Ticket::#{@ticket_id}"
 
     @renderActions()
     
