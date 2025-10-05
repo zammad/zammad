@@ -71,8 +71,11 @@ class SidebarApprovals extends App.Controller
     # Ensure we have a valid ticket_id
     current_ticket_id = @ticket_ref?.id || @ticket?.id || @ticket_id
 
+    console.log "SidebarApprovals createApprovalsWidget for ticket:", current_ticket_id, "elSidebar exists:", !!@elSidebar, "visible:", @elSidebar?.is(':visible')
+
     # Ensure sidebar element is visible before creating widget
     if @elSidebar && @elSidebar.length > 0 && @elSidebar.is(':visible')
+      console.log "SidebarApprovals creating widget for ticket:", current_ticket_id
       @widget = new App.WidgetApprovals(
         el:       @elSidebar
         ticket_id: current_ticket_id
@@ -80,9 +83,11 @@ class SidebarApprovals extends App.Controller
         callback: @refreshApprovals
       )
     else
+      console.log "SidebarApprovals sidebar not visible, scheduling widget creation for ticket:", current_ticket_id
       # Wait for sidebar to be visible before creating widget
       @delay =>
         if @elSidebar && @elSidebar.length > 0 && @elSidebar.is(':visible')
+          console.log "SidebarApprovals retry creating widget for ticket:", current_ticket_id
           @widget = new App.WidgetApprovals(
             el:       @elSidebar
             ticket_id: current_ticket_id
@@ -90,8 +95,7 @@ class SidebarApprovals extends App.Controller
             callback: @refreshApprovals
           )
         else
-          # Widget creation will be retried by the delayed call above
-          null
+          console.warn "SidebarApprovals widget creation failed - sidebar not visible for ticket:", current_ticket_id
       , 200, 'approval-widget-create-retry'
 
     @loadApprovalsForCheck()

@@ -63,6 +63,7 @@ class App.WidgetApprovals extends App.Controller
       @isLoadingApprovals = false
       return
 
+    console.log "WidgetApprovals loadApprovals called for ticket:", @ticket_id, "el exists:", !!@el, "el visible:", @el?.is(':visible')
     @loadApprovalsFromAPI()
 
   loadApprovalsFromAPI: =>
@@ -112,22 +113,29 @@ class App.WidgetApprovals extends App.Controller
     current_user = App.User.current()
     current_user_id = if current_user then String(current_user.id) else 'unknown'
 
+    console.log "WidgetApprovals render called for ticket:", @ticket_id, "approvals:", approvals?.length || 0, "el exists:", !!@el, "el visible:", @el?.is(':visible')
+
     # Ensure DOM element is visible before rendering
     if @el && @el.length > 0 && @el.is(':visible')
+      console.log "WidgetApprovals rendering to DOM for ticket:", @ticket_id
       @html App.view('widget/approvals')(
         approvals: approvals
         ticket_id: @ticket_id
         current_user_id: current_user_id
       )
     else
+      console.log "WidgetApprovals DOM not ready for ticket:", @ticket_id, "scheduling retry"
       # Schedule re-render when DOM is ready
       @delay =>
         if @el && @el.length > 0 && @el.is(':visible')
+          console.log "WidgetApprovals retry render for ticket:", @ticket_id
           @html App.view('widget/approvals')(
             approvals: approvals
             ticket_id: @ticket_id
             current_user_id: current_user_id
           )
+        else
+          console.warn "WidgetApprovals render failed - DOM not ready for ticket:", @ticket_id
       , 100, 'approval-render-retry'
 
   renderActions: =>
