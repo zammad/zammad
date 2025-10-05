@@ -36,7 +36,7 @@ class Transaction::ApprovalNotification
   end
 
   def approval
-    @approval ||= TicketApproval.find_by(id: @item[:object_id])
+    @approval ||= ::TicketApproval.find_by(id: @item[:object_id])
   end
 
   def ticket
@@ -44,7 +44,7 @@ class Transaction::ApprovalNotification
   end
 
   def current_user
-    @current_user ||= User.lookup(id: @item[:user_id]) || User.lookup(id: 1)
+    @current_user ||= ::User.lookup(id: @item[:user_id]) || ::User.lookup(id: 1)
   end
 
   def perform
@@ -129,9 +129,9 @@ class Transaction::ApprovalNotification
       if identifier.present?
         already_notified_cutoff = Time.use_zone(Setting.get('timezone_default')) { Time.current.beginning_of_day }
 
-        already_notified = History.where(
-          history_type_id:   History.type_lookup('notification').id,
-          history_object_id: History.object_lookup('Ticket').id,
+        already_notified = ::History.where(
+          history_type_id:   ::History.type_lookup('notification').id,
+          history_object_id: ::History.object_lookup('Ticket').id,
           o_id:              ticket.id
         ).where('created_at > ?', already_notified_cutoff).exists?(['value_to LIKE ?', "%#{SqlHelper.quote_like(identifier)}(#{SqlHelper.quote_like(@item[:type])}:%"])
       end
@@ -152,7 +152,7 @@ class Transaction::ApprovalNotification
 
       created_by_id = @item[:user_id] || 1
 
-      OnlineNotification.add(
+      ::OnlineNotification.add(
         type:          get_notification_type,
         object:        'Ticket',
         o_id:          ticket.id,
@@ -212,7 +212,7 @@ class Transaction::ApprovalNotification
     identifier     = user.email.presence || user.login
     recipient_list = "#{identifier}(#{type}:#{channels.join(',')})"
 
-    History.add(
+    ::History.add(
       o_id:           ticket.id,
       history_type:   'notification',
       history_object: 'Ticket',
@@ -257,7 +257,7 @@ class Transaction::ApprovalNotification
     }
     
     if @item[:user_id]
-      objects[:actor] = User.find(@item[:user_id])
+      objects[:actor] = ::User.find(@item[:user_id])
     end
     
     objects
