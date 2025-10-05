@@ -24,7 +24,7 @@ class TicketSharesController < ApplicationController
         expires_at: share_create_params[:expires_at]
       )
 
-    notify_shared_group(share, __('Ticket shared with your group'))
+    # Online notifications are handled by Transaction::ShareNotification
 
     render json: { share: serialize_share(share) }, status: :created
   rescue ActiveRecord::RecordNotFound
@@ -38,7 +38,7 @@ class TicketSharesController < ApplicationController
       .new(current_user:)
       .execute(share: @share)
 
-    notify_shared_group(share, __('Share revoked'))
+    # Online notifications are handled by Transaction::ShareNotification
 
     render json: { share: serialize_share(share) }
   rescue Exceptions::Forbidden => e
@@ -52,7 +52,7 @@ class TicketSharesController < ApplicationController
       .new(current_user:)
       .execute(share: @share, attributes: share_update_params)
 
-    notify_shared_group(share, __('Share updated'))
+    # Online notifications are handled by Transaction::ShareNotification
 
     render json: { share: serialize_share(share) }
   rescue Exceptions::Forbidden => e
@@ -68,7 +68,7 @@ class TicketSharesController < ApplicationController
       .new(current_user:)
       .execute(share: @share)
 
-    notify_shared_group(share_data, __('Share deleted'))
+    # Online notifications are handled by Transaction::ShareNotification
 
     render json: { success: true, share: serialize_share(share_data) }
   rescue Exceptions::Forbidden => e

@@ -8,9 +8,33 @@ class Service::Ticket::Approval::Destroy < Service::BaseWithCurrentUser
     serialized = serialize_approval(approval)
     
     # Send email notifications before destroying
-    Service::Ticket::Approval::EmailNotifier
-      .new(current_user: current_user)
-      .notify(approval: approval, action: :delete)
+    Transaction.execute(
+      disable: ['Transaction::Notification'],
+      user_id: current_user.id,
+      interface_handle: 'application_server',
+      object: 'TicketApproval',
+      type: 'delete',
+      object_id: approval.id,
+      changes: {
+        'status' => [approval.status, 'deleted']
+      },
+      created_at: Time.zone.now
+    ) do
+      Transaction::ApprovalNotification.new(
+        {
+          object: 'TicketApproval',
+          type: 'delete',
+          object_id: approval.id,
+          interface_handle: 'application_server',
+          changes: {
+            'status' => [approval.status, 'deleted']
+          },
+          created_at: Time.zone.now,
+          user_id: current_user.id,
+        },
+        { user_id: current_user.id }
+      ).perform
+    end
     
     approval.destroy!
 

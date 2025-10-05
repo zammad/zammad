@@ -24,10 +24,7 @@ class TicketApprovalsController < ApplicationController
         priority:    approval_create_params[:priority]
       )
 
-    notify_user(
-      user_id:      approval.approver_id,
-      notification: 'Approval request'
-    )
+    # Online notifications are handled by Transaction::ApprovalNotification
 
     render json: { approval: serialize_approval(approval) }, status: :created
   rescue ActiveRecord::RecordNotFound
@@ -43,10 +40,7 @@ class TicketApprovalsController < ApplicationController
 
     apply_tag_changes(approval, :approved)
 
-    notify_user(
-      user_id:      approval.requester_id,
-      notification: 'Approval approved'
-    )
+    # Online notifications are handled by Transaction::ApprovalNotification
 
     render json: { approval: serialize_approval(approval) }
   rescue Exceptions::Forbidden => e
@@ -62,10 +56,7 @@ class TicketApprovalsController < ApplicationController
 
     apply_tag_changes(approval, :rejected)
 
-    notify_user(
-      user_id:      approval.requester_id,
-      notification: 'Approval rejected'
-    )
+    # Online notifications are handled by Transaction::ApprovalNotification
 
     render json: { approval: serialize_approval(approval) }
   rescue Exceptions::Forbidden => e
@@ -79,10 +70,7 @@ class TicketApprovalsController < ApplicationController
       .new(current_user:)
       .execute(approval: @approval, attributes: approval_update_params)
 
-    notify_user(
-      user_id:      approval.approver_id,
-      notification: 'Approval request updated'
-    )
+    # Online notifications are handled by Transaction::ApprovalNotification
 
     render json: { approval: serialize_approval(approval) }
   rescue Exceptions::Forbidden => e
@@ -100,12 +88,7 @@ class TicketApprovalsController < ApplicationController
 
     remove_decision_tags(serialized[:status])
 
-    if serialized[:status] == 'pending' && serialized[:approver_id].present?
-      notify_user(
-        user_id:      serialized[:approver_id],
-        notification: 'Approval request deleted'
-      )
-    end
+    # Online notifications are handled by Transaction::ApprovalNotification
 
     render json: { success: true, approval: serialize_approval(serialized) }
   rescue Exceptions::Forbidden => e

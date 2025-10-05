@@ -26,9 +26,38 @@ class Service::Ticket::Share::Create < Service::BaseWithCurrentUser
       status:      'active'
     )
 
-    Service::Ticket::Share::EmailNotifier
-      .new(current_user: current_user)
-      .notify(share: share, action: :create)
+    # Send email notifications via Transaction system
+    Transaction.execute(
+      disable: ['Transaction::Notification'],
+      user_id: current_user.id,
+      interface_handle: 'application_server',
+      object: 'TicketShare',
+      type: 'create',
+      object_id: share.id,
+      changes: {
+        'status' => [nil, 'active'],
+        'group_id' => [nil, group.id],
+        'shared_by_id' => [nil, current_user.id]
+      },
+      created_at: Time.zone.now
+    ) do
+      Transaction::ShareNotification.new(
+        {
+          object: 'TicketShare',
+          type: 'create',
+          object_id: share.id,
+          interface_handle: 'application_server',
+          changes: {
+            'status' => [nil, 'active'],
+            'group_id' => [nil, group.id],
+            'shared_by_id' => [nil, current_user.id]
+          },
+          created_at: Time.zone.now,
+          user_id: current_user.id,
+        },
+        { user_id: current_user.id }
+      ).perform
+    end
 
     share
   end

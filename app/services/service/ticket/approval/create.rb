@@ -25,10 +25,38 @@ class Service::Ticket::Approval::Create < Service::BaseWithCurrentUser
     # Create automatic share if approver is in a different group
     create_auto_share_if_needed(ticket, approver)
 
-    # Send email notifications
-    Service::Ticket::Approval::EmailNotifier
-      .new(current_user: current_user)
-      .notify(approval: approval, action: :create)
+    # Send email notifications via Transaction system
+    Transaction.execute(
+      disable: ['Transaction::Notification'],
+      user_id: current_user.id,
+      interface_handle: 'application_server',
+      object: 'TicketApproval',
+      type: 'create',
+      object_id: approval.id,
+      changes: {
+        'status' => [nil, 'pending'],
+        'approver_id' => [nil, approver.id],
+        'requester_id' => [nil, current_user.id]
+      },
+      created_at: Time.zone.now
+    ) do
+      Transaction::ApprovalNotification.new(
+        {
+          object: 'TicketApproval',
+          type: 'create',
+          object_id: approval.id,
+          interface_handle: 'application_server',
+          changes: {
+            'status' => [nil, 'pending'],
+            'approver_id' => [nil, approver.id],
+            'requester_id' => [nil, current_user.id]
+          },
+          created_at: Time.zone.now,
+          user_id: current_user.id,
+        },
+        { user_id: current_user.id }
+      ).perform
+    end
 
     approval
   end

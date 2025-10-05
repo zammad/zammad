@@ -19,9 +19,29 @@ class Service::Ticket::Share::Update < Service::BaseWithCurrentUser
     share.reload
 
     if updates.any?
-      Service::Ticket::Share::EmailNotifier
-        .new(current_user: current_user)
-        .notify(share: share, action: :update)
+      Transaction.execute(
+        disable: ['Transaction::Notification'],
+        user_id: current_user.id,
+        interface_handle: 'application_server',
+        object: 'TicketShare',
+        type: 'update',
+        object_id: share.id,
+        changes: updates.transform_values { |v| [nil, v] },
+        created_at: Time.zone.now
+      ) do
+        Transaction::ShareNotification.new(
+          {
+            object: 'TicketShare',
+            type: 'update',
+            object_id: share.id,
+            interface_handle: 'application_server',
+            changes: updates.transform_values { |v| [nil, v] },
+            created_at: Time.zone.now,
+            user_id: current_user.id,
+          },
+          { user_id: current_user.id }
+        ).perform
+      end
     end
 
     share

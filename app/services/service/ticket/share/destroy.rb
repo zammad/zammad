@@ -7,9 +7,34 @@ class Service::Ticket::Share::Destroy < Service::BaseWithCurrentUser
 
     serialized = serialize_share(share)
 
-    Service::Ticket::Share::EmailNotifier
-      .new(current_user: current_user)
-      .notify(share: share, action: :delete)
+    # Send email notifications before destroying
+    Transaction.execute(
+      disable: ['Transaction::Notification'],
+      user_id: current_user.id,
+      interface_handle: 'application_server',
+      object: 'TicketShare',
+      type: 'delete',
+      object_id: share.id,
+      changes: {
+        'status' => [share.status, 'deleted']
+      },
+      created_at: Time.zone.now
+    ) do
+      Transaction::ShareNotification.new(
+        {
+          object: 'TicketShare',
+          type: 'delete',
+          object_id: share.id,
+          interface_handle: 'application_server',
+          changes: {
+            'status' => [share.status, 'deleted']
+          },
+          created_at: Time.zone.now,
+          user_id: current_user.id,
+        },
+        { user_id: current_user.id }
+      ).perform
+    end
 
     share.destroy!
 

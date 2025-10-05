@@ -22,10 +22,34 @@ class Service::Ticket::Approval::Decision < Service::BaseWithCurrentUser
     approval.update!(status: new_status)
     approval.reload
 
-    # Send email notifications
-    Service::Ticket::Approval::EmailNotifier
-      .new(current_user: current_user)
-      .notify(approval: approval, action: decision_key)
+    # Send email notifications via Transaction system
+    Transaction.execute(
+      disable: ['Transaction::Notification'],
+      user_id: current_user.id,
+      interface_handle: 'application_server',
+      object: 'TicketApproval',
+      type: decision_key.to_s,
+      object_id: approval.id,
+      changes: {
+        'status' => ['pending', new_status]
+      },
+      created_at: Time.zone.now
+    ) do
+      Transaction::ApprovalNotification.new(
+        {
+          object: 'TicketApproval',
+          type: decision_key.to_s,
+          object_id: approval.id,
+          interface_handle: 'application_server',
+          changes: {
+            'status' => ['pending', new_status]
+          },
+          created_at: Time.zone.now,
+          user_id: current_user.id,
+        },
+        { user_id: current_user.id }
+      ).perform
+    end
 
     approval
   end

@@ -19,9 +19,29 @@ class Service::Ticket::Approval::Update < Service::BaseWithCurrentUser
 
     # Send email notifications if updates were made
     if updates.any?
-      Service::Ticket::Approval::EmailNotifier
-        .new(current_user: current_user)
-        .notify(approval: approval, action: :update)
+      Transaction.execute(
+        disable: ['Transaction::Notification'],
+        user_id: current_user.id,
+        interface_handle: 'application_server',
+        object: 'TicketApproval',
+        type: 'update',
+        object_id: approval.id,
+        changes: updates.transform_values { |v| [nil, v] },
+        created_at: Time.zone.now
+      ) do
+        Transaction::ApprovalNotification.new(
+          {
+            object: 'TicketApproval',
+            type: 'update',
+            object_id: approval.id,
+            interface_handle: 'application_server',
+            changes: updates.transform_values { |v| [nil, v] },
+            created_at: Time.zone.now,
+            user_id: current_user.id,
+          },
+          { user_id: current_user.id }
+        ).perform
+      end
     end
 
     approval
