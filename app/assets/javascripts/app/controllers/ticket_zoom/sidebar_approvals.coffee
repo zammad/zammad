@@ -5,7 +5,7 @@ class SidebarApprovals extends App.Controller
 
     # Ensure taskKey and ticket_id are available for event filtering
     @taskKey = @options.taskKey || @taskKey
-    @ticket_id = @options.ticket_id || @ticket_id
+    @ticket_id = @options.ticket_id || @ticket?.id || @ticket_id
 
   sidebarItem: =>
     return if !@canSeeAgentView()
