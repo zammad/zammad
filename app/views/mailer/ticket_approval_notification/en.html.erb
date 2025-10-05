@@ -1,6 +1,6 @@
 <% 
-  action_str = action.to_s
-  case action_str
+  # Determine subject based on action
+  case action.to_s
   when 'create'
     subject = self.T('Approval request for ticket #%s', ticket.number)
   when 'update'
@@ -70,17 +70,17 @@
         </td>
         <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
           <% 
-            case approval.status.to_s
+            status_text = case approval.status.to_s
             when 'pending'
-              status_html = "<span style=\"color: #ffc107; font-weight: bold;\">#{self.T('Pending')}</span>"
+              self.T('Pending')
             when 'approved'
-              status_html = "<span style=\"color: #28a745; font-weight: bold;\">#{self.T('Approved')}</span>"
+              self.T('Approved')
             when 'rejected'
-              status_html = "<span style=\"color: #dc3545; font-weight: bold;\">#{self.T('Rejected')}</span>"
+              self.T('Rejected')
             else
-              status_html = approval.status.to_s
+              approval.status.to_s
             end
-          %><%= status_html.html_safe %>
+          %><%= status_text %>
         </td>
       </tr>
       <tr>
@@ -89,19 +89,19 @@
         </td>
         <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
           <% 
-            case approval.priority.to_s
+            priority_text = case approval.priority.to_s
             when 'low'
-              priority_html = "<span style=\"color: #6c757d;\">#{self.T('Low')}</span>"
+              self.T('Low')
             when 'normal'
-              priority_html = "<span style=\"color: #007bff;\">#{self.T('Normal')}</span>"
+              self.T('Normal')
             when 'high'
-              priority_html = "<span style=\"color: #fd7e14;\">#{self.T('High')}</span>"
+              self.T('High')
             when 'urgent'
-              priority_html = "<span style=\"color: #dc3545; font-weight: bold;\">#{self.T('Urgent')}</span>"
+              self.T('Urgent')
             else
-              priority_html = approval.priority.to_s
+              approval.priority.to_s
             end
-          %><%= priority_html.html_safe %>
+          %><%= priority_text %>
         </td>
       </tr>
       <tr>

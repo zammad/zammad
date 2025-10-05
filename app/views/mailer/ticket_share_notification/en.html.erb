@@ -1,6 +1,6 @@
 <% 
-  action_str = action.to_s
-  case action_str
+  # Determine subject based on action
+  case action.to_s
   when 'create'
     subject = self.T('Ticket #%s shared with your group', ticket.number)
   when 'update'
