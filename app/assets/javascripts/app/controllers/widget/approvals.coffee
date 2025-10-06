@@ -128,6 +128,12 @@ class App.WidgetApprovals extends App.Controller
     current_user = App.User.current()
     current_user_id = if current_user then String(current_user.id) else 'unknown'
 
+    # Debug: Log the data being passed to template
+    console.log "WidgetApprovals render - current_user_id:", current_user_id
+    console.log "WidgetApprovals render - approvals data:", approvals
+    if approvals && approvals.length > 0
+      console.log "WidgetApprovals render - first approval:", approvals[0]
+
     @html App.view('widget/approvals')(
       approvals: approvals
       ticket_id: @ticket_id

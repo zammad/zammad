@@ -127,6 +127,12 @@ class App.WidgetShares extends App.Controller
     current_user = App.User.current()
     current_user_id = if current_user then String(current_user.id) else 'unknown'
 
+    # Debug: Log the data being passed to template
+    console.log "WidgetShares render - current_user_id:", current_user_id
+    console.log "WidgetShares render - shares data:", shares
+    if shares && shares.length > 0
+      console.log "WidgetShares render - first share:", shares[0]
+
     @html App.view('widget/shares')(
       shares: shares
       ticket_id: @ticket_id
