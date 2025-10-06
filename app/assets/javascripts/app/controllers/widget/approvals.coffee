@@ -15,8 +15,10 @@ class App.WidgetApprovals extends App.Controller
     if @approvals && @approvals.length > 0
       @approvals = @approvals
       @render(@approvals)
+      @dataLoaded = true  # Mark that we have data
     else
       @approvals = []
+      @dataLoaded = false
 
     # Use the ticket object passed from sidebar (like core widgets)
     # Fallback to ticket_id for backwards compatibility
@@ -45,8 +47,8 @@ class App.WidgetApprovals extends App.Controller
       @scheduleReload(300)
     )
     
-    # Only load if no data was passed
-    unless @approvals && @approvals.length > 0
+    # Only load if no data was passed initially
+    unless @dataLoaded
       @delay =>
         @ensureDataLoaded()
       , 2000, 'approval-data-check'
@@ -55,6 +57,7 @@ class App.WidgetApprovals extends App.Controller
   reload: (args) =>
     if args?.approvals
       @approvals = args.approvals
+      @dataLoaded = true
       @render(@approvals)
     else
       @loadApprovals()

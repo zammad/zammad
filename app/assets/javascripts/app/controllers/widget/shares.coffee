@@ -14,8 +14,10 @@ class App.WidgetShares extends App.Controller
     if @shares && @shares.length > 0
       @lastShares = @shares
       @render(@lastShares)
+      @dataLoaded = true  # Mark that we have data
     else
       @lastShares = []
+      @dataLoaded = false
 
     # Use the ticket object passed from sidebar (like core widgets)
     # Fallback to ticket_id for backwards compatibility
@@ -44,8 +46,8 @@ class App.WidgetShares extends App.Controller
       @scheduleReload(300)
     )
 
-    # Only load if no data was passed
-    unless @shares && @shares.length > 0
+    # Only load if no data was passed initially
+    unless @dataLoaded
       @delay =>
         @ensureDataLoaded()
       , 2000, 'share-data-check'
@@ -54,6 +56,7 @@ class App.WidgetShares extends App.Controller
   reload: (args) =>
     if args?.shares
       @lastShares = args.shares
+      @dataLoaded = true
       @render(@lastShares)
     else
       @loadShares()
