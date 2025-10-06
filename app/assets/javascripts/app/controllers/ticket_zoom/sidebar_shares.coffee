@@ -9,6 +9,9 @@ class SidebarShares extends App.Controller
 
     # Store ticket reference for later use
     @ticket_ref = @ticket
+    
+    # Initialize shares data storage
+    @shares = []
 
   sidebarItem: =>
     return if !@canSeeAgentView()
@@ -82,11 +85,16 @@ class SidebarShares extends App.Controller
     )
 
   reload: (args) =>
+    # Store the shares data from ticket zoom controller
+    if args?.shares
+      @shares = args.shares
+      console.log "SidebarShares: Received shares data:", @shares.length
+
     if @widget && @widget.reload
       @widget.reload(args)
     else if @elSidebar
       @showPanel(@elSidebar)
-    
+
     @checkAndUpdateActions()
 
   checkAndUpdateActions: =>

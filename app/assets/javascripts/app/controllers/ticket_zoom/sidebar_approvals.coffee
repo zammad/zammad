@@ -9,6 +9,9 @@ class SidebarApprovals extends App.Controller
 
     # Store ticket reference for later use
     @ticket_ref = @ticket
+    
+    # Initialize approvals data storage
+    @approvals = []
 
   sidebarItem: =>
     return if !@canSeeAgentView()
@@ -82,6 +85,11 @@ class SidebarApprovals extends App.Controller
     )
 
   reload: (args) =>
+    # Store the approvals data from ticket zoom controller
+    if args?.approvals
+      @approvals = args.approvals
+      console.log "SidebarApprovals: Received approvals data:", @approvals.length
+
     if @widget && @widget.reload
       @widget.reload(args)
     else if @elSidebar
