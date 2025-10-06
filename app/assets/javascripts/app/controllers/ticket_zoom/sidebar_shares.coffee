@@ -90,7 +90,8 @@ class SidebarShares extends App.Controller
       @shares = args.shares
 
     if @widget && @widget.reload
-      @widget.reload(args)
+      # Pass the stored data to the widget
+      @widget.reload(shares: @shares)
     else if @elSidebar
       @showPanel(@elSidebar)
 

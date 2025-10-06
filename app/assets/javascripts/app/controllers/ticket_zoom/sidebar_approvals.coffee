@@ -90,7 +90,8 @@ class SidebarApprovals extends App.Controller
       @approvals = args.approvals
 
     if @widget && @widget.reload
-      @widget.reload(args)
+      # Pass the stored data to the widget
+      @widget.reload(approvals: @approvals)
     else if @elSidebar
       @showPanel(@elSidebar)
 
