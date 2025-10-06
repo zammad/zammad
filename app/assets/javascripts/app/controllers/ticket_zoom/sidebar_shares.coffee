@@ -88,7 +88,6 @@ class SidebarShares extends App.Controller
     # Store the shares data from ticket zoom controller
     if args?.shares
       @shares = args.shares
-      console.log "SidebarShares: Received shares data:", @shares.length
 
     if @widget && @widget.reload
       @widget.reload(args)

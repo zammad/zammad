@@ -13,11 +13,9 @@ class App.WidgetApprovals extends App.Controller
 
     # Use passed data or initialize empty array
     if @approvals && @approvals.length > 0
-      console.log "WidgetApprovals: Using passed data for ticket #{@object?.id || @ticket_id}, approvals:", @approvals.length
       @approvals = @approvals
       @render(@approvals)
     else
-      console.log "WidgetApprovals: No data passed for ticket #{@object?.id || @ticket_id}, will fetch"
       @approvals = []
 
     # Use the ticket object passed from sidebar (like core widgets)

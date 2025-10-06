@@ -88,7 +88,6 @@ class SidebarApprovals extends App.Controller
     # Store the approvals data from ticket zoom controller
     if args?.approvals
       @approvals = args.approvals
-      console.log "SidebarApprovals: Received approvals data:", @approvals.length
 
     if @widget && @widget.reload
       @widget.reload(args)

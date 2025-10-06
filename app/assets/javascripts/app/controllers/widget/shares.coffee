@@ -12,11 +12,9 @@ class App.WidgetShares extends App.Controller
 
     # Use passed data or initialize empty array
     if @shares && @shares.length > 0
-      console.log "WidgetShares: Using passed data for ticket #{@object?.id || @ticket_id}, shares:", @shares.length
       @lastShares = @shares
       @render(@lastShares)
     else
-      console.log "WidgetShares: No data passed for ticket #{@object?.id || @ticket_id}, will fetch"
       @lastShares = []
 
     # Use the ticket object passed from sidebar (like core widgets)
