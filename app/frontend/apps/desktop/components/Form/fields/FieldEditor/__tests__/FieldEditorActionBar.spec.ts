@@ -1,17 +1,14 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-import { within } from '@testing-library/vue'
-
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import { mockAiAssistanceTextToolsMutation } from '#shared/graphql/mutations/aiAssistanceTextTools.mocks.ts'
-import { EnumAiTextToolService } from '#shared/graphql/types.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
-import FieldEditorActionBar from '../FieldEditorActionBar.vue'
+import { FIELD_EDITOR_OPTIONS } from '#desktop/components/Form/fields/FieldEditor/useFieldEditorOptions.ts'
 
+import FieldEditorActionBar from '../FieldEditorActionBar.vue'
 // not actually executed in a unit test, should speed up tests
 vi.mock('@tiptap/vue-3', () => {
   return {
@@ -183,55 +180,10 @@ describe('basic toolbar testing', () => {
   })
 
   describe('AiAssistantTextTools', () => {
-    const textToolsActionMock = {
-      [EnumAiTextToolService.ImproveWriting]: vi.fn(),
-      [EnumAiTextToolService.SpellingAndGrammar]: vi.fn(),
-      [EnumAiTextToolService.Expand]: vi.fn(),
-      [EnumAiTextToolService.Simplify]: vi.fn(),
-    }
-
-    const createMockEditor = () => ({
-      state: {
-        selection: {
-          from: 0,
-          to: 10,
-          anchor: 0,
-          head: 10,
-          empty: false,
-          content: () => 'selected text',
-        },
-        doc: {
-          textBetween: vi.fn(() => 'selected text'),
-        },
-      },
-      chain: vi.fn(() => ({
-        focus: vi.fn(() => ({
-          setTextSelection: vi.fn(() => ({
-            run: vi.fn(),
-          })),
-        })),
-      })),
-      isActive: vi.fn(() => true),
-      getAttributes: vi.fn(() => ({})),
-      commands: {
-        deleteSelection: vi.fn(),
-        insertContentAt: vi.fn(),
-        focus: vi.fn(),
-        setTextSelection: vi.fn(),
-        improveWriting: textToolsActionMock[EnumAiTextToolService.ImproveWriting],
-        fixSpellingAndGrammar: textToolsActionMock[EnumAiTextToolService.SpellingAndGrammar],
-        expandText: textToolsActionMock[EnumAiTextToolService.Expand],
-        simplifyText: textToolsActionMock[EnumAiTextToolService.Simplify],
-      },
-      setEditable: vi.fn(),
-      on: vi.fn(),
-      emit: vi.fn(),
-    })
-
     it('hides feature if flag is not set', async () => {
       mockApplicationConfig({
         ai_assistance_text_tools: false,
-        ai_provider: 'openai',
+        ai_provider: true,
       })
 
       mockPermissions(['ticket.agent'])
@@ -246,14 +198,14 @@ describe('basic toolbar testing', () => {
       })
 
       expect(
-        wrapper.queryByRole('button', { name: 'Ai assistant text tools' }),
+        wrapper.queryByRole('button', { name: 'Writing Assistant Tools' }),
       ).not.toBeInTheDocument()
     })
 
     it('hides the feature if user is customer', async () => {
       mockApplicationConfig({
         ai_assistance_text_tools: true,
-        ai_provider: 'openai',
+        ai_provider: true,
       })
 
       mockPermissions(['ticket.customer'])
@@ -268,7 +220,7 @@ describe('basic toolbar testing', () => {
       })
 
       expect(
-        wrapper.queryByRole('button', { name: 'Ai assistant text tools' }),
+        wrapper.queryByRole('button', { name: 'Writing Assistant Tools' }),
       ).not.toBeInTheDocument()
     })
 
@@ -290,61 +242,28 @@ describe('basic toolbar testing', () => {
       })
 
       expect(
-        wrapper.queryByRole('button', { name: 'Ai assistant text tools' }),
+        wrapper.queryByRole('button', { name: 'Writing Assistant Tools' }),
       ).not.toBeInTheDocument()
     })
+  })
 
-    it.each([
-      {
-        label: 'Improve writing',
-        aiTextToolService: EnumAiTextToolService.ImproveWriting,
+  it('allows injection of options', async () => {
+    const wrapper = renderComponent(FieldEditorActionBar, {
+      props: {
+        contentType: 'text/html',
+        visible: true,
+        disabledPlugins: [],
+        formId: getUuid(),
       },
-      {
-        label: 'Fix spelling and grammar',
-        aiTextToolService: EnumAiTextToolService.SpellingAndGrammar,
-      },
-      {
-        label: 'Expand',
-        aiTextToolService: EnumAiTextToolService.Expand,
-      },
-      {
-        label: 'Simplify',
-        aiTextToolService: EnumAiTextToolService.Simplify,
-      },
-    ])('can use $label action', async ({ aiTextToolService, label }) => {
-      mockApplicationConfig({
-        ai_assistance_text_tools: true,
-        ai_provider: 'openai',
-      })
-
-      mockPermissions(['ticket.agent'])
-
-      mockAiAssistanceTextToolsMutation({
-        aiAssistanceTextTools: {
-          output: 'selected text',
-        },
-      })
-      const mockEditor = createMockEditor()
-
-      const wrapper = renderComponent(FieldEditorActionBar, {
-        props: {
-          contentType: 'text/plain',
-          visible: true,
-          disabledPlugins: [],
-          formId: getUuid(),
-          editor: mockEditor,
-        },
-      })
-
-      await wrapper.events.click(wrapper.getByRole('button', { name: 'Ai assistant text tools' }))
-
-      const popover = await wrapper.findByRole('region', {
-        name: 'Ai assistant text tools',
-      })
-
-      await wrapper.events.click(within(popover).getByRole('button', { name: label }))
-
-      expect(textToolsActionMock[aiTextToolService]).toHaveBeenCalled()
+      provide: [[FIELD_EDITOR_OPTIONS, { zIndex: '100' }]],
     })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Add heading' }))
+
+    const popover = await wrapper.findByRole('region', {
+      name: 'Add heading',
+    })
+
+    expect(popover).toHaveStyle('z-index: 100;')
   })
 })

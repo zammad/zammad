@@ -178,9 +178,11 @@ const openFlyout = (sharedDraftStartId: string) => {
               link="#"
               class="line-clamp-1"
               :aria-label="$t('Preview Shared Draft')"
+              internal
               @click.prevent="openFlyout(sharedDraftStart.id)"
-              >{{ sharedDraftStart.name }}</CommonLink
             >
+              {{ sharedDraftStart.name }}
+            </CommonLink>
             <CommonLabel class="line-clamp-1 text-stone-200! dark:text-neutral-500!" size="small">
               <CommonDateTime :date-time="sharedDraftStart.updatedAt" />
               <template v-if="sharedDraftStart.updatedBy">

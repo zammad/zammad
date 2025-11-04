@@ -186,46 +186,6 @@ class Report
           },
         },
       },
-      {
-        name:         'twitter_in',
-        display:      __('Twitter (in)'),
-        selected:     true,
-        dataDownload: true,
-        adapter:      Report::TicketGenericTime,
-        params:       {
-          field:    'created_at',
-          selector: {
-            'create_article_type_id'   => {
-              'operator' => 'is',
-              'value'    => Ticket::Article::Type.lookup(name: 'twitter status').id,
-            },
-            'create_article_sender_id' => {
-              'operator' => 'is',
-              'value'    => Ticket::Article::Sender.lookup(name: 'Customer').id,
-            },
-          },
-        },
-      },
-      {
-        name:         'twitter_out',
-        display:      __('Twitter (out)'),
-        selected:     true,
-        dataDownload: true,
-        adapter:      Report::TicketGenericTime,
-        params:       {
-          field:    'created_at',
-          selector: {
-            'create_article_type_id'   => {
-              'operator' => 'is',
-              'value'    => Ticket::Article::Type.lookup(name: 'twitter status').id,
-            },
-            'create_article_sender_id' => {
-              'operator' => 'is',
-              'value'    => Ticket::Article::Sender.lookup(name: 'Agent').id,
-            },
-          },
-        },
-      },
     ]
     config[:metric][:create_channels][:backend] = backend
 
@@ -288,28 +248,6 @@ class Report
         params:       {
           type:   'web',
           sender: 'Customer',
-        },
-      },
-      {
-        name:         'twitter_in',
-        display:      __('Twitter (in)'),
-        selected:     true,
-        dataDownload: false,
-        adapter:      Report::ArticleByTypeSender,
-        params:       {
-          type:   'twitter status',
-          sender: 'Customer',
-        },
-      },
-      {
-        name:         'twitter_out',
-        display:      __('Twitter (out)'),
-        selected:     true,
-        dataDownload: false,
-        adapter:      Report::ArticleByTypeSender,
-        params:       {
-          type:   'twitter status',
-          sender: 'Agent',
         },
       },
     ]

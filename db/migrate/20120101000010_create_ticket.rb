@@ -83,6 +83,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :type,                             :string,    limit: 100, null: true
       t.column :time_unit,                        :decimal, precision: 6, scale: 2, null: true
       t.column :preferences,                      :text, limit: 500.kilobytes + 1, null: true
+      t.column :ai_agent_running,                 :boolean, default: false, null: false
       t.column :updated_by_id,                    :integer,               null: false
       t.column :created_by_id,                    :integer,               null: false
       t.timestamps limit: 3, null: false
@@ -126,6 +127,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :tickets, %i[group_id state_id owner_id created_at], name: 'index_tickets_on_group_id_state_id_owner_id_created_at'
     add_index :tickets, %i[group_id state_id close_at]
     add_index :tickets, %i[group_id state_id owner_id close_at], name: 'index_tickets_on_group_id_state_id_owner_id_close_at'
+    add_index :tickets, [:ai_agent_running]
     add_foreign_key :tickets, :groups
     add_foreign_key :tickets, :users, column: :owner_id
     add_foreign_key :tickets, :users, column: :customer_id
@@ -513,6 +515,11 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_foreign_key :report_profiles, :users, column: :created_by_id
     add_foreign_key :report_profiles, :users, column: :updated_by_id
 
+    create_table :report_profiles_roles, id: false do |t|
+      t.references :profile, null: false, foreign_key: { to_table: :report_profiles }, index: true
+      t.references :role, null: false, foreign_key: true, index: true
+    end
+
     create_table :webhooks do |t|
       t.column :name,                       :string, limit: 250,              null: false
       t.column :endpoint,                   :string, limit: 2000,             null: false
@@ -592,6 +599,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
   end
 
   def self.down
+    drop_table :report_profiles_roles
     drop_table :checklist_template_items
     drop_table :checklist_templates
     drop_table :checklist_items

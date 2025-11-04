@@ -20,13 +20,16 @@ class App.TicketZoomTitle extends App.ControllerObserver
 
     # update title
     return if title is @lastAttributes.title
+
     ticket = App.Ticket.find(@object_id)
     ticket.title = title
 
     # reset article - should not be resubmitted on next ticket update
     ticket.article = undefined
 
-    ticket.save()
+    ticket.save(
+      url: "#{App.Config.get('api_path')}/tickets/#{@object_id}/update_title"
+    )
 
     App.TaskManager.mute(@taskKey)
 

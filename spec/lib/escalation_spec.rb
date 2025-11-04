@@ -40,6 +40,10 @@ RSpec.describe Escalation do
     article.ticket
   end
 
+  before do
+    travel_to '2025-07-30 12:00'
+  end
+
   describe '#preferences' do
     it { expect(instance.preferences).to be_a Escalation::TicketPreferences }
   end

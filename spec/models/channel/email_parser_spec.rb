@@ -835,6 +835,21 @@ RSpec.describe Channel::EmailParser, type: :model do
 
               include_examples 'adds message to ticket'
             end
+
+            # https://github.com/zammad/zammad/issues/5170
+            context 'when email is encrypted, including subject' do
+              let!(:ticket)  { create(:ticket, number: 31_337) }
+              let(:raw_mail) { Rails.root.join('spec/fixtures/files/pgp/mail/mail-combined.box').read.to_s }
+
+              before do
+                Setting.set('ticket_number_ignore_system_id', true) # this is needed to allow hardcoded ticket reference
+                Setting.set('pgp_integration', true)
+
+                (1..3).each { |i| create(:pgp_key, :with_private, fixture: "pgp#{i}@example.com") }
+              end
+
+              include_examples 'adds message to ticket'
+            end
           end
 
           context 'when body contains ticket reference' do

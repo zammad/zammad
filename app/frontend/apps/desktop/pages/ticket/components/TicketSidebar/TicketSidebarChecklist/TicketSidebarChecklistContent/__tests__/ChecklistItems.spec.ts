@@ -88,7 +88,7 @@ describe('ChecklistItems', () => {
 
     const checklistItems: Partial<ChecklistItem>[] = [
       {
-        id: '1',
+        id: convertToGraphQLId('ChecklistItem', 1),
         text: `${ticket?.title}`,
         checked: false,
         ticketReference: { ticket },
@@ -121,7 +121,7 @@ describe('ChecklistItems', () => {
 
     const newChecklistItems: Partial<ChecklistItem>[] = [
       {
-        id: '1',
+        id: convertToGraphQLId('ChecklistItem', 2),
         text: `${ticket?.title}`,
         checked: false,
         ticketReference: {
@@ -150,7 +150,7 @@ describe('ChecklistItems', () => {
 
     const checklistItems: Partial<ChecklistItem>[] = [
       {
-        id: '1',
+        id: convertToGraphQLId('ChecklistItem', 1),
         text: `${ticket?.title}`,
         ticketReference: {
           ticket: null,
@@ -170,7 +170,7 @@ describe('ChecklistItems', () => {
 
     const checklistItems: Partial<ChecklistItem>[] = [
       {
-        id: '1',
+        id: convertToGraphQLId('ChecklistItem', 1),
         text: `${ticket?.title}`,
         ticketReference: {
           ticket: null,
@@ -194,7 +194,7 @@ describe('ChecklistItems', () => {
       [
         ...items,
         {
-          id: '2',
+          id: convertToGraphQLId('ChecklistItem', 4),
           text: '',
           ticketReference: null,
           checked: false,

@@ -164,11 +164,13 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
     end
 
     context 'with a signature' do
-      let(:signature) { create(:signature) }
-      let(:group)     { create(:group, shared_drafts: group_shared_drafts, signature: signature) }
+      let(:signature)   { create(:signature) }
+      let(:group)       { create(:group, shared_drafts: group_shared_drafts, signature: signature) }
+      let(:saved_draft) { "#{draft_body}<br><br><div data-signature-placeholder=\"true\"></div>" }
 
       # https://github.com/zammad/zammad/issues/4042
-      it 'creates a draft without signature' do
+      # https://github.com/zammad/zammad/issues/5733
+      it 'creates a draft with a signature placeholder' do
         within :active_content do
           find('.articleNewEdit-body').send_keys(draft_body)
           click '.editControls-item.pop-select'
@@ -182,7 +184,7 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
 
           next false if draft.nil?
 
-          expect(draft.new_article).to include(body: draft_body)
+          expect(draft.new_article).to include(body: saved_draft)
         end
       end
     end
@@ -284,6 +286,55 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
         within :active_content do
           expect(page).to have_text(signature_body).and(have_text(draft_body))
         end
+      end
+
+      # https://github.com/zammad/zammad/issues/5733
+      context 'with a signature placeholder in draft' do
+        let(:draft_content)        { 'Draft content' }
+        let(:draft_body)           { "<div data-signature-placeholder=\"true\"></div><br><br>#{draft_content}" }
+        let(:draft_with_signature) { "#{signature_body}\n\n\n#{draft_content}" }
+
+        it 'applies with a signature' do
+          within :active_content do
+            expect(page).to have_text(draft_with_signature)
+          end
+        end
+      end
+    end
+
+    context 'without a signature' do
+      let(:draft_type) { 'email' }
+
+      # https://github.com/zammad/zammad/issues/5733
+      context 'placeholder is cleaned up' do
+        let(:draft_content)        { 'Draft content' }
+        let(:draft_body)           { "<div data-signature-placeholder=\"true\"></div><br><br>#{draft_content}" }
+        let(:draft_with_signature) { "#{signature_body}\n\n\n#{draft_content}" }
+
+        it 'applies with a signature' do
+          within :active_content do
+            expect(page)
+              .to have_text(draft_content)
+              .and(have_no_selector('[data-signature-placeholder]', visible: :all))
+          end
+        end
+      end
+    end
+  end
+
+  context 'preview in apply' do
+    before do
+      visit "ticket/zoom/#{ticket_with_draft.id}"
+
+      click :draft_share_button
+    end
+
+    let(:draft_content)        { 'Draft content' }
+    let(:draft_body)           { "<div data-signature-placeholder=\"true\"></div>#{draft_content}" }
+
+    it 'shows signature placeholder in preview' do
+      in_modal do
+        expect(page).to have_text("[Signature]\n#{draft_content}")
       end
     end
   end

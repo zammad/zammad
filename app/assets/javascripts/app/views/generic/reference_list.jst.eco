@@ -1,0 +1,23 @@
+<div class="tasks tasks--standalone">
+  <% for object, i in @objects: %>
+    <% if i == @show_max: %>
+      <% id = _.uniqueId('show_all_') %>
+      <div class="collapse" id="<%= id %>">
+    <% end %>
+    <div class="task">
+      <div class="task-text">
+        <a class="name" data-id="<%- object.id %>" href="<%- object.uiUrl() %>">
+          <%= object.displayName() || '-' %>
+        </a>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @objects.length > @show_max: %>
+    </div>
+    <div class="btn btn--text btn-show-all" role="button" data-toggle="collapse" data-target="#<%= id %>" aria-expanded="false" aria-controls="<%= id %>">
+      <div data-show="open"><%- @Icon('arrow-down') %> <span><%- @T('Show all…') %></span></div>
+      <div data-show="collapsed"><%- @Icon('arrow-up') %> <span><%- @T('Show less') %></span></div>
+    </div>
+  <% end %>
+</div>

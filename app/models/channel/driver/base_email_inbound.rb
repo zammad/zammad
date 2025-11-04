@@ -9,10 +9,6 @@ class Channel::Driver::BaseEmailInbound < Channel::EmailParser
     true
   end
 
-  def self.streamable?
-    false
-  end
-
   # Checks if the given channel was modified since it it was loaded
   # This check is used in email fetching loop
   def channel_has_changed?(channel)

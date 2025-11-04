@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Store::Provider::S3, authenticated_as: false, integration: true do
+RSpec.describe Store::Provider::S3, authenticated_as: false, integration: true, required_envs: %w[S3_URL] do
 
   around do |example|
     VCR.configure do |c|
@@ -177,4 +177,32 @@ RSpec.describe Store::Provider::S3, authenticated_as: false, integration: true d
     end
   end
 
+  describe '.change_checksum' do
+    let(:initial_data)     { 'foo' }
+    let(:new_data)         { 'bar' }
+    let(:initial_checksum) { Store::File.checksum(initial_data) }
+    let(:new_checksum)     { Store::File.checksum(new_data) }
+
+    before do
+      described_class.upload(new_data, initial_checksum)
+    end
+
+    after do
+      described_class.delete(initial_checksum)
+      described_class.delete(new_checksum)
+    end
+
+    it 'can read the new content' do
+      described_class.change_checksum(initial_checksum, new_checksum)
+
+      expect(described_class.get(new_checksum)).to eq(new_data)
+    end
+
+    it 'content at old path no longer exists' do
+      described_class.change_checksum(initial_checksum, new_checksum)
+
+      expect { described_class.get(initial_checksum) }
+        .to raise_error(StandardError)
+    end
+  end
 end

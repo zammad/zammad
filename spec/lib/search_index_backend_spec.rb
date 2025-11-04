@@ -1192,4 +1192,35 @@ RSpec.describe SearchIndexBackend do
       expect(described_class.search('preferences.special_key: 42', 'Ticket').count).to eq(1)
     end
   end
+
+  describe 'works with special characters', performs_jobs: true, searchindex: true do
+    # Verify fix for Github issue #2058 - Autocomplete hangs on dot in the new user form
+    it 'does searching for organization with a dot in its name' do
+      organization = create(:organization, name: 'Tes.t. Org')
+      perform_enqueued_jobs
+      searchindex_model_reload([Organization])
+
+      result = described_class.search 'Tes.', 'Organization'
+      expect(result).to include(include(id: organization.id.to_s, type: 'Organization'))
+    end
+
+    # Search query H& should correctly match H&M
+    it 'does searching for organization with & in its name' do
+      organization = create(:organization, name: 'H&M')
+      perform_enqueued_jobs
+      searchindex_model_reload([Organization])
+
+      result = described_class.search 'h&', 'Organization'
+      expect(result).to include(include(id: organization.id.to_s, type: 'Organization'))
+    end
+
+    it 'does searching for organization with _ in its name' do
+      organization = create(:organization, name: 'ABC_D')
+      perform_enqueued_jobs
+      searchindex_model_reload([Organization])
+
+      result = described_class.search 'abc_', 'Organization'
+      expect(result).to include(include(id: organization.id.to_s, type: 'Organization'))
+    end
+  end
 end

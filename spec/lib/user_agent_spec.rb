@@ -849,4 +849,40 @@ RSpec.describe UserAgent, :aggregate_failures do
       end
     end
   end
+
+  describe '.log' do
+    before do
+      allow(HttpLog).to receive(:create)
+      allow(response).to receive(:body).and_return('')
+      described_class.log('/', request, response, { log: log_params })
+    end
+
+    let(:request)    { Net::HTTP::Get.new('/') }
+    let(:response)   { Net::HTTPOK.new('/', '200', 'OK') }
+    let(:log_params) { { facility: 'AI::Provider' } }
+
+    context 'when always logging' do
+      it 'creates a log entry' do
+        expect(HttpLog).to have_received(:create)
+      end
+    end
+
+    context 'when logging only on error' do
+      let(:log_params) { { facility: 'AI::Provider', log_only_on_error: true } }
+
+      context 'when request was successful' do
+        it 'does not create a log entry' do
+          expect(HttpLog).not_to have_received(:create)
+        end
+      end
+
+      context 'when request was not successful' do
+        let(:response) { Net::HTTPNotFound.new('/', '404', 'Not Found') }
+
+        it 'creates a log entry' do
+          expect(HttpLog).to have_received(:create)
+        end
+      end
+    end
+  end
 end

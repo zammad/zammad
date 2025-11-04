@@ -153,6 +153,26 @@ CoreWorkflow.create_if_not_exists(
   updated_by_id:   1,
 )
 CoreWorkflow.create_if_not_exists(
+  name:            'base - show summary generation',
+  object:          'Group',
+  condition_saved: {
+    'custom.module': {
+      operator: 'match all modules',
+      value:    [
+        'CoreWorkflow::Custom::AdminGroupSummaryGeneration',
+      ],
+    },
+  },
+  perform:         {
+    'custom.module': {
+      execute: ['CoreWorkflow::Custom::AdminGroupSummaryGeneration']
+    },
+  },
+  changeable:      false,
+  created_by_id:   1,
+  updated_by_id:   1,
+)
+CoreWorkflow.create_if_not_exists(
   name:            'base - show group list for agents',
   condition_saved: {
     'custom.module': {

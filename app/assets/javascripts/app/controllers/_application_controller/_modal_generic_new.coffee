@@ -52,6 +52,7 @@ class App.ControllerGenericNew extends App.ControllerModal
     # save object
     ui = @
     object.save(
+      removedFields: @controller.removedFields(@controller.form)
       done: ->
         if ui.callback
           item = App[ ui.genericObject ].fullLocal(@id)

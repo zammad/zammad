@@ -1,0 +1,18 @@
+Jegy emlékeztető elérve (#{ticket.title})
+
+<div>Üdvözlet #{recipient.firstname},</div>
+<br>
+<div>Egy jegy figyelmet igényel: emlékeztető elérve (#{ticket.title}) "<b>#{ticket.customer.longname}</b>" ügyfélnél.</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Információ:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Megnyitás: #{config.product_name}</a>
+</div>

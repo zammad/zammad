@@ -135,6 +135,7 @@ watch(
       v-if="showAiAssistantTextToolsLoadingBanner && config.ai_assistance_text_tools"
       :editor="editor"
     />
+
     <CommonSectionPopup
       v-model:state="popupShown"
       :messages="subMenuPopupContent ? undefined : subMenuPopupItems"

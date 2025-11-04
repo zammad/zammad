@@ -22,7 +22,10 @@ export const useTicketArticleReplyAction = (
 
     const { articleType, ...otherOptions } = values
 
-    const typeNode = formNode.find('articleType', 'name')
+    const typeNode = formNode?.find('articleType', 'name')
+
+    if (!typeNode) return
+
     if (formNode.context) {
       Object.assign(formNode.context, { _open: true })
     }

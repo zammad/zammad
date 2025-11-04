@@ -142,11 +142,15 @@ RSpec.describe 'System > Objects', type: :system do
       click 'tbody tr:last-child'
 
       in_modal do
-        # Add two new attributes to the field.
+        # Add two new options to the field.
         2.times do |i|
           click 'tbody tr:last-child .js-addRow'
           find('tbody tr:last-child .js-key').fill_in(with: "new tree option #{i}")
         end
+
+        # Disable one of the options.
+        find('tbody tr:last-child .js-active').click
+
         click '.js-submit'
       end
 
@@ -158,8 +162,20 @@ RSpec.describe 'System > Objects', type: :system do
         click 'button.js-submit'
       end
 
-      # Check that the attributes were correctly saved.
-      expect(ObjectManager::Attribute.last.data_option[:options][-2..]).to eq([{ 'name' => 'new tree option 0', 'value' => 'new tree option 0' }, { 'name' => 'new tree option 1', 'value' => 'new tree option 1' }])
+      # Check that the options were correctly saved.
+      expect(ObjectManager::Attribute.last.data_option[:options][-2..]).to eq(
+        [
+          {
+            'name'  => 'new tree option 0',
+            'value' => 'new tree option 0',
+          },
+          {
+            'name'     => 'new tree option 1',
+            'value'    => 'new tree option 1',
+            'disabled' => true,
+          }
+        ]
+      )
     end
   end
 

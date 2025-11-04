@@ -33,4 +33,13 @@ class Channel::Driver::Sendmail < Channel::Driver::BaseEmailOutbound
       super(attr, notification, :sendmail)
     end
   end
+
+  def server_identifier(_)
+    'sendmail'
+  end
+
+  # Sendmail driver does not raise silenceable errors
+  def deliver_mail_notification_silence?(_e, _mail)
+    false
+  end
 end

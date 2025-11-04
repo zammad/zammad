@@ -14,17 +14,18 @@ class TicketOnlineNotificationSeenJob < ApplicationJob
     # set all online notifications to seen
     Transaction.execute do
       ticket = Ticket.lookup(id: ticket_id)
-      OnlineNotification.list_by_object('Ticket', ticket_id).each do |notification|
-        next if notification.seen
+      return if ticket.nil?
+      return if !OnlineNotification.seen_state?(ticket)
 
-        seen = OnlineNotification.seen_state?(ticket, notification.user_id)
-        next if !seen
-        next if seen == notification.seen
+      mention_user_ids = ticket.mentions.map(&:user_id)
 
-        notification.seen = true
-        notification.updated_by_id = user_id
-        notification.save!
-      end
+      unseen_notifications = OnlineNotification.list_by_object('Ticket', ticket_id)
+                                               .where(seen: false)
+                                               .where.not(user_id: mention_user_ids)
+
+      return if unseen_notifications.empty?
+
+      unseen_notifications.each { |n| n.update!(seen: true, updated_by_id: user_id) }
     end
   end
 end

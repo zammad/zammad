@@ -1,0 +1,8 @@
+<div class="popover-headline">
+  <h2>
+    <%- @T(@title) %>
+    <% if @ids.length > 1: %>
+      (<a href="#manage/<%= @type.toLowerCase() %>/1/id:(<%= @ids.join(' OR ') %>)"><%- @ids.length %></a>)
+    <% end %>
+  </h2>
+</div>

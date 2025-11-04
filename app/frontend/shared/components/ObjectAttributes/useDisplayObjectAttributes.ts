@@ -24,6 +24,7 @@ export interface ObjectAttributeDisplayOptions extends BaseObjectAttributeDispla
 export interface ObjectAttributesDisplayOptions extends BaseObjectAttributeDisplayOptions {
   skipAttributes?: string[]
   attributes: ObjectAttribute[]
+  includeStatic?: boolean
 }
 
 export interface AttributeField {
@@ -73,7 +74,7 @@ export const useDisplayObjectAttributes = (options: ObjectAttributesDisplayOptio
 
   const fields = computed<AttributeField[]>(() => {
     return options.attributes
-      .filter((attribute) => !attribute.isStatic)
+      .filter((attribute) => options.includeStatic || !attribute.isStatic)
       .map((attribute) => ({
         attribute,
         component: definitionsByType[attribute.dataType],

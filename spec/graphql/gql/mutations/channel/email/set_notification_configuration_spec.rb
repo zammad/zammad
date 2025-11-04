@@ -86,6 +86,6 @@ RSpec.describe Gql::Mutations::Channel::Email::SetNotificationConfiguration, typ
     Channel
       .where(area: 'Email::Notification')
       .to_a
-      .find { _1.options.dig(:outbound, :adapter) == adapter }
+      .find { it.options.dig(:outbound, :adapter) == adapter }
   end
 end

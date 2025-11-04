@@ -4,7 +4,7 @@ module Gql::Queries
   class Ticket::History < BaseQuery
     description 'Fetch history of a ticket'
 
-    argument :ticket, Gql::Types::Input::Locator::TicketInputType, description: 'Ticket locator'
+    argument :ticket_id, ID, loads: Gql::Types::TicketType, description: 'Ticket ID'
 
     type [Gql::Types::HistoryGroupType], null: false
 

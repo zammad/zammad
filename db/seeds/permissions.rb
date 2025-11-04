@@ -163,12 +163,6 @@ Permission.create_if_not_exists(
   preferences: { prio: 1250 }
 )
 Permission.create_if_not_exists(
-  name:        'admin.channel_twitter',
-  label:       __('Twitter'),
-  description: __('Manage Twitter channel of your system.'),
-  preferences: { prio: 1260 }
-)
-Permission.create_if_not_exists(
   name:        'admin.channel_facebook',
   label:       __('Facebook'),
   description: __('Manage Facebook channel of your system.'),
@@ -223,22 +217,28 @@ Permission.create_if_not_exists(
   preferences: { prio: 1332 }
 )
 Permission.create_if_not_exists(
-  name:        'admin.ai',
-  label:       __('AI'),
-  description: __('Manage AI settings of your system.'),
+  name:        'admin.ai_provider',
+  label:       __('AI Provider'),
+  description: __('Manage AI provider of your system.'),
   preferences: { prio: 1333 }
 )
 Permission.create_if_not_exists(
   name:        'admin.ai_assistance_ticket_summary',
   label:       __('Ticket Summary'),
-  description: __('Manage Zammad Smart Assist ticket summarization of your system.'),
+  description: __('Manage ticket summarization of your system.'),
   preferences: { prio: 1334 }
 )
 Permission.create_if_not_exists(
   name:        'admin.ai_assistance_text_tools',
-  label:       __('Ticket Tools'),
-  description: __('Manage Zammad Smart Assist text tools of your system.'),
+  label:       __('Writing Assistant'),
+  description: __('Manage writing asssistant text tools of your system.'),
   preferences: { prio: 1335 }
+)
+Permission.create_if_not_exists(
+  name:        'admin.ai_agent',
+  label:       __('AI Agents'),
+  description: __('Manage AI agents of your system.'),
+  preferences: { prio: 1336 }
 )
 Permission.create_if_not_exists(
   name:        'admin.integration',

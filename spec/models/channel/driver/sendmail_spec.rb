@@ -52,4 +52,32 @@ RSpec.describe Channel::Driver::Sendmail do
       expect(mocked_sendmail).to have_received(:flush)
     end
   end
+
+  describe '#deliver' do
+    let(:channel) { create(:email_notification_channel, :sendmail) }
+
+    context 'when an error is raised', aggregate_failures: true do
+      before do
+        allow_any_instance_of(Mail::Message).to receive(:deliver).and_raise(error)
+      end
+
+      let(:error) { StandardError.new('custom error message') }
+
+      it 'forwards the error' do
+        expect { channel.deliver({}) }
+          .to raise_error(Channel::DeliveryError) { |error|
+            expect(error.original_error.message).to eq('sendmail: custom error message')
+          }
+      end
+
+      context 'when it was sending a notification' do
+        it 'forwards the error' do
+          expect { channel.deliver({}, true) }
+            .to raise_error(Channel::DeliveryError) { |error|
+              expect(error.original_error.message).to eq('sendmail: custom error message')
+            }
+        end
+      end
+    end
+  end
 end

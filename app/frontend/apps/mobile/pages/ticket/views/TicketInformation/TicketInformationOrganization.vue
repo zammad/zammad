@@ -26,7 +26,7 @@ const errorCallback = createQueryErrorHandler({
   forbidden: __('You have insufficient rights to view this organization.'),
 })
 
-const organizationId = computed(() => ticket.value?.organization?.internalId)
+const organizationId = computed(() => ticket.value?.organization?.id)
 
 const {
   organization,

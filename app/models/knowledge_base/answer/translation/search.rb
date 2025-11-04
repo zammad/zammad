@@ -11,9 +11,7 @@ class KnowledgeBase::Answer::Translation
       scope :search_sql_extension, lambda { |params|
         return if params[:current_user]&.permissions?('knowledge_base.editor')
 
-        answer_ids = KnowledgeBase::Answer.internal.pluck(:id)
-
-        where(answer_id: answer_ids)
+        where(answer_id: search_answer_ids_for_user(params[:current_user]))
       }
 
       scope :search_sql_query_extension, lambda { |params|
@@ -42,10 +40,14 @@ class KnowledgeBase::Answer::Translation
         return output if params[:current_user]&.permissions?('knowledge_base.editor')
 
         output[:bool][:must] = [ { terms: {
-          answer_id: KnowledgeBase::Answer.internal.pluck(:id)
+          answer_id: search_answer_ids_for_user(params[:current_user])
         } } ]
 
         output
+      end
+
+      def search_answer_ids_for_user(user)
+        KnowledgeBase::Answer.visible_to_user(user).pluck(:id)
       end
     end
   end

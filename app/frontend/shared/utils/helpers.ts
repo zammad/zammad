@@ -101,7 +101,7 @@ export const createDeferred = <T>() => {
 }
 
 export const waitForElement = async (query: string, tries = 60): Promise<Element | null> => {
-  if (tries === 0) return null
+  if (tries === 0 || typeof document === 'undefined') return null
   const element = document.querySelector(query)
   if (element) return element
   await new Promise((resolve) => requestAnimationFrame(resolve))

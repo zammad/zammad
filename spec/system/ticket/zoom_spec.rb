@@ -549,7 +549,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       ext      = File.extname(filename)[1...]
       base64   = Base64.encode64(file).delete("\n")
 
-      "<img style='width: 1004px; max-width: 100%;' src=\\\"data:image/#{ext};base64,#{base64}\\\"><br>"
+      "<img style='width: 1004px; max-width: 100%;' src=\"data:image/#{ext};base64,#{base64}\"><br>"
     end
 
     def current_ticket
@@ -565,7 +565,7 @@ RSpec.describe 'Ticket zoom', type: :system do
         find('[name=title]').fill_in with: 'Title'
         find('[name=customer_id_completion]').fill_in with: 'customer@example.com'
         set_tree_select_value('group_id', Group.first.name)
-        find(:richtext).execute_script "this.innerHTML = \"#{ticket_article_body}\""
+        set_editor_field_richtext_value('body', ticket_article_body)
         find('.js-submit').click
       end
     end
@@ -831,6 +831,37 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  describe 'customer draft', authenticated_as: :authenticate do
+    let(:customer) { create(:customer) }
+    let(:ticket)   { create(:ticket, customer: customer) }
+    let(:article)  { create(:ticket_article, ticket: ticket) }
+
+    def authenticate
+      article
+      customer
+    end
+
+    it 'restores autosaved body and keeps a supported article type (#5767)' do
+      visit "ticket/zoom/#{ticket.id}"
+
+      taskbar_timestamp = Taskbar.last.updated_at
+
+      find(:richtext).send_keys('This is a draft body from customer')
+
+      wait.until { Taskbar.last.updated_at != taskbar_timestamp }
+
+      refresh
+
+      within '.article-new' do
+        type_input = find('input[name="type"]', visible: false)
+
+        expect(type_input.value).to eq('note')
+        expect(page).to have_no_field('input[name=to]', visible: :visible)
+        expect(find('[data-name=body]')).to have_text('This is a draft body from customer')
+      end
+    end
+  end
+
   # https://github.com/zammad/zammad/issues/3260
   describe 'next in overview macro changes URL', authenticated_as: :authenticate do
     let(:next_ticket) { create(:ticket, title: 'next Ticket', group: Group.first) }
@@ -844,7 +875,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     it 'to next Ticket ID' do
       visit 'ticket/view/all_unassigned'
-      click_on 'Welcome to Zammad!'
+      click_on 'Help me! I am an example ticket 🎓'
       click '.js-openDropdownMacro'
       find(:macro, macro.id).click
       wait(5, interval: 1).until_constant { current_url }
@@ -1459,14 +1490,14 @@ RSpec.describe 'Ticket zoom', type: :system do
     let(:received_merge_trigger) { create(:trigger, :conditionable, condition_ticket_action: :received_merge) }
     let(:update_trigger)         { create(:trigger, :conditionable, condition_ticket_action: :update) }
 
-    let(:ticket)                 { create(:ticket).tap { TransactionDispatcher.commit } }
-    let(:target_ticket)          { create(:ticket).tap { TransactionDispatcher.commit } }
+    let(:ticket)                 { create(:ticket).tap { |t| create(:ticket_article, ticket: t) && TransactionDispatcher.commit } }
+    let(:target_ticket)          { create(:ticket).tap { |t| create(:ticket_article, ticket: t) && TransactionDispatcher.commit } }
 
     let(:user)                   { create(:agent, :preferencable, notification_group_ids: [ticket, target_ticket].map(&:group_id), groups: [ticket, target_ticket].map(&:group)) }
 
     context 'when merging ticket' do
       before do
-        ticket.merge_to(ticket_id: target_ticket.id, user_id: 1)
+        ticket.merge_to(ticket_id: target_ticket.id, user_id: user.id)
       end
 
       it 'pulses source ticket' do
@@ -2628,6 +2659,76 @@ RSpec.describe 'Ticket zoom', type: :system do
           body.include?('test') && body.exclude?('rgb')
         end
       end
+    end
+  end
+
+  describe 'Inconsistent group search when selected value is in deeper levels of a sub group #5707', authenticated_as: :authenticate do
+    let(:ticket) { create(:ticket, group: create(:group, name: 'TreeB::AAA::BBB::CCC')) }
+
+    def authenticate
+      create(:group, name: 'TreeA')
+      create(:group, name: 'TreeA::AAA')
+      create(:group, name: 'TreeA::AAA::BBB')
+      create(:group, name: 'TreeA::AAA::BBB::CCC')
+      create(:group, name: 'TreeB')
+      create(:group, name: 'TreeB::AAA')
+      create(:group, name: 'TreeB::AAA::BBB')
+      ticket
+      create(:agent, groups: Group.all)
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does show the right group level' do
+      page.find("div[data-attribute-name='group_id']").click
+      wait.until { page.all('span.searchableSelect-option-text').none? { |element| element.text.include?('TreeA') } }
+    end
+  end
+
+  describe 'Delay non-active taskbars to improve initial loading speed. #5776' do
+    let(:tickets) { create_list(:ticket, 3, group: Group.find_by(name: 'Users')) }
+
+    it 'does load tickets freshly and delayed' do
+      visit "#ticket/zoom/#{tickets.first.id}"
+      visit "#ticket/zoom/#{tickets.second.id}"
+      visit "#ticket/zoom/#{tickets.third.id}"
+      refresh
+      await_empty_ajax_queue
+      page.find(".tasks a[data-key=\"Ticket-#{tickets.second.id}\"]").click
+      expect(page).to have_text(tickets.second.title)
+      page.find(".tasks a[data-key=\"Ticket-#{tickets.first.id}\"]").click
+      expect(page).to have_text(tickets.first.title)
+      page.find(".tasks a[data-key=\"Ticket-#{tickets.third.id}\"]").click
+      expect(page).to have_text(tickets.third.title)
+    end
+  end
+
+  describe 'Taskbars for missing tickets are never loaded unless switched to #5812' do
+    it 'does always complete loading' do
+      visit "#ticket/zoom/#{Ticket.first.id}"
+      visit '#ticket/zoom/99999999'
+      visit '#dashboard'
+      refresh
+      expect(page).to have_css("#navigation [data-key='Ticket-99999999']", text: 'Not Found')
+    end
+  end
+
+  describe 'Not loaded tickets do not show the update indicator in taskbar entries #5814' do
+    let(:agent_update) { create(:agent, groups: Group.all) }
+
+    it 'does show updated icon when priority is changed' do
+      ensure_websocket do
+        visit "#ticket/zoom/#{Ticket.first.id}"
+        visit '#dashboard'
+        refresh
+      end
+      expect(page).to have_no_css('#navigation .icon-status-modified-inner-circle')
+      sleep 2
+
+      Ticket.first.update(priority: Ticket::Priority.find_by(name: '3 high'), updated_by: agent_update)
+      expect(page).to have_css('#navigation .icon-status-modified-inner-circle')
     end
   end
 end

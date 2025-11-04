@@ -2,10 +2,11 @@
 
 class MicrosoftGraph
   class ApiError < StandardError
-    attr_reader :error
+    attr_reader :error, :retry_after
 
-    def initialize(error_hash)
-      @error = error_hash.with_indifferent_access
+    def initialize(error_hash, retry_after: nil)
+      @error       = error_hash.with_indifferent_access
+      @retry_after = retry_after
 
       super()
     end

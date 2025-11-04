@@ -11,6 +11,16 @@ export const UserUpdatesDocument = gql`
   userUpdates(userId: $userId) {
     user {
       ...userDetailAttributes
+      hasSecondaryOrganizations
+      ticketsCount {
+        open
+        openSearchQuery
+        closed
+        closedSearchQuery
+      }
+      policy {
+        update
+      }
     }
   }
 }

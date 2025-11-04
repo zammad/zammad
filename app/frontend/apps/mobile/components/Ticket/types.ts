@@ -25,4 +25,5 @@ export interface TicketItemData {
     fullname?: Maybe<string>
   }>
   stateColorCode: EnumTicketStateColorCode
+  aiAgentRunning?: boolean | null
 }

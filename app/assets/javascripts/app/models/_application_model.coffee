@@ -234,6 +234,11 @@ set new attributes of model (remove already available attributes)
 
   # App.Model.full(id, callback, force, bind)
   @full: (id, callback = false, force = false, bind = false) ->
+
+    # skip full requests for guessing users since they won't return results anyway
+    # and produce a lot of errors in the log #5132
+    return if @className is 'User' && typeof id is 'string' && id.startsWith('guess:')
+
     url = "#{@url}/#{id}?full=true"
 
     # subscribe and reload data / fetch new data if triggered

@@ -105,4 +105,65 @@ RSpec.describe Ticket::Search do
       expect(Ticket.search(current_user: agent, query: "#{Setting.get('ticket_hook')}#{ticket.number}")).to eq([ticket])
     end
   end
+
+  describe 'access check' do
+    let(:shared) { true }
+    let(:organization)   { create(:organization, shared:) }
+    let(:group)          { create(:group) }
+    let(:agent)          { create(:agent, groups: [group]) }
+    let(:customer)       { create(:customer, organization: organization) }
+    let(:other_customer) { create(:customer, organization: create(:organization), organizations: [organization]) }
+    let(:ticket_1)       { create(:ticket, title: 'search 1', group:, organization:, customer:) }
+    let(:ticket_2)       { create(:ticket, title: 'search 2', group:, organization:, customer: other_customer) }
+    let(:ticket_3)       { create(:ticket, title: 'search 3') }
+    let(:ticket_4)       { create(:ticket, title: 'search 4', owner: agent) }
+
+    before do
+      [ticket_1, ticket_2, ticket_3, ticket_4].each do |ticket|
+        create(:ticket_article, ticket: ticket)
+      end
+    end
+
+    shared_examples 'search for tickets' do
+      let(:results) { Ticket.search(current_user: user, query: 'search') }
+
+      context 'when user is agent' do
+        let(:user) { agent }
+
+        it 'finds accessible tickets' do
+          expect(results).to contain_exactly(ticket_1, ticket_2)
+        end
+      end
+
+      context 'when user is customer' do
+        let(:user) { customer }
+
+        context 'when organization is shared' do
+          it 'finds accessible tickets' do
+            expect(results).to contain_exactly(ticket_1, ticket_2)
+          end
+        end
+
+        context 'when organization is not shared' do
+          let(:shared) { false }
+
+          it 'finds accessible tickets' do
+            expect(results).to contain_exactly(ticket_1)
+          end
+        end
+      end
+    end
+
+    context 'with elasticsearch', searchindex: true do
+      before do
+        searchindex_model_reload([Ticket, User, Organization])
+      end
+
+      include_examples 'search for tickets'
+    end
+
+    context 'with db only' do
+      include_examples 'search for tickets'
+    end
+  end
 end

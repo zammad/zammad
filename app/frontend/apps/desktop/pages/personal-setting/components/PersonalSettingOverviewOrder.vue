@@ -40,7 +40,7 @@ dragAndDrop({
   values: dndLocalValue,
   plugins: [startAndEndEventsDNDPlugin(undefined, dndEndCallback), animations()],
   dropZoneClass: 'opacity-0',
-  touchDropZoneClass: 'opacity-0',
+  synthDropZoneClass: 'opacity-0',
 })
 </script>
 

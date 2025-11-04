@@ -63,20 +63,6 @@ class Channel::Driver::Facebook
 
   def disconnect; end
 
-=begin
-
-  Channel::Driver::Facebook.streamable?
-
-returns
-
-  true|false
-
-=end
-
-  def self.streamable?
-    false
-  end
-
   private
 
   def get_page(page_id)

@@ -1,0 +1,5 @@
+query userInfoForPopover($userId: ID!, $secondaryOrganizationsCount: Int) {
+  user(userId: $userId) {
+    ...userDetailAttributes
+  }
+}

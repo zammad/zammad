@@ -22,7 +22,43 @@ class Channel::Driver::BaseEmailOutbound
 
   def deliver_mail(attr, notification, method, options = {})
     mail = Channel::EmailBuild.build(attr, notification)
-    mail.delivery_method method, options
-    mail.deliver
+
+    begin
+      mail.delivery_method method, options
+      mail.deliver
+    rescue => e
+      # some SMTP error codes will be handled gracefully on notifications
+      if notification && deliver_mail_notification_silence?(e, mail)
+        return
+      end
+
+      raise e.class, humanized_error_message(e, options)
+    end
+
+  end
+
+  private
+
+  def deliver_mail_notification_silence?(_e, _mail)
+    raise 'not implemented'
+  end
+
+  def humanized_error_message(e, options)
+    identifier = server_identifier(options)
+
+    case e
+    when Net::OpenTimeout
+      "Network connection to #{identifier} timed out: #{e.message}"
+    when Errno::ECONNREFUSED
+      "Network connection to #{identifier} could not be established: #{e.message}"
+    when Net::SMTPAuthenticationError
+      "Authentication on #{identifier} failed: #{e.message}"
+    else
+      "#{identifier}: #{e.message}"
+    end
+  end
+
+  def server_identifier(_options)
+    raise 'not implemented'
   end
 end

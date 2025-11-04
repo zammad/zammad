@@ -14,8 +14,8 @@ RSpec.describe Gql::Queries::User, type: :graphql do
 
     let(:query) do
       <<~QUERY
-        query user($userId: ID, $userInternalId: Int) {
-          user(user: { userId: $userId, userInternalId: $userInternalId }) {
+        query user($userId: ID!) {
+          user(userId: $userId) {
             id
             firstname
             hasSecondaryOrganizations
@@ -40,23 +40,15 @@ RSpec.describe Gql::Queries::User, type: :graphql do
         )
       end
 
+      it 'has no secondary organizations' do
+        expect(gql.result.data).to include('hasSecondaryOrganizations' => false)
+      end
+
       context 'without user' do
         let(:user) { create(:user).tap(&:destroy) }
 
         it 'fetches no user' do
           expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
-        end
-      end
-
-      context 'with internalId' do
-        let(:variables) { { userInternalId: user.id } }
-
-        it 'has data' do
-          expect(gql.result.data).to include('firstname' => user.firstname)
-        end
-
-        it 'has no secondary organizations' do
-          expect(gql.result.data).to include('hasSecondaryOrganizations' => false)
         end
       end
 
@@ -87,6 +79,14 @@ RSpec.describe Gql::Queries::User, type: :graphql do
             expect(gql.result.error_type).to eq(Exceptions::Forbidden)
           end
         end
+      end
+    end
+
+    context 'without authenticated session and not existing user', authenticated_as: false do
+      let(:variables) { { userId: 'gid://zammad/User/12345689' } }
+
+      it 'fails with error type' do
+        expect(gql.result.error_type).to eq(Exceptions::NotAuthorized)
       end
     end
 

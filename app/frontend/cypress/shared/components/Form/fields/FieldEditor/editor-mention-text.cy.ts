@@ -35,13 +35,11 @@ describe('Testing "text" popup: "::" command', { retries: 2 }, () => {
       .findByText(/Anliegen sichten/)
       .click()
 
-    cy.findByRole('textbox')
-      .should('include.text', 'Vielen Dank für Ihre Anfrage')
-      .type('{backspace}{backspace}123')
-      .should('include.text', 'Verbindung setze123')
-      .should(
-        'include.html',
-        '<p>Vielen Dank für Ihre Anfrage.</p><p>Wir werden Ihr Anliegen sichten und uns schnellstmöglich mit Ihnen in Verbindung setze123</p>',
-      )
+    cy.findByRole('textbox').shouldContainNormalizedHtml('Vielen Dank für Ihre Anfrage')
+    cy.findByRole('textbox').type('{backspace}{backspace}123')
+    cy.findByRole('textbox').shouldContainNormalizedHtml('Verbindung setze123')
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
+      '<p>Vielen Dank für Ihre Anfrage.</p><p>Wir werden Ihr Anliegen sichten und uns schnellstmöglich mit Ihnen in Verbindung setze123</p>',
+    )
   })
 })

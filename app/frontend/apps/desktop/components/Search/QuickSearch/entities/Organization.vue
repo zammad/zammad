@@ -3,6 +3,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+import type { Organization } from '#shared/graphql/types.ts'
+
+import OrganizationPopoverWithTrigger from '#desktop/components/Organization/OrganizationPopoverWithTrigger.vue'
+
 import type { QuickSearchPluginProps } from '../../types.ts'
 
 const props = defineProps<QuickSearchPluginProps>()
@@ -11,12 +15,11 @@ const isOrganizationInactive = computed(() => !props.item.active)
 </script>
 
 <template>
-  <CommonLink
-    v-tooltip="item.name"
+  <OrganizationPopoverWithTrigger
+    :popover-config="{ orientation: 'right' }"
     class="group/item flex grow gap-2 rounded-md px-2 py-3 text-neutral-400 hover:bg-blue-900 hover:no-underline!"
-    :link="`/organizations/${item.internalId}`"
+    :organization="item as Organization"
     :aria-description="isOrganizationInactive ? $t('Organization is inactive.') : undefined"
-    internal
   >
     <CommonIcon
       class="shrink-0 text-neutral-500"
@@ -32,5 +35,5 @@ const isOrganizationInactive = computed(() => !props.item.active)
     >
       {{ item.name }}
     </CommonLabel>
-  </CommonLink>
+  </OrganizationPopoverWithTrigger>
 </template>

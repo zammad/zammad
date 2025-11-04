@@ -5,12 +5,14 @@ require 'models/application_model_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/has_collection_update_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
+require 'models/concerns/has_search_index_backend_examples'
 
 RSpec.describe Ticket::Priority, type: :model do
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'CanBeImported'
   it_behaves_like 'HasCollectionUpdate', collection_factory: :ticket_priority
   it_behaves_like 'HasXssSanitizedNote', model_factory: :ticket_priority
+  it_behaves_like 'HasSearchIndexBackend', indexed_factory: :ticket_priority
 
   describe 'Default state' do
     describe 'of whole table:' do

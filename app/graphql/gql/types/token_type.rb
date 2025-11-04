@@ -3,6 +3,7 @@
 module Gql::Types
   class TokenType < Gql::Types::BaseObject
     include Gql::Types::Concerns::IsModelObject
+
     # TokenPolicy has no show?, so we can't use HasPunditPolicy here.
 
     description 'User access token'

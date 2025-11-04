@@ -7,7 +7,8 @@ class SipgateIo extends App.ControllerIntegrationBase
     [__('Caller ID of outbound calls can be changed as well.')]
   ]
   events:
-    'click .js-select': 'selectAll'
+    'click .js-copy':          'copyInputToClipboard'
+    'click .js-select':        'selectAll'
     'change .js-switch input': 'switch'
 
   render: =>

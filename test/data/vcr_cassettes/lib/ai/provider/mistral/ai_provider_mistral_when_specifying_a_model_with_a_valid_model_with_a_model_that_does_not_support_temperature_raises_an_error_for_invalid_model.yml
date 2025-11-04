@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5","messages":[{"role":"system","content":""},{"role":"user","content":"This
+        is a connection test. Return in unprettified JSON ''{ \"connected\": \"true\"
+        }'' if you got the message. Respond in plain JSON format only and do not wrap
+        it in code block markers."}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - api.mistral.ai
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Mon, 27 Oct 2025 10:03:31 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '101'
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - 99515d2f28ad0476-FRA
+      Mistral-Correlation-Id:
+      - '019a251f-7999-7d4a-97de-9a8e8c8fa90f'
+      X-Kong-Request-Id:
+      - '019a251f-7999-7d4a-97de-9a8e8c8fa90f'
+      X-Envoy-Upstream-Service-Time:
+      - '52'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '53'
+      X-Kong-Proxy-Latency:
+      - '8'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=VQjGSGGbI6mzACV37BnG77bx_ze_BStvbT0FD7rwAjI-1761559411-1.0.1.1-N9ZZIZU9_9O1Twdrkgm6zT0_z_.frSkSppkZBGsflMpl91ZFB96vxFe7U3LywtGh.FwxZ._GVETQlxV1B96VkYuEewzoMB8_MGCwVRvpccw;
+        path=/; expires=Mon, 27-Oct-25 10:33:31 GMT; domain=.mistral.ai; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=MEthePXp4jvBFP6BX_WYkanknsLNys9gsVh9._9xcgY-1761559411171-0.0.1.1-604800000;
+        path=/; domain=.mistral.ai; HttpOnly; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains
+      Server:
+      - cloudflare
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"object":"error","message":"Invalid model: gpt-5","type":"invalid_model","param":null,"code":"1500"}'
+  recorded_at: Mon, 27 Oct 2025 10:03:31 GMT
+recorded_with: VCR 6.3.1

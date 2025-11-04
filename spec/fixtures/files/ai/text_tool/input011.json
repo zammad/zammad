@@ -1,0 +1,6 @@
+{
+  "input": "Soy John Doe, del equipo de infraestructura. Si lo desea, puede obtener una exportación gratuita de su instancia de Zammad example-instance.zammad.com. Tiene derecho a ello dos veces al año sin coste alguno.",
+  "expected": {
+    "language": "es"
+  }
+}

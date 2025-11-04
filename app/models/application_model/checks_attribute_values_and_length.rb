@@ -32,7 +32,7 @@ module ApplicationModel::ChecksAttributeValuesAndLength
 
       # strip null byte chars (postgresql will complain about it)
       if column.type == :text
-        self[name].delete!("\u0000")
+        self[name] = self[name].delete("\u0000")
       end
 
       # for varchar check length and replace null bytes
@@ -46,7 +46,7 @@ module ApplicationModel::ChecksAttributeValuesAndLength
       end
 
       # strip null byte chars (postgresql will complain about it)
-      self[name].delete!("\u0000")
+      self[name] = self[name].delete("\u0000")
     end
     true
   end

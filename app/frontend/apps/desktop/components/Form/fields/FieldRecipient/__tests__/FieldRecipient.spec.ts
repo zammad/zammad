@@ -144,9 +144,7 @@ describe('Form - Field - Recipient - Query', () => {
       wrapper.queryByText('Start typing to search or enter an email address…'),
     ).not.toBeInTheDocument()
 
-    let selectOptions = wrapper.getAllByRole('option')
-
-    selectOptions = wrapper.getAllByRole('option')
+    let selectOptions = wrapper.getAllByTestId('select-item')
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
@@ -167,7 +165,7 @@ describe('Form - Field - Recipient - Query', () => {
 
     await waitForAutocompleteSearchRecipientQueryCalls()
 
-    selectOptions = wrapper.getAllByRole('option')
+    selectOptions = wrapper.getAllByTestId('select-item')
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent(testOptions[1].label)

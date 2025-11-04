@@ -2,9 +2,9 @@
 
 import { useScroll, useThrottleFn } from '@vueuse/core'
 import { whenever } from '@vueuse/shared'
-import { computed, type ComputedRef, isRef, ref, watch } from 'vue'
+import { computed, isRef, ref, watch } from 'vue'
 
-import type { MaybeRef } from '@vueuse/shared'
+import type { ComputedRef, MaybeRef } from 'vue'
 
 interface Options {
   scrollStartThreshold?: ComputedRef<number | undefined>

@@ -574,17 +574,16 @@ QUnit.test("searchable_select submenu and option list check", assert => {
   el.find("[name=\"tree_select\"].js-shadow + .js-input").trigger('click')
   el.find(".searchableSelect .js-optionsList [data-value=\"a\\\\a\"] .searchableSelect-option-arrow").mouseenter().trigger('click')
   el.find(".searchableSelect .js-optionsSubmenu [data-value=\"a\\\\a::aab\"] .searchableSelect-option-text").mouseenter().trigger('click')
-  el.find("[name=\"tree_select\"].js-shadow + .js-input").trigger('click')
 
   var params = App.ControllerForm.params(el)
   var test_params = {
     tree_select: 'a\\a::aab'
   }
 
-  var optionsSubmenu = el.find(".searchableSelect [data-parent-value=\"a\\\\a\"].js-optionsSubmenu")
-  var optionsList = el.find(".searchableSelect .js-optionsList")
-
   setTimeout( () => {
+    el.find("[name=\"tree_select\"].js-shadow + .js-input").trigger('click')
+    var optionsSubmenu = el.find(".searchableSelect [data-parent-value=\"a\\\\a\"].js-optionsSubmenu")
+    var optionsList = el.find(".searchableSelect .js-optionsList")
     assert.deepEqual(params, test_params, 'form param check')
     assert.equal(optionsSubmenu.is('[hidden]'), false, 'options submenu menu not hidden')
     assert.equal(optionsList.is('[hidden]'), true, 'options list is hidden')
@@ -671,22 +670,22 @@ QUnit.test("[Core Workflow] Remove option does not work with tree select node th
   element = App.UiElement.tree_select.render(attribute)
 
   // children are removed
-  assert.equal(false, element.find("[data-value='aa::aaa']").length > 0)
+  assert.equal(false, element.find(".js-optionsList [data-value='aa::aaa']").length > 0)
 
   // one child removed, one child allowed
-  assert.equal(true, element.find("[data-value='bb::aaa'] span.searchableSelect-option-text:not(.is-inactive)").length > 0)
-  assert.equal(false, element.find("[data-value='bb::aab']").length > 0)
-  assert.equal(true, element.find("[data-value='bb'] span.searchableSelect-option-text.is-inactive").length > 0)
+  assert.equal(true, element.find(".js-optionsList [data-value='bb::aaa'] span.searchableSelect-option-text").length == 1)
+  assert.equal(false, element.find(".js-optionsList [data-value='bb::aab']").length > 0)
+  assert.equal(true, element.find(".js-optionsList [data-value='bb'] span.searchableSelect-option-button").length > 0)
 
   // parent and childs removed
-  assert.equal(false, element.find("[data-value='cc']").length > 0)
-  assert.equal(false, element.find("[data-value='cc::aaa']").length > 0)
-  assert.equal(false, element.find("[data-value='cc::aab']").length > 0)
+  assert.equal(false, element.find(".js-optionsList [data-value='cc']").length > 0)
+  assert.equal(false, element.find(".js-optionsList [data-value='cc::aaa']").length > 0)
+  assert.equal(false, element.find(".js-optionsList [data-value='cc::aab']").length > 0)
 
   // level 3 child allowed
-  assert.equal(true, element.find("[data-value='dd'] span.searchableSelect-option-text.is-inactive").length > 0)
-  assert.equal(true, element.find("[data-value='dd::aaa'] span.searchableSelect-option-text.is-inactive").length > 0)
-  assert.equal(true, element.find("[data-value='dd::aaa::bbb'] span.searchableSelect-option-text:not(.is-inactive)").length > 0)
+  assert.equal(true, element.find(".js-optionsList [data-value='dd'] span.searchableSelect-option-button").length > 0)
+  assert.equal(true, element.find(".js-optionsList [data-value='dd::aaa'] span.searchableSelect-option-button").length > 0)
+  assert.equal(true, element.find(".js-optionsList [data-value='dd::aaa::bbb'] span.searchableSelect-option-text").length == 1)
 
   attribute.value = 'aa'
   element = App.UiElement.tree_select.render(attribute)
@@ -833,3 +832,83 @@ QUnit.test("Missing selected groups for multi tree select relation in ticket zoo
 
   el.append(element)
 });
+
+
+QUnit.test("General group search tests", assert => {
+  var done = assert.async()
+
+  App.Group.refresh([{ "name": "Users", "name_last": "Users", "assignment_timeout": null, "follow_up_possible": "yes", "follow_up_assignment": true, "email_address_id": 1, "signature_id": 1, "note": "Standard Group/Pool for Tickets.", "active": true, "shared_drafts": true, "updated_at": "2025-07-15T10:33:45.474Z", "parent_id": null, "reopen_time_in_days": null, "id": 1 }, { "name": "some group1", "name_last": "some group1", "assignment_timeout": null, "follow_up_possible": "yes", "follow_up_assignment": true, "email_address_id": null, "signature_id": null, "note": null, "active": true, "shared_drafts": true, "updated_at": "2025-07-15T10:33:45.453Z", "parent_id": null, "reopen_time_in_days": null, "id": 2 }, { "name": "TreeA", "name_last": "TreeA", "assignment_timeout": null, "follow_up_possible": "yes", "follow_up_assignment": true, "email_address_id": 2, "signature_id": null, "note": null, "active": true, "shared_drafts": true, "updated_at": "2025-07-15T10:33:45.488Z", "parent_id": null, "reopen_time_in_days": null, "id": 3 }, { "name": "TreeA::AA", "name_last": "AA", "assignment_timeout": null, "follow_up_possible": "yes", "follow_up_assignment": true, "email_address_id": 3, "signature_id": null, "note": null, "active": true, "shared_drafts": true, "updated_at": "2025-07-15T10:33:45.495Z", "parent_id": 3, "reopen_time_in_days": null, "id": 4 }, { "name": "TreeA::AA::BB", "name_last": "BB", "assignment_timeout": null, "follow_up_possible": "yes", "follow_up_assignment": true, "email_address_id": 4, "signature_id": null, "note": null, "active": true, "shared_drafts": true, "updated_at": "2025-07-15T10:33:45.504Z", "parent_id": 4, "reopen_time_in_days": null, "id": 5 }, { "name": "TreeA::AA::BB::CC", "name_last": "CC", "assignment_timeout": null, "follow_up_possible": "yes", "follow_up_assignment": true, "email_address_id": 5, "signature_id": null, "note": null, "active": true, "shared_drafts": true, "updated_at": "2025-07-15T10:33:45.516Z", "parent_id": 5, "reopen_time_in_days": null, "id": 6 }, { "name": "TreeB", "name_last": "TreeB", "assignment_timeout": null, "follow_up_possible": "yes", "follow_up_assignment": true, "email_address_id": 6, "signature_id": null, "note": null, "active": true, "shared_drafts": true, "updated_at": "2025-07-15T10:33:45.523Z", "parent_id": null, "reopen_time_in_days": null, "id": 7 }, { "name": "TreeB::AA", "name_last": "AA", "assignment_timeout": null, "follow_up_possible": "yes", "follow_up_assignment": true, "email_address_id": 7, "signature_id": null, "note": null, "active": true, "shared_drafts": true, "updated_at": "2025-07-15T10:33:45.534Z", "parent_id": 7, "reopen_time_in_days": null, "id": 8 }, { "name": "TreeB::AA::BB", "name_last": "BB", "assignment_timeout": null, "follow_up_possible": "yes", "follow_up_assignment": true, "email_address_id": 8, "signature_id": null, "note": null, "active": true, "shared_drafts": true, "updated_at": "2025-07-15T10:33:45.541Z", "parent_id": 8, "reopen_time_in_days": null, "id": 9 }, { "name": "TreeB::AA::BB::CC", "name_last": "CC", "assignment_timeout": null, "follow_up_possible": "yes", "follow_up_assignment": true, "email_address_id": 9, "signature_id": null, "note": null, "active": true, "shared_drafts": true, "updated_at": "2025-07-15T10:33:45.550Z", "parent_id": 9, "reopen_time_in_days": null, "id": 10 }])
+
+  $('#forms').append('<hr><h1>General group search tests form11</h1><form id="form11"></form>')
+  var el = $('#form11')
+
+  attribute = {
+    "name": "form11_group_id",
+    "display": "form11_group_id",
+    "tag": "tree_select",
+    "null": true,
+    "nulloption": true,
+    "translate": true,
+    "relation": "Group",
+    "value": App.Group.findByAttribute('name', 'TreeB::AA::BB').id,
+  }
+
+  element = App.UiElement.tree_select.render(attribute)
+  el.append(element)
+
+  // Test:
+  // Tree structure = TreeB -> AA -> BB -> CC
+  // - Open group field
+  // - Search for "CC"
+  // - Select "CC"
+  // - Open group field
+  // - Navigate up to "BB"
+  // - Navigate up to "AA"
+  // - Select "AA"
+
+  setTimeout(() => {
+    el.find(".js-shadow + .js-input").trigger('click')
+    el.find(".js-input").val('CC').trigger('input')
+
+    setTimeout(() => {
+      assert.equal(el.find("[data-display-name='TreeA › AA › BB › CC']:visible").length, 1)
+      assert.equal(el.find("[data-display-name='TreeB › AA › BB › CC']:visible").length, 1)
+
+      el.find("[data-display-name='TreeB › AA › BB › CC'] span:visible").trigger('click')
+
+      setTimeout(() => {
+        el.find(".js-shadow + .js-input").trigger('click')
+        setTimeout(() => {
+          assert.equal(el.find("[data-display-name='TreeA › AA › BB › CC']:visible").length, 0)
+          assert.equal(el.find("[data-display-name='TreeB › AA › BB › CC']:visible").length, 1)
+          assert.equal(el.find(".js-back .dropdown-title:visible:first").text().trim(), 'BB')
+
+          el.find(".js-back:visible").trigger('click')
+          setTimeout(() => {
+            assert.equal(el.find(".js-back .dropdown-title:visible:first").text().trim(), 'AA')
+
+            el.find(".js-back:visible").trigger('click')
+            setTimeout(() => {
+              assert.equal(el.find(".js-back .dropdown-title:visible:first").text().trim(), 'TreeB')
+              assert.equal(el.find("[data-display-name='TreeB › AA']:visible").length, 1)
+
+              el.find("[data-display-name='TreeB › AA'] span:visible").trigger('click')
+              setTimeout(() => {
+                assert.equal(el.find(".js-input").attr('title'), 'TreeB › AA')
+
+                el.find(".js-shadow + .js-input").trigger('click')
+                setTimeout(() => {
+                  assert.equal(el.find(".js-back .dropdown-title:visible:first").text().trim(), 'TreeB')
+                  assert.equal(el.find("[data-display-name='TreeB › AA › BB › CC']:visible").length, 0)
+                  assert.equal(el.find("[data-display-name='TreeB › AA']:visible").length, 1)
+
+                  done()
+                }, 300)
+              }, 300)
+            }, 300)
+          }, 300)
+        }, 300)
+      }, 300)
+    }, 300)
+  }, 300)
+})

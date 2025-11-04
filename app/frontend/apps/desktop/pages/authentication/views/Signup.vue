@@ -152,16 +152,16 @@ const goToLogin = () => {
 
     <template #bottomContent>
       <div class="inline-flex flex-wrap items-center justify-center p-2 text-sm">
-        <CommonLabel class="text-center text-stone-200 dark:text-neutral-500">
+        <CommonLabel class="text-center text-stone-200 dark:text-neutral-500 max-w-90">
           {{
             $t(
               "You're already registered with your email address if you've been in touch with our Support team.",
             )
           }}
         </CommonLabel>
-        <CommonLink v-if="$c.user_lost_password" link="/reset-password">{{
-          $t('You can request your password here.')
-        }}</CommonLink>
+        <CommonLink v-if="$c.user_lost_password" link="/reset-password" size="medium">
+          {{ $t('You can request your password here.') }}
+        </CommonLink>
       </div>
       <CommonPublicLinks :screen="EnumPublicLinksScreen.Signup" />
     </template>

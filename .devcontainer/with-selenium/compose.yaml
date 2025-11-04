@@ -1,0 +1,27 @@
+name: "zammad-devcontainer"
+
+include: [../default/compose.yaml]
+
+services:
+  selenium-chrome:
+    image: selenium/standalone-chromium
+    shm_size: 2g
+    environment:
+      SE_NODE_MAX_SESSIONS: '5'
+      SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
+      SE_VNC_NO_PASSWORD: 'true'
+    ports:
+      - 4444:4444
+    restart: unless-stopped
+
+  selenium-firefox:
+    image: selenium/standalone-firefox
+    shm_size: 2g
+    environment:
+      SE_NODE_MAX_SESSIONS: '5'
+      SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
+      SE_OPTS: '--port 4445'
+      SE_VNC_NO_PASSWORD: 'true'
+    ports:
+      - 4445:4445
+    restart: unless-stopped

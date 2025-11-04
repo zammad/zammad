@@ -23,10 +23,6 @@ class FirstStepsController < ApplicationController
     if Setting.get('form_ticket_create')
       form_active = true
     end
-    twitter_active = false
-    if Channel.where(area: 'Twitter::Account').any?
-      twitter_active = true
-    end
     facebook_active = false
     if Channel.where(area: 'Facebook::Account').any?
       facebook_active = true
@@ -108,11 +104,6 @@ class FirstStepsController < ApplicationController
         {
           name:  __('Additional Channels'),
           items: [
-            {
-              name:     __('Twitter'),
-              checked:  twitter_active,
-              location: '#channels/twitter',
-            },
             {
               name:     __('Facebook'),
               checked:  facebook_active,

@@ -61,7 +61,7 @@ RSpec.describe Validations::ChannelEmailAccountUniquenessValidator do
       let(:duplicate_channel) { create(:google_channel, gmail_user: 'email@example.com') }
       let(:editable_channel) do
         build(:google_channel, gmail_user: 'email@example.com')
-          .tap { _1.save!(validate: false) }
+          .tap { it.save!(validate: false) }
       end
 
       let(:new_token) { 'new_xoauth2_token' }

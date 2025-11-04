@@ -681,4 +681,82 @@ RSpec.describe 'CoreWorkflow > Action', type: :model do
       end
     end
   end
+
+  describe '.perform - Tree select add_option re-adds disabled defaults' do
+    context 'with a tree_select attribute and add_option workflow', db_strategy: :reset do
+      let(:field1_name) { SecureRandom.uuid }
+      let(:field2_name) { SecureRandom.uuid }
+      let(:options) do
+        [
+          {
+            'name'     => 'Incident',
+            'value'    => 'Incident',
+            'children' => [
+              {
+                'disabled' => true,
+                'value'    => 'Incident::Hardware',
+                'children' => [
+                  {
+                    'name'  => 'Monitor',
+                    'value' => 'Incident::Hardware::Monitor'
+                  },
+                  {
+                    'name'     => 'Mouse',
+                    'value'    => 'Incident::Hardware::Mouse',
+                    'disabled' => true,
+                  },
+                  {
+                    'name'  => 'Keyboard',
+                    'value' => 'Incident::Hardware::Keyboard'
+                  }
+                ]
+              },
+            ]
+          },
+          {
+            'name'  => 'Change request',
+            'value' => 'Change request'
+          }
+        ]
+      end
+      let(:attribute_tree_select) do
+        create(:object_manager_attribute_tree_select, data_option: {
+                 'options' => options,
+                 default: '',
+               }, name: field1_name)
+      end
+      let(:attribute_multi_tree_select) do
+        create(:object_manager_attribute_multi_tree_select, data_option: {
+                 'options' => options,
+                 default: '',
+               }, name: field2_name)
+      end
+
+      before do
+        attribute_tree_select
+        attribute_multi_tree_select
+
+        ObjectManager::Attribute.migration_execute
+
+        create(:core_workflow,
+               object:  'Ticket',
+               perform: {
+                 "ticket.#{field2_name}": {
+                   operator:   'add_option',
+                   add_option: ['Incident::Hardware::Mouse']
+                 },
+               })
+      end
+
+      it 'keeps one disabled and re-adds the other', aggregate_failures: true do
+        field1_values = result[:restrict_values][field1_name]
+        field2_values = result[:restrict_values][field2_name]
+
+        expect(field1_values).not_to include('Incident::Hardware::Mouse', 'Incident::Hardware')
+        expect(field2_values)
+          .to include('Incident::Hardware::Mouse')
+          .and not_include('Incident::Hardware')
+      end
+    end
+  end
 end

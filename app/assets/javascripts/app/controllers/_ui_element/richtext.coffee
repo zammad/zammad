@@ -1,6 +1,6 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.richtext extends Spine.Module
-  @extend App.TextTools
+  @extend App.RichtextBubbleMenu
 
   @render: (attributeConfig, params, form) ->
     attribute = $.extend(true, {}, attributeConfig)
@@ -114,7 +114,7 @@ class App.UiElement.richtext extends Spine.Module
         uploader.render()
       , 100, undefined, 'form_upload')
 
-    @textToolsInit(item, false) if attribute.text_tools
+    @richtextBubbleMenuInit(item, false) if attribute.bubble_menu
 
     item
 

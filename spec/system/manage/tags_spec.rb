@@ -26,4 +26,16 @@ RSpec.describe 'Manage > Tags', type: :system do
 
     expect(page).to have_no_css('.modal')
   end
+
+  it 'adds multiple tags at once (#5795)' do
+    within :active_content do
+      find('input[name="name"]').fill_in with: 'tag1, tag2, tag3'
+      click '.js-submit'
+    end
+
+    expect(page).to have_css('.js-Table tr', text: 'tag1')
+    expect(page).to have_css('.js-Table tr', text: 'tag2')
+    expect(page).to have_css('.js-Table tr', text: 'tag3')
+    expect(Tag::Item.pluck(:name)).to include('tag1', 'tag2', 'tag3')
+  end
 end

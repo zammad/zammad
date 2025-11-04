@@ -1,0 +1,70 @@
+name: "zammad-devcontainer"
+
+services:
+  devcontainer:
+    "image": "ghcr.io/rails/devcontainer/images/ruby:3.4.7"
+
+    environment:
+      MEMCACHE_SERVERS: memcached:11211
+      # Don't specify the postgresql database here. This will get merged with an existing database.yml.
+      DATABASE_URL: postgres://zammad:zammad@postgresql:5432
+      REDIS_URL: redis://redis:6379
+      # Performance / DX / tests tuning
+      CI_SKIP_ASSETS_PRECOMPILE: 'true'
+      CI_SKIP_DB_RESET: 'true'
+      RAILS_SERVE_STATIC_FILES: 'true'
+      TZ: 'Europe/London'
+      Z_LOCALES: en-us:en-gb:de-de
+      ES_URL: http://elasticsearch:9200
+      ES_INDEX: estest.local_zammad
+
+    depends_on:
+      - memcached
+      - postgresql
+      - redis
+
+    volumes:
+    - ../../..:/workspaces:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+  elasticsearch:
+    image: elasticsearch:9.0.4
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - http.cors.enabled=true
+      - http.cors.allow-origin=/https:\/\/app.elasticvue.com/
+    restart: unless-stopped
+    ports:
+      # Expose the ES service for direct access if needed, but avoid conflicts with host services.
+      - 19200:9200
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+  memcached:
+    command: memcached -m 256M
+    image: memcached:1.6.38-alpine
+    restart: unless-stopped
+
+  postgresql:
+    environment:
+      POSTGRES_DB: zammad_development
+      POSTGRES_USER: zammad
+      POSTGRES_PASSWORD: zammad
+    image: postgres:17.5-alpine
+    restart: unless-stopped
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.0
+    restart: unless-stopped
+
+volumes:
+  elasticsearch-data:
+    driver: local
+  postgresql-data:
+    driver: local

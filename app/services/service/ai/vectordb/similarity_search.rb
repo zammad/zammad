@@ -14,7 +14,7 @@ module Service::AI::VectorDB
       ai_vector_db.ping!
 
       # First we need to embed the text.
-      embedding = AI::Provider.by_name(Setting.get('ai_provider')).new.embed(input: text)
+      embedding = AI::Provider.current.new.embed(input: text)
 
       # Then we need to search the vector database for the most similar items.
       ai_vector_db.knn(embedding:, k: 2)

@@ -1,0 +1,11 @@
+Önnur beiðni var sameinuð beiðni (#{ticket.title})
+
+<div>Hi #{recipient.firstname},</div>
+<br>
+<div>
+Önnur beiðni var sameinuð beiðni (#{ticket.title}) af "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Skoðaðu í #{config.product_name}</a>
+</div>

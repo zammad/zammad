@@ -86,6 +86,10 @@ export interface BaseHandlerOptions {
   errorCallback?: (error: GraphQLHandlerError) => void | boolean
 }
 
+export interface QueryHandlerOptions {
+  triggerRefetchOnConnectionReconnect: boolean | (() => boolean)
+}
+
 export type CommonHandlerOptions<TOptions> = BaseHandlerOptions & TOptions
 
 export type CommonHandlerOptionsParameter<TOptions> = Partial<BaseHandlerOptions> &

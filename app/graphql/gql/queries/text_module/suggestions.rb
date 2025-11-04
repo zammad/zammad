@@ -8,7 +8,7 @@ module Gql::Queries
     argument :query,    String, description: 'Query from the autocomplete field'
     argument :limit,    Integer, required: false, description: 'Limit for the amount of entries'
     argument :group_id, GraphQL::Types::ID, loads: Gql::Types::GroupType, required: false, description: 'Group to filter by'
-    argument :ticket_id, GraphQL::Types::ID, loads: Gql::Types::TicketType, required: false, description: 'Optional ticket this is going to be inserted into'
+    argument :ticket_id, GraphQL::Types::ID, required: false, description: 'Optional ticket this is going to be inserted into'
 
     type [Gql::Types::TextModuleType], null: false
 
@@ -16,8 +16,8 @@ module Gql::Queries
       ctx.current_user.permissions?('ticket.agent')
     end
 
-    def resolve(query:, group: nil, ticket: nil, template_render_context: nil, limit: 10)
-      permission = ticket.present? ? :read : :create
+    def resolve(query:, group: nil, ticket_id: nil, template_render_context: nil, limit: 10)
+      permission = ticket_id.present? ? :read : :create
 
       scope = TextModulePolicy::Scope
         .new(context.current_user, ::TextModule)

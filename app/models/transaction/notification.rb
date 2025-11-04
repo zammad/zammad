@@ -3,15 +3,6 @@
 class Transaction::Notification
   include ChecksHumanChanges
 
-  # Following SMTP error codes will be handled gracefully.
-  # They will be logged at info level only and the code will not propagate up the error.
-  # Other SMTP error codes will stop processing and exit with logging it at error level.
-  #
-  # 4xx - temporary issues.
-  # 52x - permanent receiving server errors.
-  # 55x - permanent receiving mailbox errors.
-  SILENCABLE_SMTP_ERROR_CODES = [400..499, 520..529, 550..559].freeze
-
 =begin
   {
     object: 'Ticket',
@@ -276,22 +267,6 @@ class Transaction::Notification
       attachments: attachments,
     )
     Rails.logger.debug { "sent ticket email notification to agent (#{@item[:type]}/#{ticket.id}/#{user.email})" }
-  rescue Channel::DeliveryError => e
-    status_code = begin
-      e.original_error.response.status.to_i
-    rescue
-      raise e
-    end
-
-    if SILENCABLE_SMTP_ERROR_CODES.any? { |elem| elem.include? status_code }
-      Rails.logger.info do
-        "could not send ticket email notification to agent (#{@item[:type]}/#{ticket.id}/#{user.email}) #{e.original_error}"
-      end
-
-      return
-    end
-
-    raise e
   end
 
   def add_recipient_list_to_history(ticket, user, channels, type)

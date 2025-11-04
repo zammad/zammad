@@ -18,7 +18,7 @@ class Validations::DataPrivacyTaskValidator < ActiveModel::Validator
 
   def check_for_deletable_type
     return if !record.deletable_type_changed?
-    return if [User, Ticket].any? { deletable.is_a?(_1) }
+    return if [User, Ticket].any? { deletable.is_a?(it) }
 
     record.errors.add(:base, __('Data privacy task allows to delete a user or a ticket only.'))
   end

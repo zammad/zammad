@@ -515,8 +515,17 @@ App.Config.set(
               callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 return if !$('.active.content .edit').get(0)
-                $('.active.content .edit [name="state_id"]').val(4)
-                $('.active.content .js-attributeBar .js-submit').first().trigger('click')
+
+                $('.active.content .edit [name="state_id"]').val(4).trigger('change')
+
+                # Waiting for the core workflow to be executed (for example, the pending time field is no longer visible).
+                interval = setInterval ->
+                  if Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length == 0
+                    clearInterval(interval)
+                    setTimeout ->
+                      $('.active.content .js-attributeBar .js-submit').first().trigger('click')
+                    , 100
+                , 30
             }
             {
               key: [['◀', '▶']]

@@ -201,9 +201,9 @@ class LayoutRefCommunicationReply extends App.ControllerAppContent
     )
 
     @$('[contenteditable]').ce({
-      mode:      'textonly'
-      multiline: true
-      maxlength: 2500
+      mode:      'richtext'
+      noImages:  true
+      maxlength: 5000
     })
 
     @$('[contenteditable]').textmodule()
@@ -2151,94 +2151,6 @@ class AdminLoadRef extends App.ControllerAppContent
 
 App.Config.set( 'layout_ref/admin_loading', AdminLoadRef, 'Routes' )
 
-
-class TwitterConversationRef extends App.ControllerAppContent
-  elements:
-    '.js-textarea':                       'textarea'
-    '.article-add':                       'articleNewEdit'
-    '.article-add .textBubble':           'textBubble'
-    '.editControls-item':                 'editControlItem'
-    '.js-letterCount':                    'letterCount'
-    '.js-signature':                      'signature'
-
-  events:
-    'input .js-textarea': 'updateLetterCount'
-
-  textareaHeight:
-    open:   88
-    closed: 20
-
-  maxTextLength: 280
-  warningTextLength: 10
-
-  constructor: ->
-    super
-    @render()
-
-  render: ->
-    @html App.view('layout_ref/twitter_conversation')()
-
-    @openTextarea null, true
-    @updateLetterCount()
-
-  updateLetterCount: (event) =>
-    textLength = @maxTextLength - @textarea.text().length - @signature.text().length - 2
-    className = switch
-      when textLength < 0 then 'label-danger'
-      when textLength < @warningTextLength then 'label-warning'
-      else ''
-
-    @letterCount
-      .text textLength
-      .removeClass 'label-danger label-warning'
-      .addClass className
-
-  openTextarea: (event, withoutAnimation) =>
-    if @articleNewEdit.hasClass('is-open')
-      return
-
-    duration = 300
-
-    if withoutAnimation
-      duration = 0
-
-    @articleNewEdit.addClass('is-open')
-
-    @textarea.velocity
-      properties:
-        minHeight: "#{ @textareaHeight.open - 38 }px"
-      options:
-        duration: duration
-        easing: 'easeOutQuad'
-
-    @textBubble.velocity
-      properties:
-        paddingBottom: 28
-      options:
-        duration: duration
-        easing: 'easeOutQuad'
-
-    # scroll to bottom
-    @textarea.velocity 'scroll',
-      container: @textarea.scrollParent()
-      offset: 99999
-      duration: 300
-      easing: 'easeOutQuad'
-      queue: false
-
-    @editControlItem
-      .removeClass('is-hidden')
-      .velocity
-        properties:
-          opacity: [ 1, 0 ]
-          translateX: [ 0, 20 ]
-          translateZ: 0
-        options:
-          duration: 300
-          stagger: 50
-          drag: true
-
-App.Config.set( 'layout_ref/twitter_conversation', TwitterConversationRef, 'Routes' )
 
 class UI extends App.ControllerAppContent
   constructor: ->

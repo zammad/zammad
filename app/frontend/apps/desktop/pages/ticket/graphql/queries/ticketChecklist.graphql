@@ -1,15 +1,5 @@
-query ticketChecklist(
-  $ticketId: ID
-  $ticketInternalId: Int
-  $ticketNumber: String
-) {
-  ticketChecklist(
-    ticket: {
-      ticketId: $ticketId
-      ticketInternalId: $ticketInternalId
-      ticketNumber: $ticketNumber
-    }
-  ) {
+query ticketChecklist($ticketId: ID!) {
+  ticketChecklist(ticketId: $ticketId) {
     id
     name
     completed

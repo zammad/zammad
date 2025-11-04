@@ -27,7 +27,7 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
     ActiveRecord::Base.transaction do
       Channel
         .where(area: 'Email::Notification')
-        .each { update_single_channel(_1) }
+        .each { update_single_channel(it) }
     end
 
     true

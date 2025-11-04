@@ -1,12 +1,13 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { toRef } from 'vue'
+import { computed, toRef } from 'vue'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import type { TicketById, TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import AiAgentAvatar from '#mobile/components/AiAgent/AiAgentAvatar.vue'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
 import { useDialog } from '#mobile/composables/useDialog.ts'
@@ -31,10 +32,13 @@ const actionsDialog = useDialog({
   component: () => import('./TicketActionsDialog.vue'),
 })
 
+const isAiAgentRunning = computed(() => props?.ticket?.aiAgentRunning)
+
 const showViewers = () => {
   return viewersDialog.open({
     name: viewersDialog.name,
     liveUsers: toRef(props, 'liveUserList'),
+    isAiAgentRunning,
   })
 }
 
@@ -70,16 +74,23 @@ const showActions = () => {
     <template #after>
       <CommonLoader data-test-id="loader-header" :loading="loadingTicket">
         <button
-          v-if="liveUserList?.length"
-          class="flex ltr:mr-0.5 rtl:ml-0.5"
+          v-if="liveUserList?.length || isAiAgentRunning"
+          class="flex gap-1 ltr:mr-0.5 rtl:ml-0.5"
           data-test-id="viewers-counter"
           type="button"
           :aria-label="$t('Show ticket viewers')"
           @click="showViewers()"
         >
-          <CommonUserAvatar class="z-10" :entity="liveUserList[0].user" personal size="xs" />
+          <AiAgentAvatar v-if="isAiAgentRunning" />
+          <CommonUserAvatar
+            v-if="liveUserList?.length"
+            class="z-10"
+            :entity="liveUserList[0].user"
+            personal
+            size="xs"
+          />
           <div
-            v-if="liveUserList.length - 1"
+            v-if="liveUserList?.length && liveUserList.length - 1"
             class="z-0 flex h-6 w-6 items-center justify-center rounded-full bg-white/80 text-xs text-black select-none ltr:-translate-x-2 rtl:translate-x-2"
             role="img"
             :aria-label="$t('Ticket has %s viewers', liveUserList.length)"

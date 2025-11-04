@@ -9,7 +9,7 @@ describe Controllers::TicketSharedDraftZoomControllerPolicy do
   let(:ticket)       { create(:ticket) }
   let(:user)         { create(:agent) }
   let(:params)       { { ticket_id: ticket.id } }
-  let(:record)       { record_class.new.tap { _1.params = params } }
+  let(:record)       { record_class.new.tap { it.params = params } }
 
   context 'when has access to ticket' do
     before do

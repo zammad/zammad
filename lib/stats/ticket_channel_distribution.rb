@@ -49,15 +49,6 @@ class Stats::TicketChannelDistribution
       )
     end
 
-    if Channel.exists?(area: 'Twitter::Account')
-      channels.push(
-        {
-          sender: 'twitter',
-          icon:   'twitter',
-        }
-      )
-    end
-
     if Channel.exists?(area: 'Facebook::Account')
       channels.push(
         {

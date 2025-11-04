@@ -41,7 +41,7 @@ class Cti::Driver::SipgateIo < Cti::Driver::Base
         user:          @config[:api_user],
         password:      @config[:api_password],
         log:           {
-          facility: 'sipagte.io',
+          facility: 'sipgate.io',
         },
         json:          true,
         open_timeout:  4,

@@ -31,15 +31,6 @@ Scheduler.create_if_not_exists(
   created_by_id: 1,
 )
 Scheduler.create_if_not_exists(
-  name:          __("Check 'Channel' streams."),
-  method:        'Channel.stream',
-  period:        60.seconds,
-  prio:          1,
-  active:        true,
-  updated_by_id: 1,
-  created_by_id: 1,
-)
-Scheduler.create_if_not_exists(
   name:          __('Execute planned jobs.'),
   method:        'Job.run',
   period:        5.minutes,

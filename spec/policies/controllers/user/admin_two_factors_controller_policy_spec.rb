@@ -6,7 +6,7 @@ describe Controllers::User::AdminTwoFactorsControllerPolicy do
   subject { described_class.new(user, record) }
 
   let(:record_class) { User::AdminTwoFactorsController }
-  let(:record)       { record_class.new.tap { _1.params = { id: 123 } } }
+  let(:record)       { record_class.new.tap { it.params = { id: 123 } } }
 
   let(:agent) { create(:agent) }
 

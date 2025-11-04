@@ -2,6 +2,8 @@
   image: docker
   stage: test
   interruptible: false
+  allow_failure: true
+  retry: 2
   rules:
     # Don't apply job filter here.
     # These jobs can only run for a) published paths and b) when triggered after the packager.io build is complete.

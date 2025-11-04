@@ -17,8 +17,6 @@ describe.each([
   ['telegram personal-message', { sender: ['Agent'] }],
   ['sms', { sender: ['Agent'] }],
   // these can be replied when sender is agent
-  ['twitter status', { sender: ['Agent', 'Customer'] }],
-  ['twitter direct-message', { sender: ['Agent', 'Customer'] }],
   [
     'facebook feed comment',
     { sender: ['Agent', 'Customer'], createArticleType: 'facebook feed post' },

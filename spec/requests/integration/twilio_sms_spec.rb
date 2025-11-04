@@ -166,7 +166,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
 
         post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['error']).to eq('Can\'t use Channel::Driver::Sms::Twilio: #<Exceptions::UnprocessableEntity: Group needed in channel definition!>')
+        expect(json_response['error']).to eq('Sms::Twilio: Group needed in channel definition! (Exceptions::UnprocessableEntity)')
       end
     end
 

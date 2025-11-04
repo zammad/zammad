@@ -6,6 +6,8 @@ RSpec.describe Tag::Item do
   subject(:item) { create(:'tag/item') }
 
   describe '.rename' do
+    let!(:ticket) { create(:ticket) }
+
     before do
       Overview.destroy_all
       Trigger.destroy_all
@@ -29,37 +31,37 @@ RSpec.describe Tag::Item do
       let!(:item_2) { create(:'tag/item', name: 'foo') }
 
       context 'with no redundant tags' do
-        let!(:tag) { create(:tag, o: Ticket.first, tag_item: item) }
+        let!(:tag) { create(:tag, o: ticket, tag_item: item) }
 
         it 'reassigns all tags from old-name item to new-name item' do
           expect { described_class.rename(id: item.id, name: item_2.name) }
             .to change { tag.reload.tag_item }.to(item_2)
-            .and change { Ticket.first.tag_list }.to([item_2.name])
+            .and change { ticket.reload.tag_list }.to([item_2.name])
         end
 
         it 'strips trailing/leading whitespace' do
           expect { described_class.rename(id: item.id, name: "  #{item_2.name} ") }
             .to change { tag.reload.tag_item }.to(item_2)
-            .and change { Ticket.first.tag_list }.to([item_2.name])
+            .and change { ticket.reload.tag_list }.to([item_2.name])
         end
       end
 
       context 'with redundant tags' do
         let!(:tags) do
-          [create(:tag, o: Ticket.first, tag_item: item),
-           create(:tag, o: Ticket.first, tag_item: item_2)]
+          [create(:tag, o: ticket, tag_item: item),
+           create(:tag, o: ticket, tag_item: item_2)]
         end
 
         it 'removes the tag assigned to old-name item' do
           expect { described_class.rename(id: item.id, name: item_2.name) }
             .to change { Tag.exists?(id: tags.first.id) }.to(false)
-            .and change { Ticket.first.tag_list }.to([item_2.name])
+            .and change { ticket.reload.tag_list }.to([item_2.name])
         end
 
         it 'strips trailing/leading whitespace' do
           expect { described_class.rename(id: item.id, name: "  #{item_2.name} ") }
             .to change { Tag.exists?(id: tags.first.id) }.to(false)
-            .and change { Ticket.first.tag_list }.to([item_2.name])
+            .and change { ticket.reload.tag_list }.to([item_2.name])
         end
       end
 
@@ -227,9 +229,12 @@ RSpec.describe Tag::Item do
   end
 
   describe '.remove' do
+    let!(:user)   { create(:user) }
+    let!(:ticket) { create(:ticket) }
+
     let!(:tags) do
-      [create(:tag, tag_item: item, o: User.first),
-       create(:tag, tag_item: item, o: Ticket.first)]
+      [create(:tag, tag_item: item, o: user),
+       create(:tag, tag_item: item, o: ticket)]
     end
 
     it 'removes the specified Tag::Item' do
@@ -269,7 +274,7 @@ RSpec.describe Tag::Item do
     end
 
     it 'returns items descending by occurrence count' do
-      expect(described_class.recommended.pluck(:name))
+      expect(described_class.recommended.pluck(:name).select { |name| name.in?(%w[once twice thrice]) })
         .to eq(%w[thrice twice once])
     end
   end
@@ -282,7 +287,7 @@ RSpec.describe Tag::Item do
     end
 
     it 'returns items descending by occurrence count' do
-      expect(described_class.filter_by_name('e').pluck(:name))
+      expect(described_class.filter_by_name('e').pluck(:name).select { |name| name.in?(%w[tag test qwerty]) })
         .to eq(%w[qwerty test])
     end
   end

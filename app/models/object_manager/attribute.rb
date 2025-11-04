@@ -360,7 +360,7 @@ possible types
     end
     data.delete(:object)
 
-    data[:name].downcase!
+    data[:name] = data[:name].downcase
 
     # check new entry - is needed
     record = ObjectManager::Attribute.find_by(
@@ -464,7 +464,7 @@ use "force: true" to delete also not editable fields
       raise 'need object or object_lookup_id param!'
     end
 
-    data[:name].downcase!
+    data[:name] = data[:name].downcase
 
     # check newest entry - is needed
     record = ObjectManager::Attribute.find_by(
@@ -820,14 +820,16 @@ where attributes are used in conditions
 
           attribute_list[condition_name][item.class.name] << item.name
         end
-      end.deep_merge(attribute_to_references_hash_model)
+      end
+        .deep_merge(attribute_to_references_hash_model)
+        .deep_merge(AI::Agent.object_attribute_dependencies)
   end
 
-  private_class_method def self.walk_conditions(condition, &block)
+  private_class_method def self.walk_conditions(condition, &)
     case condition
     when Hash
       if condition.key?('conditions') && condition['conditions'].is_a?(Array)
-        condition['conditions'].each { |sub| walk_conditions(sub, &block) }
+        condition['conditions'].each { |sub| walk_conditions(sub, &) }
       elsif condition.key?('name')
         yield condition['name']
       else
@@ -838,7 +840,7 @@ where attributes are used in conditions
         end
       end
     when Array
-      condition.each { |sub| walk_conditions(sub, &block) }
+      condition.each { |sub| walk_conditions(sub, &) }
     end
   end
 

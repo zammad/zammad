@@ -58,9 +58,9 @@ class App.UserProfileObject extends App.ControllerObserver
     @renderOrganizations()
 
     @$('[contenteditable]').ce({
-      mode:      'textonly'
-      multiline: true
-      maxlength: 250
+      mode:      'richtext'
+      maxlength: 5000
+      noImages:  true
     })
 
   showMoreOrganizations: (e) ->

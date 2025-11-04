@@ -20,6 +20,6 @@ class Validations::LinkUniquenessValidator < ActiveModel::Validator
     record
       .class
       .where(record.slice(ATTRIBUTES))
-      .then { record.persisted? ? _1.where.not(id: record.id) : _1 }
+      .then { record.persisted? ? it.where.not(id: record.id) : it }
   end
 end

@@ -15,7 +15,6 @@ module Gql::Types::Enum
       'Sms::Account',
       'Sms::Notification',
       'Telegram::Bot',
-      'Twitter::Account',
       'WhatsApp::Business',
     ].freeze
 

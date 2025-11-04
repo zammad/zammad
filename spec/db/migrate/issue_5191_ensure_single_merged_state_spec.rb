@@ -7,12 +7,12 @@ RSpec.describe Issue5191EnsureSingleMergedState, type: :db_migration do
   let(:merged_states_by_name) { Ticket::State.where(name: 'merged') }
   let(:merged_states_by_type) { merged_type.states }
 
-  def force_merged_state(&block)
-    Ticket::State.without_callback(:update, :before, :prevent_merged_state_editing, &block)
+  def force_merged_state(&)
+    Ticket::State.without_callback(:update, :before, :prevent_merged_state_editing, &)
   end
 
-  def force_destroying_state(&block)
-    Ticket::State.without_callback(:destroy, :before, :prevent_merged_state_destruction, &block)
+  def force_destroying_state(&)
+    Ticket::State.without_callback(:destroy, :before, :prevent_merged_state_destruction, &)
   end
 
   context 'when single merged name state exists' do
@@ -40,7 +40,7 @@ RSpec.describe Issue5191EnsureSingleMergedState, type: :db_migration do
   end
 
   context 'when additional merged type states exist' do
-    let(:additional_state) { build(:ticket_state, state_type: merged_type).tap { _1.save! validate: false } }
+    let(:additional_state) { build(:ticket_state, state_type: merged_type).tap { it.save! validate: false } }
 
     before do
       force_merged_state do
@@ -62,7 +62,7 @@ RSpec.describe Issue5191EnsureSingleMergedState, type: :db_migration do
   end
 
   context 'when initial merged state was renamed and additional merged type states exist' do
-    let(:additional_state) { build(:ticket_state, state_type: merged_type).tap { _1.save! validate: false } }
+    let(:additional_state) { build(:ticket_state, state_type: merged_type).tap { it.save! validate: false } }
 
     before do
       force_merged_state do
@@ -94,7 +94,7 @@ RSpec.describe Issue5191EnsureSingleMergedState, type: :db_migration do
   end
 
   context 'when multiple merged states exist and later state is named merged' do
-    let(:additional_state) { build(:ticket_state, name: 'merged', state_type: merged_type).tap { _1.save! validate: false } }
+    let(:additional_state) { build(:ticket_state, name: 'merged', state_type: merged_type).tap { it.save! validate: false } }
     let(:original_state) { Ticket::State.find_by(name: 'merged') }
 
     before do

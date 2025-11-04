@@ -1,0 +1,16 @@
+<div class="bubble-wrapper js-bubbleMenu">
+  <div class="bubble-menu" role="menu">
+    <% for item in @items: %>
+      <div class="bubble-menu-item js-action" aria-label="<%- @Ti(item.label) %>" role="menuitem" data-key="<%- item.key %>">
+        <%- @Icon(item.icon, if item.type is 'dropup' then 'icon-highlight' else null) %>
+        <% if item.type == 'dropup': %>
+          <%- @Icon('arrow-up', 'icon-chevron') %>
+        <% end %>
+      </div>
+      <% if item.divider: %>
+        <hr class="divider <% if item.dividerClass: %><%= item.dividerClass %><% end %>">
+      <% end %>
+     <% end %>
+     <div class="dropup-container"></div>
+  </ul>
+</div>

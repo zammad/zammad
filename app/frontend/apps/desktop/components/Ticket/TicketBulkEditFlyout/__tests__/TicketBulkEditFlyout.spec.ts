@@ -4,7 +4,10 @@ import { within } from '@testing-library/vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
-import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
+import {
+  mockFormUpdaterQuery,
+  waitForFormUpdaterQueryCalls,
+} from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import { mockMacrosQuery } from '#shared/graphql/queries/macros.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
@@ -76,6 +79,22 @@ describe('TicketBulkEditFlyout', () => {
     expect(await wrapper.findByText('2 tickets selected')).toBeInTheDocument()
   })
 
+  it('includes ticket IDs in form updater request', async () => {
+    const wrapper = renderBulkEditFlyout()
+
+    await wrapper.findByText('2 tickets selected')
+
+    const calls = await waitForFormUpdaterQueryCalls()
+
+    expect(calls.at(-1)?.variables).toMatchObject({
+      meta: {
+        additionalData: {
+          ticketIds: '1,2',
+        },
+      },
+    })
+  })
+
   it('allows editing ticket attributes', async () => {
     const wrapper = renderBulkEditFlyout()
     const ticketState = await wrapper.findByLabelText('State')
@@ -94,9 +113,8 @@ describe('TicketBulkEditFlyout', () => {
 
     const calls = await waitForTicketUpdateBulkMutationCalls()
 
-    expect(calls.at(-1)?.variables).toEqual({
+    expect(calls.at(-1)?.variables).toMatchObject({
       input: {
-        article: null,
         groupId: convertToGraphQLId('Group', 2),
         stateId: convertToGraphQLId('Ticket::State', 4),
       },

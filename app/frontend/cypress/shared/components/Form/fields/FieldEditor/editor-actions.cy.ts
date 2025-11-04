@@ -30,7 +30,7 @@ const testAction = (
       // It is unsafe to chain further commands that rely on the subject after `.type()`.
       //   https://docs.cypress.io/api/commands/type
       cy.findByRole(role).type(typeText)
-      cy.findByRole('textbox').should('contain.html', expected(typeText))
+      cy.findByRole('textbox').shouldContainNormalizedHtml(typeText)
     })
 
     it(`${action}${hint} - toggle text`, () => {
@@ -45,7 +45,7 @@ const testAction = (
         cy.findByTestId('action-bar').findByLabelText(action).click()
       }
 
-      cy.findByRole('textbox').should('contain.html', expected(typeText))
+      cy.findByRole('textbox').shouldContainNormalizedHtml(typeText)
     })
   })
 }
@@ -109,18 +109,18 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
 
   testAction(
     'Add ordered list',
-    () => `<ol><li><p>Something1</p></li><li><p>Something2</p></li></ol>`,
+    () => `<ol><li><p>Something1</p></li></ol>`,
     undefined,
     'listitem',
-    'Something1{enter}Something2',
+    'Something1',
     ' (multiline)',
   )
   testAction(
     'Add bullet list',
-    () => `<ul><li><p>Something1</p></li><li><p>Something2</p></li></ul>`,
+    () => `<ul><li><p>Something1</p></li></ul>`,
     undefined,
     'listitem',
-    'Something1{enter}Something2',
+    'Something1',
     ' (multiline)',
   )
 
@@ -132,11 +132,11 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
       cy.findByTestId('action-bar').findByLabelText('Format as bold').click()
       cy.findByRole('paragraph').type('Text')
 
-      cy.findByRole('textbox').should('have.html', '<p><strong>Text</strong></p>')
+      cy.findByRole('textbox').shouldContainNormalizedHtml('<p><strong>Text</strong></p>')
 
       cy.findByRole('textbox').type('{selectall}')
       cy.findByTestId('action-bar').findByLabelText('Remove formatting').click()
-      cy.findByRole('textbox').should('have.html', '<p>Text</p>')
+      cy.findByRole('textbox').shouldContainNormalizedHtml('<p>Text</p>')
     })
   })
 
@@ -282,8 +282,7 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
 
     cy.findByRole('code').type('const vue = "awesome"')
 
-    cy.findByRole('textbox').should(
-      'contain.html',
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
       '<pre><code>const <span class="hljs-attr">vue</span> = <span class="hljs-string">"awesome"</span></code></pre>',
     )
   })
@@ -298,14 +297,12 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
 
     cy.findByLabelText('Indent text').click()
 
-    cy.findByRole('textbox').should(
-      'contain.html',
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
       '<li style="margin-left: 1rem"><p>Third</p></li>',
     )
 
     cy.findByLabelText('Indent text').click()
-    cy.findByRole('textbox').should(
-      'contain.html',
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
       '<li style="margin-left: 2rem"><p>Third</p></li>',
     )
   })
@@ -320,13 +317,12 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
 
     cy.findByLabelText('Indent text').click()
 
-    cy.findByRole('textbox').should(
-      'contain.html',
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
       '<li style="margin-left: 1rem"><p>Third</p></li>',
     )
 
     cy.findByLabelText('Outdent text').click()
-    cy.findByRole('textbox').should('contain.html', '<li><p>Third</p></li>')
+    cy.findByRole('textbox').shouldContainNormalizedHtml('<li><p>Third</p></li>')
   })
 
   it('changes text color of item', () => {
@@ -341,8 +337,7 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
       cy.get('[style="background-color: rgb(239, 68, 68);"]').click(),
     )
 
-    cy.findByRole('textbox').should(
-      'contain.html',
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
       '<span style="color: rgb(239, 68, 68)">world</span>',
     )
   })

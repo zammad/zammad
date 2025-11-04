@@ -6,17 +6,23 @@ class AI::Provider::ZammadAI < AI::Provider
   def chat(prompt_system:, prompt_user:)
     service_name = options[:service_name] || 'generic'
 
+    request_body = {
+      system_prompt: prompt_system,
+      prompt:        prompt_user,
+    }
+
+    if options[:model]
+      request_body[:llm] = options[:model]
+    end
+
     response = UserAgent.post(
       "#{self.class.base_url(config)}/api/v1/features/#{service_name.underscore}",
-      {
-        system_prompt: prompt_system,
-        prompt:        prompt_user,
-      },
+      request_body,
       {
         open_timeout:  4,
         read_timeout:  60,
         verify_ssl:    true,
-        bearer_token:  config[:token],
+        bearer_token:  self.class.token(config),
         total_timeout: 60,
         json:          true,
         log:           {
@@ -26,6 +32,8 @@ class AI::Provider::ZammadAI < AI::Provider
     )
 
     data = validate_response!(response)
+    extract_response_metadata(data)
+
     data.first['response']
   end
 
@@ -41,11 +49,12 @@ class AI::Provider::ZammadAI < AI::Provider
         open_timeout:  4,
         read_timeout:  60,
         verify_ssl:    true,
-        bearer_token:  config[:token],
+        bearer_token:  token(config),
         total_timeout: 60,
         json:          true,
         log:           {
-          facility: 'AI::Provider',
+          facility:          'AI::Provider',
+          log_only_on_error: true,
         },
       },
     )
@@ -57,5 +66,18 @@ class AI::Provider::ZammadAI < AI::Provider
 
   def self.base_url(config)
     ENV['ZAMMAD_AI_API_URL'] || config[:url] || ZAMMAD_AI_API_BASE_URL
+  end
+
+  def self.token(config)
+    config[:token].presence || ENV['ZAMMAD_AI_TOKEN']
+  end
+
+  private
+
+  def extract_response_metadata(data)
+    @response_metadata = {
+      model:          data.first['model'],
+      total_duration: data.first['total_duration'],
+    }
   end
 end

@@ -174,4 +174,16 @@ RSpec.describe KnowledgeBase::Category, current_user_id: 1, type: :model do
       end
     end
   end
+
+  describe '#attributes_with_association_ids' do
+    context 'when category has children' do
+      subject(:kb_category_with_tree) { create(:kb_category_with_tree) }
+
+      it 'returns attributes with association ids' do
+        expect(kb_category_with_tree.attributes_with_association_ids).to include(
+          'child_ids' => kb_category_with_tree.child_ids,
+        )
+      end
+    end
+  end
 end

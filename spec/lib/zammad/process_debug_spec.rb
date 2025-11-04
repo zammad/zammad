@@ -11,7 +11,7 @@ RSpec.describe Zammad::ProcessDebug, :aggregate_failures do
       end
       described_class.dump_thread_status
       expect(output).to include("PID: #{Process.pid} Thread:")
-      expect(output).to include('block in dump_thread_status')
+      expect(output).to include('block in Zammad::ProcessDebug.dump_thread_status')
     end
   end
 end

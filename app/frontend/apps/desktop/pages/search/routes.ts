@@ -7,7 +7,7 @@ import type { RouteRecordRaw } from 'vue-router'
 const route: RouteRecordRaw[] = [
   {
     path: '/search/:searchTerm?',
-    name: 'search',
+    name: 'Search',
     props: true,
     component: () => import('./views/Search.vue'),
     meta: {

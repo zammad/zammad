@@ -1,0 +1,3 @@
+<div class="js-missingProviderAlert alert alert--warning <% if !@visible: %>hide<% end %>">
+  <%- @T('The provider configuration is missing. Please set up the provider before proceeding in |AI > Providers|.') %>
+</div>

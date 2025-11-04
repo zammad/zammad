@@ -12,6 +12,7 @@ import FieldOrganizationOptionIcon from './FieldOrganizationOptionIcon.vue'
 
 const props = defineProps<AutocompleteOrganizationProps>()
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   optionIconComponent: markRaw(FieldOrganizationOptionIcon),
   initialOptionBuilder: useFormFieldOrganizationInitialOptionBuilder(),

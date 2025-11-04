@@ -206,12 +206,17 @@ RSpec.describe TriggerWebhookJob, type: :job do
           webhook: webhook
         }
 
-        TriggerWebhookJob::CustomPayload.tracks.select { |t| t.respond_to?(:generate) }.each do |klass|
-          klass.generate(tracks, data)
-        end
+        # Get predefined payload from the new track system
+        predefined_payload = Service::Template::Interpolation::Interpolator::Webhook::Track::PreDefinedWebhook.payload('Mattermost')
 
-        predefined_payload = TriggerWebhookJob::CustomPayload::Track::PreDefinedWebhook.payload('Mattermost')
-        TriggerWebhookJob::CustomPayload.generate(predefined_payload, tracks)
+        # Use the new interpolation service
+        interpolator = Service::Template::Interpolation::Interpolator::Webhook.new(
+          template:                       predefined_payload,
+          tracks:                         tracks,
+          additional_track_generate_data: data,
+        )
+
+        interpolator.execute
       end
 
       shared_examples 'including correct payload' do

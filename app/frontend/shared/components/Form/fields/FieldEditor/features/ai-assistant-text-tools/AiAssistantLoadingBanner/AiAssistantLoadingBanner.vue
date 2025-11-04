@@ -18,21 +18,21 @@ const appName = useAppName()
 
 <template>
   <div
-    class="ai-stripe relative flex items-center gap-1 px-4 py-3 before:absolute before:top-0 before:left-0"
+    class="ai-stripe animate-ai-stripe relative flex items-center gap-1 px-4 py-3 before:absolute before:top-0 before:left-0"
   >
     <CommonIcon class="shrink-0" :class="icon" size="tiny" name="smart-assist" />
 
     <CommonTranslateRenderer
       v-if="appName === 'desktop'"
       class="truncate text-sm"
-      :source="__('%s is generating text')"
+      :source="__('%s is generating text…')"
       :placeholders="[
         {
           type: 'label',
           props: {
             class: label,
           },
-          content: $t('Zammad Smart Assist'),
+          content: $t('Writing Assistant'),
         },
       ]"
     />

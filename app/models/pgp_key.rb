@@ -64,19 +64,6 @@ class PGPKey < ApplicationModel
     raise e
   end
 
-  def self.params_cleanup!(params)
-    if params[:key].present?
-      params[:key].strip!
-      return params
-    end
-
-    return params if !params[:file].is_a? ActionDispatch::Http::UploadedFile
-
-    params[:key] = params[:file].tempfile
-
-    params
-  end
-
   def self.convert_binary_key_to_ascii(binary, passphrase)
     SecureMailing::PGP::Tool.new.with_private_keyring do |pgp_tool|
       pgp_tool.import(binary)

@@ -340,4 +340,20 @@ RSpec.describe 'Manage > Trigger', type: :system do
       end
     end
   end
+
+  context 'Trigger placeholder missing when language is set to german #5782', authenticated_as: :admin do
+    let(:admin) { create(:admin, preferences: { locale: 'de-de' }) }
+
+    before do
+      visit '/#manage/trigger'
+    end
+
+    it 'shows trigger placeholder in german' do
+      click ".js-tableBody tr.item[data-id='#{Trigger.find_by(name: 'auto reply (on new tickets)').id}']"
+      wait.until do
+        collection = page.execute_script("return $('div[contenteditable]').data().plugin_textmodule.collection")
+        collection.present? && collection.any? { |row| row['name'].include?('Letzter Artikel') }
+      end
+    end
+  end
 end

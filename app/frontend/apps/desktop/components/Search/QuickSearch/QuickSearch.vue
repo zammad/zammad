@@ -160,7 +160,7 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
               >
                 <CommonLink
                   v-tooltip="searchQuery"
-                  class="relative flex grow items-center gap-2 rounded-md px-2 py-3 text-neutral-400 hover:bg-blue-900 hover:no-underline!"
+                  class="relative flex grow items-center gap-2 rounded-md px-2 py-3 text-neutral-400 hover:bg-blue-900 hover:no-underline! hover:text-white!"
                   :link="`/search/${searchQuery}`"
                   internal
                   @click="resetQuickSearchInputField"

@@ -150,7 +150,7 @@ describe('QuickSearch', () => {
         wrapper.getByRole('heading', { level: 3, name: 'Recently viewed' }),
       ).toBeInTheDocument()
 
-      expect(wrapper.getByRole('link', { name: 'Ticket 1' })).toBeInTheDocument()
+      expect(wrapper.getByRole('link', { name: 'check-circle-noTicket 1' })).toBeInTheDocument()
 
       expect(wrapper.getByRole('link', { name: 'User 1' })).toBeInTheDocument()
 

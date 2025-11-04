@@ -3,6 +3,7 @@
 import { within } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { nullableMock } from '#tests/support/utils.ts'
 
 import { waitForOnlineNotificationSeenMutationCalls } from '#shared/entities/online-notification/graphql/mutations/seen.mocks.ts'
@@ -14,6 +15,8 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 describe('Ticket detail: sidebar - online notifications', () => {
   beforeEach(() => {
+    mockPermissions(['ticket.agent'])
+
     mockTicketQuery({
       ticket: createDummyTicket(),
     })

@@ -1,20 +1,20 @@
 <title><%= @context_data[:ticket].title %></title>
-<% @context_data[:ticket].articles.summarizable.each do |article| %>
-  <% next if article.body.blank? %>
-  <% next if article.body_as_text.blank? %>
-  <% if article.type.name == 'email' %>
+<% @context_data[:ticket].articles.without_system_notifications.each do |article| -%>
+  <% next if article.body.blank? -%>
+  <% next if article.body_as_text.blank? -%>
+  <% if article.type.name == 'email' -%>
     <% result = AI::Service::EmailRemoveQuote
-      .new(current_user: @current_user, context_data: { article: article })
+      .new(context_data: { article: article })
       .execute
       .content %>
     <% next if result.blank? %>
-  <% else %>
+  <% else -%>
     <% result = article.body_as_text %>
-  <% end %>
+  <% end -%>
 <article>
-  <sender><%= article.sender.name %></sender>
-  <sender_name><%= User.find(article.origin_by_id || article.created_by_id).fullname %></sender_name>
+  <sender_type><%= article.sender.name %></sender_type>
+  <sender_name><%= article.author.fullname %></sender_name>
   <visibility><%= article.internal ? 'internal' : 'public' %></visibility>
   <text><%= result %></text>
 </article>
-<% end %>
+<% end -%>

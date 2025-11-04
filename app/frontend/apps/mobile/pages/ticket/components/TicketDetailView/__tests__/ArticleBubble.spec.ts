@@ -152,7 +152,7 @@ describe('component for displaying text article', () => {
 
     expect(seeMoreButton).toHaveTextContent('See less')
 
-    await waitFor(() => expect(content, 'has actual height').toHaveStyle({ height: '910px' }))
+    await waitFor(() => expect(content, 'has actual height').toHaveStyle({ height: 'auto' }))
   })
 
   it('has "see more" for small article with signature', async () => {
@@ -190,7 +190,7 @@ describe('component for displaying text article', () => {
 
     expect(seeMoreButton).toHaveTextContent('See less')
 
-    await waitFor(() => expect(content, 'has actual height').toHaveStyle({ height: '210px' }))
+    await waitFor(() => expect(content, 'has actual height').toHaveStyle({ height: 'auto' }))
   })
 
   it('processes plain text into html', () => {

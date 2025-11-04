@@ -25,11 +25,11 @@ Note that it's also possible to run a specific test case by including the line n
 bundle exec rspec spec/system/ticket/zoom_spec.rb:1072
 ```
 
-If you would like to specify the used browser for Capybara end-to-end tests, simply set the `BROWSER` environment
+If you would like to specify the used browser for Capybara end-to-end tests, simply set the `SELENIUM_BROWSER` environment
 variable:
 
 ```sh
-BROWSER=firefox bundle exec rspec spec/system/ticket/zoom_spec.rb
+SELENIUM_BROWSER=firefox bundle exec rspec spec/system/ticket/zoom_spec.rb
 ```
 
 Also running failed tests only is possible with the option `--only-failures`.

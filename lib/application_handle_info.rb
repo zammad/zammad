@@ -36,7 +36,12 @@ module ApplicationHandleInfo
     self.context = orig
   end
 
+  CONTEXTS_WITHOUT_CUSTOM_ATTRIBUTES = %w[
+    forced_update merge
+    twitter telegram facebook form mail sms
+  ].freeze
+
   def self.context_without_custom_attributes?
-    %w[merge twitter telegram facebook form mail sms].include? context.to_s
+    CONTEXTS_WITHOUT_CUSTOM_ATTRIBUTES.include? context.to_s
   end
 end

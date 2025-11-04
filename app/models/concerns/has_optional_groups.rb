@@ -9,16 +9,10 @@ module HasOptionalGroups
     # Finds objects available in given groups
     # Objects with no selected groups as well as having one of the given groups are returned
     scope :available_in_groups, lambda { |groups|
-      left_outer_joins(optional_groups_join_table_name)
-        .where(optional_groups_join_table_name => { group_id: [nil] + Array(groups) })
+      left_outer_joins(:groups)
+        .where(groups: { id: [nil] + Array(groups) })
         .where(active: true)
         .distinct
     }
-  end
-
-  class_methods do
-    def optional_groups_join_table_name
-      :"groups_#{name.pluralize.downcase}"
-    end
   end
 end

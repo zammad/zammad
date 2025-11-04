@@ -6,7 +6,6 @@ import { toRef } from 'vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { useActivityMessage } from '#shared/composables/activity-message/useActivityMessage.ts'
 import type { OnlineNotification } from '#shared/graphql/types.ts'
-import { markup } from '#shared/utils/markup.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
@@ -21,7 +20,7 @@ const emit = defineEmits<{
   remove: [OnlineNotification]
 }>()
 
-const { link, builder, message } = useActivityMessage(toRef(props, 'notification'))
+const { link, builder, highlightedMessage } = useActivityMessage(toRef(props, 'notification'))
 
 const handleLinkClick = (notification: OnlineNotification) => {
   if (link) emit('seen', notification)
@@ -62,7 +61,7 @@ const handleLinkClick = (notification: OnlineNotification) => {
           tag="p"
           class="inline! text-lg leading-5 text-black dark:text-white"
           :class="{ 'group-hover/link:underline': notification.createdBy }"
-          v-html="markup(message)"
+          v-html="highlightedMessage"
         />
 
         <CommonDateTime

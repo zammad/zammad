@@ -7,8 +7,6 @@ module Ticket::Article::AddsMetadataGeneral
 
   TYPE_NO_METADATA = [
     'email',
-    'twitter status',
-    'twitter direct-message',
     'facebook feed post',
     'facebook feed comment',
     'sms',

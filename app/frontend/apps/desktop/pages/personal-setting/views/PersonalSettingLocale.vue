@@ -29,7 +29,7 @@ const { breadcrumbItems } = useBreadcrumb(__('Language'))
 
       <p class="mt-4 text-sm">
         {{ $t('Did you know?') }}
-        <CommonLink size="medium" target="_blank" :link="translation.link">
+        <CommonLink :link="translation.link" size="medium" open-in-new-tab>
           {{ $t('You can help translating Zammad.') }}
         </CommonLink>
       </p>

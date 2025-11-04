@@ -208,6 +208,17 @@ Building dependency tree...</code></pre>'
       end
     end
 
+    context 'with strings that have very deep nested HTML content' do
+      before do
+        stub_const('Nokogiri::Gumbo::DEFAULT_MAX_TREE_DEPTH', 3)
+      end
+
+      it 'returns an error message' do
+        expect(described_class.strict('<div><div><div><div></div></div></div></div>'))
+          .to match(HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
+      end
+    end
+
     context 'with href links that contain square brackets' do
       it 'correctly URL encodes them' do
         expect(described_class.strict(+'<a href="https://example.com/?foo=bar&baz[x]=y">example</a>', true))

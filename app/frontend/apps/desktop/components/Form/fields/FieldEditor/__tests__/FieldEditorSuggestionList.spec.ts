@@ -79,14 +79,14 @@ describe('component for rendering suggestions', () => {
       },
     })
 
-    expect(view.getByRole('option', { name: 'Category 1.1 Test 1' })).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'Category 1.1Test 1' })).toBeInTheDocument()
 
     expect(
-      view.getByRole('option', { name: 'Category 2.1 › Category 2.2 Test 2' }),
+      view.getByRole('option', { name: 'Category 2.1 › Category 2.2Test 2' }),
     ).toBeInTheDocument()
 
     expect(
-      view.getByRole('option', { name: 'Category 3.1 › … › Category 3.3 Test 3' }),
+      view.getByRole('option', { name: 'Category 3.1 › … › Category 3.3Test 3' }),
     ).toBeInTheDocument()
   })
 
@@ -109,7 +109,7 @@ describe('component for rendering suggestions', () => {
       },
     })
 
-    expect(view.getByRole('option', { name: 'Text Item key' })).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'Text Itemkey' })).toBeInTheDocument()
   })
 
   it('renders user mention', () => {
@@ -137,7 +137,7 @@ describe('component for rendering suggestions', () => {
     })
 
     expect(
-      view.getByRole('option', { name: 'Avatar (John Doe) John Doe – john@mail.com' }),
+      view.getByRole('option', { name: 'Avatar (John Doe) John Doe– john@mail.com' }),
     ).toBeInTheDocument()
 
     expect(

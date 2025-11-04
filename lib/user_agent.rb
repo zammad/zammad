@@ -152,6 +152,7 @@ class UserAgent
 
   def self.log(url, request, response, options)
     return if !options[:log]
+    return if options[:log][:log_only_on_error] && response.is_a?(Net::HTTPSuccess)
 
     # request
     request_data = {
@@ -231,7 +232,7 @@ class UserAgent
         body:    response.body,
         header:  response.each_header.to_h,
       )
-    when Net::HTTPInternalServerError
+    when Net::HTTPServerError # Covers Net::HTTPInternalServerError, Net::HTTPServiceUnavailable etc
       return Result.new(
         error:   "Server Error: #{response.inspect}!",
         success: false,
@@ -295,7 +296,7 @@ class UserAgent
   # @option options [String] :user for basic authentication
   # @option options [String] :password for basic authentication
   # @option options [String] :bearer_token for token authentication
-  # @option options [Hash] :log enable logging
+  # @option options [Hash] :log enable logging, use facility: to set logging facility and log_only_on_error: to only log failed requests
   # @option options [String] :proxy address
   # @option options [String] :proxy_no list of address to skip proxy for
   # @option options [String] :proxy_username

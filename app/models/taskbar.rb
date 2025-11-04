@@ -137,6 +137,10 @@ class Taskbar < ApplicationModel
     self.skip_live_user_trigger = true
     self.skip_item_trigger      = true
     self.last_contact           = Time.zone.now
+
+    # When we touch the taskbar for the last contact, we should also reset the notify flag.
+    self.notify = false
+
     save!
   end
 

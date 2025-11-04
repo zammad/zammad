@@ -289,7 +289,7 @@ RSpec.describe AutoWizard do
         }
       end
 
-      let(:channel) { create(:twitter_channel) }
+      let(:channel) { create(:telegram_channel) }
       let(:new_group) { create(:group) }
 
       it 'updates the specified channel with the given attributes' do

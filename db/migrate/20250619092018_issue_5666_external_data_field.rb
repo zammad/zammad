@@ -9,7 +9,7 @@ class Issue5666ExternalDataField < ActiveRecord::Migration[7.2]
 
     return if attributes.blank?
 
-    attributes.each { update_single_attribute(_1) }
+    attributes.each { update_single_attribute(it) }
 
     ApplicationModel.reset_column_information
   end

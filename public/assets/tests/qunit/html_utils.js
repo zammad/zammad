@@ -873,6 +873,21 @@ QUnit.test('remove signature', assert => {
   var should  = 'test 123'
   var result  = App.Utils.signatureRemoveByHtml(message)
   assert.equal(result, should)
+
+  var message = 'test 123<br><div data-signature="true" data-signature-id="1">Test Admin Agent<br>-----</div>'
+  var should  = 'test 123<br><div data-signature-placeholder=\"true\"></div>'
+  var result  = App.Utils.signatureRemoveByHtml(message, true)
+  assert.equal(result, should)
+
+  var message = '<div data-signature-placeholder=\"true\"></div>test 123<div data-signature="true" data-signature-id="1">Test Admin Agent<br>-----</div>'
+  var should  = 'test 123<div data-signature-placeholder=\"true\"></div>'
+  var result  = App.Utils.signatureRemoveByHtml(message, true)
+  assert.equal(result, should)
+
+  var message = 'test 123<br><div data-signature="true" data-signature-id="1">Test Admin Agent<br>-----</div>test 256'
+  var should  = 'test 123<br><div data-signature-placeholder=\"true\"></div>test 256'
+  var result  = App.Utils.signatureRemoveByHtml(message, true)
+  assert.equal(result, should)
 })
 
 // identify signature
@@ -1089,7 +1104,6 @@ QUnit.test("identify signature by plaintext", assert => {
   assert.equal(result, should)
 
 });
-
 
 QUnit.test("identify signature by HTML", assert => {
 
@@ -1578,6 +1592,18 @@ QUnit.test("check replace tags", assert => {
   verify = App.Utils.replaceTags(message, data, true)
   assert.equal(verify, result)
 
+  user = new App.User({
+    firstname: '<b>Bob</b>',
+    lastname: '<i>Smith</i>',
+  })
+  message = "<div>#{user.firstname} #{user.lastname.value}</div>"
+  result  = '<div>&lt;b&gt;Bob&lt;/b&gt; &lt;i&gt;Smith&lt;/i&gt;</div>'
+  data    = {
+    user: user
+  }
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
   var attribute_external_source = {
     name: 'external_data_source', display: 'external_data_source',  tag: 'autocompletion_ajax_external_data_source', null: true
   };
@@ -1728,8 +1754,8 @@ QUnit.test("check replace tags", assert => {
   assert.equal(verify, result)
 });
 
-// check attibute validation
-QUnit.test("check attibute validation", assert => {
+// check attribute validation
+QUnit.test("check attribute validation", assert => {
 
   var string = '123'
   var result = '123'

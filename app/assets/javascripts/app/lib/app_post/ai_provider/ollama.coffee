@@ -4,6 +4,5 @@ App.Config.set('ollama', {
   label:  __('Ollama')
   prio:   3000
   fields: ['url', 'model']
-  active: true
   default_model: 'llama3.2'
 }, 'AIProviders')

@@ -15,7 +15,7 @@ RSpec.describe Channel::Driver::MicrosoftGraphOutbound, :aggregate_failures, int
   let(:client_access_token) { channel.options['outbound']['options']['password'] }
   let(:client)              { MicrosoftGraph.new(access_token: client_access_token, mailbox: ENV['MICROSOFT365_USER']) }
 
-  describe '.deliver' do
+  describe '#deliver' do
     let(:mail_subject) { "CI test for #{described_class}" }
     let(:mail) do
       {
@@ -41,6 +41,36 @@ RSpec.describe Channel::Driver::MicrosoftGraphOutbound, :aggregate_failures, int
 
       it 'raises an error' do
         expect { channel.deliver(mail) }.to raise_error(Channel::DeliveryError)
+      end
+    end
+
+    context 'when an error is raised', aggregate_failures: true do
+      before do
+        allow_any_instance_of(described_class::MicrosoftGraphOutboundClient)
+          .to receive(:deliver!)
+          .and_raise(error)
+      end
+
+      context 'when the error is one of the predefined errors' do
+        let(:error) { Net::OpenTimeout.new('Could not reach server') }
+
+        it 'raises an error with a humanized message' do
+          expect { channel.deliver(mail) }
+            .to raise_error(Channel::DeliveryError) { |error|
+              expect(error.original_error.message).to eq('Network connection to Microsoft Graph API timed out: Could not reach server')
+            }
+        end
+      end
+
+      context 'when the error is unknown' do
+        let(:error) { StandardError.new('custom error message') }
+
+        it 'forwards the error' do
+          expect { channel.deliver(mail) }
+            .to raise_error(Channel::DeliveryError) { |error|
+              expect(error.original_error.message).to eq('Microsoft Graph API: custom error message')
+            }
+        end
       end
     end
   end

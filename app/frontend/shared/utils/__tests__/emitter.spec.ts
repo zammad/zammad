@@ -6,9 +6,9 @@ describe('emitter', () => {
   it('check working emitter object', () => {
     const emitCallbackSpy = vi.fn()
 
-    emitter.on('sessionInvalid', emitCallbackSpy)
+    emitter.on('session-invalid', emitCallbackSpy)
 
-    emitter.emit('sessionInvalid')
+    emitter.emit('session-invalid')
 
     expect(emitCallbackSpy).toHaveBeenCalled()
   })

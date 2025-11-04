@@ -39,7 +39,7 @@ class Integration::SMIMEController < ApplicationController
   end
 
   def certificate_add
-    string = params[:data]
+    string = params[:certificate]
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
@@ -69,12 +69,12 @@ class Integration::SMIMEController < ApplicationController
   end
 
   def private_key_add
-    string = params[:data]
+    string = params[:private_key]
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
 
-    raise __("Parameter 'data' or 'file' required.") if string.blank?
+    raise __("Parameter 'private_key' or 'file' required.") if string.blank?
 
     private_key = SecureMailing::SMIME::PrivateKey.read(string, params[:secret])
     private_key.valid_smime_private_key!

@@ -65,9 +65,10 @@ module Zammad
     end
 
     # define websocket session store
-    # The web socket session store will fall back to localhost Redis usage if REDIS_URL is not set.
-    # In this case, or if forced via ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND, the FS back end will be used.
-    legacy_ws_use_redis = ENV['REDIS_URL'].present? && ENV['ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND'].blank? && !Zammad::SafeMode.enabled?
+    # The web socket session store will only use redis if it is explicitly configured.
+    redis_configured = ENV['REDIS_URL'].present? || ENV['REDIS_SENTINELS'].present?
+    # Otherwise, or if forced via ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND, the FS back end will be used.
+    legacy_ws_use_redis = redis_configured && ENV['ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND'].blank? && !Zammad::SafeMode.enabled?
     config.websocket_session_store = legacy_ws_use_redis ? :redis : :file
   end
 end

@@ -13,10 +13,6 @@ export const OrganizationAttributesFragmentDoc = gql`
   active
   note
   vip
-  ticketsCount {
-    open
-    closed
-  }
   objectAttributeValues {
     ...objectAttributeValues
   }

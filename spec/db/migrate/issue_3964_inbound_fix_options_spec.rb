@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Issue3964InboundFixOptions, type: :db_migration do
   let(:channel) do
     build(:google_channel)
-      .tap { _1.options[:inbound][:options][:ssl] = old_value }
+      .tap { it.options[:inbound][:options][:ssl] = old_value }
       .tap(&:save!)
   end
 

@@ -103,14 +103,14 @@ module Tasks
             'inflection',
             'multi_xml',
             'promise.rb',
-            'thread_safe',
           ].freeze
 
           def self.find_orphaned_gems(age)
             obsolete_allowlist_entries = ALLOWLIST - Bundler.definition.specs.map(&:name)
             raise "#{obsolete_allowlist_entries} were allowlisted but not used in the Gemfile." if obsolete_allowlist_entries.any?
 
-            Bundler.definition.specs.select { |s| (s.date < age.years.ago) && ALLOWLIST.exclude?(s.name) }
+            # Gems with missing date info have 1980-01-02 as date.
+            Bundler.definition.specs.select { |s| s.date.year > 1980 && s.date < age.years.ago && ALLOWLIST.exclude?(s.name) }
           end
 
           def self.find_unreleased_gems

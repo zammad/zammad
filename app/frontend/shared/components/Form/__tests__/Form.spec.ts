@@ -1180,7 +1180,7 @@ describe('Form.vue - Autosave notification', () => {
 
     mockGraphQLApi(FormUpdaterDocument).willBehave(async (variables) => {
       if (!variables.meta.initial && !variables.meta.additionalData.skipSleep) {
-        await new Promise((r) => setTimeout(r, 6000))
+        await new Promise((r) => setTimeout(r, 9000))
       }
 
       return {
@@ -1211,7 +1211,7 @@ describe('Form.vue - Autosave notification', () => {
     const input = view.getByLabelText('Title')
     await view.events.type(input, 'New title')
 
-    await vi.advanceTimersByTimeAsync(1500)
+    await vi.advanceTimersByTimeAsync(2500)
 
     expect(notifications.notify).toHaveBeenCalledWith({
       id: 'form-updater-autosave',
@@ -1220,7 +1220,7 @@ describe('Form.vue - Autosave notification', () => {
       type: 'info',
     })
 
-    await vi.advanceTimersByTimeAsync(4000)
+    await vi.advanceTimersByTimeAsync(6000)
 
     expect(notifications.notify).toHaveBeenCalledWith({
       id: 'form-updater-autosave',
@@ -1244,11 +1244,11 @@ describe('Form.vue - Autosave notification', () => {
     const input = view.getByLabelText('Title')
     await view.events.type(input, 'New title')
 
-    await vi.advanceTimersByTimeAsync(1500)
+    await vi.advanceTimersByTimeAsync(2500)
 
     expect(notifications.notify).not.toHaveBeenCalled()
 
-    await vi.advanceTimersByTimeAsync(4000)
+    await vi.advanceTimersByTimeAsync(6000)
 
     expect(notifications.notify).not.toHaveBeenCalled()
   })
@@ -1263,11 +1263,11 @@ describe('Form.vue - Autosave notification', () => {
     const input = view.getByLabelText('Title')
     await view.events.type(input, 'New title')
 
-    await vi.advanceTimersByTimeAsync(1500)
+    await vi.advanceTimersByTimeAsync(2500)
 
     expect(notifications.notify).not.toHaveBeenCalled()
 
-    await vi.advanceTimersByTimeAsync(4000)
+    await vi.advanceTimersByTimeAsync(6000)
 
     expect(notifications.notify).not.toHaveBeenCalled()
   })

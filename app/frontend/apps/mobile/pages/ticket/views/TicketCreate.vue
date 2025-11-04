@@ -5,6 +5,7 @@ import { useEventListener } from '@vueuse/core'
 import { computed, nextTick, reactive, ref, watch } from 'vue'
 import { onBeforeRouteLeave, useRouter } from 'vue-router'
 
+import { PLUGIN_NAME as TEXT_TOOL_PLUGIN_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData, FormSchemaNode } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
@@ -20,6 +21,7 @@ import type { TicketFormData } from '#shared/entities/ticket/types.ts'
 import { useUserQuery } from '#shared/entities/user/graphql/queries/user.api.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import { EnumFormUpdaterId, EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
 import { errorOptions } from '#shared/router/error.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -168,7 +170,7 @@ const userOptions = ref<unknown[]>([])
 
 const userQuery = useUserQuery(
   () => ({
-    userInternalId: Number(customUserId),
+    userId: convertToGraphQLId('User', Number(customUserId)),
     secondaryOrganizationsCount: 3,
   }),
   {
@@ -290,6 +292,12 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
               },
               mentionKnowledgeBase: {
                 attachmentsNodeName: 'attachments',
+              },
+              [TEXT_TOOL_PLUGIN_NAME]: {
+                groupNodeName: 'group_id',
+                ticketNodeName: 'ticket_id',
+                customerNodeName: 'customer_id',
+                organizationNodeName: 'organization_id',
               },
             },
           },

@@ -9,7 +9,7 @@ export const TicketSignatureDocument = gql`
     query ticketSignature($groupId: ID!, $ticketId: ID) {
   ticketSignature(groupId: $groupId) {
     id
-    renderedBody(ticketId: $ticketId)
+    renderedBody(ticketId: $ticketId, groupId: $groupId)
   }
 }
     `;

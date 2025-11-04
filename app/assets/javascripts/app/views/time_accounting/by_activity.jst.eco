@@ -27,7 +27,7 @@
     <td><%= row.agent %>
     <td><%= @timeUnit(row.time_unit) %>
     <% if @C('time_accounting_types'): %>
-      <td><%= row.type %>
+      <td><%- @T(row.type) %>
     <% end %>
     <td><%- @humanTime(row.ticket.created_at) %>
   <% end %>

@@ -27,7 +27,7 @@ class User < ApplicationModel
   include User::OutOfOffice
   include User::Permissions
 
-  has_and_belongs_to_many :organizations,          after_add: %i[cache_update create_organization_add_history], after_remove: %i[cache_update create_organization_remove_history], class_name: 'Organization'
+  has_and_belongs_to_many :organizations,          after_add: %i[cache_update create_organization_add_history], after_remove: %i[cache_update create_organization_remove_history], before_add: %i[check_organization_uniqueness], class_name: 'Organization'
   has_and_belongs_to_many :overviews,              dependent: :nullify
   has_many                :tokens,                 after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
   has_many                :authorizations,         after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
@@ -46,7 +46,7 @@ class User < ApplicationModel
   has_many                :data_privacy_tasks,     as: :deletable
   belongs_to              :organization,           inverse_of: :members, optional: true
 
-  before_validation :check_name, :check_email, :check_login, :ensure_password, :ensure_roles, :ensure_organizations, :ensure_organizations_limit
+  before_validation :check_name, :check_email, :check_login, :ensure_password, :ensure_roles, :ensure_organizations, :ensure_different_organizations, :ensure_organizations_limit
   before_validation :check_mail_delivery_failed, on: :update
   before_save       :ensure_notification_preferences, if: :reset_notification_config_before_save
   before_create     :validate_preferences, :domain_based_assignment, :set_locale
@@ -56,6 +56,8 @@ class User < ApplicationModel
 
   validate :ensure_identifier, :ensure_email
   validate :ensure_uniq_email, unless: :skip_ensure_uniq_email
+
+  validates :login, uniqueness: { case_sensitive: false }
 
   available_perform_change_actions :data_privacy_deletion_task, :attribute_updates
 
@@ -311,7 +313,7 @@ returns
     end
     begin
       data = {
-        login:         hash['info']['nickname'] || hash['uid'],
+        login:         hash['login'],
         firstname:     hash['info']['name'] || hash['info']['display_name'],
         email:         hash['info']['email'],
         image_source:  hash['info']['image'],
@@ -634,7 +636,7 @@ try to find correct name
   def self.name_guess(string, email = nil)
     return if string.blank? && email.blank?
 
-    string.strip!
+    string = string.strip
     firstname = ''
     lastname = ''
 
@@ -739,6 +741,16 @@ try to find correct name
     save!
   end
 
+  def self.admin_user_exists?(except_role_id: [], except_user_id: [])
+    admin_role_ids = Role.joins(:permissions)
+      .where(permissions: { name: ['admin', 'admin.user'], active: true }, roles: { active: true })
+      .where.not(id: except_role_id.presence).pluck(:id)
+
+    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true })
+      .where.not(id: except_user_id.presence)
+      .exists?
+  end
+
   private
 
   def organization_history_log(org, type)
@@ -816,14 +828,15 @@ try to find correct name
   end
 
   def check_login
-
     # use email as login if not given
     if login.blank?
+      login_as_email = true
       self.login = email
     end
 
     # if email has changed, login is old email, change also login
-    if email_changed? && email_was == login
+    if email_changed? && login_was_email?
+      login_as_email = true
       self.login = email
     end
 
@@ -832,17 +845,23 @@ try to find correct name
       self.login = "auto-#{SecureRandom.uuid}"
     end
 
-    # check if login already exists
-    base_login = login.downcase.strip
+    login.downcase!
+    login.strip!
 
-    alternatives = [nil] + Array(1..20) + [ SecureRandom.uuid ]
-    alternatives.each do |suffix|
-      self.login = "#{base_login}#{suffix}"
-      exists = User.find_by(login: login)
-      return true if !exists || exists.id == id
-    end
+    # stop unless multiple-users-with-single-email is enabled
+    return if !Setting.get('user_email_multiple_use')
 
-    raise Exceptions::UnprocessableEntity, "Invalid user login generation for login #{login}!"
+    # stop unless login uses email as a fallback
+    return if !login_as_email
+
+    base_login = email.downcase.strip
+
+    # Finds a unique login. At first it tries to use email,
+    # then it tries to append numbers 1 to 20 and finally it appends a random UUID.
+    self.login = ([nil] + Array(1..20) + [ SecureRandom.uuid ])
+      .lazy
+      .map { |elem| "#{base_login}#{elem}" }
+      .find { |elem| !User.where(login: elem).where.not(id:).exists? }
   end
 
   def check_mail_delivery_failed
@@ -879,6 +898,12 @@ try to find correct name
     return if organization_id.present?
 
     errors.add :base, __('Secondary organizations are only allowed when the primary organization is given.')
+  end
+
+  def ensure_different_organizations
+    return if organization_ids.exclude?(organization_id)
+
+    errors.add :base, __('Secondary organizations cannot include the primary organization.')
   end
 
   def ensure_organizations_limit
@@ -940,7 +965,7 @@ raise 'At least one user need to have admin permissions'
     return true if !will_save_change_to_attribute?('active')
     return true if active != false
     return true if !permissions?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if !User.admin_user_exists?(except_user_id: id)
 
     true
   end
@@ -948,14 +973,9 @@ raise 'At least one user need to have admin permissions'
   def last_admin_check_by_role(role)
     return true if Setting.get('import_mode')
     return true if !role.with_permission?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if last_admin_check_admin_count < 1
+    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if !User.admin_user_exists?(except_user_id: id)
 
     true
-  end
-
-  def last_admin_check_admin_count
-    admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'], active: true }, roles: { active: true }).pluck(:id)
-    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).distinct.count - 1
   end
 
   def validate_agent_limit_by_attributes
@@ -1062,20 +1082,12 @@ raise 'At least one user need to have admin permissions'
 
       next if ref_update_columns.blank?
 
-      where_sql = ref_update_columns.map { |column| "#{column} = #{id}" }.join(' OR ')
-      ref_class.where(where_sql).find_in_batches(batch_size: 1000) do |batch_list|
-        batch_list.each do |record|
-          ref_update_columns.each do |column|
-            next if record[column] != id
-
-            record[column] = 1
-          end
-          record.save!(validate: false)
-        rescue => e
-          Rails.logger.error e
-        end
+      ref_update_columns.each do |column|
+        ref_class.unscoped.where(column => id).update_all(column => 1) # rubocop:disable Rails/SkipsModelValidations
       end
     end
+
+    Rails.cache.clear
 
     true
   end
@@ -1123,5 +1135,20 @@ raise 'At least one user need to have admin permissions'
     return if destroyed? && phone.blank? && mobile.blank?
 
     Cti::CallerId.build(self)
+  end
+
+  def login_was_email?
+    return email_was == login if !Setting.get('user_email_multiple_use')
+
+    # Detects if login was set from email and then iterated
+    email_was.present? && login&.start_with?(email_was)
+  end
+
+  def check_organization_uniqueness(new_organization)
+    return if organization != new_organization && organization_ids.exclude?(new_organization.id)
+
+    errors.add :base, __('Secondary organizations cannot include the primary organization.')
+
+    raise ActiveRecord::RecordInvalid, self
   end
 end

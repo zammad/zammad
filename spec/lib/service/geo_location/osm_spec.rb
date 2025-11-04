@@ -45,7 +45,7 @@ RSpec.describe Service::GeoLocation::Osm, :integration, use_vcr: true do
     context 'with german coordinates' do
       let(:latitude)  { 52.5220514 }
       let(:longitude) { 13.3832091 }
-      let(:result)    { '13, Marienstraße, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland' }
+      let(:result)    { '13, Marienstraße, Friedrich-Wilhelm-Stadt, Mitte, Berlin, 10117, Deutschland' }
 
       it { is_expected.to eq(result) }
     end

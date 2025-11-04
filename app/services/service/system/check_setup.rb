@@ -58,8 +58,8 @@ class Service::System::CheckSetup < Service::Base
   private
 
   def setup_done!
-    is_done = Setting.get('system_init_done')
-    has_admin = User.all.any? { |user| user.role?('Admin') && user.active? && user.id != 1 }
+    is_done   = Setting.get('system_init_done')
+    has_admin = User.admin_user_exists?(except_user_id: [1])
 
     if !is_done && has_admin
       Rails.logger.warn('The system setup is not marked as done, but at least one admin user is existing. Marking system setup as done.')

@@ -46,10 +46,10 @@ RSpec.describe 'Manage > Channels > WhatsApp', :use_vcr, required_envs: %w[WHATS
       end
 
       in_modal do
-        check_input_field_value('callback_url', callback_url)
+        check_input_field_value('callback_url', callback_url, attr: 'id')
         check_copy_to_clipboard_text('callback_url', callback_url)
 
-        check_input_field_value('verify_token', verify_token)
+        check_input_field_value('verify_token', verify_token, attr: 'id')
         check_copy_to_clipboard_text('verify_token', verify_token)
 
         click_on 'Finish'
@@ -105,10 +105,10 @@ RSpec.describe 'Manage > Channels > WhatsApp', :use_vcr, required_envs: %w[WHATS
       end
 
       in_modal do
-        check_input_field_value('callback_url', callback_url)
+        check_input_field_value('callback_url', callback_url, attr: 'id')
         check_copy_to_clipboard_text('callback_url', callback_url)
 
-        check_input_field_value('verify_token', verify_token)
+        check_input_field_value('verify_token', verify_token, attr: 'id')
         check_copy_to_clipboard_text('verify_token', verify_token)
 
         click_on 'Finish'
@@ -118,20 +118,20 @@ RSpec.describe 'Manage > Channels > WhatsApp', :use_vcr, required_envs: %w[WHATS
     end
   end
 
-  def check_copy_to_clipboard_text(field_name, clipboard_text)
-    find(".js-copy[data-target-field='#{field_name}']").click
+  def check_copy_to_clipboard_text(field_id, clipboard_text)
+    find(".js-copy[data-target-field='#{field_id}']").click
 
     # Add a temporary text input element to the page, so we can paste the clipboard text into it and compare the value.
     #   Programmatic clipboard management requires extra browser permissions and does not work in all of them.
-    page.execute_script "$('<input name=\"clipboard_#{field_name}\" type=\"text\" class=\"form-control\">').insertAfter($('input[name=#{field_name}]'));"
+    page.execute_script "$('<input id=\"clipboard_#{field_id}\" type=\"text\" class=\"form-control\">').insertAfter($('input[id=#{field_id}]'));"
 
-    input_field = find("input[name='clipboard_#{field_name}']")
+    input_field = find("input[id='clipboard_#{field_id}']")
       .send_keys('')
       .click
       .send_keys([magic_key, 'v'])
 
     expect(input_field.value).to eq(clipboard_text)
 
-    page.execute_script "$('input[name=\"clipboard_#{field_name}\"]').addClass('is-hidden');"
+    page.execute_script "$('input[id=\"clipboard_#{field_id}\"]').addClass('is-hidden');"
   end
 end

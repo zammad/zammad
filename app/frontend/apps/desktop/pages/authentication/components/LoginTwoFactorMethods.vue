@@ -38,8 +38,13 @@ const emit = defineEmits<{
     </div>
   </section>
 
-  <div class="mt-8 text-center text-sm">
-    <CommonLink v-if="recoveryCodesAvailable" link="#" @click="emit('use-recovery-code')">
+  <div class="mt-8 text-center">
+    <CommonLink
+      v-if="recoveryCodesAvailable"
+      link="#"
+      size="medium"
+      @click="emit('use-recovery-code')"
+    >
       {{ $t('Or use one of your recovery codes.') }}
     </CommonLink>
   </div>

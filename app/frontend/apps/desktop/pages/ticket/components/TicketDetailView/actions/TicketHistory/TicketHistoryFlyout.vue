@@ -112,6 +112,7 @@ watch(
             <CommonDivider
               v-if="idxRecord !== entry.records.length - 1"
               class="mt-2 px-2"
+              variant="gray"
               alternative-background
             />
           </div>

@@ -22,11 +22,10 @@ const truncatedUnseenCount = computed(() => (props.unseenCount > 99 ? '99+' : pr
   <button
     v-bind="$attrs"
     :aria-label="$t('Show notifications')"
-    class="flex h-9 w-9 items-center justify-center rounded-full outline-blue-800 focus-visible:outline"
+    class="rounded-full outline-blue-800 focus-visible:outline"
     @click="$emit('show', $event)"
   >
-    <!--  :TODO Add custom branding  -->
-    <CommonIcon name="logo" class="z-10 block h-full w-full" />
+    <slot />
   </button>
   <CommonLabel
     v-if="unseenCount > 0"

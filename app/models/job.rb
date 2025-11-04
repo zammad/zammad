@@ -8,6 +8,7 @@ class Job < ApplicationModel
   include HasSearchIndexBackend
   include CanSelector
   include CanSearch
+  include TouchesPerformReferences
 
   include Job::Assets
   include Job::SearchIndex

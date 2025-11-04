@@ -14,10 +14,13 @@
     <tbody>
       <tr>
         <td class="settings-list-row-control"><%- @T('Endpoint') %>
-        <td class="settings-list-control-cell">
-          <form>
-            <input type="url" class="form-control form-control--small js-select" readonly value="<%= App.Config.get('http_type') %>://<%= App.Config.get('fqdn') %>/api/v1/integration/check_mk/<%= App.Setting.get('check_mk_token') %>">
-          </form>
+        <td class="settings-list-control-cell form-item">
+          <div class="input form-group">
+            <div class="controls controls--button ignore-readonly">
+              <input readonly type="text" value="<%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/integration/check_mk/<%= App.Setting.get('check_mk_token') %>" class="form-control form-control--small js-select js-permanentReadonly">
+              <div class="controls-button u-clickable js-copy" role="button" aria-label="<%- @T('Copy to clipboard') %>">
+                <span class="controls-button-inner">
+                  <%- @Icon('clipboard') %>
     </tbody>
   </table>
 </div>

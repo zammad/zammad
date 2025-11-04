@@ -124,7 +124,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
       context 'with admin user' do
         context 'when importing a public key' do
           before do
-            post '/api/v1/integration/pgp/key', params: { key: public_key }
+            post '/api/v1/integration/pgp/key', params: { private_key: public_key }
           end
 
           it 'creates a new public key' do
@@ -156,7 +156,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
 
           context 'when adding the same key again' do
             before do
-              post '/api/v1/integration/pgp/key', params: { key: public_key }
+              post '/api/v1/integration/pgp/key', params: { private_key: public_key }
             end
 
             it 'returns an error' do
@@ -166,7 +166,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
 
           context 'when importing a private key with the same fingerprint' do
             before do
-              post '/api/v1/integration/pgp/key', params: { key: private_key, passphrase: private_passphrase }
+              post '/api/v1/integration/pgp/key', params: { private_key: private_key, passphrase: private_passphrase }
             end
 
             it 'returns an error' do
@@ -179,7 +179,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
 
         context 'when importing a private key' do
           before do
-            post '/api/v1/integration/pgp/key', params: { key: private_key, passphrase: private_passphrase }
+            post '/api/v1/integration/pgp/key', params: { private_key: private_key, passphrase: private_passphrase }
           end
 
           it 'creates only one key' do

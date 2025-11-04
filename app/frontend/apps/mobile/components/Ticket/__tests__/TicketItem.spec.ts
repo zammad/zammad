@@ -3,6 +3,7 @@
 import { renderComponent } from '#tests/support/components/index.ts'
 
 import { TicketState } from '#shared/entities/ticket/types.ts'
+import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 
 import TicketItem from '../TicketItem.vue'
@@ -87,5 +88,22 @@ describe('ticket item display', () => {
 
     expect(view.queryByTestId('stringUpdated')).not.toBeInTheDocument()
     expect(view.queryByText('3 high')).not.toBeInTheDocument()
+  })
+
+  describe('Ai Agent', () => {
+    it('shows ai agent indicator if running', () => {
+      const view = renderComponent(TicketItem, {
+        props: {
+          entity: createDummyTicket({ aiAgentRunning: true }),
+        },
+        store: true,
+        router: true,
+      })
+
+      expect(view.getByIconName('check-circle-no-ai')).toHaveAttribute(
+        'aria-label',
+        'Currently processing this ticket…',
+      )
+    })
   })
 })

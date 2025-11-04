@@ -140,7 +140,7 @@ class ImportOtrsController < ApplicationController
       issues.push 'otrsDynamicFields'
     end
 
-    # check if process exsists
+    # check if process exists
     sys_configs = Import::OTRS::Requester.load('SysConfig')
     sys_configs.each do |sys_config|
       next if sys_config['Key'] != 'Process'

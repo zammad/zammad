@@ -16,8 +16,4 @@ class Channel::Driver::Null
   def disconnect
     true
   end
-
-  def self.streamable?
-    false
-  end
 end

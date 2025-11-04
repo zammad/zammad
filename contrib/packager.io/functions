@@ -191,7 +191,7 @@ function create_webserver_config () {
   echo "# Creating webserver bootstart"
   ${INIT_CMD} enable ${WEBSERVER_CMD}
 
-  echo "# Restarting webserver ${WEBSERVER_CMD} - please check if all required modules are enabled in case apache fails to start."
+  echo "# Restarting webserver ${WEBSERVER_CMD} - please check if all required modules are enabled in case webserver fails to start."
   ${INIT_CMD} restart ${WEBSERVER_CMD}
 }
 

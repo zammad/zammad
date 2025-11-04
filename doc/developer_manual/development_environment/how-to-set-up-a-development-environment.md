@@ -55,8 +55,8 @@ For Linux and macOS:
 
 ```screen
 curl -sSL https://get.rvm.io | bash -s stable --rails
-rvm install ruby-3.3.8
-rvm --default use 3.3.8
+rvm install ruby-3.4.7
+rvm --default use 3.4.7
 ```
 
 ## NVM, Node.js and pnpm
@@ -92,8 +92,7 @@ system.
 For Linux and macOS:
 
 ```screen
-npm install -g @coffeelint/cli
-npm install -g stylelint
+npm install -g coffeelint@1 stylelint
 ```
 
 ## Elasticsearch

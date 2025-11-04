@@ -36,7 +36,7 @@ RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :s
     end
   end
 
-  context 'when logging in via external authentication provider', authenticated_as: false, integration: true, integration_standalone: :saml, required_envs: %w[KEYCLOAK_BASE_URL KEYCLOAK_ADMIN_USER KEYCLOAK_ADMIN_PASSWORD] do
+  context 'when logging in via external authentication provider', authenticated_as: false, integration: true, integration_standalone: :saml, required_envs: %w[KEYCLOAK_BASE_URL KC_BOOTSTRAP_ADMIN_USERNAME KC_BOOTSTRAP_ADMIN_PASSWORD] do
     let(:zammad_base_url)              { "#{Capybara.app_host}:#{Capybara.current_session.server.port}" }
     let(:zammad_saml_metadata)         { "#{zammad_base_url}/auth/saml/metadata" }
     let(:saml_base_url)                { ENV['KEYCLOAK_BASE_URL'] }

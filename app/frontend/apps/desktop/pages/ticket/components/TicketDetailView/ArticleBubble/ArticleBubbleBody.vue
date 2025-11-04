@@ -8,6 +8,7 @@ import { useHtmlInlineImages } from '#shared/composables/useHtmlInlineImages.ts'
 import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import { type ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import emitter from '#shared/utils/emitter.ts'
 import { textToHtml } from '#shared/utils/helpers.ts'
 
 interface Props {
@@ -40,6 +41,7 @@ const body = computed(() => {
 
 const showAuthorInformation = computed(() => {
   const author = props.article.author.fullname // `-` => system message
+
   return !props.showMetaInformation && author !== '-' && (author?.length ?? 0) > 0
 })
 
@@ -47,6 +49,11 @@ const { setupLinksHandlers } = useHtmlLinks('/desktop')
 const { populateInlineImages } = useHtmlInlineImages(toRef(props, 'inlineImages'), (index) =>
   emit('preview', props.inlineImages[index]),
 )
+
+const toggleShowMoreAndEmit = () => {
+  toggleShowMore()
+  emitter.emit('recompute-has-reached-article-bottom')
+}
 
 watch(
   () => body,
@@ -69,7 +76,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="Content relative p-3 transition-[padding]"
+    class="Content overflow-hidden relative p-3 transition-[padding]"
     :class="[
       bodyClasses,
       {
@@ -95,7 +102,11 @@ onMounted(() => {
       <CommonDateTime class="text-xs ltr:ml-auto rtl:mr-auto" :date-time="article.createdAt" />
     </div>
 
-    <div ref="bubbleElement" data-test-id="article-content" class="overflow-hidden text-sm">
+    <div
+      ref="bubbleElement"
+      data-test-id="article-content"
+      class="overflow-hidden transition-[height] duration-200 text-sm"
+    >
       <!--    eslint-disable vue/no-v-html-->
       <div class="inner-article-body" v-html="body" />
     </div>
@@ -108,12 +119,12 @@ onMounted(() => {
     />
     <CommonLink
       v-if="hasShowMore"
-      class="mb-1 inline-block! outline-transparent! hover:no-underline! focus-visible:outline-blue-800!"
+      class="mb-1 inline-block! outline-transparent! focus-visible:outline-blue-800!"
       role="button"
       link="#"
       size="medium"
-      @click.prevent="toggleShowMore"
-      @keydown.enter.prevent="toggleShowMore"
+      @click.prevent="toggleShowMoreAndEmit"
+      @keydown.enter.prevent="toggleShowMoreAndEmit"
     >
       {{ shownMore ? $t('See less') : $t('See more') }}
     </CommonLink>
@@ -139,6 +150,11 @@ onMounted(() => {
   }
 
   /* Wrap long lines in code blocks. */
+
+  &:deep(pre) {
+    display: block;
+    overflow-x: auto;
+  }
 
   &:deep(code) {
     white-space: pre-wrap;

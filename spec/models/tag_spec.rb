@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe Tag, type: :model do
   subject(:tag) { create(:tag) }
 
+  let!(:ticket) { create(:ticket) }
+
   shared_examples 'tag adding' do
     context 'when a Tag::Object does not exist for the given class' do
       it 'creates it and assigns it to a new Tag' do
@@ -16,13 +18,13 @@ RSpec.describe Tag, type: :model do
     end
 
     context 'when a Tag::Object already exists for the given class' do
-      let!(:tag_object) { Tag::Object.find_or_create_by(name: 'Ticket') }
+      let!(:tag_object) { Tag::Object.find_or_create_by(name: 'Bar') }
 
       it 'assigns it to a new Tag' do
-        expect { described_class.tag_add(object: 'Ticket', item: 'foo', o_id: 1, created_by_id: 1) }
+        expect { described_class.tag_add(object: 'Bar', item: 'foo', o_id: 1, created_by_id: 1) }
           .to change(described_class, :count).by(1)
           .and not_change(Tag::Object, :count)
-          .and change { described_class.last&.tag_object&.name }.to('Ticket')
+          .and change { described_class.last&.tag_object&.name }.to('Bar')
       end
     end
 
@@ -39,6 +41,11 @@ RSpec.describe Tag, type: :model do
           .to change(described_class, :count).by(1)
           .and change { Tag::Item.exists?(name: 'foo') }.to(true)
           .and change { described_class.last&.tag_item&.name }.to('foo')
+      end
+
+      it 'does not allow commas in the name' do
+        expect { described_class.tag_add(object: 'Ticket', item: 'foo,bar', o_id: 1, created_by_id: 1) }
+          .to raise_error(ActiveRecord::RecordInvalid, %r{Commas and stars are not allowed in name.})
       end
 
       context 'and the name contains 8-bit Unicode characters' do
@@ -81,11 +88,11 @@ RSpec.describe Tag, type: :model do
     end
 
     context 'when a Tag already exists for the specified record with the given name' do
-      let!(:tag) { create(:tag, o: Ticket.first, tag_item: tag_item) }
+      let!(:tag)     { create(:tag, o: ticket, tag_item: tag_item) }
       let(:tag_item) { create(:'tag/item', name: 'foo') }
 
       it 'does not create any records' do
-        expect { described_class.tag_add(object: 'Ticket', item: 'foo', o_id: Ticket.first.id, created_by_id: 1) }
+        expect { described_class.tag_add(object: 'Ticket', item: 'foo', o_id: ticket.id, created_by_id: 1) }
           .to not_change(described_class, :count)
           .and not_change(Tag::Item, :count)
       end
@@ -94,8 +101,8 @@ RSpec.describe Tag, type: :model do
 
   describe '.tag_add' do
     it 'touches the target object' do
-      expect { described_class.tag_add(object: 'Ticket', item: 'foo', o_id: Ticket.first.id, created_by_id: 1) }
-        .to change { Ticket.first.updated_at }
+      expect { described_class.tag_add(object: 'Ticket', item: 'foo', o_id: ticket.id, created_by_id: 1) }
+        .to change { ticket.reload.updated_at }
     end
 
     include_examples 'tag adding'
@@ -103,31 +110,29 @@ RSpec.describe Tag, type: :model do
 
   describe '.tag_remove' do
     it 'touches the target object' do
-      expect { described_class.tag_remove(object: 'Ticket', item: 'foo', o_id: Ticket.first.id, created_by_id: 1) }
-        .to change { Ticket.first.updated_at }
+      expect { described_class.tag_remove(object: 'Ticket', item: 'foo', o_id: ticket.id, created_by_id: 1) }
+        .to change { ticket.reload.updated_at }
     end
 
     context 'when a matching Tag exists' do
-      let!(:tag) { create(:tag, o: Ticket.first, tag_item: tag_item) }
+      let!(:tag) { create(:tag, o: ticket, tag_item: tag_item) }
       let(:tag_item) { create(:'tag/item', name: 'foo') }
 
       it 'destroys the Tag' do
-        expect { described_class.tag_remove(object: 'Ticket', o_id: Ticket.first.id, item: 'foo') }
+        expect { described_class.tag_remove(object: 'Ticket', o_id: ticket.id, item: 'foo') }
           .to change(described_class, :count).by(-1)
       end
     end
 
     context 'when no matching Tag exists' do
       it 'makes no changes' do
-        expect { described_class.tag_remove(object: 'Ticket', o_id: Ticket.first.id, item: 'foo') }
+        expect { described_class.tag_remove(object: 'Ticket', o_id: ticket.id, item: 'foo') }
           .not_to change(described_class, :count)
       end
     end
   end
 
   describe '.tag_update' do
-    let(:ticket) { Ticket.first }
-
     it 'touches the target object' do
       expect { described_class.tag_update(object: 'Ticket', items: ['foo'], o_id: ticket.id, created_by_id: 1) }
         .to change { ticket.reload.updated_at }
@@ -167,7 +172,7 @@ RSpec.describe Tag, type: :model do
 
   describe '.tag_list' do
     context 'with ASCII item names' do
-      before { items.map { |i| create(:tag, tag_item: i, o: Ticket.first) } }
+      before { items.map { |i| create(:tag, tag_item: i, o: ticket) } }
 
       let(:items) do
         [
@@ -178,13 +183,13 @@ RSpec.describe Tag, type: :model do
       end
 
       it 'returns all tag names (case-sensitive) for a given record' do
-        expect(described_class.tag_list(object: 'Ticket', o_id: Ticket.first.id))
+        expect(described_class.tag_list(object: 'Ticket', o_id: ticket.id))
           .to match_array(%w[foo bar BAR])
       end
     end
 
     context 'with Unicode (8-bit) item names' do
-      before { items.map { |i| create(:tag, tag_item: i, o: Ticket.first) } }
+      before { items.map { |i| create(:tag, tag_item: i, o: ticket) } }
 
       let(:items) do
         [
@@ -195,7 +200,7 @@ RSpec.describe Tag, type: :model do
       end
 
       it 'returns all tag names (case-sensitive) for a given record' do
-        expect(described_class.tag_list(object: 'Ticket', o_id: Ticket.first.id))
+        expect(described_class.tag_list(object: 'Ticket', o_id: ticket.id))
           .to match_array(%w[fooöäüß baröäüß BARöäüß])
       end
     end
@@ -240,7 +245,7 @@ RSpec.describe Tag, type: :model do
 
     context 'when tag_new=false' do
       before do
-        described_class.tag_add(object: 'Ticket', item: 'test123', o_id: Ticket.first.id, created_by_id: 1)
+        described_class.tag_add(object: 'Ticket', item: 'test123', o_id: ticket.id, created_by_id: 1)
         create(:tag_item, name: 'no_ticket_tag')
         Setting.set('tag_new', false)
       end

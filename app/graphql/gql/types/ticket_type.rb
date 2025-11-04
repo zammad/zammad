@@ -76,6 +76,7 @@ module Gql::Types
       field :checklist, Gql::Types::ChecklistType, description: 'Returns the checklist of this ticket, if present'
       field :referencing_checklist_tickets, [Gql::Types::TicketType, { null: false }], description: 'Returns (only accessible) other tickets which reference the current ticket'
       field :external_references, Gql::Types::TicketExternalReferencesType, null: true, description: 'Returns links to external services'
+      field :ai_agent_running, Boolean, description: 'Returns true if an AI agent is running for this ticket'
     end
 
     internal_fields do

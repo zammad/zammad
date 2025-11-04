@@ -112,4 +112,66 @@ RSpec.describe Service::Search do
       end
     end
   end
+
+  describe '#models' do
+    let(:instance) { described_class.new(current_user: user, query: 'test', objects: Models.searchable) }
+    let(:models) { instance.send(:models) }
+
+    before do
+      Setting.set('chat', true)
+      create(:knowledge_base)
+    end
+
+    context 'when user is admin only' do
+      let(:user) { create(:admin_only) }
+
+      it 'returns all globally searchable models' do
+        expect(models).to match(
+          Organization                       => include(direct_search_index: true),
+          User                               => include(direct_search_index: true),
+          KnowledgeBase::Answer::Translation => include(direct_search_index: false),
+        )
+      end
+    end
+
+    context 'when user is admin with agent permissions' do
+      let(:user) { create(:admin) }
+
+      it 'returns all globally searchable models' do
+        expect(models).to match(
+          Organization                       => include(direct_search_index: true),
+          Ticket                             => include(direct_search_index: false),
+          User                               => include(direct_search_index: true),
+          KnowledgeBase::Answer::Translation => include(direct_search_index: false),
+          Chat::Session                      => include(direct_search_index: true),
+        )
+      end
+    end
+
+    context 'when user is agent' do
+      let(:user) { create(:agent) }
+
+      it 'returns all globally searchable models' do
+        expect(models).to match(
+          Organization                       => include(direct_search_index: true),
+          Ticket                             => include(direct_search_index: false),
+          User                               => include(direct_search_index: true),
+          KnowledgeBase::Answer::Translation => include(direct_search_index: false),
+          Chat::Session                      => include(direct_search_index: true),
+        )
+      end
+    end
+
+    context 'when user is customer' do
+      let(:user) { create(:customer) }
+
+      it 'returns all globally searchable models' do
+        expect(models).to match(
+          Organization => include(direct_search_index: false),
+          Ticket       => include(direct_search_index: false),
+        )
+      end
+    end
+  end
+
 end

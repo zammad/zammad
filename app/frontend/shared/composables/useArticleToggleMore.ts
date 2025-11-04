@@ -8,7 +8,6 @@ import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 export const useArticleToggleMore = () => {
   const MIN_HEIGHT = 60
   const MAX_HEIGHT = 320
-  let heightActual = 0
   let heightHidden = 0
 
   const bubbleElement = ref<HTMLDivElement>()
@@ -34,8 +33,6 @@ export const useArticleToggleMore = () => {
     if (!bubbleElement.value) return
 
     const height = bubbleElement.value.clientHeight
-
-    heightActual = height
 
     const signatureMarker = getSignatureMarker(bubbleElement.value)
 
@@ -74,15 +71,7 @@ export const useArticleToggleMore = () => {
 
     const styles = bubbleElement.value.style
 
-    styles.transition = 'height 0.3s ease-in-out'
-    styles.height = shownMore.value ? `${heightActual + 10}px` : `${heightHidden}px`
-
-    const ontransitionend = () => {
-      styles.transition = ''
-      bubbleElement.value?.removeEventListener('transitionend', ontransitionend)
-    }
-
-    bubbleElement.value?.addEventListener('transitionend', ontransitionend)
+    styles.height = shownMore.value ? 'auto' : `${heightHidden}px`
   }
 
   return {

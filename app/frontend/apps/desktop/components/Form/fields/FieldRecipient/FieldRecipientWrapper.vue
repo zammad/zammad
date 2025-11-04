@@ -40,6 +40,7 @@ const { actions, onSearchInteractionUpdate, onKeydownFilterInput } = useAddUnkno
   filterValueValidator,
 )
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   actions,
   emptyInitialLabelText:

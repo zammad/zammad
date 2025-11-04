@@ -7,7 +7,7 @@ import type { FilePreview } from '#shared/utils/files.ts'
 
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 
-import type { MaybeRef } from '@vueuse/shared'
+import type { MaybeRef } from 'vue'
 
 interface ImagePreview {
   src?: string

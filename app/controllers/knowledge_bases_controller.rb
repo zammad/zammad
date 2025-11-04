@@ -30,40 +30,29 @@ class KnowledgeBasesController < KnowledgeBase::BaseController
   private
 
   def assets(answer_translation_content_ids = nil)
-    if KnowledgeBase.granular_permissions?
-      return granular_assets(answer_translation_content_ids) if kb_permissions?
+    case KnowledgeBase.access_for_user(current_user)
+    when :granular
+      granular_assets(answer_translation_content_ids)
+    when :editor
+      editor_assets(answer_translation_content_ids)
+    when :reader
+      reader_assets(answer_translation_content_ids)
     else
-      return editor_assets(answer_translation_content_ids) if kb_permission_editor?
-      return reader_assets(answer_translation_content_ids) if kb_permission_reader?
+      public_assets
     end
-
-    public_assets
   end
 
   def calculate_visible_ids
-    if KnowledgeBase.granular_permissions? && kb_permissions?
-      return KnowledgeBase::InternalAssets.new(current_user).visible_ids
-    end
-
-    if kb_permission_editor?
+    case KnowledgeBase.access_for_user(current_user)
+    when :granular
+      KnowledgeBase::InternalAssets.new(current_user).visible_ids
+    when :editor
       editor_assets_visible_ids
-    elsif kb_permission_reader?
+    when :reader
       reader_assets_visible_ids
     else
       {}
     end
-  end
-
-  def kb_permissions?
-    current_user&.permissions?(%w[knowledge_base.editor knowledge_base.reader])
-  end
-
-  def kb_permission_editor?
-    current_user&.permissions?('knowledge_base.editor')
-  end
-
-  def kb_permission_reader?
-    current_user&.permissions?('knowledge_base.reader')
   end
 
   def granular_assets(answer_translation_content_ids)

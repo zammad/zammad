@@ -3,6 +3,7 @@
 import { watch } from 'vue'
 
 import { triggerWebSocketReconnect } from '#shared/server/connection.ts'
+import { useAiAssistantTextToolsStore } from '#shared/stores/aiAssistantTextTools.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
@@ -36,6 +37,17 @@ export default function initializeStoreSubscriptions(): void {
           }
         },
       )
+    },
+  )
+
+  // We dispose the ai assitant text tools store, when the feature will be disabled.
+  // With this we removing the no longer needed subscription.
+  watch(
+    () => application.config.ai_assistance_text_tools,
+    (newValue) => {
+      if (!newValue) {
+        useAiAssistantTextToolsStore().$dispose()
+      }
     },
   )
 }

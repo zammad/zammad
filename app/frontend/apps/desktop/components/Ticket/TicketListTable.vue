@@ -16,6 +16,7 @@ import CommonAdvancedTable from '#desktop/components/CommonTable/CommonAdvancedT
 import CommonTableSkeleton from '#desktop/components/CommonTable/Skeleton/CommonTableSkeleton.vue'
 import CommonTicketPriorityIndicatorIcon from '#desktop/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicatorIcon.vue'
 import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicatorIcon.vue'
+import OrganizationPopoverWithTrigger from '#desktop/components/Organization/OrganizationPopoverWithTrigger.vue'
 import UserPopoverWithTrigger from '#desktop/components/User/UserPopoverWithTrigger.vue'
 
 import { useListTable } from '../CommonTable/composables/useListTable.ts'
@@ -135,9 +136,8 @@ const userPopoverSlots: {
         :key="slotName"
         #[slotName]="{ item, isRowSelected, attribute }"
       >
-        {{ item[attribute] }}
         <UserPopoverWithTrigger
-          :popover-config="{ orientation: 'left' }"
+          :popover-config="{ orientation: 'autoHorizontal' }"
           :user="(item as TicketByList)[ticketAttribute] as AvatarUser"
           class="outline-none!"
           no-link
@@ -156,8 +156,38 @@ const userPopoverSlots: {
           </CommonLabel>
         </UserPopoverWithTrigger>
       </template>
+      <template #column-cell-organization_id="{ item, isRowSelected, attribute }">
+        <OrganizationPopoverWithTrigger
+          :popover-config="{ orientation: 'autoHorizontal' }"
+          :organization="(item as TicketByList).organization!"
+          class="outline-none!"
+          no-link
+        >
+          <CommonLabel
+            class="block! shrink-0 truncate outline-offset-0! group-hover:text-black! group-hover:dark:text-white!"
+            :class="{
+              'text-black! dark:text-white!': isRowSelected,
+            }"
+          >
+            <ObjectAttributeContent
+              mode="table"
+              :attribute="attribute as unknown as ObjectAttribute"
+              :object="item"
+            />
+          </CommonLabel>
+        </OrganizationPopoverWithTrigger>
+      </template>
       <template #column-cell-stateIcon="{ item, isRowSelected }">
+        <CommonIcon
+          v-if="item.aiAgentRunning"
+          role="status"
+          :aria-label="$t('Currently processing this ticket…')"
+          class="animate-spin"
+          size="tiny"
+          name="check-circle-no-ai"
+        />
         <CommonTicketStateIndicatorIcon
+          v-else
           class="shrink-0 outline-offset-0! group-hover:text-black group-hover:dark:text-white"
           :class="{
             'text-black! dark:text-white!': isRowSelected,

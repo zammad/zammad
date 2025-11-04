@@ -610,7 +610,7 @@ class Selector::Sql < Selector::Base
       query << query_wrap.gsub('###QUERY###', query.pop)
     end
 
-    query.map! { "(#{_1})" }
+    query.map! { "(#{it})" }
 
     [query, bind_params, tables]
   end

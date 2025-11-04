@@ -17,7 +17,7 @@ vi.hoisted(() => {
 
 describe('Ticket detail view live users handling', () => {
   beforeEach(() => {
-    mockTicketQuery({ ticket: createDummyTicket() })
+    mockTicketQuery({ ticket: createDummyTicket({ aiAgentRunning: true }) })
   })
 
   it('displays idle state of the user avatar', async () => {
@@ -253,5 +253,13 @@ describe('Ticket detail view live users handling', () => {
     })
 
     expect(view.queryByRole('img', { name: 'Avatar (Nicole Braun) (VIP)' })).not.toBeInTheDocument()
+  })
+
+  describe('Ai Agent', () => {
+    it('should display AI agent avatar when AI agent is processing', async () => {
+      const view = await visitView('/tickets/1')
+
+      expect(await view.findByLabelText('AI Agent')).toBeInTheDocument()
+    })
   })
 })

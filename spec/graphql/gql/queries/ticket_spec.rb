@@ -8,14 +8,8 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
     let(:agent)     { create(:agent) }
     let(:query)     do
       <<~QUERY
-        query ticket($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
-          ticket(
-            ticket: {
-              ticketId: $ticketId
-              ticketInternalId: $ticketInternalId
-              ticketNumber: $ticketNumber
-            }
-          ) {
+        query ticket($ticketId: ID!) {
+          ticket(ticketId: $ticketId) {
             id
             internalId
             number
@@ -41,6 +35,7 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
             }
             tags
             subscribed
+            aiAgentRunning
             mentions(first: 20) {
               edges {
                 node {
@@ -123,6 +118,7 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
               'updatedBy' => { 'internalId' => 1 },
             ),
             'tags'                        => %w[tag1 tag2],
+            'aiAgentRunning'              => false,
             'policy'                      => {
               'agentReadAccess'   => true,
               'agentUpdateAccess' => true,
@@ -152,26 +148,6 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
 
         context 'when fetching a ticket by ticketId' do
           include_examples 'finds the ticket'
-        end
-
-        context 'when fetching a ticket by ticketInternalId' do
-          let(:variables) { { ticketInternalId: ticket.id } }
-
-          include_examples 'finds the ticket'
-        end
-
-        context 'when fetching a ticket by ticketNumber' do
-          let(:variables) { { ticketNumber: ticket.number } }
-
-          include_examples 'finds the ticket'
-        end
-
-        context 'when locator is missing' do
-          let(:variables) { {} }
-
-          it 'raises an exception' do
-            expect(gql.result.error_type).to eq(GraphQL::Schema::Validator::ValidationFailedError)
-          end
         end
 
         context 'with having checklist feature disabled' do

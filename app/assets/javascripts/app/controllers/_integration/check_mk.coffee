@@ -6,6 +6,9 @@ class CheckMk extends App.ControllerIntegrationBase
     [__('This service receives HTTP requests or emails from %s and creates tickets with host and service.'), 'Checkmk']
     [__('If the host and service have recovered, the ticket can be closed automatically.')]
   ]
+  events:
+    'click .js-copy':   'copyInputToClipboard'
+    'click .js-select': 'selectAll'
 
   render: =>
     super

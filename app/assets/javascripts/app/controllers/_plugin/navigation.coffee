@@ -7,6 +7,7 @@ class Navigation extends App.Controller
     '.search': 'searchContainer'
     '.js-global-search-result': 'searchResult'
     '.js-details-link': 'searchDetails'
+    '.js-toggleNotifications': 'toggleNotificationsButton'
 
   events:
     'click .js-toggleNotifications': 'toggleNotifications'
@@ -58,19 +59,6 @@ class Navigation extends App.Controller
         1000
         'recent-view-changed'
       )
-    )
-
-    # bell on / bell off
-    @controllerBind('bell', (data) =>
-      if data is 'on'
-        @$('.bell').addClass('show')
-        App.Audio.play( 'https://www.sounddogs.com/previews/2193/mp3/219024_SOUNDDOGS__be.mp3' )
-        @delay(
-          -> App.Event.trigger('bell', 'off')
-          3000
-        )
-      else
-        @$('.bell').removeClass('show')
     )
 
   release: =>
@@ -261,8 +249,12 @@ class Navigation extends App.Controller
     # renderPersonal
     @renderPersonal()
 
-    if @notificationWidget
-      @notificationWidget.remove()
+    @notificationWidget.remove() if @notificationWidget
+
+    if not @permissionCheck('ticket.agent')
+      @toggleNotificationsButton.addClass('u-unclickable')
+      return
+
     @notificationWidget = new App.OnlineNotificationWidget()
     @appEl.append @notificationWidget.el
 

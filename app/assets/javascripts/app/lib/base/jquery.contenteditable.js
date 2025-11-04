@@ -47,14 +47,28 @@
     //maxlength: 20,
   };
 
+  supportedFormattingActions = [
+    'bold',
+    'italic',
+    'underline',
+    'strikeThrough',
+    'removeFormat',
+    'h1',
+    'h2',
+    'h3',
+    'insertOrderedList',
+    'insertUnorderedList',
+  ]
+
   function Plugin( element, options ) {
     this.element  = element;
     this.$element = $(element)
 
     this.options = $.extend( {}, defaults, options) ;
 
-    this._defaults = defaults;
-    this._name     = pluginName;
+    this._defaults                   = defaults;
+    this._name                       = pluginName;
+    this._supportedFormattingActions = supportedFormattingActions;
 
     // take placeholder from markup
     if ( !this.options.placeholder && this.$element.data('placeholder') ) {
@@ -187,6 +201,11 @@
     }
     if (richtTextControl && this.options.richTextFormatKey[ e.keyCode ]) {
       e.preventDefault()
+
+      if ( this.options.mode === 'textonly' ) {
+        return
+      }
+
       if (e.keyCode == 66) {
         document.execCommand('bold')
         return true
@@ -293,12 +312,21 @@
     }
   }
 
+  Plugin.prototype.executeFormattingAction = function (formattingAction) {
+    if (!Array.prototype.includes.call(this._supportedFormattingActions, formattingAction)) {
+      this.log('unsupported formatting action', formattingAction)
+      return
+    }
+
+    document.execCommand(formattingAction)
+  }
+
   Plugin.prototype.getHtmlFromClipboard = function(clipboardData) {
     try {
       return clipboardData.getData('text/html')
     }
     catch (e) {
-      console.log('Sorry, can\'t get html of clipboard because browser is not supporting it.')
+      this.log('Sorry, can\'t get html of clipboard because browser is not supporting it.', e)
       return
     }
   }
@@ -396,21 +424,26 @@
     return result
   }
 
-  Plugin.prototype.replaceSelection = function (ranges, content) {
-    if (ranges.length && (window.getSelection || document.getSelection)) {
-      this.log('restore selection')
+  Plugin.prototype.restoreSelection = function (ranges) {
+    if (!ranges || !ranges.length || (!window.getSelection && !document.getSelection))
+      return
 
-      var sel
+    this.log('restore selection')
 
-      if (window.getSelection) sel = window.getSelection()
-      else sel = document.getSelection()
+    var sel
 
-      sel.removeAllRanges()
+    if (window.getSelection) sel = window.getSelection()
+    else sel = document.getSelection()
 
-      for (var i = 0; i < ranges.length; i++) {
-        sel.addRange(ranges[i])
-      }
+    sel.removeAllRanges()
+
+    for (var i = 0; i < ranges.length; i++) {
+      sel.addRange(ranges[i])
     }
+  }
+
+  Plugin.prototype.replaceSelection = function (ranges, content) {
+    this.restoreSelection(ranges)
 
     this.paste(App.Utils.clipboardHtmlInsertPreperation(content, this.options))
   }
@@ -550,6 +583,10 @@
 
     // look for images
     if (file.type.match('image.*')) {
+
+      // stop processing if input form does not accept images
+      if (this.options.noImages) return;
+
       var reader = new FileReader()
       reader.onload = $.proxy(function(e) {
         var result = e.target.result

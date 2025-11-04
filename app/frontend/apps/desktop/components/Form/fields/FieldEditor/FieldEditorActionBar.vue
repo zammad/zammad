@@ -19,6 +19,7 @@ import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
 import CommonPopoverMenuItem from '#desktop/components/CommonPopoverMenu/CommonPopoverMenuItem.vue'
+import { useFieldEditorOptions } from '#desktop/components/Form/fields/FieldEditor/useFieldEditorOptions.ts'
 
 import ActionToolbar from './FieldEditorActionBar/ActionToolbar.vue'
 
@@ -105,6 +106,8 @@ const showAiAssistantTextToolsLoadingBanner = ref(false)
 
 const { config } = storeToRefs(useApplicationStore())
 
+const { zIndex } = useFieldEditorOptions()
+
 watch(
   () => editor.value?.storage?.showAiTextLoader,
   (showLoader) => {
@@ -139,7 +142,7 @@ watch(
       :owner="popoverTarget"
       orientation="autoVertical"
       placement="arrowStart"
-      z-index="20"
+      :z-index="zIndex"
       hide-arrow
     >
       <template v-if="Array.isArray(subMenuPopoverContent)">

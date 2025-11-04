@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, type ComputedRef, watch } from 'vue'
+import { computed, type ComputedRef } from 'vue'
 
 import { useQueryPolling } from '#shared/composables/useQueryPolling.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
-import { useOverviewsWithCachedCountLazyQuery } from '../../graphql/queries/overviewsWithCachedCount.api.ts'
+import { useOverviewsWithCachedCountQuery } from '../../graphql/queries/overviewsWithCachedCount.api.ts'
 import { useUserCurrentTicketOverviewsCountQuery } from '../../graphql/queries/userCurrentTicketOverviewsCount.api.ts'
 
 import type { TicketOverviewQueryPollingConfig } from '../types.ts'
@@ -15,21 +15,16 @@ export const useTicketsCountByOverview = (
   pollingOverviewIds: ComputedRef<ID[]>,
   queryPollingConfig: ComputedRef<TicketOverviewQueryPollingConfig>,
 ) => {
-  // TODO: Check situation, when new overview comes in (because of changed permission or newly added).
   const overviewWithCachedCountHandler = new QueryHandler(
-    useOverviewsWithCachedCountLazyQuery(
-      // FIXME: Apparently, `useLazyQuery` will try to modify passed variables, which can lead to a warning:
-      //   [Vue warn] Write operation failed: computed value is readonly
-      // () => (
-      {
+    useOverviewsWithCachedCountQuery(
+      () => ({
         filterOverviewIds: overviewIds.value,
         ignoreUserConditions: false,
         cacheTtl: queryPollingConfig.value.counts.cache_ttl_sec,
-      },
-      // ),
+      }),
       () => ({
         fetchPolicy: 'network-only',
-        enabled: !!pollingOverviewIds.value?.length,
+        enabled: !!pollingOverviewIds.value?.length && !!overviewIds.value?.length,
         context: {
           batch: {
             active: false,
@@ -37,22 +32,6 @@ export const useTicketsCountByOverview = (
         },
       }),
     ),
-  )
-
-  const watcher = watch(
-    overviewIds,
-    (currentOverviewIds) => {
-      if (!currentOverviewIds?.length) return
-
-      overviewWithCachedCountHandler.load({
-        ignoreUserConditions: false,
-        filterOverviewIds: currentOverviewIds, // for the initial load fetch all counts for now
-        cacheTtl: queryPollingConfig.value.counts.cache_ttl_sec,
-      })
-
-      watcher.stop()
-    },
-    { immediate: true },
   )
 
   const { startPolling } = useQueryPolling(

@@ -27,7 +27,12 @@
 </div>
 
 <div class="page-content">
-<% if @searchBar: %>
+<% if @topAlert and typeof @topAlert is 'function' and not _.isEmpty(alert = @topAlert()): %>
+  <div class="alert alert--<%= alert.type %>">
+    <%- @T(alert.message) %>
+  </div>
+<% end %>
+<% if @searchBar and not @hideSearchBar: %>
   <div class="searchfield">
     <input class="js-search form-control" name="search" value="<%= @searchQuery %>" placeholder="<%- @Ti(@searchPlaceholder) %>" type="search">
     <%- @Icon('magnifier') %>

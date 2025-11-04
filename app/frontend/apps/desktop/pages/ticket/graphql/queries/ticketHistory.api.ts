@@ -6,10 +6,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketHistoryDocument = gql`
-    query ticketHistory($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
-  ticketHistory(
-    ticket: {ticketId: $ticketId, ticketInternalId: $ticketInternalId, ticketNumber: $ticketNumber}
-  ) {
+    query ticketHistory($ticketId: ID!) {
+  ticketHistory(ticketId: $ticketId) {
     createdAt
     records {
       issuer {
@@ -32,6 +30,14 @@ export const TicketHistoryDocument = gql`
           name
         }
         ... on PostmasterFilter {
+          id
+          name
+        }
+        ... on AIAgent {
+          id
+          name
+        }
+        ... on Macro {
           id
           name
         }
@@ -97,10 +103,10 @@ export const TicketHistoryDocument = gql`
   }
 }
     `;
-export function useTicketHistoryQuery(variables: Types.TicketHistoryQueryVariables | VueCompositionApi.Ref<Types.TicketHistoryQueryVariables> | ReactiveFunction<Types.TicketHistoryQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables>> = {}) {
+export function useTicketHistoryQuery(variables: Types.TicketHistoryQueryVariables | VueCompositionApi.Ref<Types.TicketHistoryQueryVariables> | ReactiveFunction<Types.TicketHistoryQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables>(TicketHistoryDocument, variables, options);
 }
-export function useTicketHistoryLazyQuery(variables: Types.TicketHistoryQueryVariables | VueCompositionApi.Ref<Types.TicketHistoryQueryVariables> | ReactiveFunction<Types.TicketHistoryQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables>> = {}) {
+export function useTicketHistoryLazyQuery(variables?: Types.TicketHistoryQueryVariables | VueCompositionApi.Ref<Types.TicketHistoryQueryVariables> | ReactiveFunction<Types.TicketHistoryQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables>> = {}) {
   return VueApolloComposable.useLazyQuery<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables>(TicketHistoryDocument, variables, options);
 }
 export type TicketHistoryQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketHistoryQuery, Types.TicketHistoryQueryVariables>;

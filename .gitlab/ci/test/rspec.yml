@@ -7,7 +7,7 @@ include:
     - .job_rules_default
   script:
     - !reference [.scripts, zammad_db_init]
-    - bundle exec rspec --require ./spec/rspec_extensions.rb --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration --profile 10
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration
 
 # RSpec 3rd party integration tests are independent of the database
 # therefore we need only one job and choose a random database for each run
@@ -33,4 +33,4 @@ rspec:integration:
     - !reference [.services, s3]
   script:
     - !reference [.scripts, zammad_db_init]
-    - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t integration -t ~integration_standalone --profile 10
+    - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t integration -t ~integration_standalone

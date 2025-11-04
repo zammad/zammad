@@ -49,21 +49,20 @@ describe('correctly adds signature', { retries: 2 }, () => {
   it('add signature into an empty editor', () => {
     resolveEditor().then((context) => {
       cy.findByRole('textbox')
-        .should('have.html', `${BREAK_HTML}`)
+        .shouldHaveNormalizedHtml(`${BREAK_HTML}`)
         .then(() => {
           context.addSignature({
             body: SIGNATURE,
             id: 1,
           })
           cy.findByRole('textbox')
-            .should(
-              'have.html',
+            .shouldHaveNormalizedHtml(
               `${BREAK_HTML}${BREAK_HTML}${WRAPPED_SIGNATURE('1', PARSED_SIGNATURE)}${BREAK_HTML}`,
             )
             .then(() => {
               context.removeSignature()
               // FIXME: Try to address the extra line break issue when removing signature.
-              cy.findByRole('textbox').should('have.html', `${BREAK_HTML}${BREAK_HTML}`)
+              cy.findByRole('textbox').shouldContainNormalizedHtml(`${BREAK_HTML}${BREAK_HTML}`)
             })
         })
     })
@@ -81,21 +80,21 @@ describe('correctly adds signature', { retries: 2 }, () => {
           body: SIGNATURE,
           id: 2,
         })
-        cy.findByRole('textbox')
-          .should(
-            'have.html',
-            `<p>${ORIGINAL_TEXT}</p>${BREAK_HTML}${WRAPPED_SIGNATURE(
-              '2',
-              `${PARSED_SIGNATURE}`,
-            )}${BREAK_HTML}`,
-          )
-          .type('new')
+        cy.findByRole('textbox').shouldContainNormalizedHtml(
+          `<p>${ORIGINAL_TEXT}</p>${BREAK_HTML}${WRAPPED_SIGNATURE(
+            '2',
+            `${PARSED_SIGNATURE}`,
+          )}${BREAK_HTML}`,
+        )
+        cy.findByRole('textbox').type('new')
 
         cy.findByRole('textbox')
-          .should('include.html', `<p>${ORIGINAL_TEXT}new</p>`) // cursor didn't move
+          .shouldContainNormalizedHtml(`<p>${ORIGINAL_TEXT}new</p>`) // cursor didn't move
           .then(() => {
             context.removeSignature()
-            cy.findByRole('textbox').should('have.html', `<p>${ORIGINAL_TEXT}new</p>${BREAK_HTML}`)
+            cy.findByRole('textbox').shouldContainNormalizedHtml(
+              `<p>${ORIGINAL_TEXT}new</p>${BREAK_HTML}`,
+            )
           })
       })
   })
@@ -119,21 +118,19 @@ describe('correctly adds signature', { retries: 2 }, () => {
         })
       })
 
-    cy.findByRole('textbox')
-      .should('contain.html', `${BREAK_HTML}<div data-signature=`)
-      .should(
-        'contain.html',
-        '<p data-marker="signature-before"><br class="ProseMirror-trailingBreak"></p><blockquote ',
-      )
-      .type('{moveToStart}text')
+    cy.findByRole('textbox').shouldContainNormalizedHtml(`${BREAK_HTML}<div data-signature=`)
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
+      '<p data-marker="signature-before"><br class="ProseMirror-trailingBreak"></p><blockquote ',
+    )
+    cy.findByRole('textbox').type('{moveToStart}text')
 
+    cy.findByRole('textbox').shouldContainNormalizedHtml('<p>text</p><div data-signature')
     cy.findByRole('textbox')
-      .should('contain.html', '<p>text</p><div data-signature')
       .then(resolveContext)
       .then((context) => {
         context.removeSignature()
       })
 
-    cy.findByRole('textbox').should('contain.html', `<p>text</p><p data-marker=`)
+    cy.findByRole('textbox').shouldContainNormalizedHtml(`<p>text</p><p data-marker=`)
   })
 })

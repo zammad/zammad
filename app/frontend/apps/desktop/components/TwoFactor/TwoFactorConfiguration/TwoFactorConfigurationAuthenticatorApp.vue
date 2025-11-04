@@ -218,7 +218,7 @@ defineExpose({
         </CommonLabel>
         <ul class="list-disc ltr:pl-5 rtl:pr-5">
           <li v-for="app in authenticatorApps" :key="app.key">
-            <CommonLink external :link="app.link" open-in-new-tab>
+            <CommonLink class="text-sm leading-snug" :link="app.link" open-in-new-tab>
               {{ $t(app.label) }}
             </CommonLink>
           </li>

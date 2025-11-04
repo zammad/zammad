@@ -26,6 +26,7 @@ const props = defineProps<Props>()
 
 const { config } = useApplicationStore()
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   optionIconComponent: markRaw(FieldTicketOptionIcon),
   gqlQuery: AutocompleteSearchTicketDocument,

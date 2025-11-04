@@ -29,7 +29,18 @@ const customer = computed(() => {
 <template>
   <div class="flex cursor-pointer ltr:pr-3 rtl:pl-3">
     <div class="flex w-14 items-center justify-center">
-      <CommonTicketStateIndicator :color-code="entity.stateColorCode" :label="entity.state.name" />
+      <CommonIcon
+        v-if="entity.aiAgentRunning"
+        role="status"
+        :aria-label="$t('Currently processing this ticket…')"
+        size="small"
+        name="check-circle-no-ai"
+      />
+      <CommonTicketStateIndicator
+        v-else
+        :color-code="entity.stateColorCode"
+        :label="entity.state.name"
+      />
     </div>
     <div
       class="flex flex-1 items-center gap-1 overflow-hidden border-b border-white/10 py-3 text-gray-100 ltr:pr-2 rtl:pl-2"

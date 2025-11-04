@@ -53,7 +53,7 @@ class SecureMailing::Backend::HandlerOutgoing < SecureMailing::Backend::Handler
   end
 
   def log(action, status, error = nil)
-    recipients = %i[to cc].map { |recipient| mail[recipient] }.join(' ').strip!
+    recipients = %i[to cc].map { |recipient| mail[recipient] }.join(' ').strip
     HttpLog.create(
       direction:     'out',
       facility:      type,

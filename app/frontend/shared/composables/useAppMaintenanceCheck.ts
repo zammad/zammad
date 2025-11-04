@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { useRouteQuery } from '@vueuse/router'
-import { onMounted, reactive, watch } from 'vue'
+import { computed, onMounted } from 'vue'
 
 import {
   useNotifications,
@@ -18,6 +18,8 @@ import type {
 import { EnumAppMaintenanceType } from '#shared/graphql/types.ts'
 import { QueryHandler, SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
 import testFlags from '#shared/utils/testFlags.ts'
+
+import { useQueryPolling } from './useQueryPolling.ts'
 
 let checksumQuery: QueryHandler<
   ApplicationBuildChecksumQuery,
@@ -55,15 +57,19 @@ const useAppMaintenanceCheck = (maintenanceOptions: UseAppMaintenanceCheckOption
       defaultPollInterval.toString(),
     )
 
-    const options = reactive({
-      pollInterval: parseInt(applicationRebuildCheckInterval.value, 10),
+    const pollInterval = computed(() => {
+      return parseInt(applicationRebuildCheckInterval.value, 10)
     })
 
-    watch(applicationRebuildCheckInterval, () => {
-      options.pollInterval = parseInt(applicationRebuildCheckInterval.value, 10)
+    checksumQuery = new QueryHandler(useApplicationBuildChecksumQuery(), {
+      errorShowNotification: false,
     })
 
-    checksumQuery = new QueryHandler(useApplicationBuildChecksumQuery(options))
+    const { startPolling } = useQueryPolling(checksumQuery, pollInterval)
+
+    checksumQuery.watchOnceOnResult(() => {
+      startPolling()
+    })
 
     const notificationMessage = __(
       'A newer version of the app is available. Please reload at your earliest.',

@@ -6,6 +6,20 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
     executions * 25.seconds
   }
 
+  MICROSOFT_GRAPH_ATTEMPTS_COUNT = 4
+
+  rescue_from MicrosoftGraph::ApiError do |error|
+    executions = executions_for(MicrosoftGraph::ApiError)
+
+    next if executions >= MICROSOFT_GRAPH_ATTEMPTS_COUNT
+
+    if error.retry_after
+      retry_job wait_until: error.retry_after
+    else
+      retry_job wait: executions * (15.seconds + (executions * 10.seconds))
+    end
+  end
+
   def perform(article_id)
     record = Ticket::Article.find(article_id)
 
@@ -74,6 +88,9 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
         },
         notification,
       )
+    rescue MicrosoftGraph::ApiError => e
+      log_error(record, e, channel)
+      return
     rescue => e
       log_error(record, e.message, channel)
       return
@@ -122,7 +139,9 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
     )
   end
 
-  def log_error(local_record, message, channel = nil)
+  def log_error(local_record, error_or_message, channel = nil)
+    message = error_or_message.try(:message) || error_or_message
+
     if channel
       local_record.preferences['delivery_channel_id'] = channel.id
     end
@@ -170,6 +189,6 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
       UserInfo.current_user_id = nil
     end
 
-    raise message
+    raise error_or_message
   end
 end

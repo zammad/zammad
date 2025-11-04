@@ -800,12 +800,12 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     context 'when many tickets exist too' do
       let(:new_tickets) do
         Array.new(55).map.with_index do |_elem, i|
-          t = create(:ticket, group: Ticket.find(1).group, title: "Ticket #{i} zammad")
+          t = create(:ticket, group: Ticket.find(1).group, title: "Ticket #{i} zammad example")
           create(:ticket_article, ticket: t)
         end
       end
 
-      let(:all_zammad_tickets)         { Ticket.where('title LIKE ?', '%ammad%') }
+      let(:all_zammad_tickets)         { Ticket.where('title LIKE ?', '%example%') }
       let(:all_zammad_tickets_default) { all_zammad_tickets.reorder('updated_at desc').to_a }
       let(:all_zammad_tickets_sorted)  { all_zammad_tickets.reorder(:title).to_a }
 

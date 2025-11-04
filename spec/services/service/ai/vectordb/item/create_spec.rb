@@ -6,7 +6,7 @@ RSpec.describe Service::AI::VectorDB::Item::Create do
   let(:object) { create(:ticket) }
 
   before do
-    Setting.set('ai_provider', 'open_ai')
+    setup_ai_provider('open_ai')
   end
 
   it 'creates a vector database item' do

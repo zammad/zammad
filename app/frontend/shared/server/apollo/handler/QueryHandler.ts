@@ -4,10 +4,12 @@ import { getOperationName } from '@apollo/client/utilities'
 import { useApolloClient } from '@vue/apollo-composable'
 import { watch, nextTick } from 'vue'
 
+import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { BaseHandler } from '#shared/server/apollo/handler/BaseHandler.ts'
 import type {
   OperationQueryOptionsReturn,
   OperationQueryResult,
+  QueryHandlerOptions,
   WatchResultCallback,
 } from '#shared/types/server/apollo/handler.ts'
 import type { ReactiveFunction } from '#shared/types/utils.ts'
@@ -29,8 +31,29 @@ import type { Ref, WatchStopHandle } from 'vue'
 export default class QueryHandler<
   TResult = OperationQueryResult,
   TVariables extends OperationVariables = OperationVariables,
-> extends BaseHandler<TResult, TVariables, UseQueryReturn<TResult, TVariables>> {
+  TOptions extends QueryHandlerOptions = QueryHandlerOptions,
+> extends BaseHandler<TResult, TVariables, UseQueryReturn<TResult, TVariables>, TOptions> {
   private lastCancel: (() => void) | null = null
+
+  protected initialize(): void {
+    super.initialize()
+
+    this.setupReconnectionHandler()
+  }
+
+  private setupReconnectionHandler(): void {
+    if (!this.handlerOptions.triggerRefetchOnConnectionReconnect) return
+
+    useOnEmitter('reconnected', () => {
+      if (
+        (typeof this.handlerOptions.triggerRefetchOnConnectionReconnect === 'function' &&
+          this.handlerOptions.triggerRefetchOnConnectionReconnect()) ||
+        this.handlerOptions.triggerRefetchOnConnectionReconnect
+      ) {
+        this.refetch().catch(() => {})
+      }
+    })
+  }
 
   public cancel() {
     this.lastCancel?.()

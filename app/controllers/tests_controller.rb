@@ -34,7 +34,15 @@ class TestsController < ApplicationController
     # Emulate the originating controller.
     params[:controller] = origin if origin
 
-    raise exception.safe_constantize, message
+    klass = exception.safe_constantize
+
+    error = if klass == Exceptions::ApplicationModel
+              klass.new(Ticket.first, message)
+            else
+              klass.new(message)
+            end
+
+    raise error
   end
 
 end

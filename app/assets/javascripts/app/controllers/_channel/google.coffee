@@ -433,27 +433,16 @@ class AppConfig extends App.ControllerModal
   buttonCancel: true
   small: true
   events:
-    'click .js-copy': 'copyToClipboard'
+    'click .js-copy':   'copyInputToClipboard'
+    'click .js-select': 'selectAll'
 
   content: ->
     @external_credential = App.ExternalCredential.findByAttribute('name', 'google')
-    content = $(App.view('google/app_config')(
+
+    $(App.view('google/app_config')(
       external_credential: @external_credential
       callbackUrl: @callbackUrl
     ))
-    content.find('.js-select').on('click', (e) =>
-      @selectAll(e)
-    )
-    content
-
-  copyToClipboard: (e) =>
-    e.preventDefault()
-
-    button = $(e.target).parents('[role="button"]')
-    field_name = button.data('targetField')
-    value = $(@container).find("input[name='#{jQuery.escapeSelector(field_name)}']").val()
-
-    @copyToClipboardWithTooltip(value, e.target,'.modal-body', true)
 
   onClosed: =>
     return if !@isChanged

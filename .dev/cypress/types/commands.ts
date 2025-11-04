@@ -71,6 +71,11 @@ declare global {
       ): Chainable<Subject>
       mount: (typeof import('cypress/vue'))['mount']
     }
+
+    interface Chainable<Subject> {
+      shouldContainNormalizedHtml(expected: string): Chainable<Subject>
+      shouldHaveNormalizedHtml(expected: string): Chainable<Subject>
+    }
   }
 }
 

@@ -1,126 +1,6 @@
 ---
 http_interactions:
 - request:
-    method: get
-    uri: https://api.anthropic.com/v1/models
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Zammad User Agent
-      Host:
-      - api.anthropic.com
-      Anthropic-Version:
-      - '2023-06-01'
-      X-Api-Key:
-      - "<ANTHROPIC_API_KEY>"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Tue, 10 Jun 2025 11:46:47 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Request-Id:
-      - req_011CPzV8TA8bhkbezB5X5bne
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Anthropic-Organization-Id:
-      - 78ada7e3-54be-4672-90aa-f3cd11f2703c
-      Via:
-      - 1.1 google
-      Cf-Cache-Status:
-      - DYNAMIC
-      X-Robots-Tag:
-      - none
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - 94d8a154aca7d3b5-FRA
-    body:
-      encoding: ASCII-8BIT
-      string: '{"data":[{"type":"model","id":"claude-opus-4-20250514","display_name":"Claude
-        Opus 4","created_at":"2025-05-22T00:00:00Z"},{"type":"model","id":"claude-sonnet-4-20250514","display_name":"Claude
-        Sonnet 4","created_at":"2025-05-22T00:00:00Z"},{"type":"model","id":"claude-3-7-sonnet-20250219","display_name":"Claude
-        Sonnet 3.7","created_at":"2025-02-24T00:00:00Z"},{"type":"model","id":"claude-3-5-sonnet-20241022","display_name":"Claude
-        Sonnet 3.5 (New)","created_at":"2024-10-22T00:00:00Z"},{"type":"model","id":"claude-3-5-haiku-20241022","display_name":"Claude
-        Haiku 3.5","created_at":"2024-10-22T00:00:00Z"},{"type":"model","id":"claude-3-5-sonnet-20240620","display_name":"Claude
-        Sonnet 3.5 (Old)","created_at":"2024-06-20T00:00:00Z"},{"type":"model","id":"claude-3-haiku-20240307","display_name":"Claude
-        Haiku 3","created_at":"2024-03-07T00:00:00Z"},{"type":"model","id":"claude-3-opus-20240229","display_name":"Claude
-        Opus 3","created_at":"2024-02-29T00:00:00Z"}],"has_more":false,"first_id":"claude-opus-4-20250514","last_id":"claude-3-opus-20240229"}'
-  recorded_at: Tue, 10 Jun 2025 11:46:47 GMT
-- request:
-    method: get
-    uri: https://api.anthropic.com/v1/models
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Zammad User Agent
-      Host:
-      - api.anthropic.com
-      Anthropic-Version:
-      - '2023-06-01'
-      X-Api-Key:
-      - "<ANTHROPIC_API_KEY>"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Tue, 10 Jun 2025 11:46:47 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Request-Id:
-      - req_011CPzV8Um7xmgy6AoU4Jdo6
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Anthropic-Organization-Id:
-      - 78ada7e3-54be-4672-90aa-f3cd11f2703c
-      Via:
-      - 1.1 google
-      Cf-Cache-Status:
-      - DYNAMIC
-      X-Robots-Tag:
-      - none
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - 94d8a1571d3b9874-FRA
-    body:
-      encoding: ASCII-8BIT
-      string: '{"data":[{"type":"model","id":"claude-opus-4-20250514","display_name":"Claude
-        Opus 4","created_at":"2025-05-22T00:00:00Z"},{"type":"model","id":"claude-sonnet-4-20250514","display_name":"Claude
-        Sonnet 4","created_at":"2025-05-22T00:00:00Z"},{"type":"model","id":"claude-3-7-sonnet-20250219","display_name":"Claude
-        Sonnet 3.7","created_at":"2025-02-24T00:00:00Z"},{"type":"model","id":"claude-3-5-sonnet-20241022","display_name":"Claude
-        Sonnet 3.5 (New)","created_at":"2024-10-22T00:00:00Z"},{"type":"model","id":"claude-3-5-haiku-20241022","display_name":"Claude
-        Haiku 3.5","created_at":"2024-10-22T00:00:00Z"},{"type":"model","id":"claude-3-5-sonnet-20240620","display_name":"Claude
-        Sonnet 3.5 (Old)","created_at":"2024-06-20T00:00:00Z"},{"type":"model","id":"claude-3-haiku-20240307","display_name":"Claude
-        Haiku 3","created_at":"2024-03-07T00:00:00Z"},{"type":"model","id":"claude-3-opus-20240229","display_name":"Claude
-        Opus 3","created_at":"2024-02-29T00:00:00Z"}],"has_more":false,"first_id":"claude-opus-4-20250514","last_id":"claude-3-opus-20240229"}'
-  recorded_at: Tue, 10 Jun 2025 11:46:47 GMT
-- request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
@@ -150,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Jun 2025 11:46:49 GMT
+      - Mon, 27 Oct 2025 09:26:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -158,35 +38,37 @@ http_interactions:
       Connection:
       - keep-alive
       Anthropic-Ratelimit-Input-Tokens-Limit:
-      - '10000'
+      - '40000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '10000'
+      - '40000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-06-10T11:46:48Z'
+      - '2025-10-27T09:26:34Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
-      - '4000'
+      - '16000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
-      - '4000'
+      - '16000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-06-10T11:46:49Z'
+      - '2025-10-27T09:26:34Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '5'
+      - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '3'
+      - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-06-10T11:47:09Z'
+      - '2025-10-27T09:26:33Z'
       Anthropic-Ratelimit-Tokens-Limit:
-      - '14000'
+      - '56000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '14000'
+      - '56000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-06-10T11:46:48Z'
+      - '2025-10-27T09:26:34Z'
       Request-Id:
-      - req_011CPzV8XWZwWozBpHq3bkwj
+      - req_011CUXTsVF776rUeesTpeN9i
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
-      - 78ada7e3-54be-4672-90aa-f3cd11f2703c
+      - 43c97a25-c30d-4a1b-bb31-5a928256fe18
+      X-Envoy-Upstream-Service-Time:
+      - '961'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -196,10 +78,10 @@ http_interactions:
       Server:
       - cloudflare
       Cf-Ray:
-      - 94d8a15b0f4edcba-FRA
+      - 995127084cd230f4-FRA
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01P373gqjQbB4ahE25VGyaiF","type":"message","role":"assistant","model":"claude-3-7-sonnet-20250219","content":[{"type":"text","text":"{
-        \"connected\": \"true\" }"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":52,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":11,"service_tier":"standard"}}'
-  recorded_at: Tue, 10 Jun 2025 11:46:49 GMT
+      string: '{"model":"claude-3-7-sonnet-20250219","id":"msg_01G46iWSQdzfStSUrVNk4kcd","type":"message","role":"assistant","content":[{"type":"text","text":"{
+        \"connected\": \"true\" }"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":52,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":11,"service_tier":"standard"}}'
+  recorded_at: Mon, 27 Oct 2025 09:26:34 GMT
 recorded_with: VCR 6.3.1

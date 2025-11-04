@@ -21,12 +21,12 @@ import {
 } from 'vue'
 
 import { useAppName } from '#shared/composables/useAppName.ts'
+import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { useTransitionConfig } from '#shared/composables/useTransitionConfig.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { getPopoverClasses } from '#shared/initializer/initializePopover.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
-import emitter from '#shared/utils/emitter.ts'
 import stopEvent from '#shared/utils/events.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
@@ -42,6 +42,7 @@ export interface Props {
   id?: string
   persistent?: boolean
   noCloseOnClickOutside?: boolean
+  noFullWidth?: boolean
   zIndex?: string
 }
 
@@ -393,7 +394,7 @@ onMounted(() => {
   testFlags.set(props.id ? `common-popover.mounted-${props.id}` : 'common-popover.mounted')
 })
 
-emitter.on('close-popover', () => {
+useOnEmitter('close-popover', () => {
   if (showPopover.value) closePopover()
 })
 </script>
@@ -413,7 +414,7 @@ emitter.on('close-popover', () => {
         :aria-labelledby="owner && '$el' in owner ? owner.$el?.id : owner?.id"
         v-bind="$attrs"
       >
-        <div class="w-full overflow-y-auto">
+        <div class="overflow-y-auto" :class="{ 'w-full': !noFullWidth }">
           <slot />
         </div>
         <div
@@ -433,7 +434,7 @@ emitter.on('close-popover', () => {
         :aria-labelledby="owner && '$el' in owner ? owner.$el?.id : owner?.id"
         v-bind="$attrs"
       >
-        <div class="w-full overflow-y-auto">
+        <div class="overflow-y-auto" :class="{ 'w-full': !noFullWidth }">
           <slot />
         </div>
         <div

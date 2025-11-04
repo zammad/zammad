@@ -30,20 +30,6 @@ class Channel::Driver::Telegram
 
   end
 
-=begin
-
-  Channel::Driver::Telegram.streamable?
-
-returns
-
-  true|false
-
-=end
-
-  def self.streamable?
-    false
-  end
-
   private
 
   def check_external_credential(options)

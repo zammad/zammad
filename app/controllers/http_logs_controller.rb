@@ -5,11 +5,10 @@ class HttpLogsController < ApplicationController
 
   # GET /http_logs/:facility
   def index
-    list = if params[:facility]
-             HttpLog.where(facility: params[:facility]).reorder(created_at: :desc).limit(params[:limit] || 50)
-           else
-             HttpLog.reorder(created_at: :desc).limit(params[:limit] || 50)
-           end
+    list = HttpLogPolicy::Scope.new(current_user, HttpLog)
+      .resolve(facility: params[:facility])
+      .reorder(created_at: :desc).limit(params[:limit] || 50)
+
     model_index_render_result(list)
   end
 

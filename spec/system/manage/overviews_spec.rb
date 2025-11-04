@@ -413,4 +413,32 @@ RSpec.describe 'Manage > Overviews', type: :system do
       include_examples 'showing the error message if roles are empty'
     end
   end
+
+  describe 'Overviews: On deletion of the 51th element it will show no entries #5696', authenticated_as: :authenticate, searchindex: true do
+    def authenticate
+      Overview.destroy_all
+      create_list(:overview, 51)
+      searchindex_model_reload([Overview])
+
+      true
+    end
+
+    it 'redirects to the previous page' do
+      visit '/#manage/overviews'
+
+      first('.table-overview a', text: '2').click
+
+      expect(page).to have_current_path(%r{/#manage/overviews/2/}, url: true)
+      expect(page).to have_css('.table-overview tbody tr.item', count: 1)
+
+      # Delete the single item on the second page
+      find('.table-overview tbody .js-action').click
+      find('[data-table-action="delete"]').click
+
+      find('.modal-dialog .js-submit').click
+
+      expect(page).to have_current_path(%r{/#manage/overviews/1/}, url: true)
+      expect(page).to have_css('.table-overview tbody tr.item', count: 50)
+    end
+  end
 end

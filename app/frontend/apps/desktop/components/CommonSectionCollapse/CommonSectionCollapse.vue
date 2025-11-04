@@ -15,6 +15,7 @@ export interface Props {
   noNegativeMargin?: boolean
   noHeader?: boolean
   scrollable?: boolean
+  containerClass?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -108,7 +109,7 @@ watch(
         v-show="!isCollapsed || noHeader"
         :id="id"
         :data-test-id="id"
-        :class="{ 'overflow-y-auto outline-none': scrollable }"
+        :class="[containerClass, { 'overflow-y-auto outline-none': scrollable }]"
       >
         <slot :header-id="headerId" />
       </div>

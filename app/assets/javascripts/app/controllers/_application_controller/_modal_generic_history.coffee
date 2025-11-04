@@ -39,6 +39,7 @@ class App.GenericHistory extends App.ControllerModal
     {
       'PostmasterFilter': __('Postmaster Filter'),
       'Job': __('Scheduler'),
+      'AI::Agent': __('AI Agent'),
     }[type] || type
 
   reworkItems: (items) ->

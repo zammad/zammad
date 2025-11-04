@@ -19,7 +19,7 @@ export const useTicketSharedDraft = (setSkipNextStateUpdate?: (skip: boolean) =>
       newArticle.type = newArticle.articleType
       newArticle.to = ((newArticle.to as string[]) || []).join(', ')
       newArticle.cc = ((newArticle.cc as string[]) || []).join(', ')
-      newArticle.body = removeSignatureFromBody(newArticle.body)
+      newArticle.body = removeSignatureFromBody(newArticle.body, true)
     }
 
     return {

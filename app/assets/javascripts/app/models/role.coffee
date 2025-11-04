@@ -7,7 +7,7 @@ class App.Role extends App.Model
     { name: 'permission_ids',     display: __('Permissions'),       tag: 'permission', item_class: 'checkbox', null: true },
     { name: 'group_ids',          display: __('Group permissions'), tag: 'group_permissions', item_class: 'checkbox', null: true },
     { name: 'default_at_signup',  display: __('Default at Signup'), tag: 'boolean', default: false, translate: true },
-    { name: 'note',               display: __('Note'),              tag: 'textarea', note: __('Notes are visible to agents only, never to customers.'), limit: 250, null: true },
+    { name: 'note',               display: __('Note'),              tag: 'richtext', note: __('Notes are visible to agents only, never to customers.'), limit: 250, null: true },
     { name: 'active',             display: __('Active'),            tag: 'active',  default: true },
     { name: 'created_by_id',      display: __('Created by'),        relation: 'User', readonly: 1 },
     { name: 'created_at',         display: __('Created'),           tag: 'datetime', readonly: 1 },

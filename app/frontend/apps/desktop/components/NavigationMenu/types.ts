@@ -11,7 +11,9 @@ export type NavigationMenuCategory = {
 }
 
 export type NavigationMenuEntry = {
+  id?: string
   label: string
+  title?: string
   icon?: string
   iconColor?: string
   count?: string | number

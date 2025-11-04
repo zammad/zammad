@@ -177,14 +177,16 @@ describe('TicketChecklistBadges', () => {
 
     expect(badges.at(1)).toHaveTextContent('tracked in2')
 
-    expect(wrapper.getByRole('link', { name: 'Hook#123' })).toHaveTextContent('Foo Title')
+    expect(wrapper.getByRole('link', { name: 'Hook#123 - Foo Title' })).toHaveTextContent(
+      'Foo Title',
+    )
 
-    expect(wrapper.getByRole('link', { name: 'Hook#123' })).toHaveAttribute(
+    expect(wrapper.getByRole('link', { name: 'Hook#123 - Foo Title' })).toHaveAttribute(
       'href',
       '/desktop/tickets/2',
     )
 
-    expect(wrapper.getByRole('link', { name: 'Hook#456' })).toHaveAttribute(
+    expect(wrapper.getByRole('link', { name: 'Hook#456 - Bar Title' })).toHaveAttribute(
       'href',
       '/desktop/tickets/23',
     )

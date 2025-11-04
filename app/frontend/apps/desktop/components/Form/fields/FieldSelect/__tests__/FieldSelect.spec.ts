@@ -2,7 +2,7 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { getAllByRole, getByRole, getByText, waitFor } from '@testing-library/vue'
+import { getAllByRole, getByRole, waitFor } from '@testing-library/vue'
 import { cloneDeep, keyBy } from 'lodash-es'
 
 import { queryAllByIconName, queryByIconName } from '#tests/support/components/iconQueries.ts'
@@ -264,16 +264,9 @@ describe('Form - Field - Select - Options', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select'))
 
-    const listbox = wrapper.getByRole('listbox')
+    const options = wrapper.getAllByTestId('select-item')
 
-    const selectOptions = getAllByRole(listbox, 'option')
-
-    expect(selectOptions[1]).toHaveAttribute('aria-disabled', 'true')
-
-    expect(getByText(listbox, disabledOptions[1].label)).toHaveClasses([
-      'text-stone-200',
-      'dark:text-neutral-500',
-    ])
+    expect(options[1]).toHaveAttribute('aria-description', 'This item expands to show more options')
   })
 
   it('supports icon property', async () => {
@@ -1190,13 +1183,10 @@ describe('Form - Field - Select - Accessibility', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select'))
 
-    const listbox = wrapper.getByRole('listbox')
+    const option = wrapper.getByTestId('select-item')
 
-    const selectOptions = getAllByRole(listbox, 'option')
-
-    expect(selectOptions).toHaveLength(1)
-    expect(selectOptions[0]).toHaveAttribute('aria-disabled', 'true')
-    expect(selectOptions[0]).toHaveTextContent('No results found')
+    expect(option).toHaveAttribute('aria-description', 'This item expands to show more options')
+    expect(option).toHaveTextContent('No results found')
   })
 
   it('provides labels for screen readers', async () => {

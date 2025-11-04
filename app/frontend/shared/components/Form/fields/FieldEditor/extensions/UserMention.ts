@@ -48,7 +48,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     addCommands: () => ({
       openUserMention:
         () =>
-        // TODO: Check if this explicit typing is needed after the stable release of next TipTap version.
+        // TODO: Check if this explicit typing is still needed after the release of TipTap version. > ^3.3
         ({ chain }: CommandProps) =>
           chain().insertContent(` ${ACTIVATOR}`).run(),
     }),
@@ -119,9 +119,9 @@ export const UserLink = Link.extend({
   name: PLUGIN_LINK_NAME,
   addAttributes() {
     return {
-      // TODO: Check if this explicit typing is still needed after the stable release of next TipTap version.
+      // TODO: Check if this explicit typing is still needed after the release of TipTap version. > ^3.3
       ...(
-        this as {
+        this as unknown as {
           parent: ParentConfig<MarkConfig<unknown, Storage>>['addAttributes']
         }
       ).parent?.(),
@@ -130,9 +130,9 @@ export const UserLink = Link.extend({
       },
       'data-mention-user-id': {
         default: null,
-        // TODO: Check if this explicit typing is still needed after the stable release of next TipTap version.
+        // TODO: Check if this explicit typing is still needed after the release of TipTap version.  > ^3.3
         parseHTML: (element: HTMLElement) => element.dataset.mentionUserId,
-        // TODO: Check if this explicit typing is still needed after the stable release of next TipTap version.
+        // TODO: Check if this explicit typing is still needed after the release of TipTap version.  > ^3.3
         renderHTML: (attributes: Record<string, unknown>) => ({
           'data-mention-user-id': attributes['data-mention-user-id'],
         }),

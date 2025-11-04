@@ -58,8 +58,8 @@ const showDraft = () => {
 <template>
   <CommonDialog
     :name="dialogName"
-    header-title="Save Draft"
-    content="There is an existing draft. Do you want to overwrite it?"
+    header-title="__('Save Draft')"
+    content="__('There is an existing draft. Do you want to overwrite it?')"
   >
     <template #footer>
       <div class="flex items-center gap-2 ltr:justify-end rtl:flex-row-reverse rtl:justify-start">

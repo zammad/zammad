@@ -29,13 +29,14 @@ examples how to use
 
 =end
 
-  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false)
+  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false, ignore_missing_objects: false)
     @objects  = objects
     @locale   = locale || Locale.default
     @timezone = timezone || Setting.get('timezone_default')
     @template = NotificationFactory::Template.new(template, escape || url_encode, trusted)
     @escape = escape
     @url_encode = url_encode
+    @ignore_missing_objects = ignore_missing_objects
   end
 
   def render(debug_errors: true)
@@ -50,7 +51,6 @@ examples how to use
   # d - data of object
   # d('user.firstname', htmlEscape)
   def d(key, escape = nil, escaping: true)
-
     # do validation, ignore some methods
     return "\#{#{key} / not allowed}" if !data_key_valid?(key)
 
@@ -89,7 +89,11 @@ examples how to use
     object_refs = @objects[object_name] || @objects[object_name.to_sym]
 
     # if object is not in available objects, just return
-    return debug("\#{#{object_name} / no such object}") if !object_refs
+    if !object_refs
+      return "\#{#{key}}" if @ignore_missing_objects
+
+      return debug("\#{#{object_name} / no such object}")
+    end
 
     # if content of method is a complex datatype, just return
     if object_methods.blank? && object_refs.class != String && object_refs.class != Float && object_refs.class != Integer
@@ -133,7 +137,7 @@ examples how to use
 
         parameters = []
         parameter.split(',').each do |p|
-          p = p.strip!
+          p = p.strip
 
           if p != p.to_i.to_s
             value = debug("\#{#{object_name}.#{object_methods_s} / invalid parameter: #{p}}")

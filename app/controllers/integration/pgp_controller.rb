@@ -34,9 +34,7 @@ class Integration::PGPController < ApplicationController
   end
 
   def key_add
-    PGPKey.params_cleanup! params
-
-    model_create_render(PGPKey, params)
+    model_create_render(PGPKey, params_add)
   end
 
   def key_delete
@@ -79,4 +77,17 @@ class Integration::PGPController < ApplicationController
       pgp_tool.export(key.fingerprint).stdout
     end
   end
+
+  def params_add
+    safe_params = params.permit(:file, :private_key, :passphrase, :domain_alias)
+
+    if safe_params[:private_key].present?
+      safe_params[:key] = safe_params.delete(:private_key).strip
+    elsif safe_params[:file].is_a? ActionDispatch::Http::UploadedFile
+      safe_params[:key] = safe_params.delete(:file).tempfile
+    end
+
+    safe_params
+  end
+
 end

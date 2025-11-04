@@ -88,7 +88,7 @@ RSpec.describe Setting, type: :model do
         setting.update(state_initial: { value: 'foo' })
         allow(described_class.logger).to receive(:info)
         described_class.reset(setting.name)
-        expect(described_class.logger).to have_received(:info).with("Setting.reset('#{setting.name}', {\"value\"=>\"foo\"})")
+        expect(described_class.logger).to have_received(:info).with("Setting.reset('#{setting.name}', {\"value\" => \"foo\"})")
       end
     end
 

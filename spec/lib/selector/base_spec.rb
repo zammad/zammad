@@ -1606,4 +1606,51 @@ RSpec.describe Selector::Base, searchindex: true do
       end
     end
   end
+
+  # https://github.com/zammad/zammad/issues/5686
+  describe 'text blob selectors fail with complex partial phrases', :aggregate_failures do
+    let(:ticket)    { create(:ticket, title: 'This is a test ticket') }
+    let(:article)   { create(:ticket_article, ticket: ticket, body: 'phrase: 1337') }
+    let(:condition) do
+      {
+        operator:   'AND',
+        conditions: [
+          {
+            name:     'article.body',
+            operator: 'contains',
+            value:    term,
+          },
+        ]
+      }
+    end
+
+    before do
+      article
+      searchindex_model_reload([Ticket])
+    end
+
+    context 'when term is a full phrase' do
+      let(:term) { 'phrase: 1337' }
+
+      it 'does match' do
+        count, = Ticket.selectors(condition)
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition)
+        expect(result[:count]).to eq(1)
+      end
+    end
+
+    context 'when term is a partial phrase' do
+      let(:term) { 'phrase: 13' }
+
+      it 'does match' do
+        count, = Ticket.selectors(condition)
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition)
+        expect(result[:count]).to eq(1)
+      end
+    end
+  end
 end

@@ -1,13 +1,15 @@
 # Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::AIAssistance::TextTools < Service::BaseWithCurrentUser
-  attr_reader :input, :service_type
+  attr_reader :input, :text_tool, :regeneration_of, :template_render_context
 
-  def initialize(input:, service_type:, current_user: nil)
+  def initialize(input:, text_tool:, current_user: nil, regeneration_of: nil, template_render_context: {})
     super(current_user:) if current_user.present?
 
     @input = input
-    @service_type = service_type
+    @text_tool = text_tool
+    @regeneration_of = regeneration_of
+    @template_render_context = template_render_context
   end
 
   def execute
@@ -16,21 +18,30 @@ class Service::AIAssistance::TextTools < Service::BaseWithCurrentUser
     Service::CheckFeatureEnabled.new(name: 'ai_assistance_text_tools').execute
     Service::CheckFeatureEnabled.new(name: 'ai_provider', custom_error_message: __('AI provider is not configured.')).execute
 
-    text_tool = ai_text_tool_service_class.new(
+    raise ArgumentError, __('AI assistance text tool is invalid.') if !text_tool.is_a?(AI::TextTool)
+    raise ArgumentError, __('AI assistance text tool is inactive.') if !text_tool.active?
+
+    ai_text_tool_service = AI::Service::TextTool.new(
       current_user:,
-      context_data: {
-        input:
-      }
+      context_data:    {
+        instruction:        rendered_text_tool_instruction,
+        fixed_instructions: Setting.get('ai_assistance_text_tools_fixed_instructions'),
+        input:,
+        text_tool:,
+      },
+      regeneration_of:,
     )
 
-    text_tool.execute
+    ai_text_tool_service.execute
   end
 
   private
 
-  def ai_text_tool_service_class
-    "AI::Service::Text#{service_type.classify}".constantize
-  rescue
-    raise ArgumentError, __("AI assistance text tool service type '#{service_type}' is not supported.")
+  def rendered_text_tool_instruction
+    @rendered_text_tool_instruction ||= NotificationFactory::Renderer.new(
+      objects:  { user: current_user }.merge(template_render_context),
+      template: text_tool.instruction,
+      escape:   false
+    ).render(debug_errors: false)
   end
 end

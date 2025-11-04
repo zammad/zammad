@@ -5,6 +5,7 @@ module DataPrivacyTask::HasActivityStreamLog
 
   included do
     include ::HasActivityStreamLog
+
     after_update :log_activity
 
     activity_stream_permission 'admin.data_privacy'

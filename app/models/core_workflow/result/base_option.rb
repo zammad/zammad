@@ -28,14 +28,27 @@ class CoreWorkflow::Result::BaseOption < CoreWorkflow::Result::Backend
   end
 
   def relation_value_default
+    return if !@result_object.payload['screen'].starts_with?('create')
     return if attribute.blank?
     return if !@result_object.attributes.attribute_options_relation?(attribute)
 
-    @result_object.attributes.options_relation_default(attribute)
+    value = @result_object.attributes.options_relation_default(attribute)
+    return if excluded_by_restrict_values?(value)
+
+    value
+  end
+
+  def init_value_default
+    return if !@result_object.payload['screen'].starts_with?('create')
+
+    value = @result_object.attributes.new_only&.try(field)
+    return if excluded_by_restrict_values?(value)
+
+    value
   end
 
   def remove_string
-    @result_object.payload['params'][field] = relation_value_default || first_value_default
+    @result_object.payload['params'][field] = relation_value_default || init_value_default || first_value_default
     set_rerun
   end
 
@@ -58,7 +71,7 @@ class CoreWorkflow::Result::BaseOption < CoreWorkflow::Result::Backend
   end
 
   def restore_array
-    new_value = @result_object.payload_backup['params'][field].map(&:to_s) & @result_object.result[:restrict_values][field]
+    new_value = @result_object.payload_backup['params'][field]&.map(&:to_s) & @result_object.result[:restrict_values][field]
 
     new_value_rerun(field, new_value)
 

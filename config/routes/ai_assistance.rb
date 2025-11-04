@@ -6,7 +6,7 @@ Zammad::Application.routes.draw do
   scope api_path do
     resources :ai_assistance, only: [] do
       collection do
-        post :text_tools
+        post 'text_tools/:id', action: :text_tools
       end
     end
   end

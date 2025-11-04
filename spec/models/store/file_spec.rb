@@ -25,31 +25,66 @@ RSpec.describe Store::File, type: :model do
     end
   end
 
-  describe '.verify' do
-    context 'when no Store::File records exist' do
+  describe 'verify' do
+    let(:counter) { Set.new }
+    let(:stores) do
+      [
+        create(:store, :txt),
+        create(:store, :txt, data: 'foo'),
+        create(:store, :txt, data: 'bar')
+      ]
+    end
+
+    before do
+      stores
+      allow_any_instance_of(described_class).to receive(:checksum_valid?) { |elem|
+        counter << elem.id
+        valid?(elem)
+      }
+    end
+
+    context 'when all files are valid' do
       it 'returns true' do
-        expect(described_class.verify).to be(true)
+        expect(described_class.verify).to be_truthy
+      end
+
+      it 'runs check for all files' do
+        described_class.verify
+        expect(counter.count).to eq(3)
+      end
+
+      it 'does not update checksum on any files even with fix_it = true' do
+        expect_any_instance_of(described_class).not_to receive(:update_checksum!)
+        described_class.verify
+      end
+
+      def valid?(_elem)
+        true
       end
     end
 
-    context 'when all Store::File records have matching #content / #sha attributes' do
-      before do
-        file # create Store::File record
-      end
-
-      it 'returns true' do
-        expect(described_class.verify).to be(true)
-      end
-    end
-
-    context 'when at least one Store::File record’s #content / #sha attributes do not match' do
-      before do
-        file # create Store::File record
-        Store::Provider::DB.last.update(data: 'bar')
-      end
-
+    context 'when one of the files is not valid' do
       it 'returns false' do
-        expect(described_class.verify).to be(false)
+        expect(described_class.verify).to be_falsey
+      end
+
+      it 'runs check for all files' do
+        described_class.verify
+        expect(counter.count).to eq(3)
+      end
+
+      it 'does not update checksum on any files with fix_it = false' do
+        expect_any_instance_of(described_class).not_to receive(:update_checksum!)
+        described_class.verify
+      end
+
+      it 'updates checksum on the invalid file with fix_it = true' do
+        expect_any_instance_of(described_class).to receive(:update_checksum!).once
+        described_class.verify(true)
+      end
+
+      def valid?(elem)
+        elem.id != stores.first.store_file.id
       end
     end
   end
@@ -89,6 +124,116 @@ RSpec.describe Store::File, type: :model do
           .to change { file.reload.provider }.to('DB')
           .and change(Store::Provider::DB, :count).by(1)
           .and change { Dir[storage_path.join('*')].count }.by(-1)
+      end
+    end
+  end
+
+  describe '#update_checksum!' do
+    let(:store)    { create(:store, :txt, data: 'foo') }
+    let(:file)     { store.store_file }
+    let(:new_data) { 'lorem ipsum' }
+
+    context 'when checksum is already correct' do
+      it 'does nothing' do
+        expect { file.update_checksum! }.not_to change(file, :updated_at)
+      end
+    end
+
+    context 'when checksum is incorrect' do
+      let(:initial_sha) { file.sha }
+
+      before do
+        initial_sha
+
+        Store::Provider::DB.find_by(sha: file.sha).update!(data: new_data)
+      end
+
+      it 'changes checksum to correct value' do
+        expect { file.update_checksum! }.to change(file, :sha)
+      end
+
+      it 'calls .change_checksum on provider' do
+        allow(Store::Provider::DB).to receive(:change_checksum)
+
+        file.update_checksum!
+
+        expect(Store::Provider::DB)
+          .to have_received(:change_checksum)
+          .with(initial_sha, described_class.checksum(new_data))
+      end
+
+      it 'updates size on related Store records' do
+        expect { file.update_checksum! }
+          .to change { store.reload.size }.to(new_data.bytesize.to_s)
+      end
+    end
+
+    context 'when checksum is incorrect and another file with the new checksum already exists' do
+      let(:other_store) { create(:store, :txt, data: new_data) }
+      let(:other_file)  { other_store.store_file }
+
+      before do
+        file
+        other_file
+
+        Store::Provider::DB.find_by(sha: file.sha).update!(data: new_data)
+      end
+
+      it 'destroys the record' do
+        expect { file.update_checksum! }
+          .to change { described_class.exists?(file.id) }.to(false)
+      end
+
+      it 'points Store records to existing file' do
+        expect { file.update_checksum! }
+          .to change { store.reload.store_file }.to(other_file)
+      end
+
+      it 'updates size on related Store records' do
+        expect { file.update_checksum! }
+          .to change { store.reload.size }.to(new_data.bytesize.to_s)
+      end
+    end
+
+    context 'when checksum is incorrect, another file with the new checksum already exists, but that file is also changed' do
+      let(:other_store) { create(:store, :txt, data: new_data) }
+      let(:other_file)  { other_store.store_file }
+
+      before do
+        file
+        other_file
+
+        Store::Provider::DB.find_by(sha: file.sha).update!(data: new_data)
+        Store::Provider::DB.find_by(sha: other_file.sha).update!(data: 'yetanotherdatahere')
+      end
+
+      it 'does not destroy the record' do
+        expect do
+          begin begin
+            file.update_checksum!
+          rescue
+            nil
+          end
+          end
+        end
+          .not_to change { described_class.exists?(file.id) }.from(true)
+      end
+
+      it 'does not touch Store records' do
+        expect do
+          begin begin
+            file.update_checksum!
+          rescue
+            nil
+          end
+          end
+        end
+          .not_to change { store.reload.store_file }
+      end
+
+      it 'raises an error' do
+        expect { file.update_checksum! }
+          .to raise_error(%r{CONFLICT: file with SHA})
       end
     end
   end

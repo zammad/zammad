@@ -12,6 +12,7 @@ import { getTicketArticleUpdatesSubscriptionHandler } from '#shared/entities/tic
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import {
   EnumTicketArticleSenderName,
+  EnumTicketSummaryGeneration,
   type TicketAiAssistanceSummaryUpdatesPayload,
   type TicketArticleUpdatesPayload,
 } from '#shared/graphql/types.ts'
@@ -77,28 +78,29 @@ describe('Ticket detail view - Ticket summary', () => {
     })
 
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
       ai_assistance_ticket_summary_config: {
-        conversation_summary: true,
         open_questions: true,
-        problem: true,
-        suggestions: true,
+        upcoming_events: true,
+        customer_sentiment: true,
       },
     })
 
     mockTicketAiAssistanceSummarizeMutation({
       ticketAIAssistanceSummarize: {
         summary: {
+          customerRequest: 'Order not received after payment',
           conversationSummary:
             'The customer paid for an order but claims to have not received it. They provided the order number and requested assistance with tracking.',
           openQuestions: ['What was the payment method used?'],
-          problem: 'Order not received after payment',
-          suggestions: [
+          upcomingEvents: [
             'Check the order status in the system',
             'Verify if the shipping address is correct',
             'Contact the shipping carrier for updates',
           ],
+          customerMood: 'Frustrated',
+          customerEmotion: '🤬',
         },
       },
     })
@@ -143,13 +145,12 @@ describe('Ticket detail view - Ticket summary', () => {
     mockPermissions(['ticket.agent'])
 
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
       ai_assistance_ticket_summary_config: {
-        conversation_summary: true,
         open_questions: true,
-        problem: true,
-        suggestions: true,
+        upcoming_events: true,
+        customer_sentiment: true,
       },
     })
 
@@ -163,7 +164,7 @@ describe('Ticket detail view - Ticket summary', () => {
 
     const calls = await waitForTicketAiAssistanceSummarizeMutationCalls()
 
-    expect(calls).toHaveLength(1)
+    const numberOfCalls = calls.length
 
     expect(await view.findByRole('heading', { name: 'Customer Intent' }))
 
@@ -179,20 +180,20 @@ describe('Ticket detail view - Ticket summary', () => {
       removeArticleId: null,
     })
 
-    expect(calls).toHaveLength(2)
+    expect(calls).toHaveLength(numberOfCalls + 1)
   })
 
   it('does not re-invoke summary update when article of type system is updated', async () => {
     mockPermissions(['ticket.agent'])
 
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
       ai_assistance_ticket_summary_config: {
-        conversation_summary: true,
         open_questions: true,
-        problem: true,
-        suggestions: true,
+        upcoming_events: true,
+        customer_sentiment: true,
+        generate_on: EnumTicketSummaryGeneration.OnTicketDetailOpening,
       },
     })
 
@@ -206,7 +207,7 @@ describe('Ticket detail view - Ticket summary', () => {
 
     const calls = await waitForTicketAiAssistanceSummarizeMutationCalls()
 
-    expect(calls).toHaveLength(1)
+    const numberOfCalls = calls.length
 
     expect(await view.findByRole('heading', { name: 'Customer Intent' }))
 
@@ -223,35 +224,37 @@ describe('Ticket detail view - Ticket summary', () => {
       false,
     )
 
-    expect(calls).toHaveLength(1)
+    expect(calls).toHaveLength(numberOfCalls)
   })
 
   it('triggers summary update when subscription comes in', async () => {
     mockPermissions(['ticket.agent'])
 
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
       ai_assistance_ticket_summary_config: {
-        conversation_summary: true,
         open_questions: true,
-        problem: true,
-        suggestions: true,
+        upcoming_events: true,
+        customer_sentiment: true,
+        generate_on: EnumTicketSummaryGeneration.OnTicketDetailOpening,
       },
     })
 
     mockTicketAiAssistanceSummarizeMutation({
       ticketAIAssistanceSummarize: {
         summary: {
+          customerRequest: 'Order not received after payment',
           conversationSummary:
             'The customer paid for an order but claims to have not received it. They provided the order number and requested assistance with tracking.',
           openQuestions: ['What was the payment method used?'],
-          problem: 'Order not received after payment',
-          suggestions: [
+          upcomingEvents: [
             'Check the order status in the system',
             'Verify if the shipping address is correct',
             'Contact the shipping carrier for updates',
           ],
+          customerMood: 'Frustrated',
+          customerEmotion: '🤬',
         },
       },
     })
@@ -268,12 +271,13 @@ describe('Ticket detail view - Ticket summary', () => {
 
     await triggerSummaryUpdate({
       summary: {
+        customerRequest: '...',
         conversationSummary: 'Summary to see if subscription comes in',
         openQuestions: ['...'],
-        problem: '...',
-        suggestions: ['foo', 'bar'],
+        upcomingEvents: ['foo', 'bar'],
+        customerMood: '...',
+        customerEmotion: '🤬',
       },
-      relevantForCurrentUser: true,
       error: null,
     })
 
@@ -288,17 +292,24 @@ describe('Ticket detail view - Ticket summary', () => {
     mockPermissions(['ticket.agent'])
 
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
+      ai_assistance_ticket_summary_config: {
+        generate_on: EnumTicketSummaryGeneration.OnTicketDetailOpening,
+      },
     })
 
     mockTicketQuery({
-      ticket: createDummyTicket(),
+      ticket: createDummyTicket({
+        group: { summaryGeneration: EnumTicketSummaryGeneration.GlobalDefault },
+      }),
     })
 
     mockTicketAiAssistanceSummarizeMutation({
       ticketAIAssistanceSummarize: {
-        relevantForCurrentUser: true,
+        analytics: {
+          isUnread: true,
+        },
       },
     })
 
@@ -306,14 +317,17 @@ describe('Ticket detail view - Ticket summary', () => {
 
     await waitForTicketAiAssistanceSummarizeMutationCalls()
 
-    expect(await view.findByRole('status', { name: 'Has update' })).toBeInTheDocument()
+    const contentSidebar = view.getByRole('complementary', { name: 'Content sidebar' })
+    expect(
+      await within(contentSidebar).findByRole('status', { name: 'Has update' }),
+    ).toBeInTheDocument()
   })
 
   it('hides update indicator when new summary comes updated from current user', async () => {
     mockPermissions(['ticket.agent'])
 
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: false,
     })
 
@@ -323,25 +337,38 @@ describe('Ticket detail view - Ticket summary', () => {
 
     mockTicketAiAssistanceSummarizeMutation({
       ticketAIAssistanceSummarize: {
-        relevantForCurrentUser: false,
+        analytics: {
+          isUnread: false,
+        },
       },
     })
 
     const view = await visitView('/tickets/1')
 
-    expect(view.queryByRole('status', { name: 'Has update' })).not.toBeInTheDocument()
+    const contentSidebar = view.getByRole('complementary', { name: 'Content sidebar' })
+
+    console.log(within(contentSidebar).queryByRole('status', { name: 'Has update' }))
+
+    expect(
+      within(contentSidebar).queryByRole('status', { name: 'Has update' }),
+    ).not.toBeInTheDocument()
   })
 
   it('hides update indicator when ticket summary sidebar is opened', async () => {
     mockPermissions(['ticket.agent'])
 
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
+      ai_assistance_ticket_summary_config: {
+        generate_on: EnumTicketSummaryGeneration.OnTicketDetailOpening,
+      },
     })
 
     mockTicketQuery({
-      ticket: createDummyTicket(),
+      ticket: createDummyTicket({
+        group: { summaryGeneration: EnumTicketSummaryGeneration.GlobalDefault },
+      }),
     })
 
     const view = await visitView('/tickets/1')
@@ -350,19 +377,28 @@ describe('Ticket detail view - Ticket summary', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Summary' }))
 
-    expect(view.queryByRole('status', { name: 'Has update' })).not.toBeInTheDocument()
+    const contentSidebar = view.getByRole('complementary', { name: 'Content sidebar' })
+
+    expect(
+      within(contentSidebar).queryByRole('status', { name: 'Has update' }),
+    ).not.toBeInTheDocument()
   })
 
   it('hides update indicator when last article was created by current user', async () => {
     mockPermissions(['ticket.agent'])
 
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
+      ai_assistance_ticket_summary_config: {
+        generate_on: EnumTicketSummaryGeneration.OnTicketDetailOpening,
+      },
     })
 
     mockTicketQuery({
-      ticket: createDummyTicket(),
+      ticket: createDummyTicket({
+        group: { summaryGeneration: EnumTicketSummaryGeneration.GlobalDefault },
+      }),
     })
 
     const view = await visitView('/tickets/1')
@@ -371,15 +407,25 @@ describe('Ticket detail view - Ticket summary', () => {
 
     await triggerSummaryUpdate({
       summary: {
+        customerRequest: '...',
         conversationSummary: 'Agent replies something',
         openQuestions: ['...'],
-        problem: '...',
+        upcomingEvents: ['...'],
+        customerMood: '...',
+        customerEmotion: '🤬',
       },
-      relevantForCurrentUser: false,
+      analytics: {
+        isUnread: false,
+        usage: null,
+      },
       error: null,
     })
 
-    expect(view.queryByRole('status', { name: 'Has update' })).not.toBeInTheDocument()
+    const contentSidebar = view.getByRole('complementary', { name: 'Content sidebar' })
+
+    expect(
+      within(contentSidebar).queryByRole('status', { name: 'Has update' }),
+    ).not.toBeInTheDocument()
   })
 
   describe('errors', () => {
@@ -398,13 +444,13 @@ describe('Ticket detail view - Ticket summary', () => {
         },
       })
       mockApplicationConfig({
-        ai_provider: 'zammad_ai',
+        ai_provider: true,
         ai_assistance_ticket_summary: true,
         ai_assistance_ticket_summary_config: {
-          conversation_summary: true,
           open_questions: true,
-          problem: true,
-          suggestions: true,
+          upcoming_events: true,
+          customer_sentiment: true,
+          generate_on: EnumTicketSummaryGeneration.OnTicketDetailOpening,
         },
       })
 
@@ -439,13 +485,13 @@ describe('Ticket detail view - Ticket summary', () => {
       })
 
       mockApplicationConfig({
-        ai_provider: 'zammad_ai',
+        ai_provider: true,
         ai_assistance_ticket_summary: true,
         ai_assistance_ticket_summary_config: {
-          conversation_summary: true,
           open_questions: true,
-          problem: true,
-          suggestions: true,
+          upcoming_events: true,
+          customer_sentiment: true,
+          generate_on: EnumTicketSummaryGeneration.OnTicketDetailOpening,
         },
       })
 
@@ -468,13 +514,13 @@ describe('Ticket detail view - Ticket summary', () => {
 
     it('shows no ai provider is selected', async () => {
       mockApplicationConfig({
-        ai_provider: '',
+        ai_provider: false,
         ai_assistance_ticket_summary: true,
         ai_assistance_ticket_summary_config: {
-          conversation_summary: true,
           open_questions: true,
-          problem: true,
-          suggestions: true,
+          upcoming_events: true,
+          customer_sentiment: true,
+          generate_on: EnumTicketSummaryGeneration.OnTicketDetailOpening,
         },
       })
 
@@ -492,7 +538,7 @@ describe('Ticket detail view - Ticket summary', () => {
     mockPermissions(['ticket.agent'])
 
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: false,
     })
 
@@ -503,5 +549,90 @@ describe('Ticket detail view - Ticket summary', () => {
     const view = await visitView('/tickets/1')
 
     expect(view.queryByRole('button', { name: 'Summary' })).not.toBeInTheDocument()
+  })
+
+  describe('ticket summary generation is set to "OnTicketSummarySidebarActivation"', () => {
+    it('does not generate summary on ticket detail opening', async () => {
+      mockPermissions(['ticket.agent'])
+
+      mockApplicationConfig({
+        ai_provider: true,
+        ai_assistance_ticket_summary: true,
+        ai_assistance_ticket_summary_config: {
+          open_questions: true,
+          upcoming_events: true,
+          customer_sentiment: true,
+          generate_on: EnumTicketSummaryGeneration.OnTicketSummarySidebarActivation,
+        },
+      })
+
+      mockTicketQuery({
+        ticket: createDummyTicket({
+          group: { summaryGeneration: EnumTicketSummaryGeneration.GlobalDefault },
+        }),
+      })
+
+      const view = await visitView('/tickets/1')
+
+      await view.events.click(await view.findByRole('button', { name: 'Summary' }))
+
+      await waitForTicketAiAssistanceSummarizeMutationCalls()
+    })
+
+    it('does not generate summary on ticket detail opening when group has value set', async () => {
+      mockPermissions(['ticket.agent'])
+
+      mockApplicationConfig({
+        ai_provider: true,
+        ai_assistance_ticket_summary: true,
+        ai_assistance_ticket_summary_config: {
+          open_questions: true,
+          upcoming_events: true,
+          customer_sentiment: true,
+          generate_on: EnumTicketSummaryGeneration.OnTicketDetailOpening,
+        },
+      })
+
+      mockTicketQuery({
+        ticket: createDummyTicket({
+          group: {
+            summaryGeneration: EnumTicketSummaryGeneration.OnTicketSummarySidebarActivation,
+          },
+        }),
+      })
+
+      const view = await visitView('/tickets/1')
+
+      await view.events.click(await view.findByRole('button', { name: 'Summary' }))
+
+      await waitForTicketAiAssistanceSummarizeMutationCalls()
+    })
+
+    it('does generate summary on ticket detail opening when group has value set', async () => {
+      mockPermissions(['ticket.agent'])
+
+      mockApplicationConfig({
+        ai_provider: true,
+        ai_assistance_ticket_summary: true,
+        ai_assistance_ticket_summary_config: {
+          open_questions: true,
+          upcoming_events: true,
+          customer_sentiment: true,
+          generate_on: EnumTicketSummaryGeneration.OnTicketSummarySidebarActivation,
+        },
+      })
+
+      mockTicketQuery({
+        ticket: createDummyTicket({
+          group: {
+            summaryGeneration: EnumTicketSummaryGeneration.OnTicketDetailOpening,
+          },
+        }),
+      })
+
+      await visitView('/tickets/1')
+
+      await waitForTicketAiAssistanceSummarizeMutationCalls()
+    })
   })
 })

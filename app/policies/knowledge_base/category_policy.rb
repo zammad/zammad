@@ -11,6 +11,10 @@ class KnowledgeBase::CategoryPolicy < ApplicationPolicy
     access_editor? || record.public_content?
   end
 
+  def show_any?
+    show? || show_public?
+  end
+
   def permissions?
     access_editor?
   end

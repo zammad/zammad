@@ -27,12 +27,8 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     const { meta: editorMeta = {}, formId } = context.value
 
     const meta = editorMeta[PLUGIN_NAME] || {}
-    let { ticketId, customerId, groupId } = context.value
-
-    if (!ticketId && meta.ticketNodeName) {
-      const node = getNodeByName(formId, meta.ticketNodeName)
-      ticketId = node?.value as string
-    }
+    const { ticketId } = context.value
+    let { customerId, groupId } = context.value
 
     if (!customerId && meta.customerNodeName) {
       const node = getNodeByName(formId, meta.customerNodeName)
@@ -47,9 +43,9 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     const { data } = await queryHandler.query({
       variables: {
         query,
-        groupId: groupId && ensureGraphqlId('Group', groupId),
-        customerId: customerId && ensureGraphqlId('User', customerId),
-        ticketId: ticketId && ensureGraphqlId('Ticket', ticketId),
+        customerId: customerId ? ensureGraphqlId('User', customerId) : undefined,
+        groupId: groupId ? ensureGraphqlId('Group', groupId) : undefined,
+        ticketId: ticketId ? ensureGraphqlId('Ticket', ticketId) : undefined,
         limit: LIMIT_QUERY_MODULES,
       },
     })

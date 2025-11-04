@@ -9,8 +9,9 @@ module HasVectorIndex
   # For example one thing which needs to be handled in the future is the metadata handling without new embedding generation.
 
   included do
-    after_commit  :vector_index_update_later, if: :persisted?
-    after_destroy :vector_index_destroy
+    # TODO: We are disabling any automatic handling until we have a real feature which is using the vector index.
+    # after_commit  :vector_index_update_later, if: :persisted?
+    # after_destroy :vector_index_destroy
   end
 
   def vector_index_update_later

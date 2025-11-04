@@ -62,12 +62,17 @@ class App.TicketZoomAttributeBar extends App.Controller
     if @resetButton.get(0) && !@resetButton.hasClass('hide') && @ticket.editable()
       resetButtonShown = true
 
+    # Destroy existing popovers before re-rendering to prevent them from getting stuck.
+    @el.find('.js-aiAgentAvatar').popover('destroy')
+    @el.find('.js-draft').popover('destroy')
+
     group                  = App.Group.find options?.newGroupId || @ticket.group_id
     draft                  = App.TicketSharedDraftZoom.findByAttribute 'ticket_id', @ticket.id
     accessibleGroups       = App.User.current().allGroupIds('change')
     sharedDraftButtonShown = group?.shared_drafts && _.contains(accessibleGroups, String(group.id))
     sharedDraftsEnabled    = group?.shared_drafts && _.contains(accessibleGroups, String(group.id))
     sharedButtonVisible    = sharedDraftsEnabled && draft? && @ticket.editable()
+    aiAgentIsRunning       = @ticket.currentView() is 'agent' && @ticket?.ai_agent_running
 
     @sharedDraftsEnabled = sharedDraftsEnabled
 
@@ -94,6 +99,7 @@ class App.TicketZoomAttributeBar extends App.Controller
       overview_id:            @overview_id
       resetButtonShown:       resetButtonShown
       sharedDraftButtonShown: sharedDraftButtonShown
+      aiAgentIsRunning:       aiAgentIsRunning
     ))
 
     @setSecondaryAction(@getAction(), localeEl)
@@ -125,6 +131,19 @@ class App.TicketZoomAttributeBar extends App.Controller
         # needs linebreak to align vertically without title
         '<br>' + content
     )
+
+    if aiAgentIsRunning
+      @el.find('.js-aiAgentAvatar').popover(
+        trigger:   'hover'
+        container: 'body'
+        html:      true
+        animation: false
+        delay:     100
+        placement: 'right'
+        sanitize:  false
+        title: -> '<h2 class="aiAgent-popover-title">' + App.i18n.translateContent('AI Agent') + '</h2>'
+        content: -> App.i18n.translateContent('Currently processing this ticket…')
+      )
 
   start: =>
     return if !@taskbarWatcher

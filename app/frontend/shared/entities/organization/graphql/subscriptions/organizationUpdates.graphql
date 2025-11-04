@@ -3,6 +3,13 @@ subscription organizationUpdates($organizationId: ID!, $membersCount: Int) {
     organization {
       ...organizationAttributes
       ...organizationMembers
+      policy {
+        update
+      }
+      ticketsCount {
+        open
+        closed
+      }
     }
   }
 }

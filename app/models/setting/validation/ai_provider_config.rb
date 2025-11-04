@@ -3,61 +3,77 @@
 class Setting::Validation::AIProviderConfig < Setting::Validation::Base
   attr_reader :provider
 
+  ERROR_MESSAGE_OLLAMA = __('AI provider Ollama URL is not set').freeze
+  ERROR_MESSAGE_AZURE  = __('AI provider Azure configuration is incomplete').freeze
+  ERROR_MESSAGE_TOKEN  = __('AI provider token is not set').freeze
+
+  class AIProviderConfigError < StandardError; end
+
   def initialize(record)
     super
 
-    @provider = Setting.get('ai_provider')
+    @provider = value[:provider]
   end
 
   def run
-    return result_success if value.blank? || provider.blank?
+    return result_success if value.blank?
 
-    msg = verify_configuration
-    return result_failed(msg) if !msg.nil?
+    verify_configuration
 
     result_success
+  rescue AIProviderConfigError => e
+    result_failed(e.message)
   end
 
   private
 
   def verify_configuration
-    msg = required_attributes
-    return msg if !msg.nil?
-
+    validate_provider
+    required_attributes
     accessible
   end
 
   def required_attributes
     case provider
     when 'ollama'
-      return __('AI provider Ollama URL is not set') if value['url'].blank?
+      required_attributes_ollama
     when 'azure'
-      return __('AI provider Azure configuration is incomplete') if !required_attributes_azure
+      required_attributes_azure
+    when 'zammad_ai'
+      required_attributes_zammad
     else
-      return __('AI provider token is not set') if value['token'].blank?
+      required_attributes_token
     end
-
-    nil
-  end
-
-  def accessible
-    provider_class = AI::Provider.by_name(provider)
-
-    provider_class.ping!(value)
-
-    nil
-  rescue => e
-    __("AI provider is not accessible: #{e.message}")
   end
 
   def required_attributes_azure
-    return false if value['url_completions'].blank?
+    raise AIProviderConfigError, ERROR_MESSAGE_AZURE if %w[url_completions token].any? { |key| value[key].blank? }
+  end
 
-    # TODO: Enable it when needed.
-    # return false if value['url_embeddings'].blank?
+  def required_attributes_ollama
+    raise AIProviderConfigError, ERROR_MESSAGE_OLLAMA if value['url'].blank?
+  end
 
-    return false if value['token'].blank?
+  def required_attributes_token
+    raise AIProviderConfigError, ERROR_MESSAGE_TOKEN if value['token'].blank?
+  end
 
-    true
+  def required_attributes_zammad
+    return if Setting.get('system_online_service') || Setting.get('developer_mode')
+
+    required_attributes_token
+  end
+
+  def validate_provider
+    raise AIProviderConfigError, __('AI provider is missing') if provider.blank?
+    raise AIProviderConfigError, __('AI provider is not supported') if !AI::Provider.by_name(provider)
+  end
+
+  def accessible
+    AI::Provider
+      .by_name(provider)
+      .ping!(value)
+  rescue => e
+    raise AIProviderConfigError, __("AI provider is not accessible: #{e.message}")
   end
 end

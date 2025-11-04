@@ -3,7 +3,9 @@
 class Store < ApplicationModel
   class File < ApplicationModel
     include ApplicationLib
-    after_destroy :destroy_provider
+
+    after_destroy :destroy_in_provider
+    has_many :stores, foreign_key: :store_file_id, dependent: :destroy, inverse_of: :store_file
 
 =begin
 
@@ -29,7 +31,7 @@ do also verify of written data
           raise __("The setting 'storage_provider' was not configured.")
         end
 
-        adapter = "Store::Provider::#{adapter_name}".constantize
+        adapter = provider_class(adapter_name)
         adapter.add(data, sha)
         file = Store::File.create(
           provider: adapter_name,
@@ -59,7 +61,7 @@ read content of a file
 =end
 
     def content
-      "Store::Provider::#{provider}".constantize.get(sha)
+      @content ||= provider_class.get(sha)
     end
 
 =begin
@@ -77,26 +79,22 @@ in case of fixing sha hash use:
 =end
 
     def self.verify(fix_it = false)
-      success = true
-      Store::File.find_each(batch_size: 10) do |item|
-        begin
-          logger.info "CHECK: Store::File.find(#{item.id})"
-          sha = checksum(item.content)
-          next if sha == item.sha
+      Store::File.find_each(batch_size: 10).reduce(true) do |memo, item|
+        logger.info "CHECK: Store::File.find(#{item.id})"
 
-          success = false
-          logger.error "DIFF: sha diff of Store::File.find(#{item.id}) current:#{sha}/db:#{item.sha}/provider:#{item.provider}"
-          store = Store.find_by(store_file_id: item.id)
-          logger.error "STORE: #{store.inspect}"
-          item.update_attribute(:sha, sha) if fix_it # rubocop:disable Rails/SkipsModelValidations
-        rescue => e
-          success = false
-          logger.error { e.message }
-          next
-        end
+        next memo if item.checksum_valid?
+
+        logger.error "DIFF: SHA diff of Store::File.find(#{item.id}) current:#{item.content_checksum}/db:#{item.sha}/provider:#{item.provider}"
+        logger.error "STORES: #{item.stores.inspect}"
+
+        item.update_checksum! if fix_it
+
+        false
+      rescue => e
+        logger.error { e.message }
+
+        false
       end
-
-      success
     end
 
 =begin
@@ -118,8 +116,8 @@ nice move to keep system responsive
 =end
 
     def self.move(source, target, delay = nil)
-      adapter_source = "Store::Provider::#{source}".constantize
-      adapter_target = "Store::Provider::#{target}".constantize
+      adapter_source = provider_class(source)
+      adapter_target = provider_class(target)
 
       succeeded = true
 
@@ -154,10 +152,62 @@ generate a checksum for the given content
       Digest::SHA256.hexdigest(content)
     end
 
+    def checksum_valid?
+      sha == content_checksum
+    end
+
+    def update_checksum!
+      return if checksum_valid?
+
+      new_sha_file = self.class.where(sha: content_checksum).where.not(id: id).first
+
+      if !new_sha_file
+        ActiveRecord::Base.transaction do
+          update! sha: content_checksum
+
+          provider_class.change_checksum(sha_previously_was, sha)
+
+          stores.find_each do |elem|
+            elem.update! size: content_size
+          end
+
+        end
+        return
+      end
+
+      if !new_sha_file.checksum_valid?
+        raise "CONFLICT: file with SHA #{new_sha_file.sha} exists but its content does not match!"
+      end
+
+      ActiveRecord::Base.transaction do
+        stores.find_each do |elem|
+          elem.update! store_file: new_sha_file, size: new_sha_file.content_size
+        end
+
+        destroy!
+      end
+    end
+
+    def content_checksum
+      @content_checksum ||= self.class.checksum(content)
+    end
+
+    def content_size
+      content.to_s.bytesize
+    end
+
+    def self.provider_class(provider)
+      "Store::Provider::#{provider}".constantize
+    end
+
     private
 
-    def destroy_provider
-      "Store::Provider::#{provider}".constantize.delete(sha)
+    def destroy_in_provider
+      provider_class.delete(sha)
+    end
+
+    def provider_class
+      self.class.provider_class(provider)
     end
   end
 end

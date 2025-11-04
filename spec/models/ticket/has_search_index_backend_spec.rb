@@ -78,6 +78,51 @@ RSpec.describe 'HasSearchIndexBackend', performs_jobs: true, searchindex: true, 
     end
   end
 
+  %w[group priority state].each do |relation|
+    describe "Updating referenced data between ticket and #{relation}" do
+      let(:user)   { create(:customer) }
+      let(:ticket) { create(:ticket, customer: user) }
+
+      before do
+        ticket.send(relation).update!(name: 'NewTestPhrase')
+        perform_enqueued_jobs
+        SearchIndexBackend.refresh
+      end
+
+      it 'finds ticket after relation update' do
+        query  = "#{relation}.name:NewTestPhrase"
+        result = Ticket.search(current_user: user, query:)
+
+        expect(result).to eq([ticket])
+      end
+    end
+  end
+
+  describe 'Include Checklist and items in search index', current_user_id: 1 do
+    let(:user) { create(:agent, groups: [ticket.group]) }
+    let(:ticket)         { create(:ticket) }
+    let(:checklist)      { create(:checklist, ticket:) }
+    let(:checklist_item) { create(:checklist_item, checklist:) }
+
+    before do
+      checklist_item
+      perform_enqueued_jobs
+      SearchIndexBackend.refresh
+    end
+
+    it 'finds the ticket by checklist name' do
+      result = Ticket.search(current_user: user, query: checklist.name)
+
+      expect(result).to eq([ticket])
+    end
+
+    it 'finds the ticket by checklist item text' do
+      result = Ticket.search(current_user: user, query: checklist_item.text)
+
+      expect(result).to eq([ticket])
+    end
+  end
+
   describe 'Updating group settings causes huge numbers of delayed jobs #4306', performs_jobs: false do
     let(:ticket) { create(:ticket, customer: create(:customer, :with_org)) }
 

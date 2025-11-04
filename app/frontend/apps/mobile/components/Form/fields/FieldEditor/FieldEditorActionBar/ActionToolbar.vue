@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { onKeyDown, useEventListener, whenever } from '@vueuse/core'
-import { useTemplateRef } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 import { nextTick, type Ref, ref, toRef } from 'vue'
 
 import type { EditorButton } from '#shared/components/Form/fields/FieldEditor/types.ts'
@@ -87,6 +87,26 @@ whenever(
   () => props.visible,
   () => nextTick(recalculateOpacity),
 )
+
+const disabledActionNames = ref<Set<string>>(new Set())
+
+const activeActions = computed(() =>
+  props.actions.filter(({ name }) => !disabledActionNames.value.has(name)),
+)
+
+// Unfortunately, we can't rely on mounted or setup hooks here, we need to await the editor to be ready
+whenever(
+  () => props.editor,
+  (editor) => {
+    if (!editor) return
+    editor?.off('toggle-visibility')
+    editor?.on('toggle-visibility', ({ name, active }) => {
+      if (active) disabledActionNames.value.delete(name)
+      else disabledActionNames.value.add(name)
+    })
+  },
+  { immediate: true, flush: 'post' },
+)
 </script>
 
 <template>
@@ -101,7 +121,7 @@ whenever(
       @keydown.tab="hideAfterLeaving"
       @scroll.passive="recalculateOpacity"
     >
-      <template v-for="(action, idx) in actions" :key="action.name">
+      <template v-for="(action, idx) in activeActions" :key="action.name">
         <button
           :title="$t(action.label || action.name)"
           type="button"
@@ -135,9 +155,11 @@ whenever(
             }"
           />
         </button>
-        <div v-if="action.showDivider && idx < actions.length - 1">
-          <hr :class="action.dividerClass" class="h-6 w-px border-0 bg-black" />
-        </div>
+        <hr
+          v-if="action.showDivider && idx < actions.length - 1"
+          :class="action.dividerClass"
+          class="h-6 w-px border-0 bg-black"
+        />
       </template>
     </div>
     <template v-if="!props.noGradient">

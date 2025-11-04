@@ -4,7 +4,7 @@ require 'rails_helper'
 
 require 'keycloak/admin'
 
-RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true, integration_standalone: :saml, required_envs: %w[KEYCLOAK_BASE_URL KEYCLOAK_ADMIN_USER KEYCLOAK_ADMIN_PASSWORD], type: :system do
+RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true, integration_standalone: :saml, required_envs: %w[KEYCLOAK_BASE_URL KC_BOOTSTRAP_ADMIN_USERNAME KC_BOOTSTRAP_ADMIN_PASSWORD], type: :system do
   let(:zammad_base_url)              { "#{Capybara.app_host}:#{Capybara.current_session.server.port}" }
   let(:zammad_saml_metadata)         { "#{zammad_base_url}/auth/saml/metadata" }
   let(:saml_base_url)                { ENV['KEYCLOAK_BASE_URL'] }
@@ -100,27 +100,15 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
 
         cert.sign(key, OpenSSL::Digest.new('SHA256'))
 
-        pem = cert.to_pem
-        pem.gsub!('-----BEGIN CERTIFICATE-----', '')
-        pem.gsub!('-----END CERTIFICATE-----', '')
-        pem.delete!("\n").strip!
-        cert = pem
-
-        pem = key.to_pem
-        pem.gsub!('-----BEGIN RSA PRIVATE KEY-----', '') # gitleaks:allow
-        pem.gsub!('-----END RSA PRIVATE KEY-----', '') # gitleaks:allow
-        pem.delete!("\n").strip!
-        key = pem
-
         {
-          cert:,
-          key:
+          cert: cert.to_pem,
+          key:  key.to_pem,
         }
       end
       let(:saml_client_json) do
         client = Rails.root.join('test/data/saml/zammad-client-secure.json').read
         client.gsub!('#KEYCLOAK_ZAMMAD_BASE_URL', zammad_base_url)
-        client.gsub!('#KEYCLOAK_ZAMMAD_CERTIFICATE', security[:cert])
+        client.gsub!('#KEYCLOAK_ZAMMAD_CERTIFICATE', security[:cert].gsub('-----BEGIN CERTIFICATE-----', '').gsub('-----END CERTIFICATE-----', '').delete("\n").strip)
 
         client
       end

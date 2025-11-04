@@ -247,7 +247,7 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
           let(:mock_server_ssl)      { false }
           let(:mock_server_starttls) { false }
 
-          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = false } }
+          let(:config) { mock_server.deep_dup.tap { it[:options][:ssl_verify] = false } }
 
           it 'adds ssl_verify set to false' do
             described_class.full(email: 'user@bigtechmail.com')
@@ -261,7 +261,7 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
           let(:mock_server_ssl)      { true }
           let(:mock_server_starttls) { false }
 
-          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = true } }
+          let(:config) { mock_server.deep_dup.tap { it[:options][:ssl_verify] = true } }
 
           it 'adds ssl_verify set to true' do
             described_class.full(email: 'user@bigtechmail.com')
@@ -275,7 +275,7 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
           let(:mock_server_ssl)      { false }
           let(:mock_server_starttls) { true }
 
-          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = true } }
+          let(:config) { mock_server.deep_dup.tap { it[:options][:ssl_verify] = true } }
 
           it 'adds ssl_verify set to true' do
             described_class.full(email: 'user@bigtechmail.com')
@@ -300,7 +300,7 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
           let(:mock_server_ssl)      { false }
           let(:mock_server_starttls) { false }
 
-          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = false } }
+          let(:config) { mock_server.deep_dup.tap { it[:options][:ssl_verify] = false } }
 
           it 'adds ssl_verify set to false' do
             described_class.full(email: 'user@example.com')
@@ -314,7 +314,7 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
           let(:mock_server_ssl)      { true }
           let(:mock_server_starttls) { false }
 
-          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = true } }
+          let(:config) { mock_server.deep_dup.tap { it[:options][:ssl_verify] = true } }
 
           it 'adds ssl_verify set to true' do
             described_class.full(email: 'user@example.com')
@@ -328,7 +328,7 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
           let(:mock_server_ssl)      { false }
           let(:mock_server_starttls) { true }
 
-          let(:config) { mock_server.deep_dup.tap { _1[:options][:ssl_verify] = true } }
+          let(:config) { mock_server.deep_dup.tap { it[:options][:ssl_verify] = true } }
 
           it 'adds ssl_verify set to true' do
             described_class.full(email: 'user@example.com')

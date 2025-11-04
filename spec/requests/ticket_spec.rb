@@ -17,7 +17,7 @@ RSpec.describe 'Ticket', type: :request do
     create(:agent, groups: Group.all, firstname: 'Tickets', lastname: 'Agent')
   end
   let!(:agent_change_only) do
-    user = create(:agent, groups: Group.all, firstname: 'Tickets', lastname: 'Agent')
+    user = create(:agent, groups: Group.all, firstname: 'Tickets', lastname: 'AgentChangeOnly')
     user.group_names_access_map = {
       ticket_group_without_create.name => %w[read change],
     }
@@ -2679,6 +2679,129 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response).to be_a(Hash)
       expect(json_response['total_count']).to eq(3)
       expect(json_response['records'].count).to eq(3)
+    end
+  end
+
+  describe 'Case insensitive in customer mail using the API not always true #5785' do
+    let(:agent)    { create(:agent, groups: Group.all) }
+    let(:customer) { create(:customer, email: 'NEW_HERE@example.com') }
+
+    it 'does create a customer and a ticket for it', :aggregate_failures do
+      customer
+      expect(customer.reload.email).to eq('new_here@example.com')
+
+      params = {
+        title:    'a new ticket #3',
+        group_id: Group.first.id,
+        priority: '2 normal',
+        state:    'new',
+        customer: 'NEW_HERE@example.com'
+      }
+      authenticated_as(agent)
+      post '/api/v1/tickets', params: params, as: :json
+      expect(response).to have_http_status(:created)
+      expect(json_response).to be_a(Hash)
+    end
+  end
+
+  describe 'PUT /api/v1/update_title' do
+    let(:ticket) { create(:ticket) }
+    let(:agent)  { create(:agent, groups: [ticket.group]) }
+    let(:title)  { 'Updated title' }
+
+    context 'with an agent', authenticated_as: :agent do
+      it 'updates the title' do
+        expect { put "/api/v1/tickets/#{ticket.id}/update_title", params: { title: }, as: :json }
+          .to change { ticket.reload.title }
+          .to(title)
+      end
+
+      it 'uses ForcedUpdate service' do
+        allow(Service::Ticket::ForcedUpdate).to receive(:new).and_call_original
+
+        put "/api/v1/tickets/#{ticket.id}/update_title", params: { title:, owner_id: 123 }, as: :json
+
+        expect(Service::Ticket::ForcedUpdate)
+          .to have_received(:new) do |param_ticket, params|
+            expect(param_ticket).to eq(ticket)
+            expect(params.to_h).to eq('title' => 'Updated title')
+          end
+      end
+    end
+
+    context 'with a customer', authenticated_as: -> { ticket.customer } do
+      it 'access is forbidden' do
+        put "/api/v1/tickets/#{ticket.id}/update_title", params: { title: }
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+  end
+
+  describe 'PUT /api/v1/update_customer' do
+    let(:ticket) { create(:ticket) }
+    let(:agent)              { create(:agent, groups: [ticket.group]) }
+    let(:title)              { 'Updated title' }
+    let(:customer)           { create(:customer, organization:, organizations: [other_organization]) }
+    let(:organization)       { create(:organization) }
+    let(:other_organization) { create(:organization) }
+
+    context 'with an agent', authenticated_as: :agent do
+      it 'updates the customer' do
+        put "/api/v1/tickets/#{ticket.id}/update_customer",
+            params: { customer_id: customer.id },
+            as:     :json
+
+        expect(ticket.reload).to have_attributes(
+          customer:,
+          organization:,
+        )
+      end
+
+      it 'updates the customer and the organzization' do
+        put "/api/v1/tickets/#{ticket.id}/update_customer",
+            params: { customer_id: customer.id, organization_id: other_organization.id },
+            as:     :json
+
+        expect(ticket.reload).to have_attributes(
+          customer:,
+          organization: other_organization,
+        )
+      end
+
+      it 'uses ForcedUpdate service with customer and organization' do
+        allow(Service::Ticket::ForcedUpdate).to receive(:new).and_call_original
+
+        put "/api/v1/tickets/#{ticket.id}/update_customer",
+            params: { customer_id: customer.id, organization_id: organization.id },
+            as:     :json
+
+        expect(Service::Ticket::ForcedUpdate)
+          .to have_received(:new) do |param_ticket, params|
+            expect(param_ticket).to eq(ticket)
+            expect(params.to_h).to eq('customer_id' => customer.id, 'organization_id' => organization.id)
+          end
+      end
+
+      it 'uses ForcedUpdate service with customer only' do
+        allow(Service::Ticket::ForcedUpdate).to receive(:new).and_call_original
+
+        put "/api/v1/tickets/#{ticket.id}/update_customer",
+            params: { customer_id: customer.id, not_permited: :field },
+            as:     :json
+
+        expect(Service::Ticket::ForcedUpdate)
+          .to have_received(:new) do |param_ticket, params|
+            expect(param_ticket).to eq(ticket)
+            expect(params.to_h).to eq('customer_id' => customer.id)
+          end
+      end
+    end
+
+    context 'with a customer', authenticated_as: -> { ticket.customer } do
+      it 'access is forbidden' do
+        put "/api/v1/tickets/#{ticket.id}/update_title", params: { title: }
+        expect(response).to have_http_status(:forbidden)
+      end
     end
   end
 end

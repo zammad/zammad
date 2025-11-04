@@ -23,7 +23,7 @@ if defined?(Puma::ControlCLI) && Zammad::ProcessDebug.enable_thread_status_handl
 end
 
 begin
-  on_booted do
+  after_booted do
     AppVersion.start_maintenance_thread(process_name: 'puma')
     Zammad::ProcessDebug.install_thread_status_handler
   end
@@ -33,7 +33,7 @@ rescue NoMethodError
 end
 
 if worker_count.positive?
-  on_worker_boot do
+  before_worker_boot do
     ActiveRecord::Base.establish_connection
     Zammad::ProcessDebug.install_thread_status_handler
   end

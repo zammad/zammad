@@ -5,14 +5,12 @@ module MonitoringHelper
     class AIProviderAccessible < Backend
 
       def run_health_check
-        provider = Setting.get('ai_provider')
-        return if provider.blank?
+        return if !Setting.get('ai_provider')
 
         provider_config = Setting.get('ai_provider_config')
-        return if provider_config.blank?
 
         begin
-          AI::Provider.by_name(provider).ping!(provider_config)
+          AI::Provider.by_config(provider_config).ping!(provider_config)
         rescue AI::Provider::ResponseError
           response.issues.push __('The AI Provider is not accessible.')
         end

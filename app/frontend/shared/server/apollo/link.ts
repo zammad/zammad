@@ -8,7 +8,6 @@ import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
 
 import { consumer } from '#shared/server/action_cable/consumer.ts'
 
-import connectedStateLink from './link/connectedState.ts'
 import csrfLink from './link/csrf.ts'
 import debugLink from './link/debug.ts'
 import errorLink from './link/error.ts'
@@ -91,7 +90,6 @@ const link = from([
   errorLink,
   setAuthorizationLink,
   debugLink,
-  connectedStateLink,
   removeTypenameFromVariables(),
   splitLink,
 ])

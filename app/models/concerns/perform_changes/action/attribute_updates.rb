@@ -25,15 +25,17 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
     when 'tags'
       tags(value)
     else
-      change_date(key, value, performable) || change_attribute(key, value)
+      object_attribute = object_manager_attribute(key)
+
+      change_date(key, value, performable, object_attribute) || change_attribute(key, value, object_attribute)
     end
   end
 
-  def change_attribute(key, value)
+  def change_attribute(key, value, object_attribute)
     exchange_user_id(value)
     template_value(value)
 
-    update_key(key, value['value'])
+    update_key(key, value['value'], object_attribute)
 
     true
   end
@@ -50,8 +52,15 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
     record.class.column_names.include?(attribute)
   end
 
-  def update_key(attribute, value)
+  def update_key(attribute, value, object_attribute)
     return if record[attribute].to_s.eql?(value.to_s)
+
+    if value.is_a?(String)
+      value = value.strip
+
+      # When only a string is given, but the attribute is multiple, we need to convert it to an array.
+      value = [value] if object_attribute&.data_option&.fetch(:multiple, false)
+    end
 
     record[attribute] = value
     history(attribute, value)
@@ -128,14 +137,13 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
     Rails.logger.debug { "set #{record.class.name.downcase}.#{attribute} = #{value.inspect} for #{record.class.name} with id #{record.id}" }
   end
 
-  def change_date(attribute, value, performable)
-    oa = object_manager_attribute(attribute)
-    return if oa.blank?
+  def change_date(attribute, value, performable, object_attribute)
+    return if object_attribute.blank? || %w[datetime date].exclude?(object_attribute[:data_type])
 
     new_value = fetch_new_date_value(value)
     return if !new_value
 
-    record[attribute] = format_new_date_value(new_value, oa)
+    record[attribute] = format_new_date_value(new_value, object_attribute)
 
     record.history_change_source_attribute(performable, attribute)
 
@@ -143,7 +151,7 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
   end
 
   def object_manager_attribute(attribute)
-    ObjectManager::Attribute.for_object(record.class.name).find_by(name: attribute, data_type: %w[datetime date])
+    ObjectManager::Attribute.for_object(record.class.name).find_by(name: attribute)
   end
 
   def fetch_new_date_value(value)

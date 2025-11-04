@@ -117,16 +117,15 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
     </div>
   </div>
   <template v-else>
-    <!-- TODO: Exchange the link to the proper route when ready. -->
     <CommonLink
       v-if="!isLoadingSearchResults"
       class="group/link mb-4 block"
-      :link="{ name: 'search', params: { searchTerm: search } }"
+      :link="{ name: 'Search', params: { searchTerm: search } }"
       @click="resetQuickSearchInputField"
       @keydown.enter="$event.target.click()"
     >
       <CommonLabel
-        class="text-blue-800! group-hover/link:underline"
+        class="text-blue-800! hover:text-blue-850! hover:dark:text-blue-600!"
         prefix-icon="search-detail"
         size="small"
       >
@@ -158,7 +157,7 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
             v-if="searchResult.remainingItemCount > 0"
             class="group/link my-1.5 ms-auto"
             :link="{
-              name: 'search',
+              name: 'Search',
               params: { searchTerm: search },
               query: { entity: searchResult.name },
             }"

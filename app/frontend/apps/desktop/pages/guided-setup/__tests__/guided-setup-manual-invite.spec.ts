@@ -119,7 +119,7 @@ describe('guided setup manual invite', () => {
       const listbox = view.getByRole('listbox')
       const options = getAllByRole(listbox, 'option')
 
-      await view.events.click(options[0])
+      await view.events.click(options[0].firstChild as Element)
       await view.events.click(view.getByLabelText('Full'))
 
       expect(view.getByLabelText('Email')).toHaveValue('test@example.com')

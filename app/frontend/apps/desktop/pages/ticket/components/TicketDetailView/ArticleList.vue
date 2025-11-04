@@ -14,6 +14,14 @@ import SystemMessage from '#desktop/pages/ticket/components/TicketDetailView/Sys
 import { useArticleContext } from '#desktop/pages/ticket/composables/useArticleContext.ts'
 import { useTicketArticleRows } from '#desktop/pages/ticket/composables/useTicketArticlesRows.ts'
 
+interface Props {
+  topBarHeight?: number
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  topBarHeight: 0,
+})
+
 const route = useRoute()
 const { context } = useArticleContext()
 
@@ -84,6 +92,22 @@ const scrollToArticle = async () => {
 
   if (!targetElement) return false
 
+  // Account for top bar height when scrolling important for an initial load
+  if (props.topBarHeight > 0) {
+    const listScrollContainer = targetElement.closest('[class*="overflow-y-auto"]') as HTMLElement
+
+    if (listScrollContainer) {
+      const containerRect = listScrollContainer.getBoundingClientRect()
+      const elementRect = targetElement.getBoundingClientRect()
+      const relativeTop = elementRect.top - containerRect.top
+      const scrollTop = listScrollContainer.scrollTop + relativeTop - props.topBarHeight
+
+      return listScrollContainer.scrollTo({
+        top: Math.max(0, scrollTop),
+        behavior: 'instant',
+      })
+    }
+  }
   targetElement?.scrollIntoView({ behavior: 'instant', block: 'start' })
 }
 

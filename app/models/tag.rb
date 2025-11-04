@@ -21,7 +21,7 @@ add tags for certain object
 =end
 
   def self.tag_add(data)
-    data[:item].strip!
+    data[:item] = data[:item].strip
 
     # lookups
     if data[:object]
@@ -80,7 +80,7 @@ or by ids
       data[:object] = Tag::Object.lookup(id: data[:tag_object_id]).name
     end
     if data[:item]
-      data[:item].strip!
+      data[:item] = data[:item].strip
       data[:tag_item_id] = Tag::Item.lookup_by_name_and_create(data[:item]).id
     end
 
@@ -144,7 +144,7 @@ update tags for certain object
 =end
 
   def self.tag_update(object:, o_id:, items:, created_by_id: nil)
-    given_tags = items.map(&:strip!)
+    given_tags = items.map(&:strip)
     old_tags   = tag_list(object: object, o_id: o_id)
 
     tag_object_id = Tag::Object.lookup_by_name_and_create(object).id

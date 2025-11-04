@@ -75,15 +75,33 @@ export default function register(config: InMemoryCacheConfig): InMemoryCacheConf
       })
     }
 
-    const cachedData = useTicketsCachedByOverviewCache().readTicketsByOverviewCache(
-      variables as TicketsCachedByOverviewQueryVariables,
-    )
+    // We receive null when the query data is still the same.
+    // Important: merge must return store values (with References), not denormalized results from readQuery.
+    if (incoming.edges === null) {
+      if (existing) return existing
 
-    // We receiving null when the query data is still the same.
-    if ((cachedData || existing) && incoming.edges === null) {
-      // TODO: Returning cache data destroys currently the references on the tickets...
-      // TODO: And workaround with "existing" is not working, because also with cache+network it's always empty.
-      return existing || cachedData!.ticketsCachedByOverview // Return existing data without updating
+      // Reconstruct a store-shaped value using References if we have a denormalized cached query result.
+      const cachedResult = useTicketsCachedByOverviewCache().readTicketsByOverviewCache(
+        variables as TicketsCachedByOverviewQueryVariables,
+      )
+
+      const cachedConnection = cachedResult?.ticketsCachedByOverview
+
+      if (cachedConnection?.edges) {
+        const edgesWithReferences = cachedConnection.edges.map((edge) => {
+          if (!edge || !edge.node) return edge
+
+          const referenceId = cache.identify(edge.node)
+          return referenceId ? { ...edge, node: { __ref: referenceId } } : edge
+        })
+
+        return {
+          ...cachedConnection,
+          edges: edgesWithReferences,
+        }
+      }
+
+      return existing
     }
 
     // Otherwise, call the original merge function for normal pagination behavior

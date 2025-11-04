@@ -123,8 +123,8 @@ module Zammad
             {
               bucket:            uri.path.present? ? uri.path.sub(%r{^/}, '') : nil,
               endpoint:          "#{uri.scheme}://#{uri.host}" + (uri.port.present? ? ":#{uri.port}" : ''),
-              access_key_id:     uri.user.presence,
-              secret_access_key: uri.password.presence,
+              access_key_id:     uri.user.present? ? URI::DEFAULT_PARSER.unescape(uri.user) : nil,
+              secret_access_key: uri.password.present? ? URI::DEFAULT_PARSER.unescape(uri.password) : nil,
             }
           else
             {}

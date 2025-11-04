@@ -17,7 +17,7 @@ class App.KnowledgeBaseFeedDialog extends App.ControllerModal
 
     url = $(e.target).prev().attr('href')
 
-    @copyToClipboardWithTooltip(url, e.target,'.modal-body', true)
+    @copyToClipboardWithTooltip(url, e.target, '.modal-body', true)
 
   clickedRenew: (e) =>
     e.preventDefault()

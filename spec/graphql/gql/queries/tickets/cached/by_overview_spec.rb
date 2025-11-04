@@ -68,23 +68,23 @@ RSpec.describe Gql::Queries::Tickets::Cached::ByOverview, :aggregate_failures, t
     let!(:ticket)        { create(:ticket) }
 
     context 'with an agent', authenticated_as: :agent do
-      def trace_queries(queries, &block)
+      def trace_queries(queries, &)
         callback = lambda do |*, payload|
           queries[payload[:name]] ||= 0
           queries[payload[:name]] += 1
         end
-        ActiveSupport::Notifications.subscribed(callback, 'sql.active_record', &block)
+        ActiveSupport::Notifications.subscribed(callback, 'sql.active_record', &)
         queries
       end
 
-      def ensure_no_ticket_queries(&block)
-        queries = trace_queries({}, &block)
+      def ensure_no_ticket_queries(&)
+        queries = trace_queries({}, &)
         expect(queries).not_to have_key('Ticket Load')
         expect(queries).not_to have_key('Ticket Count')
       end
 
-      def ensure_ticket_queries(&block)
-        queries = trace_queries({}, &block)
+      def ensure_ticket_queries(&)
+        queries = trace_queries({}, &)
         expect(queries).to have_key('Ticket Load')
         expect(queries).to have_key('Ticket Count')
       end

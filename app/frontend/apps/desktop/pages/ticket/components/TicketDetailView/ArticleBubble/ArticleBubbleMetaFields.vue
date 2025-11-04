@@ -40,7 +40,7 @@ const { fields } = useArticleMeta(toRef(props, 'article'))
             :link="url"
             :rest-api="api"
             :target="target"
-            class="text-sm! text-[rgba(255,255,255,0.75)]!"
+            size="medium"
           >
             {{ $t(label) }}
           </CommonLink>

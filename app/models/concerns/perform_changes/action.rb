@@ -39,6 +39,7 @@ class PerformChanges::Action
   def notification_factory_template_objects
     @notification_factory_template_objects ||= {
       record.class.name.downcase.to_sym => record,
+      **(record.is_a?(User) ? {} : { user: User.lookup(id: user_id) })
     }
   end
 

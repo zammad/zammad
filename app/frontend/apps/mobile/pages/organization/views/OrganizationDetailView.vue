@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRef } from 'vue'
+import { computed } from 'vue'
 
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar/index.ts'
@@ -9,6 +9,7 @@ import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttribut
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotification/useOnlineNotificationSeen.ts'
 import { useOrganizationDetail } from '#shared/entities/organization/composables/useOrganizationDetail.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import CommonTicketStateList from '#mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
@@ -30,16 +31,10 @@ const errorCallback = createQueryErrorHandler({
   forbidden: __('You have insufficient rights to view this organization.'),
 })
 
-const {
-  organization,
-  loading,
-  objectAttributes,
-  organizationQuery,
-  loadAllMembers,
-  // loadOrganization,
-} = useOrganizationDetail(toRef(props, 'internalId'), errorCallback)
+const organizationId = computed(() => convertToGraphQLId('Organization', props.internalId))
 
-// loadOrganization(props.internalId)
+const { organization, loading, objectAttributes, organizationQuery, loadAllMembers } =
+  useOrganizationDetail(organizationId, errorCallback)
 
 useOnlineNotificationSeen(organization)
 

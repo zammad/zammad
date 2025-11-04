@@ -2,6 +2,8 @@ class App.Controller extends Spine.Controller
   @include App.LogInclude
   @include App.RenderScreen
 
+  @startLoadingDelay: 1800
+
   constructor: ->
     super
 
@@ -128,6 +130,15 @@ class App.Controller extends Spine.Controller
     , 1500)
 
     return tooltipCopied
+
+  copyInputToClipboard: (e) =>
+    e.preventDefault()
+
+    controls = $(e.target).parents('.controls')
+    input    = controls.find('input[readonly]')
+    value    = input.val()
+
+    @copyToClipboardWithTooltip(value, e.target, controls, true)
 
   # disable all delay's and interval's
   disconnectClient: ->
@@ -381,7 +392,7 @@ class App.Controller extends Spine.Controller
         el.html App.view('generic/page_loading')()
       else
         @html App.view('generic/page_loading')()
-    @initLoadingDoneDelay = @delay(later, 1800)
+    @initLoadingDoneDelay = @delay(later, @constructor.startLoadingDelay)
 
   stopLoading: =>
     return if !@initLoadingDoneDelay

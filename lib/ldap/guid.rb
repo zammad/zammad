@@ -87,7 +87,7 @@ class Ldap
 
     def oracle_raw16(string, dashify: false)
       # remove dashes
-      string.delete!('-')
+      string = string.delete('-')
 
       # split every two chars
       parts = string.scan(%r{.{1,2}})

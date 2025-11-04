@@ -27,16 +27,9 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
     end
 
     # remember time accounting values
-    if params[:time_unit].present?
-      accounted_time_params = {
-        time_unit: params[:time_unit],
-        type_id:   params[:accounted_time_type_id],
-        type:      params[:accounted_time_type],
-      }
-    end
-
-    clean_params = Ticket::Article.association_name_to_id_convert(params)
-    clean_params = Ticket::Article.param_cleanup(clean_params, true)
+    accounted_time_params = article_create_accounted_time_params(params)
+    clean_params          = Ticket::Article.association_name_to_id_convert(params)
+    clean_params          = Ticket::Article.param_cleanup(clean_params, true)
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
@@ -51,74 +44,13 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
       clean_params[:internal] = false
     end
 
-    article = Ticket::Article.new(clean_params)
-    article.ticket_id = ticket.id
-    article.check_mentions_raises_error = true
+    article                                    = Ticket::Article.new(clean_params)
+    article.ticket_id                          = ticket.id
+    article.check_mentions_raises_error        = true
     article.check_email_recipient_raises_error = true
 
-    # store dataurl images to store
-    attachments_inline = []
-    if article.body && article.content_type =~ %r{text/html}i
-      (article.body, attachments_inline) = HtmlSanitizer.replace_inline_images(article.body, ticket.id)
-    end
-
-    # find attachments in upload cache
-    attachments = []
-    if form_id
-      attachments += UploadCache
-        .new(form_id)
-        .attachments
-        .reject do |elem|
-          UploadCache.files_include_attachment?(attachments_inline, elem) || elem.inline?
-        end
-    end
-
-    # store inline attachments
-    attachments_inline.each do |attachment|
-      attachments << {
-        data:        attachment[:data],
-        filename:    attachment[:filename],
-        preferences: attachment[:preferences],
-      }
-    end
-
-    # add attachments as param
-    if params[:attachments].present?
-      required_keys    = %w[mime-type filename data]
-      preferences_keys = %w[charset mime-type]
-      params[:attachments].each_with_index do |attachment, index|
-
-        # validation
-        required_keys.each do |key|
-          next if attachment[key]
-
-          raise Exceptions::UnprocessableEntity, "Attachment needs '#{key}' param for attachment with index '#{index}'"
-        end
-
-        preferences = {}
-        preferences_keys.each do |key|
-          next if !attachment[key]
-
-          store_key = key.tr('-', '_').camelize.gsub(%r{(.+)([A-Z])}, '\1_\2').tr('_', '-')
-          preferences[store_key] = attachment[key]
-        end
-
-        begin
-          base64_data = attachment[:data].gsub(%r{[\r\n]}, '')
-          attachment_data = Base64.strict_decode64(base64_data)
-        rescue ArgumentError
-          raise Exceptions::UnprocessableEntity, "Invalid base64 for attachment with index '#{index}'"
-        end
-
-        attachments << {
-          data:        attachment_data,
-          filename:    attachment[:filename],
-          preferences: preferences,
-        }
-      end
-    end
-
-    article.attachments = attachments
+    # create article with attachments
+    article = article_create_attachments(form_id, article, ticket, params)
 
     # set subtype of present
     article.preferences[:subtype] = subtype if subtype.present?
@@ -152,6 +84,95 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
     # remove temporary attachment cache
     UploadCache.new(form_id).destroy
 
+    article
+  end
+
+  def article_create_accounted_time_params(params)
+    return if params[:time_unit].blank?
+
+    {
+      time_unit: params[:time_unit],
+      type_id:   params[:accounted_time_type_id],
+      type:      params[:accounted_time_type],
+    }
+  end
+
+  def article_create_attachments_form_id(form_id, attachments_inline)
+    return [] if !form_id
+
+    UploadCache
+      .new(form_id)
+      .attachments
+      .reject do |elem|
+        UploadCache.files_include_attachment?(attachments_inline, elem) || elem.inline?
+      end
+  end
+
+  def article_create_attachments_params(params)
+    attachments = []
+
+    return attachments if params[:attachments].blank?
+
+    required_keys    = %w[mime-type filename data]
+    preferences_keys = %w[charset mime-type]
+    params[:attachments].each_with_index do |attachment, index|
+
+      # validation
+      required_keys.each do |key|
+        next if attachment[key]
+
+        raise Exceptions::UnprocessableEntity, "Attachment needs '#{key}' param for attachment with index '#{index}'"
+      end
+
+      preferences = {}
+      preferences_keys.each do |key|
+        next if !attachment[key]
+
+        store_key = key.tr('-', '_').camelize.gsub(%r{(.+)([A-Z])}, '\1_\2').tr('_', '-')
+        preferences[store_key] = attachment[key]
+      end
+
+      begin
+        base64_data = attachment[:data].gsub(%r{[\r\n]}, '')
+        attachment_data = Base64.strict_decode64(base64_data)
+      rescue ArgumentError
+        raise Exceptions::UnprocessableEntity, "Invalid base64 for attachment with index '#{index}'"
+      end
+
+      attachments << {
+        data:        attachment_data,
+        filename:    attachment[:filename],
+        preferences: preferences,
+      }
+    end
+
+    attachments
+  end
+
+  def article_create_attachments(form_id, article, ticket, params)
+
+    # store dataurl images to store
+    attachments_inline = []
+    if article.body && article.content_type =~ %r{text/html}i
+      (article.body, attachments_inline) = HtmlSanitizer.replace_inline_images(article.body, ticket.id)
+    end
+
+    # find attachments in upload cache
+    attachments = []
+    attachments += article_create_attachments_form_id(form_id, attachments_inline)
+
+    # store inline attachments
+    attachments_inline.each do |attachment|
+      attachments << {
+        data:        attachment[:data],
+        filename:    attachment[:filename],
+        preferences: attachment[:preferences],
+      }
+    end
+
+    attachments += article_create_attachments_params(params)
+
+    article.attachments = attachments
     article
   end
 end

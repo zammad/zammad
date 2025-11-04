@@ -2,21 +2,21 @@
 
 module Service::AI::VectorDB::Item
   class Create < Service::AI::VectorDB::Base
-    attr_reader :object_id, :object_name, :content, :metadata
+    attr_reader :o_id, :object_name, :content, :metadata
 
     def initialize(object_id:, object_name:, content:, metadata: {})
       super()
 
-      @object_id = object_id
+      @o_id = object_id
       @object_name = object_name
       @content = content
       @metadata = metadata
     end
 
     def execute
-      embedding = AI::Provider.by_name(Setting.get('ai_provider')).new.embed(input: content)
+      embedding = AI::Provider.current.new.embed(input: content)
 
-      ai_vector_db.create(object_id:, object_name:, content:, metadata:, embedding:)
+      ai_vector_db.create(object_id: o_id, object_name:, content:, metadata:, embedding:)
     end
   end
 end

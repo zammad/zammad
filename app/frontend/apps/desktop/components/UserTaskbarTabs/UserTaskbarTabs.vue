@@ -1,23 +1,24 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { animations, parents, updateConfig } from '@formkit/drag-and-drop'
-import { dragAndDrop } from '@formkit/drag-and-drop/vue'
+import { parents, updateConfig } from '@formkit/drag-and-drop'
 import { computedAsync } from '@vueuse/core'
 import { cloneDeep } from 'lodash-es'
 import { storeToRefs } from 'pinia'
-import { type Ref, ref, watch, useTemplateRef, nextTick } from 'vue'
+import { ref, watch, useTemplateRef, nextTick } from 'vue'
 
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import { EnumTaskbarEntityAccess } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import { startAndEndEventsDNDPlugin } from '#shared/utils/startAndEndEventsDNDPlugin.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
+import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
+import { useAccessibleDragAndDrop } from '#desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts'
+import { useKeyboardKeysForDragAndDrop } from '#desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts'
 import { useUserCurrentTaskbarItemListPrioMutation } from '#desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemListPrio.api.ts'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
@@ -99,18 +100,38 @@ const dndEndCallback = (parent: HTMLElement) => {
 
 const dndParentElement = useTemplateRef('dnd-parent')
 const dndTaskbarTabListOrder = ref(taskbarTabListOrder.value || [])
+let isKeyboardReorder = false
 
 watch(taskbarTabListOrder, (newValue) => {
-  dndTaskbarTabListOrder.value = cloneDeep(newValue || [])
+  if (!isKeyboardReorder) {
+    dndTaskbarTabListOrder.value = cloneDeep(newValue || [])
+  }
+  // Reset flag after store update
+  isKeyboardReorder = false
 })
 
-dragAndDrop({
-  parent: dndParentElement as Ref<HTMLElement>,
-  values: dndTaskbarTabListOrder,
-  plugins: [startAndEndEventsDNDPlugin(dndStartCallback, dndEndCallback), animations()],
-  dropZoneClass: 'opacity-0 no-tooltip dragging-active',
-  touchDropZoneClass: 'opacity-0 no-tooltip dragging-active',
-  draggingClass: 'dragging-active',
+const { messageNodeId } = useAnnouncer()
+
+const {
+  focusedItemIndex,
+  selectedItemIndex,
+  focusedItemId,
+  handleKeydown,
+  handleFocus,
+  handleBlur,
+} = useKeyboardKeysForDragAndDrop({
+  items: dndTaskbarTabListOrder,
+  onReorder: (newOrder) => {
+    isKeyboardReorder = true
+    updateTaskbarTabListOrder(newOrder)
+  },
+})
+
+useAccessibleDragAndDrop(dndParentElement, dndTaskbarTabListOrder, {
+  dropZoneClass: 'no-tooltip',
+  synthDropZoneClass: 'no-tooltip',
+  dndStartCallback,
+  dndEndCallback,
 })
 
 watch(
@@ -225,24 +246,30 @@ const { isTouchDevice } = useTouchDevice()
           no-negative-margin
           scrollable
         >
-          <span id="drag-and-drop-taskbar-tabs" class="sr-only">
-            {{ $t('Drag and drop to reorder your tabs.') }}
-          </span>
-
           <div id="taskbarTabListExpanded" ref="taskbar-tab-list" />
         </CommonSectionCollapse>
       </template>
 
       <div id="taskbarTabListHidden" class="hidden" aria-hidden="true">
         <Teleport :to="taskbarTabListLocation" defer>
+          <!--   eslint-disable vuejs-accessibility/no-static-element-interactions       -->
           <ul
             ref="dnd-parent"
+            tabindex="0"
+            :aria-label="$t('User taskbar tabs')"
+            :aria-activedescendant="focusedItemId"
+            :aria-describedby="messageNodeId"
             :class="{
               'flex flex-col gap-1.5 overflow-y-auto p-1': !collapsed,
             }"
+            class="focus-visible-app-default focus-visible:-outline-offset-1! rounded-lg"
+            @focus="handleFocus"
+            @blur="handleBlur"
+            @keydown="handleKeydown"
           >
             <li
               v-for="(tabEntityKey, index) in dndTaskbarTabListOrder"
+              :id="`item-${tabEntityKey}`"
               :key="tabEntityKey"
               class="group/tab relative"
               :class="{
@@ -250,7 +277,6 @@ const { isTouchDevice } = useTouchDevice()
                 'overflow-hidden first:rounded-t-lg last:rounded-b-lg': collapsed,
               }"
               :draggable="!collapsed ? 'true' : undefined"
-              :aria-describedby="!collapsed ? 'drag-and-drop-taskbar-tabs' : undefined"
             >
               <UserTaskbarTabRemove
                 v-if="taskbarTabListByTabEntityKey[tabEntityKey].taskbarTabId"
@@ -266,15 +292,17 @@ const { isTouchDevice } = useTouchDevice()
                 :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
                 :taskbar-tab-link="getTaskbarTabLink(tabEntityKey)"
                 :collapsed="collapsed"
-                class="group/link peer-focus-visible:trl:pl-(--tab-remove-bar-button-width) focus-visible-app-default rounded-none [--tab-remove-bar-button-width:2rem] group-hover/tab:ltr:pr-(--tab-remove-bar-button-width) peer-focus-visible:ltr:pr-(--tab-remove-bar-button-width) group-hover/tab:rtl:pl-(--tab-remove-bar-button-width)"
+                class="group/link peer-focus-visible:trl:pl-(--tab-remove-bar-button-width) focus-visible-app-default [--tab-remove-bar-button-width:2rem] group-hover/tab:ltr:pr-(--tab-remove-bar-button-width) peer-focus-visible:ltr:pr-(--tab-remove-bar-button-width) group-hover/tab:rtl:pl-(--tab-remove-bar-button-width)"
                 :class="{
-                  'group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px] focus-visible:-outline-offset-1!':
+                  'rounded-none group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px] focus-visible:-outline-offset-1!':
                     collapsed,
-                  'rounded-t-lg!': index === 0,
-                  'rounded-b-lg!': index === dndTaskbarTabListOrder.length - 1,
+                  'rounded-t-lg!': collapsed && index === 0,
+                  'rounded-b-lg!': collapsed && index === dndTaskbarTabListOrder.length - 1,
                   'active:cursor-grabbing': !collapsed,
                   'ltr:pr-(--tab-remove-bar-button-width) rtl:pl-(--tab-remove-bar-button-width)':
                     isTouchDevice,
+                  'outline outline-offset-1 outline-blue-900': index == focusedItemIndex,
+                  'outline outline-offset-1 outline-blue-800!': index == selectedItemIndex,
                 }"
               />
             </li>

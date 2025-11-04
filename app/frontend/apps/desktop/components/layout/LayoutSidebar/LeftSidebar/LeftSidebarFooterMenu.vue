@@ -40,7 +40,7 @@ const { betaUiSwitchEnabled, toggleBetaUiSwitch, dismissBetaUiSwitch } = useNewB
           label-class="!text-white truncate"
           @input-raw="toggleBetaUiSwitch()"
         />
-        <!-- <CommonLink class="truncate text-white" link="#" size="small">
+        <!-- <CommonLink class="truncate text-white hover:text-white!" link="#" size="small">
           {{ $t('Send Feedback') }}
         </CommonLink> -->
         <CommonIcon

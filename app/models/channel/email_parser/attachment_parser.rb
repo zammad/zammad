@@ -232,7 +232,7 @@ class Channel::EmailParser::AttachmentParser
     # https://github.com/zammad/zammad/issues/928
     filename = Mail::Encodings.value_decode(filename)
 
-    if filename.force_encoding('UTF-8').valid_encoding?
+    if filename.dup.force_encoding('UTF-8').valid_encoding?
       return filename
     end
 

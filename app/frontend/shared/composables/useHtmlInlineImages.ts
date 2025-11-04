@@ -21,6 +21,12 @@ const useHtmlInlineImages = (
       }
 
       image.classList.add('cursor-pointer')
+
+      if (image.style.width) {
+        image.style.maxWidth = image.style.width
+        image.style.width = '100%'
+      }
+
       const index = inlineImages.value.push(preview) - 1
       image.onclick = (event) => {
         event.preventDefault()

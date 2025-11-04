@@ -279,7 +279,7 @@ returns
 
   def history_change_source_attribute(source, attribute)
     return if source.blank?
-    return if [Job, Trigger, PostmasterFilter].exclude?(source.class)
+    return if [Job, Trigger, PostmasterFilter, AI::Agent].exclude?(source.class)
     return if !source.persisted?
 
     @history_changes_source ||= {}

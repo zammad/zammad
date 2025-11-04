@@ -76,8 +76,20 @@ class Maintenance extends App.ControllerSubContent
 
   sendMessage: (e) ->
     e.preventDefault()
+
     params = @formParam(e.target)
+
+    if not params.message
+      errors =
+        message: __('is required')
+
+      @log 'error', errors
+      @formValidate( form: e.target, errors: errors )
+
+      return false
+
     params.type = 'message'
+
     App.WebSocket.send(
       event:'maintenance'
       data: params

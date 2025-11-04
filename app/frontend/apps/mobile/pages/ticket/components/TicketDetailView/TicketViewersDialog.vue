@@ -6,6 +6,7 @@ import { toRef } from 'vue'
 import { useTicketLiveUsersDisplay } from '#shared/entities/ticket/composables/useTicketLiveUsersDisplay.ts'
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 
+import AiAgentAvatar from '#mobile/components/AiAgent/AiAgentAvatar.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 
@@ -14,6 +15,7 @@ import TicketViewerItem from './TicketViewerItem.vue'
 interface Props {
   name: string
   liveUsers: TicketLiveAppUser[]
+  isAiAgentRunning?: boolean
 }
 
 const props = defineProps<Props>()
@@ -35,6 +37,17 @@ const { viewingUsers, idleUsers } = useTicketLiveUsersDisplay(toRef(() => props.
         :editing="viewingUser.editing"
         :app="viewingUser.app"
       />
+    </CommonSectionMenu>
+    <CommonSectionMenu v-if="isAiAgentRunning" :help="__('Currently processing this ticket…')">
+      <div class="p-3 flex gap-3 items-center">
+        <AiAgentAvatar size="large" />
+        <CommonLabel size="large" class="text-white">{{ $t('Ai Agent') }}</CommonLabel>
+        <CommonIcon
+          class="rtl:mr-auto ltr:ml-auto"
+          :label="$t('Currently processing this ticket…')"
+          name="avatar-indicator-editing-mobile"
+        />
+      </div>
     </CommonSectionMenu>
     <CommonSectionMenu
       v-if="idleUsers.length > 0"

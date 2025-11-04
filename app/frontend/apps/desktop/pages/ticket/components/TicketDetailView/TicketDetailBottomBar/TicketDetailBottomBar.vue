@@ -7,6 +7,7 @@ import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import TicketScreenBehavior from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue'
+import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 import TicketAgentUpdateButton from './TicketAgentUpdateButton.vue'
 import TicketLiveUsers from './TicketLiveUsers.vue'
@@ -34,11 +35,16 @@ defineEmits<{
   discard: [MouseEvent]
   'execute-macro': [MacroById]
 }>()
+
+const { ticket } = useTicketInformation()
 </script>
 
 <template>
   <div class="flex gap-4 ltr:mr-auto rtl:ml-auto">
-    <TicketLiveUsers v-if="liveUserList?.length" :live-user-list="liveUserList" />
+    <TicketLiveUsers
+      v-if="liveUserList?.length || ticket?.aiAgentRunning"
+      :live-user-list="liveUserList"
+    />
 
     <TicketSharedDraftZoom
       v-if="hasAvailableDraft"

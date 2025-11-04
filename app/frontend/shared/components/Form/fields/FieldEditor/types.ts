@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
+import { PLUGIN_NAME as TEXT_TOOL_PLUGIN_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import type {
   KnowledgeBaseAnswerSuggestionsQuery,
   MentionSuggestionsQuery,
@@ -39,10 +40,7 @@ declare module '@tiptap/core' {
       setImages(images: ImageFileData[]): ReturnType
     }
     aiAssistantTextTools: {
-      improveWriting: () => ReturnType
-      fixSpellingAndGrammar: () => ReturnType
-      expandText: () => ReturnType
-      simplifyText: () => ReturnType
+      modifyTextWithAi: (textToolId: ID) => ReturnType
     }
     link: {
       toggleLink: (args: { href: string }) => ReturnType // command is set in the library extension
@@ -78,6 +76,7 @@ export interface FieldEditorProps {
   groupId?: string
   ticketId?: string
   customerId?: string
+  organizationId?: string
   /**
    * @default 'text/html'
    */
@@ -97,8 +96,6 @@ export interface FieldEditorProps {
     }
     mentionText?: {
       disabled?: boolean
-      // where to get id for the current ticket
-      ticketNodeName?: string
       // where to get id for the current customer
       customerNodeName?: string
       // where to get id for the current group
@@ -114,6 +111,15 @@ export interface FieldEditorProps {
       // where to get groupId for user mention query
       groupNodeName?: string
     }
+    [TEXT_TOOL_PLUGIN_NAME]?: {
+      disabled?: boolean
+      // where to get id for the current customer
+      customerNodeName?: string
+      // where to get id for the current organization
+      organizationNodeName?: string
+      // where to get id for the current group
+      groupNodeName?: string
+    }
   }
 }
 
@@ -122,6 +128,10 @@ export type EditorCustomPlugins = keyof ConfidentTake<FieldEditorProps, 'meta'>
 declare module '@tiptap/vue-3' {
   interface EditorEvents {
     'cancel-ai-assistant-text-tools-updates': void
+    'toggle-visibility': {
+      name: string
+      active: boolean
+    }
   }
 }
 

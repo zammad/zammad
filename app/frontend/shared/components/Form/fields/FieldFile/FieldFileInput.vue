@@ -124,6 +124,7 @@ const loadFiles = async (files: FileList | File[]) => {
   reset()
 }
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   uploadFiles: loadFiles,
 })

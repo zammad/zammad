@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::Update::Validator, current_user_id: 1 do
-  subject(:validator) { described_class.new(user: user, ticket: ticket, ticket_data: ticket_data, article_data: article_data, skip_validators: skip_validators) }
+  subject(:validator) { described_class.new(user:, ticket:, ticket_data:, article_data:, skip_validators:, macro:) }
 
   let(:user)            { create(:agent, groups: [group]) }
   let(:ticket)          { create(:ticket) }
@@ -12,6 +12,7 @@ RSpec.describe Service::Ticket::Update::Validator, current_user_id: 1 do
   let(:ticket_data)     { { title: new_title } }
   let(:article_data)    { nil }
   let(:skip_validators) { nil }
+  let(:macro)           { nil }
 
   describe '#validate!' do
     it 'does not raise an error' do

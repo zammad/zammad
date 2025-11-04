@@ -566,6 +566,14 @@ class App.TicketCreate extends App.Controller
       taskKey: @taskKey
     )
 
+    @textTools = new App.WidgetTextTools(
+      el: @$('[data-name="body"]').parent()
+      data:
+        user: App.Session.get()
+        ticket: @formDefault
+      taskKey: @taskKey
+    )
+
     $('#tags').tokenfield()
 
     @sidebarWidget = new App.TicketCreateSidebar(
@@ -645,6 +653,10 @@ class App.TicketCreate extends App.Controller
     @sidebarWidget.render(params)
     @textModule.reload(
       config: App.Config.all()
+      user: App.Session.get()
+      ticket: params
+    )
+    @textTools.reload(
       user: App.Session.get()
       ticket: params
     )
@@ -768,6 +780,7 @@ class App.TicketCreate extends App.Controller
     @submitDisable(e)
     ui = @
     ticket.save(
+      removedFields: @controllerFormCreateMiddle.removedFields(@controllerFormCreateMiddle.el)
       done: ->
 
         # Reset article after ticket create, to avoid unwanted sideeffects at other places.

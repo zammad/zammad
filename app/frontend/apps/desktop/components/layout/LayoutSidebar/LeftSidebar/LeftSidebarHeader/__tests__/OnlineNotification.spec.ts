@@ -63,6 +63,9 @@ describe('OnlineNotification', () => {
   it('displays notification logo without unseen notifications', async () => {
     const wrapper = renderComponent(OnlineNotification, {
       props: { collapsed: false },
+      slots: {
+        default: '<CommonIcon name="logo" />',
+      },
       router: true,
     })
 

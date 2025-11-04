@@ -533,6 +533,37 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       expect(response).to have_http_status(:forbidden)
       expect(Mention.count).to eq(0)
     end
+
+    context 'when special params should be updated' do
+      it 'does not update created_at via PUT when import mode is inactive' do
+        ticket  = create(:ticket, group: group)
+        article = create(:ticket_article, ticket: ticket)
+
+        original_created_at = article.created_at
+
+        authenticated_as(agent)
+
+        put "/api/v1/ticket_articles/#{article.id}", params: { created_at: 2.days.ago }, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(article.reload.created_at.to_i).to eq(original_created_at.to_i)
+      end
+
+      it 'updates created_at via PUT when import mode is active' do
+        ticket  = create(:ticket, group: group)
+        article = create(:ticket_article, ticket: ticket)
+
+        Setting.set('import_mode', true)
+        authenticated_as(agent)
+
+        new_created_at = Time.zone.parse('2020-01-02 03:04:05 UTC')
+
+        put "/api/v1/ticket_articles/#{article.id}", params: { created_at: new_created_at }, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(article.reload.created_at.to_i).to eq(new_created_at.to_i)
+      end
+    end
   end
 
   describe 'DELETE /api/v1/ticket_articles/:id', authenticated_as: -> { user } do

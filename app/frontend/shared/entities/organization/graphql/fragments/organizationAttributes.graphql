@@ -8,10 +8,6 @@ fragment organizationAttributes on Organization {
   active
   note
   vip
-  ticketsCount {
-    open
-    closed
-  }
   objectAttributeValues {
     ...objectAttributeValues
   }

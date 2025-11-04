@@ -195,26 +195,35 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       end
     end
 
-    describe '.attribute_to_references_hash_model', db_strategy: :reset do
+    describe '.attribute_to_references_hash', db_strategy: :reset do
       before do
         create(:object_manager_attribute_text, object_name: 'Ticket', name: 'custom_textfield')
       end
 
       context 'when no attribute is used in an overview' do
         it 'returns an empty hash' do
-          result = described_class.attribute_to_references_hash_model
+          result = described_class.attribute_to_references_hash
 
-          expect(result).to eq({})
+          expect(result).not_to have_key('ticket.custom_textfield')
         end
       end
 
       context 'when attribute is used in overview' do
         it 'returns a hash with the overview name and the attribute' do
           create(:overview, name: 'Test Overview', view: { 's' => %w[title custom_textfield] }, prio: nil)
-          result = described_class.attribute_to_references_hash_model
+          result = described_class.attribute_to_references_hash
 
-          expect(result).to include('ticket.custom_textfield')
           expect(result['ticket.custom_textfield']).to include('Overview' => ['Test Overview'])
+        end
+      end
+
+      context 'when attribute is used in ai agent' do
+        it 'returns a hash with the ai agent name and the attribute' do
+          create(:ai_agent, name: 'Test AI Agent', agent_type: 'TicketCategorizer', type_enrichment_data: { 'category' => 'custom_textfield' })
+          create(:ai_agent, name: 'Test AI Agent 2', agent_type: 'TicketCategorizer', type_enrichment_data: { 'category' => 'custom_textfield' })
+          result = described_class.attribute_to_references_hash
+
+          expect(result['ticket.custom_textfield']).to include('AI Agent' => ['Test AI Agent', 'Test AI Agent 2'])
         end
       end
     end

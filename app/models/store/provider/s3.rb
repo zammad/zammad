@@ -77,6 +77,12 @@ module Store::Provider::S3
       true
     end
 
+    def change_checksum(old_sha, new_sha)
+      request(:copy_object, copy_source: "#{bucket}/#{old_sha}", key: new_sha)
+
+      delete(old_sha)
+    end
+
     private
 
     def bucket
@@ -93,6 +99,5 @@ module Store::Provider::S3
     rescue => e
       log_and_raise(e)
     end
-
   end
 end

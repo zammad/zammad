@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-import { getByRole } from '@testing-library/vue'
+import { getByRole, waitFor } from '@testing-library/vue'
 import { storeToRefs } from 'pinia'
 import { type RouteRecordRaw } from 'vue-router'
 
@@ -18,6 +18,10 @@ import {
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { waitForUserCurrentTaskbarItemDeleteMutationCalls } from '#desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemDelete.mocks.ts'
+import {
+  mockUserCurrentTaskbarItemListPrioMutation,
+  waitForUserCurrentTaskbarItemListPrioMutationCalls,
+} from '#desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemListPrio.mocks.ts'
 import {
   mockUserCurrentTaskbarItemListQuery,
   waitForUserCurrentTaskbarItemListQueryCalls,
@@ -115,8 +119,6 @@ describe('UserTaskbarTabs.vue', () => {
     expect(getByIconName(tab, 'check-circle-no')).toBeInTheDocument()
     expect(tab).toHaveTextContent('Welcome to Zammad!')
 
-    expect(tab).toHaveAccessibleDescription('Drag and drop to reorder your tabs.')
-
     const link = getByRole(tab, 'link')
 
     expect(link).toHaveAttribute('href', '/desktop/tickets/1')
@@ -160,8 +162,6 @@ describe('UserTaskbarTabs.vue', () => {
     expect(getByIconName(tab, 'pencil')).toBeInTheDocument()
     expect(tab).toHaveTextContent('Received Call: Test title')
 
-    expect(tab).toHaveAccessibleDescription('Drag and drop to reorder your tabs.')
-
     const link = getByRole(tab, 'link')
 
     expect(link).toHaveAttribute('href', '/desktop/tickets/create/999')
@@ -192,8 +192,6 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(getAllByIconName(tab, 'x-lg')[1]).toHaveClass('text-red-500')
     expect(tab).toHaveTextContent('Access denied')
-
-    expect(tab).toHaveAccessibleDescription('Drag and drop to reorder your tabs.')
 
     const link = getByRole(tab, 'link')
 
@@ -226,8 +224,6 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(getAllByIconName(tab, 'x-lg')[1]).toHaveClass('text-red-500')
     expect(tab).toHaveTextContent('Not found')
-
-    expect(tab).toHaveAccessibleDescription('Drag and drop to reorder your tabs.')
 
     const link = getByRole(tab, 'link')
 
@@ -264,12 +260,13 @@ describe('UserTaskbarTabs.vue', () => {
     expect(getByIconName(tab, 'check-circle-no')).toBeInTheDocument()
     expect(tab).toHaveTextContent('Welcome to Zammad!')
 
-    expect(tab).not.toHaveAccessibleDescription('Drag and drop to reorder your tabs.')
-
     const link = getByRole(tab, 'link')
 
     expect(link).toHaveAttribute('href', '/desktop/tickets/1')
     expect(link).toHaveAccessibleName('Ticket#53001 - Welcome to Zammad!')
+
+    await wrapper.events.click(link)
+
     expect(link).toHaveClass('router-link-active router-link-exact-active')
 
     expect(getByRole(tab, 'button', { name: 'Close this tab' })).toBeInTheDocument()
@@ -439,6 +436,122 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(tabs).toHaveLength(2)
     expect(tabs[0]).toHaveTextContent('Second ticket')
+    expect(tabs[1]).toHaveTextContent('First ticket')
+  })
+
+  it('supports reordering tabs via keyboard drag-and-drop', async () => {
+    mockUserCurrentTaskbarItemListPrioMutation({
+      userCurrentTaskbarItemListPrio: {
+        __typename: 'UserCurrentTaskbarItemListPrioPayload',
+        success: true,
+        errors: [],
+      },
+    })
+
+    mockUserCurrentTaskbarItemListQuery({
+      userCurrentTaskbarItemList: [
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 1),
+          key: 'Ticket-41',
+          callback: EnumTaskbarEntity.TicketZoom,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: {
+            __typename: 'Ticket',
+            id: convertToGraphQLId('Ticket', 41),
+            internalId: 41,
+            number: '53041',
+            title: 'First ticket',
+            stateColorCode: EnumTicketStateColorCode.Open,
+            state: {
+              __typename: 'TicketState',
+              name: 'open',
+            },
+          },
+          prio: 1,
+          formId: 'foo',
+          changed: false,
+          dirty: false,
+          notify: false,
+          updatedAt: '2024-07-24T15:42:28.212Z',
+        },
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 2),
+          key: 'Ticket-42',
+          callback: EnumTaskbarEntity.TicketZoom,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: {
+            __typename: 'Ticket',
+            id: convertToGraphQLId('Ticket', 42),
+            internalId: 42,
+            number: '53042',
+            title: 'Second ticket',
+            stateColorCode: EnumTicketStateColorCode.Pending,
+            state: {
+              __typename: 'TicketState',
+              name: 'pending reminder',
+            },
+          },
+          prio: 2,
+          formId: 'bar',
+          changed: false,
+          dirty: false,
+          notify: false,
+          updatedAt: '2024-07-24T15:42:28.212Z',
+        },
+      ],
+    })
+
+    const wrapper = await renderUserTaskbarTabs()
+
+    let tabs = wrapper.getAllByRole('listitem')
+    expect(tabs).toHaveLength(2)
+    expect(tabs[0]).toHaveTextContent('First ticket')
+    expect(tabs[1]).toHaveTextContent('Second ticket')
+
+    // Focus on the sortable list and select the first item
+    const list = wrapper.getByRole('list', { name: 'User taskbar tabs' })
+    list.focus()
+
+    const messageNodeId = 'announcer-message'
+
+    expect(list.getAttribute('aria-describedby')).toBe(messageNodeId)
+
+    expect(wrapper.getByTestId(messageNodeId)).toHaveTextContent(
+      'Sortable list focused. Use up and down arrows to navigate items. Press Space to select and item and again on another item to swap them.',
+    )
+
+    await wrapper.events.keyboard('{Space}') // select first
+
+    expect(wrapper.getByTestId(messageNodeId)).toHaveTextContent(
+      'Ticket-41 selected. Use arrow keys to choose drop position, then press Space.',
+    )
+
+    // Move to second item and confirm swap
+    await wrapper.events.keyboard('{ArrowDown}')
+
+    expect(wrapper.getByTestId(messageNodeId)).toHaveTextContent('Focus on Ticket-42')
+
+    await wrapper.events.keyboard('{Space}') // swap first <-> second
+
+    expect(wrapper.getByTestId(messageNodeId)).toHaveTextContent(
+      'Swapped Ticket-41 with Ticket-42. Ticket-41 moved to position 2.',
+    )
+
+    const calls = await waitForUserCurrentTaskbarItemListPrioMutationCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      list: [
+        { id: convertToGraphQLId('Taskbar', 2), prio: 1 },
+        { id: convertToGraphQLId('Taskbar', 1), prio: 2 },
+      ],
+    })
+
+    tabs = wrapper.getAllByRole('listitem')
+
+    await waitFor(() => expect(tabs[0]).toHaveTextContent('Second ticket'))
+
     expect(tabs[1]).toHaveTextContent('First ticket')
   })
 

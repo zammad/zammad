@@ -103,6 +103,9 @@ const ticketsQuery = new QueryHandler(
       },
     },
   }),
+  {
+    triggerRefetchOnConnectionReconnect: () => foreground.value,
+  },
 )
 
 const ticketsResult = ticketsQuery.result()
@@ -336,18 +339,18 @@ defineExpose({ tickets: readonly(tickets) })
           class="space-y-2.5"
           :title="$t('Welcome!')"
         >
-          <CommonLabel class="block" tag="p">{{
+          <CommonLabel class="block!" tag="p">{{
             $t('You have not created a ticket yet.')
           }}</CommonLabel>
-          <CommonLabel class="block" tag="p">{{
+          <CommonLabel class="block!" tag="p">{{
             $t('The way to communicate with us is this thing called "ticket".')
           }}</CommonLabel>
-          <CommonLabel class="block" tag="p">{{
+          <CommonLabel class="block!" tag="p">{{
             $t('Please click on the button below to create your first one.')
           }}</CommonLabel>
           <CommonButton
             size="large"
-            class="mx-auto !mt-8"
+            class="mx-auto mt-8"
             variant="primary"
             @click="router.push({ name: 'TicketCreate' })"
             >{{ $t('Create your first ticket') }}

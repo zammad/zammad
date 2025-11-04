@@ -1,0 +1,7 @@
+query aiAssistanceTextToolsList($groupId: ID, $ticketId: ID, $limit: Int) {
+  aiAssistanceTextToolsList(groupId: $groupId, ticketId: $ticketId, limit: $limit) {
+    id
+    name
+    active
+  }
+}

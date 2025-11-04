@@ -88,8 +88,8 @@ class Certificate extends App.ControllerModal
   onSubmit: (e) =>
     params = new FormData($(e.currentTarget).closest('form').get(0))
     params.set('try', true)
-    if _.isEmpty(params.get('data'))
-      params.delete('data')
+    if _.isEmpty(params.get('certificate'))
+      params.delete('certificate')
     @formDisable(e)
 
     @ajax(
@@ -131,8 +131,8 @@ class PrivateKey extends App.ControllerModal
   onSubmit: (e) =>
     params = new FormData($(e.currentTarget).closest('form').get(0))
     params.set('try', true)
-    if _.isEmpty(params.get('data'))
-      params.delete('data')
+    if _.isEmpty(params.get('private_key'))
+      params.delete('private_key')
     @formDisable(e)
 
     @ajax(

@@ -187,6 +187,25 @@ class KnowledgeBase < ApplicationModel
     KnowledgeBase::Permission.any?
   end
 
+  def self.access_for_user(user)
+    hash = {
+      granular: KnowledgeBase.granular_permissions?,
+      editor:   user&.permissions?('knowledge_base.editor'),
+      reader:   user&.permissions?('knowledge_base.reader')
+    }
+
+    case hash
+    in { granular: true, reader: true } | { granular: true, editor: true }
+      :granular
+    in { editor: true }
+      :editor
+    in { reader: true }
+      :reader
+    else
+      :public
+    end
+  end
+
   def public_content?(kb_locale = nil)
     scope = answers.published
 

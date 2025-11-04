@@ -8,7 +8,6 @@ import { PLUGIN_NAME as KnowledgeBaseMentionName } from '#shared/components/Form
 import { PLUGIN_NAME as TextModuleMentionName } from '#shared/components/Form/fields/FieldEditor/extensions/TextModuleSuggestion.ts'
 import { PLUGIN_NAME as UserMentionName } from '#shared/components/Form/fields/FieldEditor/extensions/UserMention.ts'
 import AiAssistantTextTools from '#shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantTextTools/AiAssistantTextTools.vue'
-import { getAiAssistantTextToolsClasses } from '#shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantTextTools/initializeAiAssistantTextToolsClasses.ts'
 import FieldEditorColorMenu from '#shared/components/Form/fields/FieldEditor/features/color-picker/EditorColorMenu.vue'
 import type {
   EditorButton,
@@ -60,16 +59,16 @@ export default function useEditorActions(
 
   const { localeData } = useLocaleStore()
 
-  const { verticalGradient } = getAiAssistantTextToolsClasses()
   const getActionsList = (): EditorButton[] => {
     return [
       {
         id: getUuid(),
         name: 'aiAssistantTextTools',
         contentType: ['text/html', 'text/plain'],
-        label: __('Ai assistant text tools'),
+        label: __('Writing Assistant Tools'),
         showDivider: true,
-        dividerClass: verticalGradient,
+        dividerClass:
+          '[button[aria-expanded=true]+&]:animate-ai-stripe-vertical [button:hover+&]:animate-ai-stripe-vertical [button:focus-visible+&]:animate-ai-stripe-vertical bg-linear-to-t from-pink to-blue',
         permission: 'ticket.agent',
         show: (config) => config?.ai_assistance_text_tools && !!config.ai_provider,
         icon: 'smart-assist-elaborate',

@@ -154,6 +154,7 @@ class Create extends App.ControllerModal
           token: ui.newToken.token
         )
       onShown: ->
+        @$('.js-copy').on('click', ui.copyInputToClipboard)
         @$('.js-select').on('click', ui.selectAll)
       onCancel: ->
         @close()

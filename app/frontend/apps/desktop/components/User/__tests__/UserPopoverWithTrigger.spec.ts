@@ -5,16 +5,14 @@ import { within } from '@testing-library/vue'
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import {
-  mockUserQuery,
-  waitForUserQueryCalls,
-} from '#shared/entities/user/graphql/queries/user.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { SYSTEM_USER_ID, SYSTEM_USER_INTERNAL_ID } from '#shared/utils/constants.ts'
 
-import UserPopoverWithTrigger, {
-  type Props,
-} from '#desktop/components/User/UserPopoverWithTrigger.vue'
+import {
+  mockUserInfoForPopoverQuery,
+  waitForUserInfoForPopoverQueryCalls,
+} from '../UserPopoverWithTrigger/graphql/queries/userInfoForPopover.mocks.ts'
+import UserPopoverWithTrigger, { type Props } from '../UserPopoverWithTrigger.vue'
 
 const dummyUser = {
   id: convertToGraphQLId('User', 3),
@@ -68,7 +66,7 @@ const systemUser = {
 }
 
 const renderUserPopover = (props?: Partial<Props>, isAgent = true, isSystemUser = false) => {
-  mockUserQuery({
+  mockUserInfoForPopoverQuery({
     user: props?.user ?? dummyUser,
   })
 
@@ -144,7 +142,7 @@ describe('UserPopover', () => {
       totalCount: 4,
     }
 
-    mockUserQuery({
+    mockUserInfoForPopoverQuery({
       user: {
         ...dummyUser,
         secondaryOrganizations,
@@ -155,7 +153,11 @@ describe('UserPopover', () => {
 
     await wrapper.events.hover(wrapper.getByRole('img', { name: `Avatar (${dummyUser.fullname})` }))
 
-    await waitForUserQueryCalls()
+    const calls = await waitForUserInfoForPopoverQueryCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      userId: dummyUser.id,
+    })
 
     const popover = await wrapper.findByRole('region')
 

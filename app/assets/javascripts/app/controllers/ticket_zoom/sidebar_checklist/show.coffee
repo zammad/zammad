@@ -315,7 +315,7 @@ class App.SidebarChecklistShow extends App.Controller
   updateChecklistTitle: ->
     return if @isRenamingChecklist
 
-    @table.find('th').html(@checklistTitle())
+    @table.find('th').text(@checklistTitle())
 
   renderSorting: =>
     for id, current_index in @checklist.sorted_item_ids

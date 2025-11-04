@@ -31,7 +31,6 @@ export interface OverlayContainerOptions {
   refocus?: boolean
   beforeOpen?: (uniqueId?: string) => Awaited<unknown>
   afterClose?: (uniqueId?: string) => Awaited<unknown>
-  fullscreen?: boolean
   /**
    * If true, no page context will be added to the name, e.g. for confirmation dialogs.
    * @default false

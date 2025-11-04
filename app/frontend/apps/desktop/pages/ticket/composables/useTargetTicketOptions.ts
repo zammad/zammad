@@ -1,11 +1,9 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-import { storeToRefs } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
 
 import type { ChangedFieldFunction, FormFieldValue } from '#shared/components/Form/types.ts'
-import { getTicketNumberWithHook } from '#shared/entities/ticket/composables/getTicketNumber.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
+import { useTicketNumberAndTitle } from '#shared/entities/ticket/composables/useTicketNumberAndTitle.ts'
 
 import type { TicketRelationAndRecentListItem } from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/types.ts'
 
@@ -13,11 +11,11 @@ export const useTargetTicketOptions = (
   onChangedField: ChangedFieldFunction,
   updateFieldValues: (values: Record<string, FormFieldValue>) => void,
 ) => {
-  const { config } = storeToRefs(useApplicationStore())
-
   const targetTicketId = ref<string>()
 
   const formListTargetTicket = shallowRef<TicketRelationAndRecentListItem>()
+
+  const { getTicketNumberWithTitle } = useTicketNumberAndTitle()
 
   const formListTargetTicketOptions = computed(() => {
     if (!formListTargetTicket.value) return
@@ -25,7 +23,10 @@ export const useTargetTicketOptions = (
     return [
       {
         value: formListTargetTicket.value.id,
-        label: `${getTicketNumberWithHook(config.value.ticket_hook, formListTargetTicket.value.number)} - ${formListTargetTicket.value.title}`,
+        label: getTicketNumberWithTitle(
+          formListTargetTicket.value.number,
+          formListTargetTicket.value.title,
+        ),
         heading: formListTargetTicket.value.customer.fullname,
         ticket: formListTargetTicket.value,
       },

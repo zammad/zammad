@@ -1,5 +1,5 @@
 ---
-to: "<%= h.getPath('store', { directoryScope: directoryScope, suffix:`/${storeName}.ts`}) %>"
+to: "<%= h.getPath('store', { directoryScope: directoryScope, suffix:`${storeName}.ts`}) %>"
 ---
 // <%= h.zammadCopyright() %>
 

@@ -10,7 +10,7 @@ module Service::AI::VectorDB
     private
 
     def embedding_size
-      provider = AI::Provider.by_name(Setting.get('ai_provider'))
+      provider = AI::Provider.current
 
       embedding_sizes = provider.const_get(:EMBEDDING_SIZES)
 

@@ -67,8 +67,8 @@ module KnowledgeBasePublicMatchers
       def breadcrumb_item_url
         @breadcrumb_item_url ||= actual
             .all('.breadcrumbs .breadcrumb')
-            .find { _1.find('span').text == expected }
-            .then { _1[:href] if _1 }
+            .find { it.find('span').text == expected }
+            .then { it[:href] if it }
       end
     end
   end

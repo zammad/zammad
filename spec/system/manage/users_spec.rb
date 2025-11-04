@@ -486,4 +486,40 @@ RSpec.describe 'Manage > Users', type: :system do
       end
     end
   end
+
+  describe 'when updating an inactive agent' do
+    let(:groups) { create_list(:group, 2) }
+    let(:user)   { create(:agent, groups: groups, active: false) }
+
+    before do
+      user
+      visit '#manage/users'
+    end
+
+    it 'does not clear group permissions when setting user as active (#5727)' do
+      expect(user.reload).to have_attributes(
+        active: false,
+        groups: groups,
+      )
+
+      click "tr[data-id='#{user.id}']"
+
+      in_modal do
+        # The group permissions field should be hidden for inactive users.
+        expect(page).to have_no_text('GROUP PERMISSIONS')
+
+        set_select_field_label 'active', 'active'
+
+        click_on 'Submit'
+
+        expect(page).to have_text('User updated successfully.')
+          .and have_text('GROUP PERMISSIONS')
+      end
+
+      expect(user.reload).to have_attributes(
+        active: true,
+        groups: groups,
+      )
+    end
+  end
 end

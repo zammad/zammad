@@ -21,6 +21,7 @@ it.
 
 ## Cookbook / Recipes
 
+- [How to calculate required database connection count](cookbook/how-to-calculate-required-db-connection-count.md)
 - [How to diagnose email bugs](cookbook/how-to-diagnose-email-bugs.md)
 - [How to Debug Zammad Processes](cookbook/how-to-debug-zammad-processes.md)
 - [How to use debuggers with Zammad](cookbook/how-to-use-debuggers.md)

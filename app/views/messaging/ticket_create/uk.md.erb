@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Заявка №#{ticket.number}>: Створено #{current_user.longname} о #{ticket.updated_at}_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Створено #{current_user.longname} at #{ticket.updated_at}_
 * Група: #{ticket.group.name}
 * Власник: #{ticket.owner.fullname}
 * Статус: #{t(ticket.state.name)}

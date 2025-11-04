@@ -536,12 +536,12 @@ ObjectManager::Attribute.add(
   display:     __('Text'),
   data_type:   'richtext',
   data_option: {
-    type:       'richtext',
-    maxlength:  150_000,
-    upload:     true,
-    rows:       8,
-    null:       true,
-    text_tools: true,
+    type:        'richtext',
+    maxlength:   150_000,
+    upload:      true,
+    rows:        8,
+    null:        true,
+    bubble_menu: true,
   },
   editable:    false,
   active:      true,
@@ -1534,7 +1534,7 @@ ObjectManager::Attribute.add(
   display:     __('Note'),
   data_type:   'richtext',
   data_option: {
-    type:      'text',
+    type:      'richtext',
     maxlength: 5000,
     no_images: true,
     null:      true,
@@ -1920,7 +1920,7 @@ ObjectManager::Attribute.add(
   display:     __('Note'),
   data_type:   'richtext',
   data_option: {
-    type:      'text',
+    type:      'richtext',
     maxlength: 5000,
     no_images: true,
     null:      true,
@@ -2329,7 +2329,7 @@ ObjectManager::Attribute.add(
   display:     __('Note'),
   data_type:   'richtext',
   data_option: {
-    type:      'text',
+    type:      'richtext',
     maxlength: 250,
     no_images: true,
     null:      true,
@@ -2394,4 +2394,51 @@ ObjectManager::Attribute.add(
   to_migrate:  false,
   to_delete:   false,
   position:    1800,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Group',
+  name:        'summary_generation',
+  display:     __('Summary Generation'),
+  data_type:   'select',
+  data_option: {
+    default:    'global_default',
+    options:    [
+      {
+        name:  __('Use global default'),
+        value: 'global_default'
+      },
+      {
+        name:  __('On ticket detail opening'),
+        value: 'on_ticket_detail_opening'
+      },
+      {
+        name:  __('On ticket summary sidebar activation'),
+        value: 'on_ticket_summary_sidebar_activation'
+      }
+    ],
+    nulloption: false,
+    multiple:   false,
+    null:       false,
+    translate:  true,
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit:   {
+      '-all-' => {
+        null: false,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1450,
 )

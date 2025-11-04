@@ -277,34 +277,110 @@ RSpec.describe User, type: :model do
     end
 
     describe '#check_login' do
-      let(:agent) { create(:agent) }
+      let(:agent) { create(:agent, login: nil) }
 
-      it 'does use the origin login' do
+      it 'does use given login' do
         new_agent = create(:agent)
         expect(new_agent.login).not_to end_with('1')
       end
 
-      it 'does number up agent logins (1)' do
-        new_agent = create(:agent, login: agent.login)
-        expect(new_agent.login).to eq("#{agent.login}1")
+      it 'ensures login is downcase and without white spaces' do
+        new_agent = create(:agent, login: ' TestUser ')
+        expect(new_agent.login).to eq('testuser')
       end
 
-      it 'does number up agent logins (5)' do
-        new_agent = create(:agent, login: agent.login)
-        4.times do
-          new_agent = create(:agent, login: agent.login)
-        end
+      it 'returns validation error if the login is already taken' do
+        new_agent = build(:agent, login: agent.login)
 
-        expect(new_agent.login).to eq("#{agent.login}5")
+        new_agent.valid?
+
+        expect(new_agent.errors[:login]).to include('has already been taken')
       end
 
-      it 'does backup with uuid in cases of many duplicates' do
-        new_agent = create(:agent, login: agent.login)
-        20.times do
-          new_agent = create(:agent, login: agent.login)
+      context 'when email-as-login was used and is changed' do
+        it 'updates login' do
+          new_agent = create(:agent, login: nil)
+
+          new_agent.update! email: Faker::Internet.unique.email
+
+          expect(new_agent.login).to eq(new_agent.email)
+        end
+      end
+
+      context 'when email is empty too' do
+        it 'generates auto-login' do
+          new_agent = create(:agent, login: nil, email: nil)
+
+          expect(new_agent.login).to start_with('auto-')
+        end
+      end
+
+      context 'when user_email_multiple_use is enabled' do
+        before { Setting.set('user_email_multiple_use', true) }
+
+        context 'when login is given' do
+          it 'raises error if the login is already taken' do
+            new_agent = build(:agent, login: agent.login)
+
+            new_agent.valid?
+
+            expect(new_agent.errors[:login]).to include('has already been taken')
+          end
         end
 
-        expect(new_agent.login.sub!(agent.login, '')).to be_a_uuid
+        context 'when login is not given' do
+          it 'uses email as fallback' do
+            new_agent = create(:agent, login: nil)
+
+            expect(new_agent.login).to eq(new_agent.email)
+          end
+
+          it 'does number up agent logins (1)' do
+            new_agent = create(:agent, login: nil, email: agent.email)
+
+            expect(new_agent.login).to eq("#{new_agent.email}1")
+          end
+
+          it 'does number up agent logins (5)' do
+            new_agent = create(:agent, login: nil, email: agent.email)
+            4.times do
+              new_agent = create(:agent, login: nil, email: agent.email)
+            end
+
+            expect(new_agent.login).to eq("#{new_agent.email}5")
+          end
+
+          it 'does backup with uuid in cases of many duplicates' do
+            new_agent = create(:agent, login: nil, email: agent.email)
+            20.times do
+              new_agent = create(:agent, login: nil, email: agent.email)
+            end
+
+            expect(new_agent.login.sub!(new_agent.email, '')).to be_a_uuid
+          end
+        end
+
+        context 'when email-as-login was used and is changed' do
+          it 'updates login' do
+            new_agent = create(:agent, login: nil)
+
+            new_agent.update! email: Faker::Internet.unique.email
+
+            expect(new_agent.login).to eq(new_agent.email)
+          end
+
+          it 'number up agent logins (1)' do
+            new_agent = create(:agent, login: nil, email: agent.email)
+
+            new_email = Faker::Internet.unique.email
+
+            agent.update! email: new_email
+
+            new_agent.update! email: new_email
+
+            expect(new_agent.login).to eq("#{new_agent.email}1")
+          end
+        end
       end
     end
 
@@ -661,6 +737,9 @@ RSpec.describe User, type: :model do
         'Webhook'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
         'Overview'                           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
         'PGPKey'                             => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+        'AI::Agent'                          => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+        'AI::Analytics::Usage'               => { 'user_id' => 0 },
+        'AI::TextTool'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
         'ActivityStream'                     => { 'created_by_id' => 0 },
         'StatsStore'                         => { 'created_by_id' => 0 },
         'TextModule'                         => { 'created_by_id' => 0, 'updated_by_id' => 0 },
@@ -720,7 +799,7 @@ RSpec.describe User, type: :model do
       customer_ticket3      = create(:ticket, group: group_subject, customer: user)
       knowledge_base_answer = create(:knowledge_base_answer, archived_by_id: user.id, published_by_id: user.id, internal_by_id: user.id)
       ticket_state          = create(:ticket_state, created_by_id: user.id)
-      ticket_merged_state   = Ticket::State.find_by(name: 'merged').tap { _1.update!(updated_by_id: user.id) }
+      ticket_merged_state   = Ticket::State.find_by(name: 'merged').tap { it.update!(updated_by_id: user.id) }
 
       refs_user = Models.references('User', user.id, true)
       expect(refs_user).to eq(refs_known)
@@ -1348,6 +1427,28 @@ RSpec.describe User, type: :model do
     it 'does not deliver global assets' do
       expect(user.groups).to be_present
       expect(user.assets({}).deep_symbolize_keys.keys).not_to include(:TicketPriority, :Role, :TicketState, :Group)
+    end
+  end
+
+  describe 'Prevent an organization from being both primary and secondary #5254' do
+    let(:organizations) { create_list(:organization, 3) }
+
+    it 'is not allowed to assign the same organization as primary and secondary' do
+      expect { create(:user, organization_id: organizations.first.id, organization_ids: [organizations.first.id, organizations.second.id]) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the primary organization.')
+    end
+
+    it 'is not allowed to add one of the secondary orgaizations as primary' do
+      user = create(:user, organization: organizations.first, organizations: [organizations.second])
+
+      expect { user.organizations << organizations.first }
+        .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the primary organization.')
+    end
+
+    it 'allows to move organization from secondary to primary' do
+      user = create(:user, organization: organizations.first, organizations: [organizations.second])
+
+      expect { user.update!(organization: organizations.second, organizations: [organizations.first]) }
+        .not_to raise_error
     end
   end
 end

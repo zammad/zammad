@@ -14,7 +14,7 @@ class HtmlSanitizer
       when 'div'
         node.children.to_a.select { |t| t.text.match?(DIV_LINE_BREAK_REGEXP) }.each(&:remove)
 
-        node.remove if node.children.none? && node.classes.none?
+        node.remove if node.children.none? && node.classes.none? && node['data-signature-placeholder'].nil?
       end
     end
   end

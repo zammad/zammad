@@ -32,9 +32,12 @@ class BackgroundServices
                      queues: self.class.queues)
             end
 
-            # ::Delayed::Worker#stop? is monkey patched by config/initializers/delayed_worker_stop.rb
-            #   to ensure an early exit even during work_off().
-            result = ::Delayed::Worker.new(queues: self.class.queues).work_off
+            # DelayedJob does not support SQL Query caching correctly
+            ActiveRecord::Base.uncached do
+              # ::Delayed::Worker#stop? is monkey patched by config/initializers/delayed_worker_stop.rb
+              #   to ensure an early exit even during work_off().
+              result = ::Delayed::Worker.new(queues: self.class.queues).work_off
+            end
           end
 
           process_results(result, realtime)

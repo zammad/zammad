@@ -66,23 +66,13 @@ RSpec.describe Store::Provider::File do
 
   describe '.get' do
     context 'when a file exists for the given SHA digest' do
-      before { FileUtils.mkdir_p(filepath.parent) }
-
-      context 'and its contents match the digest' do
-        before { File.write(filepath, data) }
-
-        it 'returns the contents of the file' do
-          expect(described_class.get(sha)).to eq('foo')
-        end
+      before do
+        FileUtils.mkdir_p(filepath.parent)
+        File.write(filepath, data)
       end
 
-      context 'and its contents do NOT match the digest' do
-        before { File.write(filepath, 'bar') }
-
-        it 'raises an error' do
-          expect { described_class.get(sha) }
-            .to raise_error(StandardError)
-        end
+      it 'returns the contents of the file' do
+        expect(described_class.get(sha)).to eq('foo')
       end
     end
 
@@ -119,6 +109,41 @@ RSpec.describe Store::Provider::File do
         expect { described_class.delete(sha) }
           .to change { Rails.root.join('storage/fs').empty? }.to(true)
       end
+    end
+  end
+
+  describe '.change_checksum' do
+    let(:initial_data)     { 'foo' }
+    let(:new_data)         { 'bar' }
+    let(:initial_checksum) { Store::File.checksum(initial_data) }
+    let(:new_checksum)     { Store::File.checksum(new_data) }
+
+    before do
+      location = described_class.get_location(initial_checksum)
+      File.write(location, new_data)
+    end
+
+    after do
+      FileUtils.rm_rf(Rails.root.join('storage/fs', initial_checksum[0, 4]))
+      FileUtils.rm_rf(Rails.root.join('storage/fs', new_checksum[0, 4]))
+    end
+
+    it 'moves the file from the old path to the new path' do
+      described_class.change_checksum(initial_checksum, new_checksum)
+
+      expect(File).to exist(described_class.get_location(new_checksum))
+    end
+
+    it 'deletes the old file' do
+      described_class.change_checksum(initial_checksum, new_checksum)
+
+      expect(File).not_to exist(described_class.get_location(initial_checksum))
+    end
+
+    it 'can read the new file' do
+      described_class.change_checksum(initial_checksum, new_checksum)
+
+      expect(described_class.get(new_checksum)).to eq(new_data)
     end
   end
 end

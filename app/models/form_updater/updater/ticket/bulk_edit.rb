@@ -8,4 +8,17 @@ class FormUpdater::Updater::Ticket::BulkEdit < FormUpdater::Updater
   def object_type
     ::Ticket
   end
+
+  private
+
+  def perform_payload
+    payload = super
+
+    # Add ticket_ids to params for CoreWorkflow to determine common owners
+    return payload if meta.dig(:additional_data, 'ticketIds').nil?
+
+    payload['params']['ticket_ids'] = meta.dig(:additional_data, 'ticketIds')
+
+    payload
+  end
 end

@@ -20,7 +20,7 @@ class HtmlSanitizer
       end
 
       def build_style(input)
-        style = 'max-width:100%;'
+        style = +'max-width:100%;'
 
         return style if input.blank?
 

@@ -1,18 +1,20 @@
 <div class="text-tools-modal">
-    <span class="label" id="label-text-selected"><%- @T('Selected Text') %></span>
-    <div class="text-selected-field"  aria-labelledby="label-text-selected"><%- @selectedText %></div>
+  <span class="label" id="label-text-selected"><%- @T('Selected Text') %></span>
+  <div class="text-selected-field"  aria-labelledby="label-text-selected"><%- @selectedText %></div>
 
-    <% if @error: %>
-      <div class="error-container">
-        <div class="alert alert--danger">
-            <p><%- @T('Writing Assistant couldn’t generate text.') %></p>
-            <p><%- @T('API is not available. Please contact your Administrator and retry.') %></p>
-        </div>
+  <% if @error: %>
+    <div class="error-container">
+      <div class="alert alert--danger">
+          <p><%- @T("Writing Assistant couldn't generate text.") %></p>
+          <p><%- @T('API is not available. Please contact your Administrator and retry.') %></p>
+      </div>
 
-        <button type="button" class="js-retry btn btn--positive btn--secondary"><%- @Icon('reload') %> <%- @T('Retry') %></button>
+      <button type="button" class="js-retry btn btn--positive btn--secondary"><%- @Icon('reload') %> <%- @T('Retry') %></button>
     </div>
-   <% else: %>
-       <span class="label" id="label-result"><%- @T('Result') %></span>
-              <div class="result-field" id="label-result"  aria-labelledby="label-result"><span><%- @result %></span></div>
-    <% end %>
+  <% else: %>
+    <span id="label-result" class="label" ><%- @T('Result') %></span>
+    <div class="result-field" aria-labelledby="label-result"><span><%- @result %></span></div>
+  <% end %>
+
+  <div class="text-tools-feedback js-aiTextToolFeedback"></div>
 </div>

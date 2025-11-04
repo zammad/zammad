@@ -2,21 +2,21 @@
 
 module Service::AI::VectorDB::Item
   class Upsert < Service::AI::VectorDB::Base
-    attr_reader :object_id, :object_name, :content, :metadata
+    attr_reader :o_id, :object_name, :content, :metadata
 
     def initialize(object_id:, object_name:, content:, metadata: {})
       super()
 
-      @object_id = object_id
+      @o_id = object_id
       @object_name = object_name
       @content = content
       @metadata = metadata
     end
 
     def execute
-      embedding = AI::Provider.by_name(Setting.get('ai_provider')).new.embed(input: content)
+      embedding = AI::Provider.current.new.embed(input: content)
 
-      ai_vector_db.upsert(object_id:, object_name:, content:, metadata:, embedding:) # rubocop:disable Rails/SkipsModelValidations
+      ai_vector_db.upsert(object_id: o_id, object_name:, content:, metadata:, embedding:) # rubocop:disable Rails/SkipsModelValidations
     end
   end
 end

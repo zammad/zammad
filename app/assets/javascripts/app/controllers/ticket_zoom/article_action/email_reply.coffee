@@ -362,11 +362,33 @@ class EmailReply extends App.Controller
           body.append('<br><br>')
         signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
         App.Utils.htmlStrip(signature)
-        if signaturePosition is 'top'
+
+        placeholder = body.find('[data-signature-placeholder]')
+        if placeholder.length > 0
+          placeholder[0].replaceWith(signature[0])
+        else if signaturePosition is 'top'
           body.prepend(signature)
-          body.prepend('<br>')
+          body.prepend('<br><br>')
         else
           body.append(signature)
+        ui.$('[data-name=body]').replaceWith(body)
+    else
+      body = ui.$('[data-name=body]')
+
+      signatures = body.find('[data-signature-placeholder]')
+
+      if signatures.length > 0
+        signatures.each ->
+          node = @
+          brsToRemove = []
+          while(node?.previousSibling?.nodeName == 'BR')
+            brsToRemove.push node.previousSibling
+            node = node.previousSibling
+
+          brsToRemove.forEach (elem) -> elem.remove()
+
+          @remove()
+
         ui.$('[data-name=body]').replaceWith(body)
 
     # convert remote images into data urls

@@ -6,7 +6,6 @@ let aiAssistantTextTools = {
     item: '',
     button: '',
   },
-  verticalGradient: '',
 }
 
 export const initializeAiAssistantTextToolsClasses = (classes: typeof aiAssistantTextTools) => {

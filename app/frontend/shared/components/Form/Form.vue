@@ -1210,8 +1210,8 @@ const handleFormUpdaterAutosaveNotification = () => {
           type: NotificationTypes.Warn,
           persistent: true,
         })
-      }, 4000)
-    }, 1000)
+      }, 6000)
+    }, 2000)
   })
 }
 

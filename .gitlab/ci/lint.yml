@@ -28,18 +28,6 @@
     - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | egrep -v "/vendor|node_modules/")
   after_script: []
 
-'lint: markdown':
-  extends:
-    - .template_lint
-  image:
-    name: davidanson/markdownlint-cli2:latest
-    entrypoint: [""]
-  cache: []
-  before_script: []
-  script:
-    - markdownlint-cli2 '*.md' '**/*.md' '#node_modules' '#**/node_modules'
-  after_script: []
-
 'lint: i18n & rails':
   extends:
     - .template_lint_rails
@@ -87,7 +75,7 @@
     - echo "Finally, ensure cleanup.sh passes…"
     - script/build/cleanup.sh
 
-'lint: coffee & css':
+'lint: markdown, coffee & css':
   extends:
     - .template_lint
   cache: !reference [.cache, read_only_nodejs]
@@ -98,6 +86,8 @@
     - coffeelint --rules ./.dev/coffeelint/rules/* app/
     - echo "Stylelint check…"
     - pnpm lint:css
+    - echo "Markdownlint check…"
+    - pnpm lint:md
 
 'lint: js':
   extends:
@@ -131,7 +121,7 @@
     - !reference [.job_rules, variable_filters]
     - when: manual
   script:
-    - bundle exec rake zammad:ci:bundle:orphaned 5
+    - bundle exec rake zammad:ci:bundle:orphaned 6
 
 'update CI variables':
   extends:

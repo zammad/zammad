@@ -103,10 +103,10 @@ RSpec.describe 'Taskbars', type: :request do
       expect(json_response['ticket_create']).to be_present
     end
 
-    it 'does return ticket all data' do
+    it 'does return tickets' do
       get '/api/v1/taskbar/init', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response['ticket_all'].keys.map(&:to_i)).to include(*tickets.pluck(:id))
+      expect(json_response['assets']).to include_assets_of(*tickets)
     end
 
     it 'does return user profiles' do

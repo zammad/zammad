@@ -47,7 +47,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
         expect(page).to have_field('Messaging Icon URL', with: 'https://zammad.com/assets/images/logo-200x200.png')
         expect(page).to have_field('Custom Payload', checked: false, visible: :all)
         expect(page).to have_field('custom_payload', with: custom_payload, disabled: :all, visible: :all)
-        expect(page).to have_field('Note', with: 'Pre-defined webhook for Mattermost Notifications.')
+        check_editor_field_richtext_value('note', 'Pre-defined webhook for Mattermost Notifications.')
 
         fill_in 'Endpoint', with: 'https://example.com/mattermost_endpoint'
         fill_in 'Messaging Username', with: 'username'
@@ -182,7 +182,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
         expect(page).to have_field('Messaging Icon URL', with: webhook.preferences['pre_defined_webhook']['messaging_icon_url'])
         expect(page).to have_field('Custom Payload', checked: false, visible: :all)
         expect(page).to have_field('custom_payload', with: custom_payload, disabled: :all, visible: :all)
-        expect(page).to have_field('Note', with: 'Pre-defined webhook for Mattermost Notifications.')
+        check_editor_field_richtext_value('note', 'Pre-defined webhook for Mattermost Notifications.')
 
         fill_in 'Endpoint', with: 'https://example.com/mattermost_endpoint'
         fill_in 'Messaging Username', with: 'username'
@@ -239,7 +239,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
     let(:admin)       { create(:admin, preferences: { locale: 'de-de' }) }
     let(:webhook)     { create(:webhook) }
     let(:trigger)     { create(:trigger, perform: { 'notification.webhook' => { 'webhook_id' => webhook.id.to_s } }) }
-    let(:source)      { 'This webhook is referenced by another object and thus cannot be deleted: %s' }
+    let(:source)      { 'This object is referenced by other object(s) and thus cannot be deleted: %s' }
     let(:target)      { "[TRANSLATED] #{source}" }
     let(:translation) do
       Translation.where(locale: 'de-de', source:).destroy_all

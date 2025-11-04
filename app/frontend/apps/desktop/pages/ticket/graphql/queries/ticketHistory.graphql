@@ -1,15 +1,5 @@
-query ticketHistory(
-  $ticketId: ID
-  $ticketInternalId: Int
-  $ticketNumber: String
-) {
-  ticketHistory(
-    ticket: {
-      ticketId: $ticketId
-      ticketInternalId: $ticketInternalId
-      ticketNumber: $ticketNumber
-    }
-  ) {
+query ticketHistory($ticketId: ID!) {
+  ticketHistory(ticketId: $ticketId) {
     createdAt
     records {
       issuer {
@@ -32,6 +22,14 @@ query ticketHistory(
           name
         }
         ... on PostmasterFilter {
+          id
+          name
+        }
+        ... on AIAgent {
+          id
+          name
+        }
+        ... on Macro {
           id
           name
         }

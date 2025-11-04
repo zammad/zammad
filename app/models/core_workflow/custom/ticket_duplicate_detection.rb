@@ -32,13 +32,13 @@ class CoreWorkflow::Custom::TicketDuplicateDetection < CoreWorkflow::Custom::Bac
   end
 
   def any_attribute_match?
-    return true if @condition_object.payload['last_changed_attribute'].blank?
+    return true if resolved_last_changed_attribute.blank?
 
-    detect_attributes.include?(@condition_object.payload['last_changed_attribute'])
+    detect_attributes.include?(resolved_last_changed_attribute)
   end
 
   def params_set?
-    detect_attributes.all? { |key| params[key].present? }
+    detect_attributes.all? { |key| resolved_params[key].present? }
   end
 
   def search_selector
@@ -47,7 +47,7 @@ class CoreWorkflow::Custom::TicketDuplicateDetection < CoreWorkflow::Custom::Bac
       detect_attributes.each do |key|
         where_condition_selector["ticket.#{key}"] = {
           operator: 'is',
-          value:    params[key],
+          value:    resolved_params[key],
         }
       end
 
@@ -59,6 +59,32 @@ class CoreWorkflow::Custom::TicketDuplicateDetection < CoreWorkflow::Custom::Bac
       end
 
       where_condition_selector
+    end
+  end
+
+  def resolved_params
+    @resolved_params ||= begin
+      if detect_attributes.include?('organization_id') && params['organization_id'].blank? && params['customer_id'].present?
+        customer = User.find_by(id: params['customer_id'])
+        merged = if customer&.organization_id.present?
+                   params.merge('organization_id' => customer.organization_id)
+                 else
+                   params
+                 end
+        merged
+      else
+        params
+      end
+    end
+  end
+
+  def resolved_last_changed_attribute
+    @resolved_last_changed_attribute ||= begin
+      if detect_attributes.include?('organization_id') && @condition_object.payload['last_changed_attribute'] == 'customer_id' && params['organization_id'].blank?
+        'organization_id'
+      else
+        @condition_object.payload['last_changed_attribute']
+      end
     end
   end
 

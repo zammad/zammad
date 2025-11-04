@@ -12,7 +12,7 @@ capybara:integration:other:
     - !reference [.services, proxy]
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
-    - bundle exec rspec -t integration -t ~integration_standalone --profile 10 spec/system
+    - bundle exec rspec -t integration -t ~integration_standalone spec/system
 
 capybara:integration:saml:
   extends:
@@ -25,7 +25,7 @@ capybara:integration:saml:
     - !reference [.services, auth]
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
-    - bundle exec rspec -t integration_standalone:saml --profile 10 spec/system
+    - bundle exec rspec -t integration_standalone:saml spec/system
 
 .template_capybara_integration_otrs:
   extends:
@@ -46,11 +46,11 @@ capybara:integration:otrs:
     - .template_capybara_integration_otrs
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
-    - bundle exec rspec -t integration_standalone:otrs --profile 10 spec/system/apps
+    - bundle exec rspec -t integration_standalone:otrs spec/system/apps
 
 capybara:integration:otrs:legacy:
   extends:
     - .template_capybara_integration_otrs
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
-    - bundle exec rspec -t integration_standalone:otrs --profile 10 spec/system/import
+    - bundle exec rspec -t integration_standalone:otrs spec/system/import

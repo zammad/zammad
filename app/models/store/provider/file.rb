@@ -27,17 +27,19 @@ class Store::Provider::File
     location = get_location(sha)
 
     Rails.logger.debug { "read from fs #{location}" }
-    content   = File.binread(location)
-    local_sha = Store::File.checksum(content)
 
-    # check sha
-    raise "File corrupted: path #{location} does not match SHA digest (#{local_sha})" if local_sha != sha
-
-    content
+    File.binread(location)
   end
 
-  class << self
-    alias validate_file get
+  def self.validate_file(sha)
+    content   = get(sha)
+    local_sha = Store::File.checksum(content)
+
+    if local_sha != sha
+      raise "File corrupted: path #{location} does not match SHA digest (#{local_sha})"
+    end
+
+    true
   end
 
   # unlink file from fs
@@ -65,4 +67,14 @@ class Store::Provider::File
     Rails.root.join('storage/fs', *parts).tap { |path| FileUtils.mkdir_p(path.parent) }
   end
 
+  def self.change_checksum(old_sha, new_sha)
+    old_location = get_location(old_sha)
+    new_location = get_location(new_sha)
+
+    return if !File.exist?(old_location)
+
+    FileUtils.move(old_location, new_location)
+
+    delete(old_sha)
+  end
 end

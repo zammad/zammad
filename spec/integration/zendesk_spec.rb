@@ -33,13 +33,13 @@ RSpec.describe 'Zendesk import', db_strategy: :reset, integration: true, require
         },
         'Users'         => {
           'skipped'     => 0,
-          'created'     => 229,
+          'created'     => 230,
           'updated'     => 1,
           'unchanged'   => 0,
           'failed'      => 0,
           'deactivated' => 0,
-          'sum'         => 230,
-          'total'       => 230,
+          'sum'         => 231,
+          'total'       => 231,
         },
         'Organizations' => {
           'skipped'     => 0,
@@ -53,13 +53,13 @@ RSpec.describe 'Zendesk import', db_strategy: :reset, integration: true, require
         },
         'Tickets'       => {
           'skipped'     => 0,
-          'created'     => 144,
-          'updated'     => 3,
+          'created'     => 146,
+          'updated'     => 2,
           'unchanged'   => 0,
           'failed'      => 0,
           'deactivated' => 0,
-          'sum'         => 147,
-          'total'       => 147,
+          'sum'         => 148,
+          'total'       => 148,
         },
       }
     end

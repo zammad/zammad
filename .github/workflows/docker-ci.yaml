@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -37,7 +37,7 @@ jobs:
           outputs: type=docker,dest=/tmp/zammad-local.tar
 
       - name: Checkout docker compose files
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: zammad/zammad-docker-compose
           path: zammad-docker-compose

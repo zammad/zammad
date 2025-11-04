@@ -105,7 +105,7 @@ module ZammadCapybarActionDelegator
   end
 
   def mac_platform?
-    (ENV['BROWSER_OS'] || Gem::Platform.local.os).eql? 'darwin'
+    (ENV['SELENIUM_BROWSER_OS'] || Gem::Platform.local.os).eql? 'darwin'
   end
 
   def check(...)

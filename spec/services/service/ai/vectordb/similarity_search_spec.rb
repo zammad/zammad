@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Service::AI::VectorDB::SimilaritySearch do
   before do
-    Setting.set('ai_provider', 'open_ai')
+    setup_ai_provider('open_ai')
   end
 
   it 'Rebuild vector database table' do

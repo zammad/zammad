@@ -139,9 +139,7 @@
             }
 
             if (inputField) {
-                manager.on(inputField, 'change', function () {
-                    manager.processFiles(this.files);
-                });
+                manager.rebindInputField(inputField);
             }
 
             if (cancelContainer) {
@@ -149,6 +147,17 @@
                     manager.uploadCancel()
                 })
             }
+        },
+
+        rebindInputField: function (inputField) {
+            var manager = this;
+
+            var changeEventListener = function () {
+                manager.processFiles(this.files);
+            }
+
+            manager.off(inputField, 'change', changeEventListener);
+            manager.on(inputField, 'change', changeEventListener);
         },
 
         processFiles: function (files) {
@@ -209,7 +218,7 @@
                 data = manager.data,
                 key = manager.key || 'file';
 
-            console.log('Beging upload: ' + upload.fileName);
+            console.log('Begin upload: ' + upload.fileName);
             manager.activeUploads += 1;
 
             xhr = new window.XMLHttpRequest();
@@ -305,6 +314,19 @@
                 element.attachEvent('on' + eventName, handler);
             } else {
                 element['on' + eventName] = handler;
+            }
+        },
+
+        off: function (element, eventName, listener) {
+            if (!element) {
+                return;
+            }
+            if (element.removeEventListener) {
+                element.removeEventListener(eventName, listener, false);
+            } else if (element.detachEvent) {
+                element.detachEvent('on' + eventName, listener);
+            } else {
+                element['on' + eventName] = null;
             }
         }
     };

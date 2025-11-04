@@ -4,6 +4,7 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonTicketEscalationIndicator from '#desktop/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
@@ -16,16 +17,18 @@ const { ticket } = useTicketInformation()
 
 const { config } = storeToRefs(useApplicationStore())
 
+const { isTicketAgent } = useTicketView(ticket)
+
 const isChecklistFeatureEnabled = computed(() => !!config.value.checklist)
 </script>
 
 <template>
   <div v-if="ticket" class="flex max-w-full items-center gap-2.5 text-nowrap *:h-7">
-    <CommonTicketEscalationIndicator :escalation-at="ticket.escalationAt" />
+    <CommonTicketEscalationIndicator v-if="isTicketAgent" :ticket="ticket" has-popover />
 
     <CommonTicketStateIndicator :color-code="ticket.stateColorCode" :label="ticket.state.name" />
 
-    <CommonTicketPriorityIndicator :priority="ticket.priority" />
+    <CommonTicketPriorityIndicator v-if="isTicketAgent" :priority="ticket.priority" />
 
     <CommonBadge variant="tertiary" class="uppercase">
       <CommonDateTime :date-time="ticket.createdAt" absolute-format="date" class="ms-1">
@@ -35,6 +38,6 @@ const isChecklistFeatureEnabled = computed(() => !!config.value.checklist)
       </CommonDateTime>
     </CommonBadge>
 
-    <ChecklistBadgeList v-if="isChecklistFeatureEnabled" />
+    <ChecklistBadgeList v-if="isTicketAgent && isChecklistFeatureEnabled" />
   </div>
 </template>

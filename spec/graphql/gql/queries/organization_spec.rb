@@ -9,8 +9,8 @@ RSpec.describe Gql::Queries::Organization, type: :graphql do
     let(:variables)    { { organizationId: gql.id(organization) } }
     let(:query) do
       <<~QUERY
-        query organization($organizationId: ID, $organizationInternalId: Int) {
-          organization( organization: { organizationId: $organizationId, organizationInternalId: $organizationInternalId } ) {
+        query organization($organizationId: ID!) {
+          organization(organizationId: $organizationId) {
             id
             name
             shared
@@ -33,14 +33,6 @@ RSpec.describe Gql::Queries::Organization, type: :graphql do
 
     context 'with authenticated session', authenticated_as: :user do
       context 'when querying by Id' do
-        it 'has data' do
-          expect(gql.result.data).to include('name' => organization.name, 'shared' => organization.shared)
-        end
-      end
-
-      context 'when querying by internalId' do
-        let(:variables) { { organizationInternalId: organization.id } }
-
         it 'has data' do
           expect(gql.result.data).to include('name' => organization.name, 'shared' => organization.shared)
         end

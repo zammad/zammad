@@ -36,7 +36,7 @@ const { originalFormattingUrl } = useEmailFileUrls(props.article, ticketInternal
         v-if="originalFormattingUrl"
         :link="originalFormattingUrl"
         size="medium"
-        target="_blank"
+        open-in-new-tab
       >
         {{ $t('Original Formatting') }}
       </CommonLink>

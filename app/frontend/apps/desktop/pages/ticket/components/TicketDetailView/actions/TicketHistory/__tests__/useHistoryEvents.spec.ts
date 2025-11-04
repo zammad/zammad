@@ -16,6 +16,7 @@ import {
   type PostmasterFilter,
   type Trigger,
   type User,
+  type Macro,
   type TicketArticle,
   EnumObjectManagerObjects,
 } from '#shared/graphql/types.ts'
@@ -165,6 +166,24 @@ describe('useHistoryEvents', () => {
       const { getIssuerName } = useHistoryEvents()
 
       expect(getIssuerName(issuer)).toBe('Postmaster Filter: Internal Mails')
+    })
+
+    it('returns issuer name in case issuer is a postmaster filter', () => {
+      const issuer: Macro = {
+        __typename: 'Macro',
+        id: 'gid://zammad/Macro/1',
+        internalId: 1,
+        name: 'Flag as spam',
+        active: true,
+        perform: '',
+        uxFlowNextUp: '',
+        createdAt: '2022-01-01T00:00:00Z',
+        updatedAt: '2022-01-01T00:00:00Z',
+      }
+
+      const { getIssuerName } = useHistoryEvents()
+
+      expect(getIssuerName(issuer)).toBe('Macro: Flag as spam')
     })
 
     it('returns issuer name in case issuer is a trigger', () => {

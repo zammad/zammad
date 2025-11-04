@@ -33,4 +33,13 @@ describe('rendering item for section', () => {
 
     expect(view.getByIconName('search')).toBeInTheDocument()
   })
+
+  it('has an external link icon, if link is external', () => {
+    const view = renderMenuItem({
+      link: '/',
+      linkExternal: true,
+    })
+
+    expect(view.getByIconName('box-arrow-up-right')).toBeInTheDocument()
+  })
 })

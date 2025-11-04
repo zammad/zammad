@@ -86,7 +86,7 @@ export default function toBeAvatar(this: any, received: unknown, options: ToBeAv
       errors.push(`organization avatar doesn't have an image`)
     } else {
       const style = window.getComputedStyle(received)
-      const imageStyle = `url(/api/users/image/${options.image})`
+      const imageStyle = `url("/api/users/image/${options.image}")`
       const hasImage = style.backgroundImage === imageStyle
       if (!hasImage) {
         errors.push(`avatar has image ${style.backgroundImage} instead of ${imageStyle}`)

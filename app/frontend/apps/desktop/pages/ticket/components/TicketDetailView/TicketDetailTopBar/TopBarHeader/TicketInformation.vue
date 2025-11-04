@@ -3,9 +3,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
-
 import CommonInlineEdit from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
+import OrganizationPopoverWithTrigger from '#desktop/components/Organization/OrganizationPopoverWithTrigger.vue'
 import UserPopoverWithTrigger from '#desktop/components/User/UserPopoverWithTrigger.vue'
 import TicketInformationBadgeList from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue'
 import { useTicketEditTitle } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts'
@@ -38,12 +37,13 @@ const { updateTitle } = useTicketEditTitle(ticketId)
         }"
         :user="ticket.customer"
       />
-
-      <CommonOrganizationAvatar
+      <OrganizationPopoverWithTrigger
         v-if="ticket.organization"
-        class="ltr:-translate-x- z-10 ltr:-translate-x-1.5 rtl:translate-x-1.5"
-        :size="hideDetails ? 'medium' : 'normal'"
-        :entity="ticket.organization"
+        class="h-min ltr:-translate-x- z-10 ltr:-translate-x-1.5 rtl:translate-x-1.5"
+        :avatar-config="{
+          size: hideDetails ? 'medium' : 'normal',
+        }"
+        :organization="ticket.organization"
       />
     </div>
 

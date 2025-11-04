@@ -1,16 +1,28 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 import type { DividerOrientation } from './types.ts'
 
 interface Props {
   orientation?: DividerOrientation
   padding?: boolean
-  alternativeBackground?: boolean
+  variant?: 'neutral' | 'gray'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   orientation: 'horizontal',
+  variant: 'neutral',
+})
+
+const backgroundClass = computed(() => {
+  switch (props.variant) {
+    case 'gray':
+      return 'bg-white dark:bg-gray-200'
+    default: // neutral
+      return 'bg-neutral-100 dark:bg-gray-900'
+  }
 })
 </script>
 
@@ -25,12 +37,13 @@ const props = withDefaults(defineProps<Props>(), {
   >
     <hr
       class="border-0"
-      :class="{
-        'h-px w-full': props.orientation === 'horizontal',
-        'h-full w-px': props.orientation === 'vertical',
-        'bg-neutral-100 dark:bg-gray-900': !props.alternativeBackground,
-        'bg-white dark:bg-gray-200': props.alternativeBackground,
-      }"
+      :class="[
+        backgroundClass,
+        {
+          'h-px w-full': props.orientation === 'horizontal',
+          'h-full w-px': props.orientation === 'vertical',
+        },
+      ]"
     />
   </div>
 </template>

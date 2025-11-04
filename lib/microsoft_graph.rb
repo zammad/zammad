@@ -124,16 +124,7 @@ class MicrosoftGraph
     response = UserAgent.send(method, uri, params, options)
 
     if !response.success?
-      error_details = if response&.body&.start_with?('{')
-                        JSON.parse(response.body)['error']
-                      else
-                        {
-                          code:    response.code,
-                          message: response.body || response.error,
-                        }
-                      end
-
-      raise ApiError, error_details
+      handle_error!(response)
     end
 
     if json && (data = response.data.presence)
@@ -141,6 +132,46 @@ class MicrosoftGraph
     end
 
     response.body
+  end
+
+  def handle_error!(response)
+    error_details = parse_error(response)
+    retry_date    = parse_retry_headers(response)
+
+    raise ApiError.new(error_details, retry_after: retry_date)
+  end
+
+  def parse_error(response)
+    if response&.body&.start_with?('{')
+      return JSON.parse(response.body)['error']
+    end
+
+    {
+      code:    response.code,
+      message: response.body || response.error,
+    }
+  end
+
+  RETRY_AFTER_SECONDS_REGEXP = %r{^\d+$}
+
+  def parse_retry_headers(response)
+    # Official header name is Retry-After.
+    # But HTTP header names are case-insensitive.
+    # Thus Net::HTTP normalizes it to lowercase.
+    retry_date = response.header['retry-after']&.strip&.presence
+
+    return nil if retry_date.blank?
+
+    # HTTP Retry-After header shall be a date.
+    # However, Microssoft Graph API usually returns seconds to wait.
+    # To make things even better, Microsoft itself recommends clients to also support date as per RFC :)
+    if retry_date.match?(RETRY_AFTER_SECONDS_REGEXP)
+      return retry_date.to_i.seconds.from_now
+    end
+
+    Time.zone.parse(retry_date)
+  rescue
+    nil
   end
 
   PAGINATED_MAX_LOOPS = 25

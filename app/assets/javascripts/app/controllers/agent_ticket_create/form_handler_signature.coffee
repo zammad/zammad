@@ -12,7 +12,14 @@ class TicketCreateFormHandlerSignature
     # check if signature needs to be added
     type = ui.el.closest('.content').find('[name="formSenderType"]').val()
     if signature && signature.active && signature.body && type is 'email-out'
-      signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), config: App.Config.all() })
+      signatureFinished = App.Utils.replaceTags(signature.body,
+        user: App.Session.get()
+        config: App.Config.all()
+
+        # Fake a ticket object, if a group is present (#4448).
+        ticket:
+          group: group
+      )
 
       currentBody = ui.el.closest('.content').find('[data-name=body]')
       if !_.isEmpty(currentBody)

@@ -127,7 +127,7 @@ describe('QuickSearchResultList', () => {
 
     const router = getTestRouter()
 
-    await waitFor(() => expect(router.currentRoute.value.name).toBe('search'))
+    await waitFor(() => expect(router.currentRoute.value.name).toBe('Search'))
 
     expect(router.currentRoute.value.params).toEqual({ searchTerm: '1' })
     expect(router.currentRoute.value.query).toEqual({ entity: 'Ticket' })
@@ -247,7 +247,7 @@ describe('QuickSearchResultList', () => {
 
     const router = getTestRouter()
 
-    await waitFor(() => expect(router.currentRoute.value.name).toBe('search'))
+    await waitFor(() => expect(router.currentRoute.value.name).toBe('Search'))
 
     expect(router.currentRoute.value.params).toEqual({ searchTerm: 'User' })
   })

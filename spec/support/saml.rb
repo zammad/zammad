@@ -8,8 +8,8 @@ module ZammadSpecSupportSAML
     # Setup Keycloak SAML authentication.
     if !Keycloak::Admin.configured?
       Keycloak::Admin.configure do |config|
-        config.username = ENV['KEYCLOAK_ADMIN_USER']
-        config.password = ENV['KEYCLOAK_ADMIN_PASSWORD']
+        config.username = ENV['KC_BOOTSTRAP_ADMIN_USERNAME']
+        config.password = ENV['KC_BOOTSTRAP_ADMIN_PASSWORD']
         config.realm    = 'zammad'
         config.base_url = ENV['KEYCLOAK_BASE_URL']
       end
@@ -42,9 +42,9 @@ module ZammadSpecSupportSAML
     auth_saml_credentials[:uid_attribute] = uid_attribute if uid_attribute
 
     if security.present?
-      auth_saml_credentials[:security] = 'on'
-      auth_saml_credentials[:certificate] = "-----BEGIN CERTIFICATE-----\n#{security[:cert]}\n-----END CERTIFICATE-----"
-      auth_saml_credentials[:private_key] = "-----BEGIN RSA PRIVATE KEY-----\n#{security[:key]}\n-----END RSA PRIVATE KEY-----" # gitleaks:allow
+      auth_saml_credentials[:security]           = 'on'
+      auth_saml_credentials[:certificate]        = security[:cert]
+      auth_saml_credentials[:private_key]        = security[:key]
       auth_saml_credentials[:private_key_secret] = ''
     end
 

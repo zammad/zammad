@@ -7,9 +7,9 @@ class Webhook < ApplicationModel
   include HasSearchIndexBackend
   include CanSelector
   include CanSearch
+  include EnsuresNoRelatedObjects
 
-  before_save    :reset_custom_payload
-  before_destroy Webhook::EnsureNoRelatedObjects
+  before_save :reset_custom_payload
 
   validates :name, presence: true
   validate :validate_endpoint
@@ -19,6 +19,8 @@ class Webhook < ApplicationModel
   sanitized_html :note
 
   store :preferences
+
+  ensures_no_related_objects_path 'notification.webhook', 'webhook_id'
 
   private
 

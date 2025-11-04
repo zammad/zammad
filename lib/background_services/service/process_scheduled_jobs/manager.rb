@@ -76,8 +76,15 @@ class BackgroundServices
             Rails.application.executor.wrap do
               start_in_thread
             end
+          # Check for connection errors and initiate a process shutdown in this case,
+          #   so that the process manager can restart it.
+          rescue ActiveRecord::AdapterError => e
+            Rails.logger.error e
+            Thread.abort_on_exception = true
+            raise e
           rescue => e
             Rails.logger.error e
+          ensure
             jobs_container.delete(job.id)
           end
         end

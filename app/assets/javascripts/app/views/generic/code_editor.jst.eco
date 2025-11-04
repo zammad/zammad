@@ -1,2 +1,2 @@
-<textarea id="<%= @attribute.id %>" name="<%= @attribute.name %>" class="form-control js-codeEditor <%= @attribute.class %>" <%= @attribute.required %> <% if @attribute.disabled: %> disabled<% end %>><%= @attribute.value %></textarea>
+<textarea id="<%= @attribute.id %>" name="<%= @attribute.name %>" class="form-control js-codeEditor <%= @attribute.class %>" <%= @attribute.required %> style="opacity: 0; height: 0 !important; padding: 0 !important;" <% if @attribute.disabled: %> disabled<% end %>><%= @attribute.value %></textarea>
 <p class="help-text"><% if @attribute.hint: %><%- @T(@attribute.hint) %></p>

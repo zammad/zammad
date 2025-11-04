@@ -3,6 +3,7 @@
 import { keyBy } from 'lodash-es'
 import { computed, shallowRef } from 'vue'
 
+import { PLUGIN_NAME as TEXT_TOOL_PLUGIN_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import type {
@@ -20,6 +21,7 @@ import type {
   TicketArticleTypeFields,
 } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import type { FormKitNode } from '@formkit/core'
@@ -52,6 +54,12 @@ export const useTicketEditForm = (
       },
       mentionKnowledgeBase: {
         attachmentsNodeName: 'attachments',
+      },
+      [TEXT_TOOL_PLUGIN_NAME]: {
+        groupNodeName: 'group_id',
+        ticketNodeName: 'ticket_id',
+        customerNodeName: 'customer_id',
+        organizationNodeName: 'organization_id',
       },
       ...currentArticleType.value?.editorMeta,
     }
@@ -201,6 +209,10 @@ export const useTicketEditForm = (
         props: {
           ticketId: computed(() => ticket.value?.internalId),
           customerId: computed(() => ticket.value?.customer.internalId),
+          groupId: computed(() =>
+            ticket.value?.group.id ? getIdFromGraphQLId(ticket.value?.group.id) : undefined,
+          ),
+          organizationId: computed(() => ticket.value?.organization?.internalId),
           contentType: editorType,
           meta: editorMeta,
         },

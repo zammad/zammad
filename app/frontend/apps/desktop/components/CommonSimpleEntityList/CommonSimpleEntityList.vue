@@ -15,6 +15,7 @@ interface Props {
   entity: Entity<ObjectLike>
   type: EntityType
   label?: string
+  hasPopover?: boolean
 }
 
 const props = defineProps<Props>()
@@ -30,10 +31,10 @@ defineEmits<{
 const entitySetup = computed(() => {
   const { component: componentAsync, ...context } = entityModules[props.type]
 
-  const component = defineAsyncComponent(componentAsync as AsyncComponentLoader)
+  if (props.hasPopover) context.hasPopover = true
 
   return {
-    component,
+    component: defineAsyncComponent(componentAsync as AsyncComponentLoader),
     context,
     array: props.entity.array,
   }
@@ -41,7 +42,13 @@ const entitySetup = computed(() => {
 </script>
 
 <template>
-  <CommonSectionCollapse :id="id" v-model="modelValue" :title="label" :no-header="!label">
+  <CommonSectionCollapse
+    :id="id"
+    v-model="modelValue"
+    :title="label"
+    :no-header="!label"
+    container-class="flex flex-col gap-1.5"
+  >
     <ul v-if="entity.array?.length" class="flex flex-col gap-1.5">
       <li v-for="item in entitySetup.array" :key="`entity-${item.id}`">
         <component :is="entitySetup.component" :entity="item" :context="entitySetup.context" />

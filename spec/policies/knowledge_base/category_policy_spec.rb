@@ -27,6 +27,20 @@ describe KnowledgeBase::CategoryPolicy do
     end
   end
 
+  describe '#show_any?' do
+    context 'when category has public content' do
+      before { allow(record).to receive(:public_content?).and_return(true) }
+
+      include_examples 'with KB policy check', editor: true, reader: true, none: true, method: :show_any?
+    end
+
+    context 'when category has no public content' do
+      before { allow(record).to receive(:public_content?).and_return(false) }
+
+      include_examples 'with KB policy check', editor: true, reader: true, none: false, method: :show_any?
+    end
+  end
+
   describe '#permissions?' do
     include_examples 'with KB policy check', editor: true, reader: false, none: false, method: :permissions?
   end

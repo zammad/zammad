@@ -55,7 +55,7 @@ describe('UserInfo', () => {
 
     expect(wrapper.getByRole('link', { name: user.organization.name })).toHaveAttribute(
       'href',
-      `/organizations/${user.organization.internalId}`,
+      `/organization/profile/${user.organization.internalId}`,
     )
   })
 })

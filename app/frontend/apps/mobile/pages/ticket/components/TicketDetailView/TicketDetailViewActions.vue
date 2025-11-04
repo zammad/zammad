@@ -82,7 +82,7 @@ const scrollDown = () => {
             @click.prevent="emit('reply')"
           >
             <div>
-              <CommonIcon name="chat" size="small" decorative />
+              <CommonIcon name="chat-right-text" size="small" decorative />
             </div>
             <span class="line-clamp-1 break-all">
               {{ newArticlePresent ? $t('Edit reply') : $t('Add reply') }}

@@ -57,8 +57,10 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
       wait_for_form_to_settle('organization-edit')
 
       within('#dialog-organization-edit') do
+        find_input('Name').clear # does not trigger form updater for some reason
+
         within_form do
-          find_editor('Name').type('new name')
+          find_input('Name').type('new name')
           find_input('Custom Text').type('some text')
         end
 

@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ai.zammad.com/api/v1/features/generic
+    body:
+      encoding: UTF-8
+      string: '{"system_prompt":"","prompt":"This is a connection test. Return in
+        unprettified JSON ''{ \"connected\": \"true\" }'' if you got the message.
+        Respond in plain JSON format only and do not wrap it in code block markers."}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - ai.zammad.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <ZAMMAD_AI_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Mon, 27 Oct 2025 10:06:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - DENY
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept
+      Etag:
+      - W/"396a82ff5e5ab1d953eb7197750e5907"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 2614bb2a-2ed4-49b3-8614-721edf1a6356
+      X-Runtime:
+      - '0.640396'
+      Strict-Transport-Security:
+      - max-age=63072000
+      - max-age=63072000; includeSubDomains
+      Content-Security-Policy:
+      - default-src 'self'; script-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline';base-uri
+        'self';form-action 'self'; frame-src 'none';
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"model":"gemma3:27b","created_at":"2025-10-27T10:06:41.994402776Z","response":"{\"connected\":
+        \"true\"}","done":true,"done_reason":"stop","total_duration":498831586,"load_duration":207259991,"prompt_eval_count":52,"prompt_eval_duration":17619163,"eval_count":7,"eval_duration":170027093,"uuid":"faa43d6a-4d44-4c4e-8b2c-cb20971101c7"}]'
+  recorded_at: Mon, 27 Oct 2025 10:06:42 GMT
+recorded_with: VCR 6.3.1

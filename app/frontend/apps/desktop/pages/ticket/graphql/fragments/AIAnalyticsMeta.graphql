@@ -1,0 +1,8 @@
+fragment AIAssistantAnalyticsMeta on AIAnalyticsMetadata {
+    run {
+      id
+    }
+    usage {
+      userHasProvidedFeedback
+    }
+}

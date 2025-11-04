@@ -5,6 +5,7 @@ Ticket::Article::Type.create_if_not_exists(id: 2, name: __('sms'), communication
 Ticket::Article::Type.create_if_not_exists(id: 3, name: __('chat'), communication: true)
 Ticket::Article::Type.create_if_not_exists(id: 4, name: __('fax'), communication: true)
 Ticket::Article::Type.create_if_not_exists(id: 5, name: __('phone'), communication: true)
+# Zammad does not have a twitter integration any longer, but the types are still here for displaying existing articles and for the importers.
 Ticket::Article::Type.create_if_not_exists(id: 6, name: __('twitter status'), communication: true)
 Ticket::Article::Type.create_if_not_exists(id: 7, name: __('twitter direct-message'), communication: true)
 Ticket::Article::Type.create_if_not_exists(id: 8, name: __('facebook feed post'), communication: true)

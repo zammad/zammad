@@ -252,7 +252,7 @@ const { switchValue, toggleBetaUiSwitch } = useNewBetaUi()
       >
         <CommonLabel>
           {{ $t('Having problems?') }}
-          <CommonLink link="#" class="select-none" @click="updateState('2fa-select')">
+          <CommonLink link="#" class="select-none" size="medium" @click="updateState('2fa-select')">
             {{ $t('Try another method') }}
           </CommonLink>
         </CommonLabel>
@@ -276,7 +276,7 @@ const { switchValue, toggleBetaUiSwitch } = useNewBetaUi()
             )
           }}
         </CommonLabel>
-        <CommonLink link="/admin-password-auth">{{
+        <CommonLink link="/admin-password-auth" size="medium">{{
           $t('Request the password login here.')
         }}</CommonLink>
       </div>

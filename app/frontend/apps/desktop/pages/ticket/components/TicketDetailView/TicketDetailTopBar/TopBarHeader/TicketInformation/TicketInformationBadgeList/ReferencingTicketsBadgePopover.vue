@@ -1,27 +1,17 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
-import { getTicketNumberWithHook } from '#shared/entities/ticket/composables/getTicketNumber.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
+import { useTicketNumberAndTitle } from '#shared/entities/ticket/composables/useTicketNumberAndTitle.ts'
 
-import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
-import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
-import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
-import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
+import CommonPopoverWithTrigger from '#desktop/components/CommonPopover/CommonPopoverWithTrigger.vue'
+import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import CommonTicketLabel from '#desktop/components/CommonTicketLabel/CommonTicketLabel.vue'
-import ChecklistBadge from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadge.vue'
-import type {
-  ReferencingTicket,
-  TicketReferenceMenuItem,
-} from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/types.ts'
 
-// Trigger close manually since the popover does not close sometimes on click
-const { popover, popoverTarget, isOpen, toggle, close } = usePopover()
+import ChecklistBadge from './ChecklistBadge.vue'
 
-const { config } = storeToRefs(useApplicationStore())
+import type { ReferencingTicket } from './types.ts'
 
 interface Props {
   referencingTickets: ReferencingTicket[]
@@ -29,73 +19,50 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const ticketReferenceMenuItems = computed<Array<MenuItem> | undefined>(() =>
-  props.referencingTickets?.map((ticket, index) => ({
-    ticket,
-    key: `popover-checklist-title-item-${index}`,
-  })),
-)
-
 const referencingTicketsCount = computed(() => props.referencingTickets.length)
 
-const menuItemKeys = computed(() => ticketReferenceMenuItems.value?.map((item) => item.key))
+const { getTicketNumberWithHook } = useTicketNumberAndTitle()
 </script>
 
 <template>
-  <ChecklistBadge
-    ref="popoverTarget"
-    v-tooltip="
-      referencingTicketsCount === 1 ? $t('Show tracking ticket') : $t('Show tracking tickets')
-    "
-    role="button"
-    tag="div"
-    tabindex="0"
-    class="cursor-pointer hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-transparent focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 active:outline-blue-800 dark:hover:outline-blue-900"
-    :class="{
-      'outline outline-1 outline-offset-1 !outline-blue-800': isOpen,
-    }"
-    @click="toggle(true)"
-    @keydown.enter="toggle(true)"
-  >
-    <CommonLabel size="small" class="text-black! dark:text-white!">
-      {{
-        referencingTicketsCount === 1
-          ? getTicketNumberWithHook(config.ticket_hook, referencingTickets[0].number as string)
-          : $t('%s tickets', referencingTicketsCount)
-      }}
-    </CommonLabel>
-  </ChecklistBadge>
-
-  <CommonPopover
-    id="checklist-badge-popover"
-    ref="popover"
+  <CommonPopoverWithTrigger
+    class="rounded-md outline-offset-1 focus-visible:outline-2"
     placement="arrowEnd"
     orientation="bottom"
-    :owner="popoverTarget"
+    trigger-link-active-class="outline-blue-800! outline-2!"
+    :aria-label="
+      referencingTicketsCount === 1 ? $t('Show tracking ticket') : $t('Show tracking tickets')
+    "
+    no-min-width
+    no-full-width
   >
-    <CommonPopoverMenu
-      ref="popoverMenu"
-      :header-label="$t('Tracked as checklist item in')"
-      :items="ticketReferenceMenuItems"
-      :popover="popover"
-    >
-      <template v-for="key in menuItemKeys" :key="key" #[`item-${key}`]="item">
+    <template #popover-content="{ close }">
+      <CommonSectionCollapse
+        id="tickets-popover-title"
+        class="px-3 py-2 max-w-90 min-w-58"
+        :title="__('Tracked as checklist item in')"
+        container-class="flex flex-col gap-2"
+        no-collapse
+      >
         <CommonTicketLabel
-          v-tooltip="
-            getTicketNumberWithHook(
-              config.ticket_hook,
-              (item as unknown as TicketReferenceMenuItem).ticket.number,
-            )
-          "
-          class="group p-2.5 focus-visible:outline-transparent"
-          :classes="{
-            indicator: 'group-focus:text-white',
-            label: 'group-focus:text-white',
-          }"
-          :ticket="(item as unknown as TicketReferenceMenuItem).ticket"
+          v-for="ticket in referencingTickets"
+          :key="ticket.id"
+          class="h-9"
+          :ticket="ticket"
+          no-wrap
           @click="close"
         />
-      </template>
-    </CommonPopoverMenu>
-  </CommonPopover>
+      </CommonSectionCollapse>
+    </template>
+
+    <ChecklistBadge class="cursor-pointer h-7" tag="div">
+      <CommonLabel size="small" class="text-black! dark:text-white!">
+        {{
+          referencingTicketsCount === 1
+            ? getTicketNumberWithHook(referencingTickets[0].number)
+            : $t('%s tickets', referencingTicketsCount)
+        }}
+      </CommonLabel>
+    </ChecklistBadge>
+  </CommonPopoverWithTrigger>
 </template>

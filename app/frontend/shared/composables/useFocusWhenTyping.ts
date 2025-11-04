@@ -5,8 +5,7 @@ import { onKeyStroke, unrefElement } from '@vueuse/core'
 import stopEvent from '#shared/utils/events.ts'
 import { getFocusableElements } from '#shared/utils/getFocusableElements.ts'
 
-import type { MaybeRefOrGetter } from '@vueuse/core'
-import type { Ref } from 'vue'
+import type { MaybeRefOrGetter, Ref } from 'vue'
 
 // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role#keyboard_interactions
 // - Type-ahead is recommended for all listboxes, especially those with more than seven options

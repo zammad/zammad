@@ -8,6 +8,7 @@ RSpec.describe AI::StoredResult, type: :model do
   it { is_expected.to validate_presence_of(:identifier) }
   it { is_expected.to belong_to(:locale).optional }
   it { is_expected.to belong_to(:related_object).optional }
+  it { is_expected.to belong_to(:ai_analytics_run).optional }
   it { is_expected.to validate_uniqueness_of(:identifier).scoped_to(:locale_id, :related_object_type, :related_object_id) }
 
   describe 'identifier uniqueness check' do
@@ -64,63 +65,6 @@ RSpec.describe AI::StoredResult, type: :model do
     context 'when no criteria are provided' do
       it 'deletes all records' do
         expect { described_class.cleanup }.to change(described_class, :all).to []
-      end
-    end
-  end
-
-  describe '.upsert!' do
-    let(:ticket) { create(:ticket) }
-    let(:locale)     { create(:locale) }
-    let(:content)    { { 'test' => 'test_content' } }
-    let(:version)    { 'a' }
-    let(:identifier) { 'test_identifier' }
-    let(:metadata)   { { 'provider' => 'AmazingAI' } }
-
-    let(:lookup_attributes) { { identifier:, related_object: ticket } }
-
-    context 'when record does not exist' do
-      it 'creates a new record' do
-        instance = described_class.upsert!(content, lookup_attributes, version, metadata)
-
-        expect(instance).to have_attributes(
-          id:             be_present,
-          content:,
-          version:,
-          identifier:,
-          metadata:,
-          related_object: ticket,
-        )
-      end
-    end
-
-    context 'when partially matching record exists' do
-      before do
-        described_class.upsert!({ content: 'another' }, { identifier: }, version, metadata)
-      end
-
-      it 'creates a new record' do
-        expect { described_class.upsert!(content, lookup_attributes, version, metadata) }
-          .to change(described_class, :count)
-          .by(1)
-      end
-    end
-
-    context 'when record exists' do
-      let(:existing_record) do
-        described_class.upsert!({ content: 'old content' }, lookup_attributes, 'b', { old: 'metadata' })
-      end
-
-      it 'updates version and content' do
-        instance = described_class.upsert!(content, lookup_attributes, version, metadata)
-
-        expect(instance).to have_attributes(
-          id:             existing_record.id,
-          content:,
-          version:,
-          identifier:,
-          metadata:,
-          related_object: ticket,
-        )
       end
     end
   end

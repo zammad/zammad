@@ -46,6 +46,8 @@ class AI::Provider::Ollama < AI::Provider
     )
 
     data = validate_response!(response)
+    extract_response_metadata(data)
+
     data['response']
   end
 
@@ -79,7 +81,8 @@ class AI::Provider::Ollama < AI::Provider
         verify_ssl:    true,
         total_timeout: 60,
         log:           {
-          facility: 'AI::Provider',
+          facility:          'AI::Provider',
+          log_only_on_error: true,
         },
       },
     )
@@ -94,6 +97,12 @@ class AI::Provider::Ollama < AI::Provider
   def specific_metadata
     {
       model: options[:model],
+    }
+  end
+
+  def extract_response_metadata(data)
+    @response_metadata = {
+      total_duration: data['total_duration'],
     }
   end
 end

@@ -14,6 +14,7 @@ export interface Props {
   labelPlaceholder?: string[]
   link?: Link
   linkExternal?: boolean
+  openInNewTab?: boolean
   variant?: Variant
   icon?: string
   labelClass?: string
@@ -41,17 +42,24 @@ const iconColor = computed(() => {
     :is="link ? 'CommonLink' : 'button'"
     :link="link"
     :external="link && linkExternal"
-    class="group focus-visible-app-default block cursor-pointer leading-snug hover:no-underline! focus-visible:-outline-offset-1!"
+    :open-in-new-tab="link && openInNewTab"
+    class="group cursor-pointer leading-snug hover:no-underline!"
     data-test-id="popover-menu-item"
   >
     <slot name="leading" />
     <CommonLabel
-      class="gap-2 text-left"
+      class="gap-2 text-left flex-1"
       :class="[labelClass, variantClass]"
       :prefix-icon="icon"
       :icon-color="iconColor"
     >
       <slot>{{ i18n.t(label, ...(labelPlaceholder || [])) }}</slot>
     </CommonLabel>
+    <CommonIcon
+      v-if="link && linkExternal"
+      size="tiny"
+      name="box-arrow-up-right"
+      :class="iconColor"
+    />
   </component>
 </template>

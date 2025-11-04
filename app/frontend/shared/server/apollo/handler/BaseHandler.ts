@@ -120,7 +120,7 @@ export abstract class BaseHandler<
       //   console.error(error)
       // }
       useNotifications().notify({
-        id: this.handlerId,
+        id: this.handlerId, // TODO maybe for network error we should have the same id for all?
         message: this.errorNotificationMessage(errorHandler.type, errorHandler.message),
         type: options.errorNotificationType,
       })

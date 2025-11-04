@@ -215,7 +215,7 @@ const initializeRouter = (routes?: RouteRecordRaw[], routerBeforeGuards?: Naviga
       },
     },
     {
-      name: 'search',
+      name: 'Search',
       path: '/search/:searchTerm?',
       component: {
         template: 'search',

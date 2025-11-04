@@ -339,7 +339,7 @@ module CommonActions
   # @param timeout [Integer] seconds to wait
   # @param disappears: [Boolean] wait for modal to close because of action taken in the block. Defaults to yes.
   # @yield [] A block to be executed scoped to the modal element
-  def in_modal(timeout: Capybara.default_max_wait_time, disappears: nil, &block)
+  def in_modal(timeout: Capybara.default_max_wait_time, disappears: nil, &)
     elem = modal_ready(timeout: timeout)
 
     # check traces for RSpec's #expect
@@ -351,7 +351,7 @@ module CommonActions
     end
 
     trace.enable do
-      within(elem, &block)
+      within(elem, &)
     end
 
     # return and don't wait for modal to disappear if disappears is not nil and falsey

@@ -11,6 +11,7 @@ import type { ComputedRef, Ref } from 'vue'
 
 export interface ObjectAttribute extends ObjectManagerFrontendAttribute {
   isStatic?: boolean
+  displayConfig?: string
   dataOption?: {
     translate?: boolean
     permission?: string | string[]

@@ -11,8 +11,6 @@ module HasTimeplan
     timeplan_calculation.contains?(time)
   end
 
-  private
-
   def timeplan_calculation
     timezone = Setting.get('timezone_default')
 

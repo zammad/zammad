@@ -55,6 +55,7 @@ query ticketsCachedByOverview(
             name
           }
         }
+        aiAgentRunning
         pendingTime
         group {
           id

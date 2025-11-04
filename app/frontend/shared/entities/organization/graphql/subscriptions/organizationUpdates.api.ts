@@ -13,6 +13,13 @@ export const OrganizationUpdatesDocument = gql`
     organization {
       ...organizationAttributes
       ...organizationMembers
+      policy {
+        update
+      }
+      ticketsCount {
+        open
+        closed
+      }
     }
   }
 }

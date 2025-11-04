@@ -50,6 +50,16 @@ RSpec.describe Gql::Mutations::Ticket::CustomerUpdate, :aggregate_failures, type
         expect(gql.result.data[:ticket]).to eq(expected_response)
       end
 
+      it 'uses forced update service' do
+        allow(Service::Ticket::ForcedUpdate).to receive(:new).and_call_original
+
+        gql.execute(query, variables: variables)
+
+        expect(Service::Ticket::ForcedUpdate)
+          .to have_received(:new)
+          .with(ticket, { customer:, organization: })
+      end
+
       context 'without organization' do
         let(:customer) { create(:customer) }
         let(:input_payload)     { { customerId: gql.id(customer) } }

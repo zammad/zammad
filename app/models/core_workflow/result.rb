@@ -55,7 +55,7 @@ class CoreWorkflow::Result
       # priority e.g. would trigger a rerun because its not set yet
       # but we skip rerun here because the initial values have no logic which
       # are dependent on form changes
-      run_backend_value('set_fixed_to', field, values, skip_rerun: true, skip_mark_restricted: true)
+      run_backend_value('set_fixed_to', field, values, skip_rerun: true, skip_mark_restricted: attributes.skip_mark_restricted_default?(field))
     end
 
     set_default_only_shown_if_selectable

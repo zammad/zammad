@@ -22,7 +22,7 @@ class TicketsMassController < ApplicationController
 
     execute_transaction(@tickets) do |ticket|
       ticket.screen = 'edit'
-      ticket.perform_changes macro, 'macro', ticket, current_user.id
+      ticket.perform_changes macro, 'macro', nil, current_user.id
     end
   end
 

@@ -50,7 +50,7 @@ dragAndDrop({
   values: includedOverviews,
   plugins: [animations()],
   dropZoneClass: 'opacity-0',
-  touchDropZoneClass: 'opacity-0',
+  synthDropZoneClass: 'opacity-0',
 })
 
 const { notify } = useNotifications()

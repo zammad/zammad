@@ -10,9 +10,7 @@ class VerifyViteBundleSize
 
   # app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue is too big right now. We need to split it up.
   # For now, we allow a maximum chunk size of 1000 KB.
-  # :TODO - Improve this to fallback to 500 kb as defined in vite.config
-  # TODO: Split up the file mentioned above and reduce the maximum chunk size to 500 KB.
-  MAX_CHUNK_SIZE = 1000 * 1_024
+  MAX_CHUNK_SIZE = 500 * 1_024
 
   def self.run
     puts 'Verifying vite bundle size…'

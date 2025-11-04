@@ -9,6 +9,7 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
     {
       name: 'number',
       display: '#',
+      displayConfig: 'ticket_hook',
       dataType: 'input',
       isStatic: true,
       isInternal: true,

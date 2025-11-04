@@ -1,0 +1,7 @@
+<div class="settings-entry">
+  <% if @description: %>
+    <p><%- @T(@description) %></p>
+  <% end %>
+
+  <div class="js-form"></div>
+</div>

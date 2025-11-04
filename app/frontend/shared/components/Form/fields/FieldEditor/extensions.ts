@@ -7,6 +7,7 @@ import Color from '@tiptap/extension-color'
 import Paragraph from '@tiptap/extension-paragraph'
 import { TableKit } from '@tiptap/extension-table'
 import { TextStyle } from '@tiptap/extension-text-style'
+import UniqueID from '@tiptap/extension-unique-id'
 import StarterKit from '@tiptap/starter-kit'
 import { common, createLowlight } from 'lowlight'
 
@@ -33,8 +34,7 @@ import type { FieldEditorProps } from '#shared/components/Form/fields/FieldEdito
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
 import type { Extensions } from '@tiptap/core'
-import type { Editor } from '@tiptap/vue-3'
-import type { Ref, ShallowRef } from 'vue'
+import type { Ref } from 'vue'
 
 export const lowlight = createLowlight(common)
 
@@ -61,6 +61,9 @@ export const getPlainExtensions = (): Extensions => [
   }),
   CharacterCount,
   HardBreakPlain,
+  UniqueID.configure({
+    types: ['paragraph', 'heading'],
+  }),
 ]
 
 export const getHtmlExtensions = (): Extensions => [
@@ -117,16 +120,18 @@ export const getHtmlExtensions = (): Extensions => [
   TextStyle,
   UserLink,
   PasteHandler,
+  UniqueID.configure({
+    types: ['paragraph', 'heading'],
+  }),
 ]
 
 export const getCustomExtensions = (
   context: Ref<FormFieldContext<FieldEditorProps>>,
-  editor: ShallowRef<Editor>,
 ): Extensions => [
   Image,
   Signature,
   UserMention(context),
   KnowledgeBaseSuggestion(context),
   TextModuleSuggestion(context),
-  AiAssistantTextTools(editor),
+  AiAssistantTextTools(context),
 ]

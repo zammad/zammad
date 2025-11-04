@@ -5,7 +5,7 @@ module Zammad
     module Initializer
       module DbPreflightCheck
 
-        MIN_VERSION = '10'.freeze
+        MIN_VERSION = '13'.freeze
 
         class << self
 

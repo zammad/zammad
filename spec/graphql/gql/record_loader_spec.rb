@@ -175,8 +175,8 @@ RSpec.describe Gql::RecordLoader, :aggregate_failures, authenticated_as: :agent,
     let(:organization_id) { gql.id(Organization.last) }
     let(:query) do
       <<~QUERY
-        query organization($organizationId: ID, $organizationInternalId: Int) {
-          organization( organization: { organizationId: $organizationId, organizationInternalId: $organizationInternalId } ) {
+        query organization($organizationId: ID!) {
+          organization(organizationId: $organizationId) {
             id
             name
             shared

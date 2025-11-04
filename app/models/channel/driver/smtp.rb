@@ -6,6 +6,15 @@ class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
   DEFAULT_OPEN_TIMEOUT = 30.seconds
   DEFAULT_READ_TIMEOUT = 60.seconds
 
+  # Following SMTP error codes will be handled gracefully on notifications.
+  # They will be logged at info level only and the code will not propagate up the error.
+  # Other SMTP error codes will stop processing and exit with logging it at error level.
+  #
+  # 4xx - temporary issues.
+  # 52x - permanent receiving server errors.
+  # 55x - permanent receiving mailbox errors.
+  SILENCABLE_SMTP_ERROR_CODES_FOR_NOTIFICATIONS = [400..499, 520..529, 550..559].freeze
+
   # Sends a message via SMTP
   #
   # @example
@@ -102,5 +111,23 @@ class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
     end
 
     smtp_params
+  end
+
+  private
+
+  def server_identifier(options)
+    "'#{options[:address]}' (port #{options[:port]})"
+  end
+
+  def deliver_mail_notification_silence?(e, mail)
+    return false if !e.is_a?(Net::SMTPError)
+
+    status_code = e.response&.status&.to_i
+
+    return false if !status_code
+    return false if SILENCABLE_SMTP_ERROR_CODES_FOR_NOTIFICATIONS.none? { |elem| elem.include? status_code }
+
+    Rails.logger.info { "could not send email notification to (#{mail[:to]}) #{e}" }
+    true
   end
 end

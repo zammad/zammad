@@ -1,9 +1,9 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useEditor, EditorContent, type Editor } from '@tiptap/vue-3'
+import { useEditor, EditorContent } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
-import { computed, onMounted, onUnmounted, ref, type ShallowRef, toRef, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import { useAttachments } from '#shared/components/Form/fields/FieldEditor/composables/useAttachments.ts'
@@ -54,8 +54,30 @@ if (isPlainText.value) {
   disabledPlugins.push(userMentionPluginName, 'image')
 }
 
+const { hasPermission } = useSessionStore()
+
+const customExtensions = getCustomExtensions(reactiveContext)
+
+// TODO: extensions are in general not reactive in TipTap, we need to check if all things are working as expected.
+// TODO: Maybe we need a re-creation of the editor in some edge cases... plain <-> html (check against simple channels...)
+const availableCustomExtensions = computed(() =>
+  customExtensions.filter((extension) => {
+    const { name, options } = extension
+
+    if (disabledPlugins.includes(name as EditorCustomPlugins)) {
+      return false
+    }
+    if (options?.permission && !hasPermission(options.permission)) {
+      return false
+    }
+
+    return true
+  }),
+)
+
 const editorExtensions = computed(() => {
-  return isPlainText.value ? getPlainExtensions() : getHtmlExtensions()
+  const baseExtensions = isPlainText.value ? getPlainExtensions() : getHtmlExtensions()
+  return [...baseExtensions, ...availableCustomExtensions.value]
 })
 
 const showActionBar = ref(false)
@@ -66,9 +88,9 @@ const { hasImageExtension, loadFiles } = useAttachments(
   props.context.formId,
 )
 
-const hasTableExtension = computed(() => {
-  return editorExtensions.value.some((ext) => ext.name === 'tableKit')
-})
+const hasTableExtension = computed(() =>
+  editorExtensions.value.some((ext) => ext.name === 'tableKit'),
+)
 
 const editor = useEditor({
   extensions: editorExtensions.value,
@@ -141,15 +163,6 @@ const editor = useEditor({
   onBlur() {
     props.context.handlers.blur()
   },
-})
-
-const { hasPermission } = useSessionStore()
-
-getCustomExtensions(reactiveContext, editor as ShallowRef<Editor>).forEach((extension) => {
-  if (disabledPlugins.includes(extension.name as EditorCustomPlugins)) return
-  if ('permission' in extension.options && !hasPermission(extension.options.permission)) return
-
-  editorExtensions.value.push(extension)
 })
 
 if (VITE_TEST_MODE) {
@@ -255,6 +268,7 @@ const editorCustomContext = {
   focus: focusEditor,
 }
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, editorCustomContext)
 
 onMounted(() => {

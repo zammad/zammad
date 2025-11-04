@@ -1,0 +1,6 @@
+{
+  "input": "wir haben uns im Produkteam dagegen entschieden deine vorgeschlagene Lösung im Zammad-Standard umzusetzen. Die dahinter liegende Code-Komplexität und das Potential, dass sich Admins ausschließen und nicht wieder rein kommen schreckt uns ab, wenn man berücksichtigt, dass Agenten ggf. einen Klick pro Tag/Woche einsparen. Es tut mir <a href=\"https://www.example.de\">leid</a>, wirklich.",
+  "expected": {
+    "language": "de"
+  }
+}

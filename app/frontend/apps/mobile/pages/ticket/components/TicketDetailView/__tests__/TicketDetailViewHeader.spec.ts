@@ -41,7 +41,7 @@ describe('tickets zoom header', () => {
   test('has avatars and opens viewers dialog', async () => {
     const view = renderComponent(TicketDetailViewHeader, {
       props: {
-        ticket,
+        ticket: { ...ticket, aiAgentRunning: false },
         refetchingTicket: false,
         liveUserList: [
           {
@@ -97,5 +97,20 @@ describe('tickets zoom header', () => {
 
     expect(view.getByText('Viewing ticket')).toBeInTheDocument()
     expect(view.getByText('Opened in tabs')).toBeInTheDocument()
+  })
+
+  describe('AI Agent', () => {
+    it('displays AI agent running', () => {
+      const view = renderComponent(TicketDetailViewHeader, {
+        props: {
+          ticket: { ...ticket, aiAgentRunning: true },
+          refetchingTicket: false,
+          liveUserList: [],
+        },
+        router: true,
+      })
+
+      expect(view.getByLabelText('AI Agent')).toBeInTheDocument()
+    })
   })
 })

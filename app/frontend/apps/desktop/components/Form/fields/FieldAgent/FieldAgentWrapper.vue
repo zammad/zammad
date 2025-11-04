@@ -35,6 +35,7 @@ const buildEntityOption = (entity: User) => {
   }
 }
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   optionIconComponent: markRaw(FieldAgentOptionIcon),
   initialOptionBuilder: (

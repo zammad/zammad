@@ -2,6 +2,16 @@ subscription userUpdates($userId: ID!, $secondaryOrganizationsCount: Int) {
   userUpdates(userId: $userId) {
     user {
       ...userDetailAttributes
+      hasSecondaryOrganizations
+      ticketsCount {
+        open
+        openSearchQuery
+        closed
+        closedSearchQuery
+      }
+      policy {
+        update
+      }
     }
   }
 }

@@ -15,9 +15,11 @@ module Ticket::TriggersSubscriptions
   def trigger_subscriptions
     Gql::Subscriptions::TicketUpdates.trigger(self, arguments: { ticket_id: Gql::ZammadSchema.id_from_object(self) })
 
-    return true if !saved_change_to_attribute?('group_id')
+    real_changes = saved_changes.except(*transaction_ignore_changes_attributes.map(&:to_s))
 
-    TaskbarUpdateTriggerSubscriptionsJob.perform_later("#{self.class}-#{id}")
+    return true if real_changes.blank?
+
+    TaskbarUpdateTriggerSubscriptionsJob.perform_later("#{self.class}-#{id}", self, real_changes.keys)
   end
 
   TRIGGER_CHECKLIST_UPDATE_ON = %w[title group_id].freeze

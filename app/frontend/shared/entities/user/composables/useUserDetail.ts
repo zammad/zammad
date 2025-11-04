@@ -9,6 +9,7 @@ import { UserUpdatesDocument } from '#shared/graphql/subscriptions/userUpdates.a
 import type {
   UserUpdatesSubscriptionVariables,
   UserUpdatesSubscription,
+  User,
 } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
@@ -26,7 +27,7 @@ export const useUserDetail = (
   const userQuery = new QueryHandler(
     useUserQuery(
       () => ({
-        userId: userId.value,
+        userId: userId.value!,
         secondaryOrganizationsCount: 3,
       }),
       () => ({ enabled: Boolean(userId.value), fetchPolicy }),
@@ -45,6 +46,8 @@ export const useUserDetail = (
   }))
 
   const loadAllSecondaryOrganizations = () => {
+    if (!userId.value) return
+
     userQuery
       .refetch({
         userId: userId.value,
@@ -58,7 +61,7 @@ export const useUserDetail = (
   const userResult = userQuery.result()
   const loading = userQuery.loading()
 
-  const user = computed(() => userResult.value?.user)
+  const user = computed(() => userResult.value?.user as User)
 
   const { viewScreenAttributes } = storeToRefs(useUserObjectAttributesStore())
 

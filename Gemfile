@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # core - base
-ruby '3.3.8'
+ruby '3.4.7'
 gem 'rails', '~> 7.2.0'
 gem 'rake'
 
@@ -31,10 +31,8 @@ gem 'thor'
 # core - websocket
 gem 'em-websocket'
 gem 'eventmachine'
-gem 'hiredis'
-# version restriction from actioncable-6.1.6.1/lib/action_cable/subscription_adapter/redis.rb
-#   - check after rails update
-gem 'redis', '>= 3', '< 5'
+gem 'hiredis-client'
+gem 'redis'
 
 # core - password security
 gem 'argon2'
@@ -112,7 +110,7 @@ gem 'omniauth-microsoft-office365'
 gem 'omniauth_openid_connect'
 gem 'omniauth-saml'
 gem 'omniauth-twitter'
-gem 'omniauth-weibo-oauth2', git: 'https://github.com/zammad-deps/omniauth-weibo-oauth2', branch: 'unpin-dependencies'
+gem 'omniauth-weibo-oauth2'
 
 # Rate limiting
 gem 'rack-attack'
@@ -120,7 +118,6 @@ gem 'rack-attack'
 # channels
 gem 'koala'
 gem 'telegram-bot-ruby'
-gem 'twitter', '~> 7'
 gem 'whatsapp_sdk'
 
 # channels - email additions
@@ -171,7 +168,6 @@ gem 'acts_as_list'
 # integrations
 gem 'clearbit', require: false
 gem 'net-ldap'
-gem 'slack-notifier', require: false
 gem 'zendesk_api', require: false
 
 # integrations - exchange

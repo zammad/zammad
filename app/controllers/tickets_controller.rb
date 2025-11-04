@@ -222,24 +222,7 @@ class TicketsController < ApplicationController
       end
     end
 
-    if response_expand?
-      result = ticket.reload.attributes_with_association_names
-      render json: result, status: :created
-      return
-    end
-
-    if response_full?
-      full = Ticket.full(ticket.id)
-      render json: full, status: :created
-      return
-    end
-
-    if response_all?
-      render json: Ticket::AssetsAll.new(current_user, ticket.reload).all_assets, status: :created
-      return
-    end
-
-    render json: ticket.reload.attributes_with_association_ids, status: :created
+    render_reloaded_ticket(ticket, status: :created)
   end
 
   # PUT /api/v1/tickets/1
@@ -286,24 +269,7 @@ class TicketsController < ApplicationController
       end
     end
 
-    if response_expand?
-      result = ticket.reload.attributes_with_association_names
-      render json: result, status: :ok
-      return
-    end
-
-    if response_full?
-      full = Ticket.full(params[:id])
-      render json: full, status: :ok
-      return
-    end
-
-    if response_all?
-      render json: Ticket::AssetsAll.new(current_user, ticket.reload).all_assets, status: :ok
-      return
-    end
-
-    render json: ticket.reload.attributes_with_association_ids, status: :ok
+    render_reloaded_ticket(ticket)
   end
 
   # DELETE /api/v1/tickets/1
@@ -528,5 +494,52 @@ class TicketsController < ApplicationController
       try:          params[:try],
     )
     render json: result, status: :ok
+  end
+
+  # PUT /api/v1/tickets/1/update_title
+  def update_title
+    ticket = Ticket.find(params[:id])
+    authorize!(ticket, :agent_update_access?)
+
+    Service::Ticket::ForcedUpdate
+      .new(ticket, params.permit(:title))
+      .execute
+
+    render_reloaded_ticket(ticket)
+  end
+
+  # PUT /api/v1/tickets/1/update_customer
+  def update_customer
+    ticket = Ticket.find(params[:id])
+    authorize!(ticket, :agent_update_access?)
+
+    Service::Ticket::ForcedUpdate
+      .new(ticket, params.permit(:customer_id, :organization_id))
+      .execute
+
+    render_reloaded_ticket(ticket)
+  end
+
+  private
+
+  def render_reloaded_ticket(ticket, status: :ok)
+    if response_expand?
+      result = ticket.reload.attributes_with_association_names
+      render(json: result, status:)
+      return
+    end
+
+    if response_full?
+      full = Ticket.full(ticket.id)
+      render(json: full, status:)
+      return
+    end
+
+    if response_all?
+      render(json: Ticket::AssetsAll.new(current_user, ticket.reload).all_assets, status:)
+      return
+    end
+
+    render json: ticket.reload.attributes_with_association_ids, status:
   end
 end

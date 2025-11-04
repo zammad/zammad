@@ -33,30 +33,27 @@ const clickHandler = (notification: Notification) => {
           v-for="notification in notifications"
           :key="notification.id"
           data-test-id="notification"
+          class="flex justify-center"
         >
-          <div class="flex justify-center">
-            <div
-              class="m-3 flex cursor-pointer items-center"
-              :class="[notificationTypeClassMap.base, getClassName(notification)]"
-              role="button"
-              tabindex="0"
-              @keydown.enter="clickHandler(notification)"
-              @click="clickHandler(notification)"
-            >
-              <CommonIcon
-                :name="`common-notification-${notification.type}`"
-                size="small"
-                decorative
-              />
-              <!-- eslint-disable vue/no-v-html -->
-              <span
-                class="text-sm"
-                :class="notificationTypeClassMap.message"
-                v-html="
-                  markup($t(notification.message, ...(notification.messagePlaceholder || [])))
-                "
-              />
-            </div>
+          <div
+            class="m-3 flex cursor-pointer items-center w-max"
+            :class="[notificationTypeClassMap.base, getClassName(notification)]"
+            role="button"
+            tabindex="0"
+            @keydown.enter="clickHandler(notification)"
+            @click="clickHandler(notification)"
+          >
+            <CommonIcon
+              :name="`common-notification-${notification.type}`"
+              size="small"
+              decorative
+            />
+            <!-- eslint-disable vue/no-v-html -->
+            <span
+              class="text-sm"
+              :class="notificationTypeClassMap.message"
+              v-html="markup($t(notification.message, ...(notification.messagePlaceholder || [])))"
+            />
           </div>
         </div>
       </TransitionGroup>

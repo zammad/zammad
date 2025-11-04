@@ -78,7 +78,10 @@ class TagsController < ApplicationController
 
   # POST /api/v1/tag_list
   def admin_create
-    Tag::Item.lookup_by_name_and_create(params[:name])
+    Array.wrap(params[:name]).each do |name|
+      Tag::Item.lookup_by_name_and_create(name)
+    end
+
     render json: {}
   end
 

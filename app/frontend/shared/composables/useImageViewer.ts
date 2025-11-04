@@ -4,7 +4,7 @@ import { ref, unref, watchEffect } from 'vue'
 
 import { canPreviewFile } from '#shared/utils/files.ts'
 
-import type { MaybeRef } from '@vueuse/shared'
+import type { MaybeRef } from 'vue'
 
 interface ImagePreview {
   src?: string

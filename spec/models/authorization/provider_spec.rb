@@ -41,4 +41,37 @@ RSpec.describe Authorization::Provider, :aggregate_failures, type: :model do
       end
     end
   end
+
+  describe '#fetch_user' do
+    let(:uid) { SecureRandom.uuid }
+    let(:auth_hash) do
+      {
+        'info' => { 'email' => Faker::Internet.email, 'nickname' => 'test-nickname' },
+        'uid'  => uid,
+      }
+    end
+
+    before do
+      Setting.set('auth_third_party_no_create_user', false)
+      Setting.set('auth_third_party_auto_link_at_inital_login', false)
+    end
+
+    it 'creates a new user with the login attribute set to the nickname' do
+      expect { described_class.new(auth_hash) }.to change(User, :count).by(1)
+
+      user = User.find_by(email: auth_hash['info']['email'])
+      expect(user).to be_present
+      expect(user.login).to eq(auth_hash['info']['nickname'])
+    end
+
+    context 'when openid connect provider is used' do
+      it 'creates a new user with the login attribute set to the nickname' do
+        expect { Authorization::Provider::OpenidConnect.new(auth_hash) }.to change(User, :count).by(1)
+
+        user = User.find_by(email: auth_hash['info']['email'])
+        expect(user).to be_present
+        expect(user.login).to eq(auth_hash['uid'])
+      end
+    end
+  end
 end

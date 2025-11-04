@@ -7,6 +7,7 @@ import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
+import { PLUGIN_NAME as TEXT_TOOL_PLUGIN_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import { transformEditorHtml } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
@@ -15,7 +16,7 @@ import { getNodeByName } from '#shared/components/Form/utils.ts'
 import { useMacros, useTicketMacros } from '#shared/entities/macro/composables/useMacros.ts'
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
-import { getTicketNumberWithHook } from '#shared/entities/ticket/composables/getTicketNumber.ts'
+import { useTicketNumberAndTitle } from '#shared/entities/ticket/composables/useTicketNumberAndTitle.ts'
 import type {
   TicketArticleReceivedFormValues,
   TicketBulkEditFormData,
@@ -28,14 +29,15 @@ import {
   type TicketUpdateBulkUserError,
   type TicketUpdateInput,
 } from '#shared/graphql/types.ts'
+import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
 import type { MutationSendError } from '#shared/types/error.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
+import { provideFieldEditorOptions } from '#desktop/components/Form/fields/FieldEditor/useFieldEditorOptions.ts'
 import SplitButton from '#desktop/components/SplitButton/SplitButton.vue'
 import { useTicketUpdateBulkMutation } from '#desktop/entities/ticket/graphql/mutations/updateBulk.api.ts'
 
@@ -51,8 +53,6 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   success: []
 }>()
-
-const application = useApplicationStore()
 
 const { form, formSetErrors, formNodeId, formSubmit } = useForm()
 
@@ -135,6 +135,9 @@ const formSchema = defineFormSchema([
                 mentionUser: {
                   disabled: true,
                 },
+                [TEXT_TOOL_PLUGIN_NAME]: {
+                  disabled: true,
+                },
                 image: {
                   disabled: true,
                 },
@@ -166,6 +169,9 @@ const formSchema = defineFormSchema([
     ],
   },
 ])
+
+// To make popover be above the flyout backdrop
+provideFieldEditorOptions({ zIndex: '40' })
 
 const { attributesLookup: ticketObjectAttributesLookup } = useObjectAttributes(
   EnumObjectManagerObjects.Ticket,
@@ -209,6 +215,8 @@ const macroMenuItems = computed<MenuItem[]>(
       onClick: () => executeMacro(macro),
     })) ?? [],
 )
+
+const { getTicketNumberWithTitle } = useTicketNumberAndTitle()
 
 const bulkEditTickets = async (formData: FormSubmitData<TicketBulkEditFormData>) => {
   const cleanedFormData = Object.fromEntries(
@@ -255,10 +263,10 @@ const bulkEditTickets = async (formData: FormSubmitData<TicketBulkEditFormData>)
             {
               message: i18n.t(
                 `Ticket failed to save: %s (Reason: %s)`,
-                `${getTicketNumberWithHook(
-                  application.config.ticket_hook,
+                getTicketNumberWithTitle(
                   firstError.failedTicket.number,
-                )} - ${firstError.failedTicket.title}`,
+                  firstError.failedTicket.title,
+                ),
                 firstError.message,
               ),
             },
@@ -280,6 +288,10 @@ const ticketIdsCount = computed(() => props.ticketIds.length)
 const schemaData = reactive({
   ticketIdsCount,
 })
+
+const formUpdaterAdditionalParams = computed(() => ({
+  ticketIds: props.ticketIds.map((id) => getIdFromGraphQLId(id)).join(','),
+}))
 </script>
 
 <template>
@@ -294,6 +306,7 @@ const schemaData = reactive({
       id="form-tickets-bulk-edit"
       ref="form"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketBulkEdit"
+      :form-updater-additional-params="formUpdaterAdditionalParams"
       should-autofocus
       use-object-attributes
       :schema="formSchema"

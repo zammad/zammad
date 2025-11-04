@@ -12,6 +12,7 @@ const FieldAutoCompleteInput = defineAsyncComponent(
 
 const props = defineProps<Props>()
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, useFieldExternalDataSourceWrapper(toRef(props, 'context')))
 </script>
 

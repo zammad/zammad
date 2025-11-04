@@ -2,16 +2,11 @@
 
 class Taskbar::Init::Ticket < Taskbar::Init::Backend
   def data(result)
-    result[:ticket_all] = TicketPolicy::ReadScope
+    TicketPolicy::ReadScope
       .new(current_user, Ticket.where(id: ticket_ids))
       .resolve
-      .each_with_object({}) do |elem, memo|
-        memo[elem.id] = Ticket::AssetsAll
-          .new(current_user, elem)
-          .all_assets(result[:assets])
-          .except(:assets)
+      .each_with_object({}) do |elem, _memo|
+        elem.assets(result[:assets])
       end
-
-    result
   end
 end

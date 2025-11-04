@@ -75,6 +75,7 @@ export const useTrapTab = <T extends HTMLElement>(
       container.value?.prepend(firstElementToShiftFocusOnFirstNode)
       firstNode = firstElementToShiftFocusOnFirstNode
       firstElementToShiftFocusOnFirstNode.focus()
+      firstElementToShiftFocusOnFirstNode.remove()
     })
   }
 

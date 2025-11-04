@@ -25,6 +25,10 @@ class CoreWorkflow::Attributes
     end
   end
 
+  def new_only
+    @new_only ||= payload_class.new
+  end
+
   def selected_only
 
     # params loading and preparing is very expensive so cache it
@@ -204,13 +208,19 @@ class CoreWorkflow::Attributes
     @result_object.result[:rerun_count] || 0
   end
 
-  def options_array(options)
+  def options_array(options, attribute_name)
     result = []
+    @attribute_with_disabled_options ||= Set.new
 
     options.each do |option|
-      result << option['value']
+      if option['disabled'].present?
+        @attribute_with_disabled_options << attribute_name
+      else
+        result << option['value']
+      end
+
       if option['children'].present?
-        result += options_array(option['children'])
+        result += options_array(option['children'], attribute_name)
       end
     end
 
@@ -239,6 +249,10 @@ class CoreWorkflow::Attributes
     screen_value(attribute, 'filter').present?
   end
 
+  def attribute_options_disabled?(attribute)
+    @attribute_with_disabled_options&.include?(attribute[:name])
+  end
+
   def attribute_options_array?(attribute)
     attribute[:options].present? && attribute[:options].instance_of?(Array)
   end
@@ -256,7 +270,7 @@ class CoreWorkflow::Attributes
     if attribute_filter?(attribute)
       values = screen_value(attribute, 'filter')
     elsif attribute_options_array?(attribute)
-      values = options_array(attribute[:options])
+      values = options_array(attribute[:options], attribute[:name])
     elsif attribute_options_hash?(attribute)
       values = options_hash(attribute[:options])
     elsif attribute_options_relation?(attribute)
@@ -290,6 +304,13 @@ class CoreWorkflow::Attributes
       result[ attribute[:name] ] = values.map(&:to_s)
     end
     result
+  end
+
+  def skip_mark_restricted_default?(field)
+    attribute = object_elements_hash[field]
+    return false if attribute_options_array?(attribute) && attribute_options_disabled?(attribute)
+
+    true
   end
 
   def all_options_default

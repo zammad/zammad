@@ -1,0 +1,6 @@
+{
+  "input": "<div>Azt javaslom, hogy ezt állítsa `disabled` értékre. Egy lelkiismeretes rendszergazda úgyis mindig ügyel arra, hogy a rendszere naprakész legyen. Ahogy fentebb is említettem, a Zammad kapcsolatban problémákhoz vezethet, ha a szolgáltatás önállóan dönt úgy, hogy csomagokat frissít.</div><div><br></div><div>Nézze meg magának az apt saját naplóit (`/var/log/apt/history.log.*`), és ellenőrizze, hogy azok az időpontok, amikor problémákat tapasztalt, egybeesnek-e a frissítések időpontjaival.</div>",
+  "expected": {
+    "language": "hu"
+  }
+}

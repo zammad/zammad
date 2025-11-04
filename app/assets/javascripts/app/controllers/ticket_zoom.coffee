@@ -1,6 +1,8 @@
 class App.TicketZoom extends App.Controller
   @include App.TicketNavigable
 
+  @startLoadingDelay: 0
+
   elements:
     '.main':             'main'
     '.ticketZoom':       'ticketZoom'
@@ -24,6 +26,12 @@ class App.TicketZoom extends App.Controller
     @sidebarState  = {}
     @tooltipCopied = undefined
     @init          = params.init
+
+    # controllerLoadImmediately:
+    # true - does mean that the controller is the active content of the taskbar and is directly marked as delayed, this will trigger the fetch asap instead of post poning it
+    # false - controller is not active content of taskbar, so fetch will be post poned until user clicks on it
+    # If the ticket does not come with the taskbar init, we need to load it directly to check it's existance
+    @controllerLoadImmediately = params.shown || !App.Ticket.find(params.ticket_id)
 
     # if we are in init task startup, ignore overview_id
     if !params.init
@@ -76,15 +84,14 @@ class App.TicketZoom extends App.Controller
     @delay(fetchDelayed, 1000, "ticket-zoom-#{@ticket_id}")
 
   fetch: =>
+
+    # if controller is not active, then delay the fetch
+    return App.TaskManager.touch(@taskKey) if !@controllerLoadImmediately
+
     return if !@Session.get()
     queue = false
     if !@initFetched
       queue = true
-
-    if @init
-      @init = false
-      initTicket = App.TaskbarInit.ticket(@ticket_id)
-      return @load(initTicket, false, App.Ticket.fullLocal(@ticket_id)) if initTicket
 
     # get data
     @ajax(
@@ -135,8 +142,10 @@ class App.TicketZoom extends App.Controller
     )
 
   load: (data, local = false, newTicketRaw = undefined) =>
-    if !newTicketRaw
-      newTicketRaw = data.assets.Ticket[@ticket_id]
+    @previousTicketRaw = @currentTicketRaw
+    @currentTicketRaw  = data.assets.Ticket[@ticket_id]
+
+    return if newTicketRaw
 
     view       = @ticket?.currentView()
     readable   = @ticket?.userGroupAccess('read')
@@ -151,13 +160,34 @@ class App.TicketZoom extends App.Controller
     if @view && ( !_.isEqual(@formMeta.configure_attributes, formMeta.configure_attributes) || !_.isEqual(@formMeta.dependencies, formMeta.dependencies) || !_.isEqual(@formMeta.filter, formMeta.filter) || @view isnt view || @readable isnt readable || @changeable isnt changeable || @fullable isnt fullable )
       @renderDone = false
 
-    ticketIsNewest = @ticketUpdatedAtLastCall && new Date(newTicketRaw.updated_at).getTime() <= new Date(@ticketUpdatedAtLastCall).getTime()
+    ticketIsNewest = @ticketUpdatedAtLastCall && new Date(@currentTicketRaw.updated_at).getTime() <= new Date(@ticketUpdatedAtLastCall).getTime()
     return if @renderDone && ticketIsNewest
-    @ticketUpdatedAtLastCall = newTicketRaw.updated_at
+    @ticketUpdatedAtLastCall = @currentTicketRaw.updated_at
 
-    # notify if ticket changed not by my self
-    if @initFetched && !ticketIsNewest && newTicketRaw.updated_by_id isnt @Session.get('id')
-      App.TaskManager.notify(@taskKey)
+    attributes_to_ignore_for_notify = [
+      'ai_agent_running',
+      'updated_by_id',
+      'updated_at',
+    ]
+
+    # notify if ticket changed not by my self and no AI agent was active
+    if @initFetched && !ticketIsNewest
+
+      # Compare @currentTicketRaw with ticket data to see if any relevant attribute has changed
+      ticketAttributesChanged = []
+      for key, value of @currentTicketRaw
+        if !_.isEqual(@previousTicketRaw[key], value)
+          ticketAttributesChanged.push(key)
+
+      ticketChanged = false
+      for key in ticketAttributesChanged
+        if !_.includes(attributes_to_ignore_for_notify, key)
+          ticketChanged = true
+          break
+
+      if ticketChanged
+        @checkNotify(@currentTicketRaw)
+
     @initFetched = true
 
     if !@doNotLog
@@ -231,6 +261,21 @@ class App.TicketZoom extends App.Controller
     "#ticket/zoom/#{@ticket_id}"
 
   show: (params) =>
+
+    # if controller is not active, then delay the fetch
+    # and save the execution of this function for later
+    if !@controllerLoadImmediately
+      @startLoading()
+      if @subscribeDelayedTicket
+        App.Ticket.unsubscribe(@subscribeDelayedTicket)
+
+      @controllerLoadImmediately = true
+      @initFetched               = false
+      @init                      = false
+      @callbackDelayedShow       = =>
+        @show(params)
+      return @fetch()
+
     @navupdate(url: '#', type: 'menu')
 
     # set all notifications to seen
@@ -255,6 +300,8 @@ class App.TicketZoom extends App.Controller
     if @articleNew
       @articleNew.show()
 
+    @sidebarWidget?.ticketZoomShown()
+
     return if !@attributeBar
     @attributeBar.start()
 
@@ -262,6 +309,10 @@ class App.TicketZoom extends App.Controller
       @overview_id = params.overview_id
 
       @renderOverviewNavigator(@el)
+
+  checkNotify: (ticket) ->
+    return if ticket.updated_by_id is @Session.get('id')
+    App.TaskManager.notify(@taskKey)
 
   # scroll to article if given
   scrollToPosition: (position, delay, article_id) =>
@@ -280,14 +331,9 @@ class App.TicketZoom extends App.Controller
     # remember for later
     return if params.type is 'init' && !@shown
 
-    if params.article_id
-      article_id = params.article_id
-      params.article_id = undefined
-    else if @pagePositionData
-      article_id = @pagePositionData
-      @pagePositionData = undefined
-
     # scroll to article if given
+    # only switch if url contains the article id so it does not always move to the article on opening
+    article_id = window.location.hash.match(/ticket\/zoom\/\d+\/(\d+)/)?[1]
     if article_id && article_id isnt @last_article_id
       @scrollToPosition('article', 300, article_id)
 
@@ -344,6 +390,8 @@ class App.TicketZoom extends App.Controller
     @autosaveStop()
     @positionPageHeaderStop()
     @sidebarWidget?.releaseController()
+    if @subscribeDelayedTicket
+      App.Ticket.unsubscribe(@subscribeDelayedTicket)
 
   muteTask: =>
     App.TaskManager.mute(@taskKey)
@@ -466,6 +514,22 @@ class App.TicketZoom extends App.Controller
     return @articleNew?.params()
 
   render: (local) =>
+
+    # if controller is delayed, we only want to update the taskbar with the ticket info
+    # and keep some subscriber to keep the state up to date
+    if !@controllerLoadImmediately
+      if @ticket && !@subscribeDelayedTicket
+        @subscribeDelayedTicket = @ticket.subscribe((subscribeTicket) =>
+          return if @controllerLoadImmediately
+
+          @checkNotify(subscribeTicket)
+          App.TaskManager.touch(@taskKey)
+        )
+
+      App.TaskManager.touch(@taskKey)
+      @setPendingTimeReminderDelay()
+      return
+
     # If taskbar item is not a valid ticket
     return if !@ticket
 
@@ -607,9 +671,15 @@ class App.TicketZoom extends App.Controller
         links:            @links
       )
 
+    # if the controller was delayed we need to execute
+    # the show function now to set the correct position
+    # in the content of the page
+    @stopLoading()
+    if @callbackDelayedShow
+      @callbackDelayedShow()
+      @callbackDelayedShow = undefined
+
     if !@initDone
-      if @article_id
-        @pagePositionData = @article_id
       @pagePosition(type: 'init')
       @positionPageHeaderStart()
       @initDone = true
@@ -928,7 +998,7 @@ class App.TicketZoom extends App.Controller
         @autosaveStart()
         return
 
-    editContollerForm = @sidebarWidget?.get('100-TicketEdit')?.edit?.controllerFormSidebarTicket
+    editContollerForm = @sidebarWidget.get('100-TicketEdit').edit.controllerFormSidebarTicket
 
     # validate ticket by model
     errors = ticket.validate(
@@ -975,10 +1045,12 @@ class App.TicketZoom extends App.Controller
     return @submitTimeAccounting(e, ticket, macro, editContollerForm) if ticket.currentView() isnt 'agent'
     return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !App.Config.get('checklist')
 
-    # Warning modal should be considered only if the ticket state was changed.
-    return @submitTimeAccounting(e, ticket, macro, editContollerForm) if not @changed('ticket', 'state_id')
+    macroContainsStateChange = macro?.perform?.hasOwnProperty('ticket.state_id')
 
-    ticketState    = App.TicketState.find(ticket.state_id)
+    # Warning modal should be considered only if the ticket state was changed.
+    return @submitTimeAccounting(e, ticket, macro, editContollerForm) if not @changed('ticket', 'state_id') and not macroContainsStateChange
+
+    ticketState    = App.TicketState.find(macro?.perform?['ticket.state_id']?['value'] || ticket.state_id)
     isClosed       = ticketState.state_type.name is 'closed'
     isPendingClose = ticketState.state_type.name is 'pending action' && App.TicketState.find(ticketState.next_state_id).state_type.name is 'closed'
     return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !isClosed && !isPendingClose
@@ -998,12 +1070,12 @@ class App.TicketZoom extends App.Controller
 
   submitTimeAccounting: (e, ticket, macro, editContollerForm) =>
     if !ticket.article
-      @submitPost(e, ticket, macro)
+      @submitPost(e, ticket, macro, editContollerForm)
       return
 
     # verify if time accounting is enabled
     if !editContollerForm.getFlag('time_accounting')
-      @submitPost(e, ticket, macro)
+      @submitPost(e, ticket, macro, editContollerForm)
       return
 
     new App.TicketZoomTimeAccountingModal(
@@ -1015,7 +1087,7 @@ class App.TicketZoom extends App.Controller
         ticket.article.time_unit              = params.time_unit
         ticket.article.accounted_time_type_id = params.accounted_time_type_id
 
-        @submitPost(e, ticket, macro)
+        @submitPost(e, ticket, macro, editContollerForm)
     )
 
   saveDraft: (e) =>
@@ -1026,7 +1098,7 @@ class App.TicketZoom extends App.Controller
       new_article:       @articleNew?.params() || {}
       ticket_attributes: @ticketParams()
 
-    params.new_article.body = App.Utils.signatureRemoveByHtml(params.new_article.body)
+    params.new_article.body = App.Utils.signatureRemoveByHtml(params.new_article.body, true)
 
     loaded_draft_id = params.new_article.shared_draft_id
 
@@ -1070,7 +1142,7 @@ class App.TicketZoom extends App.Controller
       error: =>
         @draftFetched()
 
-  submitPost: (e, ticket, macro) =>
+  submitPost: (e, ticket, macro, editContollerForm) =>
     taskAction = @$('.js-secondaryActionButtonLabel').data('type')
 
     if macro && macro.ux_flow_next_up
@@ -1080,12 +1152,15 @@ class App.TicketZoom extends App.Controller
     if taskAction is 'closeNextInOverview' || taskAction is 'next_from_overview'
       nextTicket = @getNextTicketInOverview()
 
+    removedFields = editContollerForm.removedFields(editContollerForm.elReplace)
+    payload       = _.omit(ticket.attributes(), removedFields)
+
     # submit changes
     @ajax(
       id: "ticket_update_#{ticket.id}"
       type: 'PUT'
       url: "#{App.Ticket.url}/#{ticket.id}?all=true"
-      data: JSON.stringify(ticket.attributes())
+      data: JSON.stringify(payload)
       processData: true
       success: (data) =>
 

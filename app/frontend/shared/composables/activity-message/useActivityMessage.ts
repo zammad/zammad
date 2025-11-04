@@ -20,6 +20,8 @@ export const useActivityMessage = (activity: Readonly<Ref<OnlineNotification>>) 
     activity.value.metaObject,
   )
 
+  const highlightedMessage = message?.replace(/\|(.+)\|/gm, '<b>$1</b>')
+
   const link = activity.value.metaObject
     ? builder.value?.path(activity.value.metaObject)
     : undefined
@@ -30,5 +32,5 @@ export const useActivityMessage = (activity: Readonly<Ref<OnlineNotification>>) 
     )
   }
 
-  return { link, builder, message }
+  return { link, builder, message, highlightedMessage }
 }

@@ -24,7 +24,7 @@ RSpec.describe 'User history', authenticated_as: :authenticate, time_zone: 'Euro
       country:                'Germany',
       out_of_office_start_at: current_time,
       last_login:             current_time,
-      organizations:          [organization, org_1, org_2]
+      organizations:          [org_1, org_2]
     )
 
     travel_to Time.zone.parse('2021-04-06 23:30:00')
@@ -34,7 +34,7 @@ RSpec.describe 'User history', authenticated_as: :authenticate, time_zone: 'Euro
       mobile:               '5757473827',
       out_of_office_end_at: current_time,
       last_login:           current_time,
-      organizations:        [organization, org_1]
+      organizations:        [org_1]
     )
 
     travel_back

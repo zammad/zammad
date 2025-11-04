@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { storeToRefs } from 'pinia'
-import { computed, ref, type Ref } from 'vue'
+import { computed, ref, type ComputedRef, type Ref } from 'vue'
 
 import type {
   OrganizationUpdatesSubscriptionVariables,
   OrganizationUpdatesSubscription,
+  Organization,
 } from '#shared/graphql/types.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
@@ -19,25 +19,20 @@ import { useOrganizationObjectAttributesStore } from '../stores/objectAttributes
 import type { WatchQueryFetchPolicy } from '@apollo/client/core'
 
 export const useOrganizationDetail = (
-  internalId: Ref<number | undefined>,
+  organizationId: Ref<string | undefined> | ComputedRef<string | undefined>,
   errorCallback?: (error: GraphQLHandlerError) => boolean,
   fetchPolicy?: WatchQueryFetchPolicy,
 ) => {
-  const organizationId = computed(() => {
-    if (!internalId.value) return
-
-    return convertToGraphQLId('Organization', internalId.value)
-  })
   const fetchMembersCount = ref<Maybe<number>>(3)
 
   const organizationQuery = new QueryHandler(
     useOrganizationQuery(
       () => ({
-        organizationInternalId: internalId.value,
+        organizationId: organizationId.value!,
         membersCount: 3,
       }),
       () => ({
-        enabled: Boolean(internalId.value),
+        enabled: Boolean(organizationId.value),
         fetchPolicy,
       }),
     ),
@@ -60,17 +55,14 @@ export const useOrganizationDetail = (
   const organizationResult = organizationQuery.result()
   const loading = organizationQuery.loading()
 
-  const organization = computed(() => organizationResult.value?.organization)
+  const organization = computed(() => organizationResult.value?.organization as Organization)
 
   const loadAllMembers = () => {
-    const organizationInternalId = organization.value?.internalId
-    if (!organizationInternalId) {
-      return
-    }
+    if (!organizationId) return
 
     organizationQuery
       .refetch({
-        organizationInternalId,
+        organizationId: organizationId.value,
         membersCount: null,
       })
       .then(() => {

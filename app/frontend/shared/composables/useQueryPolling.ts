@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
+import { watchPausable } from '@vueuse/shared'
 import { ref, type Ref, type ComputedRef, onScopeDispose, toRef, watch, toValue } from 'vue'
 
 import type { QueryHandler } from '#shared/server/apollo/handler'
+import { connected } from '#shared/server/connection.ts'
 import type { OperationQueryResult } from '#shared/types/server/apollo/handler'
 
 import type { OperationVariables } from '@apollo/client/core'
@@ -44,7 +46,7 @@ export const useQueryPolling = <
 
     const poll = async () => {
       const pollVariables = typeof variables === 'function' ? variables() : variables?.value
-      await query.refetch(pollVariables as TVariables)
+      await query.refetch(pollVariables as TVariables).catch(() => {})
 
       // Only schedule next poll after current one completes
       if (isPolling.value) {
@@ -74,6 +76,29 @@ export const useQueryPolling = <
       stopPolling()
     },
   )
+
+  // When connection is lost or established again, start or stop polling accordingly.
+  const { resume: startConnectionWatch } = watchPausable(
+    connected,
+    (newValue) => {
+      if (!isPolling.value && toValue(options)?.enabled !== undefined && !toValue(options)?.enabled)
+        return
+
+      if (newValue && !isPolling.value) {
+        startPolling()
+      } else if (!newValue && isPolling.value) {
+        stopPolling()
+      }
+    },
+    {
+      initialState: 'paused',
+    },
+  )
+
+  // Start the connection watcher only after the polling was started at least once.
+  watch(isPolling, startConnectionWatch, {
+    once: true,
+  })
 
   // Automatically stop polling when scope is disposed
   onScopeDispose(() => {

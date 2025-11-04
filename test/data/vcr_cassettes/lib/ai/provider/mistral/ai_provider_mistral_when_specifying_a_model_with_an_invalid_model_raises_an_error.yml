@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"nonexisting-model","messages":[{"role":"system","content":""},{"role":"user","content":"This
+        is a connection test. Return in unprettified JSON ''{ \"connected\": \"true\"
+        }'' if you got the message. Respond in plain JSON format only and do not wrap
+        it in code block markers."}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - api.mistral.ai
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Mon, 27 Oct 2025 10:03:36 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '113'
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - 99515d5078859a39-FRA
+      Mistral-Correlation-Id:
+      - '019a251f-8e6a-7458-9197-613e423a5e3c'
+      X-Kong-Request-Id:
+      - '019a251f-8e6a-7458-9197-613e423a5e3c'
+      X-Envoy-Upstream-Service-Time:
+      - '63'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '63'
+      X-Kong-Proxy-Latency:
+      - '5'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=eml7qD57XJ2KanTShKflQnZxHNLbsOKOQdYbb4KRtMA-1761559416-1.0.1.1-7fPmjZFJMqpgLhvBpi9RQQpafZGtszaCx1ZDr5D_VVzoWeO9iofsKqQk58hNlhTXj0LBJz2tKgK8DomwQYkAB_Ow1zcfrXwL3QymgOGOExE;
+        path=/; expires=Mon, 27-Oct-25 10:33:36 GMT; domain=.mistral.ai; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=_0C8B5qcxafkfEo6_XtHoIjAf3JL6YC04SAIAVTZ47g-1761559416537-0.0.1.1-604800000;
+        path=/; domain=.mistral.ai; HttpOnly; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains
+      Server:
+      - cloudflare
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"object":"error","message":"Invalid model: nonexisting-model","type":"invalid_model","param":null,"code":"1500"}'
+  recorded_at: Mon, 27 Oct 2025 10:03:36 GMT
+recorded_with: VCR 6.3.1

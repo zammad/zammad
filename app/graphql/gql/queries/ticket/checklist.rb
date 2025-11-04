@@ -6,7 +6,7 @@ module Gql::Queries
 
     description 'Fetch ticket checklist'
 
-    argument :ticket, Gql::Types::Input::Locator::TicketInputType, description: 'Ticket locator'
+    argument :ticket_id, ID, loads: Gql::Types::TicketType, description: 'Ticket ID'
 
     type Gql::Types::ChecklistType, null: true
 

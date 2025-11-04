@@ -21,12 +21,16 @@ defineProps<Props>()
       </CommonLabel>
       <ul v-for="[id, number, title] in tickets" :key="id" class="list-inside list-disc">
         <li>
-          <CommonLabel class="text-yellow-600"
-            ><CommonLink :link="`/tickets/${id}`" class="text-yellow-600 !underline">{{
-              number
-            }}</CommonLink>
-            {{ title }}</CommonLabel
-          >
+          <CommonLabel class="text-yellow-600!">
+            <CommonLink
+              :link="`/tickets/${id}`"
+              class="text-yellow-600 hover:text-yellow-700! hover:dark:text-yellow-500! underline hover:underline!"
+              size="medium"
+            >
+              {{ number }}
+            </CommonLink>
+            {{ title }}
+          </CommonLabel>
         </li>
       </ul>
     </div>

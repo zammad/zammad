@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useTemplateRef, computed } from 'vue'
+import { computed } from 'vue'
 
 interface Props {
   active?: boolean
@@ -15,8 +15,6 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-
-const el = useTemplateRef('el')
 
 const colorClasses = computed(() => {
   if (props.active)
@@ -48,6 +46,7 @@ const iconClassMap = {
       fontSizeClassMap[props.size],
       {
         'cursor-pointer': !disabled && ((tabMode && !active) || !tabMode),
+        'hover:text-black hover:dark:text-white': !active,
       },
     ]"
     :aria-disabled="disabled"

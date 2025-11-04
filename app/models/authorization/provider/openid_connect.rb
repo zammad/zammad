@@ -12,4 +12,8 @@ class Authorization::Provider::OpenidConnect < Authorization::Provider
 
     user
   end
+
+  def user_create_login_lookup
+    auth_hash['uid']
+  end
 end

@@ -138,6 +138,17 @@ const removeTag = (tag: string) => {
 const { isTouchDevice } = useTouchDevice()
 
 const { config } = useApplicationStore()
+
+// TODO: Add proper quick search handler for tag search when ready.
+const getTagSearchLink = (tag: string) => ({
+  name: 'Search',
+  params: {
+    searchTerm: `tags:"${tag}"`,
+  },
+  query: {
+    entity: 'Ticket',
+  },
+})
 </script>
 
 <template>
@@ -151,7 +162,7 @@ const { config } = useApplicationStore()
     >
       <div v-for="tag in tags" :key="tag" class="group flex h-10 grow items-center gap-1.5">
         <CommonLabel class="grow" prefix-icon="tag">
-          <CommonLink class="line-clamp-1 text-sm leading-snug" link="#">
+          <CommonLink class="line-clamp-1" :link="getTagSearchLink(tag)" size="medium">
             {{ tag }}
           </CommonLink>
         </CommonLabel>

@@ -28,14 +28,8 @@ RSpec.describe Gql::Types::GroupType do
     let(:variables) { { ticketId: gql.id(ticket) } }
     let(:query) do
       <<~QUERY
-        query ticket($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
-          ticket(
-            ticket: {
-              ticketId: $ticketId
-              ticketInternalId: $ticketInternalId
-              ticketNumber: $ticketNumber
-            }
-          ) {
+        query ticket($ticketId: ID!) {
+          ticket(ticketId: $ticketId) {
             id
             group {
               name

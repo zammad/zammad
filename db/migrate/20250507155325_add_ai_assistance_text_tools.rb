@@ -15,20 +15,20 @@ class AddAIAssistanceTextTools < ActiveRecord::Migration[7.2]
   def add_admin_permission
     Permission.create_if_not_exists(
       name:        'admin.ai_assistance_text_tools',
-      label:       'Ticket Tools',
-      description: 'Manage Zammad Smart Assist text tools of your system.',
+      label:       'Writing Assistant',
+      description: 'Manage writing assistant text tools of your system.',
       preferences: { prio: 1335 }
     )
   end
 
   def add_feature_flag_setting
     Setting.create_if_not_exists(
-      title:       'Text Tools',
+      title:       'Writing Assistant',
       name:        'ai_assistance_text_tools',
       area:        'AI::Assistance',
-      description: 'Enable or disable the AI assistance text tools.',
+      description: 'Enable or disable the writing assistant text tools.',
       options:     {},
-      state:       true,
+      state:       false,
       preferences: {
         authentication: true,
         permission:     ['admin.ai_assistance_text_tools'],

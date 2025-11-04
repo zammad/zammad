@@ -27,6 +27,7 @@ class App.ControllerModal extends App.Controller
   showTrySupport: false
   showTryMax: 10
   showTrydelay: 1000
+  stickyAlerts: [] # [['warning', 'Your message here'],...]
 
   events:
     'submit form':                        'submit'
@@ -69,7 +70,7 @@ class App.ControllerModal extends App.Controller
   update: =>
     if @message
       content = App.Utils.htmlEscape( App.i18n.translatePlain(@message) )
-    else if @contentInline
+    else if not _.isUndefined(@contentInline)
       content = @contentInline
     else
       content = @content()
@@ -88,6 +89,7 @@ class App.ControllerModal extends App.Controller
       centerButtons:     @centerButtons
       leftButtons:       @leftButtons
       includeForm:       @includeForm
+      stickyAlerts:      @stickyAlerts
     ))
     modal.find('.modal-body').html(content)
     if !@initRenderingDone

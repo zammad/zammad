@@ -110,7 +110,7 @@ export default {
   'lock-open': 'unlock',
   trash: 'trash3',
   'reply-alt': 'reply-all',
-  web: 'globe',
+  web: 'chat-right-text',
 
   // Conflicting names
   mobile: 'phone',

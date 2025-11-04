@@ -4,22 +4,28 @@ import { getByIconName, queryByIconName } from '#tests/support/components/iconQu
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
+import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { mockUserQuery } from '#shared/entities/user/graphql/queries/user.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import TicketLiveUsers, {
   type Props,
 } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue'
+import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 import liveUserList from './mocks/live-user-list.json'
 
-const renderTicketLiveUsers = (props?: Partial<Props>) =>
+const renderTicketLiveUsers = (
+  props?: Partial<Props>,
+  options?: Parameters<typeof createDummyTicket>[0],
+) =>
   renderComponent(TicketLiveUsers, {
     props: {
       liveUserList: liveUserList as TicketLiveAppUser[],
       ...props,
     },
     router: true,
+    provide: [[TICKET_KEY, { ticket: createDummyTicket(options) }]],
   })
 
 vi.hoisted(() => {
@@ -148,5 +154,13 @@ describe('TicketLiveUsers', () => {
       'fill-stone-200',
       'dark:fill-neutral-500',
     ])
+  })
+
+  describe('Ai Agent', () => {
+    it('indicates that agent is processing this ticket', async () => {
+      const wrapper = renderTicketLiveUsers(undefined, { aiAgentRunning: true })
+
+      expect(wrapper.getByLabelText('AI Agent')).toBeInTheDocument()
+    })
   })
 })

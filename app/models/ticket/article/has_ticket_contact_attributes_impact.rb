@@ -13,7 +13,7 @@ module Ticket::Article::HasTicketContactAttributesImpact
   def update_ticket_article_attributes
     changed = false
 
-    if article_count_update
+    if compute_articles_count
       changed = true
     end
 
@@ -38,7 +38,7 @@ module Ticket::Article::HasTicketContactAttributesImpact
 
   def update_ticket_count_attribute
     changed = false
-    if article_count_update
+    if compute_articles_count
       changed = true
     end
 
@@ -50,15 +50,9 @@ module Ticket::Article::HasTicketContactAttributesImpact
     ticket.save!
   end
 
-  # get article count
-  def article_count_update
-    current_count = ticket.article_count
-    sender = Ticket::Article::Sender.lookup(name: 'System')
-    count = Ticket::Article.where(ticket_id: ticket_id).where.not(sender_id: sender.id).count
-    return false if current_count == count
-
-    ticket.article_count = count
-    true
+  def compute_articles_count
+    ticket.compute_articles_count
+    ticket.article_count_changed?
   end
 
   # set first response

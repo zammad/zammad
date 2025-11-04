@@ -21,7 +21,7 @@ RSpec.describe 'Manage > Channels > Microsoft 365 IMAP Email', time_zone: 'Europ
         fill_in 'client_secret', with: client_secret
         fill_in 'client_tenant', with: client_tenant
 
-        check_input_field_value('callback_url', callback_url)
+        check_input_field_value('callback_url', callback_url, attr: 'id')
 
         click_on 'Submit'
       end

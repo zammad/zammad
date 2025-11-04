@@ -391,69 +391,6 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
     include_examples 'mobile app: reply article', 'Telegram', attachments: true
   end
 
-  context 'when article was created as a twitter status' do
-    let(:article) do
-      create(
-        :twitter_article,
-        ticket: ticket,
-        sender: Ticket::Article::Sender.lookup(name: 'Customer'),
-      )
-    end
-
-    include_examples 'mobile app: reply article', 'Twitter', attachments: false do
-      let(:current_text) { article.from.to_s }
-      let(:new_text)     { '' }
-      let(:result_text)  { start_with("#{article.from} \n/#{agent.firstname.first}#{agent.lastname.first}") }
-    end
-
-    it 'cannot create large article' do
-      open_article_reply_dialog
-
-      find_editor('Text').type(Faker::Lorem.characters(number: 281))
-
-      click_on('Save')
-
-      expect(find_editor('Text')).to have_text('This field must contain between 1 and 280 characters')
-    end
-  end
-
-  context 'when article was created as a twitter dm' do
-    include_examples 'mobile app: reply article', 'Twitter', 'DM when sender is customer', attachments: false do
-      let(:article) do
-        create(
-          :twitter_dm_article,
-          ticket: ticket,
-          sender: Ticket::Article::Sender.lookup(name: 'Customer'),
-        )
-      end
-      let(:result_text) { start_with("#{new_text}\n/#{agent.firstname.first}#{agent.lastname.first}") }
-      let(:to) { [article.from] }
-    end
-
-    include_examples 'mobile app: reply article', 'Twitter', 'DM when sender is agent', attachments: false do
-      let(:article) do
-        create(
-          :twitter_dm_article,
-          ticket: ticket,
-          sender: Ticket::Article::Sender.lookup(name: 'Agent'),
-        )
-      end
-      let(:result_text) { start_with("#{new_text}\n/#{agent.firstname.first}#{agent.lastname.first}") }
-      let(:to) { [article.to] }
-    end
-
-    it 'cannot create large article, "to" is required' do
-      open_article_reply_dialog
-
-      # unselect preselected field
-      find_select('To').select_options([article.from])
-
-      click_on('Save')
-
-      expect(find_select('To')).to have_text('This field is required')
-    end
-  end
-
   context 'when article was created as a facebook post' do
     let(:article) do
       create(

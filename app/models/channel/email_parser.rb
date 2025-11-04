@@ -75,7 +75,7 @@ class Channel::EmailParser
 =end
 
   def parse(msg, allow_missing_attribute_exceptions: true)
-    msg = msg.force_encoding('binary')
+    msg = msg.dup.force_encoding('binary')
     # mail 2.6 and earlier accepted non-conforming mails that lacked the correct CRLF seperators,
     # mail 2.7 and above require CRLF so we force it on using binary_unsafe_to_crlf
     msg = Mail::Utilities.binary_unsafe_to_crlf(msg)
@@ -305,7 +305,7 @@ returns
 
       # store attachments
       mail[:attachments]&.each do |attachment|
-        filename = attachment[:filename].force_encoding('utf-8')
+        filename = attachment[:filename].dup.force_encoding('utf-8')
         if !filename.force_encoding('UTF-8').valid_encoding?
           filename = filename.utf8_encode(fallback: :read_as_sanitized_binary)
         end

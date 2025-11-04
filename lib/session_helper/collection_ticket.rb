@@ -45,6 +45,7 @@ module SessionHelper::CollectionTicket
         EmailAddress,
         Template,
         Ticket::SharedDraftStart,
+        AI::TextTool,
       ].each do |klass|
         collections[ klass.to_app_model ] = []
         klass.all.each do |item|

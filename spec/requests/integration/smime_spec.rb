@@ -28,7 +28,7 @@ RSpec.describe 'Integration SMIME', type: :request do
 
       it 'adds certificate by string' do
         expect do
-          post endpoint, params: { data: certificate_string }, as: :json
+          post endpoint, params: { certificate: certificate_string }, as: :json
         end.to change(SMIMECertificate, :count).by(1)
 
         expect(response).to have_http_status(:ok)
@@ -111,7 +111,7 @@ RSpec.describe 'Integration SMIME', type: :request do
 
       it 'adds by string' do
         expect do
-          post endpoint, params: { data: private_string, secret: secret }, as: :json
+          post endpoint, params: { private_key: private_string, secret: secret }, as: :json
         end.to change {
           certificate.reload
           certificate.private_key

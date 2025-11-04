@@ -44,8 +44,12 @@ const TextDirectionPlugin = ({ types }: { types: string[] }) =>
       let modified = false
 
       newState.doc.descendants((node, pos) => {
-        if (types.includes(node.type.name) && !node.attrs.dir && node.textContent) {
-          tr.setNodeAttribute(pos, 'dir', getTextDirection(node.textContent))
+        if (types.includes(node.type.name) && node.textContent) {
+          const detectedDir = getTextDirection(node.textContent)
+
+          if (node.attrs.dir === detectedDir) return
+
+          tr.setNodeAttribute(pos, 'dir', detectedDir)
           modified = true
         }
       })

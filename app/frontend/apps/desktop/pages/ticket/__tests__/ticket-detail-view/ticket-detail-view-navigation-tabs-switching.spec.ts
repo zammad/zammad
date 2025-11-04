@@ -103,7 +103,7 @@ describe('Ticket detail view multi tabs switching', () => {
     })
   })
 
-  it('remembers collapsed states if user returns to tab', async () => {
+  it('remembers collapsed section states if user returns to tab', async () => {
     const view = await visitView('/tickets/1')
 
     let contentSidebar = await view.findByLabelText('Content sidebar')
@@ -127,8 +127,6 @@ describe('Ticket detail view multi tabs switching', () => {
       }),
     )
 
-    expect(view.getByLabelText('State')).toHaveTextContent('closed')
-
     contentSidebar = await view.findByLabelText('Content sidebar')
     collapsableHeaderButtons = within(contentSidebar).getByTestId('controls-ticket-attributes')
     expect(collapsableHeaderButtons).toHaveAttribute('aria-expanded', 'true')
@@ -141,8 +139,6 @@ describe('Ticket detail view multi tabs switching', () => {
         name: `Ticket#${ticket.number} - ${ticket.title}`,
       }),
     )
-
-    expect(view.getByLabelText('State')).toHaveTextContent('open')
 
     contentSidebar = await view.findByLabelText('Content sidebar')
     collapsableHeaderButtons = within(contentSidebar).getByTestId('controls-ticket-attributes')

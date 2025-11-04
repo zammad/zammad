@@ -6,7 +6,7 @@ import { computed, type ComputedRef } from 'vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
-import type { Organization, UserQuery } from '#shared/graphql/types.ts'
+import { EnumTicketStateTypeCategory, type Organization, type User } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
@@ -17,6 +17,7 @@ import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/C
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 import NavigationMenuList from '#desktop/components/NavigationMenu/NavigationMenuList.vue'
 import { NavigationMenuDensity } from '#desktop/components/NavigationMenu/types.ts'
+import TicketListPopoverWithTrigger from '#desktop/components/Ticket/TicketListPopoverWithTrigger.vue'
 import UserInfo from '#desktop/components/User/UserInfo.vue'
 import type { TicketInformation } from '#desktop/entities/ticket/types.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
@@ -28,7 +29,7 @@ import {
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
 interface Props extends TicketSidebarContentProps {
-  customer: UserQuery['user']
+  customer: User
   secondaryOrganizations: ReturnType<typeof normalizeEdges<Partial<Organization>>>
   objectAttributes: ObjectAttribute[]
 }
@@ -83,12 +84,12 @@ const actions = computed<MenuItem[]>(() => [
     :entity="customer"
     :actions="actions"
   >
-    <UserInfo :user="customer" />
+    <UserInfo :user="customer" has-organization-popover />
 
     <ObjectAttributes
       :attributes="objectAttributes"
       :object="customer"
-      :skip-attributes="['firstname', 'lastname']"
+      :skip-attributes="['firstname', 'lastname', 'organization_id']"
     />
 
     <CommonSimpleEntityList
@@ -98,6 +99,7 @@ const actions = computed<MenuItem[]>(() => [
       :type="EntityType.Organization"
       :label="__('Secondary organizations')"
       :entity="secondaryOrganizations"
+      has-popover
       @load-more="$emit('load-more-secondary-organizations')"
     />
 
@@ -111,21 +113,68 @@ const actions = computed<MenuItem[]>(() => [
         :density="NavigationMenuDensity.Dense"
         :items="[
           {
+            id: 'open',
             label: __('open tickets'),
+            title: __('Open Tickets'),
             icon: 'check-circle-no',
             iconColor: 'fill-yellow-500',
             count: customer?.ticketsCount?.open || 0,
-            route: '/search/ticket/open',
+            route: `/search/${customer?.ticketsCount?.openSearchQuery ?? ''}?entity=Ticket`,
           },
           {
+            id: 'closed',
             label: __('closed tickets'),
+            title: __('Closed Tickets'),
             icon: 'check-circle-outline',
             iconColor: 'fill-green-400',
             count: customer?.ticketsCount?.closed || 0,
-            route: '/search/ticket/closed',
+            route: `/search/${customer?.ticketsCount?.closedSearchQuery ?? ''}?entity=Ticket`,
           },
         ]"
-      />
+      >
+        <template #default="{ entry, paddingClasses, countSize, countVariant }">
+          <TicketListPopoverWithTrigger
+            :filters="{
+              customerId: customer.id,
+              stateTypeCategory:
+                entry.id === 'open'
+                  ? EnumTicketStateTypeCategory.Open
+                  : EnumTicketStateTypeCategory.Closed,
+            }"
+            :title="entry.title!"
+            :no-results="entry.count === 0"
+            :trigger-class="[
+              'focus-visible-app-default flex items-center gap-1 rounded-lg! text-sm text-gray-100 hover:bg-blue-600 hover:text-black! hover:no-underline! dark:text-neutral-400 dark:hover:bg-blue-900 dark:hover:text-white!',
+              paddingClasses,
+            ]"
+            :trigger-link="typeof entry.route === 'string' ? entry.route : undefined"
+            :popover-config="{
+              orientation: 'left',
+              placement: 'arrowStart',
+            }"
+            no-hover-styling
+          >
+            <CommonIcon
+              size="small"
+              aria-hidden="true"
+              class="h-4 shrink-0"
+              :class="entry.iconColor"
+              :name="entry.icon!"
+            />
+            <CommonLabel class="line-clamp-1! grow text-current!">
+              {{ $t(entry.label) }}
+            </CommonLabel>
+            <CommonBadge
+              class="cursor-pointer leading-snug font-bold"
+              :size="countSize"
+              :variant="countVariant"
+              rounded
+            >
+              {{ entry.count }}
+            </CommonBadge>
+          </TicketListPopoverWithTrigger>
+        </template>
+      </NavigationMenuList>
     </CommonSectionCollapse>
   </TicketSidebarContent>
 </template>

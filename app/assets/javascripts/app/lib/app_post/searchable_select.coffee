@@ -10,6 +10,7 @@ class App.SearchableSelect extends Spine.Controller
     'click .js-option':                               'selectItem'
     'click .js-enter .searchableSelect-option-text':  'selectItem'
     'click .searchableSelect-option-arrow':           'navigateIn'
+    'click .searchableSelect-option-button':          'navigateIn'
     'click .js-back':                                 'navigateOut'
     'mouseenter .js-option':                          'highlightItem'
     'mouseenter .js-enter':                           'highlightItem'
@@ -64,7 +65,7 @@ class App.SearchableSelect extends Spine.Controller
           if App[relation] && App[relation].exists dataId
             name = App[relation].find(dataId).displayName()
             value = dataId
-            values.push({name: name, value: value})
+            values.push({ name: name, value: value })
             tokens += App.view('generic/token')(
               name: name
               value: value
@@ -74,7 +75,7 @@ class App.SearchableSelect extends Spine.Controller
 
       else
         for value in @attribute.value
-          values.push({name: value, value: value})
+          values.push({ name: value, value: value })
           tokens += App.view('generic/token')(
             name: value
             value: value
@@ -92,14 +93,14 @@ class App.SearchableSelect extends Spine.Controller
     @input.get(0).selectValue = @selectValue
 
     # initial data
+    @lastValue   = @attribute.value
     @currentMenu = @findMenuContainingValue(@attribute.value)
-    @level = @getIndex(@currentMenu)
 
     @clear.on('click.searchable_select', @clearValue)
 
     @el.addClass('searchableSelect-dropdown-up') if @attribute.direction == 'up'
 
-  renderSubmenus: (options) ->
+  renderSubmenus: (options, level = 1) ->
     html = ''
     if options
       for option in options
@@ -108,9 +109,10 @@ class App.SearchableSelect extends Spine.Controller
             options: @renderOptions(option.children)
             parentValue: option.value
             title: option.name
+            level: level
           )
           if @hasSubmenu(option.children)
-            html += @renderSubmenus(option.children)
+            html += @renderSubmenus(option.children, level + 1)
     html
 
   updateAttributeOptionDisplayName: (options, parentNames = []) =>
@@ -191,11 +193,20 @@ class App.SearchableSelect extends Spine.Controller
         classes += ' js-option'
       if option.category
         classes += ' with-category'
+      if option.inactive and option.children
+        classes += ' inactive-with-children'
 
-      html += App.view('generic/searchable_select_option')
+      template =
+        if option.inactive and option.children
+          'generic/searchable_select_option_inactive_with_children'
+        else
+          'generic/searchable_select_option'
+
+      html += App.view(template)
         class:      classes
         isSelected: @isOptionSelected(option)
         option:     option
+
     html
 
   renderAllOptions: (parentName, options, level) =>
@@ -205,19 +216,26 @@ class App.SearchableSelect extends Spine.Controller
         className = if option.children then 'js-enter' else 'js-option'
         if level && level > 0
           className += ' is-hidden is-child'
+        if option.inactive and option.children
+          className += ' inactive-with-children'
 
-        html += App.view('generic/searchable_select_option')(
+        template =
+          if option.inactive and option.children
+            'generic/searchable_select_option_inactive_with_children'
+          else
+            'generic/searchable_select_option'
+
+        html += App.view(template)
           class:      className
           detail:     parentName
           isSelected: @isOptionSelected(option)
           option:     option
-        )
 
         if option.children
           # We leave it to the browser to "invert" the chevron on RTL languages.
           #   This happens automatically for inlined RTL text since chevron is considered punctuation.
           delimiter = if level is 0 then '—' else '›'
-          html += @renderAllOptions("#{parentName} #{delimiter} #{option.name}", option.children, level+1)
+          html += @renderAllOptions("#{parentName} #{delimiter} #{option.name}", option.children, level + 1)
     html
 
   onDropdownShow: (event)  =>
@@ -225,10 +243,13 @@ class App.SearchableSelect extends Spine.Controller
       event.preventDefault()
 
   onDropdownShown: =>
+    if !@isOpen && !@attribute?.ajax
+      @resetSearch()
+
     @input.on('click', @stopPropagation)
 
     @highlightFirst()
-    if @level > 0
+    if @getIndex(@currentMenu) > 0
       @showSubmenu(@currentMenu)
     @isOpen = true
 
@@ -316,14 +337,14 @@ class App.SearchableSelect extends Spine.Controller
     @clearAutocomplete()
 
   autocompleteOrNavigateIn: (event) ->
-    if @currentItem && @currentItem.hasClass('js-enter')
+    if not @query and @currentItem?.hasClass('js-enter')
       @navigateIn(event)
     else
       @fillWithAutocompleteSuggestion(event)
 
   autocompleteOrNavigateOut: (event) ->
     # if we're in a depth then navigateOut
-    if @level != 0
+    if @getIndex(@currentMenu) != 0
       @navigateOut(event)
     else
       @fillWithAutocompleteSuggestion(event)
@@ -354,6 +375,8 @@ class App.SearchableSelect extends Spine.Controller
     @input.prop('selectionEnd', caretPosition)
 
   autocomplete: (value, text) ->
+    return if @attribute.multiple
+
     @suggestion = text
     @suggestionValue = value
     startIndex = text.indexOf(@query)
@@ -374,14 +397,23 @@ class App.SearchableSelect extends Spine.Controller
       .removeAttr('title')
     @onInput(null, false)
 
+  setMenuByLastValue: =>
+    @currentMenu.prop('hidden', true)
+    @currentMenu = @findMenuContainingValue(@lastValue)
+    @currentMenu.prop('hidden', false)
+
   selectValue: (value, currentText, displayName) =>
     @resetSearch()
 
     @input.val(currentText)
       .attr('title', displayName)
     @shadowInput.val(value)
+
     @attribute.valueName = currentText
-    @attribute.value = value
+    @attribute.value     = value
+    @lastValue           = value
+
+    @setMenuByLastValue()
 
   selectItem: (event) ->
     row = $(event.currentTarget).closest('li')
@@ -393,7 +425,8 @@ class App.SearchableSelect extends Spine.Controller
     currentText = row.find('[role=option]')[0]?.firstChild?.textContent?.trim()
     return if not currentText
 
-    dataId = row.data('value')
+    dataId     = row.data('value')
+    @lastValue = dataId
 
     if @attribute.multiple
       event.stopPropagation()
@@ -402,6 +435,7 @@ class App.SearchableSelect extends Spine.Controller
       @selectValue(dataId, currentText, row.data('displayName'))
       @toggleClear()
 
+    @setMenuByLastValue()
     @markSelected(dataId)
 
   markSelected: (value) ->
@@ -436,8 +470,6 @@ class App.SearchableSelect extends Spine.Controller
 
     @animateToSubmenu(target_menu, dir)
 
-    @level+=dir
-
   animateToSubmenu: (target_menu, direction) ->
     @animating = true
     target_menu.prop('hidden', false)
@@ -445,28 +477,32 @@ class App.SearchableSelect extends Spine.Controller
     oldCurrentItem = @currentItem
 
     @currentMenu.data('current_item_index', @currentItem.index())
-    # default: 1 (first item after the back button)
-    target_item_index = target_menu.data('current_item_index') || 1
+
+    # by default always start from the back button
+    target_item_index = 0
+
     # if the direction is out then we know the target item -> its the parent item
     if direction is -1
       value = @currentMenu.attr('data-parent-value')
       target_item_index = @getOptionIndex(target_menu, value)
 
     @currentItem = target_menu.children().eq(target_item_index)
-    @currentItem.addClass('is-active')
+    @currentItem.addClass('is-active is-highlighted')
 
     target_menu.velocity
       properties:
-        translateX: [0, direction*100+'%']
+        translateX: [0, direction * 100 + '%']
       options:
         duration: 240
+        complete: ->
+          target_menu.css('translateX', '').css('transform', '')
 
     if @attribute.direction == 'up'
       @dropdown.css('overflow-y', 'hidden')
 
     @currentMenu.velocity
       properties:
-        translateX: [direction*-100+'%', 0]
+        translateX: [direction * -100 + '%', 0]
       options:
         duration: 240
         complete: =>
@@ -475,8 +511,8 @@ class App.SearchableSelect extends Spine.Controller
 
           oldCurrentItem.removeClass('is-active')
           oldCurrentItem.removeClass('is-highlighted') if oldCurrentItem.hasClass('js-enter')
-          $.Velocity.hook(@currentMenu, 'translateX', '')
           @currentMenu.prop('hidden', true)
+          @currentMenu.css('translateX', '').css('transform', '')
           @dropdown.height(target_menu.height())
           @currentMenu = target_menu
           @animating = false
@@ -488,9 +524,12 @@ class App.SearchableSelect extends Spine.Controller
 
   findParentOptionByValue: (options, value, lastParent) ->
     return if !options
+
     for option in options
       return lastParent if option.value?.toString() is value?.toString()
-      return @findParentOptionByValue(option.children, value, option) if option.children
+
+      parent = @findParentOptionByValue(option.children, value, option)
+      return parent if parent
 
   findMenuContainingValue: (value) ->
     return @optionsList if !@attribute.options or !value
@@ -502,9 +541,7 @@ class App.SearchableSelect extends Spine.Controller
 
   getIndex: (menu) ->
     return 0 if !menu
-    parentValue = menu.attr('data-parent-value')
-    return 0 if !parentValue
-    return parentValue.split('::').length
+    return parseInt(menu.attr('data-level')) || 0
 
   onTab: (event) ->
     if not @isOpen
@@ -540,7 +577,7 @@ class App.SearchableSelect extends Spine.Controller
     event.preventDefault()
 
     if @currentItem || !@attribute.unknown
-      return if @currentItem.hasClass('has-inactive')
+      return if @currentItem.hasClass('has-inactive') or @currentItem.hasClass('inactive-with-children')
 
       valueName   = @currentItem.children('span.searchableSelect-option-text').text().trim()
       value       = @currentItem.attr('data-value')
@@ -602,7 +639,7 @@ class App.SearchableSelect extends Spine.Controller
       if option.children
         @updateAttributeOptionSelected(option.children, value)
 
-  createToken: ({name, value}) =>
+  createToken: ({ name, value }) =>
     content = {}
     if @attribute.relation
       content =
@@ -643,6 +680,13 @@ class App.SearchableSelect extends Spine.Controller
       @shadowInput.val @query
 
   filterByQuery: (query) ->
+    if (query && query.length > 0) || @getIndex(@currentMenu) == 0 || !@lastValue
+      @currentMenu.prop('hidden', true)
+      @optionsList.prop('hidden', false)
+      @currentMenu = @optionsList
+    else
+      @setMenuByLastValue()
+
     query = escapeRegExp(query)
     regex = new RegExp(query.split(' ').join('.*'), 'i')
 
@@ -654,7 +698,11 @@ class App.SearchableSelect extends Spine.Controller
         @textContent.match(regex)
       .removeClass 'is-hidden'
 
-    if !query
+    if query
+      @optionsList.addClass 'has-query'
+      @optionItems.filter('.inactive-with-children').addClass 'is-hidden'
+    else
+      @optionsList.removeClass 'has-query'
       @optionItems.filter('.is-child').addClass 'is-hidden'
 
     # if all are hidden
@@ -665,23 +713,29 @@ class App.SearchableSelect extends Spine.Controller
     else
       @highlightFirst(true)
 
+    if @currentMenu.height() > 0
+      @dropdown.height(@currentMenu.height())
+
   addValueToShadowInput: (currentText, dataId) ->
     @resetSearch()
 
     if @attribute.multiple
       return if @shadowInput.val().includes("#{dataId}") if @shadowInput.val() # cast dataId to string before check
-      @currentData = {name: currentText, value: dataId}
+      @currentData = { name: currentText, value: dataId }
     else
-      @currentData = {name: currentText, value: dataId}
+      @currentData = { name: currentText, value: dataId }
       return if @shadowInput.val().includes("#{dataId}") if @shadowInput.val() # cast dataId to string before check
 
     @shadowInput.append($('<option/>').attr('selected', true).attr('value', @currentData.value).text(@currentData.name))
     @onShadowChange()
 
   highlightFirst: (autocomplete) ->
+    return if autocomplete and document.activeElement isnt @input.get(0)
+
     @unhighlightCurrentItem()
     @currentItem = @getCurrentOptions().not('.is-hidden').first()
-    @currentItem.addClass 'is-active'
+    @currentItem.addClass('is-active')
+    @currentItem.addClass('is-highlighted') if @currentItem.hasClass('js-enter')
 
     if autocomplete
       @autocomplete @currentItem.attr('data-value'), @currentItem.children('span.searchableSelect-option-text').text().trim()
@@ -698,7 +752,9 @@ class App.SearchableSelect extends Spine.Controller
     @currentItem = null
 
   toggleClear: =>
-    if _.isEmpty(@attribute.value) and not @isOpen
+    return if @attribute.multiple
+
+    if @attribute.value?.toString().length
       @clear.removeClass('hide')
     else
       @clear.addClass('hide')

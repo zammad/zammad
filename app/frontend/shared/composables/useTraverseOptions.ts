@@ -6,7 +6,7 @@ import stopEvent from '#shared/utils/events.ts'
 import { getFocusableElements } from '#shared/utils/getFocusableElements.ts'
 import type { FocusableOptions } from '#shared/utils/getFocusableElements.ts'
 
-import type { MaybeRefOrGetter } from '@vueuse/shared'
+import type { MaybeRefOrGetter } from 'vue'
 
 type TraverseDirection = 'horizontal' | 'vertical' | 'mixed'
 type ReturnValue = boolean | null | void | undefined

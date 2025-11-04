@@ -193,7 +193,11 @@ const onContextClick = () => {
             {{ username }}
           </span>
         </div>
-        <div ref="bubbleElement" data-test-id="article-content" class="overflow-hidden text-base">
+        <div
+          ref="bubbleElement"
+          data-test-id="article-content"
+          class="overflow-hidden transition-[height] duration-200 text-base"
+        >
           <!-- eslint-disable vue/no-v-html -->
           <div class="Content" v-html="body" />
         </div>
@@ -283,6 +287,19 @@ const onContextClick = () => {
 .Content {
   word-break: normal;
   overflow-wrap: anywhere;
+
+  &:deep(img, svg) {
+    display: inline;
+  }
+
+  &:deep(pre) {
+    overflow-x: auto;
+  }
+
+  /* Wrap long lines in code blocks. */
+  &:deep(code) {
+    white-space: pre-wrap;
+  }
 }
 
 .Article:not(.Internal) {

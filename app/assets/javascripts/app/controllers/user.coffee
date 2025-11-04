@@ -142,13 +142,25 @@ class App.ControllerGenericIndexUser extends App.ControllerGenericIndex
     e.preventDefault()
     item = App.User.find(id)
 
+    removeGroupPermissions = (params, attribute, attributes, classname, form, ui) ->
+      return if item.active
+
+      form.find('[data-attribute-name="group_ids"]').remove()
+      form.find('[name="active"]').closest('.form-group').find('.help-block').html(
+        App.i18n.translateInline('You cannot view or change the group permissions of an inactive user. Activate them first to manage their permissions.')
+      )
+
     hideOrganizationHelp = (params, attribute, attributes, classname, form, ui) ->
       return if App.Config.get('ticket_organization_reassignment')
 
       form.find('[name="organization_id"]').closest('.form-group').find('.help-message').addClass('hide')
 
     item.secondaryOrganizations(0, 1000, =>
-      new App.ControllerGenericEdit(
+      constructor = @editControllerClass()
+
+      wasInactive = not item.active
+
+      new constructor(
         id: item.id
         pageData:
           title:     __('Users')
@@ -158,9 +170,70 @@ class App.ControllerGenericIndexUser extends App.ControllerGenericIndex
           navupdate: '#users'
         genericObject: 'User'
         container: @el.closest('.content')
-        handlers: [hideOrganizationHelp]
+        handlers: [removeGroupPermissions, hideOrganizationHelp]
         screen: 'edit'
         veryLarge: true
+        contentFormParams: ->
+          @item.group_ids = undefined if not @item.active # do not submit empty group_ids if user is inactive
+          @item
+        onSubmit: (e) ->
+          params = @formParam(e.target)
+          @item.load(params)
+
+          # validate form using HTML5 validity check
+          element = $(e.target).closest('form').get(0)
+          if element && element.reportValidity && !element.reportValidity()
+            return false
+
+          # validate
+          errors = @item.validate(
+            controllerForm: @controller
+          )
+
+          if @validateOnSubmit
+            errors = _.extend({}, errors, @validateOnSubmit(params))
+
+          if !_.isEmpty(errors)
+            @log 'error', errors
+            @formValidate( form: e.target, errors: errors )
+            return false
+
+          # disable form
+          @formDisable(e)
+
+          # save object
+          ui = @
+          @item.save(
+            removedFields: @controller.removedFields(@controller.form)
+            done: ->
+              if ui.callback
+                item = App[ ui.genericObject ].fullLocal(@id)
+                ui.callback(item)
+
+              if wasInactive and item.active
+                wasInactive = false
+
+                # Re-render the modal with success alert on top.
+                ui.render()
+                ui.el
+                  .find('.js-success')
+                  .html(App.i18n.translateInline('User updated successfully.'))
+                  .removeClass('hide')
+
+                return
+
+              ui.close()
+
+            fail: (settings, details) =>
+              App[ ui.genericObject ].fetch(id: @id)
+              ui.log 'errors'
+              ui.formEnable(e)
+
+              if details && details.invalid_attribute
+                @formValidate( form: e.target, errors: details.invalid_attribute )
+              else
+                ui.controller.showAlert(details.error_human || details.error || __('The object could not be updated.'))
+          )
       )
     )
 

@@ -86,7 +86,7 @@ describe('TicketScreenBehavior', () => {
 
     const menu = await wrapper.findByRole('menu')
 
-    await wrapper.events.click(within(menu).getByRole('checkbox', { name: 'check2 Close tab' }))
+    await wrapper.events.click(within(menu).getByRole('checkbox', { name: 'check2Close tab' }))
 
     const calls = await waitForUserCurrentTicketScreenBehaviorMutationCalls()
 

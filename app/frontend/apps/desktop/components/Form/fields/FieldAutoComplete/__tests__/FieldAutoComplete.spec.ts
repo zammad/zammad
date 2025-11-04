@@ -566,7 +566,10 @@ describe('Form - Field - AutoComplete - Initial Options', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    expect(wrapper.getAllByRole('option')[1]).toHaveAttribute('aria-disabled', 'true')
+    expect(wrapper.getAllByTestId('select-item')[1]).toHaveAttribute(
+      'aria-description',
+      'This item expands to show more options',
+    )
 
     expect(getByText(wrapper.getByRole('listbox'), disabledOptions[1].label)).toHaveClass(
       'text-stone-200 dark:text-neutral-500',
@@ -1092,13 +1095,12 @@ describe('Form - Field - AutoComplete - Accessibility', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    const listbox = wrapper.getByRole('listbox')
+    expect(wrapper.getByTestId('select-item')).toHaveAttribute(
+      'aria-description',
+      'This item expands to show more options',
+    )
 
-    const selectOptions = getAllByRole(listbox, 'option')
-
-    expect(selectOptions).toHaveLength(1)
-    expect(selectOptions[0]).toHaveAttribute('aria-disabled', 'true')
-    expect(selectOptions[0]).toHaveTextContent('Start typing to search…')
+    expect(wrapper.getByTestId('select-item')).toHaveTextContent('Start typing to search…')
   })
 
   it('shows the provided hint in case there are no options available', async () => {
@@ -1113,13 +1115,12 @@ describe('Form - Field - AutoComplete - Accessibility', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    const listbox = wrapper.getByRole('listbox')
+    expect(wrapper.getByTestId('select-item')).toHaveAttribute(
+      'aria-description',
+      'This item expands to show more options',
+    )
 
-    const selectOptions = getAllByRole(listbox, 'option')
-
-    expect(selectOptions).toHaveLength(1)
-    expect(selectOptions[0]).toHaveAttribute('aria-disabled', 'true')
-    expect(selectOptions[0]).toHaveTextContent('Custom Text')
+    expect(wrapper.getByTestId('select-item')).toHaveTextContent('Custom Text')
   })
 
   it('provides labels for screen readers', async () => {

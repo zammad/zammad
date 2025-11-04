@@ -512,3 +512,20 @@ Capybara/NegationMatcherAfterVisit:
 RSpec/IncludeExamples:
   Description: 'Allow to use both it_behaves_like and include_examples'
   Enabled: false
+
+Rails/FindByOrAssignmentMemoization:
+  Description: 'Allow to use ||= for memoization of find_by returns'
+  Enabled: false
+
+# Looks like this cop is currently broken.
+# Allowing shorthands in one-line blocks would be fine.
+# But as of now it mis-detects chained blocks as multiliners.
+Style/ItBlockParameter:
+  Description: 'Allow to use it shorthand in blocks'
+  EnforcedStyle: only_numbered_parameters
+
+# There is a warning in the cop about possible performance issues,
+#  see https://docs.rubocop.org/rubocop-rails/cops_rails.html#safety-railspluckinwhere.
+Rails/PluckInWhere:
+  Description: 'Identifies places where pluck is used in where query methods and can be replaced with select.'
+  Enabled: false

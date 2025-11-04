@@ -55,6 +55,24 @@ RSpec.describe MonitoringHelper::HealthChecker::Scheduler do
       instance.send(:last_execution)
       expect(instance.response.issues.count).to be 1
     end
+
+    it 'adds expected next execution time in issue' do
+      scheduler = create(:scheduler, last_run: 50.minutes.ago)
+      allow(instance).to receive_messages(last_execution_scope: [scheduler], next_execution_time: 10.minutes.from_now)
+      instance.send(:last_execution)
+      expect(instance.response.issues.first)
+        .to start_with('scheduler may not run')
+        .and include('next execution in 10 minutes')
+    end
+
+    it 'adds expected execution time when next execution time is in the past' do
+      scheduler = create(:scheduler, last_run: 50.minutes.ago)
+      allow(instance).to receive_messages(last_execution_scope: [scheduler], next_execution_time: Time.current)
+      instance.send(:last_execution)
+      expect(instance.response.issues.first)
+        .to start_with('scheduler may not run')
+        .and include('next execution imminent')
+    end
   end
 
   describe '#last_execution_scope' do
@@ -148,6 +166,71 @@ RSpec.describe MonitoringHelper::HealthChecker::Scheduler do
 
       it 'adds action' do
         expect(instance.response.actions.first).to eq :restart_failed_jobs
+      end
+    end
+  end
+
+  describe '#next_execution_time' do
+    before do
+      freeze_time
+    end
+
+    context 'when no timeplan' do
+      let(:scheduler) { create(:scheduler, period: 1.hour, last_run:) }
+
+      context 'when last_run is nil' do
+        let(:last_run) { nil }
+
+        it 'return current time' do
+          expect(instance.send(:next_execution_time, scheduler))
+            .to eq(Time.current)
+        end
+      end
+
+      context 'when last_run is present' do
+        let(:last_run) { 45.minutes.ago }
+
+        it 'returns last_run + period' do
+          expect(instance.send(:next_execution_time, scheduler))
+            .to eq(15.minutes.from_now)
+        end
+      end
+    end
+
+    context 'with a timeplan' do
+      let(:scheduler) { create(:scheduler, :timeplan, period: 1.hour, last_run:) }
+
+      context 'when last_run is nil' do
+        let(:last_run) { nil }
+
+        before { travel_to Time.current.change(hour: 10, min: 0) }
+
+        it 'returns next matching time from now' do
+          expect(instance.send(:next_execution_time, scheduler))
+            .to eq(13.hours.from_now)
+        end
+      end
+
+      context 'when last_run just happened within timeplan' do
+        let(:last_run) { Time.current }
+
+        before { travel_to Time.current.change(hour: 23, min: 0) }
+
+        it 'returns next matching time after the current time' do
+          expect(instance.send(:next_execution_time, scheduler))
+            .to eq(1.day.from_now)
+        end
+      end
+
+      context 'when last run was long ago' do
+        let(:last_run) { Time.current }
+
+        before { travel_to Time.current.change(hour: 16, min: 0) }
+
+        it 'returns next matching time from now' do
+          expect(instance.send(:next_execution_time, scheduler))
+            .to eq(7.hours.from_now)
+        end
       end
     end
   end

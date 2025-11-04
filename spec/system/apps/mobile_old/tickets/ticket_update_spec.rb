@@ -75,9 +75,11 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
         expect(page).to have_no_selector(:button, 'Save')
 
+        title = find_input('Ticket title')
+        expect(title).to have_value('Ticket Title')
+        title.clear
+
         within_form(form_updater_gql_number: 1) do
-          title = find_input('Ticket title')
-          expect(title).to have_value('Ticket Title')
           title.type('New Title')
 
           state = find_select('State')
@@ -159,6 +161,8 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
         visit "/tickets/#{ticket.id}/information"
 
         wait_for_form_to_settle('form-ticket-edit')
+
+        find_input('Ticket title').clear # does not trigger form updater for some reason
 
         within_form(form_updater_gql_number: 1) do
           find_input('Ticket title').type('New Title')

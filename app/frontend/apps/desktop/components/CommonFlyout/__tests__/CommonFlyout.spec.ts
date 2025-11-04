@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-import { beforeAll, describe, expect } from 'vitest'
+import { describe, expect } from 'vitest'
 import { nextTick } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -12,19 +12,6 @@ const html = String.raw
 describe('CommonFlyout', () => {
   describe('standalone component', () => {
     let flyout: ReturnType<typeof renderComponent>
-    let mainElement: HTMLElement
-    let app: HTMLDivElement
-
-    beforeAll(() => {
-      app = document.createElement('div')
-      app.id = 'app'
-      document.body.appendChild(app)
-
-      mainElement = document.createElement('main')
-      mainElement.id = 'main-content'
-
-      app.insertAdjacentElement('beforeend', mainElement)
-    })
 
     beforeEach(() => {
       flyout = renderComponent(CommonFlyout, {
@@ -34,6 +21,7 @@ describe('CommonFlyout', () => {
           headerIcon: 'buildings',
           showBackdrop: false,
         },
+        flyout: true,
         router: true,
       })
     })
@@ -131,14 +119,14 @@ describe('CommonFlyout', () => {
     it('displays by default over the main content', async () => {
       await flyout.rerender({ fullscreen: false })
 
-      expect(mainElement.children).not.include(flyout.baseElement)
-      expect(app.children).include(flyout.baseElement)
+      expect(document.body).not.include(flyout.baseElement)
+      expect(document.body).include(flyout.baseElement)
     })
 
     it('supports displaying over entire viewport', async () => {
       await flyout.rerender({ fullscreen: true })
 
-      expect(mainElement.children).include(flyout.baseElement)
+      expect(document.body).include(flyout.baseElement)
     })
 
     describe('events', () => {

@@ -24,6 +24,7 @@ performance:
     - git checkout stable-6.0
     - !reference [.scripts, source_rvm]
     - rvm use 3.1.3
+    - bundle config set without mysql
     - !reference [.scripts, bundle_install]
     - !reference [.scripts, configure_environment]
     - !reference [.scripts, zammad_db_init]
@@ -34,7 +35,7 @@ performance:
     - bundle exec rails r tmp/performance/run_tests.rb || true
     # Then, switch to the current commit, migrate to it and run a few selected tests.
     - git checkout $CI_COMMIT_SHA
-    - rvm use 3.3.8
+    - rvm use 3.4.7
     - !reference [.scripts, bundle_install]
     # Force redis usage, even if it was disabled by the initial configure_environment script of stable.
     - export REDIS_URL=redis://redis

@@ -234,7 +234,6 @@ QUnit.test("searchable_select submenu and option list check", assert => {
   el.find("[name=\"searchable_select1\"].js-shadow + .js-input").trigger('click')
   el.find("div[data-attribute-name=searchable_select1] .js-optionsList [data-value=\"c\\\\cc\"] .searchableSelect-option-arrow").mouseenter().trigger('click')
   el.find("div[data-attribute-name=searchable_select1] .js-optionsSubmenu [data-value=\"c\\\\cc::bbb\"] .searchableSelect-option-text").mouseenter().trigger('click')
-  el.find("[name=\"searchable_select1\"].js-shadow + .js-input").trigger('click')
 
   var params = App.ControllerForm.params(el)
   var test_params = {
@@ -242,10 +241,10 @@ QUnit.test("searchable_select submenu and option list check", assert => {
     searchable_select2: 'c\\cc',
   }
 
-  var optionsSubmenu = el.find("div[data-attribute-name=searchable_select1] .searchableSelect .js-optionsSubmenu")
-  var optionsList = el.find("div[data-attribute-name=searchable_select1] .searchableSelect .js-optionsList")
-
   setTimeout( () => {
+    el.find("[name=\"searchable_select1\"].js-shadow + .js-input").trigger('click')
+    var optionsSubmenu = el.find("div[data-attribute-name=searchable_select1] .searchableSelect .js-optionsSubmenu")
+    var optionsList = el.find("div[data-attribute-name=searchable_select1] .searchableSelect .js-optionsList")
     assert.deepEqual(params, test_params, 'form param check')
     assert.equal(optionsSubmenu.is('[hidden]'), false, 'options submenu menu not hidden')
     assert.equal(optionsList.is('[hidden]'), true, 'options list is hidden')

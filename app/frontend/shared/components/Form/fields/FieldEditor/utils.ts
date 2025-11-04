@@ -1,13 +1,12 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { autoUpdate, computePosition, flip, shift } from '@floating-ui/dom'
+import { type Editor, getHTMLFromFragment } from '@tiptap/core'
 import { posToDOMRect, VueRenderer } from '@tiptap/vue-3'
-import { DOMSerializer } from 'prosemirror-model'
 
 import type { SetFloatingPopoverOptions } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { convertFileList } from '#shared/utils/files.ts'
 
-import type { Editor } from '@tiptap/core'
 import type { Component } from 'vue'
 
 const addTableClasses = (container: HTMLDivElement) => {
@@ -57,22 +56,41 @@ export const convertInlineImages = (
  */
 export const getSelection = (editor: Editor) => editor.state.selection
 
-export const getHTMLFromSelection = (editor: Editor, selection?: Editor['state']['selection']) => {
-  const sel = selection ?? editor!.state.selection
-  const slice = sel.content()
-  const serializer = DOMSerializer.fromSchema(editor!.schema)
-  const fragment = serializer.serializeFragment(slice.content)
-  const div = document.createElement('div')
-  div.appendChild(fragment)
+const selectionIsWithinSameParent = (selection: Editor['state']['selection']) => {
+  const { $from, $to, empty } = selection
 
-  return div.innerHTML
+  if (empty) return false
+
+  return $from.parent === $to.parent
+}
+
+export const getHTMLContentBetweenSelection = (
+  editor: Editor,
+  { from, to }: { from: number; to: number },
+) => {
+  const slice = editor.state.doc.cut(from, to)
+
+  let html = getHTMLFromFragment(slice.content, editor.schema)
+
+  if (selectionIsWithinSameParent(editor.state.selection)) {
+    // remove the outer block wrapper
+    html = html.slice(html.indexOf('>') + 1, html.lastIndexOf('<'))
+  }
+
+  return html
 }
 
 export const updateSelectedContent = (editor: Editor, content: string) => {
-  editor!.commands.deleteSelection()
+  const { $from, $to } = editor.state.selection
 
-  // Remove visual newlines from the model which should not play any role.
-  return editor!.commands.insertContent(content.replace(/\s*\n\s*/g, ''))
+  const cleanContent = content.replace(/\s*\n\s*/g, '')
+
+  return editor.commands.insertContentAt({ from: $from.pos, to: $to.pos }, cleanContent, {
+    parseOptions: {
+      preserveWhitespace: false,
+    },
+    errorOnInvalidContent: false,
+  })
 }
 
 /*

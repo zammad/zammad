@@ -60,5 +60,5 @@ that lists known exceptions.
 
 ### Static JS Code Analysis
 
-We use the [SonarJS](https://github.com/SonarSource/SonarJS) plugin for
-ESLint for this.
+We use the [eslint-plugin-security](https://www.npmjs.com/package/eslint-plugin-security) plugin for
+basic checks.

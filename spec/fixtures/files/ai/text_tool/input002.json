@@ -1,0 +1,6 @@
+{
+  "input": "<h2>Sehenswürdigkeiten</h2><ul><li>Kirche des \nhl. Cyrill und Method, erbaut 1899–1900 im Neorenaissancestil nach \nPlänen des Podiebrader Baumeisters František Proft. Die Weihe der Kirche\n erfolgte am 8. Juli 1900. Der barocke Hauptaltar des hl. Alois ist ein \nWerk von <a href=\"https://de.wikipedia.org/wiki/Ignaz_Raab\">Ignaz Raab</a> aus dem 18. Jahrhundert.</li><li>Hügel Vinný vrch, westlich des Dorfes, Naturdenkmal</li><li>Reste der Feste Bolice, nördlich des Ortes</li><li>Statue der hl. Dreifaltigkeit aus dem Jahre 1854, im Park</li></ul>",
+  "expected": {
+    "language": "de"
+  }
+}

@@ -19,7 +19,17 @@ module MonitoringHelper
         last_execution_scope.each do |scheduler|
           next if last_execution_on_time?(scheduler)
 
-          response.issues.push "scheduler may not run (last execution of #{scheduler.method} #{time_ago_in_words(scheduler.last_run)} ago) - please contact your system administrator"
+          last_execution = time_ago_in_words(scheduler.last_run)
+
+          next_execution_time = next_execution_time(scheduler)
+
+          next_execution = if next_execution_time.future?
+                             "in #{distance_of_time_in_words(Time.current, next_execution_time(scheduler))}"
+                           else
+                             'imminent'
+                           end
+
+          response.issues.push "scheduler may not run (last execution of #{scheduler.method} #{last_execution} ago, next execution #{next_execution}) - please contact your system administrator"
           break
         end
       end
@@ -34,7 +44,7 @@ module MonitoringHelper
       def last_execution_deadline(scheduler)
         return scheduler.last_run if scheduler.timeplan.blank?
 
-        calculator = TimeplanCalculation.new(scheduler.timeplan, Setting.get('timezone_default'))
+        calculator = scheduler.timeplan_calculation
         intermediary = calculator.next_at(scheduler.last_run + 10.minutes)
         calculator.next_at(intermediary + 10.minutes)
       end
@@ -43,6 +53,24 @@ module MonitoringHelper
         return false if scheduler.last_run.blank?
 
         last_execution_deadline(scheduler) + scheduler.period.seconds >= LAST_EXECUTION_TOLERANCE.ago
+      end
+
+      def next_execution_time(scheduler)
+        if scheduler.timeplan.blank?
+          return Time.current if scheduler.last_run.blank?
+
+          return scheduler.last_run + scheduler.period
+        end
+
+        current_time = if scheduler.last_run
+                         [Time.current, scheduler.last_run + scheduler.period].max
+                       else
+                         Time.current
+                       end
+
+        scheduler
+          .timeplan_calculation
+          .next_at(current_time)
       end
 
       def none_running

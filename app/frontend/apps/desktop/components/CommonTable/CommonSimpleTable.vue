@@ -159,7 +159,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
                 :class="{
                   'ltr:text-black rtl:text-black dark:text-white': isRowSelected,
                 }"
-                class="truncate text-sm group-hover:text-black group-focus-visible:text-white group-active:text-white hover:no-underline! group-hover:dark:text-white"
+                class="truncate text-sm group-hover:text-black! group-focus-visible:text-white group-active:text-white hover:no-underline! group-hover:dark:text-white!"
                 @click.stop
                 @keydown.stop
                 >{{ (item[header.key] as TableItemLinkValue).label }}

@@ -113,7 +113,6 @@ h1 {
   margin: 0.8em 0 0.6em;
   font-weight: normal;
   overflow-wrap: break-word;
-  word-wrap: break-word;
   /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated */
   word-break: break-word;
 
@@ -805,7 +804,7 @@ b {
 
 .sections--compact-text {
   display: grid;
-  grid-gap: 20px;
+  gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   font-size: 14px;
 

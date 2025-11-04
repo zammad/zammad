@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::Update::Validator::TimeAccounting do
-  subject(:validator) { described_class.new(user: user, ticket: ticket, ticket_data: ticket_data, article_data: article_data) }
+  subject(:validator) { described_class.new(user:, ticket:, ticket_data:, article_data:, macro:) }
 
   let(:user)          { create(:agent, groups: [group]) }
   let(:ticket)        { create(:ticket) }
@@ -11,6 +11,7 @@ RSpec.describe Service::Ticket::Update::Validator::TimeAccounting do
   let(:new_title)     { Faker::Lorem.unique.word }
   let(:ticket_data)   { { title: new_title, state: Ticket::State.find_by(name: 'new') } }
   let(:article_data)  { nil }
+  let(:macro)         { nil }
 
   shared_examples 'not raising an error' do
     it 'does not raise an error' do

@@ -656,6 +656,6 @@ describe('CommonAdvancedTable', () => {
       caption: 'Table caption',
     })
 
-    expect(wrapper.getByRole('row', { name: 'Nicole Braun 2+' })).toBeInTheDocument()
+    expect(wrapper.getByRole('row', { name: 'Nicole Braun2+' })).toBeInTheDocument()
   })
 })

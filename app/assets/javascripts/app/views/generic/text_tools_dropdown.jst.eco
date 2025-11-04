@@ -1,14 +1,10 @@
 <% if !@disabled: %>
-<div class="text-tools-dropdown dropdown dropdown--actions dropup js-textToolsDropdown">
-  <ul class="dropdown-menu" role="menu" aria-label="<%- @Ti('Writing Assistant Tools') %>">
-    <li class="js-action" role="menuitem" data-type="improve_writing">
-      <%- @T('Improve writing') %>
-    <li class="js-action" role="menuitem" data-type="spelling_and_grammar">
-      <%- @T('Fix spelling and grammar') %>
-    <li class="js-action" role="menuitem" data-type="expand">
-      <%- @T('Expand') %>
-    <li class="js-action" role="menuitem" data-type="simplify">
-      <%- @T('Simplify') %>
+<div class="text-tools-dropdown dropdown dropdown--actions dropup">
+  <ul class="dropdown-menu" role="menu">
+  <% for item in @items: %>
+    <li class="js-action" role="menuitem" data-id="<%= item.id %>">
+      <%- @T(item.name) %>
+  <% end %>
   </ul>
 </div>
 <% end %>

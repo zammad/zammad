@@ -43,14 +43,14 @@ describe('guided setup import selection', () => {
 
       const view = await visitView('/guided-setup/import')
 
-      expect(view.getByRole('button', { name: 'Freshdesk Beta' })).toBeInTheDocument()
-      expect(view.getByRole('button', { name: 'Kayako Beta' })).toBeInTheDocument()
-      expect(view.getByRole('button', { name: 'OTRS Beta' })).toBeInTheDocument()
-      expect(view.getByRole('button', { name: 'Zendesk Beta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'FreshdeskBeta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'KayakoBeta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'OTRSBeta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'ZendeskBeta' })).toBeInTheDocument()
       expect(view.getByRole('button', { name: 'Go Back' })).toBeInTheDocument()
 
       const importSourceButton = view.getByRole('button', {
-        name: 'Freshdesk Beta',
+        name: 'FreshdeskBeta',
       })
 
       await view.events.click(importSourceButton)

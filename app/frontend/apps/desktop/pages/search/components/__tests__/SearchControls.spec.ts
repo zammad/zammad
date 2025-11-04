@@ -29,9 +29,9 @@ describe('SearchControls', () => {
 
     expect(wrapper.getByRole('tablist')).toBeInTheDocument()
     expect(wrapper.getAllByRole('tab')).toHaveLength(3)
-    expect(wrapper.getByRole('tab', { name: 'Organization 11' })).toBeInTheDocument()
-    expect(wrapper.getByRole('tab', { name: 'Ticket 22' })).toBeInTheDocument()
-    expect(wrapper.getByRole('tab', { name: 'User 33' })).toBeInTheDocument()
+    expect(wrapper.getByRole('tab', { name: 'Organization11' })).toBeInTheDocument()
+    expect(wrapper.getByRole('tab', { name: 'Ticket22' })).toBeInTheDocument()
+    expect(wrapper.getByRole('tab', { name: 'User33' })).toBeInTheDocument()
   })
 
   it('updates the search term when input changes', async () => {

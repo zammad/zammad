@@ -7,13 +7,13 @@ import { computed, nextTick, onMounted, ref, type Ref, toRef, useTemplateRef, wa
 import { onBeforeRouteUpdate } from 'vue-router'
 
 import ObjectAttributeContent from '#shared/components/ObjectAttributes/ObjectAttribute.vue'
+import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { EnumObjectManagerObjects, EnumOrderDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
-import emitter from '#shared/utils/emitter.ts'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CellCheckbox from '#desktop/components/CommonTable/CellContent/CellCheckbox.vue'
@@ -216,7 +216,8 @@ onMounted(() => {
 })
 
 useEventListener('resize', () => initializeHeaderWidths())
-emitter.on('main-sidebar-transition', () => initializeHeaderWidths())
+
+useOnEmitter('main-sidebar-transition', () => initializeHeaderWidths())
 
 const getTooltipText = (item: TableAdvancedItem, tableAttribute: TableAttribute) =>
   tableAttribute.headerPreferences?.truncate ? item[tableAttribute.name] : undefined
@@ -394,7 +395,7 @@ const getLinkColorClasses = (item: TableAdvancedItem) => {
 
   switch ((item as TicketById).priority?.uiColor) {
     case 'high-priority':
-      return 'text-red-500 dark:text-red-500'
+      return 'text-red-500'
     case 'low-priority':
       return 'text-stone-200 dark:text-neutral-500'
     default:
@@ -592,7 +593,7 @@ const getLinkColorClasses = (item: TableAdvancedItem) => {
                     },
                     getLinkColorClasses(item),
                   ]"
-                  class="block! truncate text-sm group-hover:text-black group-focus-visible:text-white group-active:text-white hover:no-underline! group-hover:dark:text-white"
+                  class="block! truncate text-sm group-hover:text-black! group-focus-visible:text-white group-active:text-white hover:no-underline! group-hover:dark:text-white!"
                   @click.stop
                   @keydown.stop
                 >

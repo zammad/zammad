@@ -6,5 +6,5 @@
       <label for="attribute-<%= @attribute.name %>"></label>
     </div>
   </label>
-  <% if @attribute.note: %><span class="help-text"><%- @T(@attribute.note) %></span><% end %>
 </div>
+<% if @attribute.note: %><span class="help-text"><%- @T(@attribute.note) %></span><% end %>

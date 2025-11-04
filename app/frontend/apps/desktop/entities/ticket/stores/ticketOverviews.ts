@@ -170,6 +170,9 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
               },
             },
           ),
+          {
+            errorShowNotification: false, // We do not show notifications for the overview polling query in the background.
+          },
         )
 
         if (lastTicketOverviewLink.value && overviewsByLink.value[lastTicketOverviewLink.value]) {

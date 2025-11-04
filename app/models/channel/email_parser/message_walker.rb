@@ -111,23 +111,23 @@ class Channel::EmailParser::MessageWalker
     end
   end
 
-  def walk_multipart_mixed(part, force_html:, &block)
+  def walk_multipart_mixed(part, force_html:, &)
     has_html = part.parts.any? { |p| p.content_type&.start_with?('text/html') || p.html_part.present? }
     has_inline_attachment = part.parts.any? { |p| p.attachment? && part_inline_image?(p) }
 
     part.parts.each do |sub_part|
-      walk_message_parts(sub_part, force_html: has_html || has_inline_attachment, &block)
+      walk_message_parts(sub_part, force_html: has_html || has_inline_attachment, &)
     end
   end
 
-  def walk_multipart_related(part, force_html:, &block)
+  def walk_multipart_related(part, force_html:, &)
     if part.html_part.present?
       yield part.html_part, :html
     elsif part.text_part.present?
       has_inline_attachment = part.parts.any? { |p| p.attachment? && part_inline_image?(p) }
 
       part.parts.each do |sub_part|
-        walk_message_parts(sub_part, force_html: has_inline_attachment, &block)
+        walk_message_parts(sub_part, force_html: has_inline_attachment, &)
       end
     end
   end

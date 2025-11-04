@@ -123,6 +123,12 @@ RSpec.describe 'Import from Zendesk', authenticated_as: false, required_envs: %w
 
       expect(page).to have_text(Setting.get('fqdn'))
 
+      # skip intro/clues
+      user = User.find_by(login: 'admin@example.com')
+      user.preferences[:intro]                    = true
+      user.preferences[:keyboard_shortcuts_clues] = true
+      user.save!
+
       # Check that the login is working and also the left navigation side bar is visible.
       login(
         username: 'admin@example.com',

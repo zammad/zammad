@@ -13,55 +13,41 @@
       <div class="alert alert--danger">
         <%- @T('No AI provider is currently set up. Please contact your administrator.') %>
       </div>
-    <% else if @noSummaryPossible: %>
+    <% else if @invalidSummary: %>
       <div class="alert alert--info">
         <%- @T('There is not enough content yet to summarize this ticket.') %>
       </div>
     <% else if @data?.result: %>
       <% for item in @structure: %>
-        <% if !_.isEmpty(@data.result[item.value]): %>
+        <% values = [] %>
+        <% if _.isArray(item.value): %>
+          <% values = _.compact(_.flatten(_.map(item.value, (key) => @data?.result[key]))) %>
+        <% else: %>
+          <% values = @data?.result[item.value] %>
+        <% end %>
+        <% if !_.isEmpty(values): %>
           <div class="ticket-summary-sidebar-item">
-            <h3><%- @T(item.name) %></h4>
+            <h3><%- @T(item.name) %></h3>
             <% if item.type is 'list': %>
-              <% if item?.feature is 'checklist' && @checklist: %>
-                <ul class="js-ticket-summary-list">
-                  <% for localList in @data.result[item.value]: %>
-                    <li class="ticket-summary-sidebar-list-item-action">
-                      <span>
-                        <%= localList %>
-                      </span>
-                      <button class="btn btn--secondary btn--action btn--small js-addChecklistItem btn--add-checklist-item" data-content="<%= localList %>" aria-label="<%- @T('Add as checklist item') %>" type="button">
-                        <%- @Icon 'checkmark' %>
-                        <span><%- @T('Add') %></span>
-                      </button>
-                    </li>
-                  <% end %>
-                  </ul>
-              <% else: %>
-                <ul>
-                  <% for localList in @data.result[item.value]: %>
-                    <li><%= localList %></li>
-                  <% end %>
-                </ul>
-              <% end %>
+              <ul>
+                <% for localList in values: %>
+                  <li><%- @L(localList) %></li>
+                <% end %>
+              </ul>
             <% else: %>
-              <p><%= @data.result[item.value] %></p>
-            <% end %>
-            <% if item?.feature is 'checklist' && @checklist: %>
-              <button class="btn btn--secondary btn--action btn--small js-addAllToChecklist btn--add-all-to-checklist" type="button">
-                <%- @Icon 'double-checkmark' %>
-                <span><%- @T('Add all to checklist') %></span>
-              </button>
+              <% if _.isArray(values): %>
+                <p><%- values.join(' ') %></p>
+              <% else: %>
+                <p><%- values %></p>
+              <% end %>
             <% end %>
           </div>
         <% end %>
       <% end %>
       </div>
-      <p class="text-muted text-small">
-        <%- @T('Be sure to check AI-generated summaries for accuracy.') %>
-      </p>
+      <div class="js-aiFeedback"></div>
     <% else: %>
-      <p><%- @T('Zammad Smart Assist is generating the summary for you…') %></p>
+      <p><%- @T('Summary is being generated…') %></p>
       <div class="loading-container">
         <div class="loading icon"></div>
       </div>

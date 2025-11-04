@@ -49,8 +49,7 @@ export const createArticleActions = (
   }
   const filterByView = createFilter(options, app)
   return articleActionPlugins
-    .map((p) => p.addActions?.(ticket, article, options) || [])
-    .flat()
+    .flatMap((p) => p.addActions?.(ticket, article, options) || [])
     .filter(filterByView)
 }
 
@@ -66,8 +65,7 @@ export const createArticleTypes = (
   const filterByView = createFilter(options, app)
   return (
     articleActionPlugins
-      .map((p) => p.addTypes?.(ticket, options) || [])
-      .flat()
+      .flatMap((p) => p.addTypes?.(ticket, options) || [])
       .filter(filterByView)
       // oxlint-disable-next-line no-unused-vars
       .map(({ apps, ...type }) => type)

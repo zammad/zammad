@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
       return
     end
 
-    profiles = Report::Profile.list
+    profiles = Report::ProfilesPolicy::Scope.new(current_user, Report::Profile).resolve
     if profiles.blank?
       render json: {
         error: __('There are currently no report profiles configured.'),
@@ -131,16 +131,17 @@ class ReportsController < ApplicationController
     end
 
     if params[:profile_id]
-      profile = Report::Profile.find(params[:profile_id])
+      profile = Report::ProfilesPolicy::Scope.new(current_user, Report::Profile).resolve.find_by(id: params[:profile_id])
     else
       params[:profiles].each do |profile_id, active|
         next if !active
 
-        profile = Report::Profile.find(profile_id)
+        profile = Report::ProfilesPolicy::Scope.new(current_user, Report::Profile).resolve.find_by(id: profile_id)
       end
     end
+
     if !profile
-      raise Exceptions::UnprocessableEntity, __('The active reporting profile could not be found.')
+      raise Exceptions::UnprocessableEntity, __('The reporting profile could not be found.')
     end
 
     local_config = Report.config

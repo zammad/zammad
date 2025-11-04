@@ -19,7 +19,7 @@ class HtmlSanitizer
     end
 
     def clean_string(input)
-      output = input.gsub(%r{<(|/)[A-z]:[A-z]>}, '')
+      output = input.gsub(%r{<(|/)[[:word:]]:[[:word:]]>}u, '')
 
       output = output.delete("\t")
       # remove all new lines

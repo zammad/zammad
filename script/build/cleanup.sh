@@ -28,7 +28,7 @@ rm .yardopts
 rm -rf doc/developer_manual
 
 # Various development files
-rm -rf .dev
+rm -rf .dev .devcontainer
 
 # delete caches
 rm -rf tmp/*

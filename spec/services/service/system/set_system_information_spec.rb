@@ -35,7 +35,7 @@ RSpec.describe Service::System::SetSystemInformation do
     end
 
     context 'when locale is given but another parameter is invalid' do
-      let(:variables) { required_variables.merge(locale_default: 'lt').tap { _1.delete(:url) } }
+      let(:variables) { required_variables.merge(locale_default: 'lt').tap { it.delete(:url) } }
 
       it 'does not set locale' do
         expect { service.execute }.to raise_error(Exceptions::InvalidAttribute)
@@ -79,7 +79,7 @@ RSpec.describe Service::System::SetSystemInformation do
     end
 
     context 'when organization name is given but another parameter is invalid' do
-      let(:variables) { required_variables.tap { _1.delete(:url) } }
+      let(:variables) { required_variables.tap { it.delete(:url) } }
 
       it 'does not set organization name' do
         expect { service.execute }.to raise_error(Exceptions::InvalidAttribute)
@@ -95,7 +95,7 @@ RSpec.describe Service::System::SetSystemInformation do
     end
 
     context 'when organization name is not given' do
-      let(:variables) { required_variables.tap { _1.delete(:organization) } }
+      let(:variables) { required_variables.tap { it.delete(:organization) } }
 
       it 'returns an error' do
         expect { service.execute }.to raise_error(Exceptions::MissingAttribute)
@@ -124,7 +124,7 @@ RSpec.describe Service::System::SetSystemInformation do
     end
 
     context 'when url is given but another parameter is invalid' do
-      let(:variables) { required_variables.tap { _1.delete(:organization) } }
+      let(:variables) { required_variables.tap { it.delete(:organization) } }
 
       it 'does not set http type & FQDN' do
         expect { service.execute }.to raise_error(Exceptions::MissingAttribute)
@@ -140,7 +140,7 @@ RSpec.describe Service::System::SetSystemInformation do
     end
 
     context 'when url is not given' do
-      let(:variables) { required_variables.tap { _1.delete(:url) } }
+      let(:variables) { required_variables.tap { it.delete(:url) } }
 
       it 'returns an error' do
         expect { service.execute }.to raise_error(Exceptions::InvalidAttribute)
@@ -175,7 +175,7 @@ RSpec.describe Service::System::SetSystemInformation do
     end
 
     context 'when logo is given but another parameter is invalid' do
-      let(:variables) { required_variables.merge(logo: image_data).tap { _1.delete(:url) } }
+      let(:variables) { required_variables.merge(logo: image_data).tap { it.delete(:url) } }
 
       it 'does not store logo to storage', :aggregate_failures do
         expect { service.execute }.to raise_error(Exceptions::InvalidAttribute)

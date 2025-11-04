@@ -3,9 +3,11 @@
 import { isEqual, keyBy, mapValues } from 'lodash-es'
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import type {
   Exact,
+  Overview,
   UserCurrentOverviewOrderingUpdatesSubscription,
   UserCurrentOverviewOrderingUpdatesSubscriptionVariables,
   UserCurrentTicketOverviewsQuery,
@@ -15,9 +17,28 @@ import type {
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import { getCurrentApp } from '#desktop/currentApp.ts'
 import { useUserCurrentTicketOverviewsQuery } from '#desktop/entities/ticket/graphql/queries/userCurrentTicketOverviews.api.ts'
 import { UserCurrentOverviewOrderingFullAttributesUpdatesDocument } from '#desktop/entities/ticket/graphql/subscriptions/useCurrentOverviewOrderingFullAttributesUpdates.api.ts'
 import { UserCurrentTicketOverviewFullAttributesUpdatesDocument } from '#desktop/entities/ticket/graphql/subscriptions/userCurrentTicketOverviewFullAttributesUpdates.api.ts'
+
+const verifyCurrentRoute = (overviews: Overview[], firstOverview: Overview) => {
+  getCurrentApp().runWithContext(() => {
+    const router = useRouter()
+    const { name: routeName, params } = router.currentRoute.value
+    if (routeName !== 'TicketOverview') return
+
+    const currentActiveOverviewName = params.overviewLink
+    const activeOverview = overviews.find((overview) => overview.link === currentActiveOverviewName)
+
+    if (!activeOverview) return
+
+    // Edge case: if the last overview is the same as the first overview, we redirect to the dashboard, so no more overview is available
+    if (overviews[0].link === firstOverview.link) return router.push('/dashboard')
+
+    router.replace({ name: routeName, params: { overviewLink: firstOverview.link } })
+  })
+}
 
 const initializeOverviewsSubscriptions = (
   query: QueryHandler<
@@ -31,13 +52,25 @@ const initializeOverviewsSubscriptions = (
   >({
     document: UserCurrentTicketOverviewFullAttributesUpdatesDocument,
     variables: { ignoreUserConditions: false },
-    updateQuery(_, { subscriptionData }) {
+    updateQuery(_, { subscriptionData, previousData }) {
       const ticketOverviews =
         subscriptionData.data.userCurrentTicketOverviewUpdates?.ticketOverviews
 
-      // if we return empty array here, the actual query will be aborted, because we have fetchPolicy "cache-and-network"
+      // if we return an empty array here, the actual query will be aborted, because we have fetchPolicy "cache-and-network"
       // if we return existing value, it will throw an error, because "overviews" doesn't exist yet on the query result
       if (!ticketOverviews) return null as unknown as UserCurrentTicketOverviewsQuery
+
+      // if the current active overview is removed/disabled, we need to redirect
+      const newOverviews = ticketOverviews
+      const previousOverviews = previousData?.userCurrentTicketOverviews ?? []
+
+      // Check if overviews were removed
+      if (newOverviews && previousOverviews.length > newOverviews.length) {
+        const removedOverviews = previousOverviews.filter(
+          (prevOverview) => !newOverviews.some((overview) => overview.id === prevOverview?.id),
+        )
+        verifyCurrentRoute(removedOverviews as Overview[], newOverviews[0] as Overview)
+      }
 
       return {
         userCurrentTicketOverviews: ticketOverviews,

@@ -22,6 +22,7 @@ class Ticket::PerformChanges::Action < ::PerformChanges::Action # rubocop:disabl
   def notification_factory_template_objects
     @notification_factory_template_objects ||= begin
       {
+        user:                     User.lookup(id: user_id),
         ticket:                   record,
         article:                  last_articles[:last_article],
         created_article:          article,

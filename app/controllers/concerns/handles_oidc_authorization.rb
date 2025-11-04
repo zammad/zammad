@@ -10,8 +10,7 @@ module HandlesOidcAuthorization
       raise Exceptions::UnprocessableEntity, __("The required parameter 'logout_token' is missing.") if params[:logout_token].blank?
 
       begin
-        oidc = OmniAuth::Strategies::OidcDatabase.new(OmniAuth::Strategies::OidcDatabase.setup)
-        decoded = oidc.decode_logout_token(params[:logout_token])
+        decoded = oidc_strategy.decode_logout_token(params[:logout_token])
       rescue => e
         Rails.logger.error "OpenID Connect OP-initiated logout failed: #{e.message}"
         raise Exceptions::UnprocessableEntity, __("The 'logout_token' is invalid.")
@@ -25,15 +24,11 @@ module HandlesOidcAuthorization
     private
 
     def oidc_session?
-      session[:oidc_id_token].present?
+      session[:oidc_id_token].present? && oidc_strategy.config.end_session_endpoint.present?
     end
 
     def oidc_destroy
-      oidc = OmniAuth::Strategies::OidcDatabase.new(OmniAuth::Strategies::OidcDatabase.setup)
-
-      options = oidc.config
-
-      logout_url = Addressable::URI.parse(options.end_session_endpoint)
+      logout_url = Addressable::URI.parse(oidc_strategy.config.end_session_endpoint)
       logout_url.query_values = {
         id_token_hint:            session[:oidc_id_token],
         post_logout_redirect_uri: "#{Setting.get('http_type')}://#{Setting.get('fqdn')}"
@@ -46,5 +41,8 @@ module HandlesOidcAuthorization
       Rails.logger.error "OpenID Connect RP-initiated logout failed: #{e.message}"
     end
 
+    def oidc_strategy
+      @oidc_strategy ||= OmniAuth::Strategies::OidcDatabase.new(OmniAuth::Strategies::OidcDatabase.setup)
+    end
   end
 end

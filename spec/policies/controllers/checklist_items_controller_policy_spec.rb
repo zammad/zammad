@@ -60,7 +60,7 @@ RSpec.describe Controllers::ChecklistItemsControllerPolicy, current_user_id: 1 d
     end
 
     context 'when user has read-only access to ticket' do
-      let(:user) { create(:agent).tap { _1.user_groups.create!(group: ticket.group, access: 'read') } }
+      let(:user) { create(:agent).tap { it.user_groups.create!(group: ticket.group, access: 'read') } }
 
       context 'when checklist is given' do
         let(:params) { { checklist_id: checklist.id } }

@@ -396,6 +396,8 @@ class App.Search extends App.Controller
         pagerEnabled: false
         orderEnabled: false
         pagerAjax: true
+        clone: false
+        destroy: false
       )
 
     @renderPagination()

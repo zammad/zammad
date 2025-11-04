@@ -520,6 +520,21 @@ RSpec.describe NotificationFactory::Renderer do
         it_behaves_like 'correctly rendering the attributes'
       end
     end
+
+    context 'when variables for not given objects should be ignored' do
+      let(:ticket) { create(:ticket, customer: @user) }
+      let(:user)            { create(:user, firstname: 'Max') }
+      let(:template)        { '#{user.firstname} _SEPERATOR_ #{ticket.customer.lastname}' }
+      let(:expected_render) { 'Nicole _SEPERATOR_ ' }
+
+      it 'correctly renders variables for given object reference' do
+        renderer = build(:notification_factory_renderer,
+                         objects:                { user: },
+                         template:,
+                         ignore_missing_objects: true)
+        expect(renderer.render).to eq 'Max _SEPERATOR_ #{ticket.customer.lastname}'
+      end
+    end
   end
   # rubocop:enable Lint/InterpolationCheck
 

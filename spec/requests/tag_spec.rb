@@ -25,9 +25,7 @@ RSpec.describe Tag, type: :request do
     end
 
     context 'tag removal', authenticated_as: :agent do
-      before do
-        described_class.tag_add(**payload, created_by_id: 1)
-      end
+      let!(:tag) { create(:tag, o: ticket, tag: payload[:item]) }
 
       it 'returns ok' do
         delete '/api/v1/tags/remove', params: payload
@@ -38,7 +36,7 @@ RSpec.describe Tag, type: :request do
       it 'deletes tag' do
         delete '/api/v1/tags/remove', params: payload
 
-        expect(described_class.tag_list(payload)).to be_empty
+        expect(described_class.tag_list(payload)).not_to include(tag.tag_item.name)
       end
     end
 

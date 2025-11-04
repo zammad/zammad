@@ -3,6 +3,7 @@
 class Store < ApplicationModel
   PREFERENCES_SIZE_MAX = 2400
 
+  belongs_to :created_by,   class_name: 'User', optional: true
   belongs_to :store_object, class_name: 'Store::Object', optional: true
   belongs_to :store_file,   class_name: 'Store::File', optional: true
   delegate :content, to: :store_file

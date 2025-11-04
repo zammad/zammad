@@ -7,6 +7,7 @@ import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue'
 import TicketInformation from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
@@ -59,14 +60,13 @@ const detailViewActiveClasses = computed(() => {
       class="flex"
     >
       <template #trailing>
-        <CommonIcon
+        <CommonButton
           v-if="ticketNumber"
           v-tooltip="$t('Copy ticket number')"
-          :aria-label="$t('Copy ticket number')"
-          role="button"
-          name="files"
-          size="xs"
-          class="cursor-pointer text-blue-800 ltr:ml-2 rtl:mr-2"
+          variant="secondary"
+          icon="files"
+          size="small"
+          class="ms-1"
           @click="copyToClipboard(ticketNumberWithTicketHook)"
         />
       </template>

@@ -5,9 +5,6 @@ class App.TaskbarInit
     @DATA = value
     App.Collection.loadAssets(value.assets)
 
-  @ticket: (id) ->
-    return @DATA?.ticket_all?[id]
-
   @ticket_stats_organization: (id) ->
     return @DATA?.ticket_stats_organization?[id]
 

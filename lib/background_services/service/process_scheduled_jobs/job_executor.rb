@@ -25,21 +25,19 @@ class BackgroundServices::Service::ProcessScheduledJobs::JobExecutor
   def execute
     mark_as_started
     eval_job_method
+
+  # Check for connection errors and initiate a process shutdown in this case,
+  #   so that the process manager can restart it.
+  rescue ActiveRecord::AdapterError => e
+    log_execution_error(e)
+    raise e
+
+  # Catch all other StandardErrors to be able to retry the job execution.
   rescue => e
     log_execution_error(e)
-
-    # reconnect in case db connection is lost
-    begin
-      ActiveRecord::Base.connection.reconnect!
-    rescue => e
-      Rails.logger.error "Can't reconnect to database #{e.inspect}"
-    end
-
     retry_execution
 
-  # rescue any other Exceptions that are not StandardError or childs of it
-  # https://stackoverflow.com/questions/10048173/why-is-it-bad-style-to-rescue-exception-e-in-ruby
-  # http://rubylearning.com/satishtalim/ruby_exceptions.html
+  # For any other non-StandardError Exceptions (like SystemExit, NoMemoryError, etc.), log them and exit.
   rescue Exception => e # rubocop:disable Lint/RescueException
     log_execution_error(e)
     raise

@@ -33,7 +33,7 @@ class App.WidgetPlaceholder extends App.Controller
       list = {}
       if App[item.object] && App[item.object].configure_attributes
         for attribute in App[item.object].configure_attributes
-          if !ignoreAttributes[attribute.name] && attribute.name.substr(attribute.name.length-4,attribute.name.length) isnt '_ids'
+          if !ignoreAttributes[attribute.name] && attribute.name.substr(attribute.name.length - 4, attribute.name.length) isnt '_ids'
             list[attribute.name] = attribute
         for name in _.keys(list).sort()
           attribute = list[name]
@@ -47,11 +47,11 @@ class App.WidgetPlaceholder extends App.Controller
               subList = {}
               subAttributes = {}
               for subAttribute in App[attribute.relation].configure_attributes
-                if !ignoreSubAttributes[subAttribute.name] && subAttribute.name.substr(subAttribute.name.length-3,subAttribute.name.length) isnt '_id' && subAttribute.name.substr(subAttribute.name.length-4,subAttribute.name.length) isnt '_ids'
+                if !ignoreSubAttributes[subAttribute.name] && subAttribute.name.substr(subAttribute.name.length - 3, subAttribute.name.length) isnt '_id' && subAttribute.name.substr(subAttribute.name.length - 4, subAttribute.name.length) isnt '_ids'
                   subList[subAttribute.name] = subAttribute
               for subName in _.keys(subList).sort()
                 subAttributes[subName] = subList[subName].display
-            relation = "#{item.prefix}.#{attribute.name.substr(0,attribute.name.length-3)}"
+            relation = "#{item.prefix}.#{attribute.name.substr(0, attribute.name.length - 3)}"
             for key, display of subAttributes
               name = "\#{#{relation}.#{key}}"
               content = "\#{#{relation}.#{key}}"
@@ -111,17 +111,21 @@ class App.WidgetPlaceholder extends App.Controller
     ]
 
     for item in all
-      if item.name.startsWith('Article')
+      if item.content.startsWith('#{article.')
         for replace in replaces
+          name = item.name.split(' > ')
+          name[0] = App.i18n.translateInline(replace.display)
+          name = name.join(' > ')
+
           all.push {
-            name: item.name.replace('Article', App.i18n.translateInline(replace.display))
+            name: name
             content: item.content.replace('article', replace.name)
             id: item.id.replace('article', replace.name)
             keywords: item.keywords.replace('article', replace.name)
           }
 
     all = _.filter(all, (item) ->
-      return !item.name.startsWith('Article')
+      return !item.content.startsWith('#{article.')
     )
 
     # add config

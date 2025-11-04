@@ -64,9 +64,9 @@ const startImport = () => {
         )
       }}
     </CommonLabel>
-    <CommonLink class="text-sm" :link="sourcePlugin.documentationURL" external open-in-new-tab>{{
-      $t('For additional support, consult our migration guide.')
-    }}</CommonLink>
+    <CommonLink :link="sourcePlugin.documentationURL" size="medium" external open-in-new-tab>
+      {{ $t('For additional support, consult our migration guide.') }}
+    </CommonLink>
     <div
       v-if="sourcePlugin.preStartHints && sourcePlugin.preStartHints.length > 0"
       class="flex flex-col gap-1.5"

@@ -142,7 +142,6 @@ class ExcelSheet
         return ref_name
       end
     end
-    value = record.try(attribute)
 
     # if no value exists, check additional values
     if !value && additional && additional[attribute.to_sym]

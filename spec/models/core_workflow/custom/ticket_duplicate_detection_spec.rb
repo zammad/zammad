@@ -3,14 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe CoreWorkflow::Custom::TicketDuplicateDetection, type: :model do
-  let(:ticket_group)                { create(:group) }
-  let(:ticket_group_without_access) { create(:group) }
-  let(:agent1)                      { create(:agent, groups: [ticket_group, ticket_group_without_access], firstname: 'Tickets', lastname: 'Agent') }
-  let(:agent2)                      { create(:agent, groups: [], firstname: 'Tickets', lastname: 'Agent') }
-  let(:ticket1)                     { create(:ticket, title: '123', group: ticket_group) }
-  let(:ticket2)                     { create(:ticket, title: 'ABC', group: ticket_group) }
-  let(:ticket3)                     { create(:ticket, title: '123', group: ticket_group_without_access) }
-  let(:result)                      { CoreWorkflow.perform(payload: payload, user: action_user) }
+  let(:ticket_group)                  { create(:group) }
+  let(:ticket_group_without_access)   { create(:group) }
+  let(:agent1)                        { create(:agent, groups: [ticket_group, ticket_group_without_access], firstname: 'Tickets', lastname: 'Agent') }
+  let(:agent2)                        { create(:agent, groups: [], firstname: 'Tickets', lastname: 'Agent') }
+  let(:org)                           { create(:organization) }
+  let(:customer)                      { create(:customer, organization: org) }
+  let(:ticket1)                       { create(:ticket, title: '123', group: ticket_group, customer: customer) }
+  let(:ticket2)                       { create(:ticket, title: 'ABC', group: ticket_group) }
+  let(:ticket3)                       { create(:ticket, title: '123', group: ticket_group_without_access) }
+  let(:result)                        { CoreWorkflow.perform(payload: payload, user: action_user) }
 
   let(:payload) do
     {
@@ -250,6 +252,56 @@ RSpec.describe CoreWorkflow::Custom::TicketDuplicateDetection, type: :model do
       end
 
       it 'does return count of 1' do
+        expect(result[:fill_in]['ticket_duplicate_detection'])
+          .to be_a(Hash)
+          .and include(items: [[ticket1.id, ticket1.number, ticket1.title]])
+          .and include(count: 1)
+      end
+    end
+  end
+
+  context 'when duplication attributes contain title and organization' do
+    before do
+      Setting.set('ticket_duplicate_detection_attributes', %w[title organization_id])
+    end
+
+    context 'when organization is explicitly provided in params' do
+      let(:action_user) { agent1 }
+
+      let(:payload) do
+        {
+          'event'                  => 'core_workflow',
+          'request_id'             => 'default',
+          'class_name'             => 'Ticket',
+          'screen'                 => 'create_middle',
+          'params'                 => { 'title' => '123', 'organization_id' => org.id.to_s },
+          'last_changed_attribute' => 'title',
+        }
+      end
+
+      it 'does return count of 1 for matching organization' do
+        expect(result[:fill_in]['ticket_duplicate_detection'])
+          .to be_a(Hash)
+          .and include(items: [[ticket1.id, ticket1.number, ticket1.title]])
+          .and include(count: 1)
+      end
+    end
+
+    context 'when organization is missing, falls back to customer organization' do
+      let(:action_user) { agent1 }
+
+      let(:payload) do
+        {
+          'event'                  => 'core_workflow',
+          'request_id'             => 'default',
+          'class_name'             => 'Ticket',
+          'screen'                 => 'create_middle',
+          'params'                 => { 'title' => '123', 'customer_id' => customer.id.to_s, 'organization_id' => '' },
+          'last_changed_attribute' => 'customer_id',
+        }
+      end
+
+      it 'does return count of 1 using the customer organization' do
         expect(result[:fill_in]['ticket_duplicate_detection'])
           .to be_a(Hash)
           .and include(items: [[ticket1.id, ticket1.number, ticket1.title]])

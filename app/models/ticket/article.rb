@@ -18,7 +18,6 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::EnqueueCommunicateFacebookJob
   include Ticket::Article::EnqueueCommunicateSmsJob
   include Ticket::Article::EnqueueCommunicateTelegramJob
-  include Ticket::Article::EnqueueCommunicateTwitterJob
   include Ticket::Article::EnqueueCommunicateWhatsappJob
   include Ticket::Article::HasTicketContactAttributesImpact
   include Ticket::Article::ResetsTicketState
@@ -72,11 +71,14 @@ class Ticket::Article < ApplicationModel
                              :to,
                              :cc
 
-  scope :summarizable, lambda {
+  scope :without_system_notifications, lambda {
     system_sender = Ticket::Article::Sender.lookup(name: 'System')
+    note_type = Ticket::Article::Type.lookup(name: 'note')
 
-    where.not(sender_id: system_sender.id)
+    where('sender_id != ? OR type_id = ?', system_sender.id, note_type.id)
   }
+
+  scope :non_system, -> { where.not(sender: Ticket::Article::Sender.lookup(name: 'System')) }
 
   attr_accessor :should_clone_inline_attachments, :check_mentions_raises_error, :check_email_recipient_raises_error
 
@@ -188,6 +190,10 @@ The originator (origin_by, if any) or the creator of an article.
 
   def author
     origin_by || created_by
+  end
+
+  def author_id
+    origin_by_id || created_by_id
   end
 
 =begin

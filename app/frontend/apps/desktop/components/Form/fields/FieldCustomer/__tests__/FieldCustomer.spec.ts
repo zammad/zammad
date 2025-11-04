@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
-import { getByRole, waitFor } from '@testing-library/vue'
+import { waitFor } from '@testing-library/vue'
 
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -58,7 +58,7 @@ describe('Form - Field - Customer - Features', () => {
 
     expect(wrapper.queryByRole('button', { name: 'add new email address' })).not.toBeInTheDocument()
 
-    expect(wrapper.getByRole('option')).toHaveTextContent('Loading…')
+    expect(wrapper.getByTestId('select-item')).toHaveTextContent('Loading…')
 
     await wrapper.events.type(filterElement, '@bar.tld')
 
@@ -130,7 +130,7 @@ describe('Form - Field - Customer - Query', () => {
       wrapper.queryByText('Start typing to search or enter an email address…'),
     ).not.toBeInTheDocument()
 
-    let selectOptions = wrapper.getAllByRole('option')
+    let selectOptions = wrapper.getAllByTestId('select-item')
 
     expect(selectOptions).toHaveLength(2)
 
@@ -144,13 +144,9 @@ describe('Form - Field - Customer - Query', () => {
 
     expect(getByIconName(selectOptions[1], 'buildings')).toBeInTheDocument()
 
-    const button = getByRole(selectOptions[1], 'button', {
-      name: 'Has submenu',
-    })
+    await wrapper.events.click(selectOptions[1])
 
-    await wrapper.events.click(button)
-
-    selectOptions = wrapper.getAllByRole('option')
+    selectOptions = wrapper.getAllByTestId('select-item')
 
     expect(selectOptions).toHaveLength(1)
 
@@ -160,7 +156,7 @@ describe('Form - Field - Customer - Query', () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Back to previous page' }))
 
-    selectOptions = wrapper.getAllByRole('option')
+    selectOptions = wrapper.getAllByTestId('select-item')
 
     expect(selectOptions).toHaveLength(2)
   })

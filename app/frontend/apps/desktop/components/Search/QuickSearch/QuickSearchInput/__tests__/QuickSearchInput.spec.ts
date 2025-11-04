@@ -89,7 +89,7 @@ describe('QuickSearchInput', () => {
 
     const router = getTestRouter()
 
-    await waitFor(() => expect(router.currentRoute.value.name).toBe('search'))
+    await waitFor(() => expect(router.currentRoute.value.name).toBe('Search'))
 
     expect(router.currentRoute.value.params).toEqual({
       searchTerm: 'testExample',

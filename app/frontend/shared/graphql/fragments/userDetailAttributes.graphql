@@ -41,9 +41,4 @@ fragment userDetailAttributes on User {
     }
     totalCount
   }
-  hasSecondaryOrganizations
-  ticketsCount {
-    open
-    closed
-  }
 }

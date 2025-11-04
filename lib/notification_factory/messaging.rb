@@ -35,8 +35,8 @@ returns
     end
 
     {
-      subject: render_template(messaging_template[:subject], data).strip!,
-      body:    message_body.strip!,
+      subject: render_template(messaging_template[:subject], data).strip,
+      body:    message_body.strip,
     }
   end
 

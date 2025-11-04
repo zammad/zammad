@@ -198,6 +198,10 @@ class App.ArticleViewItem extends App.ControllerObserver
     @shown = true
 
     @textBubbleImages.each (i, el) =>
+      if el.style.width
+        el.style.maxWidth = el.style.width
+        el.style.width = '100%'
+      
       if !el.complete
         $(el).one 'load', @measureSeeMore
 

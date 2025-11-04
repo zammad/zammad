@@ -12,6 +12,17 @@ class Channel::Driver::MicrosoftGraphOutbound < Channel::Driver::BaseEmailOutbou
     deliver_mail(attr, notification, MicrosoftGraphOutboundClient, options)
   end
 
+  private
+
+  def server_identifier(_)
+    'Microsoft Graph API' # rubocop:disable Zammad/DetectTranslatableString
+  end
+
+  # Microsoft Graph API shall not be used for sending notifications
+  def deliver_mail_notification_silence?(_e, _mail)
+    false
+  end
+
   class MicrosoftGraphOutboundClient
     def initialize(values)
       @settings = values

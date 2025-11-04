@@ -1,6 +1,6 @@
 class App.TicketZoomArticleNew extends App.Controller
   @include App.SecurityOptions
-  @include App.TextTools
+  @include App.RichtextBubbleMenu
 
   elements:
     '.js-textarea':                       'textarea'
@@ -37,8 +37,8 @@ class App.TicketZoomArticleNew extends App.Controller
     super
 
     @internalSelector = false
-    @type = @defaults['type'] || 'note'
     @setPossibleArticleTypes()
+    @type = @normalizeArticleType(@defaults['type'] || 'note')
 
     if @ticket.currentView() is 'agent'
       @internalSelector = true
@@ -151,6 +151,18 @@ class App.TicketZoomArticleNew extends App.Controller
     for config in @actions()
       if config && config.articleTypes
         @articleTypes = config.articleTypes(@articleTypes, @ticket, @)
+
+  normalizeArticleType: (type) =>
+    return if not type
+
+    articleTypeExists = _.some(@articleTypes, (articleType) -> articleType?.name is type)
+    return type if articleTypeExists
+
+    if @ticket?.currentView() is 'customer'
+      fallback = _.find(@articleTypes, (articleType) -> articleType?.name?)
+      return fallback?.name || 'note'
+
+    type
 
   placeCaretAtEnd: (el) ->
     el.focus()
@@ -268,11 +280,27 @@ class App.TicketZoomArticleNew extends App.Controller
           )
         @subscribeIdTextModule = ticket.subscribe(callback)
 
+      @textTools?.releaseController()
+      @textTools = new App.WidgetTextTools(
+        el: @$('.js-textarea').parent()
+        data:
+          ticket: ticket
+          user:   App.Session.get()
+        taskKey: @taskKey
+      )
+      if !@subscribeIdTextTools
+        @subscribeIdTextTools = ticket.subscribe((ticket) =>
+          @textTools.reload(
+            ticket: ticket
+            user:   App.Session.get()
+          )
+        )
+
     if _.isArray(@attachments)
       for attachment in @attachments
         @renderAttachment(attachment)
 
-    @textToolsInit(@textarea.parent(), false)
+    @richtextBubbleMenuInit(@textarea.parent(), false)
 
   params: =>
     params = @formParam( @$('.article-add') )
@@ -443,6 +471,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @$('[name=internal]').val(value)
 
   setArticleTypePre: (type, signaturePosition = 'bottom') =>
+    type = @normalizeArticleType(type)
     wasScrolledToBottom = @isScrolledToBottom()
 
     # reset old params
@@ -456,6 +485,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @$('.js-selectableTypes').addClass('hide').filter("[data-type='#{type}']").removeClass('hide')
 
     @setPossibleArticleTypes()
+    type = @normalizeArticleType(type)
 
     # get config
     config = {}

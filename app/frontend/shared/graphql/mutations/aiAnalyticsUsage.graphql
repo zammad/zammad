@@ -1,0 +1,13 @@
+mutation aiAnalyticsUsage(
+  $aiAnalyticsRunId: ID!
+  $input: AIAnalyticsUsageInput!
+) {
+  aiAnalyticsUsage(
+    aiAnalyticsRunId: $aiAnalyticsRunId
+    input: $input
+  ) {
+    usage {
+      id
+    }
+  }
+}

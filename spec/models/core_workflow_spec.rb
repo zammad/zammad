@@ -358,4 +358,52 @@ RSpec.describe CoreWorkflow, type: :model do
       expect(result[:rerun_count]).to be < CoreWorkflow::Result::MAX_RERUN
     end
   end
+
+  describe 'The default value of a boolean ticket object is not recognized correctly by Core Workflows when creating a ticket. #5670', db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:screens) do
+      {
+        'create_middle' => {
+          'ticket.agent' => {
+            'shown'    => false,
+            'required' => false,
+          }
+        }
+      }
+    end
+
+    context 'when select field' do
+      let!(:workflow1) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: { "ticket.#{field_name}" => { 'operator' => 'is', 'value' => ['jx'] } })
+      end
+
+      before do
+        create(:object_manager_attribute_select, name: field_name, display: field_name, screens: screens, data_option: { 'options' => [{ value: 'nx', name: 'nx' }, { value: 'jx', name: 'jx' }], 'default' => 'jx', 'linktemplate' => '', 'translate' => false, 'null' => true, 'relation' => '', 'nulloption' => false, 'maxlength' => 255, 'historical_options' => { 'jx' => 'jx', 'nx' => 'nx' } })
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it 'does match because the default value is used in the background' do
+        expect(result[:matched_workflows]).to include(workflow1.id)
+      end
+    end
+
+    context 'when boolean field' do
+      let!(:workflow1) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: { "ticket.#{field_name}" => { 'operator' => 'is', 'value' => ['true'] } })
+      end
+
+      before do
+        create(:object_manager_attribute_boolean, name: field_name, display: field_name, screens: screens, data_option: { 'options' => { false => 'nx', true => 'jx' }, 'default' => true, 'translate' => false, 'null' => true, 'relation' => '' })
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it 'does match because the default value is used in the background' do
+        expect(result[:matched_workflows]).to include(workflow1.id)
+      end
+    end
+  end
 end

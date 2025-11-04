@@ -378,7 +378,7 @@ class App.UiElement.ApplicationUiElement
 
   @isTreeRelation: (attribute) ->
     return false if !attribute.relation
-    return false if !_.find(App[attribute.relation].configure_attributes, (attr) -> attr.name is 'parent_id')
+    return false if attribute.tag isnt 'tree_select' and not _.some(App[attribute.relation].configure_attributes, (attr) -> attr.name is 'parent_id')
     return true
 
   @setTreeRelationData: (list, attribute) ->

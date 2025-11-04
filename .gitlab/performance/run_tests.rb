@@ -50,7 +50,7 @@ def version_oldstable?
   Version.get.match?(%r{^6\.0\.})
 end
 
-def expect(title:, max_time:, max_sql_queries:, results:, &block)
+def expect(title:, max_time:, max_sql_queries:, results:, &)
 
   ActiveRecord::Base.connection.query_cache.clear
   Rails.cache.clear
@@ -59,7 +59,7 @@ def expect(title:, max_time:, max_sql_queries:, results:, &block)
   failed      = false
   callback = ->(_name, _start, _finish, _id, payload) { sql_queries += 1 if !payload[:cached] }
   time = Benchmark.measure do
-    ActiveSupport::Notifications.subscribed(callback, 'sql.active_record', &block)
+    ActiveSupport::Notifications.subscribed(callback, 'sql.active_record', &)
   end
   puts "  #{title}: #{time.real}s (#{sql_queries} queries)"
 

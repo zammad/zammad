@@ -125,7 +125,7 @@ RSpec.describe Ticket::Stats do
 
     # https://github.com/zammad/zammad/issues/5600
     it 'returns empty results if user does not have access to any tickets' do
-      user_sans_permissions = create(:user).tap { _1.update! roles: [create(:role)] }
+      user_sans_permissions = create(:user).tap { it.update! roles: [create(:role)] }
 
       instance = described_class.new(current_user: user_sans_permissions, user_id: customer_other.id, organization_id: organization.id, assets: {})
 

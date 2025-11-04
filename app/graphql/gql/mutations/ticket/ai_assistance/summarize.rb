@@ -5,47 +5,58 @@ module Gql::Mutations
     description 'Return current summary or trigger generation in the background'
 
     argument :ticket_id, GraphQL::Types::ID, loads: Gql::Types::TicketType, loads_pundit_method: :agent_read_access?, description: 'The ticket to fetch the summary for'
+    argument :regeneration_of_id, GraphQL::Types::ID, loads: Gql::Types::AI::Analytics::RunType, required: false, description: 'The previous AI run to regenerate the summary for (if any)'
 
     field :summary, Gql::Types::Ticket::AIAssistance::SummaryType, description: 'Different parts of the generated summary'
-    field :reason, String, description: 'Reason for the result of the summary generation'
-    field :fingerprint_md5, String, description: 'MD5 digest of the complete summary content'
-    field :relevant_for_current_user, Boolean, description: 'Indicates if the summary is relevant for the current user'
+    field :analytics, Gql::Types::AI::Analytics::MetadataType, description: 'Analytics metadata', null: true
 
     # TODO: The current cache situation is more a first PoC, it will change to an persistent store.
 
-    def resolve(ticket:)
+    def resolve(ticket:, regeneration_of: nil)
       Service::CheckFeatureEnabled.new(name: 'ai_assistance_ticket_summary').execute
       Service::CheckFeatureEnabled.new(name: 'ai_provider', custom_error_message: __('AI provider is not configured.')).execute
 
-      summarize_service = Service::Ticket::AIAssistance::Summarize.new(
-        locale:               context.current_user.locale,
-        ticket:,
-        persistence_strategy: :stored_only,
-      )
-
-      if (stored_content = summarize_service.execute&.content)
-        # Fetch last article for the ticket to determine the relevance of the summary.
-        last_article = ::Ticket::Article.last_customer_agent_article(ticket.id)
-
-        return {
-          summary:                   {
-            problem:              stored_content['problem'],
-            conversation_summary: stored_content['summary'],
-            open_questions:       stored_content['open_questions'],
-            suggestions:          stored_content['suggestions'],
-          },
-          reason:                    stored_content['reason'],
-          fingerprint_md5:           Digest::MD5.hexdigest(stored_content.slice('problem', 'summary', 'open_questions', 'suggestions').to_s),
-          relevant_for_current_user: last_article&.author&.id != context.current_user.id,
-        }
+      if regeneration_of
+        return enqueue_job(ticket, regeneration_of:)
       end
 
+      ai_result = Service::Ticket::AIAssistance::Summarize
+        .new(
+          locale:               context.current_user.locale,
+          ticket:,
+          persistence_strategy: :stored_only,
+        ).execute
+
+      if ai_result&.content.blank?
+        return enqueue_job(ticket)
+      end
+
+      return_stored_result(ticket, ai_result)
+    end
+
+    private
+
+    def enqueue_job(ticket, regeneration_of: nil)
       # Trigger background job to generate the summary.
-      TicketAIAssistanceSummarizeJob.perform_later(ticket, context.current_user.locale)
+      TicketAIAssistanceSummarizeJob.perform_later(ticket, context.current_user.locale, regeneration_of:)
 
       {
         summary: nil,
         reason:  nil,
+      }
+    end
+
+    def return_stored_result(ticket, ai_result)
+      usage = ai_result.ai_analytics_run&.usage_by(context.current_user)
+      is_unread = ticket.ai_summary_unread?(context.current_user, ai_result.ai_analytics_run)
+
+      {
+        summary:   ai_result.content,
+        analytics: {
+          run:       ai_result.ai_analytics_run,
+          usage:,
+          is_unread:
+        }
       }
     end
   end

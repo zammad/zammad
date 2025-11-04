@@ -8,7 +8,7 @@ class AI::Provider
 
   EMBEDDING_SIZES = {}.freeze
 
-  attr_accessor :config, :options
+  attr_accessor :config, :options, :response_metadata
 
   def initialize(config: {}, options: {})
     @config = config.presence || Setting.get('ai_provider_config')
@@ -17,16 +17,27 @@ class AI::Provider
       options[:model] = @config[:model]
     end
 
-    @options = self.class::DEFAULT_OPTIONS.merge(options.deep_symbolize_keys)
+    @options = self.class::DEFAULT_OPTIONS.merge(options.compact.deep_symbolize_keys)
+
+    @response_metadata = {}
   end
 
   class << self
-    def list
-      @list ||= descendants.sort_by(&:name)
-    end
-
     def by_name(name)
       "AI::Provider::#{name.classify}".safe_constantize
+    end
+
+    def by_config(config)
+      provider_name = config&.dig(:provider)
+      return if provider_name.blank?
+
+      by_name(provider_name)
+    end
+
+    def current
+      return nil if !Setting.get('ai_provider')
+
+      by_config(Setting.get('ai_provider_config'))
     end
 
     def ping!(_config)
@@ -45,7 +56,7 @@ class AI::Provider
       Rails.logger.error "Unable to parse JSON response: #{e.inspect}"
       Rails.logger.error "Response: #{result}"
 
-      raise ResponseError, __('The response could not be processed.')
+      raise OutputFormatError, __('The response could not be processed.')
     end
   end
 
@@ -57,13 +68,17 @@ class AI::Provider
     {
       provider:    self.class.name,
       temperature: options[:temperature],
-    }.merge(specific_metadata)
+    }.merge(specific_metadata).merge(@response_metadata)
   end
 
   private
 
   def specific_metadata
     {}
+  end
+
+  def extract_response_metadata(_data)
+    @response_metadata = {}
   end
 
   def chat(prompt_system:, prompt_user:)
@@ -76,4 +91,5 @@ class AI::Provider
 
   class RequestError < StandardError; end
   class ResponseError < StandardError; end
+  class OutputFormatError < ResponseError; end
 end

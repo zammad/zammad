@@ -5,6 +5,13 @@
 @plugin '@formkit/themes/tailwindcss';
 @plugin '../../../build/zammadTailwindPlugin.js';
 
+:root {
+  /* LIMITED support -> opt in modern browsers @see https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size */
+
+  /* allows animating of intrinsic absolute <-> relative units */
+  interpolate-size: allow-keywords;
+}
+
 @layer base {
   html {
     --safe-bottom: env(safe-area-inset-bottom);
@@ -451,6 +458,67 @@
     content: '';
     height: 2px;
     width: 100%;
-    background-image: repeating-linear-gradient(to right, var(--color-blue), var(--color-pink));
+    background: repeating-linear-gradient(
+      to right,
+      var(--color-blue),
+      var(--color-pink),
+      var(--color-blue)
+    );
+    background-size: 200% auto;
+    background-position: 0 100%;
+    transition: background-position 1s ease-in-out;
+  }
+}
+
+@utility animate-ai-stripe-vertical {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 2px;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--color-blue),
+      var(--color-pink),
+      var(--color-blue)
+    );
+    background-size: 100% 200%;
+    z-index: 1;
+    animation: gradient-vertical 2s linear infinite;
+    animation-fill-mode: forwards;
+  }
+}
+
+@utility animate-ai-stripe {
+  &::before {
+    animation: gradient 2s infinite;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes gradient-vertical {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 -200%;
   }
 }

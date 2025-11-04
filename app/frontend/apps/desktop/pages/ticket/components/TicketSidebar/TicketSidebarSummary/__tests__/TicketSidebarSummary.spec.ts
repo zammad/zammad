@@ -9,6 +9,7 @@ import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
+import { EnumTicketSummaryGeneration } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { pluginFiles } from '#desktop/pages/ticket/components/TicketSidebar/plugins/index.ts'
@@ -94,6 +95,7 @@ const renderRenderTicketSidebarSummary = (ticket: Partial<TicketById> = defaultT
       },
     },
     router: true,
+    form: true,
     store: true,
   })
 
@@ -104,26 +106,29 @@ const renderRenderTicketSidebarSummary = (ticket: Partial<TicketById> = defaultT
 }
 const ticketAIAssistanceSummarizeMock = {
   summary: {
+    customerRequest: 'Order not received after payment',
     conversationSummary:
       'The customer paid for an order but claims to have not received it. They provided the order number and requested assistance with tracking.',
     openQuestions: ['What was the payment method used?'],
-    problem: 'Order not received after payment',
-    suggestions: [
+    upcomingEvents: [
       'Check the order status in the system',
       'Verify if the shipping address is correct',
       'Contact the shipping carrier for updates',
     ],
+    customerMood: 'Frustrated',
+    customerEmotion: '🤬',
   },
 }
 
 describe('TicketSidebarSummary', () => {
-  it('displays correctly,', async () => {
+  it('displays correctly', async () => {
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
       ai_assistance_ticket_summary_config: {
         open_questions: true,
-        suggestions: true,
+        upcoming_events: true,
+        customer_sentiment: true,
       },
     })
 
@@ -145,10 +150,11 @@ describe('TicketSidebarSummary', () => {
     ).toBeInTheDocument()
 
     const headings = [
-      'Conversation Summary',
       'Customer Intent',
+      'Conversation Summary',
       'Open Questions',
-      'Suggested Next Steps',
+      'Upcoming Events',
+      'Customer Sentiment',
     ]
 
     headings.forEach((heading) => {
@@ -161,10 +167,11 @@ describe('TicketSidebarSummary', () => {
     })
 
     const content = [
+      ticketAIAssistanceSummarizeMock.summary.customerRequest,
       ticketAIAssistanceSummarizeMock.summary.conversationSummary,
       ...ticketAIAssistanceSummarizeMock.summary.openQuestions,
-      ticketAIAssistanceSummarizeMock.summary.problem,
-      ...ticketAIAssistanceSummarizeMock.summary.suggestions,
+      ...ticketAIAssistanceSummarizeMock.summary.upcomingEvents,
+      `${ticketAIAssistanceSummarizeMock.summary.customerEmotion} ${ticketAIAssistanceSummarizeMock.summary.customerMood}`,
     ]
 
     content.forEach((text) => {
@@ -174,11 +181,12 @@ describe('TicketSidebarSummary', () => {
 
   it('does not display headings which are disabled,', async () => {
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
       ai_assistance_ticket_summary_config: {
         open_questions: false,
-        suggestions: true,
+        upcoming_events: true,
+        customer_sentiment: false,
       },
     })
 
@@ -199,9 +207,9 @@ describe('TicketSidebarSummary', () => {
       }),
     ).toBeInTheDocument()
 
-    const enabledHeadings = ['Customer Intent', 'Suggested Next Steps']
+    const enabledHeadings = ['Customer Intent', 'Conversation Summary', 'Upcoming Events']
 
-    const disabledHeadings = ['Open Questions']
+    const disabledHeadings = ['Open Questions', 'Customer Sentiment']
 
     enabledHeadings.forEach((heading) => {
       expect(
@@ -239,11 +247,21 @@ describe('TicketSidebarSummary', () => {
 
   it('displays content hint', async () => {
     mockTicketAiAssistanceSummarizeMutation({
-      ticketAIAssistanceSummarize: ticketAIAssistanceSummarizeMock,
+      ticketAIAssistanceSummarize: {
+        ...ticketAIAssistanceSummarizeMock,
+        analytics: {
+          run: {
+            id: convertToGraphQLId('AIAnalyticsRun', 12345),
+          },
+          usage: {
+            userHasProvidedFeedback: false,
+          },
+        },
+      },
     })
 
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
       ai_assistance_ticket_summary_config: {
         open_questions: true,
@@ -253,29 +271,31 @@ describe('TicketSidebarSummary', () => {
 
     const wrapper = renderRenderTicketSidebarSummary()
 
-    expect(
-      await wrapper.findByText('Be sure to check AI-generated summaries for accuracy.'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Any feedback on this result?')).toBeInTheDocument()
   })
 
   it('shows info that summary is too short to be generated', async () => {
     mockTicketAiAssistanceSummarizeMutation({
       ticketAIAssistanceSummarize: {
         summary: {
-          problem: null,
+          customerRequest: null,
           conversationSummary: null,
           openQuestions: null,
-          suggestions: null,
+          upcomingEvents: null,
+          customerMood: null,
+          customerEmotion: null,
         },
       },
     })
 
     mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
       ai_assistance_ticket_summary_config: {
         open_questions: true,
-        suggestions: true,
+        upcoming_events: true,
+        customer_sentiment: true,
+        generate_on: EnumTicketSummaryGeneration.OnTicketDetailOpening,
       },
     })
 
@@ -295,38 +315,140 @@ describe('TicketSidebarSummary', () => {
 
     const wrapper = renderRenderTicketSidebarSummary()
 
-    expect(
-      wrapper.getByText('Zammad Smart Assist is generating the summary for you…'),
-    ).toBeInTheDocument()
+    expect(wrapper.getByText('Summary is being generated…')).toBeInTheDocument()
     expect(wrapper.getAllByLabelText('Placeholder for AI generated heading')).toHaveLength(4)
 
     expect(wrapper.getAllByLabelText('Placeholder for AI generated text')).toHaveLength(16)
   })
 
-  it('hides feature if feature flag is disabled', async () => {
+  it('shows message that user has provided already feedback', async () => {
     mockApplicationConfig({
-      checklist: false,
-    })
-
-    mockApplicationConfig({
-      ai_provider: 'zammad_ai',
+      ai_provider: true,
       ai_assistance_ticket_summary: true,
-      ai_assistance_ticket_summary_config: {
-        open_questions: true,
-        suggestions: true,
-      },
     })
 
     mockTicketAiAssistanceSummarizeMutation({
-      ticketAIAssistanceSummarize: ticketAIAssistanceSummarizeMock,
+      ticketAIAssistanceSummarize: {
+        ...ticketAIAssistanceSummarizeMock,
+        analytics: {
+          run: {
+            id: convertToGraphQLId('AIAnalyticsRun', 12345),
+          },
+          usage: {
+            userHasProvidedFeedback: true,
+          },
+        },
+      },
     })
 
     const wrapper = renderRenderTicketSidebarSummary()
 
     await waitForTicketAiAssistanceSummarizeMutationCalls()
 
-    expect(wrapper.queryByRole('button', { name: 'Add all to checklist' })).not.toBeInTheDocument()
+    expect(
+      await wrapper.findByText('You have already provided feedback, thank you.'),
+    ).toBeInTheDocument()
+  })
 
-    expect(wrapper.queryAllByRole('button', { name: 'Add as checklist item' }).length).toBe(0)
+  it('allows to regenerate AI summary', async () => {
+    const runId = convertToGraphQLId('AIAnalyticsRun', 12345)
+
+    mockApplicationConfig({
+      ai_provider: true,
+      ai_assistance_ticket_summary: true,
+    })
+
+    mockTicketAiAssistanceSummarizeMutation({
+      ticketAIAssistanceSummarize: {
+        ...ticketAIAssistanceSummarizeMock,
+        analytics: {
+          run: {
+            id: runId,
+          },
+          usage: {
+            userHasProvidedFeedback: false,
+          },
+        },
+      },
+    })
+
+    const wrapper = renderRenderTicketSidebarSummary()
+
+    await waitForTicketAiAssistanceSummarizeMutationCalls()
+
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Regenerate' }))
+
+    const calls = await waitForTicketAiAssistanceSummarizeMutationCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      ticketId: defaultTicket.id,
+      regenerationOfId: runId,
+    })
+  })
+
+  it('removes ask for feedback message on positive feedback', async () => {
+    const runId = convertToGraphQLId('AIAnalyticsRun', 12345)
+
+    mockApplicationConfig({
+      ai_provider: true,
+      ai_assistance_ticket_summary: true,
+    })
+
+    mockTicketAiAssistanceSummarizeMutation({
+      ticketAIAssistanceSummarize: {
+        ...ticketAIAssistanceSummarizeMock,
+        analytics: {
+          run: {
+            id: runId,
+          },
+          usage: {
+            userHasProvidedFeedback: false,
+          },
+        },
+      },
+    })
+
+    const wrapper = renderRenderTicketSidebarSummary()
+
+    await waitForTicketAiAssistanceSummarizeMutationCalls()
+
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Positive Feedback' }))
+
+    await waitForTicketAiAssistanceSummarizeMutationCalls()
+
+    expect(wrapper.queryByText('Any feedback on this result?')).not.toBeInTheDocument()
+  })
+
+  it('removes ask for feedback message on negative feedback', async () => {
+    const runId = convertToGraphQLId('AIAnalyticsRun', 12345)
+
+    mockApplicationConfig({
+      ai_provider: true,
+      ai_assistance_ticket_summary: true,
+    })
+
+    mockTicketAiAssistanceSummarizeMutation({
+      ticketAIAssistanceSummarize: {
+        ...ticketAIAssistanceSummarizeMock,
+        analytics: {
+          run: {
+            id: runId,
+          },
+          usage: {
+            userHasProvidedFeedback: false,
+          },
+        },
+      },
+    })
+
+    const wrapper = renderRenderTicketSidebarSummary()
+
+    await waitForTicketAiAssistanceSummarizeMutationCalls()
+
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Negative Feedback' }))
+
+    await waitForTicketAiAssistanceSummarizeMutationCalls()
+
+    expect(wrapper.queryByText('Any feedback on this result?')).not.toBeInTheDocument()
   })
 })

@@ -291,17 +291,17 @@ class EmailHelper
 
     def self.translations
       {
-        'authentication failed'                                     => __('Authentication failed.'),
-        'Username and Password not accepted'                        => __('Authentication failed.'),
-        'Incorrect username'                                        => __('Authentication failed due to incorrect username.'),
-        'Lookup failed'                                             => __('Authentication failed due to incorrect username.'),
-        'Invalid credentials'                                       => __('Authentication failed due to incorrect credentials.'),
-        'authentication not enabled'                                => __('Authentication not possible (not offered by the service)'),
-        'getaddrinfo: nodename nor servname provided, or not known' => __('The hostname could not be found.'),
-        'getaddrinfo: Name or service not known'                    => __('The hostname could not be found.'),
-        'No route to host'                                          => __('There is no route to this host.'),
-        'execution expired'                                         => __('This host cannot be reached.'),
-        'Connection refused'                                        => __('The connection was refused.'),
+        'authentication failed'                        => __('Authentication failed.'),
+        'Username and Password not accepted'           => __('Authentication failed.'),
+        'Incorrect username'                           => __('Authentication failed due to incorrect username.'),
+        'Lookup failed'                                => __('Authentication failed due to incorrect username.'),
+        'Invalid credentials'                          => __('Authentication failed due to incorrect credentials.'),
+        'authentication not enabled'                   => __('Authentication not possible (not offered by the service)'),
+        'nodename nor servname provided, or not known' => __('The hostname could not be found.'),
+        'Name or service not known'                    => __('The hostname could not be found.'),
+        'No route to host'                             => __('There is no route to this host.'),
+        'execution expired'                            => __('This host cannot be reached.'),
+        'Connection refused'                           => __('The connection was refused.'),
       }
     end
 

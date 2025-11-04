@@ -31,7 +31,7 @@
   <h2><%- @T('Your callback URL') %></h2>
   <div class="input form-group">
     <div class="controls controls--button ignore-readonly">
-      <input readonly id="callback_url" name="callback_url" type="text" value="<%= @callbackUrl %>" class="form-control">
+      <input readonly id="callback_url" type="text" value="<%= @callbackUrl %>" class="form-control js-select js-permanentReadonly">
       <div class="controls-button u-clickable js-copy" role="button" data-target-field="callback_url" aria-label="<%- @T('Copy to clipboard') %>">
         <span class="controls-button-inner">
           <%- @Icon('clipboard') %>

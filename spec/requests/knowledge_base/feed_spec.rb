@@ -32,17 +32,46 @@ RSpec.describe 'KnowledgeBase feed', authenticated_as: :user, type: :request do
   end
 
   describe '#category' do
-    before do
-      get feed_knowledge_base_category_path(knowledge_base, category, locale_name)
+    context 'when using existing category' do
+      before do
+        get feed_knowledge_base_category_path(knowledge_base, category.id, locale_name)
+      end
+
+      it 'lists entries', :aggregate_failures do
+        expect(response.body).to include(published_answer.translations.first.title)
+        expect(response.body).not_to include(published_answer_in_other_category.translations.first.title)
+      end
+
+      it 'uses category title' do
+        expect(response.body).to include(category.translations.first.title)
+      end
     end
 
-    it 'lists entries', :aggregate_failures do
-      expect(response.body).to include(published_answer.translations.first.title)
-      expect(response.body).not_to include(published_answer_in_other_category.translations.first.title)
+    context 'when using non-existing category' do
+      before do
+        get feed_knowledge_base_category_path(knowledge_base, category.id + 111, locale_name)
+      end
+
+      it 'returns 404' do
+        expect(response).to have_http_status :not_found
+      end
     end
 
-    it 'uses category title' do
-      expect(response.body).to include(category.translations.first.title)
+    context 'when using inaccessible category' do
+      let(:user)                  { create(:agent) }
+      let(:inaccessible_category) { create(:knowledge_base_category, knowledge_base:) }
+
+      before do
+        KnowledgeBase::PermissionsUpdate
+          .new(inaccessible_category)
+          .update! Role.find_by(name: 'Admin') => 'reader', Role.find_by(name: 'Agent') => 'none'
+
+        get feed_knowledge_base_category_path(knowledge_base, inaccessible_category.id, locale_name)
+      end
+
+      it 'returns 403' do
+        expect(response).to have_http_status :forbidden
+      end
     end
   end
 

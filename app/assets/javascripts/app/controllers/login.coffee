@@ -177,7 +177,7 @@ class Login extends App.ControllerFullPage
     if !_.isEmpty(detailsRaw)
       details = JSON.parse(detailsRaw)
 
-    errorMessage = App.i18n.translateContent(details.error || 'Could not process your request')
+    errorMessage = App.i18n.translatePlain(details.error || 'Could not process your request')
 
     if config = details.two_factor_required
       @defaultTwoFactorMethod          = config.default_two_factor_authentication_method

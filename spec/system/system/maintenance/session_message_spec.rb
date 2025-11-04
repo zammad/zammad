@@ -4,12 +4,11 @@ require 'rails_helper'
 
 RSpec.describe 'System > Maintenance - Session Message', type: :system do
   let(:agent)                 { User.find_by(login: 'agent1@example.com') }
-  let(:session_message_title) { 'Testing <b>Session Message Title</b>' }
-  let(:session_message_text)  { "message <b>1äöüß</b> Session Message Title\n\n\nhttps://zammad.org" }
+  let(:session_message_title) { 'Testing Session Message Title' }
+  let(:session_message_text)  { 'message 1äöüß Session Message Text https://zammad.org' }
 
-  def check_sesion_message_content(title, text)
-    expect(page).to have_text(title)
-    expect(page).to have_text(text)
+  def check_session_message_content(title, text)
+    expect(page).to have_text(title).and have_text(text)
   end
 
   context 'when maintenance session message is used and a open session exists' do
@@ -31,14 +30,17 @@ RSpec.describe 'System > Maintenance - Session Message', type: :system do
 
       within :active_content do
         fill_in 'head', with: session_message_title
-        find('.js-Message .js-textarea[data-name="message"]').send_keys(session_message_text)
+
+        within '.js-Message' do
+          set_editor_field_value 'message', session_message_text
+        end
 
         click '.js-Message button.js-submit'
       end
 
       using_session(:second_browser) do
         in_modal do
-          check_sesion_message_content(session_message_title, session_message_text)
+          check_session_message_content(session_message_title, session_message_text)
 
           click '.js-close'
         end
@@ -57,8 +59,12 @@ RSpec.describe 'System > Maintenance - Session Message', type: :system do
       visit 'system/maintenance'
 
       within :active_content do
-        fill_in 'head', with: "#{message_title} #2"
-        find('.js-Message .js-textarea[data-name="message"]').send_keys("#{message_text} #2")
+        fill_in 'head', with: message_title
+
+        within '.js-Message' do
+          set_editor_field_value 'message', message_text
+        end
+
         check 'reload', allow_label_click: true
 
         click '.js-Message button.js-submit'
@@ -66,7 +72,7 @@ RSpec.describe 'System > Maintenance - Session Message', type: :system do
 
       using_session(:second_browser) do
         in_modal do
-          check_sesion_message_content(message_title, message_text)
+          check_session_message_content(message_title, message_text)
 
           expect(page).to have_text('Continue session')
         end

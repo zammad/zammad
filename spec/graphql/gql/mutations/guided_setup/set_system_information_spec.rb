@@ -87,7 +87,7 @@ RSpec.describe Gql::Mutations::GuidedSetup::SetSystemInformation, type: :graphql
       end
 
       context 'when url is not given for an online service' do
-        let(:variables) { { input: required_variables.tap { _1.delete(:url) } } }
+        let(:variables) { { input: required_variables.tap { it.delete(:url) } } }
 
         before { Setting.set('system_online_service', true) }
 

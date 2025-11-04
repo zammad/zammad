@@ -1,152 +1,256 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
-import { Extension } from '@tiptap/core'
+import { Extension, Editor } from '@tiptap/core'
+import { effectScope, ref, type Ref, watch } from 'vue'
 
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
+import { useAiAssistanceTextToolsListQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/aiAssistanceTextTools/aiAssistanceTextToolsList.api.ts'
+import type { FieldEditorProps } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import {
-  getHTMLFromSelection,
+  getHTMLContentBetweenSelection,
   updateSelectedContent,
 } from '#shared/components/Form/fields/FieldEditor/utils.ts'
-import { useAiAssistanceTextToolsMutation } from '#shared/graphql/mutations/aiAssistanceTextTools.api.ts'
-import { EnumAiTextToolService } from '#shared/graphql/types.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { getNodeByName } from '#shared/components/Form/utils.ts'
+import { useAiAssistanceTextToolsRunMutation } from '#shared/graphql/mutations/aiAssistanceTextToolsRun.api.ts'
+import { convertToGraphQLId, ensureGraphqlId } from '#shared/graphql/utils.ts'
+import { MutationHandler, QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import { useAiAssistantTextToolsStore } from '#shared/stores/aiAssistantTextTools.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
-import type { Editor } from '@tiptap/vue-3'
-import type { ShallowRef } from 'vue'
+import type { FormKitNode } from '@formkit/core'
 
-export default (editor: ShallowRef<Editor>) => {
-  const showActionBarAndHideAiTextLoader = () => {
-    editor.value.setEditable(true)
-    editor.value.storage.showAiTextLoader = false
-  }
+const createAiTextToolsController = () => {
+  let mutationCancelled = false
 
-  const hideActionBarAndShowAiTextLoader = () => {
-    editor.value.setEditable(false)
-    editor.value.storage.showAiTextLoader = true
-  }
-
-  let mutationGotCancelled = false
-
-  const useAbortableMutation = () => {
+  const createAbortableMutation = () => {
     const abortController = new AbortController()
-
     const textToolsMutation = new MutationHandler(
-      useAiAssistanceTextToolsMutation({
+      useAiAssistanceTextToolsRunMutation({
         context: { fetchOptions: { signal: abortController.signal } },
       }),
       {
         errorCallback: (error) => {
-          return !(mutationGotCancelled && error.type === GraphQLErrorTypes.NetworkError)
+          return !(mutationCancelled && error.type === GraphQLErrorTypes.NetworkError)
         },
       },
     )
+
     return {
       textToolsMutation,
       isLoading: textToolsMutation.loading(),
-      abortController,
       abort: () => abortController.abort(),
     }
   }
 
-  let aiAssistanceTextToolsController = useAbortableMutation()
+  return {
+    mutation: createAbortableMutation(),
+    get isCancelled() {
+      return mutationCancelled
+    },
+    cancel: () => {
+      mutationCancelled = true
+    },
+    reset: () => {
+      mutationCancelled = false
+    },
+    recreate() {
+      this.mutation = createAbortableMutation()
+    },
+  }
+}
 
-  const sendTextToolsMutation = async (textToolService: EnumAiTextToolService, input: string) => {
-    const response = await aiAssistanceTextToolsController.textToolsMutation.send({
-      input,
-      serviceType: textToolService,
-    })
-    return response?.aiAssistanceTextTools?.output
+const createLoaderHandler = (editor: Editor) => ({
+  showActionBarAndHideLoader: () => {
+    editor.setEditable(true)
+    editor.storage.showAiTextLoader = false
+  },
+  hideActionBarAndShowLoader: () => {
+    editor.setEditable(false)
+    editor.storage.showAiTextLoader = true
+  },
+})
+
+const getFormRenderContext = async (context: Ref<FormFieldContext<FieldEditorProps>>) => {
+  const { formId, ticketId, meta: editorMeta } = context.value
+  const meta = editorMeta?.[PLUGIN_NAME] || {}
+
+  let { customerId, groupId, organizationId } = context.value
+
+  if (!customerId && meta.customerNodeName) {
+    customerId = getNodeByName(formId, meta.customerNodeName)?.value as string
   }
 
-  const modifySelectedText = async (textToolService: EnumAiTextToolService) => {
-    const lastSelection = editor.value.state.selection
-
-    const input = getHTMLFromSelection(editor.value, lastSelection)
-
-    hideActionBarAndShowAiTextLoader()
-
-    const { notify } = useNotifications()
-
-    editor.value.on('cancel-ai-assistant-text-tools-updates', () => {
-      mutationGotCancelled = true
-      aiAssistanceTextToolsController.abort()
-      aiAssistanceTextToolsController = useAbortableMutation()
-
-      mutationGotCancelled = false
-    })
-
-    editor.value.on('update', () => {
-      if (aiAssistanceTextToolsController.isLoading.value) {
-        notify({
-          id: 'ai-assistant-text-tools-aborted',
-          type: NotificationTypes.Info,
-          message: __(
-            'The text was modified. Your request has been aborted to prevent overwriting.',
-          ),
-        })
-        aiAssistanceTextToolsController.abort()
-        aiAssistanceTextToolsController = useAbortableMutation()
-      }
-    })
-
-    return sendTextToolsMutation(textToolService, input)
-      .then((output) => {
-        if (!output) return
-
-        // Make sure the right selection is always set
-        editor.value.chain().focus().setTextSelection(lastSelection).run()
-
-        updateSelectedContent(editor.value, output)
-      })
-      .catch(() => {
-        editor?.value.chain().focus().setTextSelection(lastSelection).run()
-      })
-      .finally(showActionBarAndHideAiTextLoader)
+  if (!organizationId && meta.organizationNodeName) {
+    organizationId = getNodeByName(formId, meta.organizationNodeName)?.value as string
   }
+
+  if (!groupId && meta.groupNodeName) {
+    groupId = getNodeByName(formId, meta.groupNodeName)?.value as string
+  }
+
+  return {
+    customerId: customerId ? ensureGraphqlId('User', customerId) : undefined,
+    groupId: groupId ? ensureGraphqlId('Group', groupId) : undefined,
+    organizationId: organizationId ? ensureGraphqlId('Organization', organizationId) : undefined,
+    ticketId: ticketId ? ensureGraphqlId('Ticket', ticketId) : undefined,
+  }
+}
+
+const sendTextToolsMutation = async (
+  textToolId: ID,
+  input: string,
+  controller: ReturnType<typeof createAiTextToolsController>,
+  context: Ref<FormFieldContext<FieldEditorProps>>,
+) => {
+  const contextData = await getFormRenderContext(context)
+
+  const response = await controller.mutation.textToolsMutation.send({
+    input,
+    textToolId,
+    templateRenderContext: contextData,
+  })
+
+  return response?.aiAssistanceTextToolsRun?.output
+}
+
+const setupEventHandlers = (
+  editor: Editor,
+  controller: ReturnType<typeof createAiTextToolsController>,
+) => {
+  const { notify } = useNotifications()
+
+  editor.on('cancel-ai-assistant-text-tools-updates', () => {
+    controller.cancel()
+    controller.mutation.abort()
+    controller.recreate()
+    controller.reset()
+  })
+
+  editor.on('update', () => {
+    if (controller.mutation.isLoading.value) {
+      notify({
+        id: 'ai-assistant-text-tools-aborted',
+        type: NotificationTypes.Info,
+        message: __('The text was modified. Your request has been aborted to prevent overwriting.'),
+      })
+      controller.mutation.abort()
+      controller.recreate()
+    }
+  })
+}
+
+const executeTextModification = async (
+  textToolId: ID,
+  editor: Editor,
+  context: Ref<FormFieldContext<FieldEditorProps>>,
+) => {
+  const loadingHandlers = createLoaderHandler(editor)
+  const controller = createAiTextToolsController()
+
+  const normalizedRange = editor.state.selection
+  const input = getHTMLContentBetweenSelection(editor, normalizedRange)
+
+  loadingHandlers.hideActionBarAndShowLoader()
+  setupEventHandlers(editor, controller)
+
+  try {
+    const output = await sendTextToolsMutation(textToolId, input, controller, context)
+    if (!output) return
+
+    editor.chain().focus().setTextSelection(normalizedRange).run()
+    updateSelectedContent(editor, output)
+  } catch {
+    editor?.chain().focus().setTextSelection(normalizedRange).run()
+  } finally {
+    loadingHandlers.showActionBarAndHideLoader()
+    editor.chain().focus().run()
+  }
+}
+
+export const PLUGIN_NAME = 'aiAssistantTextTools'
+
+export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
+  const { formId, ticketId, meta: editorMeta } = context.value
+  const meta = editorMeta?.[PLUGIN_NAME] || {}
+  let scope = effectScope()
 
   return Extension.create({
-    name: 'AiAssistantTextTools',
+    name: PLUGIN_NAME,
     addStorage() {
       return {
         showAiTextLoader: false,
       }
     },
+    onBeforeCreate({ editor }) {
+      const { config } = useApplicationStore()
+
+      watch(
+        () => config.ai_assistance_text_tools,
+        (newValue) => {
+          if (!newValue) {
+            if (scope.active) scope.stop()
+            return
+          }
+
+          if (!scope.active) {
+            scope = effectScope()
+          }
+
+          scope.run(() => {
+            const textToolsStore = useAiAssistantTextToolsStore()
+
+            const groupNode = getNodeByName(formId, meta.groupNodeName!) as FormKitNode<number>
+
+            const groupId = ref<number>(groupNode?.value)
+
+            groupNode?.on('commit', ({ payload }) => {
+              groupId.value = payload
+            })
+
+            const queryHandler = new QueryHandler(
+              useAiAssistanceTextToolsListQuery(() => ({
+                groupId: groupId.value ? convertToGraphQLId('Group', groupId.value) : undefined,
+                ticketId: ticketId ? convertToGraphQLId('Ticket', ticketId) : undefined,
+              })),
+            )
+
+            queryHandler.watchOnResult(({ aiAssistanceTextToolsList }) => {
+              if (!editor) return
+
+              editor.emit('toggle-visibility', {
+                name: PLUGIN_NAME,
+                active: !!aiAssistanceTextToolsList.length,
+              })
+            })
+
+            watch(
+              () => groupId.value,
+              (newGroupId, oldGroupId) => {
+                // If the groupId changes, we deactivate the old one
+                if (oldGroupId !== newGroupId) textToolsStore.deactivate(oldGroupId)
+
+                textToolsStore.activate(newGroupId, queryHandler)
+              },
+              { immediate: true },
+            )
+
+            editor.on('destroy', () => textToolsStore.deactivate(groupId.value))
+          })
+        },
+        { immediate: true },
+      )
+    },
     addCommands() {
       return {
-        improveWriting:
-          () =>
+        modifyTextWithAi:
+          (textToolId) =>
           ({ editor }) => {
-            modifySelectedText(EnumAiTextToolService.ImproveWriting).then(() => {
-              editor.chain().focus().run()
-            })
-            return true
-          },
-        fixSpellingAndGrammar:
-          () =>
-          ({ editor }) => {
-            modifySelectedText(EnumAiTextToolService.SpellingAndGrammar).then(() => {
-              editor.chain().focus().run()
-            })
-            return true
-          },
-        expandText:
-          () =>
-          ({ editor }) => {
-            modifySelectedText(EnumAiTextToolService.Expand).then(() => {
-              editor.chain().focus().run()
-            })
-            return true
-          },
-        simplifyText:
-          () =>
-          ({ editor }) => {
-            modifySelectedText(EnumAiTextToolService.Simplify).then(() => {
-              editor.chain().focus().run()
-            })
+            executeTextModification(textToolId, editor, context)
             return true
           },
       }
@@ -155,6 +259,9 @@ export default (editor: ShallowRef<Editor>) => {
       return {
         permission: 'ticket.agent',
       }
+    },
+    onDestroy() {
+      scope.stop()
     },
   })
 }

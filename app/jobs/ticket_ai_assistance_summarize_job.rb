@@ -7,53 +7,26 @@ class TicketAIAssistanceSummarizeJob < AIJob
     "#{self.class.name}/#{arguments[0].id}/#{arguments[0].articles.last&.created_at}/#{arguments[1]}"
   end
 
-  def perform(ticket, locale)
+  def perform(ticket, locale, regeneration_of: nil)
     summarize = Service::Ticket::AIAssistance::Summarize.new(
       locale:,
-      ticket:
+      ticket:,
+      regeneration_of:,
     )
 
-    content = summarize.execute&.content
-
-    if content.nil?
-      # Trigger the update for the new desktop view.
-      trigger_subscription(ticket:, locale:, data: {
-                             summary: {
-                               problem:              '',
-                               conversation_summary: '',
-                               open_questions:       [],
-                               suggestions:          [],
-                             },
-                             reason:  '',
-                           },)
-
-      # Trigger the update for the old stack
-      Sessions.broadcast({
-                           event: 'ticket::summary::update',
-                           data:  { ticket_id: ticket.id, locale: }
-                         })
-
-      return
-    end
+    ai_result = summarize.execute
 
     # Trigger the update for the new desktop view.
     trigger_subscription(ticket:, locale:, data: {
-                           summary:         {
-                             problem:              content['problem'],
-                             conversation_summary: content['summary'],
-                             open_questions:       content['open_questions'],
-                             suggestions:          content['suggestions']
-                           },
-                           reason:          content['reason'],
-                           fingerprint_md5: Digest::MD5.hexdigest(content.slice('problem', 'summary', 'open_questions', 'suggestions').to_s),
-                         },)
+      summary:             ai_result&.content || {},
+      ai_analytics_run_id: ai_result&.ai_analytics_run&.id,
+    }.compact)
 
     # Trigger the update for the old stack
-    Sessions.broadcast({
-                         event: 'ticket::summary::update',
-                         data:  { ticket_id: ticket.id, locale: }
-                       })
+    broadcast({ ticket_id: ticket.id, locale: })
   rescue => e
+    Rails.logger.error "TicketAIAssistanceSummarizeJob failed for ticket #{ticket.id}: #{e.message}\n#{e.backtrace.join("\n")}"
+
     trigger_subscription(ticket:, locale:, data: {
                            error: {
                              message:   e.message,
@@ -62,13 +35,17 @@ class TicketAIAssistanceSummarizeJob < AIJob
                          })
 
     # Trigger the update for the old stack without real date (it will be refetched on frontend decision).
-    Sessions.broadcast({
-                         event: 'ticket::summary::update',
-                         data:  { ticket_id: ticket.id, locale:, error: true }
-                       })
+    broadcast({ ticket_id: ticket.id, locale:, error: true })
   end
 
   private
+
+  def broadcast(data)
+    Sessions.broadcast({
+                         event: 'ticket::summary::update',
+                         data:
+                       })
+  end
 
   def trigger_subscription(ticket:, locale:, data:)
     Gql::Subscriptions::Ticket::AIAssistance::SummaryUpdates.trigger(

@@ -53,6 +53,7 @@ const { openCreateUserDialog } = useUserCreate({
   },
 })
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   optionIconComponent: markRaw(FieldCustomerOptionIcon),
   initialOptionBuilder: (

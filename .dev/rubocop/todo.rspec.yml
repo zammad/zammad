@@ -10,7 +10,6 @@ RSpec/ContextWording:
     - 'spec/db/migrate/issue_2345_es_attachment_max_size_in_mb_setting_lower_default_spec.rb'
     - 'spec/db/migrate/issue_2368_add_indices_to_histories_and_tickets_spec.rb'
     - 'spec/db/migrate/issue_2541_fix_notification_email_without_body_spec.rb'
-    - 'spec/jobs/communicate_twitter_job_spec.rb'
     - 'spec/jobs/concerns/has_active_job_lock_spec.rb'
     - 'spec/jobs/concerns/has_collection_update_spec.rb'
     - 'spec/jobs/imap_authentication_migration_cleanup_job_spec.rb'
@@ -55,7 +54,6 @@ RSpec/ContextWording:
     - 'spec/models/application_model/can_assets_examples.rb'
     - 'spec/models/application_model/checks_import_examples.rb'
     - 'spec/models/calendar_spec.rb'
-    - 'spec/models/channel/driver/twitter_spec.rb'
     - 'spec/models/channel/email_parser_spec.rb'
     - 'spec/models/channel/filter/follow_up_merged_spec.rb'
     - 'spec/models/channel/filter/follow_up_possible_check_spec.rb'
@@ -126,7 +124,6 @@ RSpec/ContextWording:
     - 'spec/system/basic/assets_spec.rb'
     - 'spec/system/basic/richtext_spec.rb'
     - 'spec/system/channels/email_spec.rb'
-    - 'spec/system/channels/twitter_spec.rb'
     - 'spec/system/cti_spec.rb'
     - 'spec/system/dashboard_spec.rb'
     - 'spec/system/keyboard_shortcuts_spec.rb'
@@ -159,7 +156,6 @@ RSpec/ContextWording:
     - 'spec/system/system/integration/clearbit_spec.rb'
     - 'spec/system/system/integration/icinga_spec.rb'
     - 'spec/system/system/integration/sipgate_spec.rb'
-    - 'spec/system/system/integration/slack_spec.rb'
     - 'spec/system/system/integration/smime_spec.rb'
     - 'spec/system/system/object_manager_spec.rb'
     - 'spec/system/ticket/create_spec.rb'
@@ -235,13 +231,11 @@ RSpec/InstanceVariable:
 
 RSpec/LetSetup:
   Exclude:
-    - 'spec/jobs/communicate_twitter_job_spec.rb'
     - 'spec/jobs/ticket_online_notification_seen_job_spec.rb'
     - 'spec/lib/external_credential/google_spec.rb'
     - 'spec/lib/external_credential/microsoft365_spec.rb'
     - 'spec/lib/secure_mailing/smime_spec.rb'
     - 'spec/lib/sessions/backend/ticket_overview_list_spec.rb'
-    - 'spec/models/channel/driver/twitter_spec.rb'
     - 'spec/models/channel/email_parser_spec.rb'
     - 'spec/models/cti/caller_id_spec.rb'
     - 'spec/models/cti/driver/base_spec.rb'
@@ -303,7 +297,6 @@ RSpec/MessageSpies:
     - 'spec/lib/sequencer/unit/import/common/object_attribute/sanitized_name_spec.rb'
     - 'spec/lib/sequencer/unit/import/zendesk/sub_sequence/base_examples.rb'
     - 'spec/lib/sequencer/unit/import/zendesk/ticket/comment/attachment/request_spec.rb'
-    - 'spec/models/channel/driver/twitter_spec.rb'
     - 'spec/models/channel/email_parser_spec.rb'
     - 'spec/models/concerns/has_groups_examples.rb'
     - 'spec/models/concerns/has_history_examples.rb'
@@ -326,7 +319,6 @@ RSpec/MultipleExpectations:
     - 'spec/db/migrate/rename_locale_on_users_spec.rb'
     - 'spec/integration/ldap_spec.rb'
     - 'spec/integration/otrs_spec.rb'
-    - 'spec/jobs/communicate_twitter_job_spec.rb'
     - 'spec/jobs/concerns/has_active_job_lock_spec.rb'
     - 'spec/jobs/search_index_job_spec.rb'
     - 'spec/jobs/ticket_user_ticket_counter_job_spec.rb'
@@ -366,7 +358,6 @@ RSpec/MultipleExpectations:
     - 'spec/lib/user_info_spec.rb'
     - 'spec/models/calendar_spec.rb'
     - 'spec/models/channel/driver/sms/twilio_spec.rb'
-    - 'spec/models/channel/driver/twitter_spec.rb'
     - 'spec/models/channel/email_parser_spec.rb'
     - 'spec/models/concerns/has_groups_examples.rb'
     - 'spec/models/concerns/has_history_examples.rb'
@@ -442,7 +433,6 @@ RSpec/MultipleExpectations:
 RSpec/NestedGroups:
   Exclude:
     - 'spec/lib/secure_mailing/smime_spec.rb'
-    - 'spec/models/channel/driver/twitter_spec.rb'
     - 'spec/models/channel/email_parser_spec.rb'
     - 'spec/models/job_spec.rb'
     - 'spec/models/store_spec.rb'
@@ -453,8 +443,6 @@ RSpec/NestedGroups:
 
 RSpec/VerifiedDoubles:
   Exclude:
-    - 'spec/db/migrate/issue_2460_fix_corrupted_twitter_ids_spec.rb'
-    - 'spec/jobs/communicate_twitter_job_spec.rb'
     - 'spec/lib/external_sync_spec.rb'
     - 'spec/lib/ldap_spec.rb'
     - 'spec/lib/sequencer/sequence/import/ldap/users_spec.rb'

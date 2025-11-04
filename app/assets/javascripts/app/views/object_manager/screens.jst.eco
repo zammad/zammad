@@ -26,7 +26,7 @@
         <tr>
           <td class="settings-list-control-cell">
           <td class="settings-list-control-cell small" colspan=2>
-            <%- @T('Not applicable to: merging, emails, form, Facebook, Telegram, Twitter, SMS') %>
+            <%- @T('Not applicable to: merging, emails, form, Facebook, Telegram, SMS') %>
       <% end %>
     </tbody>
   </table>

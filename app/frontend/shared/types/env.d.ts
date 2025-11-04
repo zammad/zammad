@@ -5,6 +5,6 @@
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'
   // oxlint-disable-next-line @typescript-eslint/no-empty-object-type
-  const component: DefineComponent<{}, {}, any>
+  const component: DefineComponent<{}, {}, unknown>
   export default component
 }

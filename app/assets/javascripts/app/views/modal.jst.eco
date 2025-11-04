@@ -16,6 +16,17 @@
         </h1>
   <% end %>
       </div>
+      <div class="modal-sticky-alerts-container">
+        <% for alert in @stickyAlerts: %>
+          <div class="alert alert--<%= alert[0] %>" role="alert">
+            <% if _.isArray(alert[1]): %>
+              <%- @T(alert[1]...) %>
+            <% else: %>
+              <%- @T(alert[1]) %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
       <div class="modal-alerts-container"></div>
       <div class="modal-body">
       <%- @content %>

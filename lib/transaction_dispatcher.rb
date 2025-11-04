@@ -201,16 +201,7 @@ class TransactionDispatcher
     # return if we run import mode
     return true if Setting.get('import_mode')
 
-    # ignore certain attributes
-    real_changes = {}
-    record.saved_changes.each do |key, value|
-      next if key == 'updated_at'
-      next if key == 'article_count'
-      next if key == 'create_article_type_id'
-      next if key == 'create_article_sender_id'
-
-      real_changes[key] = value
-    end
+    real_changes = record.saved_changes.except(*record.transaction_ignore_changes_attributes.map(&:to_s))
 
     # do not send anything if nothing has changed
     return true if real_changes.blank?

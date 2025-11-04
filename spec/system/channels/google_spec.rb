@@ -19,7 +19,7 @@ RSpec.describe 'Manage > Channels > Google Email', time_zone: 'Europe/London', t
         fill_in 'client_id', with: client_id
         fill_in 'client_secret', with: client_secret
 
-        check_input_field_value('callback_url', callback_url)
+        check_input_field_value('callback_url', callback_url, attr: 'id')
 
         click_on 'Submit'
       end

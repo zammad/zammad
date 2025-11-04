@@ -10,14 +10,8 @@ RSpec.describe Gql::Queries::Ticket::Checklist, current_user_id: 1, type: :graph
 
   let(:query) do
     <<~QUERY
-      query ticketChecklist($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
-        ticketChecklist(
-          ticket: {
-            ticketId: $ticketId
-            ticketInternalId: $ticketInternalId
-            ticketNumber: $ticketNumber
-          }
-        ) {
+      query ticketChecklist($ticketId: ID!) {
+        ticketChecklist(ticketId: $ticketId) {
           id
           name
           completed
@@ -106,26 +100,6 @@ RSpec.describe Gql::Queries::Ticket::Checklist, current_user_id: 1, type: :graph
       let(:response)  { nil }
 
       it_behaves_like 'returning checklist data'
-    end
-
-    context 'with alternative input variables' do
-      context 'with internal ticket ID' do
-        let(:variables) { { ticketInternalId: ticket.id } }
-
-        it_behaves_like 'returning checklist data'
-      end
-
-      context 'with ticket number' do
-        let(:variables) { { ticketNumber: ticket.number } }
-
-        it_behaves_like 'returning checklist data'
-      end
-
-      context 'without any of required variables' do
-        let(:variables) { {} }
-
-        it_behaves_like 'raising an error', GraphQL::Schema::Validator::ValidationFailedError
-      end
     end
 
     context 'with ticket checklist item' do

@@ -5,553 +5,132 @@ require 'rails_helper'
 RSpec.describe 'Search', type: :request do
 
   let(:group) { create(:group) }
-  let!(:admin) do
-    create(:admin, groups: [Group.lookup(name: 'Users'), group])
-  end
-  let!(:agent) do
-    create(:agent, firstname: 'Search superuniqstring1337', groups: [Group.lookup(name: 'Users'), group])
-  end
-  let!(:customer) do
-    create(:customer)
-  end
-  let!(:organization1) do
-    create(:organization, name: 'Rest Org')
-  end
-  let!(:organization2) do
-    create(:organization, name: 'Rest Org #2')
-  end
-  let!(:organization3) do
-    create(:organization, name: 'Rest Org #3')
-  end
-  let!(:organization4) do
-    create(:organization, name: 'Tes.t. Org')
-  end
-  let!(:organization5) do
-    create(:organization, name: 'ABC_D Org')
-  end
-  let!(:customer2) do
-    create(:customer, organization: organization1)
-  end
-  let!(:customer3) do
-    create(:customer, organization: organization1)
-  end
-  let!(:ticket1) do
-    create(:ticket, title: 'test superuniqstring1337-1', customer: customer, group: group)
-  end
-  let!(:ticket2) do
-    create(:ticket, title: 'test superuniqstring1337-2', customer: customer2, group: group)
-  end
-  let!(:ticket3) do
-    create(:ticket, title: 'test superuniqstring1337-2', customer: customer3, group: group)
-  end
-  let!(:article1) do
-    create(:ticket_article, ticket_id: ticket1.id)
-  end
-  let!(:article2) do
-    create(:ticket_article, ticket_id: ticket2.id)
-  end
-  let!(:article3) do
-    create(:ticket_article, ticket_id: ticket3.id)
-  end
+  let(:agent) { create(:agent, firstname: 'Search superuniqstring1337', groups: [Group.lookup(name: 'Users'), group]) }
+
+  let(:ticket1) { create(:ticket, title: 'test superuniqstring1337-1', group:) }
+  let(:ticket2) { create(:ticket, title: 'test superuniqstring1337-2', group:) }
+  let(:ticket3) { create(:ticket, title: 'test superuniqstring1337-2', group:) }
+
+  let(:article1) { create(:ticket_article, ticket_id: ticket1.id) }
+  let(:article2) { create(:ticket_article, ticket_id: ticket2.id) }
+  let(:article3) { create(:ticket_article, ticket_id: ticket3.id) }
 
   describe 'request handling', performs_jobs: true, searchindex: true do
     before do
+      agent
+      article1 && article2 && article3
       searchindex_model_reload([Ticket, User, Organization])
     end
 
-    it 'does settings index with nobody' do
-      params = {
-        query: 'test superuniqstring1337',
-        limit: 2,
-      }
+    let(:term) { 'test superuniqstring1337' }
+    let(:params) { { query: term } }
 
-      post '/api/v1/search/ticket', params: params, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).not_to be_blank
-      expect(json_response['error']).to eq('Authentication required')
+    context 'when not logged in' do
+      it 'returns authentication error for global search' do
+        post '/api/v1/search', params: params, as: :json
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response).to include('error' => 'Authentication required')
+      end
 
-      post '/api/v1/search/user', params: params, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).not_to be_blank
-      expect(json_response['error']).to eq('Authentication required')
-
-      post '/api/v1/search', params: params, as: :json
-      expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).not_to be_blank
-      expect(json_response['error']).to eq('Authentication required')
+      it 'returns authentication error for object search' do
+        post '/api/v1/search/ticket', params: params, as: :json
+        expect(response).to have_http_status(:forbidden)
+        expect(json_response).to include('error' => 'Authentication required')
+      end
     end
 
-    it 'does settings index with admin' do
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 1,
-      }
-      authenticated_as(admin)
-      post '/api/v1/search', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['result'][0]['type']).to eq('Ticket')
-      expect(json_response['result'][0]['id']).to eq(ticket3.id)
-      expect(json_response['result'][1]['type']).to eq('User')
-      expect(json_response['result'][1]['id']).to eq(agent.id)
-      expect(json_response['result'][2]).to be_falsey
+    context 'when logged in as authenticated user', authenticated_as: :admin do
+      let(:admin) { create(:admin, groups: [Group.lookup(name: 'Users'), group]) }
+      let(:term)  { 'superuniqstring1337' }
 
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
+      it 'passes on limit to search service' do
+        params[:limit] = 123
 
-      post '/api/v1/search', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['result'][0]['type']).to eq('Ticket')
-      expect(json_response['result'][0]['id']).to eq(ticket3.id)
-      expect(json_response['result'][1]['type']).to eq('Ticket')
-      expect(json_response['result'][1]['id']).to eq(ticket2.id)
-      expect(json_response['result'][2]['type']).to eq('Ticket')
-      expect(json_response['result'][2]['id']).to eq(ticket1.id)
-      expect(json_response['result'][3]['type']).to eq('User')
-      expect(json_response['result'][3]['id']).to eq(agent.id)
-      expect(json_response['result'][4]).to be_falsey
+        allow(Service::Search).to receive(:new).and_call_original
 
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
+        post '/api/v1/search', params: params, as: :json
 
-      post '/api/v1/search/ticket', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['result'][0]['type']).to eq('Ticket')
-      expect(json_response['result'][0]['id']).to eq(ticket3.id)
-      expect(json_response['result'][1]['type']).to eq('Ticket')
-      expect(json_response['result'][1]['id']).to eq(ticket2.id)
-      expect(json_response['result'][2]['type']).to eq('Ticket')
-      expect(json_response['result'][2]['id']).to eq(ticket1.id)
-      expect(json_response['result'][3]).to be_falsey
+        expect(Service::Search)
+          .to have_received(:new)
+          .with(hash_including(options: include(limit: 123)))
+      end
 
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
+      it 'returns flattened search results' do
+        post '/api/v1/search', params: params, as: :json
 
-      post '/api/v1/search/user', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['result'][0]['type']).to eq('User')
-      expect(json_response['result'][0]['id']).to eq(agent.id)
-      expect(json_response['result'][1]).to be_falsey
-    end
+        expect(json_response).to include('result' => contain_exactly(
+          include('type' => 'Ticket', 'id' => ticket1.id),
+          include('type' => 'Ticket', 'id' => ticket2.id),
+          include('type' => 'Ticket', 'id' => ticket3.id),
+          include('type' => 'User', 'id' => agent.id),
+        ), 'assets' => include_assets_of(ticket1, ticket2, ticket3, agent))
+      end
 
-    it 'does settings index with agent' do
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 1,
-      }
+      it 'returns flattened search results when searching for multiple objects' do
+        post '/api/v1/search/ticket-user', params: params, as: :json
 
-      authenticated_as(agent)
-      post '/api/v1/search', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['result'][0]['type']).to eq('Ticket')
-      expect(json_response['result'][0]['id']).to eq(ticket3.id)
-      expect(json_response['result'][1]['type']).to eq('User')
-      expect(json_response['result'][1]['id']).to eq(agent.id)
-      expect(json_response['result'][2]).to be_falsey
+        expect(json_response).to include('result' => contain_exactly(
+          include('type' => 'Ticket', 'id' => ticket1.id),
+          include('type' => 'Ticket', 'id' => ticket2.id),
+          include('type' => 'Ticket', 'id' => ticket3.id),
+          include('type' => 'User', 'id' => agent.id),
+        ), 'assets' => include_assets_of(ticket1, ticket2, ticket3, agent))
+      end
 
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
+      it 'returns flattened search results when searching for for a single object' do
+        post '/api/v1/search/ticket', params: params, as: :json
 
-      post '/api/v1/search', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['result'][0]['type']).to eq('Ticket')
-      expect(json_response['result'][0]['id']).to eq(ticket3.id)
-      expect(json_response['result'][1]['type']).to eq('Ticket')
-      expect(json_response['result'][1]['id']).to eq(ticket2.id)
-      expect(json_response['result'][2]['type']).to eq('Ticket')
-      expect(json_response['result'][2]['id']).to eq(ticket1.id)
-      expect(json_response['result'][3]['type']).to eq('User')
-      expect(json_response['result'][3]['id']).to eq(agent.id)
-      expect(json_response['result'][4]).to be_falsey
+        expect(json_response).to include('result' => contain_exactly(
+          include('type' => 'Ticket', 'id' => ticket1.id),
+          include('type' => 'Ticket', 'id' => ticket2.id),
+          include('type' => 'Ticket', 'id' => ticket3.id),
+        ), 'assets' => include_assets_of(ticket1, ticket2, ticket3).and(not_include_assets_of(agent)))
+      end
 
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
+      context 'when searching by object' do
+        let(:params) { super().merge(by_object: true) }
 
-      post '/api/v1/search/ticket', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['result'][0]['type']).to eq('Ticket')
-      expect(json_response['result'][0]['id']).to eq(ticket3.id)
-      expect(json_response['result'][1]['type']).to eq('Ticket')
-      expect(json_response['result'][1]['id']).to eq(ticket2.id)
-      expect(json_response['result'][2]['type']).to eq('Ticket')
-      expect(json_response['result'][2]['id']).to eq(ticket1.id)
-      expect(json_response['result'][3]).to be_falsey
+        it 'returns search results by object' do
+          post '/api/v1/search', params: params, as: :json
 
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
-
-      post '/api/v1/search/user', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['result'][0]['type']).to eq('User')
-      expect(json_response['result'][0]['id']).to eq(agent.id)
-      expect(json_response['result'][1]).to be_falsey
-    end
-
-    it 'does settings index with customer 1' do
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
-
-      authenticated_as(customer)
-      post '/api/v1/search', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['result'][0]['type']).to eq('Ticket')
-      expect(json_response['result'][0]['id']).to eq(ticket1.id)
-      expect(json_response['result'][1]).to be_falsey
-
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
-
-      post '/api/v1/search/ticket', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['result'][0]['type']).to eq('Ticket')
-      expect(json_response['result'][0]['id']).to eq(ticket1.id)
-      expect(json_response['result'][1]).to be_falsey
-
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
-
-      post '/api/v1/search/user', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['result'][0]).to be_falsey
-    end
-
-    it 'does settings index with customer 2' do
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
-
-      authenticated_as(customer2)
-      post '/api/v1/search', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['result'][0]['type']).to eq('Ticket')
-      expect(json_response['result'][0]['id']).to eq(ticket3.id)
-      expect(json_response['result'][1]['type']).to eq('Ticket')
-      expect(json_response['result'][1]['id']).to eq(ticket2.id)
-      expect(json_response['result'][2]).to be_falsey
-
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
-
-      post '/api/v1/search/ticket', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['result'][0]['type']).to eq('Ticket')
-      expect(json_response['result'][0]['id']).to eq(ticket3.id)
-      expect(json_response['result'][1]['type']).to eq('Ticket')
-      expect(json_response['result'][1]['id']).to eq(ticket2.id)
-      expect(json_response['result'][2]).to be_falsey
-
-      params = {
-        query: 'superuniqstring1337*',
-        limit: 10,
-      }
-
-      post '/api/v1/search/user', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response['result'][0]).to be_falsey
-    end
-
-    # Verify fix for Github issue #2058 - Autocomplete hangs on dot in the new user form
-    it 'does searching for organization with a dot in its name' do
-      authenticated_as(agent)
-      get '/api/v1/search/organization?query=tes.', as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response['result'].size).to eq(1)
-      expect(json_response['result'][0]['type']).to eq('Organization')
-      target_id = json_response['result'][0]['id']
-      expect(json_response['assets']['Organization'][target_id.to_s]['name']).to eq('Tes.t. Org')
-    end
-
-    # Search query H& should correctly match H&M
-    it 'does searching for organization with _ in its name' do
-      authenticated_as(agent)
-      get '/api/v1/search/organization?query=abc_', as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response['result'].size).to eq(1)
-      expect(json_response['result'][0]['type']).to eq('Organization')
-      target_id = json_response['result'][0]['id']
-      expect(json_response['assets']['Organization'][target_id.to_s]['name']).to eq('ABC_D Org')
-    end
-
-    it 'does find the ticket by group name even if the group name changes' do
-      authenticated_as(agent)
-      post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && group.name:ultrasupport" }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['assets']['Ticket']).to be_falsey
-      expect(group).not_to eq('ultrasupport')
-
-      group.update(name: 'ultrasupport')
-      perform_enqueued_jobs
-      SearchIndexBackend.refresh
-
-      post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && group.name:ultrasupport" }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['assets']['Ticket'][ticket1.id.to_s]).to be_truthy
-    end
-
-    it 'does find the ticket by state name even if the state name changes' do
-      authenticated_as(agent)
-      post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && state.name:ultrastate" }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['assets']['Ticket']).to be_falsey
-      expect(ticket1.state.name).not_to eq('ultrastate')
-
-      ticket1.state.update(name: 'ultrastate')
-      perform_enqueued_jobs
-      SearchIndexBackend.refresh
-
-      post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && state.name:ultrastate" }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['assets']['Ticket'][ticket1.id.to_s]).to be_truthy
-    end
-
-    it 'does find the ticket by priority name even if the priority name changes' do
-      authenticated_as(agent)
-      post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && priority.name:ultrapriority" }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['assets']['Ticket']).to be_falsey
-      expect(ticket1.priority.name).not_to eq('ultrapriority')
-
-      ticket1.priority.update(name: 'ultrapriority')
-      perform_enqueued_jobs
-      SearchIndexBackend.refresh
-
-      post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && priority.name:ultrapriority" }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['assets']['Ticket'][ticket1.id.to_s]).to be_truthy
-    end
-
-    it 'does find the ticket by the checklist name', current_user_id: 1 do
-      authenticated_as(agent)
-
-      ticket1.create_checklist! name: 'chcklst name'
-      perform_enqueued_jobs
-      SearchIndexBackend.refresh
-
-      post '/api/v1/search/Ticket', params: { query: 'chcklst' }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['assets']['Ticket'][ticket1.id.to_s]).to be_truthy
-    end
-
-    it 'does find the ticket by a checklist entry', current_user_id: 1 do
-      authenticated_as(agent)
-
-      ticket1.create_checklist!
-      ticket1.checklist.items.create! text: 'checklist entry'
-      perform_enqueued_jobs
-      SearchIndexBackend.refresh
-
-      post '/api/v1/search/Ticket', params: { query: 'checklist entry' }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to be_truthy
-      expect(json_response['assets']['Ticket'][ticket1.id.to_s]).to be_truthy
-    end
-  end
-
-  describe 'Assign user to multiple organizations #1573' do
-    shared_examples 'search for organization ids' do
-      context 'when customer with multi organizations', authenticated_as: :customer do
-        context 'with multi organizations' do
-          let(:customer) { create(:customer, organization: organizations[0], organizations: organizations[1..2]) }
-          let(:organizations) { create_list(:organization, 5) }
-
-          it 'does not return organizations which are not allowed' do
-            params = {
-              query: 'TestOrganization',
-              limit: 10,
-            }
-            post '/api/v1/search/Organization', params: params, as: :json
-            expect(json_response['result']).to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
-            expect(json_response['result']).to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
-            expect(json_response['result']).to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
-          end
-
-          it 'does not return organizations which are not allowed when overwritten' do
-            params = {
-              query: 'TestOrganization',
-              limit: 10,
-              ids:   organizations.map(&:id)
-            }
-            post '/api/v1/search/Organization', params: params, as: :json
-            expect(json_response['result']).to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
-            expect(json_response['result']).to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
-            expect(json_response['result']).to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
-          end
+          expect(json_response).to include('result' => include(
+            'Ticket' => include(
+              'object_ids'  => contain_exactly(ticket1.id, ticket2.id, ticket3.id),
+              'total_count' => 3
+            ),
+            'User'   => include(
+              'object_ids'  => contain_exactly(agent.id),
+              'total_count' => 1
+            )
+          ), 'assets' => include_assets_of(ticket1, ticket2, ticket3, agent))
         end
 
-        context 'with single organization' do
-          let(:customer) { create(:customer, organization: organizations[0]) }
-          let(:organizations) { create_list(:organization, 5) }
+        it 'returns search results by object when searching for multiple objects' do
+          post '/api/v1/search/user-ticket', params: params, as: :json
 
-          it 'does not return organizations which are not allowed' do
-            params = {
-              query: 'TestOrganization',
-              limit: 10,
-            }
-            post '/api/v1/search/Organization', params: params, as: :json
-            expect(json_response['result']).to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
-          end
-
-          it 'does not return organizations which are not allowed when overwritten' do
-            params = {
-              query: 'TestOrganization',
-              limit: 10,
-              ids:   organizations.map(&:id)
-            }
-            post '/api/v1/search/Organization', params: params, as: :json
-            expect(json_response['result']).to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
-          end
+          expect(json_response).to include('result' => match(
+            'Ticket' => include(
+              'object_ids'  => contain_exactly(ticket1.id, ticket2.id, ticket3.id),
+              'total_count' => 3
+            ),
+            'User'   => include(
+              'object_ids'  => contain_exactly(agent.id),
+              'total_count' => 1
+            )
+          ), 'assets' => include_assets_of(ticket1, ticket2, ticket3, agent))
         end
 
-        context 'with no organization' do
-          let(:customer) do
-            organizations
-            create(:customer)
-          end
-          let(:organizations) { create_list(:organization, 5) }
+        it 'returns search results by object when searching for a single object' do
+          post '/api/v1/search/user', params: params, as: :json
 
-          it 'does not return organizations which are not allowed' do
-            params = {
-              query: 'TestOrganization',
-              limit: 10,
-            }
-            post '/api/v1/search/Organization', params: params, as: :json
-            expect(json_response['result']).not_to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
-          end
-
-          it 'does not return organizations which are not allowed when overwritten' do
-            params = {
-              query: 'TestOrganization',
-              limit: 10,
-              ids:   organizations.map(&:id)
-            }
-            post '/api/v1/search/Organization', params: params, as: :json
-            expect(json_response['result']).not_to include({ 'id' => organizations[0].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[1].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[2].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[3].id, 'type' => 'Organization' })
-            expect(json_response['result']).not_to include({ 'id' => organizations[4].id, 'type' => 'Organization' })
-          end
+          expect(json_response).to include('result' => match(
+            'User' => include(
+              'object_ids'  => contain_exactly(agent.id),
+              'total_count' => 1
+            )
+          ), 'assets' => include_assets_of(agent).and(not_include_assets_of(ticket1, ticket2, ticket3)))
         end
       end
-
-      it 'does return all organizations' do
-        params = {
-          query: 'Rest',
-          limit: 10,
-        }
-        authenticated_as(admin)
-        post '/api/v1/search/Organization', params: params, as: :json
-        expect(json_response['result']).to include({ 'id' => organization1.id, 'type' => 'Organization' })
-        expect(json_response['result']).to include({ 'id' => organization2.id, 'type' => 'Organization' })
-        expect(json_response['result']).to include({ 'id' => organization3.id, 'type' => 'Organization' })
-      end
-
-      it 'does return organization specific ids' do
-        params = {
-          query: 'Rest',
-          ids:   [organization1.id],
-          limit: 10,
-        }
-        authenticated_as(admin)
-        post '/api/v1/search/Organization', params: params, as: :json
-        expect(json_response['result']).to include({ 'id' => organization1.id, 'type' => 'Organization' })
-        expect(json_response['result']).not_to include({ 'id' => organization2.id, 'type' => 'Organization' })
-        expect(json_response['result']).not_to include({ 'id' => organization3.id, 'type' => 'Organization' })
-      end
-    end
-
-    context 'with elasticsearch', searchindex: true do
-      before do
-        searchindex_model_reload([Ticket, User, Organization])
-      end
-
-      include_examples 'search for organization ids'
-    end
-
-    context 'with db only', searchindex: false do
-      before do
-        Setting.set('es_url', nil)
-      end
-
-      include_examples 'search for organization ids'
     end
   end
 

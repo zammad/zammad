@@ -149,65 +149,6 @@ FactoryBot.define do
       end
     end
 
-    factory :twitter_channel do
-      area { 'Twitter::Account' }
-      options do
-        {
-          adapter:                  'twitter',
-          user:                     {
-            id:          oauth_token&.split('-')&.first,
-            screen_name: 'APITesting001',
-            name:        'Test API Account',
-          },
-          auth:                     {
-            external_credential_id: external_credential.id,
-            oauth_token:            oauth_token,
-            oauth_token_secret:     oauth_token_secret,
-            consumer_key:           consumer_key,
-            consumer_secret:        consumer_secret,
-          },
-          sync:                     {
-            webhook_id:      '',
-            mentions:        {
-              group_id: Group.first.id
-            },
-            direct_messages: {
-              group_id: Group.first.id
-            },
-            search:          [
-              {
-                term:     search_term,
-                group_id: Group.first.id
-              },
-            ],
-          },
-          subscribed_to_webhook_id: external_credential.credentials[:webhook_id],
-        }.deep_merge(custom_options)
-      end
-
-      transient do
-        custom_options { {} }
-        external_credential { association :twitter_credential }
-        oauth_token         { external_credential.credentials[:oauth_token] }
-        oauth_token_secret  { external_credential.credentials[:oauth_token_secret] }
-        consumer_key        { external_credential.credentials[:consumer_key] }
-        consumer_secret     { external_credential.credentials[:consumer_secret] }
-        search_term         { 'zammad' }
-      end
-
-      trait :legacy do
-        transient do
-          custom_options { { sync: { import_older_tweets: true } } }
-        end
-      end
-
-      trait :invalid do
-        transient do
-          external_credential { association :twitter_credential, :invalid }
-        end
-      end
-    end
-
     factory :facebook_channel do
       area { 'Facebook::Account' }
       options do

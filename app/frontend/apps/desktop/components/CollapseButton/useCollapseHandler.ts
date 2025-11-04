@@ -3,7 +3,7 @@
 import { useLocalStorage } from '@vueuse/core'
 import { onMounted, type Ref, ref, watch } from 'vue'
 
-import emitter from '#shared/utils/emitter.ts'
+import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 
 import type { CollapseOptions, CollapseEmit } from './types.ts'
 
@@ -28,7 +28,7 @@ export const useCollapseHandler = (emit: CollapseEmit, options?: CollapseOptions
     callEmit()
   }
 
-  emitter.on('expand-collapsed-content', (name: string) => {
+  useOnEmitter('expand-collapsed-content', (name) => {
     if (options?.name === name && isCollapsed.value) toggleCollapse()
   })
 

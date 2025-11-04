@@ -11,5 +11,10 @@ Rails.application.config.filter_parameters += %i[
 
 # Zammad extensions:
 Rails.application.config.filter_parameters += %i[
-  bind_pw credentials state.body state.article.body article.body article.attachments.data attachments.data body
+  bind_pw credentials passphrase
+  state.body state.article.body article.body article.attachments.data attachments.data body
+]
+Rails.application.config.filter_parameters += [
+  %r{.+key}i,  # privateKey, apiKey, ...
+  %r{.+cert}i, # idp_cert, idpCert, …
 ]

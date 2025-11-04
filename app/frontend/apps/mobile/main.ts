@@ -17,6 +17,7 @@ import initializeStore from '#shared/stores/index.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import { setCurrentApp } from '#mobile/currentApp.ts'
 import { initializeForm, initializeFormFields } from '#mobile/form/index.ts'
 import { initializeGlobalComponentStyles } from '#mobile/initializer/initializeGlobalComponentStyles.ts'
 import initializeGlobalDirectives from '#mobile/initializer/initializeGlobalDirectives.ts'
@@ -37,6 +38,9 @@ if (forceDesktopLocalStorage.value) window.location.href = '/'
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
   initializeAppName('mobile')
+
+  // Remember the current created app.
+  setCurrentApp(app)
 
   initializeApolloClient(app)
 

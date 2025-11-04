@@ -8,6 +8,13 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] * ));
 
+:root {
+  /* LIMITED support -> opt-in modern browsers @see https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size */
+
+  /* allows animating of intrinsic absolute <-> relative units */
+  interpolate-size: allow-keywords;
+}
+
 @layer base {
   /* Override autofill styles in Firefox. */
   :-moz-autofill {
@@ -208,7 +215,7 @@
     }
 
     a {
-      @apply text-blue-800;
+      @apply text-blue-800 hover:underline hover:text-blue-850 hover:dark:text-blue-600;
     }
 
     [dir='rtl'] {
@@ -458,18 +465,74 @@
     content: '';
     height: 2px;
     width: 100%;
-    background-image: repeating-linear-gradient(
+    background: repeating-linear-gradient(
       to right,
       var(--color-blue-800),
-      var(--color-pink-200)
+      var(--color-pink-200),
+      var(--color-blue-800)
     );
+    background-size: 200% auto;
+    background-position: 0 100%;
+    transition: background-position 1s ease-in-out;
+  }
+}
+
+@utility animate-ai-stripe-vertical {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 2px;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--color-blue-800),
+      var(--color-pink-200),
+      var(--color-blue-800)
+    );
+    background-size: 100% 200%;
+    z-index: 1;
+    animation: gradient-vertical 2s linear infinite;
+    animation-fill-mode: forwards;
+  }
+}
+
+@utility animate-ai-stripe {
+  &::before {
+    animation: gradient 2s infinite;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes gradient-vertical {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 -200%;
   }
 }
 
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/word-break#break-word */
 @utility break-word {
   overflow-wrap: anywhere !important;
-  word-wrap: normal;
 }
 
 /* Uses to be in the @layer utilities */

@@ -9,18 +9,13 @@
 </div>
 
 <div class="page-content">
-  <% if @C('ai_assistance_ticket_summary') && @missingProvider: %>
-  <div class="alert alert--warning">
-    <%- @T('The provider configuration is missing. Please set up the provider before proceeding in |AI > Providers|.') %>
-  </div>
-  <% end %>
 
   <%- @description %>
 
-  <h2><%- @T('Services') %></h2>
+  <h2><%- @T('Summary Services') %></h2>
 
   <div class="ai-assistance-services">
-    <% for option in @contentOptions: %>
+    <% for option in @serviceOptions: %>
       <div class="checkbox checkbox--service">
         <label class="inline-label checkbox-replacement">
           <input type="checkbox" name="<%= option.key %>" value="true" <% if option.active: %>checked<% end %> <% if option.disabled is true: %> disabled<% end %>>
@@ -34,5 +29,20 @@
         <span class="help-text"><%- @T(option.description) %></span>
       </div>
     <% end %>
+  </div>
+
+  <div>
+    <h2 id="generation-config-label"><%- @T('Summary Generation') %></h3>
+    <p id="generation-config-description" class="help-text"><%- @T('Defines global configuration when the summary will be generated in the ticket zoom.') %></p>
+
+    <form class="js-ticketSummaryGenerationConfig ticket-summary-generation-form" id="ticket_summary_generation_action">
+      <div class="horizontal start">
+        <div class="flex form-item">
+          <div class="js-ticketSummaryGenerationConfigSelect"></div>
+          <span class="help-block"><%- @T('You can overwrite this setting for specific groups in the group manager. %l', '#manage/groups') %></span>
+        </div>
+        <button type="submit" class="btn btn--primary">Submit</button>
+      </div>
+    </form>
   </div>
 </div>

@@ -1,7 +1,12 @@
 <p><%- @T('For security reasons, the API token is shown only once. You\'ll need to save it somewhere secure before continuing.') %></p>
 
-<form>
-  <div class="input form-group">
-    <div class="controls"><input type="text" value="<%= @token %>" class="form-control input js-select" readonly></div>
+<div class="input form-group">
+  <div class="controls controls--button ignore-readonly">
+    <input readonly type="text" value="<%= @token %>" class="form-control js-select js-permanentReadonly">
+    <div class="controls-button u-clickable js-copy" role="button" aria-label="<%- @T('Copy to clipboard') %>">
+      <span class="controls-button-inner">
+        <%- @Icon('clipboard') %>
+      </span>
+    </div>
   </div>
-</form>
+</div>

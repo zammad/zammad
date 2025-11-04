@@ -12,7 +12,8 @@ module Ticket::PerformChanges
                                      :notification_email,
                                      :notification_sms,
                                      :notification_webhook,
-                                     :article_note
+                                     :article_note,
+                                     :ai_agent
   end
 
   def pre_execute(perform_changes_data)

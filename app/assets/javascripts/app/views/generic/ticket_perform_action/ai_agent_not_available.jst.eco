@@ -1,0 +1,1 @@
+<div><%- @T('No AI agent available, please create a new one or activate an existing one at "Manage > AI Agents"') %></div>

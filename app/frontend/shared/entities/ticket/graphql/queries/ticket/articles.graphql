@@ -1,21 +1,13 @@
 query ticketArticles(
-  $ticketId: ID
-  $ticketInternalId: Int
-  $ticketNumber: String
+  $ticketId: ID!
   $beforeCursor: String
   $afterCursor: String
   $pageSize: Int
   $loadFirstArticles: Boolean = true
   $firstArticlesCount: Int = 1
 ) {
-  firstArticles: ticketArticles(
-    ticket: {
-      ticketId: $ticketId
-      ticketInternalId: $ticketInternalId
-      ticketNumber: $ticketNumber
-    }
-    first: $firstArticlesCount
-  ) @include(if: $loadFirstArticles) {
+  firstArticles: ticketArticles(ticketId: $ticketId, first: $firstArticlesCount)
+    @include(if: $loadFirstArticles) {
     edges {
       node {
         ...ticketArticleAttributes
@@ -23,11 +15,7 @@ query ticketArticles(
     }
   }
   articles: ticketArticles(
-    ticket: {
-      ticketId: $ticketId
-      ticketInternalId: $ticketInternalId
-      ticketNumber: $ticketNumber
-    }
+    ticketId: $ticketId
     before: $beforeCursor
     after: $afterCursor
     last: $pageSize

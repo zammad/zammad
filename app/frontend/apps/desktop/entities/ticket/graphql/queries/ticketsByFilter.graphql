@@ -1,0 +1,26 @@
+query ticketsByFilter(
+  $customerId: ID
+  $stateTypeCategory: EnumTicketStateTypeCategory
+  $pageSize: Int = 7
+) {
+  ticketsByFilter(
+    customerId: $customerId
+    stateTypeCategory: $stateTypeCategory
+    first: $pageSize
+  ) {
+    totalCount
+    edges {
+      node {
+        id
+        internalId
+        number
+        title
+        stateColorCode
+        state {
+          id
+          name
+        }
+      }
+    }
+  }
+}

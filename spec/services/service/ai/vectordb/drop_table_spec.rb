@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Service::AI::VectorDB::DropTable do
   before do
-    Setting.set('ai_provider', 'open_ai')
+    setup_ai_provider('open_ai')
   end
 
   it 'Drop vector database table' do

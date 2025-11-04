@@ -138,7 +138,7 @@ describe('Fields - FieldGroupPermissions', () => {
 
     expect(view.getByRole('button', { name: 'Has submenu' })).toBeInTheDocument()
 
-    await view.events.click(options[0])
+    await view.events.click(options[0].firstChild as Element)
     await view.events.click(view.getByRole('button', { name: 'Add' }))
     await view.events.click(view.getAllByRole('combobox')[1])
 
@@ -149,7 +149,7 @@ describe('Fields - FieldGroupPermissions', () => {
 
     expect(getByRole(listbox, 'button', { name: 'Has submenu' })).toBeInTheDocument()
 
-    await view.events.click(options[0])
+    await view.events.click(options[0].firstChild as Element)
     // Because of clicking outside the input is a toggle, we need to click twice
     await view.events.click(view.getAllByRole('combobox')[1])
     await view.events.click(view.getAllByRole('combobox')[1])
@@ -158,7 +158,7 @@ describe('Fields - FieldGroupPermissions', () => {
 
     await view.events.click(getByRole(listbox, 'button', { name: 'Has submenu' }))
 
-    await view.events.click(getByRole(listbox, 'option'))
+    await view.events.click(getByRole(listbox, 'option').firstChild as Element)
 
     await waitFor(() => {
       expect(getNode('groupPermissions')?.value).toEqual([
@@ -233,7 +233,7 @@ describe('Fields - FieldGroupPermissions', () => {
 
     expect(options).toHaveLength(2)
 
-    expect(queryByRole(listbox, 'button', { name: 'Has submenu' })).toBeInTheDocument()
+    expect(queryByRole(listbox, 'presentation', { name: 'Has submenu' })).toBeInTheDocument() // :TODO write it properly
   })
 
   it('ensures either granular or full access is selected', async () => {
@@ -340,7 +340,7 @@ describe('Fields - FieldGroupPermissions', () => {
 
     const secondGroupSelection = options[0].textContent || ''
 
-    await view.events.click(options[0])
+    await view.events.click(options[0].firstChild as Element)
     await view.events.click(view.getAllByLabelText('Read')[1])
     await view.events.click(view.getAllByRole('button', { name: 'Remove' })[0])
 
@@ -388,7 +388,7 @@ describe('Fields - FieldGroupPermissions - Input Checklist', () => {
     const view = await renderGroupPermissionsInput(commonProps)
 
     await view.events.click(view.getByRole('combobox'))
-    await view.events.click(view.getAllByRole('option')[0])
+    await view.events.click(view.getAllByRole('option')[0].firstChild as Element)
 
     const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 

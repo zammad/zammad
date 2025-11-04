@@ -16,7 +16,7 @@ const props = defineProps<ListTableProps<Organization>>()
 
 const emit = defineEmits<ListTableEmits>()
 
-const getLink = (item: ObjectWithId) => `/organizations/${getIdFromGraphQLId(item.id)}`
+const getLink = (item: ObjectWithId) => `/organization/profile/${getIdFromGraphQLId(item.id)}`
 
 const { goToItem, goToItemLinkColumn, loadMore, resort, storageKeyId } = useListTable(
   props,

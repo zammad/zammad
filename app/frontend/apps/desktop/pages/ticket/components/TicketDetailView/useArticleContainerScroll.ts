@@ -1,7 +1,16 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { useScroll, useThrottleFn, whenever } from '@vueuse/core'
-import { computed, onMounted, onActivated, type Ref, ref, type ShallowRef, watch } from 'vue'
+import {
+  computed,
+  onMounted,
+  onActivated,
+  type Ref,
+  ref,
+  type ShallowRef,
+  watch,
+  nextTick,
+} from 'vue'
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 
@@ -97,10 +106,16 @@ export const useArticleContainerScroll = (
     { immediate: true },
   )
 
+  const waitForTransitionEnd = async () => new Promise((resolve) => setTimeout(resolve, 200)) // 200ms is transition time
+
   watch(
     () => articleListInstance.value?.rows,
     async () => {
       if (articleListInstance.value?.didScrollInitially) return
+
+      await nextTick()
+
+      await waitForTransitionEnd()
 
       await articleListInstance.value?.scrollToArticle()
 
@@ -115,13 +130,15 @@ export const useArticleContainerScroll = (
   // Handling scrolling to bottom if new article is added
   watch(
     () => articleListInstance.value?.rows,
-    (newRows, oldRows) => {
+    async (newRows, oldRows) => {
       if (!newRows || !oldRows) return
 
       if (newRows.at(-1)?.key === oldRows.at(-1)?.key) return
       // article got removed
       if (newRows.at(-1)?.key === oldRows.at(-2)?.key) return
       // article got added
+      await nextTick()
+      await waitForTransitionEnd()
       articleListInstance.value?.scrollToArticle()
     },
   )

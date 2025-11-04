@@ -213,4 +213,62 @@ RSpec.describe Channel::Driver::Smtp, integration: true, required_envs: %w[MAIL_
       end
     end
   end
+
+  describe '#deliver' do
+    let(:channel) { create(:email_channel, :smtp) }
+
+    context 'when an error is raised', aggregate_failures: true do
+      before do
+        allow_any_instance_of(Mail::Message).to receive(:deliver).and_raise(error)
+      end
+
+      context 'when the error is one of the predefined errors' do
+        let(:error) { Net::OpenTimeout.new('Could not reach server') }
+
+        it 'raises an error with a humanized message' do
+          expect { channel.deliver({}) }
+            .to raise_error(Channel::DeliveryError) { |error|
+              expect(error.original_error.message)
+                .to eq("Network connection to 'smtp.example.com' (port 465) timed out: Could not reach server")
+            }
+        end
+      end
+
+      context 'when the error is unknown' do
+        let(:error) { StandardError.new('custom error message') }
+
+        it 'forwards the error' do
+          expect { channel.deliver({}) }
+            .to raise_error(Channel::DeliveryError) { |error|
+              expect(error.original_error.message).to eq("'smtp.example.com' (port 465): custom error message")
+            }
+        end
+      end
+
+      context 'when it was sending a notification' do
+        let(:error) { Net::SMTPUnknownError.new(error_response, message: 'smtp error') }
+        let(:error_response) { Net::SMTP::Response.parse("#{error_code} dummy error") }
+
+        context 'when the error is silenceable' do
+          let(:error_code) { 400 }
+
+          it 'raises no error' do
+            expect { channel.deliver({}, true) }
+              .not_to raise_error
+          end
+        end
+
+        context 'when the error is not silenceable' do
+          let(:error_code) { 123 }
+
+          it 'raises an error' do
+            expect { channel.deliver({}, true) }
+              .to raise_error(Channel::DeliveryError) { |error|
+                expect(error.original_error.message).to eq("'smtp.example.com' (port 465): smtp error")
+              }
+          end
+        end
+      end
+    end
+  end
 end

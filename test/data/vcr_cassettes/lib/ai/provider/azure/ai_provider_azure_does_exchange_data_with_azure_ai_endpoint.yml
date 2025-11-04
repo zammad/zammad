@@ -7,7 +7,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"system","content":""},{"role":"user","content":"This
         is a connection test. Return in unprettified JSON ''{ \"connected\": \"true\"
-        }'' if you got the message."}],"temperature":null,"response_format":{"type":"json_object"},"stream":false,"store":false}'
+        }'' if you got the message. Respond in plain JSON format only and do not wrap
+        it in code block markers."}],"temperature":null,"response_format":{"type":"json_object"},"stream":false,"store":false}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -27,11 +28,11 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '1046'
+      - '1060'
       Content-Type:
       - application/json
       Apim-Request-Id:
-      - 8be37a66-5817-4849-87d3-cb77cdd44a85
+      - 4c741502-58c9-4c93-a2c3-096408a20d5d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -43,33 +44,28 @@ http_interactions:
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Remaining-Tokens:
-      - '49332'
+      - '49947'
       X-Ratelimit-Limit-Tokens:
       - '50000'
-      Cmp-Upstream-Response-Duration:
-      - '152'
+      Azureml-Model-Session:
+      - d115-20251020025138
       X-Accel-Buffering:
       - 'no'
       X-Ms-Rai-Invoked:
       - 'true'
-      X-Envoy-Upstream-Service-Time:
-      - '192'
       X-Request-Id:
-      - 65bf12d3-4967-4d22-9192-ba7113c66b4e
-      Ms-Azureml-Model-Time:
-      - '190'
+      - d45dfe94-482b-44aa-93d5-3016107cb613
       X-Ms-Client-Request-Id:
       - Not-Set
-      Azureml-Model-Session:
-      - v20250415-3-168426324-2
       X-Ms-Deployment-Name:
       - gpt-4o
       Date:
-      - Wed, 14 May 2025 13:44:09 GMT
+      - Mon, 27 Oct 2025 09:28:30 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"{\"connected\":\"true\"}","refusal":null,"role":"assistant"}}],"created":1747230250,"id":"chatcmpl-BX6h0G4NfDf8PTDD24dUowmqHtjiH","model":"gpt-4o","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":"fp_ee1d74bde0","usage":{"completion_tokens":6,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":39,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":45}}
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"{
+        \"connected\": \"true\" }","refusal":null,"role":"assistant"}}],"created":1761557310,"id":"chatcmpl-CVDoc6GHVxRirHnUH43dRzHJNP7uw","model":"gpt-4o-2024-11-20","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":"fp_b54fe76834","usage":{"completion_tokens":9,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":55,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":64}}
 
         '
-  recorded_at: Wed, 14 May 2025 13:44:10 GMT
+  recorded_at: Mon, 27 Oct 2025 09:28:30 GMT
 recorded_with: VCR 6.3.1

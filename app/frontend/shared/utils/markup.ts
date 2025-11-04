@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
+import { escape } from 'lodash-es'
+
 // to be compatible with app/assets/javascripts/app/lib/app_post/i18n.coffee:267
 export const markup = (source: string): string =>
-  source
+  escape(source)
     .replace(/\|\|(.+?)\|\|/gm, '<i>$1</i>')
     .replace(/\|(.+?)\|/gm, '<b>$1</b>')
     .replace(/_(.+?)_/gm, '<u>$1</u>')

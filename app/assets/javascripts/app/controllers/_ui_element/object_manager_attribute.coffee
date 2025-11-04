@@ -501,6 +501,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     newRow = element.find('.js-template').clone().removeClass('js-template')
     newRow.find('.js-key').attr('level', level)
     newRow.find('.js-key').val(child.name)
+    newRow.find('.js-active').prop('checked', !child.disabled)
     @setRowLevel(newRow, level)
     if level is 5
       newRow.find('.js-addChild').addClass('hide')

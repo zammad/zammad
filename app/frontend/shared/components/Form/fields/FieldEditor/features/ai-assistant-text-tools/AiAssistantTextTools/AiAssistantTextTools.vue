@@ -1,16 +1,20 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import {
   useNotifications,
   NotificationTypes,
 } from '#shared/components/CommonNotifications/index.ts'
+import { PLUGIN_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import { getAiAssistantTextToolsClasses } from '#shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantTextTools/initializeAiAssistantTextToolsClasses.ts'
 import type { FieldEditorProps } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { getNodeByName } from '#shared/components/Form/utils.ts'
+import { useAiAssistantTextToolsStore } from '#shared/stores/aiAssistantTextTools.ts'
 
+import type { FormKitNode } from '@formkit/core'
 import type { Editor } from '@tiptap/vue-3'
 
 const props = defineProps<{
@@ -25,12 +29,47 @@ const emit = defineEmits<{
   'show-ai-text-loader': [boolean]
 }>()
 
+const meta = props.formContext?.meta || {}
+const fieldName = meta[PLUGIN_NAME]?.groupNodeName
+const { formId } = props.formContext!
+
+const groupField = getNodeByName(formId as string, fieldName as string) as
+  | FormKitNode<number>
+  | undefined
+
+const groupId = ref(groupField?.value)
+
+groupField?.on('commit', ({ payload }) => {
+  groupId.value = payload
+})
+
+onBeforeUnmount(() => {
+  groupField?.off('commit')
+})
+
 const smartEditorClasses = getAiAssistantTextToolsClasses()
+
+const { lookupResult } = useAiAssistantTextToolsStore()
+
+const textToolsList = computed(() => lookupResult(groupId.value)?.value)
 
 const { notify } = useNotifications()
 
 const hasSelection = computed(
   () => props.editor?.state.selection.anchor !== props.editor?.state.selection.head,
+)
+
+const actions = computed(
+  () =>
+    textToolsList.value?.aiAssistanceTextToolsList.map((tool) => ({
+      key: tool.id,
+      label: tool.name,
+      disabled: !hasSelection.value,
+      command: () => {
+        emit('action')
+        props.editor!.commands.modifyTextWithAi(tool.id)
+      },
+    })) ?? [],
 )
 
 onMounted(() => {
@@ -46,49 +85,10 @@ onMounted(() => {
     })
   })
 })
-
-const actions = [
-  {
-    key: 'improve-writing',
-    label: __('Improve writing'),
-    disabled: !hasSelection.value,
-    command: () => {
-      emit('action')
-      props.editor!.commands.improveWriting()
-    },
-  },
-  {
-    key: 'fix-spelling-grammar',
-    label: __('Fix spelling and grammar'),
-    disabled: !hasSelection.value,
-    command: () => {
-      emit('action')
-      props.editor!.commands.fixSpellingAndGrammar()
-    },
-  },
-  {
-    key: 'expand',
-    label: __('Expand'),
-    disabled: !hasSelection.value,
-    command: () => {
-      emit('action')
-      props.editor!.commands.expandText()
-    },
-  },
-  {
-    key: 'simplify',
-    label: __('Simplify'),
-    disabled: !hasSelection.value,
-    command: () => {
-      emit('action')
-      props.editor!.commands.simplifyText()
-    },
-  },
-]
 </script>
 
 <template>
-  <div :class="smartEditorClasses.popover.base">
+  <div v-if="actions.length" :class="smartEditorClasses.popover.base">
     <ul ref="list">
       <li v-for="action in actions" :key="action.key" :class="smartEditorClasses.popover.item">
         <button

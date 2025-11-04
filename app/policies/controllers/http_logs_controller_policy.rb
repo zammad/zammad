@@ -1,5 +1,17 @@
 # Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::HttpLogsControllerPolicy < Controllers::ApplicationControllerPolicy
-  default_permit!('admin.*')
+  def index?
+    permitted?
+  end
+
+  def create?
+    permitted?
+  end
+
+  private
+
+  def permitted?
+    HttpLogPolicy.new(user, record).permitted?
+  end
 end

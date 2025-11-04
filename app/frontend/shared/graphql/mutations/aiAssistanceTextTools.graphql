@@ -1,5 +1,0 @@
-mutation aiAssistanceTextTools($input: String!, $serviceType: EnumAITextToolService!) {
-  aiAssistanceTextTools(input: $input, serviceType: $serviceType) {
-    output
-  }
-}

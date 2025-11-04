@@ -31,13 +31,10 @@ FactoryBot.define do
     end
 
     factory :twitter_ticket do
-      with_channel
-      channel_name { :twitter_channel }
-
       preferences do
         {
-          channel_id:          channel.id,
-          channel_screen_name: channel.options[:user][:screen_name]
+          channel_id:          1234,
+          channel_screen_name: 'screen'
         }
       end
     end

@@ -8,14 +8,15 @@ class Setting < ApplicationModel
   store         :state_current
   store         :state_initial
   store         :preferences
+  before_validation :transform
   before_validation :state_check
   before_create :set_initial
   after_save    :reset_class_cache_key
   after_commit  :reset_other_caches, :broadcast_frontend, :check_refresh
 
-  validates_with Setting::Validator
+  validates_with Setting::Validator, if: -> { !skip_validate }
 
-  attr_accessor :state
+  attr_accessor :state, :skip_validate
 
   @@current         = {}
   @@raw             = {}
@@ -36,11 +37,13 @@ set config setting
 
 =end
 
-  def self.set(name, value)
+  def self.set(name, value, validate: true)
     setting = Setting.find_by(name: name)
     if !setting
       raise "Can't find config setting '#{name}'"
     end
+
+    setting.skip_validate = !validate
 
     setting.state_current = { value: value }
     setting.save!
@@ -248,6 +251,11 @@ reload config settings
     return if ['auth_saml_credentials'].exclude?(name)
 
     AppVersion.trigger_browser_reload AppVersion::MSG_CONFIG_CHANGED
+  end
+
+  def transform
+    Array(preferences[:transformations])
+      .map { |klass| klass.constantize.new(self).run }
   end
 end
 # rubocop:enable Style/ClassVars

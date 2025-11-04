@@ -7,15 +7,8 @@ RSpec.describe MonitoringHelper::HealthChecker::AIProviderAccessible, integratio
 
   describe '#check_health' do
     context 'when AI integration is not configured' do
-      it 'reports no issue' do
-        expect(instance.check_health.issues).to be_blank
-      end
-    end
-
-    context 'when AI integration has an empty configuration' do
       before do
-        Setting.set('ai_provider', 'open_ai')
-        Setting.set('ai_provider_config', {})
+        unset_ai_provider
       end
 
       it 'reports no issue' do
@@ -28,8 +21,7 @@ RSpec.describe MonitoringHelper::HealthChecker::AIProviderAccessible, integratio
         # Reset preferences to avoid validation errors.
         ai_config = Setting.find_by(name: 'ai_provider_config')
         ai_config.update!(preferences: {})
-        Setting.set('ai_provider', 'open_ai')
-        Setting.set('ai_provider_config', { 'token' => '123' })
+        setup_ai_provider('open_ai', token: '123')
       end
 
       context 'when AI provider is accessible' do

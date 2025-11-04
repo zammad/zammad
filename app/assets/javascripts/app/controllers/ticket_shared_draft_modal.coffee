@@ -166,6 +166,15 @@ class Content extends App.Controller
       when App.TicketSharedDraftStart
         @shared_draft_content?.body
 
+  bodyWithSignaturePlaceholder: ->
+    body = $('<div>').html(@body())
+
+    body
+      .find('[data-signature-placeholder]')
+      .text("[#{App.i18n.translateInline(__('Signature'))}]\n")
+
+    body.html()
+
   author: ->
     App.User.find @shared_draft.updated_by_id
 
@@ -178,7 +187,7 @@ class Content extends App.Controller
 
   render: ->
     @html App.view('ticket_shared_draft_modal')(
-      body:      @body()
+      body:      @bodyWithSignaturePlaceholder()
       name:      @author().displayName()
       timestamp: @timestamp()
     )

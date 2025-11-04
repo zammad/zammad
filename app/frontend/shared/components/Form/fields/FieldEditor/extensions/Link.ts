@@ -48,7 +48,7 @@ export default Link.extend({
     let activeLinkMarkElement: HTMLLinkElement | null = null
 
     const setAriaLabels = (id: string) => {
-      const linkMark = getActiveNodeOrMark((this as { editor: Editor }).editor)
+      const linkMark = getActiveNodeOrMark(this.editor)
 
       if (!linkMark) return
       activeLinkMarkElement = linkMark as HTMLLinkElement

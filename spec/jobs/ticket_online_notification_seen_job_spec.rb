@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe TicketOnlineNotificationSeenJob, type: :job do
-  let!(:user)       { create(:user) }
-  let!(:other_user) { create(:user) }
-  let!(:ticket)     { create(:ticket, owner: user, created_by_id: user.id) }
-  let!(:online_notification) do
+  let(:group)      { create(:group) }
+  let(:user)       { create(:agent, groups: [group]) }
+  let(:other_user) { create(:agent, groups: [group]) }
+  let(:ticket)     { create(:ticket, owner: user, group: group) }
+  let(:online_notification) do
     create(:online_notification, o_id: ticket.id, user_id: user.id)
   end
 
@@ -21,5 +22,23 @@ RSpec.describe TicketOnlineNotificationSeenJob, type: :job do
     expect do
       described_class.perform_now(ticket.id, user.id)
     end.to change { online_notification.reload.seen }
+  end
+
+  context 'when some ticket subscribers exists for the ticket' do
+    before do
+      create(:mention, mentionable: ticket, user: other_user)
+    end
+
+    it 'does not mark online notifications as seen for mentioned users' do
+      # Create an online notification for the mentioned user on the same ticket
+      mentioned_notification = create(:online_notification, o_id: ticket.id, user_id: other_user.id)
+
+      # Move ticket to a state that would normally auto-mark notifications as seen
+      ticket.update!(state_id: Ticket::State.lookup(name: 'closed').id)
+
+      # Ensure the mentioned user's notification is NOT auto-marked as seen
+      expect { described_class.perform_now(ticket.id, user.id) }
+        .not_to change { mentioned_notification.reload.seen }.from(false)
+    end
   end
 end

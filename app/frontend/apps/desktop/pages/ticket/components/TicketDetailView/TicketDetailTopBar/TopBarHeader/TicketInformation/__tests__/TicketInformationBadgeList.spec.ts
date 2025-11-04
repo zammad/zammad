@@ -5,11 +5,12 @@ import { computed, ref } from 'vue'
 import { renderComponent } from '#tests/support/components/index.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
+import type { Ticket } from '#shared/graphql/types.ts'
 
 import TicketInformationBadgeList from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue'
 import { mockTicketChecklistQuery } from '#desktop/pages/ticket/graphql/queries/ticketChecklist.mocks.ts'
 
-const ticket = createDummyTicket()
+let ticket: Ticket
 
 vi.mock('#desktop/pages/ticket/composables/useTicketInformation.ts', () => ({
   useTicketInformation: () => ({
@@ -36,6 +37,7 @@ describe('TicketInformationBadgeList', () => {
   })
 
   it('displays a open ticket badge', () => {
+    ticket = createDummyTicket()
     const wrapper = renderComponent(TicketInformationBadgeList, {})
 
     const badges = wrapper.getAllByTestId('common-badge')
@@ -44,6 +46,7 @@ describe('TicketInformationBadgeList', () => {
   })
 
   it('displays a ticket priority badge', () => {
+    ticket = createDummyTicket()
     const wrapper = renderComponent(TicketInformationBadgeList, {})
 
     const badges = wrapper.getAllByTestId('common-badge')
@@ -51,7 +54,21 @@ describe('TicketInformationBadgeList', () => {
     expect(badges.at(1)).toHaveTextContent(ticket.priority.name)
   })
 
+  it('do not display a ticket priority badge if user has no agent permissions', () => {
+    ticket = createDummyTicket({ defaultPolicy: { update: false, agentReadAccess: false } })
+
+    const wrapper = renderComponent(TicketInformationBadgeList, {})
+
+    const badges = wrapper.getAllByTestId('common-badge')
+
+    // Verify that no badge contains priority content.
+    badges.forEach((badge) => {
+      expect(badge).not.toHaveTextContent(ticket.priority.name)
+    })
+  })
+
   it('displays a ticket created at badge', () => {
+    ticket = createDummyTicket()
     const wrapper = renderComponent(TicketInformationBadgeList, {})
 
     const badges = wrapper.getAllByTestId('common-badge')

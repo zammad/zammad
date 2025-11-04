@@ -3,6 +3,7 @@
 module Gql::Types
   class MacroType < Gql::Types::BaseObject
     include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasInternalIdField
     include Gql::Types::Concerns::HasInternalNoteField
     include Gql::Types::Concerns::HasPunditAuthorization
 

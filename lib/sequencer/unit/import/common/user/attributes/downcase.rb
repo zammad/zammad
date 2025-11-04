@@ -11,7 +11,7 @@ class Sequencer::Unit::Import::Common::User::Attributes::Downcase < Sequencer::U
     %i[login email].each do |attribute|
       next if mapped[attribute].blank?
 
-      mapped[attribute].downcase!
+      mapped[attribute] = mapped[attribute].downcase
     end
   end
 end

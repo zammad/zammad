@@ -7,6 +7,7 @@ require 'rails_helper'
 RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, authenticated_as: :authenticate, db_strategy: :reset, type: :system do
   let(:primary_organization)    { create(:organization) }
   let(:secondary_organizations) { create_list(:organization, 4) }
+  let(:third_organization)      { create(:organization) }
   let(:customer)                { create(:customer, organization: primary_organization, organizations: secondary_organizations, address: 'Berlin') }
   let(:group)                   { create(:group) }
   let(:ticket)                  { create(:ticket, customer: customer, group: group) }
@@ -60,12 +61,17 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
 
     wait_for_form_to_settle('user-edit')
 
+    # Does not trigger form updater for some reason.
+    find_input('First name').clear
+    find_input('Last name').clear
+    find_input('Address').clear
+
     within_form(form_updater_gql_number: 2) do
       find_input('Text Attribute').type('foobar')
       find_input('First name').type('Foo')
       find_input('Last name').type('Bar')
       find_input('Address').type('München')
-      find_autocomplete('Organization').search_for_option(secondary_organizations.first.name)
+      find_autocomplete('Organization').search_for_option(third_organization.name)
 
       # # Despite the name of the action, the following DESELECTS all secondary organizations for the customer.
       # #   This works because all these values are already selected in the field.
@@ -78,7 +84,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
 
     expect(find('[role="img"][aria-label="Avatar (Foo Bar)"]')).to have_text('FB')
     expect(find('h2')).to have_text('Foo Bar')
-    expect(find('h3')).to have_text(secondary_organizations.first.name)
+    expect(find('h3')).to have_text(third_organization.name)
     expect(find('section', text: 'Address')).to have_text('München')
     expect(find('section', text: 'Text Attribute')).to have_text('foobar')
 

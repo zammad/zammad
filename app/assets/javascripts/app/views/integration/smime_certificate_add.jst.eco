@@ -19,7 +19,7 @@
     <label for="certificate-paste"><%- @T('Paste Certificate') %></label>
   </div>
   <div class="controls">
-    <textarea cols="25" rows="20" name="data" style="height: 200px;" id="certificate-paste"></textarea>
+    <textarea cols="25" rows="20" name="certificate" style="height: 200px;" id="certificate-paste"></textarea>
   </div>
 </div>
 

@@ -16,7 +16,7 @@ PreCommit:
     command: ['bundle', 'exec', 'rubocop']
   CoffeeLint:
     required_executable: 'coffeelint'
-    install_command: 'npm install -g @coffeelint/cli'
+    install_command: 'npm install -g coffeelint@1'
     # .dev/coffeelint/rules/* not supported in YAML, specify all rules separately.
     flags:
       ['--reporter=csv', '--rules', './.dev/coffeelint/rules/detect_translatable_string.coffee']
@@ -26,6 +26,7 @@ PreCommit:
   Stylelint:
     enabled: true
     required_executable: 'pnpm'
+    install_command: 'npm install -g stylelint'
     command: ['pnpm', '--silent', 'lint:css:cmd']
     include:
       - '**/*.scss'

@@ -39,6 +39,7 @@ export interface Props {
   fullscreen?: boolean
   global?: boolean
   escapeConfig?: Pick<OrderKeyHandlerConfig, 'beforeHandlerRuns' | 'handler'>
+  noClose?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -66,6 +67,7 @@ const footerElement = useTemplateRef('footer')
 const contentElement = useTemplateRef('content')
 
 const close = async (cancel?: boolean) => {
+  if (props.noClose) return
   emit('close', cancel)
   await closeDialog(props.name, props.global)
 }
@@ -149,6 +151,7 @@ const transition = VITE_TEST_MODE
               </div>
             </slot>
             <CommonButton
+              v-if="!noClose"
               class="ms-auto"
               variant="neutral"
               size="medium"

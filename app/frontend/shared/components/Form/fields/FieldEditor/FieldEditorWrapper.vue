@@ -37,6 +37,7 @@ const preContext = {
   focus: () => queueAction((context) => nextTick(() => context.focus())),
 }
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, preContext)
 </script>
 

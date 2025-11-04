@@ -47,7 +47,8 @@
       {
         "ignoreAtRules": ["apply"]
       }
-    ]
+    ],
+    "nesting-selector-no-missing-scoping-root": null
   },
   "ignoreFiles": [
     "public/assets/*.css",

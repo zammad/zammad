@@ -4,6 +4,7 @@ require 'rails_helper'
 require 'models/application_model_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/has_timeplan_examples'
+require 'models/concerns/touches_perform_references_examples'
 
 RSpec.describe Job, type: :model do
   subject(:job) { create(:job) }
@@ -11,6 +12,7 @@ RSpec.describe Job, type: :model do
   it_behaves_like 'ApplicationModel', can_assets: { selectors: %i[condition perform] }
   it_behaves_like 'HasXssSanitizedNote', model_factory: :job
   it_behaves_like 'HasTimeplan'
+  it_behaves_like 'TouchesPerformReferences'
 
   describe 'validation' do
     it 'uses Validations::VerifyPerformRulesValidator' do
@@ -660,6 +662,19 @@ RSpec.describe Job, type: :model do
       job.run(true)
       expect(Ticket::Article.last.subject).to eq(job_subject)
       expect(Ticket::Article.last.attachments).to be_present
+    end
+  end
+
+  describe 'Scheduler config will be changed with variable execution value when executed #5792' do
+    subject(:job) { create(:job, perform: { 'ticket.title' => { 'value' => "my name is \#{ticket.customer.firstname}" } }) }
+
+    let(:customer) { create(:customer, firstname: 'Homer', lastname: 'Simpson') }
+    let(:ticket)   { create(:ticket, customer: customer) }
+
+    it 'does change ticket state to closed' do
+      ticket
+      expect { job.run(true) }.not_to change { job.reload.perform['ticket.title']['value'] }
+      expect(ticket.reload.title).to eq('my name is Homer')
     end
   end
 end

@@ -17,9 +17,9 @@
           <% if item.navheader: %>
             <li class="dropdown-header"><%- @T(item.navheader) %></li>
           <% end %>
-          <li<% if item.toggle: %> class="dropdown-menu-item dropdown-menu-item--toggle"<% end %>>
+          <li class="<% if item.containerClass: %><%= item.containerClass %><% end %> <% if item.toggle: %>dropdown-menu-item dropdown-menu-item--toggle<% end %>">
             <% if item.target: %>
-            <a href="<%= item.target %>" data-key="<%- item.key %>" class="horizontal center <% if item.onclick: %>js-onclick<% end %>">
+            <a href="<%= item.target %>" data-key="<%- item.key %>" class="horizontal center <% if item.onclick: %>js-onclick<% end %>" <% if item.external: %>target="_blank"<% end %>>
             <% else: %>
             <div class="horizontal center">
             <% end %>

@@ -20,7 +20,7 @@
       <label for="key-paste"><%- @T('Paste Private Key') %></label>
     </div>
     <div class="controls">
-      <textarea cols="25" rows="20" name="data" style="height: 200px;" id="key-paste"></textarea>
+      <textarea cols="25" rows="20" name="private_key" style="height: 200px;" id="key-paste"></textarea>
     </div>
   </div>
 </div>

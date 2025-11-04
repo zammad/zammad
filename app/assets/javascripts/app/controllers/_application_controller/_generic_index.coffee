@@ -120,6 +120,11 @@ class App.ControllerGenericIndex extends App.Controller
 
       App[@genericObject][method](
         (collection, data) =>
+          maxPage = Math.max(1, Math.ceil(data.total_count / @pageData.pagerPerPage))
+          if @pageData.pagerSelected && @pageData.pagerSelected > maxPage
+            @pageData.pagerSelected = maxPage
+            return @navigate "#{@pageData.pagerBaseUrl}#{@pageData.pagerSelected}/#{encodeURIComponent(@searchQuery)}"
+
           @pageData.pagerTotalCount = data.total_count
           if data.total_count > @pageData.pagerPerPage || @searchQuery
             @dndCallback = undefined
@@ -128,6 +133,9 @@ class App.ControllerGenericIndex extends App.Controller
             @table.renderState = undefined if @table
           @stopLoading()
           @renderObjects(collection)
+
+          @renderCallback() if @renderCallback
+
         params
       )
       return
@@ -137,6 +145,8 @@ class App.ControllerGenericIndex extends App.Controller
       order:  @defaultOrder
     )
     @renderObjects(objects)
+
+    @renderCallback() if @renderCallback
 
   renderObjects: (objects) =>
 
@@ -158,11 +168,13 @@ class App.ControllerGenericIndex extends App.Controller
         head:              @pageData.objects
         buttons:           @pageData.buttons
         subHead:           @pageData.subHead
+        topAlert:          @pageData.topAlert
         showDescription:   showDescription
         objects:           @pageData.objects
         searchPlaceholder: @pageData.searchPlaceholder
         searchBar:         @searchBar
         searchQuery:       @searchQuery
+        hideSearchBar:     _.isEmpty(@searchQuery) and _.isEmpty(objects)
         filterMenu:        @filterMenu
       )
 

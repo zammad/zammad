@@ -3,6 +3,7 @@
 require 'rails_helper'
 require 'models/application_model_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
+require 'models/concerns/touches_perform_references_examples'
 
 RSpec.describe Trigger, type: :model do
   subject(:trigger) { create(:trigger, condition: condition, perform: perform, activator: activator, execution_condition_mode: execution_condition_mode) }
@@ -18,6 +19,7 @@ RSpec.describe Trigger, type: :model do
 
   it_behaves_like 'ApplicationModel', can_assets: { selectors: %i[condition perform] }
   it_behaves_like 'HasXssSanitizedNote', model_factory: :trigger
+  it_behaves_like 'TouchesPerformReferences'
 
   describe 'validation' do
     it 'uses Validations::VerifyPerformRulesValidator' do

@@ -31,7 +31,7 @@ module Gql::Mutations
       hash
         .slice(:adapter)
         .merge(hash[:options])
-        .tap { _1[:ssl] = map_ssl_value(_1) }
+        .tap { it[:ssl] = map_ssl_value(it) }
     end
 
     def map_ssl_value(hash)

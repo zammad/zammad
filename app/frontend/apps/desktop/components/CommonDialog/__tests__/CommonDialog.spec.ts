@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises } from '@vue/test-utils'
-import { afterAll, beforeAll, expect } from 'vitest'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
@@ -12,20 +11,6 @@ import { getDialogMeta, useDialog } from '../useDialog.ts'
 const html = String.raw
 
 describe('visuals for common dialog', () => {
-  let mainElement: HTMLElement
-  let app: HTMLDivElement
-
-  beforeAll(() => {
-    app = document.createElement('div')
-    app.id = 'app'
-    document.body.appendChild(app)
-
-    mainElement = document.createElement('main')
-    mainElement.id = 'main-content'
-
-    app.insertAdjacentElement('beforeend', mainElement)
-  })
-
   beforeEach(() => {
     const { dialogsOptions } = getDialogMeta()
     dialogsOptions.set('dialog', {
@@ -48,6 +33,7 @@ describe('visuals for common dialog', () => {
         default: 'Content Slot',
       },
       router: true,
+      dialog: true,
     })
 
     expect(wrapper.getByText('Some Title')).toBeInTheDocument()
@@ -64,6 +50,7 @@ describe('visuals for common dialog', () => {
         header: 'Some Title',
       },
       router: true,
+      dialog: true,
     })
 
     expect(wrapper.getByText('Some Title')).toBeInTheDocument()
@@ -79,6 +66,7 @@ describe('visuals for common dialog', () => {
           teleport: true,
         },
       },
+      dialog: true,
       router: true,
     })
 
@@ -99,6 +87,35 @@ describe('visuals for common dialog', () => {
     expect(emitted.close[2]).toEqual([false])
   })
 
+  it('can not close dialog with keyboard and clicks, if noClose is set', async () => {
+    const wrapper = renderComponent(CommonDialog, {
+      props: {
+        name: 'dialog',
+        noClose: true,
+      },
+      global: {
+        stubs: {
+          teleport: true,
+        },
+      },
+      router: true,
+      dialog: true,
+    })
+
+    await flushPromises()
+
+    await wrapper.events.keyboard('{Escape}')
+
+    const emitted = wrapper.emitted()
+
+    expect(emitted.close).toBeUndefined()
+
+    expect(wrapper.queryByLabelText('Close dialog')).not.toBeInTheDocument()
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'OK' }))
+    expect(emitted.close).toBeUndefined()
+  })
+
   it('rendering different footer button content', () => {
     const wrapper = renderComponent(CommonDialog, {
       props: {
@@ -112,6 +129,7 @@ describe('visuals for common dialog', () => {
         default: 'Content Slot',
       },
       router: true,
+      dialog: true,
     })
 
     expect(wrapper.getByRole('button', { name: 'Yes, continue' })).toBeInTheDocument()
@@ -124,6 +142,7 @@ describe('visuals for common dialog', () => {
         name: 'dialog',
       },
       router: true,
+      dialog: true,
     })
 
     expect(wrapper.getByRole('dialog')).toHaveAccessibleName('foobar')
@@ -151,6 +170,7 @@ describe('visuals for common dialog', () => {
         `,
       },
       router: true,
+      dialog: true,
     })
 
     wrapper.getByTestId('input').focus()
@@ -189,6 +209,7 @@ describe('visuals for common dialog', () => {
         `,
       },
       router: true,
+      dialog: true,
     })
 
     await flushPromises()
@@ -245,10 +266,11 @@ describe('visuals for common dialog', () => {
         name: 'dialog',
         fullscreen: false,
       },
+      dialog: true,
     })
 
-    expect(mainElement.children).not.include(wrapper.baseElement)
-    expect(app.children).include(wrapper.baseElement)
+    expect(document.body).not.include(wrapper.baseElement)
+    expect(document.body).include(wrapper.baseElement)
   })
 
   it('supports displaying over entire viewport', () => {
@@ -259,6 +281,6 @@ describe('visuals for common dialog', () => {
       },
     })
 
-    expect(mainElement.children).include(wrapper.baseElement)
+    expect(document.body).include(wrapper.baseElement)
   })
 })

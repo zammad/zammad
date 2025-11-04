@@ -164,7 +164,10 @@ describe('CommonSelect.vue', () => {
 
     await view.events.click(view.getByText('Open Select'))
 
-    expect(view.getByRole('option')).toHaveAttribute('aria-disabled', 'true')
+    expect(view.getByTestId('select-item')).toHaveAttribute(
+      'aria-description',
+      'This item expands to show more options',
+    )
 
     await view.events.click(view.getByText('Item A'))
 
@@ -271,10 +274,13 @@ describe('CommonSelect.vue', () => {
 
     expect(view.queryByRole('button', { name: 'Back to previous page' })).not.toBeInTheDocument()
 
-    expect(view.getByRole('option')).toHaveTextContent('parent')
-    expect(view.getByRole('option')).toHaveAttribute('aria-disabled', 'true')
+    expect(view.getByTestId('select-item')).toHaveTextContent('parent')
+    expect(view.getByTestId('select-item')).toHaveAttribute(
+      'aria-description',
+      'This item expands to show more options',
+    )
 
-    await view.events.click(view.getByRole('button', { name: 'Has submenu' }))
+    await view.events.click(view.getByTestId('select-item'))
 
     expect(view.emitted().push).toEqual([[testParentOption]])
 
@@ -283,7 +289,7 @@ describe('CommonSelect.vue', () => {
       isChildPage: true,
     })
 
-    expect(view.getByRole('option')).toHaveTextContent('child')
+    expect(view.getByTestId('select-item')).toHaveTextContent('child')
 
     await view.events.click(view.getByRole('button', { name: 'Back to previous page' }))
 
@@ -296,10 +302,13 @@ describe('CommonSelect.vue', () => {
 
     expect(view.queryByRole('button', { name: 'Back to previous page' })).not.toBeInTheDocument()
 
-    expect(view.getByRole('option')).toHaveTextContent('parent')
-    expect(view.getByRole('option')).toHaveAttribute('aria-disabled', 'true')
+    expect(view.getByTestId('select-item')).toHaveTextContent('parent')
+    expect(view.getByTestId('select-item')).toHaveAttribute(
+      'aria-description',
+      'This item expands to show more options',
+    )
 
-    await view.events.click(view.getByRole('button', { name: 'Has submenu' }))
+    await view.events.click(view.getByTestId('select-item'))
 
     await view.rerender({
       options: [testChildOption],

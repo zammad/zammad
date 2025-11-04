@@ -19,13 +19,23 @@
           environment:
             - ZAMMAD_HTTP_TYPE=https
             - ZAMMAD_FQDN=${APP_FQDN}
+            - ZAMMAD_AI_TOKEN=${ZAMMAD_AI_TOKEN}
         zammad-railsserver:
+          environment:
+            - ZAMMAD_AI_TOKEN=${ZAMMAD_AI_TOKEN}
           ports:
             - "127.0.0.1:${APP_PORT}:3000"
+        zammad-scheduler:
+          environment:
+            - ZAMMAD_AI_TOKEN=${ZAMMAD_AI_TOKEN}
         zammad-websocket:
+          environment:
+            - ZAMMAD_AI_TOKEN=${ZAMMAD_AI_TOKEN}
           ports:
             - "127.0.0.1:${WS_PORT}:6042"
         zammad-backup:
+          environment:
+            - ZAMMAD_AI_TOKEN=${ZAMMAD_AI_TOKEN}
           profiles:
             - do-not-start
       YML_FILE
@@ -60,7 +70,6 @@
     - |
       cat - <<JSON_FILE > tmp/auto_wizard.json
       {
-        "Token": "${CI_JOB_TOKEN}",
         "Users": [
           {
             "login": "admin@example.com",
@@ -218,7 +227,7 @@
     DOCKER_COMPOSE_COMMAND: docker compose -f docker-compose.yml -f docker-compose.review-app.yml -p ${APP_NAME}
   environment:
     name: ${APP_NAME}
-    url: https://${APP_FQDN}#getting_started/auto_wizard/${CI_JOB_TOKEN}
+    url: https://${APP_FQDN}#getting_started/auto_wizard
   rules:
     - if: $CI_MERGE_REQUEST_ID
       when: manual

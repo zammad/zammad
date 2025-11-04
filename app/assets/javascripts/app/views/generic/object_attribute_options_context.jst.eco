@@ -1,0 +1,70 @@
+<div class="<%= @attribute.class %>">
+  <input class="js-objectAttributeOptionsContext" type="hidden" name="{json}<%= @attribute.name %>" value="<%= @valueRaw %>" />
+
+  <div class="form-group">
+    <div class="horizontal-filters-switch horizontal-filters-switch--align-start">
+      <label>
+        <%- @T(@attribute.limit_label) %>
+        <div class="zammad-switch zammad-switch--small js-switch">
+          <input type="checkbox" value="true" id="attribute-<%= @attribute.name %>-limit-toggle" <% if @limitActive: %>checked<% end %> <% if @attribute.disabled: %>disabled<% end %>>
+          <label for="attribute-<%= @attribute.name %>-limit-toggle"></label>
+        </div>
+      </label>
+    </div>
+    <% if @attribute.limit_description: %><span class="js-objectAttributeOptionsContextLimitDescription help-text<% if @limitActive: %> hide<% end %>"><%- @T(@attribute.limit_description) %></span><% end %>
+  </div>
+
+  <div class="js-objectAttributeOptionsContextListContainer form-group <% if @required: %>is-required<% end %> <% if !@limitActive: %>hide<% end %>">
+    <label for="attribute-<%= @attribute.name %>-search"><%- @T(@attribute.table_label) %><% if @required: %> <span>*</span><% end %></label>
+    <% if @required: %><input class="js-objectAttributeOptionsContextRequiredValidator" type="text" name="<%= @attribute.name %>-required-validator" required style="opacity: 0; height: 0 !important; padding: 0 !important;" /><% end %>
+    <table class="object-attribute-options-context-list settings-list js-objectAttributeOptionsContextList" style="width: 100%;">
+      <thead>
+        <th><%- @T(@objectAttributeDisplay) %></th>
+        <% if @showDescription: %><th><%- @T('Description') %></th><% end %>
+        <th><%- @T('Action') %></th>
+      </thead>
+      <tbody>
+      <% for option in @optionsSelected: %>
+        <tr data-id="<%= option.value %>">
+          <td><%- @T(option.label) %></td>
+          <% if @showDescription: %><td><textarea class="form-control js-description"><%- @T(option.description) %></textarea></td><% end %>
+          <td class="<% if !@showDescription: %>settings-list-middle<% end %>">
+            <a class="btn btn--text btn--primary js-remove">
+              <%- @Icon('trash') %>
+              <%- @T('Remove') %>
+            </a>
+          </td>
+        </tr>
+      <% end %>
+
+        <tr class="hide js-objectAttributeOptionsContextShadowItemRow">
+          <td></td>
+          <% if @showDescription: %><td><textarea class="form-control js-description"></textarea></td><% end %>
+          <td class="<% if !@showDescription: %>settings-list-middle<% end %>">
+            <a class="btn btn--text btn--primary js-remove">
+              <%- @Icon('trash') %>
+              <%- @T('Remove') %>
+            </a>
+          </td>
+        </tr>
+
+        <tr class="js-objectAttributeOptionsContextNewItemRow">
+          <td class="js-objectAttributeOptionsContextItemAddNew <% if !@showDescription: %>settings-list-middle<% end %>"></td>
+          <% if @showDescription: %><td><textarea class="form-control js-descriptionNew"></textarea></td><% end %>
+          <td class="js-objectAttributeOptionsContextItemAction <% if !@showDescription: %>settings-list-middle<% end %>">
+            <div class="object-attribute-options-context-new-item-row-wrapper">
+              <a class="btn btn--text btn--create js-add">
+                <%- @Icon('plus-small') %>
+                <%- @T('Add') %>
+              </a>
+              <a class="btn btn--text btn--subtle js-add-all <% if @hideAddAll: %>hide<% end %>">
+                <%- @Icon('add-all') %>
+                <%- @T('Add All') %>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

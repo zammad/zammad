@@ -12,14 +12,8 @@ RSpec.describe Gql::Queries::Ticket::History, timezone: 'Europe/Berlin', type: :
 
     let(:query) do
       <<~QUERY
-        query ticketHistory($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
-          ticketHistory(
-            ticket: {
-              ticketId: $ticketId
-              ticketInternalId: $ticketInternalId
-              ticketNumber: $ticketNumber
-            }
-          ) {
+        query ticketHistory($ticketId: ID!) {
+          ticketHistory(ticketId: $ticketId) {
             createdAt
             records {
               issuer {

@@ -7,18 +7,20 @@ import {
   ref,
   watch,
   type ComputedRef,
+  type Ref,
   type WatchHandle,
 } from 'vue'
 
 import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 
 interface PageOptions {
+  pageActive?: Ref<boolean>
   metaTitle?: ComputedRef<string>
   onReactivate?: () => void
 }
 
 export const usePage = (pageOptions: PageOptions) => {
-  const pageActive = ref(true)
+  const pageActive = pageOptions.pageActive || ref(true)
 
   const pageInactive = computed(() => !pageActive.value)
 

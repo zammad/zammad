@@ -16,7 +16,7 @@ RSpec.describe Service::User::PasswordReset::Update do
           expect(error).to be_a(klass)
             .and have_attributes(
               message:  include(message),
-              metadata: [include(message), *message_placeholder],
+              metadata: [include(message), *message_placeholder], # rubocop:disable Layout/EmptyLinesAfterModuleInclusion
             )
         end
       else

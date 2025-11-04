@@ -3,6 +3,7 @@
 import { ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import LeftSidebarHeader from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader.vue'
@@ -18,7 +19,10 @@ vi.mock('#shared/server/apollo/client.ts', () => ({
   }),
 }))
 
-const renderLeftSidebarHeader = (collapsed = true) => {
+const renderLeftSidebarHeader = (collapsed = true, noPermission?: boolean) => {
+  if (noPermission) mockPermissions([])
+  else mockPermissions(['ticket.agent'])
+
   const searchValue = ref('')
   const searchActive = ref(false)
 
@@ -59,5 +63,12 @@ describe('LeftSidebarHeader', () => {
     const { wrapper } = renderLeftSidebarHeader(true)
 
     expect(wrapper.queryByRole('searchbox', { name: 'Search…' })).not.toBeInTheDocument()
+  })
+
+  it('shows dummy logo when user has no agent permission (#5835)', async () => {
+    const { wrapper } = renderLeftSidebarHeader(true, true)
+
+    expect(wrapper.queryByRole('button', { name: 'Show notifications' })).not.toBeInTheDocument()
+    expect(wrapper.getByIconName('logo')).toBeInTheDocument()
   })
 })

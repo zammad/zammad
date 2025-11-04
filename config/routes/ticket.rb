@@ -28,6 +28,8 @@ Zammad::Application.routes.draw do
   match api_path + '/tickets',                                       to: 'tickets#create',            via: :post
   match api_path + '/tickets/:id',                                   to: 'tickets#update',            via: :put
   match api_path + '/tickets/:id',                                   to: 'tickets#destroy',           via: :delete
+  match api_path + '/tickets/:id/update_title',                      to: 'tickets#update_title',      via: :put
+  match api_path + '/tickets/:id/update_customer',                   to: 'tickets#update_customer',   via: :put
   match api_path + '/tickets/mass_macro',                            to: 'tickets_mass#macro',        via: :post
   match api_path + '/tickets/mass_update',                           to: 'tickets_mass#update',       via: :post
   match api_path + '/ticket_create',                                 to: 'tickets#ticket_create',     via: :get
@@ -70,5 +72,6 @@ Zammad::Application.routes.draw do
   match api_path + '/ticket_articles/:id/retry_security_process',             to: 'ticket_articles#retry_security_process',                    via: :post
   match api_path + '/ticket_articles/:id/retry_whatsapp_attachment_download', to: 'ticket_articles#retry_whatsapp_attachment_download',        via: :post
 
-  match api_path + '/tickets/:id/enqueue_summarize', to: 'ticket/summarize#enqueue',   via: :post
+  # ticket summarize (AI)
+  match api_path + '/tickets/:id/summarize',                          to: 'ticket/summarize#summarize',   via: :post
 end

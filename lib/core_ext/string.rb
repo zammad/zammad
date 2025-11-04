@@ -170,7 +170,7 @@ class String
     end
 
     # insert spaces on [A-z]\n[A-z]
-    string.gsub!(%r{([A-z])[[:space:]]([A-z])}m, '\1 \2')
+    string.gsub!(%r{([[:alpha:]])[[:space:]]([[:alpha:]])}mu, '\1 \2')
 
     # remove all new lines
     string.gsub!(%r{(\n\r|\r\r\n|\r\n|\n)}, '')

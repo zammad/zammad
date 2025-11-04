@@ -2,27 +2,16 @@
 
 require_relative '../../lib/zammad/service/redis'
 
-# If REDIS_URL is not set, fall back to default port / localhost, to ease configuration
-#   for simple installations.
-redis_url = ENV['REDIS_URL'].presence || 'redis://localhost:6379'
-driver = redis_url.start_with?('rediss://') ? :ruby : :hiredis
-
 Rails.application.config.action_cable.cable = {
   adapter:        :redis,
-  driver:         driver,
-  url:            redis_url,
   channel_prefix: "zammad_#{Rails.env}",
+  **Zammad::Service::Redis.config,
 }
+
 begin
   Zammad::Service::Redis.new.ping
-  Rails.logger.info { "ActionCable is using the redis instance at #{redis_url}." }
 rescue Redis::CannotConnectError => e
-  warn "There was an error trying to connect to Redis via #{redis_url}."
-  if ENV['REDIS_URL'].present?
-    warn 'Please make sure Redis is available.'
-  else
-    warn 'Please provide a Redis instance at localhost:6379 or set REDIS_URL to point to a different location.'
-  end
+  warn 'There was an error trying to connect to Redis.'
   warn e.inspect
   Zammad::SafeMode.continue_or_exit!
 end

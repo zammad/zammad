@@ -81,6 +81,7 @@ const onCloseSelectDropdown = async () => {
   onDeactivate()
 }
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   actions,
   defaultFilter: '*', // show tag recommendations on initial opening

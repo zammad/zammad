@@ -32,11 +32,12 @@ class App.KnowledgeBaseSidebarAttachments extends App.Controller
     @renderDragAndDropIfNeeded()
 
   renderDragAndDropIfNeeded: ->
-    return if @dragAndDropRendered
+    if @uploadManager
+      # After re-rendering, we need to rebind the input field.
+      @uploadManager.rebindInputField(@input.get(0))
+      return
 
-    @dragAndDropRendered = true
-
-    html5Upload.initialize(
+    @uploadManager = html5Upload.initialize(
       uploadUrl:              @object.generateURL('attachments')
       dropContainer:          @el.get(0)
       cancelContainer:        @cancelContainer

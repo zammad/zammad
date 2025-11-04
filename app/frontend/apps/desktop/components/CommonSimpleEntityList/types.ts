@@ -18,4 +18,5 @@ export interface EntityModule {
   type: EntityType
   component: () => Promise<Component>
   emptyMessage: string
+  hasPopover?: boolean
 }

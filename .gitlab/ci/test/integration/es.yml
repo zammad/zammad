@@ -9,7 +9,7 @@
   stage: test
   script:
     - !reference [.scripts, zammad_db_init]
-    - bundle exec rspec --tag searchindex --tag ~type:system --profile 10
+    - bundle exec rspec --tag searchindex --tag ~type:system
 
 # Lowest supported version
 rspec:es:stable:

@@ -33,6 +33,9 @@ class Authorization::Provider
       raise AccountError
     end
 
+    # Lookup the login attribute, because it can be different for different providers.
+    auth_hash['login'] = user_create_login_lookup
+
     User.create_from_hash!(auth_hash)
   end
 
@@ -40,6 +43,10 @@ class Authorization::Provider
     return if info['email'].nil?
 
     User.find_by(email: info['email'].downcase)
+  end
+
+  def user_create_login_lookup
+    auth_hash['info']['nickname'] || auth_hash['uid']
   end
 
   class AccountError < StandardError

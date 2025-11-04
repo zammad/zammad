@@ -28,8 +28,7 @@ const { pause: pauseIntersectionObserver, resume: resumeIntersectionObserver } =
   useIntersectionObserver(
     button,
     ([{ isIntersecting, target }]) => {
-      if (isIntersecting && !props.action.disabled) (target as HTMLButtonElement).disabled = false
-      else (target as HTMLButtonElement).disabled = true
+      ;(target as HTMLButtonElement).disabled = !(isIntersecting && !props.action.disabled)
       emit('visible', isIntersecting ?? false)
     },
     {
@@ -49,7 +48,7 @@ defineExpose({
     ref="button"
     v-tooltip="$t(action.label || action.name)"
     type="button"
-    class="relative focus-visible-app-default aria-expanded:text-white transition-color flex items-center gap-1 rounded-lg p-1.5 hover:bg-blue-600 active:text-white hover:text-black dark:hover:bg-blue-900 dark:hover:text-white"
+    class="relative focus-visible-app-default aria-expanded:text-white transition-color flex items-center gap-1 rounded-lg p-1.5 hover:bg-blue-600 active:text-white active:bg-blue-800! hover:text-black dark:hover:bg-blue-900 dark:hover:text-white"
     :class="[
       action.class,
       {

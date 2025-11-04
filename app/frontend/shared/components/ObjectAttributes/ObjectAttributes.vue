@@ -1,8 +1,11 @@
 <!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+
 import { useSharedVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import { useDisplayObjectAttributes } from './useDisplayObjectAttributes.ts'
@@ -14,6 +17,7 @@ export interface Props {
   object: ObjectLike
   attributes: ObjectAttribute[]
   skipAttributes?: string[]
+  includeStatic?: boolean
   alwaysShowAfterFields?: boolean
 }
 
@@ -23,12 +27,17 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { fields } = useDisplayObjectAttributes(props)
 const { objectAttributes: objectAttributesConfig } = useSharedVisualConfig()
+
+const { config } = storeToRefs(useApplicationStore())
+
+const getDisplayLabel = (attribute: ObjectAttribute) =>
+  attribute.displayConfig ? config.value[attribute.displayConfig] : attribute.display
 </script>
 
 <template>
   <Component :is="objectAttributesConfig.outer" v-if="fields.length || props.alwaysShowAfterFields">
     <template v-for="field of fields" :key="field.attribute.name">
-      <Component :is="objectAttributesConfig.wrapper" :label="field.attribute.display">
+      <Component :is="objectAttributesConfig.wrapper" :label="getDisplayLabel(field.attribute)">
         <CommonLink
           v-if="field.link"
           :link="field.link"

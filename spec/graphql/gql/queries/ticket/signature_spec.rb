@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe Gql::Queries::Ticket::Signature, type: :graphql do
-  let(:signature) { create(:signature, body: "\#{user.fullname} via \#{config.product_name}") }
+  let(:signature) { create(:signature, body: "\#{user.fullname} via \#{config.product_name} in \#{ticket.group.name}") }
   let(:group)     { create(:group, signature_id: signature.id) }
   let(:query)     do
     <<~QUERY
       query ticketSignature($groupId: ID!, $ticketId: ID) {
         ticketSignature(groupId: $groupId) {
           id
-          renderedBody(ticketId: $ticketId)
+          renderedBody(ticketId: $ticketId, groupId: $groupId)
         }
       }
     QUERY
@@ -29,7 +29,7 @@ RSpec.describe Gql::Queries::Ticket::Signature, type: :graphql do
         it 'returns data' do
           expect(gql.result.data).to eq({
                                           'id'           => gql.id(signature),
-                                          'renderedBody' => "#{user.fullname} via #{Setting.get('product_name')}",
+                                          'renderedBody' => "#{user.fullname} via #{Setting.get('product_name')} in #{group.name}",
                                         })
         end
       end

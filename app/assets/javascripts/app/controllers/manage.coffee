@@ -33,6 +33,7 @@ App.Config.set('channels/:target/error/:error_code/channel/:channel_id', ManageR
 App.Config.set('channels/:target/error/:error_code/param/:param', ManageRouter, 'Routes')
 App.Config.set('channels/:target/:channel_id', ManageRouter, 'Routes')
 App.Config.set('ai/:target', ManageRouter, 'Routes')
+App.Config.set('ai/:target/:page/:search_query', ManageRouter, 'Routes')
 App.Config.set('system/:target', ManageRouter, 'Routes')
 App.Config.set('system/:target/:integration', ManageRouter, 'Routes')
 App.Config.set('system/:target/:integration/error/:error_code', ManageRouter, 'Routes')

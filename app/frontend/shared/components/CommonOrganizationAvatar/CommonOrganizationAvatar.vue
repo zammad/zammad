@@ -22,12 +22,30 @@ const icon = computed(() => {
 })
 
 const { base, inactive } = getOrganizationAvatarClasses()
+
+const sizeClass = computed(() => {
+  switch (props.size) {
+    case 'xs':
+      return 'p-0.5'
+    case 'small':
+      return 'p-2'
+    case 'medium':
+      return 'p-2.5'
+    case 'large':
+      return 'p-4'
+    case 'xl':
+      return 'p-6'
+    default:
+      return 'p-3.5'
+  }
+})
 </script>
 
 <template>
   <CommonAvatar
     :class="[
       base,
+      sizeClass,
       {
         [inactive]: !entity.active,
       },

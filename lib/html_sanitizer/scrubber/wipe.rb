@@ -48,7 +48,7 @@ class HtmlSanitizer
         return if !node['style']
 
         style = clear_style_pairs(node)
-          .each_with_object('') do |elem, memo|
+          .each_with_object(+'') do |elem, memo|
             memo << "#{elem};" if clear_style_pair_valid?(node, elem)
           end
 

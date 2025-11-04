@@ -60,7 +60,7 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
     end
 
     context 'with wrong ticket channel' do
-      let(:article) { create(:twitter_article) }
+      let(:article) { create(:sms_article) }
 
       it_behaves_like 'permanent delivery failure'
     end

@@ -10,14 +10,22 @@ export const domFrom = (html: string, document_ = document) => {
   return dom
 }
 
-export const removeSignatureFromBody = (input: FormFieldValue) => {
+export const removeSignatureFromBody = (input: FormFieldValue, placeholder: boolean = false) => {
   if (!input || typeof input !== 'string') {
     return input
   }
 
   const dom = domFrom(input)
 
-  dom.querySelectorAll('div[data-signature="true"]').forEach((elem) => elem.remove())
+  dom.querySelectorAll('div[data-signature-placeholder]').forEach((elem) => elem.remove())
+
+  dom.querySelectorAll('div[data-signature]').forEach((elem) => {
+    if (placeholder) {
+      elem.replaceWith(domFrom('<div data-signature-placeholder="true"></div>'))
+    } else {
+      elem.remove()
+    }
+  })
 
   return dom.innerHTML
 }

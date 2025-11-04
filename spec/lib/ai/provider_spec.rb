@@ -45,15 +45,51 @@ RSpec.describe AI::Provider do
     end
   end
 
-  describe '.list' do
-    it 'returns a list of providers' do
-      expect(described_class.list).to eq([
-                                           AI::Provider::Anthropic,
-                                           AI::Provider::Azure,
-                                           AI::Provider::Ollama,
-                                           AI::Provider::OpenAI,
-                                           AI::Provider::ZammadAI,
-                                         ])
+  describe '.by_config' do
+    it 'returns the correct class' do
+      config = { provider: 'open_ai' }
+      expect(described_class.by_config(config)).to eq(AI::Provider::OpenAI)
+    end
+
+    it 'returns nil when provider is blank' do
+      config = {}
+      expect(described_class.by_config(config)).to be_nil
+    end
+  end
+
+  describe '.current' do
+    before do
+      Setting.set('ai_provider_config', config, validate: false)
+      Setting.set('ai_provider', flag)
+    end
+
+    context 'when config is provided' do
+      let(:config) { { provider: 'open_ai' } }
+
+      context 'when AI provider flag is true' do
+        let(:flag) { true }
+
+        it 'returns the correct class' do
+          expect(described_class.current).to eq(AI::Provider::OpenAI)
+        end
+      end
+
+      context 'when AI provider flag is false' do
+        let(:flag) { false }
+
+        it 'returns nil' do
+          expect(described_class.current).to be_nil
+        end
+      end
+    end
+
+    context 'when config is blank' do
+      let(:config) { {} }
+      let(:flag)   { true }
+
+      it 'returns nil' do
+        expect(described_class.current).to be_nil
+      end
     end
   end
 

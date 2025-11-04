@@ -47,12 +47,8 @@ class App.TicketCustomer extends App.ControllerModal
       # close modal
       @close()
 
-      # update ticket
-      ticket = App.Ticket.find(@ticket_id)
-      ticket.article = undefined
-      ticket.updateAttributes(
-        customer_id: @customer_id
-        organization_id: @organization_id
+      ticket.save(
+        url: ticket.generateURL('update_customer')
       )
 
     # load user if not already exists

@@ -105,7 +105,7 @@ describe('TicketOverviews', () => {
       within(primaryNavigationSidebar).getByRole('link', {
         name: 'Overviews',
       }),
-    ).toHaveAttribute('href', '/desktop/tickets/view')
+    ).toHaveAttribute('href', expect.stringContaining('/desktop/tickets/view'))
 
     const secondaryNavigationSidebar = await view.findByRole('complementary', {
       name: 'second level navigation sidebar',
@@ -275,7 +275,7 @@ describe('TicketOverviews', () => {
 
     expect(
       within(secondaryNavigationSidebar).getByRole('link', {
-        name: 'My Tickets 0', // 0 comes from the ticket count
+        name: 'My Tickets0', // 0 comes from the ticket count
       }),
     ).toBeInTheDocument()
 

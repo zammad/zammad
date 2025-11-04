@@ -100,9 +100,9 @@ class App.WidgetOrganization extends App.Controller
     @renderMembers()
 
     @$('[contenteditable]').ce(
-      mode:      'textonly'
-      multiline: true
-      maxlength: 250
+      mode:      'richtext'
+      maxlength: 5000
+      noImages:  true
     )
 
   update: (e) =>

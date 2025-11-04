@@ -126,6 +126,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.boolean :follow_up_assignment,              null: false, default: true
       t.boolean :active,                            null: false, default: true
       t.boolean :shared_drafts,                     null: false, default: true
+      t.string :summary_generation,                 null: false, default: 'global_default'
       t.string :note,                   limit: 250, null: true
       t.integer :updated_by_id,                     null: false
       t.integer :created_by_id,                     null: false
@@ -923,6 +924,25 @@ class CreateBase < ActiveRecord::Migration[4.2]
     end
     add_index :system_reports, [:uuid], unique: true
 
+    create_table :ai_analytics_runs do |t|
+      t.string :identifier, null: false
+      t.string :version
+      t.string :ai_service_name, null: false, index: true
+
+      t.references :locale, null: true, foreign_key: { to_table: :locales }
+      t.references :related_object, polymorphic: true, null: true
+      t.references :triggered_by, polymorphic: true, null: true
+
+      t.references :regeneration_of, null: true, foreign_key: { to_table: :ai_analytics_runs }
+
+      t.jsonb :content, null: false, default: {}
+      t.jsonb :payload, null: false, default: {}
+      t.jsonb :context, null: false, default: {}
+      t.jsonb :error,   null: false, default: {}
+
+      t.timestamps limit: 3
+    end
+
     create_table :ai_stored_results do |t|
       t.string :identifier, null: false
       t.string :version
@@ -934,11 +954,74 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.references :related_object, polymorphic: true, null: true,
         index: { name: 'index_ai_stored_results_on_related_object' }
 
+      t.references :ai_analytics_run, null: true, foreign_key: { to_table: :ai_analytics_runs }
+
       t.timestamps limit: 3
 
       t.index %i[identifier locale_id related_object_id related_object_type],
               unique: true,
               name:   'index_ai_stored_results_on_identifier_and_other'
+    end
+
+    create_table :ai_agents do |t|
+      t.string 'name', limit: 250, null: false, default: ''
+      t.jsonb 'definition', null: false, default: {}
+      t.jsonb 'action_definition', null: false, default: {}
+
+      t.string 'agent_type', limit: 250
+      t.jsonb 'type_enrichment_data', null: false, default: {}
+
+      t.string 'note', limit: 250
+
+      t.boolean 'active', default: true, null: false
+
+      t.references :created_by, type: :integer, null: false, foreign_key: { to_table: :users }
+      t.references :updated_by, type: :integer, null: false, foreign_key: { to_table: :users }
+
+      t.timestamps limit: 3, null: false
+
+      t.index :name, unique: true
+      t.index :active
+    end
+
+    create_table :ai_text_tools do |t|
+      t.string 'name', limit: 250, null: false, default: ''
+
+      t.string 'instruction', limit: 1.megabyte, null: false, default: ''
+
+      t.string 'note', limit: 250
+
+      t.boolean 'active', default: true, null: false
+
+      t.references :created_by, type: :integer, null: false, foreign_key: { to_table: :users }
+      t.references :updated_by, type: :integer, null: false, foreign_key: { to_table: :users }
+
+      t.timestamps limit: 3, null: false
+
+      t.index :name, unique: true
+      t.index :active
+    end
+
+    create_table :ai_text_tools_groups, id: false do |t|
+      t.references :text_tool, foreign_key: { to_table: :ai_text_tools }
+      t.references :group
+    end
+    add_index :ai_text_tools_groups, [:text_tool_id]
+    add_index :ai_text_tools_groups, [:group_id]
+    add_foreign_key :ai_text_tools_groups, :groups
+
+    create_table :ai_analytics_usages do |t|
+      t.references :ai_analytics_run, null: false, foreign_key: { to_table: :ai_analytics_runs }
+      t.references :user, null: false, foreign_key: { to_table: :users }, type: :integer
+
+      t.boolean :rating, null: true, default: nil # rubocop:disable Rails/ThreeStateBooleanColumn
+      t.text :comment, null: true, default: nil
+
+      t.jsonb :context, null: false, default: {}
+
+      t.timestamps limit: 3
+
+      t.index %i[ai_analytics_run_id user_id], unique: true
     end
   end
 end

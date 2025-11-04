@@ -25,6 +25,12 @@ class App.UiElement.object_perform_action extends App.UiElement.ApplicationActio
         model: 'Notification'
         model_show: ['Ticket']
 
+    if attribute.ai_agent
+      groups.ai =
+        name: __('AI')
+        model: 'AI'
+        model_show: ['Ticket']
+
     if attribute.object_name is undefined
       attribute.object_name = params.object or 'Ticket'
 
@@ -43,12 +49,15 @@ class App.UiElement.object_perform_action extends App.UiElement.ApplicationActio
     elements = {}
     for groupKey, groupMeta of groups
       if !groupMeta.model || !App[groupMeta.model]
-        if groupKey is 'notification'
-          elements["#{groupKey}.email"] = { name: 'email', display: __('Email') }
-          elements["#{groupKey}.sms"] = { name: 'sms', display: __('SMS') }
-          elements["#{groupKey}.webhook"] = { name: 'webhook', display: __('Webhook') }
-        else if groupKey is 'article'
-          elements["#{groupKey}.note"] = { name: 'note', display: __('Note') }
+        switch groupKey
+          when 'notification'
+            elements["#{groupKey}.email"] = { name: 'email', display: __('Email') }
+            elements["#{groupKey}.sms"] = { name: 'sms', display: __('SMS') }
+            elements["#{groupKey}.webhook"] = { name: 'webhook', display: __('Webhook') }
+          when 'article'
+            elements["#{groupKey}.note"] = { name: 'note', display: __('Note') }
+          when 'ai'
+            elements["#{groupKey}.ai_agent"] = { name: 'ai_agent', display: __('AI Agent') }
       else
 
         for row in App[groupMeta.model].configure_attributes

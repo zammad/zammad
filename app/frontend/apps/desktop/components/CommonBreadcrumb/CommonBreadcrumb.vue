@@ -45,13 +45,13 @@ const sizeClasses = computed(() => {
 
         <CommonLink
           v-if="item.route"
-          class="focus:outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+          class="focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
           :link="item.route"
           internal
         >
-          <CommonLabel size="large" class="line-clamp-1 hover:underline">{{
-            item.noOptionLabelTranslation ? item.label : $t(item.label as string)
-          }}</CommonLabel>
+          <CommonLabel class="line-clamp-1 hover:text-black hover:dark:text-white" size="large">
+            {{ item.noOptionLabelTranslation ? item.label : $t(item.label as string) }}
+          </CommonLabel>
         </CommonLink>
 
         <component

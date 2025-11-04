@@ -2,7 +2,9 @@
 
 <script setup lang="ts">
 import { whenever } from '@vueuse/core'
+import { computed } from 'vue'
 
+import { useSessionStore } from '#shared/stores/session.ts'
 import emitter from '#shared/utils/emitter.ts'
 
 import OnlineNotification from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue'
@@ -11,6 +13,8 @@ import QuickSearchInput from '#desktop/components/Search/QuickSearch/QuickSearch
 interface Props {
   collapsed?: boolean
 }
+
+defineProps<Props>()
 
 const searchValue = defineModel<string>('search', {
   required: true,
@@ -27,7 +31,9 @@ whenever(
   },
 )
 
-defineProps<Props>()
+const { hasPermission } = useSessionStore()
+
+const isTicketAgent = computed(() => hasPermission('ticket.agent') ?? false)
 </script>
 
 <template>
@@ -39,9 +45,14 @@ defineProps<Props>()
       class="grow"
     />
 
-    <OnlineNotification
+    <component
+      :is="isTicketAgent ? OnlineNotification : 'div'"
       v-show="!isSearchActive"
+      class="flex items-center justify-center"
       :class="{ 'ltr:ml-auto rtl:mr-auto': !collapsed }"
-    />
+    >
+      <!--  :TODO Add custom branding  -->
+      <CommonIcon name="logo" class="z-10 block h-9 w-9" />
+    </component>
   </header>
 </template>

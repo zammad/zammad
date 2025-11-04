@@ -186,22 +186,35 @@ class App extends Spine.Controller
         isHtmlEscape = true
         timestamp = App.i18n.translateTimestamp(resultLocal)
 
-        escalation = false
-        cssClass = attributeConfig.class || ''
-        if cssClass.match 'escalation'
-          escalation = true
+        buildTimeElementBase = ->
+          title = timestamp
+          timezone = ''
+          if attributeConfig.include_timezone
+            timezone_default = App.Config.get('timezone_default')
+            title += " #{timezone_default}"
+            timezone = " timezone=\"#{timezone_default}\""
 
-        humanTime = ''
-        if !table
-          humanTime = App.PrettyDate.humanTime(resultLocal, escalation)
+          return {
+            title: title,
+            timezone: timezone
+          }
 
-        title = timestamp
-        timezone = ''
-        if attributeConfig.include_timezone
-          timezone = " timezone=\"#{App.Config.get('timezone_default')}\""
-          title += ' ' + App.Config.get('timezone_default')
+        buildTimeElement = ->
+          escalation = attributeConfig.class?.match?('escalation')
+          humanTime = if !table then App.PrettyDate.humanTime(resultLocal, escalation) else ''
+          timeBase = buildTimeElementBase()
+          "<time class=\"humanTimeFromNow #{attributeConfig.class || ''}\" datetime=\"#{resultLocal}\" title=\"#{timeBase.title}\"#{timeBase.timezone}>#{humanTime}</time>"
 
-        resultLocal = "<time class=\"humanTimeFromNow #{cssClass}\" datetime=\"#{resultLocal}\" title=\"#{title}\"#{timezone}>#{humanTime}</time>"
+        buildTimeElementWithContent = (content) ->
+          timeBase = buildTimeElementBase()
+          "<time class=\"#{attributeConfig.class || ''}\" datetime=\"#{resultLocal}\" title=\"#{timeBase.title}\"#{timeBase.timezone}>#{content}</time>"
+
+        if attributeConfig.no_past_dates && resultLocal
+          scheduledTime = new Date(resultLocal)
+          currentTime = new Date()
+          resultLocal = if scheduledTime < currentTime then buildTimeElementWithContent(__('due')) else buildTimeElement()
+        else
+          resultLocal = buildTimeElement()
       else if attributeConfig.tag is 'float'
         resultLocal = App.ViewHelpers.timeUnit(resultLocal)
 

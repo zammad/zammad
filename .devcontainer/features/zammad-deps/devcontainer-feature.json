@@ -1,0 +1,50 @@
+{
+  "id": "zammad-deps",
+  "version": "1.0.0",
+  "name": "Zammad Dependency Installer",
+  "description": "Installs dependencies required for Zammad.",
+  "dependsOn": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "moby": false
+    },
+    "ghcr.io/devcontainers-extra/features/shellcheck:1": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/joshuanianji/devcontainer-features/mount-pnpm-store:1": {},
+    // Can't use bundler cache, it breaks overcommit:
+    //   https://github.com/rails/devcontainer/issues/55
+    //"ghcr.io/rails/devcontainer/features/bundler-cache:1": {},
+    "ghcr.io/rails/devcontainer/features/postgres-client": {},
+    "ghcr.io/devcontainers-extra/features/apt-get-packages": {
+      "packages": "curl gnupg libimlib2-dev"
+    },
+    "ghcr.io/devcontainers/features/go:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "andyyaldoo.vscode-json",
+        "bradlc.vscode-tailwindcss",
+        "dariofuzinato.vue-peek",
+        "davidanson.vscode-markdownlint",
+        "dbaeumer.vscode-eslint",
+        "dotjoshjohnson.xml",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "ezforo.copy-relative-path-and-line-numbers",
+        "jock.svg",
+        "kaiwood.endwise",
+        "lkytal.coffeelinter",
+        "mde.select-highlight-minimap",
+        "oxc.oxc-vscode",
+        "redhat.vscode-yaml",
+        "shardulm94.trailing-spaces",
+        "shopify.ruby-lsp",
+        "streetsidesoftware.code-spell-checker",
+        "timonwong.shellcheck",
+        "vitest.explorer",
+        "vue.volar"
+      ]
+    }
+  },
+  "privileged": true
+}

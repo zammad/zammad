@@ -84,7 +84,7 @@ RSpec.describe Ticket::Article, type: :model do
 
         context 'of subsequent articles on a ticket' do
           subject(:article) do
-            create(:ticket_article, ticket: ticket, sender_name: 'Customer', type_name: 'twitter status')
+            create(:ticket_article, ticket: ticket, sender_name: 'Customer', type_name: 'whatsapp message')
           end
 
           let!(:first_article) do
@@ -364,101 +364,6 @@ RSpec.describe Ticket::Article, type: :model do
                 perform_enqueued_jobs commit_transaction: true
               end.not_to change { log.reload.attributes }
             end
-          end
-        end
-      end
-    end
-
-    describe 'Auto-setting of outgoing Twitter article attributes (via bg jobs):', performs_jobs: true, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET], use_vcr: :with_oauth_headers do
-      subject!(:twitter_article) { create(:twitter_article, sender_name: 'Agent') }
-
-      let(:channel) { Channel.find(twitter_article.ticket.preferences[:channel_id]) }
-
-      it 'sets #from to sender’s Twitter handle' do
-        expect { perform_enqueued_jobs }
-          .to change { twitter_article.reload.from }
-          .to('@APITesting001')
-      end
-
-      it 'sets #to to recipient’s Twitter handle' do
-        expect { perform_enqueued_jobs }
-          .to change { twitter_article.reload.to }
-          .to('') # Tweet in VCR cassette is addressed to no one
-      end
-
-      it 'sets #message_id to tweet ID (https://twitter.com/_/status/<id>)' do
-        expect { perform_enqueued_jobs }
-          .to change { twitter_article.reload.message_id }
-      end
-
-      it 'sets #preferences with tweet metadata' do
-        expect { perform_enqueued_jobs }
-          .to change { twitter_article.reload.preferences }
-          .to(hash_including('twitter', 'links'))
-
-        expect(twitter_article.preferences[:links].first)
-          .to include(
-            'name'   => 'on Twitter',
-            'target' => '_blank',
-            'url'    => "https://twitter.com/_/status/#{twitter_article.message_id}"
-          )
-      end
-
-      it 'does not change #cc' do
-        expect { perform_enqueued_jobs }.not_to change { twitter_article.reload.cc }
-      end
-
-      it 'does not change #subject' do
-        expect { perform_enqueued_jobs }.not_to change { twitter_article.reload.subject }
-      end
-
-      it 'does not change #content_type' do
-        expect { perform_enqueued_jobs }.not_to change { twitter_article.reload.content_type }
-      end
-
-      it 'does not change #body' do
-        expect { perform_enqueued_jobs }.not_to change { twitter_article.reload.body }
-      end
-
-      it 'does not change #sender' do
-        expect { perform_enqueued_jobs }.not_to change { twitter_article.reload.sender }
-      end
-
-      it 'does not change #type' do
-        expect { perform_enqueued_jobs }.not_to change { twitter_article.reload.type }
-      end
-
-      it 'sets appropriate status attributes on the ticket’s channel' do
-        expect { perform_enqueued_jobs }
-          .to change { channel.reload.attributes }
-          .to hash_including(
-            'status_in'    => nil,
-            'last_log_in'  => nil,
-            'status_out'   => 'ok',
-            'last_log_out' => ''
-          )
-      end
-
-      context 'when the original channel (specified in ticket.preferences) was deleted' do
-        context 'but a new one with the same screen_name exists' do
-          let(:new_channel) { create(:twitter_channel) }
-
-          before do
-            channel.destroy
-
-            expect(new_channel.options[:user][:screen_name])
-              .to eq(channel.options[:user][:screen_name])
-          end
-
-          it 'sets appropriate status attributes on the new channel' do
-            expect { perform_enqueued_jobs }
-              .to change { new_channel.reload.attributes }
-              .to hash_including(
-                'status_in'    => nil,
-                'last_log_in'  => nil,
-                'status_out'   => 'ok',
-                'last_log_out' => ''
-              )
           end
         end
       end
@@ -861,7 +766,7 @@ RSpec.describe Ticket::Article, type: :model do
     end
   end
 
-  describe '.summarizable' do
+  describe '.without_system_notifications' do
     let(:ticket)    { create(:ticket) }
     let(:article_1) { create(:ticket_article, :system_outbound_email, ticket:) }
     let(:article_2) { create(:ticket_article, :inbound_web, ticket:) }
@@ -870,7 +775,7 @@ RSpec.describe Ticket::Article, type: :model do
     before { article_1 && article_2 && article_3 }
 
     it 'filters out System articles' do
-      expect(ticket.articles.summarizable).to contain_exactly(article_2, article_3)
+      expect(ticket.articles.without_system_notifications).to contain_exactly(article_2, article_3)
     end
   end
 end

@@ -93,7 +93,7 @@ returns
             lookup = class_object.lookup(login: value)
           end
           if !lookup
-            lookup = class_object.lookup(email: value)
+            lookup = class_object.lookup(email: value.downcase)
           end
         else
           lookup = class_object.lookup(name: value)
@@ -144,7 +144,14 @@ returns
       next if association_attributes_ignored.include?(assoc_name)
 
       eager_load.push(assoc_name)
-      pluck.push(Arel.sql("#{ActiveRecord::Base.connection.quote_table_name(assoc.table_name)}.id AS #{ActiveRecord::Base.connection.quote_table_name(assoc_name)}"))
+      alias_name = if assoc.klass.table_name == self.class.table_name
+                     "#{assoc.name}_#{assoc.klass.table_name}"
+                   else
+                     assoc.klass.table_name
+                   end
+
+      pluck.push(Arel.sql("#{ActiveRecord::Base.connection.quote_table_name(alias_name)}.id AS #{ActiveRecord::Base.connection.quote_table_name(assoc_name)}"))
+
       keys.push("#{assoc_name.to_s.singularize}_ids")
     end
 
@@ -386,7 +393,7 @@ returns
               lookup = class_object.lookup(login: value)
             end
             if !lookup
-              lookup = class_object.lookup(email: value)
+              lookup = class_object.lookup(email: value.downcase)
             end
           else
             lookup = class_object.lookup(name: value)
@@ -433,7 +440,7 @@ returns
               lookup = class_object.lookup(login: item)
             end
             if !lookup
-              lookup = class_object.lookup(email: item)
+              lookup = class_object.lookup(email: item.downcase)
             end
           else
             lookup = class_object.lookup(name: item)

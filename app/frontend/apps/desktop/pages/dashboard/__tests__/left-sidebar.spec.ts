@@ -10,6 +10,8 @@ import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockLogoutMutation } from '#shared/graphql/mutations/logout.mocks.ts'
 
+import { avatarMenuItems } from '#desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/index.ts'
+
 describe('Left sidebar', () => {
   beforeEach(() => {
     mockUserCurrent({
@@ -124,7 +126,7 @@ describe('Left sidebar', () => {
     it.each([{ collapsed: false }, { collapsed: true }])(
       'shows menu popover on click (collapsed: $collapsed)',
       async ({ collapsed }) => {
-        mockPermissions(['user_preferences', 'ticket.agent'])
+        mockPermissions(['user_preferences', 'ticket.agent', 'admin'])
 
         localStorage.setItem('gid://zammad/User/999-left-sidebar-collapsed', String(collapsed))
 
@@ -146,7 +148,7 @@ describe('Left sidebar', () => {
         const menu = getByRole(popover, 'menu')
         const menuItems = getAllByRole(menu, 'menuitem')
 
-        expect(menuItems).toHaveLength(4)
+        expect(menuItems).toHaveLength(avatarMenuItems.length)
       },
     )
 

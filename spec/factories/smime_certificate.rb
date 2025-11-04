@@ -13,7 +13,7 @@ FactoryBot.define do
 
     trait :with_private do
       private_key { Rails.root.join("spec/fixtures/files/smime/#{fixture}.key").read }
-      private_key_secret { Rails.root.join("spec/fixtures/files/smime/#{fixture}.secret").read.strip! }
+      private_key_secret { Rails.root.join("spec/fixtures/files/smime/#{fixture}.secret").read.strip }
     end
   end
 end

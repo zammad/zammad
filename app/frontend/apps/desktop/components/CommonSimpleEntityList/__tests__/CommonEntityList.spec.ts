@@ -59,7 +59,7 @@ describe('CommonSimpleEntityList', () => {
       expect(wrapper.getAllByTestId('common-link')).toHaveLength(3)
       expect(wrapper.getAllByTestId('common-link').at(0)).toHaveAttribute(
         'href',
-        '/organizations/2',
+        '/organization/profile/2',
       )
     })
   })

@@ -8,6 +8,8 @@ class AI::StoredResult < ApplicationModel
 
   validates :identifier, presence: true, uniqueness: { scope: %i[locale_id related_object_type related_object_id] }
 
+  belongs_to :ai_analytics_run, class_name: 'AI::Analytics::Run', optional: true
+
   # Delete all record matching given criterias
   #
   # @diff [Integer] number of seconds to look back for records to delete, also takes Rails helpers like 1.year.
@@ -29,11 +31,5 @@ class AI::StoredResult < ApplicationModel
     end
 
     scope.delete_all
-  end
-
-  # Insert or update a record
-  def self.upsert!(content, lookup_attributes, version, metadata)
-    find_or_initialize_by(lookup_attributes)
-      .tap { |record| record.update!(content:, version:, metadata:) }
   end
 end

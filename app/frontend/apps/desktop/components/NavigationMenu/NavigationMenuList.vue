@@ -32,16 +32,16 @@ const paddingClasses = computed(() =>
 <template>
   <nav class="flex p-0">
     <ul class="m-0 flex basis-full flex-col gap-1 p-0">
-      <li v-for="entry in items" :key="entry.label">
-        <CommonLink
-          class="focus-visible-app-default flex items-center gap-1 rounded-lg! text-sm text-gray-100 hover:bg-blue-600 hover:text-black hover:no-underline! dark:text-neutral-400 dark:hover:bg-blue-900 dark:hover:text-white"
-          :class="[paddingClasses]"
-          exact-active-class="bg-blue-800! w-full text-white!"
-          internal
-          :link="entry.route"
-        >
-          <template #default="{ isActive }">
-            <slot v-bind="entry">
+      <li v-for="entry in items" :key="entry.id || entry.label">
+        <slot v-bind="{ entry, paddingClasses, countSize, countVariant }">
+          <CommonLink
+            class="focus-visible-app-default flex items-center gap-1 rounded-lg! text-sm text-gray-100 hover:bg-blue-600 hover:text-black! hover:no-underline! dark:text-neutral-400 dark:hover:bg-blue-900 dark:hover:text-white!"
+            :class="[paddingClasses]"
+            exact-active-class="bg-blue-800! w-full text-white!"
+            internal
+            :link="entry.route"
+          >
+            <template #default="{ isActive }">
               <CommonIcon
                 v-if="entry.icon"
                 size="small"
@@ -50,7 +50,7 @@ const paddingClasses = computed(() =>
                 :class="entry.iconColor"
                 :name="entry.icon"
               />
-              <CommonLabel class="line-clamp-1! grow text-current!">
+              <CommonLabel class="line-clamp-1! grow text-current!" :aria-label="$t(entry.title)">
                 {{ $t(entry.label) }}
               </CommonLabel>
               <CommonBadge
@@ -60,14 +60,15 @@ const paddingClasses = computed(() =>
                 :variant="countVariant"
                 :class="{
                   'bg-transparent! text-white!': isActive,
+                  'cursor-pointer': !!entry.route,
                 }"
                 rounded
               >
                 {{ entry.count }}
               </CommonBadge>
-            </slot>
-          </template>
-        </CommonLink>
+            </template>
+          </CommonLink>
+        </slot>
       </li>
     </ul>
   </nav>

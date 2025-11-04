@@ -18,15 +18,37 @@ To execute this manually, just paste the following into the browser console
     # check if sender is admin
     return if !permission_check('admin.maintenance', 'maintenance')
 
+    # Check if the event contains the maintenance message and sanitize it.
+    if message?
+      @payload['data']['message'] = sanitize(message)
+    end
+
     Sessions.broadcast(@payload, 'public', @session['id'])
 
     # Maintenance mode start/stop messages are not needed for GraphQL, as clients
     #   watch on changes of the config settings.
+    return if !message?
+
     data = @payload['data']
-    return if data['type'] != 'message'
 
     Gql::Subscriptions::PushMessages.trigger({ title: data['head'], text: data['message'] })
     false
   end
 
+  private
+
+  def message
+    @payload['data']['message']
+  end
+
+  def message?
+    @payload.dig('data', 'type') == 'message'
+  end
+
+  def sanitize(input)
+    HtmlSanitizer::Strict
+      .new(no_images: true)
+      .sanitize(input)
+      .strip
+  end
 end

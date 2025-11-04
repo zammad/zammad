@@ -1,12 +1,16 @@
-mutation ticketAIAssistanceSummarize($ticketId: ID!) {
-  ticketAIAssistanceSummarize(ticketId: $ticketId) {
+mutation ticketAIAssistanceSummarize($ticketId: ID!, $regenerationOfId: ID) {
+  ticketAIAssistanceSummarize(ticketId: $ticketId, regenerationOfId: $regenerationOfId) {
     summary {
+      customerRequest
       conversationSummary
       openQuestions
-      problem
-      suggestions
+      upcomingEvents
+      customerMood
+      customerEmotion
     }
-    fingerprintMd5
-    relevantForCurrentUser
+    analytics {
+      ...AIAssistantAnalyticsMeta
+      isUnread
+    }
   }
 }

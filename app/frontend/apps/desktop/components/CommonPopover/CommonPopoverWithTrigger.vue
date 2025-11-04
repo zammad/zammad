@@ -11,11 +11,12 @@ import CommonPopover, {
 } from '#desktop/components/CommonPopover/CommonPopover.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 
-interface Props extends Omit<CommonPopoverProps, 'owner'> {
+export interface Props extends Omit<CommonPopoverProps, 'owner'> {
   triggerLink?: string
   triggerLinkActiveClass?: string
   noFocusStyling?: boolean
   noHoverStyling?: boolean
+  noMinWidth?: boolean
   zIndex?: string
 }
 
@@ -98,7 +99,7 @@ onUnmounted(() => {
     v-bind="$props"
     :id="uniqueId"
     ref="popover"
-    class="min-w-[17rem]"
+    :class="{ 'min-w-[17rem]': !noMinWidth }"
     :z-index="zIndex"
     no-close-on-click-outside
     :owner="popoverTarget"
@@ -106,8 +107,10 @@ onUnmounted(() => {
     <slot
       name="popover-content"
       :popover-id="uniqueId"
+      :popover="popover"
       :is-open="isOpen"
       :has-opened-via-long-click="hasOpenedViaLongPress"
+      :close="close"
     />
   </CommonPopover>
 
@@ -128,7 +131,7 @@ onUnmounted(() => {
         'focus-visible:outline-1 focus-visible:outline-blue-800 hover:focus-visible:outline-blue-800':
           !noFocusStyling,
         'outline-transparent!': noFocusStyling,
-        'hover:outline-1 hover:outline-blue-900': !noHoverStyling,
+        'hover:outline-1 hover:outline-blue-600 hover:dark:outline-blue-900': !noHoverStyling,
       },
     ]"
     @keydown.space.prevent="open"

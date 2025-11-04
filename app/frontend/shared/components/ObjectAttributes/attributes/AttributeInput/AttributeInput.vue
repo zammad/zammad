@@ -51,8 +51,8 @@ const link = computed(() => {
     v-else
     :class="config?.classes?.link"
     :external="attribute.dataOption.type !== 'url'"
-    open-in-new-tab
     :link="link"
+    open-in-new-tab
   >
     {{ title }}
   </CommonLink>

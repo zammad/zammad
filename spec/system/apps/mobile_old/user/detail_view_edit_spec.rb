@@ -132,6 +132,11 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
 
     shared_examples 'editing user data' do
       it 'supports editing user data' do
+        # Does not trigger form updater for some reason.
+        find_input('First name').clear
+        find_input('Last name').clear
+        find_input('Address').clear
+
         within_form(form_updater_gql_number: 1) do
           find_input('First name').type('Foo')
           find_input('Last name').type('Bar')
@@ -176,6 +181,8 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
       let(:user) { create(:customer, :without_email) }
 
       it 'updates User record' do
+        find_input('First name').clear # does not trigger form updater for some reason
+
         within_form(form_updater_gql_number: 1) do
           find_input('First name').type('No Email')
 

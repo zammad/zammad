@@ -107,27 +107,34 @@ class TriggerWebhookJob < ApplicationJob
   end
 
   def pre_defined_webhook_payload
-    TriggerWebhookJob::CustomPayload::Track::PreDefinedWebhook.payload(webhook.pre_defined_webhook_type)
+    Service::Template::Interpolation::Interpolator::Webhook::Track::PreDefinedWebhook.payload(webhook.pre_defined_webhook_type)
   end
 
   def generate_custom_payload
-    tracks = { ticket:, article: }
-    add_custom_tracks(tracks)
-
     payload = webhook.customized_payload ? webhook.custom_payload : pre_defined_webhook_payload
     return default_payload if payload.nil?
 
-    hash = TriggerWebhookJob::CustomPayload.generate(payload, tracks)
-    return hash if webhook.customized_payload
+    tracks = { ticket:, article: }
 
+    # Use the new interpolation service
+    interpolator = Service::Template::Interpolation::Interpolator::Webhook.new(
+      template:                       payload,
+      tracks:                         tracks,
+      additional_track_generate_data: webhook_data,
+    )
+
+    result = interpolator.execute
+    return result if webhook.customized_payload
+
+    # Handle post_replace for pre-defined webhooks
     pre_defined_webhook = "Webhook::PreDefined::#{webhook.pre_defined_webhook_type}".constantize.new
-    return hash if !pre_defined_webhook.respond_to?(:post_replace)
+    return result if !pre_defined_webhook.respond_to?(:post_replace)
 
-    pre_defined_webhook.post_replace(hash, tracks)
+    pre_defined_webhook.post_replace(result, tracks)
   end
 
-  def add_custom_tracks(tracks)
-    data = {
+  def webhook_data
+    {
       event:   {
         type:      event_type,
         execution: execution_type,
@@ -136,12 +143,6 @@ class TriggerWebhookJob < ApplicationJob
       },
       webhook: webhook
     }
-
-    TriggerWebhookJob::CustomPayload.tracks.each do |track|
-      next if !track.respond_to?(:generate)
-
-      track.generate(tracks, data)
-    end
   end
 
 end

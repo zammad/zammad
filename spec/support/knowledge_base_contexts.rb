@@ -41,6 +41,14 @@ RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do # rubocop:dis
     create(:knowledge_base_answer, :published, category: other_category)
   end
 
+  let :internal_answer_in_other_category do
+    create(:knowledge_base_answer, :internal, category: other_category)
+  end
+
+  let :draft_answer_in_other_category do
+    create(:knowledge_base_answer, :draft, category: other_category)
+  end
+
   let :published_answer_in_subcategory do
     create(:knowledge_base_answer, :published, category: subcategory)
   end

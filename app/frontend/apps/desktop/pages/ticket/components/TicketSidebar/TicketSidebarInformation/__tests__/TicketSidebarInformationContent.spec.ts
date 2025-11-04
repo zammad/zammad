@@ -87,10 +87,15 @@ describe('TicketSidebarInformationContent', () => {
 
       expect(wrapper.getByRole('heading', { name: 'Tags', level: 3 })).toBeInTheDocument()
 
-      expect(wrapper.getByRole('link', { name: 'tag1' })).toBeInTheDocument()
+      expect(wrapper.getByRole('link', { name: 'tag1' })).toHaveAttribute(
+        'href',
+        `/desktop/search/${encodeURI('tags:"tag1"')}?entity=Ticket`,
+      )
 
-      // TODO: adjust link as soon as we have correct value for search
-      expect(wrapper.getByRole('link', { name: 'tag2' })).toHaveAttribute('href', '#')
+      expect(wrapper.getByRole('link', { name: 'tag2' })).toHaveAttribute(
+        'href',
+        `/desktop/search/${encodeURI('tags:"tag2"')}?entity=Ticket`,
+      )
     })
 
     it.each(['Change customer'])('shows button for `%s` action', async (buttonLabel) => {

@@ -101,17 +101,27 @@ class TicketArticlesController < ApplicationController
     article = Ticket::Article.find(params[:id])
     authorize!(article)
 
-    # only update internal and highlight info
     clean_params = {}
-    if !params[:internal].nil?
-      clean_params[:internal] = params[:internal]
-    end
-    if params.dig(:preferences, :highlight).present?
-      clean_params = article.param_preferences_merge(clean_params.merge(
-                                                       preferences: {
-                                                         highlight: params[:preferences][:highlight].to_s
-                                                       }
-                                                     ))
+
+    # With active import mode every article attribute can be updated.
+    if Setting.get('import_mode') == true
+      clean_params = Ticket::Article.association_name_to_id_convert(params)
+      clean_params = Ticket::Article.param_cleanup(clean_params, true)
+
+      # Only apply preferences changes (keep not updated keys/values)
+      clean_params = article.param_preferences_merge(clean_params)
+    else
+      # only update internal and highlight info
+      if !params[:internal].nil?
+        clean_params[:internal] = params[:internal]
+      end
+      if params.dig(:preferences, :highlight).present?
+        clean_params = article.param_preferences_merge(clean_params.merge(
+                                                         preferences: {
+                                                           highlight: params[:preferences][:highlight].to_s
+                                                         }
+                                                       ))
+      end
     end
 
     article.update!(clean_params)

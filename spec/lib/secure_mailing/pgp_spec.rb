@@ -656,16 +656,11 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
         let(:sender_key)       { create(:pgp_key, :with_private, fixture: sender_email_address) }
         let(:recipient_key)    { create(:pgp_key, :with_private, fixture: recipient_email_address) }
         let(:cc_recipient_key) { create(:pgp_key, :with_private, fixture: cc_recipient_email_address) }
+        let(:pgp_mail)         { Rails.root.join('spec/fixtures/files/pgp/mail/mail-combined.box').read }
+        let(:encrypted_mail)   { Channel::EmailParser.new.parse(pgp_mail.to_s) }
 
-        let(:mail) do
-          # Import a mail that was signed + encrypted with the same command.
-          pgp_mail = Rails.root.join('spec/fixtures/files/pgp/mail/mail-combined.box').read
-
-          mail = Channel::EmailParser.new.parse(pgp_mail.to_s)
-          SecureMailing.incoming(mail)
-
-          mail
-        end
+        # Import a mail that was signed + encrypted with the same command.
+        let(:mail) { encrypted_mail.deep_dup.tap { SecureMailing.incoming(it) } }
 
         context 'when all keys are present' do
           before do
@@ -675,6 +670,11 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
           end
 
           it_behaves_like 'decrypting and verifying signature'
+
+          it 'uncovers subject when decrypting mail' do
+            expect { SecureMailing.incoming(encrypted_mail) }
+              .to change { encrypted_mail[:subject] }.to('Ticket#31337 secret subject')
+          end
         end
 
         context 'when only cc recipient key is present for decryption' do

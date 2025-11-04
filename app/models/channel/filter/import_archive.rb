@@ -75,7 +75,6 @@ module Channel::Filter::ImportArchive
   def self.disable_notifications_and_triggers(transaction_params)
     transaction_params[:disable] += %w[
       Transaction::Notification
-      Transaction::Slack
       Transaction::Trigger
     ]
   end

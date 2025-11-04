@@ -256,6 +256,24 @@ RSpec.describe Ticket, type: :model do
         end
       end
 
+      context 'when merging tickets with articles' do
+        let(:merge_user) { create(:user) }
+
+        it 'recalculates article_count for source and target tickets' do
+          create_list(:ticket_article, 2, :outbound_email, ticket: ticket)
+          create(:ticket_article, :system_outbound_email, ticket: ticket)
+          create(:ticket_article, :outbound_email, ticket: target_ticket)
+
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
+
+          reloaded_ticket        = described_class.find(ticket.id)
+          reloaded_target_ticket = described_class.find(target_ticket.id)
+
+          expect(reloaded_ticket.article_count).to eq(reloaded_ticket.articles.non_system.count)
+          expect(reloaded_target_ticket.article_count).to eq(reloaded_target_ticket.articles.non_system.count)
+        end
+      end
+
       context 'when merging' do
         let(:merge_user) { create(:user) }
 
@@ -2071,6 +2089,61 @@ RSpec.describe Ticket, type: :model do
     it 'does not deliver global assets' do
       expect(ticket.group).to be_present
       expect(ticket.assets({}).deep_symbolize_keys.keys).not_to include(:TicketPriority, :Role, :TicketState, :Group)
+    end
+  end
+
+  describe '#ai_summary_unread?' do
+    subject(:ticket) { create(:ticket) }
+
+    let(:user)             { create(:agent, groups: [ticket.group]) }
+    let(:ai_analytics_run) { create(:ai_analytics_run, related_object: ticket) }
+
+    context 'when a given run is seen' do
+      let(:ai_analytics_usage) { create(:ai_analytics_usage, user:, ai_analytics_run:) }
+
+      before do
+        ai_analytics_usage
+        article
+      end
+
+      context 'when the last relevant article is from the user' do
+        let(:article) { create(:ticket_article, ticket:, created_by: user) }
+
+        it { is_expected.not_to be_ai_summary_unread(user, ai_analytics_run) }
+      end
+
+      context 'when the last relevant article is from someone else' do
+        let(:article) { create(:ticket_article, ticket:, created_by: ticket.customer) }
+
+        it { is_expected.not_to be_ai_summary_unread(user, ai_analytics_run) }
+      end
+    end
+
+    context 'when a given run is not seen yet' do
+      before do
+        ai_analytics_run
+        article
+      end
+
+      context 'when the last relevant article is from the user' do
+        let(:article) { create(:ticket_article, ticket:, created_by: user) }
+
+        it { is_expected.not_to be_ai_summary_unread(user, ai_analytics_run) }
+      end
+
+      context 'when the last relevant article is from someone else' do
+        let(:article) { create(:ticket_article, ticket:, created_by: ticket.customer) }
+
+        it { is_expected.to be_ai_summary_unread(user, ai_analytics_run) }
+      end
+    end
+
+    context 'without a given run' do
+      before do
+        create(:ticket_article, ticket:, created_by: user)
+      end
+
+      it { is_expected.not_to be_ai_summary_unread(user, nil) }
     end
   end
 end

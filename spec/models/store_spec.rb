@@ -53,7 +53,7 @@ RSpec.describe Store, type: :model do
 
         it 'stores data as binary string to #content attribute' do
           expect { create(:store, **attributes) }
-            .to change { described_class.last&.content }.to('hello world äöüß'.force_encoding('ASCII-8BIT'))
+            .to change { described_class.last&.content }.to('hello world äöüß'.dup.force_encoding('ASCII-8BIT'))
         end
       end
 
