@@ -181,7 +181,7 @@ RSpec.describe Job, type: :model do
           end
 
           describe 'use case: deleting tickets based on tag' do
-            let(:condition) { { 'ticket.tags' => { 'operator' => 'contains one', 'value' => 'spam' } } }
+            let(:condition) { { 'ticket.tags' => { 'operator' => 'includes any', 'value' => 'spam' } } }
             let(:perform)             { { 'ticket.action' => { 'value' => 'delete' } } }
             let!(:matching_ticket)    { create(:ticket).tap { |t| t.tag_add('spam', 1) } }
             let!(:nonmatching_ticket) { create(:ticket) }

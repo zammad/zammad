@@ -114,7 +114,7 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
         within '.ticket_selector' do
           toggle_expert_mode(true)
 
-          set_condition(2, 'Tags', 'contains all', value_token_input: %w[tag1 tag2])
+          set_condition(2, 'Tags', 'includes all', value_token_input: %w[tag1 tag2])
         end
 
         click '.js-submit'
@@ -125,7 +125,7 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
           'conditions' => [
             {
               'name'     => 'ticket.tags',
-              'operator' => 'contains all',
+              'operator' => 'includes all',
               'value'    => %w[tag1 tag2].join(', '),
             },
           ],
@@ -405,12 +405,12 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
               'conditions' => [
                 {
                   'name'     => 'ticket.tags',
-                  'operator' => 'contains one',
+                  'operator' => 'includes any',
                   'value'    => %w[tag1 tag2].join(', '),
                 },
                 {
                   'name'     => 'ticket.tags',
-                  'operator' => 'contains one not',
+                  'operator' => 'excludes any',
                   'value'    => %w[tag3 tag4].join(', '),
                 },
               ],
@@ -423,11 +423,11 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
             within '.ticket_selector' do
               check_expert_mode(true)
               check_subclause_selector(1, 'Match any (OR)')
-              check_condition(2, 'Tags', 'contains one', value_token_input: %w[tag1 tag2])
-              check_condition(3, 'Tags', 'contains one not', value_token_input: %w[tag3 tag4])
+              check_condition(2, 'Tags', 'includes any', value_token_input: %w[tag1 tag2])
+              check_condition(3, 'Tags', 'excludes any', value_token_input: %w[tag3 tag4])
 
-              set_condition(2, 'Tags', 'contains all', value_token_input: %w[tag5 tag6])
-              set_condition(3, 'Tags', 'contains all not', value_token_input: %w[tag7])
+              set_condition(2, 'Tags', 'includes all', value_token_input: %w[tag5 tag6])
+              set_condition(3, 'Tags', 'excludes all', value_token_input: %w[tag7])
             end
 
             click '.js-submit'
@@ -438,12 +438,12 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
               'conditions' => [
                 {
                   'name'     => 'ticket.tags',
-                  'operator' => 'contains all',
+                  'operator' => 'includes all',
                   'value'    => %w[tag5 tag6].join(', '),
                 },
                 {
                   'name'     => 'ticket.tags',
-                  'operator' => 'contains all not',
+                  'operator' => 'excludes all',
                   'value'    => %w[tag7].join(', '),
                 },
               ],

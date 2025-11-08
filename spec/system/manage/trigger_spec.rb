@@ -203,8 +203,8 @@ RSpec.describe 'Manage > Trigger', type: :system do
       end
     end
 
-    context "with 'contains all' used" do
-      let(:operator) { 'contains all' }
+    context "with 'includes all' used" do
+      let(:operator) { 'includes all' }
 
       context 'when updated value is the same with trigger value' do
         let(:ticket_multiselect_values) { trigger_values }
@@ -219,8 +219,8 @@ RSpec.describe 'Manage > Trigger', type: :system do
       end
     end
 
-    context "with 'contains one' used" do
-      let(:operator) { 'contains one' }
+    context "with 'includes any' used" do
+      let(:operator) { 'includes any' }
 
       context 'when updated value is the same with trigger value' do
         let(:ticket_multiselect_values) { trigger_values }
@@ -247,8 +247,8 @@ RSpec.describe 'Manage > Trigger', type: :system do
       end
     end
 
-    context "with 'contains all not' used" do
-      let(:operator) { 'contains all not' }
+    context "with 'excludes all' used" do
+      let(:operator) { 'excludes all' }
 
       context 'when updated value is different from the trigger value' do
         let(:ticket_multiselect_values) { options.values - trigger_values }
@@ -269,8 +269,8 @@ RSpec.describe 'Manage > Trigger', type: :system do
       end
     end
 
-    context "with 'contains one not' used" do
-      let(:operator) { 'contains one not' }
+    context "with 'excludes any' used" do
+      let(:operator) { 'excludes any' }
 
       context 'when updated value is different from the trigger value' do
         let(:ticket_multiselect_values) { options.values - trigger_values }

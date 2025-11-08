@@ -613,7 +613,7 @@ msgstr ""
 msgid "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
 
-#: app/models/ticket.rb:295
+#: app/models/ticket.rb:296
 msgid "A ticket cannot be merged into itself."
 msgstr ""
 
@@ -1409,7 +1409,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:151
-#: app/models/user.rb:756
+#: app/models/user.rb:757
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -1992,7 +1992,7 @@ msgstr ""
 msgid "At least one filter must be provided."
 msgstr ""
 
-#: app/models/user.rb:658
+#: app/models/user.rb:659
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2005,7 +2005,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:128
-#: app/models/user.rb:735
+#: app/models/user.rb:736
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -6038,7 +6038,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:668
+#: app/models/user.rb:669
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -8555,7 +8555,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:607
+#: app/models/user.rb:608
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -8719,7 +8719,7 @@ msgstr ""
 msgid "It is not possible to delete your current account."
 msgstr ""
 
-#: app/models/ticket.rb:293
+#: app/models/ticket.rb:294
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 
@@ -10127,7 +10127,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:687
+#: app/models/user.rb:688
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -10927,7 +10927,7 @@ msgstr ""
 msgid "No translation for this locale available"
 msgstr ""
 
-#: app/models/ticket.rb:418
+#: app/models/ticket.rb:419
 msgid "No triggers active"
 msgstr ""
 
@@ -13794,11 +13794,11 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:675
+#: app/models/user.rb:676
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:681
+#: app/models/user.rb:682
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -16366,7 +16366,7 @@ msgstr ""
 msgid "The server presented a certificate that could not be verified."
 msgstr ""
 
-#: lib/user_agent.rb:236
+#: lib/user_agent.rb:235
 msgid "The server returned a redirect response, but the current operation does not allow redirects."
 msgstr ""
 
@@ -17883,7 +17883,7 @@ msgstr ""
 msgid "Token-based API access has been disabled by the administrator."
 msgstr ""
 
-#: lib/user_agent.rb:240
+#: lib/user_agent.rb:239
 msgid "Too many redirections for the original URL, halting."
 msgstr ""
 
@@ -19781,7 +19781,7 @@ msgstr ""
 msgid "Zammad Helpdesk"
 msgstr ""
 
-#: lib/user_agent.rb:126
+#: lib/user_agent.rb:125
 msgid "Zammad User Agent"
 msgstr ""
 
@@ -20009,40 +20009,16 @@ msgstr ""
 msgid "connected"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:143
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "contains"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:145
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
-msgid "contains all"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:146
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
-msgid "contains all not"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:144
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "contains not"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:216
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
-msgid "contains one"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:218
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
-msgid "contains one not"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
@@ -20258,6 +20234,18 @@ msgstr ""
 msgid "example macro"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:146
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+msgid "excludes all"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:218
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+msgid "excludes any"
+msgstr ""
+
 #: db/seeds/ticket_article_types.rb:16
 msgid "facebook direct-message"
 msgstr ""
@@ -20457,6 +20445,18 @@ msgstr ""
 msgid "inactive"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:145
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+msgid "includes all"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:216
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+msgid "includes any"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
 msgid "internal"
@@ -20589,7 +20589,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:872
+#: app/models/user.rb:873
 msgid "is too long"
 msgstr ""
 

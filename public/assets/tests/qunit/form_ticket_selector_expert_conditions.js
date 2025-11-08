@@ -391,22 +391,22 @@ QUnit.test('renders additional attributes correctly', (assert) => {
         },
         {
           name: 'ticket.tags',
-          operator: 'contains all',
+          operator: 'includes all',
           value: 'tag 1, tag 2',
         },
         {
           name: 'ticket.tags',
-          operator: 'contains one',
+          operator: 'includes any',
           value: 'tag 1',
         },
         {
           name: 'ticket.tags',
-          operator: 'contains all not',
+          operator: 'excludes all',
           value: 'tag 3, tag 4',
         },
         {
           name: 'ticket.tags',
-          operator: 'contains one not',
+          operator: 'excludes any',
           value: 'tag 3',
         },
         {
@@ -539,22 +539,22 @@ QUnit.test('renders additional attributes correctly', (assert) => {
         },
         {
           name: 'ticket.test_multiselect',
-          operator: 'contains all',
+          operator: 'includes all',
           value: ['a', 'b'],
         },
         {
           name: 'ticket.test_multiselect',
-          operator: 'contains one',
+          operator: 'includes any',
           value: ['c'],
         },
         {
           name: 'ticket.test_multiselect',
-          operator: 'contains all not',
+          operator: 'excludes all',
           value: ['b', 'c'],
         },
         {
           name: 'ticket.test_multiselect',
-          operator: 'contains one not',
+          operator: 'excludes any',
           value: ['a'],
         },
         {
@@ -569,22 +569,22 @@ QUnit.test('renders additional attributes correctly', (assert) => {
         },
         {
           name: 'ticket.test_multi_tree_select',
-          operator: 'contains all',
+          operator: 'includes all',
           value: ['a', 'a::b'],
         },
         {
           name: 'ticket.test_multi_tree_select',
-          operator: 'contains one',
+          operator: 'includes any',
           value: ['a::b::c'],
         },
         {
           name: 'ticket.test_multi_tree_select',
-          operator: 'contains all not',
+          operator: 'excludes all',
           value: ['a::b', 'a::b::c'],
         },
         {
           name: 'ticket.test_multi_tree_select',
-          operator: 'contains one not',
+          operator: 'excludes any',
           value: ['a'],
         },
         {
@@ -699,16 +699,16 @@ QUnit.test('renders additional attributes correctly', (assert) => {
 
   // Check ticket tag options.
   assert.equal(el.find('.js-filterElement:nth-child(21) .js-attributeSelector select option:selected').text(), 'Tags', 'tags attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(21) .js-operator select option:selected').text(), 'contains all', 'contains all operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(21) .js-operator select option:selected').text(), 'includes all', 'includes all operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(21) .js-value input.form-control').val(), 'tag 1, tag 2', 'tag 1, tag 2 input value')
   assert.equal(el.find('.js-filterElement:nth-child(22) .js-attributeSelector select option:selected').text(), 'Tags', 'tags attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(22) .js-operator select option:selected').text(), 'contains one', 'contains one operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(22) .js-operator select option:selected').text(), 'includes any', 'includes any operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(22) .js-value input.form-control').val(), 'tag 1', 'tag 1 input value')
   assert.equal(el.find('.js-filterElement:nth-child(23) .js-attributeSelector select option:selected').text(), 'Tags', 'tags attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(23) .js-operator select option:selected').text(), 'contains all not', 'contains all not operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(23) .js-operator select option:selected').text(), 'excludes all', 'excludes all operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(23) .js-value input.form-control').val(), 'tag 3, tag 4', 'tag 3, tag 4 input value')
   assert.equal(el.find('.js-filterElement:nth-child(24) .js-attributeSelector select option:selected').text(), 'Tags', 'tags attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(24) .js-operator select option:selected').text(), 'contains one not', 'contains one not operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(24) .js-operator select option:selected').text(), 'excludes any', 'excludes any operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(24) .js-value input.form-control').val(), 'tag 3', 'tag 3 input value')
 
   // Check custom text attribute options.
@@ -808,18 +808,18 @@ QUnit.test('renders additional attributes correctly', (assert) => {
 
   // Check custom multiselect attribute options.
   assert.equal(el.find('.js-filterElement:nth-child(49) .js-attributeSelector select option:selected').text(), 'test_multiselect', 'test_multiselect attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(49) .js-operator select option:selected').text(), 'contains all', 'contains all operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(49) .js-operator select option:selected').text(), 'includes all', 'includes all operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(49) .js-value select option:selected:nth-child(1)').text(), 'A', 'A value selected')
   assert.equal(el.find('.js-filterElement:nth-child(49) .js-value select option:selected:nth-child(2)').text(), 'B', 'B value selected')
   assert.equal(el.find('.js-filterElement:nth-child(50) .js-attributeSelector select option:selected').text(), 'test_multiselect'), 'test_multiselect attribute selected'
-  assert.equal(el.find('.js-filterElement:nth-child(50) .js-operator select option:selected').text(), 'contains one', 'contains one operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(50) .js-operator select option:selected').text(), 'includes any', 'includes any operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(50) .js-value select option:selected').text(), 'C', 'C value selected')
   assert.equal(el.find('.js-filterElement:nth-child(51) .js-attributeSelector select option:selected').text(), 'test_multiselect', 'test_multiselect attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(51) .js-operator select option:selected').text(), 'contains all not', 'contains all not operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(51) .js-operator select option:selected').text(), 'excludes all', 'excludes all operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(51) .js-value select option:selected:nth-child(2)').text(), 'B', 'B value selected')
   assert.equal(el.find('.js-filterElement:nth-child(51) .js-value select option:selected:nth-child(3)').text(), 'C', 'B value selected')
   assert.equal(el.find('.js-filterElement:nth-child(52) .js-attributeSelector select option:selected').text(), 'test_multiselect', 'test_multiselect attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(52) .js-operator select option:selected').text(), 'contains one not', 'contains one not operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(52) .js-operator select option:selected').text(), 'excludes any', 'excludes any operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(52) .js-value select option:selected').text(), 'A', 'A value selected')
 
   // Check custom tree select attribute options.
@@ -833,18 +833,18 @@ QUnit.test('renders additional attributes correctly', (assert) => {
 
   // Check custom multiselect attribute options.
   assert.equal(el.find('.js-filterElement:nth-child(55) .js-attributeSelector select option:selected').text(), 'test_multi_tree_select', 'test_multi_tree_select attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(55) .js-operator select option:selected').text(), 'contains all', 'contains all operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(55) .js-operator select option:selected').text(), 'includes all', 'includes all operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(55) .js-value select option:selected:nth-child(1)').text(), 'a', 'a value selected')
   assert.equal(el.find('.js-filterElement:nth-child(55) .js-value select option:selected:nth-child(2)').text(), 'a::b', 'a::b value selected')
   assert.equal(el.find('.js-filterElement:nth-child(56) .js-attributeSelector select option:selected').text(), 'test_multi_tree_select', 'test_multi_tree_select attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(56) .js-operator select option:selected').text(), 'contains one', 'contains one operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(56) .js-operator select option:selected').text(), 'includes any', 'includes any operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(56) .js-value select option:selected').text(), 'a::b::c', 'a::b::c value selected')
   assert.equal(el.find('.js-filterElement:nth-child(57) .js-attributeSelector select option:selected').text(), 'test_multi_tree_select', 'test_multi_tree_select attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(57) .js-operator select option:selected').text(), 'contains all not', 'contains all not operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(57) .js-operator select option:selected').text(), 'excludes all', 'excludes all operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(57) .js-value select option:selected:nth-child(1)').text(), 'a::b', 'a::b value selected')
   assert.equal(el.find('.js-filterElement:nth-child(57) .js-value select option:selected:nth-child(2)').text(), 'a::b::c', 'a::b::c value selected')
   assert.equal(el.find('.js-filterElement:nth-child(58) .js-attributeSelector select option:selected').text(), 'test_multi_tree_select', 'test_multi_tree_select attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(58) .js-operator select option:selected').text(), 'contains one not', 'contains one not operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(58) .js-operator select option:selected').text(), 'excludes any', 'excludes any operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(58) .js-value select option:selected').text(), 'a', 'a value selected')
 
   // Check customer VIP flag options (boolean).
@@ -1287,12 +1287,12 @@ QUnit.test('handles tags attribute without any errors #4507', (assert) => {
       conditions: [
         {
           name: 'ticket.tags',
-          operator: 'contains one',
+          operator: 'includes any',
           value: 'tag 1',
         },
         {
           name: 'ticket.tags',
-          operator: 'contains one not',
+          operator: 'excludes any',
           value: 'tag 2',
         },
       ],
@@ -1310,15 +1310,15 @@ QUnit.test('handles tags attribute without any errors #4507', (assert) => {
   })
 
   assert.equal(el.find('.js-filterElement:nth-child(2) .js-attributeSelector select option:selected').text(), 'Tags', 'tags attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(2) .js-operator select option:selected').text(), 'contains one', 'contains one operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(2) .js-operator select option:selected').text(), 'includes any', 'includes any operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(2) .js-value input.form-control').val(), 'tag 1', 'tag 1 input value')
   assert.equal(el.find('.js-filterElement:nth-child(3) .js-attributeSelector select option:selected').text(), 'Tags', 'tags attribute selected')
-  assert.equal(el.find('.js-filterElement:nth-child(3) .js-operator select option:selected').text(), 'contains one not', 'contains one not operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(3) .js-operator select option:selected').text(), 'excludes any', 'excludes any operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(3) .js-value input.form-control').val(), 'tag 2', 'tag 2 input value')
 
-  el.find('.js-filterElement:nth-child(2) .js-operator select').val('contains all').trigger('change')
+  el.find('.js-filterElement:nth-child(2) .js-operator select').val('includes all').trigger('change')
   el.find('.js-filterElement:nth-child(2) .js-value input.form-control').val('tag 3, tag 4').trigger('change')
-  el.find('.js-filterElement:nth-child(3) .js-operator select').val('contains all not').trigger('change')
+  el.find('.js-filterElement:nth-child(3) .js-operator select').val('excludes all').trigger('change')
   el.find('.js-filterElement:nth-child(3) .js-value input.form-control').val('tag 5, tag 6').trigger('change')
 
   var params = App.ControllerForm.params(el)
@@ -1328,12 +1328,12 @@ QUnit.test('handles tags attribute without any errors #4507', (assert) => {
       conditions: [
         {
           name: 'ticket.tags',
-          operator: 'contains all',
+          operator: 'includes all',
           value: 'tag 3, tag 4',
         },
         {
           name: 'ticket.tags',
-          operator: 'contains all not',
+          operator: 'excludes all',
           value: 'tag 5, tag 6',
         },
       ],

@@ -277,7 +277,7 @@ RSpec.describe Trigger, type: :model do
         context 'mix of recipient group keyword and single recipient users' do
           let(:recipient) { [ 'ticket_customer', "userid_#{recipient1.id}", "userid_#{recipient2.id}", "userid_#{recipient3.id}" ] }
 
-          it 'contains all recipients' do
+          it 'includes all recipients' do
             expect(ticket.articles.last.to).to eq("#{ticket.customer.email}, #{recipient1.email}, #{recipient2.email}, #{recipient3.email}")
           end
 
@@ -293,7 +293,7 @@ RSpec.describe Trigger, type: :model do
         context 'list of single users only' do
           let(:recipient) { [ "userid_#{recipient1.id}", "userid_#{recipient2.id}", "userid_#{recipient3.id}" ] }
 
-          it 'contains all recipients' do
+          it 'includes all recipients' do
             expect(ticket.articles.last.to).to eq("#{recipient1.email}, #{recipient2.email}, #{recipient3.email}")
           end
 
@@ -1181,8 +1181,8 @@ RSpec.describe Trigger, type: :model do
         end
       end
 
-      context "with 'contains all' used" do
-        let(:operator) { 'contains all' }
+      context "with 'includes all' used" do
+        let(:operator) { 'includes all' }
 
         context 'when updated value is the same with trigger value' do
           let(:ticket_multiselect_values) { trigger_values }
@@ -1208,7 +1208,7 @@ RSpec.describe Trigger, type: :model do
           it_behaves_like 'updating the ticket with the trigger condition'
         end
 
-        context 'when updated value contains one of the trigger value' do
+        context 'when updated value includes any of the trigger value' do
           let(:ticket_multiselect_values) { [trigger_values.first] }
 
           it_behaves_like 'not updating the ticket with the trigger condition'
@@ -1221,8 +1221,8 @@ RSpec.describe Trigger, type: :model do
         end
       end
 
-      context "with 'contains one' used" do
-        let(:operator) { 'contains one' }
+      context "with 'includes any' used" do
+        let(:operator) { 'includes any' }
 
         context 'when updated value is the same with trigger value' do
           let(:ticket_multiselect_values) { trigger_values }
@@ -1261,8 +1261,8 @@ RSpec.describe Trigger, type: :model do
         end
       end
 
-      context "with 'contains all not' used" do
-        let(:operator) { 'contains all not' }
+      context "with 'excludes all' used" do
+        let(:operator) { 'excludes all' }
 
         context 'when updated value is the same with trigger value' do
           let(:ticket_multiselect_values) { trigger_values }
@@ -1301,8 +1301,8 @@ RSpec.describe Trigger, type: :model do
         end
       end
 
-      context "with 'contains one not' used" do
-        let(:operator) { 'contains one not' }
+      context "with 'excludes any' used" do
+        let(:operator) { 'excludes any' }
 
         context 'when updated value is the same with trigger value' do
           let(:ticket_multiselect_values) { trigger_values }

@@ -480,9 +480,9 @@ RSpec.describe SearchIndexBackend do
         expect(result).to eq({ count: 8, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
-      it 'finds records with tags which contains all' do
+      it 'finds records with tags which includes all' do
         result = described_class.selectors('Ticket',
-                                           { 'ticket.tags'=>{ 'operator' => 'contains all', 'value' => 't1, t2' } },
+                                           { 'ticket.tags'=>{ 'operator' => 'includes all', 'value' => 't1, t2' } },
                                            {},
                                            {
                                              field: 'created_at', # sort to verify result
@@ -490,9 +490,9 @@ RSpec.describe SearchIndexBackend do
         expect(result).to eq({ count: 1, object_ids: [ticket3.id.to_s] })
       end
 
-      it 'finds records with tags which contains one' do
+      it 'finds records with tags which includes any' do
         result = described_class.selectors('Ticket',
-                                           { 'ticket.tags'=>{ 'operator' => 'contains one', 'value' => 't1, t2' } },
+                                           { 'ticket.tags'=>{ 'operator' => 'includes any', 'value' => 't1, t2' } },
                                            {},
                                            {
                                              field: 'created_at', # sort to verify result
@@ -500,9 +500,9 @@ RSpec.describe SearchIndexBackend do
         expect(result).to eq({ count: 3, object_ids: [ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
 
-      it 'finds records with tags which contains all not' do
+      it 'finds records with tags which excludes all' do
         result = described_class.selectors('Ticket',
-                                           { 'ticket.tags'=>{ 'operator' => 'contains all not', 'value' => 't2' } },
+                                           { 'ticket.tags'=>{ 'operator' => 'excludes all', 'value' => 't2' } },
                                            {},
                                            {
                                              field: 'created_at', # sort to verify result
@@ -510,9 +510,9 @@ RSpec.describe SearchIndexBackend do
         expect(result).to eq({ count: 6, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s, ticket1.id.to_s] })
       end
 
-      it 'finds records with tags which contains one not' do
+      it 'finds records with tags which excludes any' do
         result = described_class.selectors('Ticket',
-                                           { 'ticket.tags'=>{ 'operator' => 'contains one not', 'value' => 't1' } },
+                                           { 'ticket.tags'=>{ 'operator' => 'excludes any', 'value' => 't1' } },
                                            {},
                                            {
                                              field: 'created_at', # sort to verify result

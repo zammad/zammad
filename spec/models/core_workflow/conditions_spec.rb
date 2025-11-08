@@ -583,7 +583,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
                  object:             'Ticket',
                  condition_selected: {
                    'ticket.tags': {
-                     operator: 'contains all',
+                     operator: 'includes all',
                      value:    ['special'],
                    },
                  })
@@ -604,7 +604,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
                  object:             'Ticket',
                  condition_selected: {
                    'ticket.tags': {
-                     operator: 'contains all',
+                     operator: 'includes all',
                      value:    ['NOPE'],
                    },
                  })
@@ -631,7 +631,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
                  object:             'Ticket',
                  condition_selected: {
                    'ticket.tags': {
-                     operator: 'contains all',
+                     operator: 'includes all',
                      value:    ['special'],
                    },
                  })
@@ -648,7 +648,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
                  object:             'Ticket',
                  condition_selected: {
                    'ticket.tags': {
-                     operator: 'contains all',
+                     operator: 'includes all',
                      value:    ['NOPE'],
                    },
                  })
@@ -671,7 +671,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
                  object:             'Ticket',
                  condition_selected: {
                    'ticket.tags': {
-                     operator: 'contains all',
+                     operator: 'includes all',
                      value:    ['special'],
                    },
                  })
@@ -692,7 +692,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
                  object:             'Ticket',
                  condition_selected: {
                    'ticket.tags': {
-                     operator: 'contains all',
+                     operator: 'includes all',
                      value:    ['NOPE'],
                    },
                  })
@@ -704,7 +704,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
       end
     end
 
-    context 'when contains one' do
+    context 'when includes any' do
       context 'when match' do
         let(:payload) do
           base_payload.merge('params' => { 'tags' => 'special, special2' })
@@ -715,7 +715,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
                  object:             'Ticket',
                  condition_selected: {
                    'ticket.tags': {
-                     operator: 'contains one',
+                     operator: 'includes any',
                      value:    ['special'],
                    },
                  })
@@ -736,7 +736,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
                  object:             'Ticket',
                  condition_selected: {
                    'ticket.tags': {
-                     operator: 'contains one',
+                     operator: 'includes any',
                      value:    ['NOPE'],
                    },
                  })
@@ -1230,7 +1230,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
              object:             'Ticket',
              condition_selected: {
                "ticket.#{field_name}": {
-                 operator: 'contains all',
+                 operator: 'includes all',
                  value:    %w[key_1 key_2],
                },
              })
@@ -1298,7 +1298,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
              object:             'Ticket',
              condition_selected: {
                "ticket.#{field_name}": {
-                 operator: 'contains all not',
+                 operator: 'excludes all',
                  value:    %w[key_1 key_2],
                },
              })

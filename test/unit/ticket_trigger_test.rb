@@ -3602,8 +3602,8 @@ class TicketTriggerTest < ActiveSupport::TestCase
           'value'    => Ticket::State.lookup(name: 'new').id.to_s,
         },
         'ticket.tags'     => {
-          'operator' => 'contains one not',
-          # 'operator' => 'contains all not',
+          'operator' => 'excludes any',
+          # 'operator' => 'excludes all',
           'value'    => 'sender1, sender2',
         },
       },
@@ -4011,7 +4011,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
           'operator' => 'has changed',
         },
         'ticket.tags'     => {
-          'operator' => 'contains one not',
+          'operator' => 'excludes any',
           'value'    => 'nosendmail test123'
         }
       },
@@ -4040,7 +4040,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
           'operator' => 'has changed',
         },
         'ticket.tags'     => {
-          'operator' => 'contains one not',
+          'operator' => 'excludes any',
           'value'    => 'nosendmail2',
         }
       },
