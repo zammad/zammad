@@ -48,7 +48,9 @@ bin/dev
 
 ### 5. Login
 
-Once the application is running, open it in your browser at `http://localhost:3000` and use the default development credentials:
+Once the application is running, open it in your browser at either `http://localhost:3000/desktop` (new stack) or `http://localhost:3000` (old stack).
+
+Then use the default development credentials to login:
 
 ```text
 Username / Email: admin@example.com
