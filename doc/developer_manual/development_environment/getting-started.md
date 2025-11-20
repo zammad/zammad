@@ -34,17 +34,15 @@ For more information, see [devcontainer setup guide](devcontainer-setup.md)
 
 ### 4. Launching Zammad
 
-You can start Zammad development services with:
-
 #### Devcontainer setup
 
-```sh
-dev
-```
+Open a new terminal in `VS Code`. You should now run a `bash` shell attached to your devcontainer.
 
-#### Manual setup
+#### Start development services
 
-```sh
+You can start Zammad all development services with a single command for either devcontainer or manual setup:
+
+```bash
 bin/dev
 ```
 
