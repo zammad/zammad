@@ -10,14 +10,15 @@ services:
       DATABASE_URL: postgres://zammad:zammad@postgresql:5432
       REDIS_URL: redis://redis:6379
       # Performance / DX / tests tuning
-      CI_SKIP_ASSETS_PRECOMPILE: 'true'
-      CI_SKIP_DB_RESET: 'true'
-      RAILS_SERVE_STATIC_FILES: 'true'
-      TZ: 'Europe/London'
+      CI_SKIP_ASSETS_PRECOMPILE: "true"
+      # Prepare and seed DB for development
+      CI_SKIP_DB_RESET: "false"
+      RAILS_SERVE_STATIC_FILES: "true"
+      TZ: "Europe/London"
       Z_LOCALES: en-us:en-gb:de-de
       ES_URL: http://elasticsearch:9200
       ES_INDEX: estest.local_zammad
-      VITE_RUBY_HOST: '127.0.0.1'
+      VITE_RUBY_HOST: "127.0.0.1"
 
     depends_on:
       - memcached
