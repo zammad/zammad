@@ -47,7 +47,7 @@ You may see a blank browser window until this is complete.
 ### Default Credentials
 
 ```text
-Username / Email: example@zammad.com
+Username / Email: admin@example.com
 Password: test
 ```
 
