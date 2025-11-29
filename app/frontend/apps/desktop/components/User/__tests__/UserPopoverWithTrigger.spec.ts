@@ -177,9 +177,9 @@ describe('UserPopover', () => {
     expect(avatarWrapper).toHaveAttribute('href', `/users/${dummyUser.internalId}`)
   })
 
-  it('disables link navigation when noLink is true', () => {
+  it('disables link navigation when noTriggerLink is true', () => {
     const wrapper = renderUserPopover({
-      noLink: true,
+      noTriggerLink: true,
     })
 
     const avatarWrapper = wrapper.getByRole('button', {

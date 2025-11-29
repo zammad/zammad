@@ -184,7 +184,9 @@ describe('User Detail View', () => {
       const header = within(main).getByTestId('user-detail-top-bar')
       const breadcrumb = within(header).getByRole('navigation', { name: 'Breadcrumb navigation' })
 
-      await view.events.click(within(breadcrumb).getByRole('button', { name: 'Copy user name' }))
+      await view.events.click(
+        within(breadcrumb).getByRole('button', { name: 'Copy user display name' }),
+      )
 
       expect(copyToClipboardMock).toHaveBeenCalledWith([
         {

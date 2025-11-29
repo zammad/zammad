@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-11-24 09:00+0000\n"
+"PO-Revision-Date: 2025-11-28 09:00+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/sr_Cyrl/>\n"
@@ -1164,7 +1164,7 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
 "Прихватите политику приватности података и политику прихватљиве употребе"
 
-#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:45
+#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:46
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:36
 msgid "Access denied"
 msgstr "Недозвољен приступ"
@@ -2487,7 +2487,7 @@ msgstr ""
 "Време истека доделе у минутима уколико одговорни оператер не ради на тикету. "
 "Тикет ће бити приказан као недодељен."
 
-#: app/graphql/gql/queries/tickets/by_filter.rb:19
+#: app/graphql/gql/queries/tickets/by_filter.rb:20
 msgid "At least one filter must be provided."
 msgstr "Неопходно је приложити бар један филтер."
 
@@ -2908,6 +2908,8 @@ msgid ""
 "Bar chart showing ticket statistics. Created and closed tickets over the "
 "last 12 months."
 msgstr ""
+"Графикон приказује статистике тикета. Отворени и затворени тикети у току "
+"задњих 12 месеци."
 
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee:9
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:9
@@ -3927,6 +3929,7 @@ msgstr "Затворено у"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:130
 #: app/assets/javascripts/app/controllers/widget/user.coffee:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:129
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:43
 msgid "Closed Tickets"
 msgstr "Затворени тикети"
 
@@ -4207,7 +4210,7 @@ msgstr "Неуспешно повезивање са Elasticsearch вектор�
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:8
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:288
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:166
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:162
 msgid "Contact the administrator if you have any problems logging in."
 msgstr ""
 "Контактирајте администратора уколико имате проблема приликом пријављивања."
@@ -4279,7 +4282,7 @@ msgid "Continue session"
 msgstr "Настави сесију"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:138
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:169
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:165
 msgid "Continue to desktop"
 msgstr "Настави на основни приказ"
 
@@ -4366,10 +4369,8 @@ msgid "Copy to clipboard"
 msgstr "Копирај у привремену меморију"
 
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:105
-#, fuzzy
-#| msgid "Copy Secret"
 msgid "Copy user name"
-msgstr "Ископирај шифру"
+msgstr "Ископирај име корисника"
 
 #: db/seeds/settings.rb:601
 msgid "Core Workflow Ajax Mode"
@@ -6589,6 +6590,10 @@ msgstr "Откажи своје несачуване измене."
 msgid "Dislikes count"
 msgstr "Број дислајкова"
 
+#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:61
+msgid "Dismiss alert"
+msgstr "Одбаци упозорење"
+
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:7
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:7
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco:8
@@ -8065,7 +8070,7 @@ msgstr "Није било могуће приказати QR код. Молим�
 msgid "Failed to update checklist item."
 msgstr "Грешка при снимању задатка."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:23
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:25
 msgid "Failed to upload."
 msgstr "Неуспешно отпремање."
 
@@ -8157,6 +8162,12 @@ msgstr "Систем датотека"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:130
 msgid "Filter"
 msgstr "Филтер"
+
+#: app/graphql/gql/queries/tickets/by_filter.rb:24
+msgid ""
+"Filtering by customer's organizations requires customer filter to be "
+"provided."
+msgstr "Филтрирање по организацијама клијента захтева филтер клијента."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 msgid "Find a ticket"
@@ -9729,7 +9740,6 @@ msgstr "Информације: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:9
@@ -9814,6 +9824,10 @@ msgstr ""
 "Убаците код додатка у изворни код сваке стране на којој ћаскање треба да "
 "буде видљиво. Неопходно је убацити га на крај изворног кода стране пре "
 "затвореног §</body>§ елемента."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+msgid "Inserting image not possible due to source restrictions"
+msgstr "Није могуће убацивање сличице услед рестрикција изворног ресурса"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
 msgid "Inserts a horizontal rule"
@@ -12399,6 +12413,7 @@ msgstr "Нема резултата за овај упит."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:305
+#: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:66
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:480
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
@@ -12983,6 +12998,7 @@ msgstr "Отвори Tiket# %s"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:122
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:120
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:35
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
 msgstr "Отворени тикети"
@@ -13152,6 +13168,7 @@ msgstr "Редослед прегледа тикета"
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:13
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:70
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -14459,7 +14476,7 @@ msgstr "ID повезаног објекта"
 msgid "Related Object Type"
 msgstr "Врста повезаног објекта"
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:97
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:139
 msgid "Related tickets"
 msgstr "Сродни тикети"
 
@@ -14718,7 +14735,7 @@ msgstr "Упути захтев за пријаву преко привреме�
 
 #: app/assets/javascripts/app/views/login.jst.eco:106
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:280
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:159
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:155
 msgid "Request the password login here."
 msgstr "Упути захтев за пријаву преко привремене лозинке овде."
 
@@ -14900,7 +14917,7 @@ msgstr "Промени висину панела чланка"
 msgid "Resize column"
 msgstr "Прошири колону"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:252
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
 msgid "Resize frame"
 msgstr "Промени ширину рама"
 
@@ -15363,6 +15380,10 @@ msgstr "URL за претрагу је неисправан."
 msgid "Search URL is missing."
 msgstr "Недостаје URL за претрагу."
 
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:87
+msgid "Search all"
+msgstr "Претражи све"
+
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:48
 msgid "Search for AI agents"
 msgstr "Претражи AI агенте"
@@ -15550,7 +15571,7 @@ msgstr "Тражи…"
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:102
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:73
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:113
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:88
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1161
@@ -19666,10 +19687,8 @@ msgid "Ticket failed to save: %s"
 msgstr "Неуспешно снимање тикета: %s"
 
 #: app/frontend/apps/desktop/components/Ticket/TicketBarChart/useTicketStatsChart.ts:52
-#, fuzzy
-#| msgid "Ticket Create"
 msgid "Ticket frequency"
-msgstr "Отварање тикета"
+msgstr "Учесталост тикета"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue:96
 msgid "Ticket has %s viewers"
@@ -21151,6 +21170,7 @@ msgstr "Користи се приликом гледања тикета"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:28
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:35
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
@@ -21491,7 +21511,6 @@ msgstr "Погледај из перспективе корисника"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:17

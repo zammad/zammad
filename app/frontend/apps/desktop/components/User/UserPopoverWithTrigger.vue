@@ -20,7 +20,7 @@ export interface Props {
   popoverConfig?: Omit<CommonPopoverProps, 'owner'>
   avatarConfig?: Omit<CommonUserAvatarProps, 'entity'>
   triggerClass?: string
-  noLink?: boolean
+  noTriggerLink?: boolean
   noFocusStyling?: boolean
   noHoverStyling?: boolean
   zIndex?: string
@@ -63,7 +63,7 @@ const isSystemUser = computed(() => {
     :no-hover-styling="noHoverStyling"
     :no-focus-styling="noFocusStyling"
     :z-index="zIndex"
-    :trigger-link="!noLink ? `/users/${userInternalId}` : undefined"
+    :trigger-link="!noTriggerLink ? `/users/${userInternalId}` : undefined"
     :trigger-link-active-class="
       !$slots?.default?.()
         ? 'outline-2! outline-offset-1! outline-blue-800! hover:outline-blue-800!'
@@ -76,6 +76,7 @@ const isSystemUser = computed(() => {
         :id="popoverId"
         :user-avatar="user"
         :has-open-via-long-click="hasOpenedViaLongClick"
+        :no-profile-link="!noTriggerLink"
       />
     </template>
 

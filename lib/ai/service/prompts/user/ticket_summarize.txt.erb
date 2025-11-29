@@ -14,6 +14,7 @@
 <article>
   <sender_type><%= article.sender.name %></sender_type>
   <sender_name><%= article.author.fullname %></sender_name>
+  <created_at><%= article.created_at %></created_at>
   <visibility><%= article.internal ? 'internal' : 'public' %></visibility>
   <text><%= result %></text>
 </article>

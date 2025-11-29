@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-11-19 09:00+0000\n"
+"PO-Revision-Date: 2025-11-28 09:00+0000\n"
 "Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -1079,7 +1079,7 @@ msgstr "Text-Werkzeug des KI-Assistenten ist ungültig."
 
 #: lib/excel_sheet/ai/analytics/errors.rb:4
 msgid "AI error log"
-msgstr "KI Fehlerprotokoll"
+msgstr "KI-Fehlerprotokoll"
 
 #: db/seeds/settings.rb:6013
 msgid "AI provider"
@@ -1116,11 +1116,11 @@ msgstr "KI-Anbieter-Token ist nicht gesetzt"
 
 #: lib/ai/service/ticket_summarize.rb:48
 msgid "AI service result is missing expected keys"
-msgstr ""
+msgstr "Im Ergebnis des KI-Dienstes fehlen erwartete Schlüssel"
 
 #: lib/excel_sheet/ai/analytics/with_usage.rb:4
 msgid "AI usage and feedback log"
-msgstr "KI Nutzungs- und Feedbackprotokoll"
+msgstr "KI-Nutzungs- und Feedbackprotokoll"
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:251
@@ -1182,7 +1182,7 @@ msgstr "API-Token"
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr "Datenschutzrichtlinie und Nutzungsbedingungen akzeptieren"
 
-#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:45
+#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:46
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:36
 msgid "Access denied"
 msgstr "Zugang verweigert"
@@ -2529,7 +2529,7 @@ msgstr ""
 "nicht am Ticket arbeitet. Das Ticket wird danach als nicht zugeordnet "
 "angezeigt."
 
-#: app/graphql/gql/queries/tickets/by_filter.rb:19
+#: app/graphql/gql/queries/tickets/by_filter.rb:20
 msgid "At least one filter must be provided."
 msgstr "Mindestens ein Objekt muss ausgewählt sein."
 
@@ -2956,6 +2956,8 @@ msgid ""
 "Bar chart showing ticket statistics. Created and closed tickets over the "
 "last 12 months."
 msgstr ""
+"Balkendiagramm mit Ticket-Statistiken. Erstellte und geschlossene Tickets in "
+"den letzten 12 Monaten."
 
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee:9
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:9
@@ -3988,6 +3990,7 @@ msgstr "Geschlossen am"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:130
 #: app/assets/javascripts/app/controllers/widget/user.coffee:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:129
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:43
 msgid "Closed Tickets"
 msgstr "Geschlossene Tickets"
 
@@ -4269,7 +4272,7 @@ msgstr "Verbindung zu Elasticsearch Vector DB fehlgeschlagen"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:8
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:288
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:166
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:162
 msgid "Contact the administrator if you have any problems logging in."
 msgstr "Kontaktieren Sie bei Anmelde-Problemen den Administrator."
 
@@ -4340,7 +4343,7 @@ msgid "Continue session"
 msgstr "Sitzung fortsetzen"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:138
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:169
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:165
 msgid "Continue to desktop"
 msgstr "Weiter mit Desktop"
 
@@ -4428,10 +4431,8 @@ msgid "Copy to clipboard"
 msgstr "In die Zwischenablage kopieren"
 
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:105
-#, fuzzy
-#| msgid "Copy Secret"
 msgid "Copy user name"
-msgstr "Geheimnis kopieren"
+msgstr "Benutzernamen kopieren"
 
 #: db/seeds/settings.rb:601
 msgid "Core Workflow Ajax Mode"
@@ -6715,6 +6716,10 @@ msgstr "Verwerfen der ungespeicherten Änderungen."
 msgid "Dislikes count"
 msgstr "Zähler Abneigung"
 
+#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:61
+msgid "Dismiss alert"
+msgstr "Alarm schließen"
+
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:7
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:7
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco:8
@@ -8225,7 +8230,7 @@ msgstr ""
 msgid "Failed to update checklist item."
 msgstr "Aktualisierung des Checklisten-Elements ist fehlgeschlagen."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:23
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:25
 msgid "Failed to upload."
 msgstr "Hochladen fehlgeschlagen."
 
@@ -8319,6 +8324,14 @@ msgstr "Dateisystem"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:130
 msgid "Filter"
 msgstr "Filter"
+
+#: app/graphql/gql/queries/tickets/by_filter.rb:24
+msgid ""
+"Filtering by customer's organizations requires customer filter to be "
+"provided."
+msgstr ""
+"Für die Filterung nach Organisationen des Kunden muss ein Kundenfilter "
+"bereitgestellt werden."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 msgid "Find a ticket"
@@ -9922,7 +9935,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:9
@@ -10008,6 +10020,10 @@ msgstr ""
 "Fügen Sie den Widget-Code in jede Seite ein, auf welcher der Chat angezeigt "
 "werden soll. Der Widget-Code sollte am Ende des Quellcodes eingefügt werden, "
 "vor dem schließenden §</body>§-Tag."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+msgid "Inserting image not possible due to source restrictions"
+msgstr "Bild einfügen aufgrund von Restriktionen der Quelle nicht möglich"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
 msgid "Inserts a horizontal rule"
@@ -12560,10 +12576,8 @@ msgid "No import in progress."
 msgstr "Kein Import im Gange."
 
 #: app/frontend/apps/desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue:160
-#, fuzzy
-#| msgid "No macros available."
 msgid "No items available"
-msgstr "Keine Makros verfügbar."
+msgstr "Keine Elemente verfügbar"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:193
 msgid "No linked issues"
@@ -12615,6 +12629,7 @@ msgstr "Keine Ergebnisse für diese Anfrage."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:305
+#: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:66
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:480
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
@@ -13209,6 +13224,7 @@ msgstr "Öffne Ticket# %s"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:122
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:120
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:35
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
 msgstr "Offene Tickets"
@@ -13380,6 +13396,7 @@ msgstr "Reihenfolge der Ticket-Übersichten"
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:13
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:70
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -14704,18 +14721,16 @@ msgstr "Verwandte Antworten"
 #: lib/excel_sheet/ai/analytics/errors.rb:30
 #: lib/excel_sheet/ai/analytics/with_usage.rb:30
 msgid "Related Object ID"
-msgstr "Zugehörige Objekt ID"
+msgstr "Zugehörige Objekt-ID"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:29
 #: lib/excel_sheet/ai/analytics/with_usage.rb:29
 msgid "Related Object Type"
 msgstr "Zugehöriger Objekttyp"
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:97
-#, fuzzy
-#| msgid "Create ticket"
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:139
 msgid "Related tickets"
-msgstr "Ticket erstellen"
+msgstr "Verwandte Tickets"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue:70
 msgid "Relax, your system is being set up…"
@@ -14972,7 +14987,7 @@ msgstr "Passwort-Anmeldung für Administrator anfordern?"
 
 #: app/assets/javascripts/app/views/login.jst.eco:106
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:280
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:159
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:155
 msgid "Request the password login here."
 msgstr "Fordern Sie die Passwort-Anmeldung hier an."
 
@@ -15158,7 +15173,7 @@ msgstr "Größe des Artikel-Bereichs ändern"
 msgid "Resize column"
 msgstr "Spaltengröße ändern"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:252
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
 msgid "Resize frame"
 msgstr "Rahmengröße ändern"
 
@@ -15625,6 +15640,12 @@ msgstr "Die Such-URL ist ungültig."
 msgid "Search URL is missing."
 msgstr "Die Such-URL fehlt."
 
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:87
+#, fuzzy
+#| msgid "Search"
+msgid "Search all"
+msgstr "Suche"
+
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:48
 msgid "Search for AI agents"
 msgstr "Suche nach KI-Agenten"
@@ -15816,7 +15837,7 @@ msgstr "Suchen…"
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:102
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:73
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:113
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:88
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1161
@@ -20043,10 +20064,8 @@ msgid "Ticket failed to save: %s"
 msgstr "Ticket konnte nicht gespeichert werden: %s"
 
 #: app/frontend/apps/desktop/components/Ticket/TicketBarChart/useTicketStatsChart.ts:52
-#, fuzzy
-#| msgid "Ticket Create"
 msgid "Ticket frequency"
-msgstr "Ticket erstellen"
+msgstr "Ticket-Häufigkeit"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue:96
 msgid "Ticket has %s viewers"
@@ -21561,6 +21580,7 @@ msgstr "Verwendet beim Ansehen eines Tickets"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:28
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:35
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
@@ -21903,7 +21923,6 @@ msgstr "Aus Benutzersicht ansehen"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:17

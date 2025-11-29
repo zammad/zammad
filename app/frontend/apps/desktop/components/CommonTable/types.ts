@@ -31,8 +31,7 @@ type TableColumnPreference = {
 }
 
 export interface TableSimpleHeader<K = string>
-  extends TableHeaderPreference,
-    TableColumnPreference {
+  extends TableHeaderPreference, TableColumnPreference {
   key: K
   label: string
   labelPlaceholder?: string[]

@@ -10,8 +10,10 @@ export interface CommonPopoverInstance {
   popoverElement: HTMLDivElement | null
 }
 
-export interface CommonPopoverInternalInstance
-  extends Omit<CommonPopoverInstance, 'isOpen' | 'popoverElement'> {
+export interface CommonPopoverInternalInstance extends Omit<
+  CommonPopoverInstance,
+  'isOpen' | 'popoverElement'
+> {
   isOpen: Ref<boolean>
   popoverElement: Readonly<ShallowRef<HTMLDivElement | null>>
 }

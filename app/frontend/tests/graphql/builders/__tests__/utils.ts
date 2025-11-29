@@ -24,8 +24,10 @@ interface EnhancedMutationHandler<R, V extends OperationVariables> extends Mutat
   getMockedData: () => { data: R }
 }
 
-interface EnhancedSubscriptionHandler<R extends Record<string, any>, V extends OperationVariables>
-  extends SubscriptionHandler<R, V> {
+interface EnhancedSubscriptionHandler<
+  R extends Record<string, any>,
+  V extends OperationVariables,
+> extends SubscriptionHandler<R, V> {
   getTestSubscriptionHandler: () => TestSubscriptionHandler<R>
 }
 

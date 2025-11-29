@@ -22,6 +22,7 @@ import { useUserInfoForPopoverQuery } from './graphql/queries/userInfoForPopover
 
 interface Props {
   userAvatar: AvatarUser
+  noProfileLink?: boolean
 }
 
 const props = defineProps<Props>()
@@ -60,7 +61,7 @@ const goToUserProfile = () => {
   <section ref="popover-section" data-type="popover" class="space-y-2 p-3">
     <UserPopoverSkeleton v-if="debouncedLoading && !user" />
     <template v-else-if="user">
-      <UserInfo :user="user" no-link />
+      <UserInfo :user="user" :no-link="noProfileLink" />
 
       <ObjectAttributes
         :class="{

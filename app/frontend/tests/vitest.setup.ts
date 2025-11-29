@@ -286,11 +286,9 @@ declare module 'vitest' {
   }
 
   interface Assertion<T = any>
-    extends matchers.AxeMatchers,
-      TestingLibraryMatchers<typeof expect.stringContaining, T> {}
+    extends matchers.AxeMatchers, TestingLibraryMatchers<typeof expect.stringContaining, T> {}
   interface AsymmetricMatchersContaining
-    extends matchers.AxeMatchers,
-      TestingLibraryMatchers<any, any> {}
+    extends matchers.AxeMatchers, TestingLibraryMatchers<any, any> {}
 }
 
 declare global {

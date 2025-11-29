@@ -102,7 +102,7 @@ const events = computed(() => {
       <template #trailing>
         <CommonButton
           v-if="userDisplayName"
-          v-tooltip="$t('Copy user name')"
+          v-tooltip="$t('Copy user display name')"
           variant="secondary"
           icon="files"
           size="small"

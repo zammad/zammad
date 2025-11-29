@@ -18,15 +18,15 @@ export const useArchiveBeforeWarningHandler = () =>
     (field, fields) =>
       Boolean(
         fields.archive.props.value &&
-          field.props.value &&
-          isFuture(parseISO(field.props.value as string)),
+        field.props.value &&
+        isFuture(parseISO(field.props.value as string)),
       ),
     (changedField, fields) =>
       Boolean(
         fields.archive.props.value &&
-          changedField?.name === 'archive_before' &&
-          changedField.newValue &&
-          isFuture(parseISO(changedField.newValue as string)),
+        changedField?.name === 'archive_before' &&
+        changedField.newValue &&
+        isFuture(parseISO(changedField.newValue as string)),
       ),
     (node, addAlert, clearAlert) => {
       const { value } = node

@@ -48,9 +48,7 @@ const CUSTOMER_FLYOUT_KEY = 'ticket-change-customer'
 const { open: openChangeCustomerFlyout } = useFlyout({
   name: CUSTOMER_FLYOUT_KEY,
   component: () =>
-    import(
-      '#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue'
-    ),
+    import('#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue'),
 })
 
 let ticket: TicketInformation['ticket']

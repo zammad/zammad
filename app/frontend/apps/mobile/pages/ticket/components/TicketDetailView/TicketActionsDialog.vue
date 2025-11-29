@@ -79,9 +79,7 @@ const topButtons = computed(() =>
 const changeCustomerDialog = useDialog({
   name: 'ticket-change-customer',
   component: () =>
-    import(
-      '#mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue'
-    ),
+    import('#mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue'),
 })
 
 const showChangeCustomer = () => {

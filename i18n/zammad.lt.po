@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-11-21 09:00+0000\n"
+"PO-Revision-Date: 2025-11-28 09:00+0000\n"
 "Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/lt/>\n"
@@ -1159,7 +1159,7 @@ msgstr "API žetonas"
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr "Sutinku su duomenų privatumo ir priimtino naudojimo taisyklėmis"
 
-#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:45
+#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:46
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:36
 msgid "Access denied"
 msgstr "Prieigos nėra"
@@ -1305,10 +1305,8 @@ msgid "Action"
 msgstr "Veiksmas"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:79
-#, fuzzy
-#| msgid "Action execution"
 msgid "Action definition"
-msgstr "Veiksmų vykdymas"
+msgstr "Veiksmo aprašymas"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Action execution"
@@ -2219,10 +2217,8 @@ msgid "Apply filter…"
 msgstr "Taikyti filtrą…"
 
 #: app/assets/javascripts/app/controllers/text_tools_modal.coffee:4
-#, fuzzy
-#| msgid "Provider"
 msgid "Approve"
-msgstr "Tiekėjas"
+msgstr "Patvirtinti"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:221
@@ -2380,10 +2376,8 @@ msgid "Are you sure? Your recent searches will be lost."
 msgstr "Ar tikrai? Turite pakeitimų, kurie bus prarasti."
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:120
-#, fuzzy
-#| msgid "Are you sure? Your recently viewed items will get lost."
 msgid "Are you sure? Your recently closed items will get lost."
-msgstr "Ar tikrai? Naujausi peržiūrėti elementai bus prarasti."
+msgstr "Ar tikrai? Neseniai uždaryti skirtukai bus prarasti."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:54
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:11
@@ -2485,11 +2479,9 @@ msgstr ""
 "Priskyrimo laiko limitas minutėmis. Jei priskirtas agentas nedirba su "
 "triktimi, ji bus rodoma kaip nepriskirta."
 
-#: app/graphql/gql/queries/tickets/by_filter.rb:19
-#, fuzzy
-#| msgid "At least one object must be selected."
+#: app/graphql/gql/queries/tickets/by_filter.rb:20
 msgid "At least one filter must be provided."
-msgstr "Pasirinkite bent vieną triktį."
+msgstr "Pateikite bent vieną filtrą."
 
 #: app/models/user.rb:659
 msgid ""
@@ -2907,6 +2899,8 @@ msgid ""
 "Bar chart showing ticket statistics. Created and closed tickets over the "
 "last 12 months."
 msgstr ""
+"Grafikas rodantis trikčių statistiką. Atidarytos ir uždarytos triktys per "
+"pastaruosius 12 mėnesių."
 
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee:9
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:9
@@ -2941,10 +2935,8 @@ msgid "Be sure to check AI-generated content for accuracy."
 msgstr "Nepamirškite patikrinti DI sugeneruoto turinio tikslumo."
 
 #: app/assets/javascripts/app/models/webhook.coffee:11
-#, fuzzy
-#| msgid "Generate Token"
 msgid "Bearer Token"
-msgstr "Generuoti žetoną"
+msgstr "Prieigos žetonas"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:788
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts:105
@@ -3668,6 +3660,10 @@ msgid ""
 "below. Make sure the options have clear names and optional descriptions, as "
 "that would comprise the context provided to the AI agent."
 msgstr ""
+"Pasirinkite į kurias atributo vertes bus atsižvelgiama skirstant triktis. "
+"Jei norite apsiriboti konkrečiomis parinktimis, pasirinkite bent dvi toliau "
+"pateiktas parinktis. Įsitikinkite, kad parinktys turi aiškius pavadinimus ir "
+"galimus aprašymus. Tai sudarys DI agentui pateikiamą kontekstą."
 
 #: app/models/ai/agent/type/ticket_group_dispatcher.rb:16
 msgid ""
@@ -3676,6 +3672,10 @@ msgid ""
 "the groups have clear names and optional descriptions, as that would "
 "comprise the context provided to the AI agent."
 msgstr ""
+"Pasirinkite į kurias grupes bus atsižvelgiama skirstant triktis. Jei norite "
+"apsiriboti konkrečiomis grupėmis, pasirinkite bent dvi. Įsitikinkite, kad "
+"grupės turi aiškius pavadinimus ir galimus aprašymus. Tai sudarys DI agentui "
+"pateikiamą kontekstą."
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:20
 msgid ""
@@ -3684,6 +3684,10 @@ msgid ""
 "Make sure the priorities have clear names and optional descriptions, as that "
 "would comprise the context provided to the AI agent."
 msgstr ""
+"Pasirinkite į kuriuos prioritetus bus atsižvelgiama skirstant triktis. Jei "
+"norite apsiriboti konkrečiais prioritetais, pasirinkite bent du. "
+"Įsitikinkite, kad prioritetai turi aiškius pavadinimus ir galimus aprašymus. "
+"Tai sudarys DI agentui pateikiamą kontekstą."
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco:7
 msgid "Choose your language."
@@ -3774,10 +3778,8 @@ msgid "Clear recent searches"
 msgstr "Išvalyti naujausias paieškas"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:222
-#, fuzzy
-#| msgid "Clear recently viewed"
 msgid "Clear recently closed"
-msgstr "Išvalyti naujausius žiūrėtus"
+msgstr "Išvalyti nesenai uždarytuosius"
 
 #: app/frontend/apps/desktop/pages/search/components/SearchEmptyMessage.vue:34
 msgid "Clear search"
@@ -3917,6 +3919,7 @@ msgstr "Uždaryta"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:130
 #: app/assets/javascripts/app/controllers/widget/user.coffee:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:129
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:43
 msgid "Closed Tickets"
 msgstr "Uždarytos triktys"
 
@@ -4196,7 +4199,7 @@ msgstr "Nepavyko užmegzti ryšio su Elasticsearch vektorine DB"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:8
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:288
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:166
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:162
 msgid "Contact the administrator if you have any problems logging in."
 msgstr "Susisiekite su administratoriumi jei nepavyksta prisijungti."
 
@@ -4239,10 +4242,8 @@ msgid "Context"
 msgstr "Kontekstas"
 
 #: app/frontend/apps/desktop/components/SplitButton/SplitButton.vue:85
-#, fuzzy
-#| msgid "Context"
 msgid "Context menu"
-msgstr "Kontekstas"
+msgstr "Kontekstinis meniu"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
@@ -4269,7 +4270,7 @@ msgid "Continue session"
 msgstr "Tęsti sesiją"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:138
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:169
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:165
 msgid "Continue to desktop"
 msgstr "Tęsti dideliame ekrane"
 
@@ -4286,10 +4287,8 @@ msgstr "Prisidėjimas prie vertimo"
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:72
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:4
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:85
-#, fuzzy
-#| msgid "Event Summary"
 msgid "Conversation Summary"
-msgstr "Įvykio aprašymas"
+msgstr "Pokalbio santrauka"
 
 #: lib/sessions/event/chat_transfer.rb:30
 msgid "Conversation is transferred into another chat. Please stay tuned."
@@ -4358,10 +4357,8 @@ msgid "Copy to clipboard"
 msgstr "Kopijuoti į iškarpinę"
 
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:105
-#, fuzzy
-#| msgid "Copy Secret"
 msgid "Copy user name"
-msgstr "Kopijuoti slaptuką"
+msgstr "Kopijuoti naudotojo vardą"
 
 #: db/seeds/settings.rb:601
 msgid "Core Workflow Ajax Mode"
@@ -4387,6 +4384,8 @@ msgid ""
 "Could not create user and send verification email because import_mode "
 "setting is on."
 msgstr ""
+"Nepavyko sukurti naudotojo ir išsiųsti patvirtinimo el. laiško, nes įjungtas "
+"import_mode nustatymas."
 
 #: app/services/service/channel/whatsapp/base.rb:37
 msgid "Could not fetch WhatsApp phone number details."
@@ -4447,6 +4446,8 @@ msgstr "Nepavyko pašalinti dviejų veiksnių autentifikavimo metodo."
 msgid ""
 "Could not send user verification email because import_mode setting is on."
 msgstr ""
+"Nepavyko išsiųsti naudotojo patvirtinimo el. laiško, nes įjungtas "
+"import_mode nustatymas."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:228
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:88
@@ -4831,7 +4832,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Ticket/TicketItem.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:41
 msgid "Currently processing this ticket…"
-msgstr ""
+msgstr "ŠIuo metu ši triktis apdorojama…"
 
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:130
 msgid ""
@@ -4846,10 +4847,8 @@ msgid "Custom"
 msgstr "Pasirinktinis"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:6
-#, fuzzy
-#| msgid "Customer tickets"
 msgid "Custom AI Agent"
-msgstr "Kliento triktys"
+msgstr "Pasirinktinis DI agentas"
 
 #: app/assets/javascripts/app/models/webhook.coffee:16
 msgid "Custom Payload"
@@ -4869,10 +4868,8 @@ msgid "Custom address is not set"
 msgstr "Pasirinktinis adresas nėra nurodytas"
 
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:7
-#, fuzzy
-#| msgid "Custom Translation"
 msgid "Custom instructions"
-msgstr "Pasirinktinis vertimas"
+msgstr "Pasirinktinės instrukcijos"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:512
@@ -4909,18 +4906,14 @@ msgstr "Kliento pokalbiai"
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:65
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:80
-#, fuzzy
-#| msgid "Customer tickets"
 msgid "Customer Intent"
-msgstr "Kliento triktys"
+msgstr "Kliento ketinimai"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:91
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:100
-#, fuzzy
-#| msgid "Customer tickets"
 msgid "Customer Sentiment"
-msgstr "Kliento triktys"
+msgstr "Kliento nuotaika"
 
 #: app/models/system_report/plugin/entities/user.rb:4
 msgid "Customer and agent ratio (role based user counts)"
@@ -5160,10 +5153,8 @@ msgstr ""
 "valdybai)."
 
 #: db/seeds/settings.rb:3709
-#, fuzzy
-#| msgid "Define pipeline name for Elasticsearch."
 msgid "Define if asciifolding analyzer should be used in Elasticsearch."
-msgstr "Nurodo Elasticsearch pipeline pavadinimą."
+msgstr "Nurodo ar Elasticsearch turėtų naudoti asciifolding analizatorių."
 
 #: db/seeds/settings.rb:3673
 msgid "Define max. attachment size for Elasticsearch."
@@ -5355,14 +5346,10 @@ msgid "Defines endpoint of Elasticsearch."
 msgstr "Nurodo Elasticsearch prieigos adresą."
 
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:36
-#, fuzzy
-#| msgid ""
-#| "Defines the configuration how many articles can be created in a minute "
-#| "range per ticket."
 msgid ""
 "Defines global configuration when the summary will be generated in the "
 "ticket zoom."
-msgstr "Nurodo kiek įrašų galima sukurti vienoje triktyje per vieną minutę."
+msgstr "Nurodo kada bus generuojama trikties santrauka."
 
 #: db/seeds/settings.rb:2980
 msgid ""
@@ -5480,10 +5467,8 @@ msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "Nurodo ar sipgate.io (http://www.sipgate.io) įjungtas."
 
 #: db/seeds/settings.rb:6016
-#, fuzzy
-#| msgid "The setting 'storage_provider' was not configured."
 msgid "Defines if the AI provider is configured."
-msgstr "Nustatymas „storage_provider“ nesukonfigūruotas."
+msgstr "Nurodo ar DI tiekėjas sukonfigūruotas."
 
 #: db/seeds/settings.rb:5058
 msgid ""
@@ -5520,6 +5505,9 @@ msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
+"Nurodo ar formatuoto teksto redagatoriuje yra iššokančio meniu funkcija. "
+"Atkreipkite dėmesį, kad Įjungus rašymo asistentą, šis nustatymas "
+"ignoruojamas."
 
 #: db/seeds/settings.rb:5941
 msgid ""
@@ -5685,27 +5673,20 @@ msgid "Defines postmaster filter to identify sender user."
 msgstr "Nurodo postmaster filtrą, identifikuojantį siunčiantįjį naudotoją."
 
 #: db/seeds/settings.rb:4295
-#, fuzzy
-#| msgid "Defines postmaster filter to identify sender user."
 msgid "Defines postmaster filter to identify session user."
-msgstr "Nurodo postmaster filtrą, identifikuojantį siunčiantįjį naudotoją."
+msgstr "Nurodo postmaster filtrą, identifikuojantį sesijos naudotoją."
 
 #: db/seeds/settings.rb:4457
-#, fuzzy
-#| msgid "Defines postmaster filter to identify sender user."
 msgid "Defines postmaster filter to identify ticket group."
-msgstr "Nurodo postmaster filtrą, identifikuojantį siunčiantįjį naudotoją."
+msgstr "Nurodo postmaster filtrą, identifikuojantį trikties grupę."
 
 #: db/seeds/settings.rb:4394
-#, fuzzy
-#| msgid ""
-#| "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) "
-#| "emails."
 msgid ""
 "Defines postmaster filter to manage Checkmk (http://mathias-kettner.com/"
 "check_mk.html) emails."
 msgstr ""
-"Nurodo postmaster filtrą Monit (https://mmonit.com/monit/) laiškų tvarkymui."
+"Nurodo postmaster filtrą, tvarkantį Checkmk (http://mathias-kettner.com/"
+"check_mk.html) el. laiškus."
 
 #: db/seeds/settings.rb:4376
 msgid ""
@@ -5902,6 +5883,8 @@ msgid ""
 "Defines the fixed instructions that guide the AI Writing Assistant on e.g. "
 "how to format its output."
 msgstr ""
+"Nurodo nekintamas instrukcijas DI rašymo asistentui. Pavyzdžiui kaip "
+"formatuoti rezultatą."
 
 #: db/seeds/settings.rb:290
 msgid ""
@@ -6212,10 +6195,8 @@ msgid "Delete old online notification entries."
 msgstr "Ištrinti senų pranešimus įrašus."
 
 #: db/seeds/schedulers.rb:70
-#, fuzzy
-#| msgid "Delete old 'RecentView' entries."
 msgid "Delete old recently closed entries."
-msgstr "Ištrinti senus „Neseniai žiūrėta“ įrašus."
+msgstr "Ištrinti senus uždarytų skirtukų įrašus."
 
 #: db/seeds/schedulers.rb:151
 msgid "Delete old stats store entries."
@@ -6501,7 +6482,7 @@ msgstr "Išjungti pranešimus"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:36
 msgid "Disable the banner for the BETA switch"
-msgstr ""
+msgstr "Išjungti BETA jungiklio skydelį"
 
 #: db/seeds/settings.rb:1300
 msgid "Disables user creation on logon with a third-party application."
@@ -6560,10 +6541,12 @@ msgid "Discard your unsaved changes."
 msgstr "Atmesti neišsaugotus pakeitimus."
 
 #: lib/excel_sheet/ai/analytics/with_usage.rb:44
-#, fuzzy
-#| msgid "Linked Accounts"
 msgid "Dislikes count"
-msgstr "Susietos paskyros"
+msgstr "Nepatiktukų kiekis"
+
+#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:61
+msgid "Dismiss alert"
+msgstr "Uždaryti įspėjimą"
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:7
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:7
@@ -6575,11 +6558,11 @@ msgstr "Rodoma vertė"
 
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:15
 msgid "Display Zammad in the New BETA User Interface"
-msgstr ""
+msgstr "Rodyti Zammad naujojoje BETA naudotojo sąsajoje"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:21
 msgid "Display Zammad with the New BETA User Interface"
-msgstr ""
+msgstr "Rodyti Zammad naujojoje BETA naudotojo sąsajoje"
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
 #: db/seeds/settings.rb:1883
@@ -6696,16 +6679,12 @@ msgid "Download Certificate"
 msgstr "Parsisiųsti sertifikatą"
 
 #: app/assets/javascripts/app/views/ai/provider_logs.jst.eco:11
-#, fuzzy
-#| msgid "Media Download Error"
 msgid "Download Error Logs"
-msgstr "Medijos atsisiuntimo klaida"
+msgstr "Parsisiųsti klaidų žurnalus"
 
 #: app/assets/javascripts/app/views/ai/provider_logs.jst.eco:7
-#, fuzzy
-#| msgid "Feedback"
 msgid "Download Feedback"
-msgstr "Atsiliepimai"
+msgstr "Parsisiųsti atsiliepimus"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:59
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:37
@@ -6768,7 +6747,7 @@ msgstr "Norėdami pakeisti apžvalgų eiliškumą, pervilkite."
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:64
 msgid "Drag ended for %s."
-msgstr ""
+msgstr "Baigėsi %s vilkimas."
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:2
 msgid "Drag to reorder"
@@ -6910,10 +6889,8 @@ msgid "Editor"
 msgstr "Redaktorius"
 
 #: db/seeds/settings.rb:3706
-#, fuzzy
-#| msgid "Elasticsearch Model Configuration"
 msgid "Elasticsearch Asciifolding Configuration"
-msgstr "Elasticsearch modelio konfigūracija"
+msgstr "Elasticsearch Asciifolding konfigūracija"
 
 #: db/seeds/settings.rb:3661
 msgid "Elasticsearch Attachment Extensions"
@@ -6956,10 +6933,8 @@ msgid "Elasticsearch Total Payload Size"
 msgstr "Elasticsearch suminis pateikiamų duomenų dydis"
 
 #: lib/ai/vectordb.rb:170
-#, fuzzy
-#| msgid "Elasticsearch Endpoint Index"
 msgid "Elasticsearch index does not exist"
-msgstr "Elasticsearch prieigos indeksas"
+msgstr "Elasticsearch indeksas neegzistuoja"
 
 #: lib/search_index_backend.rb:448
 msgid ""
@@ -7083,10 +7058,8 @@ msgid "Email address '%{email}' is already used for another user."
 msgstr "El. pašto adresas „%{email}“ jau naudojamas."
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:11
-#, fuzzy
-#| msgid "Email address"
 msgid "Email addresses"
-msgstr "El. pašto adresas"
+msgstr "El. pašto adresai"
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee:53
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:49
@@ -7260,15 +7233,15 @@ msgstr ""
 
 #: db/seeds/settings.rb:6046
 msgid "Enable or disable the ticket summary."
-msgstr ""
+msgstr "Įjungti arba išjungti trikties santrauką."
 
 #: db/seeds/settings.rb:6079
 msgid "Enable or disable the writing assistant text tools."
-msgstr ""
+msgstr "Įjungti arba išjungti rašymo asistento įrankius."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
 msgid "Enable the banner for the BETA switch"
-msgstr ""
+msgstr "Įjungti BETA jungiklio skydelį"
 
 #: db/seeds/settings.rb:2544
 msgid "Enable ticket auto assignment."
@@ -7533,7 +7506,7 @@ msgstr "Įveskite kodą iš dviejų veiksnių autentifikacijos programėlės."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:37
 msgid "Enter the instruction for the AI agent."
-msgstr ""
+msgstr "Įveskite instrukciją DI agentui."
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:24
 msgid ""
@@ -7553,7 +7526,7 @@ msgstr ""
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:28
 msgid "Enter the role description of the AI agent."
-msgstr ""
+msgstr "Įveskite DI agento vaidmens aprašymą."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:28
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:275
@@ -7636,7 +7609,7 @@ msgstr "Įveskite savo naudotojo vardą ar el. pašto adresą"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:67
 msgid "Entity context"
-msgstr ""
+msgstr "Subjekto kontekstas"
 
 #: app/models/system_report/plugin/entities/counts.rb:4
 msgid "Entity counts of database objects (e.g. ticket count, user count, etc.)"
@@ -7751,7 +7724,7 @@ msgstr "Eskaluota (dėl atsakinėjimo laiko)"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:123
 msgid "Escape pressed. No item selected."
-msgstr ""
+msgstr "Paspaustas Esc. Nepasirinktas joks elementas."
 
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:51
 msgid "Event Ending"
@@ -7895,7 +7868,7 @@ msgstr "Esamos triktys (atidarytos)"
 
 #: db/seeds/ai/text_tools.rb:64
 msgid "Expand draft into well-written section"
-msgstr ""
+msgstr "Išplėsti juodraštį į gerai parašytą skyrių"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:187
 msgid "Expand sidebar"
@@ -7906,10 +7879,8 @@ msgid "Expand this element"
 msgstr "Išplėsti šį elementą"
 
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:27
-#, fuzzy
-#| msgid "Expert"
 msgid "Experimental"
-msgstr "Ekspertas"
+msgstr "Eksperimentinis"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:223
 msgid "Expert"
@@ -8041,7 +8012,7 @@ msgstr "Nepavyko sukonfigūruoti QR kodo. Bandykite vėl."
 msgid "Failed to update checklist item."
 msgstr "Nepavyko atnaujinti kontrolinio sąrašo punkto."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:23
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:25
 msgid "Failed to upload."
 msgstr "Nepavyko įkelti."
 
@@ -8082,10 +8053,8 @@ msgid "Feedback"
 msgstr "Atsiliepimai"
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:15
-#, fuzzy
-#| msgid "Feedback Form"
 msgid "Feedback & Logs"
-msgstr "Įvertinimo forma"
+msgstr "Atsiliepimai ir žurnalai"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:34
 msgid "Feedback Form"
@@ -8135,6 +8104,12 @@ msgstr "Failų sistema"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:130
 msgid "Filter"
 msgstr "Filtras"
+
+#: app/graphql/gql/queries/tickets/by_filter.rb:24
+msgid ""
+"Filtering by customer's organizations requires customer filter to be "
+"provided."
+msgstr "Filtravimas pagal kliento organizacijas reikalauja kliento filtro."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 msgid "Find a ticket"
@@ -8210,7 +8185,7 @@ msgstr "Pirmas atsakymas"
 
 #: db/seeds/ai/text_tools.rb:4
 msgid "Fix spelling and grammar"
-msgstr ""
+msgstr "Taisyti rašybą ir gramatiką"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:3
 msgid "Fixed Email Accounts"
@@ -8222,7 +8197,7 @@ msgstr "Plokščias dizainas"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:90
 msgid "Focus on %s"
-msgstr ""
+msgstr "Sutelkti dėmesį į %s"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:433
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:283
@@ -8284,6 +8259,8 @@ msgid ""
 "documentation. This is a highly advanced feature and should be used with "
 "caution."
 msgstr ""
+"Pavyzdžių rasite numatytuose DI agentų tipuose arba mūsų dokumentacijoje. "
+"Tai sudėtingesnė funkcija, todėl ja reikia naudotis atsargiai."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:10
 msgid "For more details, please check out our online documentation %l."
@@ -8302,6 +8279,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/ai_agent.coffee:31
 msgid "For this agent to run, it needs to be used in a trigger or scheduler."
 msgstr ""
+"Kad šis agentas būtų paleistas, jis turi būti panaudotas paleistuke arba "
+"planiniame darbe."
 
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:62
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:38
@@ -8316,10 +8295,8 @@ msgid "Forbidden"
 msgstr "Uždrausta"
 
 #: lib/ai/provider/concerns/handles_response.rb:16
-#, fuzzy
-#| msgid "You do not have administrator permission."
 msgid "Forbidden - you do not have permission to access this resource"
-msgstr "Neturite administratoriaus prieigos."
+msgstr "Uždrausta - neturite teisių naudotis šiuo ištekliu"
 
 #: app/assets/javascripts/app/models/public_link.coffee:9
 msgid "Forgot Password Screen"
@@ -8533,10 +8510,8 @@ msgid "Generating recovery codes…"
 msgstr "Generuojami atsarginiai prisijungimo kodai…"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:39
-#, fuzzy
-#| msgid "Generating recovery codes…"
 msgid "Generating text…"
-msgstr "Generuojami atsarginiai prisijungimo kodai…"
+msgstr "Tekstas generuojamas…"
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:265
 msgid "Generic API to integrate VoIP service provider with real-time push."
@@ -8874,10 +8849,8 @@ msgid "HTTP Authentication token"
 msgstr "HTTP autentifikacijos žetonas"
 
 #: app/assets/javascripts/app/models/webhook.coffee:11
-#, fuzzy
-#| msgid "Basic Authentication"
 msgid "HTTP Basic Authentication"
-msgstr "Bazinė autentifikacija"
+msgstr "HTTP bazinė autentifikacija"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:752
 msgid "HTTP Basic Authentication password"
@@ -8932,12 +8905,16 @@ msgid ""
 "Have the BETA switch between the old and the new UI always available in the "
 "Primary Navigation"
 msgstr ""
+"BETA jungiklis tarp senosios ir naujosios vartotojo sąsajos visada "
+"prieinamas pagrindinėje navigacijoje"
 
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:21
 msgid ""
 "Have the BETA switch between the old and the new UI always available in the "
 "primary navigation"
 msgstr ""
+"BETA jungiklis tarp senosios ir naujosios vartotojo sąsajos visada "
+"prieinamas pagrindinėje navigacijoje"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:3
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:254
@@ -8964,26 +8941,20 @@ msgstr "Viršutinis meniu"
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:129
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:116
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:116
-#, fuzzy
-#| msgid "pending"
 msgid "Heading 1"
-msgstr "laukiantys"
+msgstr "Antraštė 1"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:136
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:128
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:127
-#, fuzzy
-#| msgid "pending"
 msgid "Heading 2"
-msgstr "laukiantys"
+msgstr "Antraštė 2"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:143
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:140
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:138
-#, fuzzy
-#| msgid "pending"
 msgid "Heading 3"
-msgstr "laukiantys"
+msgstr "Antraštė 3"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco:27
 msgid "Health Check"
@@ -9020,7 +8991,7 @@ msgstr "Pagalba"
 
 #: db/seeds/community_user_resources.rb:26
 msgid "Help me! I am an example ticket 🎓"
-msgstr ""
+msgstr "Padėkite man! Aš esu pavyzdinė triktis 🎓"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee:39
 msgid "Help to improve Zammad!"
@@ -9035,10 +9006,8 @@ msgstr ""
 "rodomos antraštėje arba lapo apačioje."
 
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:16
-#, fuzzy
-#| msgid "Here you can create one."
 msgid "Here you can create new tickets and customers."
-msgstr "Ją galite sukurti čia."
+msgstr "Čia galite kurti naujas triktis ir klientus."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 msgid "Here you can create one."
@@ -9103,6 +9072,9 @@ msgid ""
 "early and send your feedback on it.¶¶You can come back any time using the "
 "switch below."
 msgstr ""
+"Zammad netrukus turės naują agentų sąsają!¶Prašome išbandyti ją anksčiau ir "
+"atsiųsti savo atsiliepimus apie ją.¶Jūs galite grįžti bet kuriuo metu, "
+"naudodami žemiau esantį jungiklį."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:72
 msgid "Hi! Which one of our products?"
@@ -9110,7 +9082,7 @@ msgstr "Sveiki! Kuris iš mūsų produktų?"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:51
 msgid "Hide Beta UI switch"
-msgstr ""
+msgstr "Paslėpti BETA naudotojo sąsajos jungiklį"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:24
 msgid "Hide authenticator app secret"
@@ -9222,16 +9194,12 @@ msgid ""
 msgstr "Kiek turi atidarytų eskaluotų trikčių?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee:27
-#, fuzzy
-#| msgid ""
-#| "How many of your tickets are coming from email, phone, Twitter, or "
-#| "Facebook? (Shows percentages for both inbound and outbound tickets.)"
 msgid ""
 "How many of your tickets are coming from email, phone, or Facebook? (Shows "
 "percentages for both inbound and outbound tickets.)"
 msgstr ""
-"Kiek trikčių gaunate iš el. pašto, telefono, Twitter ar Facebook? (Rodoma "
-"procentinė įeinančių ir išeinančių trikčių dalis.)"
+"Kiek trikčių gaunate el. paštu, telefonu ar Facebook? (Rodoma procentinė "
+"įeinančių ir išeinančių trikčių dalis.)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee:9
 msgid ""
@@ -9605,7 +9573,7 @@ msgstr "Incidentas"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:208
 msgid "Include all users in nested groups of this group"
-msgstr ""
+msgstr "Įtraukti visus naudotojus į šios grupės pogrupius"
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:24
 msgid "Include attachments of the article?"
@@ -9614,7 +9582,7 @@ msgstr "Ar įtraukti įrašo priedus?"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:92
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:207
 msgid "Include nested"
-msgstr ""
+msgstr "Įtraukti įdėtus giliau"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:74
 msgid "Include unassigned tickets in subscription for escalated tickets."
@@ -9655,10 +9623,8 @@ msgid "Including private key."
 msgstr "Įskaitant privatų raktą."
 
 #: lib/ai/vectordb.rb:163
-#, fuzzy
-#| msgid "Elasticsearch version"
 msgid "Incompatible Elasticsearch version"
-msgstr "Elasticsearch versija"
+msgstr "Nesuderinama Elasticsearch versija"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:344
@@ -9712,7 +9678,6 @@ msgstr "Informacija: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:9
@@ -9757,10 +9722,8 @@ msgstr "Įterpti stulpelį prieš"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:229
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
-#, fuzzy
-#| msgid "Insert inline code"
 msgid "Insert divider"
-msgstr "Įterpti įterptinį kodą"
+msgstr "Įterpti skirtuką"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
@@ -9800,6 +9763,10 @@ msgstr ""
 "pokalbio langas. Jis turėtų būti lapo apačioje prieš uždarančiąją „</body>“ "
 "žymą."
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+msgid "Inserting image not possible due to source restrictions"
+msgstr "Neįmanoma įterpti paveikslėlio dėl šaltinio apribojimų"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
 msgid "Inserts a horizontal rule"
 msgstr "Įterpia horizontalią liniją"
@@ -9829,18 +9796,16 @@ msgid "Installed"
 msgstr "Įdiegta"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
-#, fuzzy
-#| msgid "Integrations"
 msgid "Instruction"
-msgstr "Integracijos"
+msgstr "Instrukcijos"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:55
 msgid "Instruction context"
-msgstr ""
+msgstr "Instrukcijų kontekstas"
 
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:25
 msgid "Instructions about output format will be added"
-msgstr ""
+msgstr "Bus pridėtos instrukcijos apie rezultato formatą"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:45
 msgid "Integer field"
@@ -10450,7 +10415,7 @@ msgstr "Išdėstymo pavyzdys"
 
 #: app/assets/javascripts/app/views/navigation/desktop-beta-switch.jst.eco:5
 msgid "Learn More"
-msgstr ""
+msgstr "Sužinokite daugiau"
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:200
 msgid "Library"
@@ -10462,10 +10427,8 @@ msgid "Light"
 msgstr "Šviesi"
 
 #: lib/excel_sheet/ai/analytics/with_usage.rb:43
-#, fuzzy
-#| msgid "Linked Accounts"
 msgid "Likes count"
-msgstr "Susietos paskyros"
+msgstr "Patiktukų kiekis"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:17
 msgid "Limit Groups"
@@ -10473,11 +10436,11 @@ msgstr "Grupių ribojimas"
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:50
 msgid "Limit categories and provide optional descriptions"
-msgstr ""
+msgstr "Apribokite kategorijas ir pateikite papildomus aprašymus"
 
 #: app/models/ai/agent/type/ticket_group_dispatcher.rb:23
 msgid "Limit groups and provide optional descriptions"
-msgstr ""
+msgstr "Apribokite grupes ir pateikite papildomus aprašymus"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:61
 msgid "Limit notifications to specific groups"
@@ -10485,7 +10448,7 @@ msgstr "Siųsti pranešimus tik pasirinktose grupėse"
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:28
 msgid "Limit priorities and provide optional descriptions"
-msgstr ""
+msgstr "Apribokite prioritetus ir pateikite papildomus aprašymus"
 
 #: db/seeds/settings.rb:3109
 msgid "Limit tickets by IP per day"
@@ -10556,20 +10519,16 @@ msgid "Link Related Answer"
 msgstr "Susieti su Žinių bazės atsakymu"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:150
-#, fuzzy
-#| msgid "Link Tickets"
 msgid "Link Text"
-msgstr "Susieti triktis"
+msgstr "Nuorodos tekstas"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:156
 msgid "Link Tickets"
 msgstr "Susieti triktis"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:148
-#, fuzzy
-#| msgid "Link %s"
 msgid "Link URL"
-msgstr "Susieti %s"
+msgstr "Nuorodos adresas"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:176
 msgid "Link account on %s"
@@ -10869,16 +10828,12 @@ msgid "Manage"
 msgstr "Tvarkyti"
 
 #: db/seeds/permissions.rb:240
-#, fuzzy
-#| msgid "Manage ticket settings of your system."
 msgid "Manage AI agents of your system."
-msgstr "Tvarkykite savo sistemos trikčių nustatymus."
+msgstr "Tvarkykite DI agentus."
 
 #: db/seeds/permissions.rb:222
-#, fuzzy
-#| msgid "Manage roles of your system."
 msgid "Manage AI provider of your system."
-msgstr "Tvarkykite savo sistemos roles."
+msgstr "Tvarkykite DI tiekėją."
 
 #: db/seeds/permissions.rb:252
 msgid "Manage API of your system."
@@ -10901,16 +10856,12 @@ msgid "Manage Google mail channel of your system."
 msgstr "Tvarkykite savo sistemos Google pašto kanalą."
 
 #: db/seeds/permissions.rb:162
-#, fuzzy
-#| msgid "Manage Microsoft Graph mail channel of your system."
 msgid "Manage Microsoft 365 Graph mail channel of your system."
 msgstr "Tvarkykite savo sistemos Microsoft 365 Graph pašto kanalą."
 
 #: db/seeds/permissions.rb:156
-#, fuzzy
-#| msgid "Manage Microsoft 365 mail channel of your system."
 msgid "Manage Microsoft 365 IMAP mail channel of your system."
-msgstr "Tvarkykite savo sistemos Microsoft 365 pašto kanalą."
+msgstr "Tvarkykite savo sistemos Microsoft 365 IMAP pašto kanalą."
 
 #: db/seeds/permissions.rb:138
 msgid "Manage SMS channel of your system."
@@ -10939,7 +10890,7 @@ msgstr "Tvarkykite savo sistemos WhatsApp kanalą."
 
 #: db/seeds/permissions.rb:517
 msgid "Manage access to New BETA UI switch."
-msgstr ""
+msgstr "Tvarkykite prieigą prie naujos BETA sąsajos jungiklio."
 
 #: db/seeds/permissions.rb:312
 msgid "Manage active user sessions of your system."
@@ -11122,10 +11073,8 @@ msgid "Manage ticket states of your system."
 msgstr "Tvarkykite savo sistemos trikčių būsenas."
 
 #: db/seeds/permissions.rb:228
-#, fuzzy
-#| msgid "Manage ticket macros of your system."
 msgid "Manage ticket summarization of your system."
-msgstr "Tvarkykite savo sistemos trikčių makrokomandas."
+msgstr "Tvarkykite trikčių santraukos konfigūraciją."
 
 #: db/seeds/permissions.rb:60
 msgid "Manage ticket tags of your system."
@@ -11156,10 +11105,8 @@ msgid "Manage webhooks of your system."
 msgstr "Tvarkykite savo sistemos Webhook."
 
 #: db/seeds/permissions.rb:234
-#, fuzzy
-#| msgid "Manage ticket macros of your system."
 msgid "Manage writing assistant text tools of your system."
-msgstr "Tvarkykite savo sistemos trikčių makrokomandas."
+msgstr "Tvarkykite rašymo asistentą."
 
 #: app/views/mailer/application.html.erb:47
 msgid "Manage your notification settings"
@@ -11327,10 +11274,8 @@ msgid "Media Download Error"
 msgstr "Medijos atsisiuntimo klaida"
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleRetryMediaDownload.ts:31
-#, fuzzy
-#| msgid "Media download was successful."
 msgid "Media download failed."
-msgstr "Medija sėkmingai parsisiųsta."
+msgstr "Nepavyko parsisiųsti medijos."
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleRetryMediaDownload.ts:44
 msgid "Media download failed. Please try again later."
@@ -11547,7 +11492,7 @@ msgstr "Nesutampantis telefono numerio id."
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/mistral.coffee:4
 msgid "Mistral AI"
-msgstr ""
+msgstr "Mistral AI"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:23
 #: db/seeds/object_manager_attributes.rb:1036
@@ -11559,10 +11504,8 @@ msgid "Mode"
 msgstr "Režimas"
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:144
-#, fuzzy
-#| msgid "Mode"
 msgid "Model"
-msgstr "Režimas"
+msgstr "Modelis"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:272
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
@@ -11832,7 +11775,7 @@ msgstr "Reikia „fingerprint“ parametro!"
 
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:41
 msgid "Need help? Check the Zammad Documentation for detailed guidance."
-msgstr ""
+msgstr "Reikia pagalbos? Išsamių instrukcijų ieškokite Zammad dokumentacijoje."
 
 #: lib/sessions/event/chat_base.rb:27
 msgid "Need session_id."
@@ -11847,10 +11790,8 @@ msgid "Needed"
 msgstr "Reikalingas"
 
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:95
-#, fuzzy
-#| msgid "Feedback"
 msgid "Negative Feedback"
-msgstr "Atsiliepimai"
+msgstr "Neigiamas atsiliepimas"
 
 #: app/controllers/sessions_controller.rb:56
 msgid ""
@@ -11879,10 +11820,8 @@ msgid "New & Open Tickets"
 msgstr "Naujos ir atidarytos triktys"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:55
-#, fuzzy
-#| msgid "Agent"
 msgid "New AI Agent"
-msgstr "Agentas"
+msgstr "Naujas DI agentas"
 
 #: app/assets/javascripts/app/controllers/api.coffee:190
 msgid "New Access Token is"
@@ -11911,17 +11850,15 @@ msgstr "Naujas atributas"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:11
 msgid "New BETA UI"
-msgstr ""
+msgstr "Nauja BETA sąsaja"
 
 #: db/seeds/permissions.rb:516
 msgid "New BETA UI Switch"
-msgstr ""
+msgstr "Naujos BETA sąsajos jungiklis"
 
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:58
-#, fuzzy
-#| msgid "New tab"
 msgid "New Beta UI"
-msgstr "Naujas skirtukas"
+msgstr "Nauja BETA sąsaja"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:10
 msgid "New Calendar"
@@ -11941,7 +11878,7 @@ msgstr "Nauja šalinimo užduotis"
 
 #: app/frontend/apps/desktop/composables/useBetaDisclaimer.ts:40
 msgid "New Desktop UI — Alpha Version"
-msgstr ""
+msgstr "Nauja darbalaukio naudotojo sąsaja - Alfa versija"
 
 #: app/assets/javascripts/app/controllers/group.coffee:28
 msgid "New Group"
@@ -12058,10 +11995,8 @@ msgid "New Workflow"
 msgstr "Naujas Workflow"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
-#, fuzzy
-#| msgid "Waiting in %s"
 msgid "New Writing Assistant Tool"
-msgstr "Laukiama %s"
+msgstr "Naujas rašymo asistentas"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:66
 msgid "New organizations are shared."
@@ -12196,29 +12131,22 @@ msgid "No %s configured."
 msgstr "Nesukonfigūruota %s."
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/ai_agent_not_available.jst.eco:1
-#, fuzzy
-#| msgid ""
-#| "No webhook available, please create a new one or activate an existing one "
-#| "at \"Manage > Webhook\""
 msgid ""
 "No AI agent available, please create a new one or activate an existing one "
 "at \"Manage > AI Agents\""
 msgstr ""
-"Webhook nėra. Sukurti naują arba aktyvuokite esamą „Tvarkymas > Webhook“"
+"DI agentų nėra. Sukurkite naują arba aktyvuokite esamą „Tvarkymas > DI "
+"agentai“"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:70
-#, fuzzy
-#| msgid "The password could not be set. Please contact your administrator."
 msgid "No AI provider is currently set up. Please contact your administrator."
-msgstr "Nepavyko pakeisti slaptažodžio. Susisiekite su savo administratoriumi."
+msgstr "DI tiekėjas nesukonfigūruotas. Susisiekite su savo administratoriumi."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:42
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:111
-#, fuzzy
-#| msgid "Comment"
 msgid "No Comment"
-msgstr "Komentaras"
+msgstr "Be komentaro"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:917
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:42
@@ -12377,10 +12305,8 @@ msgid "No import in progress."
 msgstr "Importavimas nevykdomas."
 
 #: app/frontend/apps/desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue:160
-#, fuzzy
-#| msgid "No macros available."
 msgid "No items available"
-msgstr "Galimų makrokomandų nėra."
+msgstr "Galimų įrašų nėra"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:193
 msgid "No linked issues"
@@ -12429,6 +12355,7 @@ msgstr "Šios užklausos rezultatų nėra."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:305
+#: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:66
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:480
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
@@ -12479,6 +12406,8 @@ msgid ""
 "No suitable object attributes found, please add one of the supported types "
 "first: %s"
 msgstr ""
+"Tinkamų objekto atributų nėra, pirmiausia pridėkite vieną iš palaikomų tipų: "
+"%s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
 msgid "No tags added yet."
@@ -12572,12 +12501,9 @@ msgid "Not allowed to access this task."
 msgstr "Neturite prieigos prie šios užduoties."
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:29
-#, fuzzy
-#| msgid ""
-#| "Not applicable to: merging, emails, form, Facebook, Telegram, Twitter, SMS"
 msgid "Not applicable to: merging, emails, form, Facebook, Telegram, SMS"
 msgstr ""
-"Netaikoma prijungimui, el. laiškams, formoms, Facebook, Telegram, Twitter, "
+"Netaikoma trikčių sujungimui, el. laiškams, formoms, Facebook, Telegram ir "
 "SMS"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:42
@@ -12614,10 +12540,8 @@ msgid "Not found"
 msgstr "Nerasta"
 
 #: lib/ai/provider/concerns/handles_response.rb:18
-#, fuzzy
-#| msgid "No results found"
 msgid "Not found - resource not found"
-msgstr "Rezultatų nerasta"
+msgstr "Nerasta - resursas neegzistuoja"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:77
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:58
@@ -12834,19 +12758,15 @@ msgstr "Objektas"
 #: app/assets/javascripts/app/controllers/object_manager.coffee:118
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:3
 msgid "Object Manager"
-msgstr "Objektų tvarkymas"
+msgstr "Objektų tvarkyklė"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:160
-#, fuzzy
-#| msgid "Object Manager"
 msgid "Object Manager Attribute"
-msgstr "Objektų tvarkymas"
+msgstr "Objektų tvarkyklės atributas"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:161
-#, fuzzy
-#| msgid "Object Manager"
 msgid "Object Manager Attributes"
-msgstr "Objektų tvarkymas"
+msgstr "Objektų tvarkyklės atributai"
 
 #: app/services/service/history/list.rb:52
 msgid "Object does not support history"
@@ -12893,12 +12813,12 @@ msgstr "%s, %s rašė:"
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:46
 #: db/seeds/object_manager_attributes.rb:2413
 msgid "On ticket detail opening"
-msgstr ""
+msgstr "Atidarant triktį"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:50
 #: db/seeds/object_manager_attributes.rb:2417
 msgid "On ticket summary sidebar activation"
-msgstr ""
+msgstr "Atidarant trikties santrauką"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:10
 msgid "On-screen Translation"
@@ -13007,10 +12927,8 @@ msgstr "Atidaryti kontrolinį sąrašą"
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:79
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:5
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:90
-#, fuzzy
-#| msgid "Options"
 msgid "Open Questions"
-msgstr "Parinktys"
+msgstr "Atviri klausimai"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
 msgid "Open Ticket# %s"
@@ -13019,6 +12937,7 @@ msgstr "Atidaryti triktį # %s"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:122
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:120
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:35
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
 msgstr "Atidarytos triktys"
@@ -13086,10 +13005,8 @@ msgid "Open your authenticator app and scan the QR code below:"
 msgstr "Atsidarykite autentifikatoriaus programėlę ir nuskanuokite QR kodą:"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/open_ai.coffee:4
-#, fuzzy
-#| msgid "Open"
 msgid "OpenAI"
-msgstr "Atidaryti"
+msgstr "OpenAI"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:91
@@ -13159,8 +13076,6 @@ msgid "Order of Overviews"
 msgstr "Apžvalgų eiliškumas"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:29
-#, fuzzy
-#| msgid "Order of Overviews"
 msgid "Order of overviews"
 msgstr "Apžvalgų eiliškumas"
 
@@ -13191,6 +13106,7 @@ msgstr "Trikčių apžvalgų eiliškumas"
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:13
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:70
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -13354,10 +13270,8 @@ msgid "Outdent text"
 msgstr "Pritraukti tekstą"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorActionBar/ActionToolbar.vue:199
-#, fuzzy
-#| msgid "User menu"
 msgid "Overflow menu"
-msgstr "Naudotojo meniu"
+msgstr "Iššokantis meniu"
 
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
@@ -13478,10 +13392,8 @@ msgid "Pagination links"
 msgstr "Puslapių nuorodos"
 
 #: app/controllers/integration/smime_controller.rb:77
-#, fuzzy
-#| msgid "Parameter 'data' or 'file' required."
 msgid "Parameter 'private_key' or 'file' required."
-msgstr "Būtinas „data“ arba „file“ parametras."
+msgstr "Būtinas „ private_key“ arba „file“ parametras."
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:87
@@ -13613,14 +13525,12 @@ msgstr "Įklijuokite raktą"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:37
 #: lib/excel_sheet/ai/analytics/with_usage.rb:37
-#, fuzzy
-#| msgid "Custom Payload"
 msgid "Payload"
-msgstr "Pasirinktiniai siunčiamieji duomenys"
+msgstr "Siunčiamieji duomenys"
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "Payment required - please top up your account"
-msgstr ""
+msgstr "Reikalingas apmokėjimas - papildykite savo paskyrą"
 
 #: db/seeds/overviews.rb:132
 msgid "Pending Reached Tickets"
@@ -13727,11 +13637,11 @@ msgstr "Rūžava"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary/SummarySkeleton.vue:9
 msgid "Placeholder for AI generated heading"
-msgstr ""
+msgstr "Vieta DI sugeneruotai antraštei"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary/SummarySkeleton.vue:11
 msgid "Placeholder for AI generated text"
-msgstr ""
+msgstr "Vieta DI sugeneruotam tekstui"
 
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee:3
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:5
@@ -13851,6 +13761,8 @@ msgid ""
 "Please note that email aliases have to be configured on the Microsoft 365 "
 "side beforehand. %l"
 msgstr ""
+"Atkreipkite dėmesį, kad papildomi el. pašto adresai pirma turi būti "
+"sukonfigūruoti \"Microsoft 365\" pusėje. %l"
 
 #: db/seeds/settings.rb:1919
 msgid ""
@@ -13905,10 +13817,8 @@ msgid "Please select at least one ticket overview"
 msgstr "Pasirinkite bent vieną trikčių apžvalgą"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantTextTools/AiAssistantTextTools.vue:84
-#, fuzzy
-#| msgid "Please select a ticket to merge into."
 msgid "Please select some text first."
-msgstr "Pasirinkite prie kurios trikties prijungti."
+msgstr "Pirmiausia pažymėkite tekstą."
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:5
 msgid ""
@@ -13957,10 +13867,8 @@ msgid "Position"
 msgstr "Pozicija"
 
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:88
-#, fuzzy
-#| msgid "Feedback"
 msgid "Positive Feedback"
-msgstr "Atsiliepimai"
+msgstr "Teigiamas atsiliepimaas"
 
 #: app/models/system_report/plugin/postgre_sql.rb:4
 msgid "PostgresSQL server version"
@@ -14183,24 +14091,24 @@ msgstr "Protokolas"
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:74
 msgid ""
 "Provide a summary of the conversation between customer and support agent."
-msgstr ""
+msgstr "Pateikia kliento ir pagalbos agento pokalbio santrauką."
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:67
 msgid "Provide a summary of the problem the customer needs to get resolved."
-msgstr ""
+msgstr "Pateikia kliento problemos santrauką."
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:81
 msgid "Provide a summary of the questions raised in the conversation."
-msgstr ""
+msgstr "Pateikia iškilusių klausimų santrauką."
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:87
 msgid "Provide a summary of the upcoming events based on the conversation."
-msgstr ""
+msgstr "Pateikia būsimų įvykių santrauką pagal pokalbio turinį."
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:93
 msgid ""
 "Provide an assessment of the customer sentiment based on the conversation."
-msgstr ""
+msgstr "Pateikia kliento nuotaikos įvertinimą pagal pokalbio turinį."
 
 #: app/controllers/knowledge_base/categories_controller.rb:23
 #: lib/knowledge_base/menu_item_update_action.rb:92
@@ -14212,6 +14120,8 @@ msgid ""
 "Provide specific and unambiguous instructions for the LLM to process a given "
 "text which will be part of the system prompt."
 msgstr ""
+"Pateikite konkrečius ir nedviprasmiškus nurodymus, kaip LLM turi apdoroti "
+"tam tikrą tekstą, kuriebus sistemos užklausos dalis."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:3
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:167
@@ -14310,11 +14220,11 @@ msgstr ""
 
 #: lib/ai/provider/concerns/handles_response.rb:20
 msgid "Rate limit exceeded - please wait a moment"
-msgstr ""
+msgstr "Viršytas užklausų limitas - truputi palaukite"
 
 #: app/models/ai/analytics/usage.rb:16
 msgid "Rating can only be set once"
-msgstr ""
+msgstr "Įvertinti galima tik vieną kartą"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:43
@@ -14392,16 +14302,12 @@ msgid "Recently Viewed Tickets"
 msgstr "Neseniai žiūrėtos triktys"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:133
-#, fuzzy
-#| msgid "Recently viewed"
 msgid "Recently closed"
-msgstr "Neseniai žiūrėta"
+msgstr "Ką tik uždaryta"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:133
-#, fuzzy
-#| msgid "Recently viewed items were cleared successfully."
 msgid "Recently closed items were cleared successfully."
-msgstr "Peržiūrėjimų istorija buvo išvalyta."
+msgstr "Uždarytų skirtukų istorija išvalyta."
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:526
 msgid "Recently viewed"
@@ -14454,10 +14360,8 @@ msgid ""
 msgstr "Paminėjimai - ieškoti tęsinio ir In-Reply-to ar References antraštėse."
 
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:127
-#, fuzzy
-#| msgid "Reopening rate"
 msgid "Regenerate"
-msgstr "Iš naujo atidarytų"
+msgstr "Regeneruoti"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:254
 msgid "Regenerate Recovery Codes"
@@ -14469,10 +14373,8 @@ msgstr "Sugeneruoti naujus atsarginius prisijungimo kodus"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:34
 #: lib/excel_sheet/ai/analytics/with_usage.rb:34
-#, fuzzy
-#| msgid "Reopening rate"
 msgid "Regeneration Of ID"
-msgstr "Iš naujo atidarytų"
+msgstr "Regeneruotojo ID"
 
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:211
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:139
@@ -14494,23 +14396,17 @@ msgstr "Susiję atsakymai"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:30
 #: lib/excel_sheet/ai/analytics/with_usage.rb:30
-#, fuzzy
-#| msgid "Delete Object"
 msgid "Related Object ID"
-msgstr "Ištrinti objektą"
+msgstr "Susijusio objekto ID"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:29
 #: lib/excel_sheet/ai/analytics/with_usage.rb:29
-#, fuzzy
-#| msgid "Delete Object"
 msgid "Related Object Type"
-msgstr "Ištrinti objektą"
+msgstr "Susijusio objekto tipas"
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:97
-#, fuzzy
-#| msgid "Create ticket"
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:139
 msgid "Related tickets"
-msgstr "Kurti triktį"
+msgstr "Susijusios triktys"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue:70
 msgid "Relax, your system is being set up…"
@@ -14571,10 +14467,8 @@ msgid "Remove %s"
 msgstr "Pašalinti %s"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:160
-#, fuzzy
-#| msgid "Remove item"
 msgid "Remove Link"
-msgstr "Pašalinti elementą"
+msgstr "Pašalinti nuorodą"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:76
 msgid "Remove Notification"
@@ -14755,10 +14649,8 @@ msgid "Request Admin Consent"
 msgstr "Prašyti administratoriaus sutikimo"
 
 #: app/assets/javascripts/app/models/webhook.coffee:9
-#, fuzzy
-#| msgid "Request"
 msgid "Request Method"
-msgstr "Užklausa"
+msgstr "Užklausos metodas"
 
 #: db/seeds/object_manager_attributes.rb:132
 msgid "Request for Change"
@@ -14771,7 +14663,7 @@ msgstr "Prašyti administratoriaus slaptažodžio prisijungimui?"
 
 #: app/assets/javascripts/app/views/login.jst.eco:106
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:280
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:159
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:155
 msgid "Request the password login here."
 msgstr "Prašykite prisijungimo slaptažodžio čia."
 
@@ -14839,10 +14731,8 @@ msgid "Reset successful."
 msgstr "Sėkmingai atstatyta."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/color-picker/EditorColorMenu.vue:68
-#, fuzzy
-#| msgid "Change text color"
 msgid "Reset text color"
-msgstr "Keisti teksto spalvą"
+msgstr "Atstatyti teksto spalvą"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:214
 msgid "Reset to Default Settings"
@@ -14956,7 +14846,7 @@ msgstr "Keisti šonjuostės dydį"
 msgid "Resize column"
 msgstr "Pakeisti stulpelio dydį"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:252
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
 msgid "Resize frame"
 msgstr "Keisti dydį"
 
@@ -14989,10 +14879,8 @@ msgid "Result"
 msgstr "Rezultatas"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:43
-#, fuzzy
-#| msgid "Results"
 msgid "Result structure"
-msgstr "Rezultatai"
+msgstr "Rezultato struktūra"
 
 #: app/assets/javascripts/app/views/generic/object_import/result.jst.eco:2
 msgid "Result:"
@@ -15038,11 +14926,11 @@ msgstr ""
 
 #: db/seeds/ai/text_tools.rb:33
 msgid "Rewrite complex section and make it easy to understand"
-msgstr ""
+msgstr "Perrašyti sudėtingą dalį ir padaryti ją lengvai suprantama"
 
 #: db/seeds/settings.rb:6104
 msgid "Richtext Bubble Menu"
-msgstr ""
+msgstr "Formatuoto teksto iššokantis meniu"
 
 #: app/models/webhook/pre_defined/rocket_chat.rb:5
 msgid "Rocket Chat Notifications"
@@ -15061,10 +14949,8 @@ msgid "Role %s is conflicting with role %s, do you want to continue?"
 msgstr "„%s“ rolė nesuderinama su „%s“ role. Ar norite tęsti?"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:25
-#, fuzzy
-#| msgid "Description"
 msgid "Role description"
-msgstr "Aprašymas"
+msgstr "Rolės aprašymas"
 
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:193
@@ -15424,6 +15310,10 @@ msgstr "Paieškos adresas yra neteisingas."
 msgid "Search URL is missing."
 msgstr "Įveskite paieškos adresą."
 
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:87
+msgid "Search all"
+msgstr "Ieškoti visų"
+
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:48
 msgid "Search for AI agents"
 msgstr "Ieškoti DI agentų"
@@ -15611,7 +15501,7 @@ msgstr "Ieškoti…"
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:102
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:73
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:113
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:88
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1161
@@ -15627,14 +15517,8 @@ msgstr ""
 "organizacija."
 
 #: app/models/user.rb:682
-#, fuzzy
-#| msgid ""
-#| "Secondary organizations are only allowed when the primary organization is "
-#| "given."
 msgid "Secondary organizations cannot include the primary organization."
-msgstr ""
-"Papildomos organizacijos leidžiamos tik tada kai yra nurodyta pagrindinė "
-"organizacija."
+msgstr "Pagrindinė organizacija negali būti tarp papildomų organizacijų."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:3
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:34
@@ -15791,7 +15675,7 @@ msgstr "Pasirinkti lentelės eilutę"
 #: app/models/ai/agent/type/ticket_categorizer.rb:34
 msgid ""
 "Select the attribute whose value will be automatically set by the AI agent."
-msgstr ""
+msgstr "Pasirinkite atributą, kurio vertę automatiškai nustatys DI agentas."
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:216
 msgid "Select the customer of the ticket or create one."
@@ -15811,10 +15695,8 @@ msgid "Select this entry"
 msgstr "Pasirinkti šį įrašą"
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:2
-#, fuzzy
-#| msgid "Select Template"
 msgid "Selected Text"
-msgstr "Pasirinkite šabloną"
+msgstr "Pasirinktas tekstas"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee:9
 msgid "Selected conditions"
@@ -15829,10 +15711,8 @@ msgid "Selected tickets do not match any macros."
 msgstr "Pasirinktos triktys neatitinka nei vienos makrokomandos."
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:120
-#, fuzzy
-#| msgid "Deletion failed."
 msgid "Selection cancelled for %s."
-msgstr "Ištrinti nepavyko."
+msgstr "%s pasirinkimas atšauktas."
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Selective (default)"
@@ -15871,10 +15751,8 @@ msgid "Send Email: %s"
 msgstr "Siųsti laišką: %s"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:44
-#, fuzzy
-#| msgid "Feedback"
 msgid "Send Feedback"
-msgstr "Atsiliepimai"
+msgstr "Siųsti atsiliepimą"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:119
 msgid "Send Invitation"
@@ -15995,10 +15873,8 @@ msgid "Service Notification"
 msgstr "Paslaugos pranešimas"
 
 #: lib/ai/provider/concerns/handles_response.rb:26
-#, fuzzy
-#| msgid "Media download failed. Please try again later."
 msgid "Service overloaded - please try again later"
-msgstr "Nepavyko atsisiųsti medijos. Bandykite vėliau."
+msgstr "Paslauga sulaukia per daug užklausų - bandykite vėliau"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:11
 msgid "Services"
@@ -16308,10 +16184,8 @@ msgid "Show meta data"
 msgstr "Rodyti meta duomenis"
 
 #: app/frontend/apps/desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue:17
-#, fuzzy
-#| msgid "show more"
 msgid "Show more"
-msgstr "rodyti daugiau"
+msgstr "Rodyti daugiau"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:252
 msgid "Show next tab"
@@ -16343,10 +16217,8 @@ msgid "Show ticket actions"
 msgstr "Rodyti trikties veiksmus"
 
 #: app/frontend/apps/desktop/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue:26
-#, fuzzy
-#| msgid "Ignore Escalation/SLA Information"
 msgid "Show ticket escalation information"
-msgstr "Ignoruoti eskalaciją / SLA informacija"
+msgstr "Rodyti triktis eskalacijos informaciją"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue:81
 msgid "Show ticket viewers"
@@ -16621,10 +16493,13 @@ msgid ""
 "Sortable list focused. Use up and down arrows to navigate items. Press Space "
 "to select and item and again on another item to swap them."
 msgstr ""
+"Sufokusuotas rikiuojamas sąrašas. Naudokite žemyn/aukštyn rodykles norėdami "
+"pasirinkti įrašą. Spauskite tarpą norėdami pasirinkti įrašą ir po to ant "
+"kito, kad sukeistumėte juos vietomis."
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:47
 msgid "Sorted %s in user taskbar list to position %s."
-msgstr ""
+msgstr "Skirtukas „%s“ perkeltas į poziciją %s."
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:491
 msgid "Sorted ascending"
@@ -16878,10 +16753,8 @@ msgid "Store"
 msgstr "Talpykla"
 
 #: db/seeds/settings.rb:6030
-#, fuzzy
-#| msgid "Stores the GitHub configuration."
 msgid "Stores the AI provider configuration."
-msgstr "Talpina GitHub konfigūraciją."
+msgstr "Saugo DI tiekėjo konfigūraciją."
 
 #: db/seeds/settings.rb:5085
 msgid "Stores the GitHub configuration."
@@ -16894,7 +16767,7 @@ msgstr "Talpina GitLab konfigūraciją."
 #: db/seeds/settings.rb:6060
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
-msgstr ""
+msgstr "Sauko trikčių santraukų pasirinkimus (pvz. kurios sekcijos rodomos)."
 
 #: db/seeds/object_manager_attributes.rb:1248
 msgid "Street"
@@ -16955,10 +16828,8 @@ msgstr "Pateikti"
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:45
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:114
-#, fuzzy
-#| msgid "Comment"
 msgid "Submit Comment"
-msgstr "Komentaras"
+msgstr "Pateikti komentarą"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:147
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:178
@@ -17005,34 +16876,26 @@ msgstr "Prenumeratos nustatymai"
 
 #: db/seeds/ai/text_tools.rb:98
 msgid "Summarize section to about half its current size"
-msgstr ""
+msgstr "Sutraukia sekciją iki maždaug pusės esamo dydžio"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:106
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-summary.ts:11
-#, fuzzy
-#| msgid "Event Summary"
 msgid "Summary"
-msgstr "Įvykio aprašymas"
+msgstr "Santrauka"
 
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:35
 #: db/seeds/object_manager_attributes.rb:2403
-#, fuzzy
-#| msgid "Start new conversation"
 msgid "Summary Generation"
-msgstr "Pradėti naują pokalbį"
+msgstr "Santraukos generavimas"
 
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:15
-#, fuzzy
-#| msgid "Image Service"
 msgid "Summary Services"
-msgstr "Paveiksliukų paslauga"
+msgstr "Santraukos paslaugos"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:46
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:139
-#, fuzzy
-#| msgid "The new ticket number could not be generated."
 msgid "Summary is being generated…"
-msgstr "Nepavyko sugeneruoti naujos trikties numerio."
+msgstr "Santrauka generuojama…"
 
 #: app/assets/javascripts/app/models/user.coffee:336
 msgid "Summer holiday"
@@ -17055,7 +16918,7 @@ msgstr "Daugiakalbės Žinių bazės palaikymas."
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:71
 msgid "Swapped %s with %s. %s moved to position %s."
-msgstr ""
+msgstr "%s sukeistas vietomis su %s. %s perkelta į poziciją %s."
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:16
 msgid "Switch back to old layout"
@@ -17066,10 +16929,8 @@ msgid "Switch to new layout"
 msgstr "Persijungti į naująjį išdėstymą"
 
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:307
-#, fuzzy
-#| msgid "Set to internal"
 msgid "Switch to old interface"
-msgstr "Pažymėti kaip vidinį"
+msgstr "Grįžti į senąją sąsają"
 
 #: db/seeds/schedulers.rb:133
 msgid "Sync calendars with iCal feeds."
@@ -17359,7 +17220,7 @@ msgstr "Teksto srities laukelis"
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:121
 msgid "Thank you for your feedback."
-msgstr ""
+msgstr "Ačiū už atsiliepimą."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:50
 msgid ""
@@ -17374,13 +17235,11 @@ msgstr "Ačiū, kad prisijungėti. Laiškas išsiųstas į „%s“."
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:106
 msgid "Thanks for the feedback. Please explain what went wrong?"
-msgstr ""
+msgstr "Ačiū už atsiliepimą. Paaiškinkite, kas nutiko ne taip?"
 
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:230
-#, fuzzy
-#| msgid "Ticket has been created successfully."
 msgid "The %s selected tickets have been updated successfully."
-msgstr "Triktis sukurta."
+msgstr "%s pasirinktos triktys buvo atnaujintos."
 
 #: lib/secure_mailing/pgp/tool/exec/agent.rb:13
 msgid "The 'gpg-agent' process could not be stopped."
@@ -17404,20 +17263,16 @@ msgstr ""
 "žinučių."
 
 #: lib/monitoring_helper/health_checker/ai_provider_accessible.rb:15
-#, fuzzy
-#| msgid "The login is not possible."
 msgid "The AI Provider is not accessible."
-msgstr "Prisijungti neįmanoma."
+msgstr "DI tiekėjas nepasiekiamas."
 
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
 msgstr "Nepavyko rasti API žetono."
 
 #: lib/ai/vectordb.rb:52
-#, fuzzy
-#| msgid "The access token could not be created."
 msgid "The Elasticsearch index could not be created"
-msgstr "Nepavyko sukurti prieigos žetono."
+msgstr "Nepavyko sukurti Elasticsearch indekso"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee:56
 msgid "The Knowledge Base could not be created."
@@ -17760,12 +17615,17 @@ msgid ""
 "information for the AI agent. You can provide any object in the system, "
 "which will be included in the instruction."
 msgstr ""
+"Kontekstas tai JSON objektas, kuriame pateikiama papildoma objekto atributų "
+"informacija DI agentui. Galite pateikti bet kurį sistemos objektą, kuris bus "
+"įtrauktas į instrukcijas."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:69
 msgid ""
 "The context is a JSON object that defines what information about the current "
 "entity will be provided to the AI agent."
 msgstr ""
+"Kontekstas tai JSON objektas, nurodantis kokia informacija apie apdorojamą "
+"įrašą bus pateikta DI agentui."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:400
@@ -17775,7 +17635,7 @@ msgstr "Jūsų pateiktas dabartinis slaptažodis neteisingas."
 
 #: app/services/service/ai/vectordb/create_table.rb:18
 msgid "The currently selected AI provider does not support embeddings."
-msgstr ""
+msgstr "Šiuo metu pasirinktas DI tiekėjas nepalaiko įterpinių."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:6
 msgid ""
@@ -17809,12 +17669,15 @@ msgid ""
 "The definition is a JSON object that defines the action to be performed by "
 "the AI agent."
 msgstr ""
+"Veiksmo aprašymas yra JSON objektas, kuris aprašo veiksmą atliekamą DI "
+"agento."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:29
 msgid ""
 "The description defines the role of the AI agent. It is used to describe its "
 "purpose and behavior."
 msgstr ""
+"DI agento rolės aprašymas naudojamas aprašyti DI agento paskirtį ir elgesį."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:71
 msgid "The device could not be deleted."
@@ -17826,21 +17689,17 @@ msgstr "Skirtukas tarp Trikties identifikatoriaus ir numerio. Pvz „:“."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:92
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1688
-#, fuzzy
-#| msgid "Media download failed. Please try again later."
 msgid "The download could not be started. Please try again later."
-msgstr "Nepavyko atsisiųsti medijos. Bandykite vėliau."
+msgstr "Nepavyko parsisiųsti. Bandykite vėliau."
 
 #: app/assets/javascripts/app/views/microsoft365/duplicate_email_address.jst.eco:3
 msgid "The email address |%s| is already in use by another account."
 msgstr "El. pašto adresas |%s| jau naudojamas kitos paskyros."
 
 #: app/services/service/user/password_reset/send.rb:41
-#, fuzzy
-#| msgid "The email could not be sent to the user."
 msgid ""
 "The email could not be sent to the user because import_mode setting is on."
-msgstr "Nepavyko išsiųsti laiško naudotojui."
+msgstr "Nepavyko išsiųsti el. laiško, nes įjungtas import_mode nustatymas."
 
 #: app/services/service/auth/send_admin_token.rb:39
 #: app/services/service/user/password_reset/update.rb:42
@@ -18183,10 +18042,8 @@ msgid "The product version could not be fetched."
 msgstr "Nepavyko gauti produkto versijos."
 
 #: app/models/webhook.rb:66
-#, fuzzy
-#| msgid "The provided token is invalid."
 msgid "The provided HTTP method is invalid."
-msgstr "Pateiktas žetonas yra netinkamas."
+msgstr "Pateiktas HTTP metodas netinkamas."
 
 #: app/controllers/import_freshdesk_controller.rb:11
 #: app/controllers/import_kayako_controller.rb:12
@@ -18250,6 +18107,8 @@ msgid ""
 "The provider configuration is missing. Please set up the provider before "
 "proceeding in |AI > Providers|."
 msgstr ""
+"DI tiekėjas nesukonfigūruotas. Prieš tęsdami, sukonfigūruokite tiekėją |DI > "
+"Tiekėjai|."
 
 #: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The public PGP key could not be found."
@@ -18260,10 +18119,8 @@ msgid "The report could not be generated"
 msgstr "Nepavyko sugeneruoti ataskaitos"
 
 #: app/controllers/reports_controller.rb:139
-#, fuzzy
-#| msgid "The active reporting profile could not be found."
 msgid "The reporting profile could not be found."
-msgstr "Nepavyko rasti aktyvaus ataskaitų profilio."
+msgstr "Nepavyko rasti ataskaitų profilio."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:31
 msgid "The request could not be processed."
@@ -18274,10 +18131,8 @@ msgid "The request limit for this operation was exceeded."
 msgstr "Buvo viršytas šios operacijos užklausų limitas."
 
 #: app/assets/javascripts/app/views/generic/error/not_found.jst.eco:3
-#, fuzzy
-#| msgid "The hostname could not be found."
 msgid "The requested %s could not be found."
-msgstr "Nepavyko rasti serverio."
+msgstr "Ieškomas %s nerastas."
 
 #: lib/validations/verify_perform_rules_validator.rb:63
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
@@ -18428,8 +18283,6 @@ msgid "The required value 'group_id' is missing."
 msgstr "Būtinas „group_id“ parametras."
 
 #: lib/ai/provider.rb:59
-#, fuzzy
-#| msgid "The request could not be processed."
 msgid "The response could not be processed."
 msgstr "Nepavyko apdoroti užklausos."
 
@@ -18460,6 +18313,8 @@ msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
 msgstr ""
+"Serveris pateikė nukreipimo nuorodą, tačiau ši operacija neleidžia "
+"nukreipimų."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:625
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:200
@@ -18535,15 +18390,17 @@ msgid ""
 "The structure is a JSON object that defines the result format to be returned "
 "by the AI agent."
 msgstr ""
+"Tai yra JSON objektas, kuris nurodo kaip DI agentas turėtų pateikti "
+"rezultatą."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:5
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:82
-#, fuzzy
-#| msgid "The password could not be set. Please contact your administrator."
 msgid ""
 "The summary could not be generated. Please try again later or contact your "
 "administrator."
-msgstr "Nepavyko pakeisti slaptažodžio. Susisiekite su savo administratoriumi."
+msgstr ""
+"Nepavyko sugeneruoti santraukos. Bandykite vėliau arba susisiekite su savo "
+"administratoriumi."
 
 #: app/graphql/gql/concerns/handles_password_revalidation_token.rb:13
 msgid "The supplied password revalidation token is invalid."
@@ -18607,17 +18464,19 @@ msgid ""
 "The text defines the instruction for the AI agent. It is used to guide it "
 "and tell it what to do."
 msgstr ""
+"Tekstas nurodo instrukcijas DI agentui. Jis DI agentui apibūdina kaip ir ką "
+"daryti."
 
 #: app/controllers/ai_assistance_controller.rb:12
-#, fuzzy
-#| msgid "The target ticket number could not be found."
 msgid "The text tool with the given ID could not be found."
-msgstr "Nepavyko rasti trikties prie kurios prijungti."
+msgstr "Nepavyko rasti teksto įrankio su nurodytu ID."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts:139
 msgid ""
 "The text was modified. Your request has been aborted to prevent overwriting."
 msgstr ""
+"Tekstas buvo pakeistas. Jūsų užklausa buvo nutraukta siekiant išvengti "
+"perrašymo."
 
 #: app/services/service/ticket/update/validator/checklist_completed.rb:17
 msgid "The ticket checklist is incomplete."
@@ -18924,31 +18783,33 @@ msgstr "PGP laiškas buvo užšifruotas su nežinomu algoritmu."
 #: db/seeds/ai/text_tools.rb:26
 msgid ""
 "This Writing Assistant Tool corrects spelling and grammar errors in the text."
-msgstr ""
+msgstr "Šis rašymo asistentas ištaiso rašybos ir gramatikos klaidas."
 
 #: db/seeds/ai/text_tools.rb:123
 msgid ""
 "This Writing Assistant Tool creates a short summary of the selected text "
 "keeping the original meaning."
 msgstr ""
+"Šis rašymo asistentas sukuria trumpą pasirinkto teksto santrauką "
+"išsaugodamas pagrindinę mintį."
 
 #: db/seeds/ai/text_tools.rb:91
 msgid ""
 "This Writing Assistant Tool expands the draft into a well-structured and "
 "comprehensible text."
 msgstr ""
+"Šis rašymo asistentas išplečia juodraštį į gerai sudėtą ir suprantamą tekstą."
 
 #: db/seeds/ai/text_tools.rb:57
 msgid ""
 "This Writing Assistant Tool simplifies the selected text and improves "
 "comprehension."
 msgstr ""
+"Šis rašymo asistentas supaprasta pasirinktą tekstą ir pagerina suprantamumą."
 
 #: app/controllers/ticket_articles_controller.rb:195
-#, fuzzy
-#| msgid "This article is not part of the ticket."
 msgid "This article does not have a raw copy available."
-msgstr "Šis įrašas nėra nurodytos trikties dalis."
+msgstr "Šio įrašo neapdorotos kopijos nėra."
 
 #: app/models/ticket/time_accounting.rb:44
 msgid "This article is not part of the ticket."
@@ -19164,6 +19025,9 @@ msgid ""
 "parts. You can define the role description, instruction and its context, "
 "entity context, result structure, and action definition."
 msgstr ""
+"Tai pritaikomas DI agento tipas, kuris leidžia pilnai kontroliuoti visas jo "
+"dalis. Galite aprašyti jo rolę, duoti instrukcijas ir kontekstą, rezultato "
+"struktūrą ir veiksmo aprašymą."
 
 #: db/seeds/settings.rb:66
 msgid "This is a default maintenance message. Click here to change."
@@ -19192,7 +19056,7 @@ msgstr "Tai nėra tinkamas X509 sertifikatas. Patikrinkite sertifikato formatą.
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:69
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:89
 msgid "This item expands to show more options"
-msgstr ""
+msgstr "Šis elementas išplečiamas į daugiau pasirinkimų"
 
 #: app/models/channel/email_parser.rb:11
 msgid ""
@@ -19245,6 +19109,8 @@ msgid ""
 "This new desktop UI is currently in development and not ready for production "
 "use. It may contain bugs or incomplete features."
 msgstr ""
+"Naujoji naudotojo sąsaja šiuo metu vystoma ir dar netinka kasdieniam "
+"naudojimui. Joje gali būti klaidų ir neišbaigtų funkcijų."
 
 #: app/controllers/application_controller/handles_errors.rb:99
 #: app/graphql/gql/zammad_schema.rb:103
@@ -19258,7 +19124,7 @@ msgstr "Nepavyko rasti šio objekto."
 #: app/models/concerns/ensures_no_related_objects.rb:31
 msgid ""
 "This object is referenced by other object(s) and thus cannot be deleted: %s"
-msgstr ""
+msgstr "Šis objektas naudojamas kitų objektų ir negali būti ištrintas: %s"
 
 #: app/services/service/system/check_setup.rb:29
 msgid ""
@@ -19304,16 +19170,17 @@ msgid "This service allows you to connect %s with %s."
 msgstr "Ši paslauga leidžia sujungti %s su %s."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:25
-#, fuzzy
-#| msgid "This service allows you to connect %s with %s."
 msgid "This service allows you to connect Zammad with an AI provider."
-msgstr "Ši paslauga leidžia sujungti %s su %s."
+msgstr "Ši paslauga leidžia jums sujungti Zammad su DI paslaugų tiekėju."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:43
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
 msgstr ""
+"Naudodamiesi šia paslauga, galite parsisiųsti agentų pateiktus atsiliepimus "
+"apie DI funkcijas ir informaciją apie klaidas, susijusias su nepavykusiomis "
+"DI užklausomis."
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:6
 msgid "This service enables Zammad to connect with your Exchange server."
@@ -19367,12 +19234,8 @@ msgstr "Ši sistema jau sukonfigūruota ir administratoriaus paskyra jau yra."
 #: app/services/service/system/import/apply_configuration_base.rb:46
 #: app/services/service/system/import/run.rb:37
 #: app/services/service/system/run_auto_wizard.rb:6
-#, fuzzy
-#| msgid ""
-#| "This system has already been configured and an administrator account "
-#| "exists."
 msgid "This system has already been configured."
-msgstr "Ši sistema jau sukonfigūruota ir administratoriaus paskyra jau yra."
+msgstr "Ši sistema jau sukonfigūruota."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:10
 msgid "This system is configured for automated setup."
@@ -19395,23 +19258,30 @@ msgid ""
 "This type of AI agent can categorize incoming tickets into an appropriate "
 "category based on their content and topic."
 msgstr ""
+"Šis DI agento tipas gali skirstyti įeinančias triktis į kategorijas pagal jų "
+"turinį ir temą."
 
 #: app/models/ai/agent/type/ticket_group_dispatcher.rb:10
 msgid ""
 "This type of AI agent can dispatch incoming tickets into an appropriate "
 "group based on their content and topic."
 msgstr ""
+"Šis DI agento tipas gali skirstyti įeinančias triktis į grupes pagal turinį "
+"ir temą."
 
 #: app/models/ai/agent/type/ticket_title_rewriter.rb:10
 msgid ""
 "This type of AI agent can improve title of incoming tickets based on their "
 "content and topic."
 msgstr ""
+"Šis DI agento tipas gali patikslinti įeinančios trikties pavadinimą pagal "
+"jos turinį."
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:10
 msgid ""
 "This type of AI agent can prioritize incoming tickets based on their content."
 msgstr ""
+"Šis DI agento tipas gali prioriterizuoti įeinančias triktis pagal jų turinį."
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
 msgid "This user does not have access to the given group"
@@ -19524,10 +19394,8 @@ msgid "Ticket Auto Assignment"
 msgstr "Trikčių automatinis priskyrimas"
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:11
-#, fuzzy
-#| msgid "Ticket Customer"
 msgid "Ticket Categorizer"
-msgstr "Trikties klientas"
+msgstr "Trikčių kategorizuoklis"
 
 #: db/seeds/settings.rb:2373
 msgid "Ticket Conditions Expert Mode"
@@ -19550,10 +19418,8 @@ msgid "Ticket Duplicate Detection"
 msgstr "Trikties dublikatų aptikimas"
 
 #: app/models/ai/agent/type/ticket_group_dispatcher.rb:6
-#, fuzzy
-#| msgid "Ticket update"
 msgid "Ticket Group Dispatcher"
-msgstr "Trikties atnaujinimas"
+msgstr "Trikčių grupuotojas"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:73
 msgid "Ticket History"
@@ -19623,10 +19489,8 @@ msgid "Ticket Priorities"
 msgstr "Trikčių prioritetai"
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:6
-#, fuzzy
-#| msgid "Ticket Priorities"
 msgid "Ticket Prioritizer"
-msgstr "Trikčių prioritetai"
+msgstr "Trikčių prioritetizuotojas"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:3
 msgid "Ticket Priority"
@@ -19672,16 +19536,12 @@ msgstr "Trikties prenumeratos"
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
 #: db/seeds/permissions.rb:227 db/seeds/settings.rb:6043
-#, fuzzy
-#| msgid "Event Summary"
 msgid "Ticket Summary"
-msgstr "Įvykio aprašymas"
+msgstr "Trikties santrauka"
 
 #: db/seeds/settings.rb:6057
-#, fuzzy
-#| msgid "Ticket Count"
 msgid "Ticket Summary Config"
-msgstr "Trikčių skaičius"
+msgstr "Trikties santraukos konfigūracija"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:3
 msgid ""
@@ -19690,12 +19550,13 @@ msgid ""
 "reading time in the ticket with a summarized version of the problem, open "
 "questions and upcoming events."
 msgstr ""
+"Trikties santrauka pateikia pokalbio esmines detales. Įjungus bus rodoma "
+"nauja šonjuostė su problemos santrauka, atvirais klausimais ir būsimais "
+"įvykiais."
 
 #: app/models/ai/agent/type/ticket_title_rewriter.rb:6
-#, fuzzy
-#| msgid "Ticket viewers"
 msgid "Ticket Title Rewriter"
-msgstr "Trikties žiūrovai"
+msgstr "Trikties užvadintuvas"
 
 #: db/seeds/settings.rb:2886
 msgid "Ticket Trigger Loop Protection Articles Total"
@@ -19732,10 +19593,8 @@ msgid "Ticket failed to save: %s"
 msgstr "Triktes nepavyko išsaugoti: %s"
 
 #: app/frontend/apps/desktop/components/Ticket/TicketBarChart/useTicketStatsChart.ts:52
-#, fuzzy
-#| msgid "Ticket update"
 msgid "Ticket frequency"
-msgstr "Bilieto atnaujinimas"
+msgstr "Trikčių dažnumas"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue:96
 msgid "Ticket has %s viewers"
@@ -20353,7 +20212,7 @@ msgstr "Perkelti diskusiją į kitą pokalbį:"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:56
 msgid "Transferred %s from user taskbar list %s at position %s."
-msgstr ""
+msgstr "„%s“ skirtukas perkeltas iš %s į %s."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:219
 msgid "Translate field contents"
@@ -20382,17 +20241,13 @@ msgstr "Trigger"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:32
 #: lib/excel_sheet/ai/analytics/with_usage.rb:32
-#, fuzzy
-#| msgid "Trigger"
 msgid "Triggered By ID"
-msgstr "Trigger"
+msgstr "Paleidusiojo ID"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:31
 #: lib/excel_sheet/ai/analytics/with_usage.rb:31
-#, fuzzy
-#| msgid "Trigger"
 msgid "Triggered By Type"
-msgstr "Trigger"
+msgstr "Paleidusiojo tipas"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:14
 msgid "Triggered because pending reminder was reached"
@@ -20430,10 +20285,8 @@ msgid "Try Another Method"
 msgstr "Pabandykite kitą metodą"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:195
-#, fuzzy
-#| msgid "New tab"
 msgid "Try New BETA UI"
-msgstr "Naujas skirtukas"
+msgstr "Išbandykite naują BETA sąsają"
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:124
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:125
@@ -20607,7 +20460,7 @@ msgstr "Tipas:"
 
 #: db/seeds/settings.rb:6004
 msgid "UI Desktop Beta Switch"
-msgstr ""
+msgstr "Darbalaukio BETA sąsajos perjungiklis"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:44
 msgid "UID"
@@ -20639,14 +20492,12 @@ msgid "URL (AJAX endpoint)"
 msgstr "Adresas (AJAX prieigos taškas)"
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:165
-#, fuzzy
-#| msgid "%s (option)"
 msgid "URL (Completions)"
-msgstr "%s (pasirinkimas)"
+msgstr "Adresas (užbaigimai)"
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:175
 msgid "URL (Embeddings)"
-msgstr ""
+msgstr "Adresas (įterpiniai)"
 
 #: app/controllers/first_steps_controller.rb:206 db/seeds/overviews.rb:32
 msgid "Unassigned & Open Tickets"
@@ -20753,7 +20604,7 @@ msgstr "Nepalaikomi webhook siunčiamieji duomenys."
 
 #: app/assets/javascripts/app/models/ai_agent.coffee:30
 msgid "Unused"
-msgstr ""
+msgstr "Nepanaudotas"
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco:6
 msgid ""
@@ -20767,7 +20618,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:95
 msgid "Upcoming Events"
-msgstr ""
+msgstr "Būsimi įvykiai"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:89
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:88
@@ -21081,10 +20932,8 @@ msgid "Uploading"
 msgstr "Įkėliama"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:6
-#, fuzzy
-#| msgid "Uploading"
 msgid "Uploading…"
-msgstr "Įkėliama"
+msgstr "Įkėliama…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:136
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:3
@@ -21093,10 +20942,8 @@ msgid "Usage"
 msgstr "Naudojimas"
 
 #: lib/excel_sheet/ai/analytics/with_usage.rb:42
-#, fuzzy
-#| msgid "New User Accounts"
 msgid "Usages count"
-msgstr "Naujos naudototojų paskyros"
+msgstr "Naudojimų kiekis"
 
 #: lib/secure_mailing/pgp/tool/exec.rb:26
 #: lib/secure_mailing/pgp/tool/exec/agent.rb:26
@@ -21117,10 +20964,8 @@ msgid "Use double click to change level of the row."
 msgstr "Norėdami pakeisti eilutės lygį, naudokite dvigubą spustelėjimą."
 
 #: db/seeds/object_manager_attributes.rb:2409
-#, fuzzy
-#| msgid "Unset default"
 msgid "Use global default"
-msgstr "Nunulinti numatytąjį"
+msgstr "Naudoti visuotinius nustatymus"
 
 #: app/assets/javascripts/app/models/application.coffee:8
 msgid "Use one line per URI"
@@ -21184,10 +21029,8 @@ msgid "Used in schedulers"
 msgstr "Naudojamas planiniuose darbuose"
 
 #: app/assets/javascripts/app/models/ai_agent.coffee:8
-#, fuzzy
-#| msgid "Used in object views"
 msgid "Used in triggers"
-msgstr "Naudojami objektų peržiūrose"
+msgstr "Naudojamas paleistukuose"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:539
 msgid "Used when composing a Ticket article"
@@ -21231,6 +21074,7 @@ msgstr "Naudojami peržiūrint triktį"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:28
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:35
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
@@ -21243,10 +21087,8 @@ msgstr "Naudotojas ( cenzūruota):"
 
 #: app/assets/javascripts/app/controllers/documentation_link.coffee:14
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/user-documentation.ts:7
-#, fuzzy
-#| msgid "User mailbox"
 msgid "User Documentation"
-msgstr "Naudotojo paštadėžė"
+msgstr "Naudotojo dokumentacija"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:47
 msgid "User Filter"
@@ -21352,16 +21194,12 @@ msgid "User successfully unlocked!"
 msgstr "Naudotojas atrakintas!"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:259
-#, fuzzy
-#| msgid "List of all user taskbar tabs"
 msgid "User taskbar tabs"
-msgstr "Visų naudotojo skirtukų sąrašas"
+msgstr "Naudotojo skirtukai"
 
 #: app/assets/javascripts/app/controllers/user.coffee:220
-#, fuzzy
-#| msgid "Ticket updated successfully."
 msgid "User updated successfully."
-msgstr "Triktis atnaujinta."
+msgstr "Naudotojas atnaujintas."
 
 #: app/frontend/apps/desktop/pages/user/routes.ts:21
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:31
@@ -21457,10 +21295,8 @@ msgid "VIP"
 msgstr "VIP"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:13
-#, fuzzy
-#| msgid "Call from %s"
 msgid "Valid from"
-msgstr "Skambutis nuo %s"
+msgstr "Galioja nuo"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:105
 msgid "Validation failed"
@@ -21577,7 +21413,6 @@ msgstr "Rodyti kaip naudotojui"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:17
@@ -21961,31 +21796,23 @@ msgstr "Workflow"
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:16
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:35
 #: db/seeds/permissions.rb:233 db/seeds/settings.rb:6076
-#, fuzzy
-#| msgid "Waiting in %s"
 msgid "Writing Assistant"
-msgstr "Laukiama %s"
+msgstr "Rašymo asistentas"
 
 #: db/seeds/settings.rb:6090
-#, fuzzy
-#| msgid "Waiting in %s"
 msgid "Writing Assistant Fixed Instructions"
-msgstr "Laukiama %s"
+msgstr "Rašymo asistento fiksuotos instrukcijos"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:16
-#, fuzzy
-#| msgid "Waiting in %s"
 msgid "Writing Assistant Tool"
-msgstr "Laukiama %s"
+msgstr "Rašymo asistentas"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:17
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:82
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:68
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:68
-#, fuzzy
-#| msgid "Waiting in %s"
 msgid "Writing Assistant Tools"
-msgstr "Laukiama %s"
+msgstr "Rašymo asistentai"
 
 #: app/assets/javascripts/app/models/ai_text_tool.coffee
 msgid ""
@@ -21994,18 +21821,17 @@ msgid ""
 "within the article editor. You can even create custom tools to meet specific "
 "needs, e.g. using branch or company specific wording."
 msgstr ""
+"Rašymo asistentai supaprastina įrašo teksto išbaigimą prieš siunčiant. "
+"Įjungus, jie yra prieinami įrašo redagatoriuje. Taip pat galite susikurti "
+"papildomų asistentų pagal savo poreikius."
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:8
-#, fuzzy
-#| msgid "Waiting in %s"
 msgid "Writing Assistant couldn't generate text."
-msgstr "Laukiama %s"
+msgstr "Rašmo asistentas negalėjo sugeneruoti teksto."
 
 #: app/assets/javascripts/app/controllers/text_tools_modal.coffee:24
-#, fuzzy
-#| msgid "Waiting in %s"
 msgid "Writing Assistant: %s"
-msgstr "Laukiama %s"
+msgstr "Rašymo asistentas: %s"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
 msgid "Year"
@@ -22044,10 +21870,8 @@ msgid "Yes, start real import."
 msgstr "Taip, pradėti tikrąjį importavimą."
 
 #: app/assets/javascripts/app/views/generic/error/unauthorized.jst.eco:3
-#, fuzzy
-#| msgid "You have insufficient rights to open this tab."
 msgid "You are not authorized to open this %s."
-msgstr "Neturite prieigos prie šio skirtuko."
+msgstr "Jūs neturite prieigos prie šio %s."
 
 #: public/assets/chat/views/waiting.eco:8
 msgid "You are on waiting list position <strong>%s</strong>."
@@ -22237,6 +22061,7 @@ msgstr ""
 msgid ""
 "You can overwrite this setting for specific groups in the group manager. %l"
 msgstr ""
+"Jūs galite pakeisti šį nustatymą pasirinktoms grupėms grupių tvarkyklėje. %l"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282
 msgid ""
@@ -22269,12 +22094,16 @@ msgid ""
 "You can switch between the old and the New BETA UI at any moment in the "
 "Profile > New BETA UI section."
 msgstr ""
+"Galite persijungti tarp senosios ir naujos BETA sąsajos bet kuriuo metu "
+"Profilis > Nauja BETA sąsaja sekcijoje."
 
 #: app/frontend/apps/desktop/composables/useNewBetaUi.ts:38
 msgid ""
 "You can switch between the old and the New BETA UI at any moment in the "
 "Profile Settings > New BETA UI section."
 msgstr ""
+"Galite persijungti tarp senosios ir naujos BETA sąsajos bet kuriuo metu "
+"Profilio nustatymai > Nauja BETA sąsaja sekcijoje."
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:32
 msgid "You can use the following script to post the data to %s."
@@ -22285,6 +22114,8 @@ msgid ""
 "You cannot view or change the group permissions of an inactive user. "
 "Activate them first to manage their permissions."
 msgstr ""
+"Negalite peržiūrėti ar keisti neaktyvaus vartotojo grupių teisių. Pirma "
+"turite aktyvuoti vartotoją."
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:16
 msgid "You currently don't have any tickets."
@@ -22305,10 +22136,8 @@ msgid "You do not have administrator permission."
 msgstr "Neturite administratoriaus prieigos."
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:41
-#, fuzzy
-#| msgid "You do not have administrator permission."
 msgid "You do not have permission to update"
-msgstr "Neturite administratoriaus prieigos."
+msgstr "Neturite teisių atnaujinti"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:411
 msgid "You don't have more tickets to load."
@@ -22329,7 +22158,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:4
 msgid "You have already provided feedback, thank you."
-msgstr ""
+msgstr "Jūs jau pateikėte atsiliepimą. Ačiū."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue:46
 msgid "You have exceeded the character limit by %s"
@@ -22458,19 +22287,6 @@ msgstr "YouTube ar Vimeo adresas"
 #. This is the template file app/views/mailer/password_change/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/password_change/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Your #{config.product_name} password has been changed\n"
-#| "\n"
-#| "<p>Hi #{user.firstname},</p>\n"
-#| "<br>\n"
-#| "<p>The password for your #{config.product_name} account <b>#{user.login}</"
-#| "b> has been changed recently.</p>\n"
-#| "<br>\n"
-#| "<p>This activity is not known to you? If not, contact your system "
-#| "administrator.</p>\n"
-#| "<br>\n"
-#| "<p>Your #{config.product_name} Team</p>\n"
 msgid ""
 "Your #{config.product_name} password has been changed\n"
 "\n"
@@ -22491,7 +22307,7 @@ msgstr ""
 "<p>Jūsų #{config.product_name} paskyros <b>#{user.login}</b> slaptažodis ką "
 "tik buvo pakeistas.</p>\n"
 "<br>\n"
-"<p>Ar šis veiksmas jums žinomas? Jei ne, susisiekite su savo sistemos "
+"<p>Jei jūs nekeitėte savo slaptažodžio, susisiekite su savo sistemos "
 "administratoriumi.</p>\n"
 "<br>\n"
 "<p>Jūsų #{config.product_name} komanda</p>\n"
@@ -22577,10 +22393,8 @@ msgid "Your connection is not private"
 msgstr "Jūsų ryšys nėra privatus"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_feedback_widget.coffee:50
-#, fuzzy
-#| msgid "Loading failed, please try again later."
 msgid "Your feedback could not be recorded, please try again later."
-msgstr "Įkėlimas nepavyko, bandykite vėliau."
+msgstr "Nepavyko išsaugoti jūsų atsiliepimo, bandykite vėliau."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:23
 msgid "Your language"
@@ -22609,10 +22423,8 @@ msgid "Zammad"
 msgstr "Zammad"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/zammad_ai.coffee:3
-#, fuzzy
-#| msgid "Zammad"
 msgid "Zammad AI"
-msgstr "Zammad"
+msgstr "Zammad AI"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
 msgid ""
@@ -23083,10 +22895,8 @@ msgid "drag here to cancel"
 msgstr "tempkite čia, kad atšauktumėte"
 
 #: app/assets/javascripts/app/index.coffee:215
-#, fuzzy
-#| msgid "Tue"
 msgid "due"
-msgstr "A"
+msgstr "laikas suėjo"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:146
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:136
@@ -23384,18 +23194,14 @@ msgstr "yra bet kuris iš"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:29
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:115
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:56
-#, fuzzy
-#| msgid "Create tag"
 msgid "is greater than"
-msgstr "Sukurti žymą"
+msgstr "yra didesnė nei"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:29
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:116
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:56
-#, fuzzy
-#| msgid "must be greater than or equal to %{count}"
 msgid "is greater than or equal to"
-msgstr "turi būti daugiau nei arba lygu %{count}"
+msgstr "yra didesnė nei arba lygi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
@@ -23413,15 +23219,13 @@ msgstr "yra didesnė už didžiausią leistiną reikšmę %{max_value}"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:56
 msgid "is less than"
-msgstr ""
+msgstr "yra mažesnė nei"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:29
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:114
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:56
-#, fuzzy
-#| msgid "must be less than or equal to %{count}"
 msgid "is less than or equal to"
-msgstr "turi būti mažiau nei arba lygu %{count}"
+msgstr "yra mažesnė nei arba lygi"
 
 #: lib/validations/object_manager/attribute_validator/max_length.rb:25
 msgid "is longer than the allowed length %{maxlength}"
@@ -23679,6 +23483,7 @@ msgstr "naujos ir atidarytos"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:27
 msgid "new,beta,desktop view,desktop ui"
 msgstr ""
+"nauja,naujas,beta,sąsaja,darbalaukis,vartotojo sąsaja,ui,testas,bandomoji"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:10
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:23

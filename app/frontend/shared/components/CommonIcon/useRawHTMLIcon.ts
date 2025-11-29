@@ -14,8 +14,8 @@ export const useRawHTMLIcon = (props: Props & { class?: string }) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="icon ${iconClass.value} ${props.class || ''} fill-current"
-      width="${finalSize.value.width}"
-      height="${finalSize.value.height}"
+      width=${finalSize.value.width}
+      height=${finalSize.value.height}
       ${!props.decorative && `aria-label=${i18n.t(props.label || props.name) || ''}`}
       ${(props.decorative && 'aria-hidden="true"') || ''}
     >

@@ -17,11 +17,11 @@ const isComponent = (obj: unknown): obj is Component => {
   if (!obj) return false
   return Boolean(
     (typeof obj === 'function' && obj.length === 2) ||
-      (typeof obj === 'object' &&
-        !Array.isArray(obj) &&
-        !('$el' in obj) &&
-        !('$cmp' in obj) &&
-        !('if' in obj)),
+    (typeof obj === 'object' &&
+      !Array.isArray(obj) &&
+      !('$el' in obj) &&
+      !('$cmp' in obj) &&
+      !('if' in obj)),
   )
 }
 

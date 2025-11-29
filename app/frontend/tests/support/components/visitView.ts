@@ -95,9 +95,8 @@ if (isDesktop) {
   //     '#desktop/router/guards/before/systemSetupInfo.ts'
   //   )
   //   routerBeforeGuards.push(systemSetupInfo)
-  const { default: activeTaskbarTab } = await import(
-    '#desktop/router/guards/before/activeTaskbarTab.ts'
-  )
+  const { default: activeTaskbarTab } =
+    await import('#desktop/router/guards/before/activeTaskbarTab.ts')
   routerBeforeGuards.push(activeTaskbarTab)
 }
 

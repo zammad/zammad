@@ -1197,7 +1197,7 @@ msgstr ""
 "Принять Политику конфиденциальности данных и Политику допустимого "
 "использования"
 
-#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:45
+#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:46
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:36
 msgid "Access denied"
 msgstr "Доступ запрещён"
@@ -2539,7 +2539,7 @@ msgstr ""
 "Время ожидания назначения в минутах, если назначенный агент не работает над "
 "заявкой. Заявка будет отображаться как «не назначенная»."
 
-#: app/graphql/gql/queries/tickets/by_filter.rb:19
+#: app/graphql/gql/queries/tickets/by_filter.rb:20
 #, fuzzy
 #| msgid "At least one object must be selected."
 msgid "At least one filter must be provided."
@@ -3988,6 +3988,7 @@ msgstr "Закрыто в"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:130
 #: app/assets/javascripts/app/controllers/widget/user.coffee:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:129
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:43
 msgid "Closed Tickets"
 msgstr "Закрытые заявки"
 
@@ -4274,7 +4275,7 @@ msgstr "Подключение к Elasticsearch Vector DB не удалось"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:8
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:288
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:166
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:162
 msgid "Contact the administrator if you have any problems logging in."
 msgstr ""
 "Свяжитесь с администратором, если Вы испытываете проблемы с авторизацией."
@@ -4346,7 +4347,7 @@ msgid "Continue session"
 msgstr "Продолжение сессии"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:138
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:169
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:165
 msgid "Continue to desktop"
 msgstr "Продолжить в десктопной версии"
 
@@ -6723,6 +6724,10 @@ msgstr "Отменить Ваши несохраненные изменения.
 msgid "Dislikes count"
 msgstr "Связанные учётные записи"
 
+#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:61
+msgid "Dismiss alert"
+msgstr ""
+
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:7
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:7
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco:8
@@ -8230,7 +8235,7 @@ msgstr "Не удалось установить QR-код. Пожалуйста
 msgid "Failed to update checklist item."
 msgstr "Не удалось обновить элемент чек-листа."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:23
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:25
 msgid "Failed to upload."
 msgstr "Не удалось загрузить."
 
@@ -8324,6 +8329,12 @@ msgstr "Файловая система"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:130
 msgid "Filter"
 msgstr "Фильтр"
+
+#: app/graphql/gql/queries/tickets/by_filter.rb:24
+msgid ""
+"Filtering by customer's organizations requires customer filter to be "
+"provided."
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 msgid "Find a ticket"
@@ -9931,7 +9942,6 @@ msgstr "Информация: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:9
@@ -10017,6 +10027,12 @@ msgstr ""
 "Вставьте код виджета в исходный код каждой страницы, на которой должен быть "
 "виден чат. Он должен быть помещен в конце исходного кода страницы перед "
 "закрывающим тегом §</body>§."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+#, fuzzy
+#| msgid "It is not possible to delete your current account."
+msgid "Inserting image not possible due to source restrictions"
+msgstr "Удалить текущую учетную запись невозможно."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
 msgid "Inserts a horizontal rule"
@@ -12639,6 +12655,7 @@ msgstr "Нет результатов для этого запроса."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:305
+#: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:66
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:480
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
@@ -13232,6 +13249,7 @@ msgstr "Открыть заявку №%s"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:122
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:120
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:35
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
 msgstr "Открытые заявки"
@@ -13403,6 +13421,7 @@ msgstr "Порядок представлений заявок"
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:13
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:70
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -14739,7 +14758,7 @@ msgstr "Удалить объект"
 msgid "Related Object Type"
 msgstr "Удалить объект"
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:97
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:139
 #, fuzzy
 #| msgid "Create ticket"
 msgid "Related tickets"
@@ -15002,7 +15021,7 @@ msgstr "Запрашивать пароль для авторизации адм
 
 #: app/assets/javascripts/app/views/login.jst.eco:106
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:280
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:159
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:155
 msgid "Request the password login here."
 msgstr "Запросить пароль для авторизации здесь."
 
@@ -15188,7 +15207,7 @@ msgstr "Изменить размер панели статьи"
 msgid "Resize column"
 msgstr "Изменить размер столбца"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:252
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
 msgid "Resize frame"
 msgstr "Изменить размер рамки"
 
@@ -15658,6 +15677,12 @@ msgstr "URL-адрес поиска недействителен."
 msgid "Search URL is missing."
 msgstr "URL-адрес поиска отсутствует."
 
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:87
+#, fuzzy
+#| msgid "Search"
+msgid "Search all"
+msgstr "Поиск"
+
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:48
 msgid "Search for AI agents"
 msgstr "Поиск ИИ агентов"
@@ -15845,7 +15870,7 @@ msgstr "Поиск…"
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:102
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:73
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:113
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:88
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1161
@@ -21563,6 +21588,7 @@ msgstr "Используется при просмотре заявки"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:28
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:35
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
@@ -21913,7 +21939,6 @@ msgstr "Вид от имени пользователя"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:17

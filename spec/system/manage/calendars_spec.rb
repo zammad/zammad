@@ -2,7 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Calendars', time_zone: 'America/Sao_Paulo', type: :system do
+# TODO: This test relies on a VCR cassette in order to work around the CI rate limit issue with Google Calendar servers:
+#
+#   > Client Error: #<Net::HTTPTooManyRequests 429 Too Many Requests
+#
+#   However, due to holidays changing every year, the cassette will eventually become outdated.
+#   When this happens, the test may start to fail due to missing events, requiring a manual update to the cassette.
+RSpec.describe 'Manage > Calendars', time_zone: 'America/Sao_Paulo', type: :system, use_vcr: true do
 
   context 'Date' do
     let(:calendar_title) { "test calendar #{SecureRandom.uuid}" }

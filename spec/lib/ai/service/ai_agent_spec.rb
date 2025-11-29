@@ -5,11 +5,13 @@ require 'rails_helper'
 RSpec.describe AI::Service::AIAgent, :aggregate_failures do
   subject(:ai_service) { described_class.new(current_user:, context_data:, additional_options:) }
 
+  let(:ai_agent) { create(:ai_agent) }
   let(:ticket)   { create(:ticket, title: 'Test Ticket', group: group, priority: priority) }
   let(:group)    { create(:group, name: 'Support Team') }
   let(:priority) { Ticket::Priority.lookup(name: '2 normal') }
   let(:context_data) do
     {
+      ai_agent:            ai_agent,
       ticket:              ticket,
       role_description:    'Test AI Agent',
       instruction:         'Analyze the ticket and provide recommendations',
@@ -122,6 +124,7 @@ RSpec.describe AI::Service::AIAgent, :aggregate_failures do
   context 'when entity_context has object_attributes with only values (no labels)' do
     let(:context_data) do
       {
+        ai_agent:            ai_agent,
         ticket:              ticket,
         role_description:    'Test AI Agent',
         instruction:         'Analyze the ticket and provide recommendations',
@@ -167,6 +170,7 @@ RSpec.describe AI::Service::AIAgent, :aggregate_failures do
     context 'when articles is set to "all"' do
       let(:context_data) do
         {
+          ai_agent:            ai_agent,
           ticket:              ticket,
           role_description:    'Test AI Agent',
           instruction:         'Analyze the ticket and provide recommendations',
@@ -210,6 +214,7 @@ RSpec.describe AI::Service::AIAgent, :aggregate_failures do
     context 'when articles is set to "last"' do
       let(:context_data) do
         {
+          ai_agent:            ai_agent,
           ticket:              ticket,
           role_description:    'Test AI Agent',
           instruction:         'Analyze the ticket and provide recommendations',
@@ -250,6 +255,7 @@ RSpec.describe AI::Service::AIAgent, :aggregate_failures do
       let(:specific_article) { articles.first }
       let(:context_data) do
         {
+          ai_agent:            ai_agent,
           ticket:              ticket,
           article:             specific_article,
           role_description:    'Test AI Agent',

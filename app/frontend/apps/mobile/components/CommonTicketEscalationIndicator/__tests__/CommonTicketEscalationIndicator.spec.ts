@@ -6,9 +6,8 @@ const now = new Date('2023-02-28 12:00:00')
 vi.useFakeTimers().setSystemTime(now)
 
 const { renderComponent } = await import('#tests/support/components/index.ts')
-const { default: CommonTicketEscalationIndicator } = await import(
-  '../CommonTicketEscalationIndicator.vue'
-)
+const { default: CommonTicketEscalationIndicator } =
+  await import('../CommonTicketEscalationIndicator.vue')
 
 export {}
 

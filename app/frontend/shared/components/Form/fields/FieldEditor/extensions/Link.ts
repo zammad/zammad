@@ -77,33 +77,31 @@ export default Link.extend({
     }
 
     return {
-      openLinkForm:
-        () =>
-        ({ editor }: { editor: Editor }) => {
-          const { state } = editor
-          const { from, to } = state.selection
+      openLinkForm: () => () => {
+        const { state } = this.editor
+        const { from, to } = state.selection
 
-          const id = getUuid() // used to connect the link mark with the popover
+        const id = getUuid() // used to connect the link mark with the popover
 
-          setAriaLabels(id)
+        setAriaLabels(id)
 
-          linkComponent = setFloatingPopover(
-            LinkForm,
-            editor,
-            {
-              from,
-              to,
-              id,
+        linkComponent = setFloatingPopover(
+          LinkForm,
+          this.editor,
+          {
+            from,
+            to,
+            id,
+          },
+          {
+            onClose: () => {
+              this.editor.commands.closeLinkForm()
             },
-            {
-              onClose: () => {
-                editor.commands.closeLinkForm()
-              },
-            },
-          )
+          },
+        )
 
-          return true
-        },
+        return true
+      },
       closeLinkForm: () => () => {
         destroyLinkForm()
         return false
@@ -114,7 +112,7 @@ export default Link.extend({
   addProseMirrorPlugins() {
     const { editor, parent } = this as unknown as {
       editor: Editor
-      parent: () => (typeof Plugin)[]
+      parent: () => Plugin[]
     }
 
     return [

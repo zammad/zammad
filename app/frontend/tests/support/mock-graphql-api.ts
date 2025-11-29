@@ -203,8 +203,10 @@ export const mockGraphQLApi = (operationDocument: DocumentNode): MockGraphQLInst
   return instance
 }
 
-export interface ExtendedIMockSubscription<T = unknown>
-  extends Omit<IMockSubscription, 'next' | 'closed'> {
+export interface ExtendedIMockSubscription<T = unknown> extends Omit<
+  IMockSubscription,
+  'next' | 'closed'
+> {
   closed: () => boolean
   next: (result: RequestHandlerResponse<T>) => Promise<void>
 }

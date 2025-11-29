@@ -336,7 +336,7 @@ const showGroupByRow = (item: TableAdvancedItem) => {
 
   const show = Boolean(
     currentGroupByValueIndex === -1 ||
-      !groupByRowCounts.value[currentGroupByValueIndex].includes(item.id),
+    !groupByRowCounts.value[currentGroupByValueIndex].includes(item.id),
   )
 
   // Remember current group index, when it should be shown.

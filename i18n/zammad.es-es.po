@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-10-21 10:24+0000\n"
-"Last-Translator: Alfredo Sola <alfredo@sola.es>\n"
+"PO-Revision-Date: 2025-11-26 09:00+0000\n"
+"Last-Translator: Benjamin Scharf <bs@zammad.com>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/es/>\n"
 "Language: es-es\n"
@@ -486,10 +486,8 @@ msgid "%s days ago"
 msgstr "%s días atrás"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
-#, fuzzy
-#| msgid "%s ticket selected"
 msgid "%s deselected."
-msgstr "%s ticket seleccionado"
+msgstr "%s deseleccionado."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:709
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:260
@@ -522,10 +520,8 @@ msgid "%s hours ago"
 msgstr "%s horas atrás"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:28
-#, fuzzy
-#| msgid "%s is generating text"
 msgid "%s is generating text…"
-msgstr "%s está generando texto"
+msgstr "%s está generando texto…"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:91
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:58
@@ -1056,10 +1052,8 @@ msgstr "Configuración del proveedor de IA"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:26
 #: lib/excel_sheet/ai/analytics/with_usage.rb:26
-#, fuzzy
-#| msgid "Image Service"
 msgid "AI Service Name"
-msgstr "Servicio de imágenes"
+msgstr "Nombre del servicio de IA"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:35
 msgid "AI agent used in schedulers"
@@ -1070,35 +1064,25 @@ msgid "AI agent used in triggers"
 msgstr "Agente de IA utilizado en los desencadenantes"
 
 #: app/assets/javascripts/app/models/ai_agent.coffee
-#, fuzzy
-#| msgid ""
-#| "AI agents enable streamlined processing powered by AI-driven insights. "
-#| "You can execute AI agents via triggers or schedulers."
 msgid ""
 "AI agents enable streamlined processing powered by artificial intelligence. "
 "You can execute AI agents via triggers or schedulers."
 msgstr ""
 "Los agentes de IA permiten un procesamiento optimizado gracias a la "
-"información proporcionada por la IA. Puedes ejecutar agentes de IA mediante "
-"activadores o programadores."
+"inteligencia artificial. Puede ejecutar agentes de IA mediante disparadores "
+"o programadores."
 
 #: app/services/service/ai_assistance/text_tools.rb:22
-#, fuzzy
-#| msgid "Ai assistant text tools"
 msgid "AI assistance text tool is inactive."
-msgstr "Herramientas de texto del asistente AI"
+msgstr "La herramienta de texto de asistencia con IA está inactiva."
 
 #: app/services/service/ai_assistance/text_tools.rb:21
-#, fuzzy
-#| msgid "Ai assistant text tools"
 msgid "AI assistance text tool is invalid."
-msgstr "Herramientas de texto del asistente AI"
+msgstr "La herramienta de texto de asistencia de IA no es válida."
 
 #: lib/excel_sheet/ai/analytics/errors.rb:4
-#, fuzzy
-#| msgid "API error."
 msgid "AI error log"
-msgstr "Error de API."
+msgstr "Registro de errores de IA"
 
 #: db/seeds/settings.rb:6013
 msgid "AI provider"
@@ -1113,10 +1097,8 @@ msgid "AI provider Ollama URL is not set"
 msgstr "Proveedor de IA Ollama La URL no está configurada"
 
 #: app/models/setting/validation/ai_provider_config.rb:68
-#, fuzzy
-#| msgid "AI provider"
 msgid "AI provider is missing"
-msgstr "Proveedor de IA"
+msgstr "Falta el proveedor de IA"
 
 #: app/controllers/ticket/summarize_controller.rb:8
 #: app/graphql/gql/mutations/ticket/ai_assistance/summarize.rb:16
@@ -1137,11 +1119,11 @@ msgstr "El token del proveedor de IA no está configurado."
 
 #: lib/ai/service/ticket_summarize.rb:48
 msgid "AI service result is missing expected keys"
-msgstr ""
+msgstr "El resultado del servicio de IA no contiene las claves esperadas."
 
 #: lib/excel_sheet/ai/analytics/with_usage.rb:4
 msgid "AI usage and feedback log"
-msgstr ""
+msgstr "Uso de IA y registro de comentarios"
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:251
@@ -1203,7 +1185,7 @@ msgstr "API token"
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr "Aceptar Política de Privacidad de Datos & Política de Uso Aceptable"
 
-#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:45
+#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:46
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:36
 msgid "Access denied"
 msgstr "Acceso denegado"
@@ -1350,10 +1332,8 @@ msgid "Action"
 msgstr "Acción"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:79
-#, fuzzy
-#| msgid "Action execution"
 msgid "Action definition"
-msgstr "Ejecución de acción"
+msgstr "Definición de acción"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Action execution"
@@ -1506,10 +1486,8 @@ msgid "Add Account"
 msgstr "Añadir cuenta"
 
 #: app/assets/javascripts/app/views/generic/object_attribute_options_context.jst.eco:62
-#, fuzzy
-#| msgid "Add link"
 msgid "Add All"
-msgstr "Agregar enlace"
+msgstr "Añadir todo"
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:7
 msgid "Add Bot"
@@ -1697,10 +1675,8 @@ msgid "Add this class to a button on your page that should open the chat."
 msgstr "Añadir esta clase a un botón en su página que debería abrir el chat."
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:158
-#, fuzzy
-#| msgid "Add ordered list"
 msgid "Add unordered list"
-msgstr "Añadir una lista ordenada"
+msgstr "Añadir lista desordenada"
 
 #: app/controllers/first_steps_controller.rb:105
 msgid "Additional Channels"
@@ -1745,10 +1721,8 @@ msgstr "Consentimiento del administrador"
 
 #: app/assets/javascripts/app/controllers/documentation_link.coffee:2
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/admin-documentation.ts:7
-#, fuzzy
-#| msgid "Administration"
 msgid "Admin Documentation"
-msgstr "Administración"
+msgstr "Documentación Administrativa"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee:23
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:25
@@ -1899,8 +1873,6 @@ msgid "Agents with \"%s\" permission"
 msgstr "Agentes con el permiso \"%s\""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:44
-#, fuzzy
-#| msgid "AI Agent"
 msgid "Ai Agent"
 msgstr "Agente de IA"
 
@@ -2000,10 +1972,8 @@ msgid "Allow future dates toggle value is required."
 msgstr "Permitir fechas futuras es obligatorio."
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:61
-#, fuzzy
-#| msgid "Multiple selection field"
 msgid "Allow multiple selections"
-msgstr "Campo de selección múltiple"
+msgstr "Permitir selecciones múltiples"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:326
 msgid "Allow past"
@@ -2447,10 +2417,9 @@ msgid "Are you sure? Your recent searches will be lost."
 msgstr "¿Estás seguro? Se perderán tus búsquedas recientes."
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:120
-#, fuzzy
-#| msgid "Are you sure? Your recently viewed items will get lost."
 msgid "Are you sure? Your recently closed items will get lost."
-msgstr "¿Estás seguro? Los artículos que has visto recientemente se perderán."
+msgstr ""
+"¿Estás seguro? Los elementos que hayas cerrado recientemente se perderán."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:54
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:11
@@ -2552,11 +2521,9 @@ msgstr ""
 "Tiempo de espera de la tarea en minutos, si el agente asignado no está "
 "trabajando en ella. El caso pasará a mostrarse \"no asignado\"."
 
-#: app/graphql/gql/queries/tickets/by_filter.rb:19
-#, fuzzy
-#| msgid "At least one object must be selected."
+#: app/graphql/gql/queries/tickets/by_filter.rb:20
 msgid "At least one filter must be provided."
-msgstr "Al menos se debe seleccionar un objeto."
+msgstr "Se debe proporcionar al menos un filtro."
 
 #: app/models/user.rb:659
 msgid ""
@@ -2853,22 +2820,16 @@ msgid "Autosaving is taking longer than expected…"
 msgstr "El autoguardado está tardando más de lo esperado…"
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:52
-#, fuzzy
-#| msgid "Available methods"
 msgid "Available Categories"
-msgstr "Métodos disponibles"
+msgstr "Categorías disponibles"
 
 #: app/models/ai/agent/type/ticket_group_dispatcher.rb:25
-#, fuzzy
-#| msgid "Available methods"
 msgid "Available Groups"
-msgstr "Métodos disponibles"
+msgstr "Grupos disponibles"
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:30
-#, fuzzy
-#| msgid "Available methods"
 msgid "Available Priorities"
-msgstr "Métodos disponibles"
+msgstr "Prioridades disponibles"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
@@ -2982,6 +2943,8 @@ msgid ""
 "Bar chart showing ticket statistics. Created and closed tickets over the "
 "last 12 months."
 msgstr ""
+"Gráfico de barras que muestra las estadísticas de tickets. Tickets creados y "
+"cerrados en los últimos 12 meses."
 
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee:9
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:9
@@ -3012,16 +2975,12 @@ msgstr "Configuración Básica"
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:120
-#, fuzzy
-#| msgid "Be sure to check AI-generated summaries for accuracy."
 msgid "Be sure to check AI-generated content for accuracy."
-msgstr "Asegúrese de comprobar la exactitud de los resúmenes generados por IA."
+msgstr "Asegúrate de comprobar la exactitud del contenido generado por IA."
 
 #: app/assets/javascripts/app/models/webhook.coffee:11
-#, fuzzy
-#| msgid "Generate Token"
 msgid "Bearer Token"
-msgstr "Generar token"
+msgstr "Bearer Token"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:788
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts:105
@@ -3437,10 +3396,8 @@ msgid "Category"
 msgstr "Categoría"
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:32
-#, fuzzy
-#| msgid "New Attribute"
 msgid "Category Attribute"
-msgstr "Nuevo atributo"
+msgstr "Atributo de categoría"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:246
 msgid "Category page layout"
@@ -3769,22 +3726,17 @@ msgstr ""
 "al agente de IA."
 
 #: app/models/ai/agent/type/ticket_group_dispatcher.rb:16
-#, fuzzy
-#| msgid ""
-#| "Choose which groups will be considered for dispatching tickets. If you "
-#| "want to limit it to specific groups, please select at least two below. "
-#| "Make sure the groups have clear, descriptive names, as that would be the "
-#| "only context provided to the AI agent."
 msgid ""
 "Choose which groups will be considered for dispatching tickets. If you want "
 "to limit it to specific groups, please select at least two below. Make sure "
 "the groups have clear names and optional descriptions, as that would "
 "comprise the context provided to the AI agent."
 msgstr ""
-"Elegir los grupos que se considerarán para despachar casos. Si se desea "
-"limitar a grupos específicos, por favor elegir al menos dos aquí abajo. "
-"Asegúrese de que los grupos tienen nombres claros y descriptivos, puesto que "
-"esto será el único contexto suministrado al agente AI."
+"Elige qué grupos se tendrán en cuenta para enviar tickets. Si quieres "
+"limitarlo a grupos específicos, selecciona al menos dos a continuación. "
+"Asegúrate de que los grupos tengan nombres claros y descripciones "
+"opcionales, ya que eso formaría parte del contexto proporcionado al agente "
+"de IA."
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:20
 msgid ""
@@ -3793,6 +3745,11 @@ msgid ""
 "Make sure the priorities have clear names and optional descriptions, as that "
 "would comprise the context provided to the AI agent."
 msgstr ""
+"Elija qué prioridades se tendrán en cuenta al priorizar los tickets. Si "
+"desea limitarlo a prioridades específicas, seleccione al menos dos de las "
+"siguientes. Asegúrese de que las prioridades tengan nombres claros y "
+"descripciones opcionales, ya que eso constituiría el contexto proporcionado "
+"al agente de IA."
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco:7
 msgid "Choose your language."
@@ -3883,10 +3840,8 @@ msgid "Clear recent searches"
 msgstr "Borrar búsquedas recientes"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:222
-#, fuzzy
-#| msgid "Clear recently viewed"
 msgid "Clear recently closed"
-msgstr "Borrar los elementos vistos recientemente"
+msgstr "Clear cerró recientemente"
 
 #: app/frontend/apps/desktop/pages/search/components/SearchEmptyMessage.vue:34
 msgid "Clear search"
@@ -3920,7 +3875,7 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:49
 msgid "Click to edit…"
-msgstr ""
+msgstr "Haga clic para editar…"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco:9
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:28
@@ -4029,6 +3984,7 @@ msgstr "Cerrado el"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:130
 #: app/assets/javascripts/app/controllers/widget/user.coffee:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:129
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:43
 msgid "Closed Tickets"
 msgstr "Cerrar Tickets"
 
@@ -4055,20 +4011,16 @@ msgid "Combined subscription URL"
 msgstr "URL de suscripción combinada"
 
 #: app/models/tag/item.rb:4
-#, fuzzy
-#| msgid "spaces are not allowed"
 msgid "Commas and stars are not allowed in name."
-msgstr "no se permiten espacios"
+msgstr "No se permiten comas ni asteriscos en el nombre."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
 msgid "Comment"
 msgstr "Comentario"
 
 #: lib/excel_sheet/ai/analytics/with_usage.rb:46
-#, fuzzy
-#| msgid "Comment"
 msgid "Comments"
-msgstr "Comentario"
+msgstr "Comentarios"
 
 #: app/models/report.rb:194
 msgid "Communication"
@@ -4311,11 +4263,11 @@ msgstr "Prueba de conexion exitosa"
 
 #: lib/ai/vectordb.rb:153
 msgid "Connection to Elasticsearch Vector DB failed"
-msgstr ""
+msgstr "Error al conectarse a la base de datos vectorial Elasticsearch"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:8
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:288
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:166
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:162
 msgid "Contact the administrator if you have any problems logging in."
 msgstr "Contactar al administrador si hay problemas para entrar."
 
@@ -4386,7 +4338,7 @@ msgid "Continue session"
 msgstr "Continuar la sesión"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:138
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:169
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:165
 msgid "Continue to desktop"
 msgstr "Continuar en el escritorio"
 
@@ -4475,10 +4427,8 @@ msgid "Copy to clipboard"
 msgstr "Copiar al portapapeles"
 
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:105
-#, fuzzy
-#| msgid "Copy Secret"
 msgid "Copy user name"
-msgstr "Copia Secreta"
+msgstr "Copiar nombre de usuario"
 
 #: db/seeds/settings.rb:601
 msgid "Core Workflow Ajax Mode"
@@ -4961,7 +4911,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Ticket/TicketItem.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:41
 msgid "Currently processing this ticket…"
-msgstr ""
+msgstr "Actualmente procesando este ticket…"
 
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:130
 msgid ""
@@ -4976,10 +4926,8 @@ msgid "Custom"
 msgstr "Personalizada"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:6
-#, fuzzy
-#| msgid "Customer Intent"
 msgid "Custom AI Agent"
-msgstr "Intención del cliente"
+msgstr "Agente de IA personalizado"
 
 #: app/assets/javascripts/app/models/webhook.coffee:16
 msgid "Custom Payload"
@@ -4999,10 +4947,8 @@ msgid "Custom address is not set"
 msgstr "La dirección personalizada no está establecida"
 
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:7
-#, fuzzy
-#| msgid "Custom Translation"
 msgid "Custom instructions"
-msgstr "Traducción personalizada"
+msgstr "Instrucciones personalizadas"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:512
@@ -5045,10 +4991,8 @@ msgstr "Intención del cliente"
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:91
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:100
-#, fuzzy
-#| msgid "Customer Intent"
 msgid "Customer Sentiment"
-msgstr "Intención del cliente"
+msgstr "Sentimiento del cliente"
 
 #: app/models/system_report/plugin/entities/user.rb:4
 msgid "Customer and agent ratio (role based user counts)"
@@ -5290,10 +5234,9 @@ msgstr ""
 "ejemplo: ejecutivos)."
 
 #: db/seeds/settings.rb:3709
-#, fuzzy
-#| msgid "Define pipeline name for Elasticsearch."
 msgid "Define if asciifolding analyzer should be used in Elasticsearch."
-msgstr "Define el nombre del pipeline para Elasticsearch."
+msgstr ""
+"Defina si se debe utilizar el analizador asciifolding en Elasticsearch."
 
 #: db/seeds/settings.rb:3673
 msgid "Define max. attachment size for Elasticsearch."
@@ -5494,16 +5437,12 @@ msgid "Defines endpoint of Elasticsearch."
 msgstr "Define un endpoint de Elasticsearch."
 
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:36
-#, fuzzy
-#| msgid ""
-#| "Defines the configuration how many articles can be created in a minute "
-#| "range per ticket."
 msgid ""
 "Defines global configuration when the summary will be generated in the "
 "ticket zoom."
 msgstr ""
-"Define la configuración de cuántos artículos se pueden crear en un rango de "
-"minutos por ticket."
+"Define la configuración global cuando se generará el resumen en el zoom del "
+"ticket."
 
 #: db/seeds/settings.rb:2980
 msgid ""
@@ -5626,10 +5565,8 @@ msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "Define si sipgate.io (http://www.sipgate.io) está o no habilitado."
 
 #: db/seeds/settings.rb:6016
-#, fuzzy
-#| msgid "AI provider is not configured."
 msgid "Defines if the AI provider is configured."
-msgstr "El proveedor de IA no está configurado."
+msgstr "Define si el proveedor de IA está configurado."
 
 #: db/seeds/settings.rb:5058
 msgid ""
@@ -5672,6 +5609,9 @@ msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
+"Define si la función de menú emergente del editor de texto enriquecido está "
+"habilitada. Tenga en cuenta que esta configuración se ignorará si el "
+"asistente de escritura está activado."
 
 #: db/seeds/settings.rb:5941
 msgid ""
@@ -5853,12 +5793,10 @@ msgstr ""
 "mensaje."
 
 #: db/seeds/settings.rb:4295
-#, fuzzy
-#| msgid "Defines postmaster filter to identify sender user."
 msgid "Defines postmaster filter to identify session user."
 msgstr ""
-"Define el filtro de postmaster para identificar el usuario que remite el "
-"mensaje."
+"Define el filtro del administrador de correo para identificar al usuario de "
+"la sesión."
 
 #: db/seeds/settings.rb:4457
 msgid "Defines postmaster filter to identify ticket group."
@@ -6780,6 +6718,10 @@ msgstr "Descartar los cambios no guardados."
 #| msgid "Linked Accounts"
 msgid "Dislikes count"
 msgstr "Cuentas Relacionadas"
+
+#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:61
+msgid "Dismiss alert"
+msgstr ""
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:7
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:7
@@ -8296,7 +8238,7 @@ msgstr "Error al configurar el código QR. Inténtalo de nuevo."
 msgid "Failed to update checklist item."
 msgstr "No se ha podido actualizar el ítem de la lista de comprobación."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:23
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:25
 msgid "Failed to upload."
 msgstr "Error al cargar."
 
@@ -8396,6 +8338,12 @@ msgstr "Sistema de archivos"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:130
 msgid "Filter"
 msgstr "Filtro"
+
+#: app/graphql/gql/queries/tickets/by_filter.rb:24
+msgid ""
+"Filtering by customer's organizations requires customer filter to be "
+"provided."
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 msgid "Find a ticket"
@@ -10017,7 +9965,6 @@ msgstr "Información: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:9
@@ -10105,6 +10052,12 @@ msgstr ""
 "Inserta el código del widget en el código fuente de cada página en la que el "
 "chat será visible. Debe colocarse al final del código fuente de la página "
 "antes de la etiqueta de cierre § </ body> §."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+#, fuzzy
+#| msgid "It is not possible to delete your current account."
+msgid "Inserting image not possible due to source restrictions"
+msgstr "No es posible eliminar su cuenta actual."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
 msgid "Inserts a horizontal rule"
@@ -12778,6 +12731,7 @@ msgstr "No se encontraron resultados"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:305
+#: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:66
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:480
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
@@ -13393,6 +13347,7 @@ msgstr "Abrir Ticket# %s"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:122
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:120
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:35
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
 msgstr "Tickets abiertos"
@@ -13573,6 +13528,7 @@ msgstr "Orden de los resúmenes de tickets"
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:13
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:70
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -14929,7 +14885,7 @@ msgstr "Eliminar Objeto"
 msgid "Related Object Type"
 msgstr "Eliminar Objeto"
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:97
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:139
 #, fuzzy
 #| msgid "Create ticket"
 msgid "Related tickets"
@@ -15194,7 +15150,7 @@ msgstr "¿Solicitar inicio de sesión con contraseña para administradores?"
 
 #: app/assets/javascripts/app/views/login.jst.eco:106
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:280
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:159
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:155
 msgid "Request the password login here."
 msgstr "Solicite el inicio de sesión con contraseña aquí."
 
@@ -15384,7 +15340,7 @@ msgstr "Cambiar el tamaño del panel de artículos"
 msgid "Resize column"
 msgstr "Borrar columna"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:252
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
 msgid "Resize frame"
 msgstr "Cambiar el tamaño del marco"
 
@@ -15854,6 +15810,12 @@ msgstr "La URL de búsqueda no es válida."
 msgid "Search URL is missing."
 msgstr "Falta la URL de búsqueda."
 
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:87
+#, fuzzy
+#| msgid "Search"
+msgid "Search all"
+msgstr "Buscar"
+
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:48
 #, fuzzy
 #| msgid "Search for users"
@@ -16083,7 +16045,7 @@ msgstr "Buscar…"
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:102
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:73
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:113
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:88
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1161
@@ -21883,6 +21845,7 @@ msgstr "Se usa cuando se ve un ticket"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:28
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:35
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
@@ -22240,7 +22203,6 @@ msgstr "Vista desde la perspectiva del usuario"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:17

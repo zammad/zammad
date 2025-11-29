@@ -14,7 +14,8 @@ import type { Props as CommonButtonProps } from '../CommonButton/CommonButton.vu
 import type { Props as CommonPopoverMenuProps } from '../CommonPopoverMenu/CommonPopoverMenu.vue'
 
 export interface Props
-  extends CommonButtonProps,
+  extends
+    CommonButtonProps,
     Pick<CommonPopoverProps, 'orientation' | 'placement'>,
     Pick<CommonPopoverMenuProps, 'items'> {
   addonDisabled?: boolean

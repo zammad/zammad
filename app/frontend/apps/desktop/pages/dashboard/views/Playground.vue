@@ -1712,7 +1712,7 @@ const userEntity = {
 
         <div class="flex gap-4">
           <CommonUserAvatar
-            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            class="cursor-pointer border border-neutral-100 outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
             tabindex="0"
             :entity="{
               id: 'gid://zammad/User/2',

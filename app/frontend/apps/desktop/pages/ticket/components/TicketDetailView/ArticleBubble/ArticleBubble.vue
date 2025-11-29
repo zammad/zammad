@@ -22,9 +22,7 @@ import ArticleReactionBadge from '#desktop/pages/ticket/components/TicketDetailV
 
 const ArticleBubbleHeader = defineAsyncComponent(
   () =>
-    import(
-      '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue'
-    ),
+    import('#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue'),
 )
 
 interface Props {
@@ -92,7 +90,7 @@ const { showPreview } = useFilePreviewViewer(
     ]"
   >
     <UserPopoverWithTrigger
-      class="!absolute bottom-0"
+      class="absolute! bottom-0"
       :class="{
         'ltr:-right-2.5 ltr:translate-x-full rtl:-left-2.5 rtl:-translate-x-full':
           position === 'right',

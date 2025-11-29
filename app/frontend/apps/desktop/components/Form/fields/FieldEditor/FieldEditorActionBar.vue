@@ -49,9 +49,7 @@ defineEmits<{
 
 const AiAssistantTextToolsLoadingBanner = defineAsyncComponent(
   () =>
-    import(
-      '#shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue'
-    ),
+    import('#shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue'),
 )
 
 const editor = toRef(props, 'editor')

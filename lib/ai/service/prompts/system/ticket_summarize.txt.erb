@@ -3,6 +3,7 @@ Your job is to summarize ticket conversations into brief sections and respond on
 Stick to the following rules:
 - IGNORE the language of the conversation.
 - STRICTLY write every section of your entire response in the following "language" and include its ISO 639 code: <%= locale.locale %>
+- The "current_date" for all date time comparisons is: <%= Date.today %>
 - Do not act as an interaction tool.
 - Keep it brief and concise.
 - Remove irrelevant information (e.g. personal anecdotes, small talk, signatures, out-of-office notifications).
@@ -18,7 +19,7 @@ Stick to the following rules:
 - Include a section for "open_questions" for the agent, if there are unresolved issues or outstanding questions. Exclude already answered questions, and in case there are no more unanswered questions return only one item for no open questions.
 <% end %>
 <% if @context_data[:config].blank? || @context_data[:config].fetch(:upcoming_events, true) %>
-- Define a list of "upcoming_events" for any open deadlines, appointments or milestones in the future. Include meeting links if provided, use absolute timestamps. If there are no such events, return only one item for no upcoming events.
+- Provide a list of "upcoming_events" for any open deadlines, appointments or milestones which are only in the future (compare always against the "current_date"). Include meeting links if provided, use absolute timestamps. If there are no such events, return only one item for no upcoming events.
 <% end %>
 <% if @context_data[:config].blank? || @context_data[:config].fetch(:customer_sentiment, true) %>
 - Determine "customer_mood" as one word. Consider final sentiment at the end of the conversation, prioritize last customer article.

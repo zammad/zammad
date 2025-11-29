@@ -37,8 +37,7 @@ export interface EmailInboundMessagesData {
 }
 
 export interface EmailInboundData
-  extends Required<EmailBaseConfigurationData>,
-    EmailInboundMessagesData {
+  extends Required<EmailBaseConfigurationData>, EmailInboundMessagesData {
   adapter: EnumChannelEmailInboundAdapter
   ssl: EnumChannelEmailSsl
   folder?: string

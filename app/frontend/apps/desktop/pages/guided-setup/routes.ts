@@ -166,9 +166,7 @@ const route: RouteRecordRaw[] = [
             name: 'GuidedSetupImportSource',
             props: true,
             component: () =>
-              import(
-                './views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue'
-              ),
+              import('./views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue'),
             meta: {
               title: __('Import from Source'),
               requiresAuth: false,
@@ -181,9 +179,7 @@ const route: RouteRecordRaw[] = [
             name: 'GuidedSetupImportSourceStart',
             props: true,
             component: () =>
-              import(
-                './views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue'
-              ),
+              import('./views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue'),
             meta: {
               title: __('Start Import from Source'),
               requiresAuth: false,
@@ -196,9 +192,7 @@ const route: RouteRecordRaw[] = [
             name: 'GuidedSetupImportSourceStatus',
             props: true,
             component: () =>
-              import(
-                './views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue'
-              ),
+              import('./views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue'),
             meta: {
               title: __('Status Import'),
               requiresAuth: false,

@@ -36,25 +36,19 @@ const ticketHistoryFlyoutName = 'ticket-history'
 const { open: openTicketMergeFlyout } = useFlyout({
   name: ticketMergeFlyoutName,
   component: () =>
-    import(
-      '#desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue'
-    ),
+    import('#desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue'),
 })
 
 const { open: openTicketHistoryFlyout } = useFlyout({
   name: ticketHistoryFlyoutName,
   component: () =>
-    import(
-      '#desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue'
-    ),
+    import('#desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue'),
 })
 
 const { open: openChangeCustomerFlyout } = useFlyout({
   name: ticketChangeCustomerFlyoutName,
   component: () =>
-    import(
-      '#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue'
-    ),
+    import('#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue'),
 })
 
 // :TODO find a way to provide the ticket via prop

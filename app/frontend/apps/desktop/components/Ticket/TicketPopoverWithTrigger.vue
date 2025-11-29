@@ -17,7 +17,7 @@ export interface Props {
   ticket: Partial<Ticket | TicketById>
   popoverConfig?: Omit<CommonPopoverProps, 'owner'>
   triggerClass?: string
-  noLink?: boolean
+  noTriggerLink?: boolean
   noFocusStyling?: boolean
   noHoverStyling?: boolean
   zIndex?: string
@@ -52,7 +52,7 @@ const isAgent = computed(() => session.hasPermission('ticket.agent'))
     :no-hover-styling="noHoverStyling"
     :no-focus-styling="noFocusStyling"
     :z-index="zIndex"
-    :trigger-link="!noLink ? `/tickets/${ticket.internalId}` : undefined"
+    :trigger-link="!noTriggerLink ? `/tickets/${ticket.internalId}` : undefined"
     trigger-link-class="focus-visible:rounded-md!"
     :trigger-link-active-class="
       !$slots?.default?.()

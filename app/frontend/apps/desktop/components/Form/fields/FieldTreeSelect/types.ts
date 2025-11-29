@@ -11,7 +11,9 @@ export interface FieldTreeSelectInputDropdownInstance {
   isOpen: boolean
 }
 
-export interface FieldTreeSelectInputDropdownInternalInstance
-  extends Omit<FieldTreeSelectInputDropdownInstance, 'isOpen'> {
+export interface FieldTreeSelectInputDropdownInternalInstance extends Omit<
+  FieldTreeSelectInputDropdownInstance,
+  'isOpen'
+> {
   isOpen: Ref<boolean>
 }

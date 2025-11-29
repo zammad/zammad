@@ -56,6 +56,7 @@ class Service::AI::Agent::Run < Service::Base
 
     AI::Service::AIAgent.new(
       context_data:       {
+        ai_agent:,
         ticket:,
         role_description:    agent_definition['role_description'],
         instruction:         agent_definition['instruction'],

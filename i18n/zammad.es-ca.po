@@ -1164,7 +1164,7 @@ msgstr "Token de la API"
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr "Accept Data Privacy Policy & Acceptable Use Policy"
 
-#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:45
+#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:46
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:36
 #, fuzzy
 #| msgid "Access to %s"
@@ -2680,7 +2680,7 @@ msgstr ""
 "Temps assignat en minuts si l'agent no està treballant amb aquesta tasca. El "
 "tiquet es mostrarà com sense assignar"
 
-#: app/graphql/gql/queries/tickets/by_filter.rb:19
+#: app/graphql/gql/queries/tickets/by_filter.rb:20
 #, fuzzy
 msgid "At least one filter must be provided."
 msgstr "At least one object must be selected."
@@ -4365,6 +4365,7 @@ msgstr "Closed At"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:130
 #: app/assets/javascripts/app/controllers/widget/user.coffee:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:129
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:43
 msgid "Closed Tickets"
 msgstr "Tiquets tancats"
 
@@ -4684,7 +4685,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:8
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:288
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:166
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:162
 #, fuzzy
 msgid "Contact the administrator if you have any problems logging in."
 msgstr "Contact the administrator if you have any problems logging in."
@@ -4769,7 +4770,7 @@ msgid "Continue session"
 msgstr "Continua la sessió"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:138
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:169
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:165
 #, fuzzy
 #| msgid "Continue session"
 msgid "Continue to desktop"
@@ -7278,6 +7279,10 @@ msgstr "Descarta els canvis no guardats."
 msgid "Dislikes count"
 msgstr "Comptes vinculats"
 
+#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:61
+msgid "Dismiss alert"
+msgstr ""
+
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:7
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:7
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco:8
@@ -8973,7 +8978,7 @@ msgstr "Failed to set up QR code. Please try again."
 msgid "Failed to update checklist item."
 msgstr "Crea un nou client"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:23
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:25
 #, fuzzy
 msgid "Failed to upload."
 msgstr "Failed to upload."
@@ -9077,6 +9082,12 @@ msgstr "Filesystem"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:130
 msgid "Filter"
 msgstr "Filtres"
+
+#: app/graphql/gql/queries/tickets/by_filter.rb:24
+msgid ""
+"Filtering by customer's organizations requires customer filter to be "
+"provided."
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 #, fuzzy
@@ -10931,7 +10942,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:9
@@ -11031,6 +11041,12 @@ msgstr ""
 "Insereix el codi del widget al codi font de cada pagina on el xat hauria de "
 "ser visible. Hauria d'estar col·locat al final del codi font de la pàgina "
 "abans de la etiqueta de tancament §</body>§"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Inserting image not possible due to source restrictions"
+msgstr "Estàs segur d'eliminar aquest objecte?"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
 msgid "Inserts a horizontal rule"
@@ -14103,6 +14119,7 @@ msgstr "No results found"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:305
+#: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:66
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:480
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
@@ -14781,6 +14798,7 @@ msgstr "Tiquet obert # %s"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:122
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:120
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:35
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
 msgstr "Tiquets oberts"
@@ -15001,6 +15019,7 @@ msgstr "Resums"
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:13
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:70
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -16537,7 +16556,7 @@ msgstr "Crea un nou tiquet de prova"
 msgid "Related Object Type"
 msgstr "Crea un nou tiquet de prova"
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:97
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:139
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Related tickets"
@@ -16863,7 +16882,7 @@ msgstr "Request password login for admin?"
 
 #: app/assets/javascripts/app/views/login.jst.eco:106
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:280
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:159
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:155
 #, fuzzy
 msgid "Request the password login here."
 msgstr "Request the password login here."
@@ -17035,7 +17054,7 @@ msgstr "Tanca la pestanya"
 msgid "Resize column"
 msgstr "Elimina fitxer"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:252
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
 #, fuzzy
 msgid "Resize frame"
 msgstr "Resize frame"
@@ -17573,6 +17592,12 @@ msgstr "Search URL is invalid."
 msgid "Search URL is missing."
 msgstr "Search URL is missing."
 
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:87
+#, fuzzy
+#| msgid "Search"
+msgid "Search all"
+msgstr "Buscar"
+
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:48
 #, fuzzy
 #| msgid "Search for users"
@@ -17812,7 +17837,7 @@ msgstr "Buscar"
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:102
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:73
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:113
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:88
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1161
@@ -24244,6 +24269,7 @@ msgstr "Utilitzat quan visiones un tiquet"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:28
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:35
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
@@ -24644,7 +24670,6 @@ msgstr "Visualitza des de la perspectiva de l'usuari"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:17

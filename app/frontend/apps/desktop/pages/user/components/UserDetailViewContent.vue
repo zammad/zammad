@@ -107,7 +107,7 @@ customerTicketsByFilterSubscription.onResult(({ data }) => {
           :content-container-element="contentContainerElement"
         />
         <section class="mx-auto w-full max-w-5xl grid grid-cols-2 gap-6 p-6">
-          <div class="flex flex-col gap-6">
+          <div class="self-start flex flex-col gap-6">
             <CommonSectionContainer
               v-if="user?.hasSecondaryOrganizations"
               :label="__('Secondary organizations')"
@@ -136,7 +136,7 @@ customerTicketsByFilterSubscription.onResult(({ data }) => {
             />
           </div>
 
-          <CommonSectionContainer :label="__('Related tickets')">
+          <CommonSectionContainer class="self-start" :label="__('Related tickets')">
             <CommonTabGroup
               v-model="activeCustomerTicketsTab"
               class="mb-3"

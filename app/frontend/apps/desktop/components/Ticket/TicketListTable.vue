@@ -140,7 +140,7 @@ const userPopoverSlots: {
           :popover-config="{ orientation: 'autoHorizontal' }"
           :user="(item as TicketByList)[ticketAttribute] as AvatarUser"
           class="outline-none!"
-          no-link
+          no-trigger-link
         >
           <CommonLabel
             class="block! shrink-0 truncate outline-offset-0! group-hover:text-black! group-hover:dark:text-white!"

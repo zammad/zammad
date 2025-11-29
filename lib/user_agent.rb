@@ -83,7 +83,7 @@ class UserAgent
       end
     end
 
-    # http.set_debug_output($stdout) if options[:debug]
+    http.set_debug_output($stdout) if options[:debug]
 
     http
   end

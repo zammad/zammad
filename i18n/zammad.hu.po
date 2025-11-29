@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-11-24 13:27+0000\n"
+"PO-Revision-Date: 2025-11-27 09:00+0000\n"
 "Last-Translator: Karoly Nagy <cpt.charlesg@gmail.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hu/>\n"
@@ -1029,71 +1029,71 @@ msgstr "AI"
 #: app/frontend/apps/mobile/components/AiAgent/AiAgentAvatar.vue:34
 #: app/models/ai/agent.rb:102
 msgid "AI Agent"
-msgstr "MI ügynök"
+msgstr "AI ügynök"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:6
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/ai_agent.jst.eco:3
 #: db/seeds/permissions.rb:239
 msgid "AI Agents"
-msgstr "MI ügynökök"
+msgstr "AI ügynökök"
 
 #: db/seeds/permissions.rb:221
 msgid "AI Provider"
-msgstr "MI szolgáltató"
+msgstr "AI szolgáltató"
 
 #: db/seeds/settings.rb:6027
 msgid "AI Provider Config"
-msgstr "MI szolgáltató beállítások"
+msgstr "AI szolgáltató beállítások"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:26
 #: lib/excel_sheet/ai/analytics/with_usage.rb:26
 msgid "AI Service Name"
-msgstr "MI szolgáltató neve"
+msgstr "AI szolgáltató neve"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:35
 msgid "AI agent used in schedulers"
-msgstr "Ütemezőkben használt MI ügynök"
+msgstr "Ütemezőkben használt AI ügynök"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:32
 msgid "AI agent used in triggers"
-msgstr "Eseményindítókban használt MI ügynök"
+msgstr "Eseményindítókban használt AI ügynök"
 
 #: app/assets/javascripts/app/models/ai_agent.coffee
 msgid ""
 "AI agents enable streamlined processing powered by artificial intelligence. "
 "You can execute AI agents via triggers or schedulers."
 msgstr ""
-"A mesterséges intelligencia által működtetett MI ügynökök lehetővé teszik a "
-"gördülékeny feldolgozást. Az MI ügynököket eseményindítók vagy ütemezők "
+"A mesterséges intelligencia által működtetett AI ügynökök lehetővé teszik a "
+"gördülékeny feldolgozást. Az AI ügynököket eseményindítók vagy ütemezők "
 "segítségével futtathatja."
 
 #: app/services/service/ai_assistance/text_tools.rb:22
 msgid "AI assistance text tool is inactive."
-msgstr "MI asszisztens szöveg eszköz inaktív."
+msgstr "AI asszisztens szöveg eszköz inaktív."
 
 #: app/services/service/ai_assistance/text_tools.rb:21
 msgid "AI assistance text tool is invalid."
-msgstr "MI asszisztens szöveg eszköz érvénytelen."
+msgstr "AI asszisztens szöveg eszköz érvénytelen."
 
 #: lib/excel_sheet/ai/analytics/errors.rb:4
 msgid "AI error log"
-msgstr "MI hibanapló"
+msgstr "AI hibanapló"
 
 #: db/seeds/settings.rb:6013
 msgid "AI provider"
-msgstr "MI szolgáltató"
+msgstr "AI szolgáltató"
 
 #: app/models/setting/validation/ai_provider_config.rb:7
 msgid "AI provider Azure configuration is incomplete"
-msgstr "Az MI szolgáltató Azure konfigurációja hiányos"
+msgstr "Az AI szolgáltató Azure konfigurációja hiányos"
 
 #: app/models/setting/validation/ai_provider_config.rb:6
 msgid "AI provider Ollama URL is not set"
-msgstr "Az MI szolgáltató Ollama URLje nincs megadva"
+msgstr "Az AI szolgáltató Ollama URLje nincs megadva"
 
 #: app/models/setting/validation/ai_provider_config.rb:68
 msgid "AI provider is missing"
-msgstr "MI szolgáltató hiányzik"
+msgstr "AI szolgáltató hiányzik"
 
 #: app/controllers/ticket/summarize_controller.rb:8
 #: app/graphql/gql/mutations/ticket/ai_assistance/summarize.rb:16
@@ -1102,23 +1102,23 @@ msgstr "MI szolgáltató hiányzik"
 #: app/services/service/ai_assistance/text_tools.rb:19
 #: app/services/service/ticket/ai_assistance/summarize.rb:17
 msgid "AI provider is not configured."
-msgstr "Az MI szolgáltató nincs beállítva."
+msgstr "Az AI szolgáltató nincs beállítva."
 
 #: app/models/setting/validation/ai_provider_config.rb:69
 msgid "AI provider is not supported"
-msgstr "Az MI szolgáltató nem támogatott"
+msgstr "Az AI szolgáltató nem támogatott"
 
 #: app/models/setting/validation/ai_provider_config.rb:8
 msgid "AI provider token is not set"
-msgstr "Az MI szolgáltató tokenje nincs beállítva"
+msgstr "Az AI szolgáltató tokenje nincs beállítva"
 
 #: lib/ai/service/ticket_summarize.rb:48
 msgid "AI service result is missing expected keys"
-msgstr "MI szolgáltatás eredményéből hiányoznak a várt kulcsok"
+msgstr "AI szolgáltatás eredményéből hiányoznak a várt kulcsok"
 
 #: lib/excel_sheet/ai/analytics/with_usage.rb:4
 msgid "AI usage and feedback log"
-msgstr "MI használat és visszajelzés napló"
+msgstr "AI használat és visszajelzés napló"
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:251
@@ -1180,7 +1180,7 @@ msgstr "API token"
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr "Adatvédelmi szabályzat és Elfogadható felhasználási szabályzat"
 
-#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:45
+#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:46
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:36
 msgid "Access denied"
 msgstr "Hozzáférés megtagadva"
@@ -1958,7 +1958,7 @@ msgstr ""
 #: app/models/ai/agent/type/ticket_categorizer.rb:65
 msgid "Allow AI Agent to select multiple categories from all possible values."
 msgstr ""
-"Engedélyezze az MI ügynök számára, hogy több kategóriát is kiválasszon az "
+"Engedélyezze az AI ügynök számára, hogy több kategóriát is kiválasszon az "
 "összes lehetséges értékből."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:317
@@ -2522,7 +2522,7 @@ msgstr ""
 "A hozzárendelési időkorlát percben, ha a kijelölt ügynök nem dolgozik rajta. "
 "A jegy nem hozzárendeltként jelenik meg."
 
-#: app/graphql/gql/queries/tickets/by_filter.rb:19
+#: app/graphql/gql/queries/tickets/by_filter.rb:20
 msgid "At least one filter must be provided."
 msgstr "Legalább egy szűrőt meg kell adni."
 
@@ -2946,6 +2946,8 @@ msgid ""
 "Bar chart showing ticket statistics. Created and closed tickets over the "
 "last 12 months."
 msgstr ""
+"Oszlopdiagram a jegyek statisztikájáról. Létrehozott és lezárt jegyek az "
+"elmúlt 12 hónapban."
 
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee:9
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:9
@@ -2977,7 +2979,7 @@ msgstr "Alap beállítások"
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:120
 msgid "Be sure to check AI-generated content for accuracy."
-msgstr "Ellenőrizd az MI által generált tartalom pontosságát."
+msgstr "Ellenőrizd az AI által generált tartalom pontosságát."
 
 #: app/assets/javascripts/app/models/webhook.coffee:11
 msgid "Bearer Token"
@@ -3723,7 +3725,7 @@ msgstr ""
 "jegyek kategorizálásakor. Ha konkrét lehetőségekre szeretné korlátozni, "
 "kérjük, válasszon ki legalább kettőt az alábbiak közül. Győződjön meg arról, "
 "hogy a lehetőségeknek egyértelmű neveik és opcionális leírásaik vannak, "
-"mivel ez alkotja az MI ügynökének nyújtott kontextust."
+"mivel ez alkotja az AI ügynökének nyújtott kontextust."
 
 #: app/models/ai/agent/type/ticket_group_dispatcher.rb:16
 msgid ""
@@ -3736,7 +3738,7 @@ msgstr ""
 "Ha csak adott csoportokra szeretné korlátozni, kérjük, válasszon ki legalább "
 "kettőt az alábbiak közül. Győződjön meg arról, hogy a csoportoknak "
 "egyértelmű neveik és opcionális leírásaik vannak, mivel ezeket magában "
-"foglalja a kontextus, amelyet az MI ügynöke kap."
+"foglalja a kontextus, amelyet az AI ügynöke kap."
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:20
 msgid ""
@@ -3749,7 +3751,7 @@ msgstr ""
 "rangsorolásakor. Ha konkrét prioritásokra szeretné korlátozni, kérjük, "
 "válasszon ki legalább kettőt az alábbiak közül. Győződjön meg arról, hogy a "
 "prioritásoknak egyértelmű neveik és opcionális leírásaik vannak, mivel ez "
-"magában foglalja az MI ügynöknek nyújtott kontextust."
+"magában foglalja az AI ügynöknek nyújtott kontextust."
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco:7
 msgid "Choose your language."
@@ -3981,6 +3983,7 @@ msgstr "Lezárva ekkor"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:130
 #: app/assets/javascripts/app/controllers/widget/user.coffee:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:129
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:43
 msgid "Closed Tickets"
 msgstr "Lezárt jegyek"
 
@@ -4262,7 +4265,7 @@ msgstr "Kapcsolódás az Elasticsearch Vector adatbázishoz sikertelen volt"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:8
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:288
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:166
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:162
 msgid "Contact the administrator if you have any problems logging in."
 msgstr ""
 "Ha bármilyen problémája van a bejelentkezéssel, forduljon a rendszergazdához."
@@ -4334,7 +4337,7 @@ msgid "Continue session"
 msgstr "Munkamenet folytatása"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:138
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:169
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:165
 msgid "Continue to desktop"
 msgstr "Folytatás asztali gépen"
 
@@ -4421,10 +4424,8 @@ msgid "Copy to clipboard"
 msgstr "Másolás a vágólapra"
 
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:105
-#, fuzzy
-#| msgid "Copy Secret"
 msgid "Copy user name"
-msgstr "Titok másolása"
+msgstr "Felhasználónév másolása"
 
 #: db/seeds/settings.rb:601
 msgid "Core Workflow Ajax Mode"
@@ -4925,7 +4926,7 @@ msgstr "Egyéni"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:6
 msgid "Custom AI Agent"
-msgstr "Egyedi MI ügynök"
+msgstr "Egyedi AI ügynök"
 
 #: app/assets/javascripts/app/models/webhook.coffee:16
 msgid "Custom Payload"
@@ -5589,7 +5590,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:6016
 msgid "Defines if the AI provider is configured."
-msgstr "Az MI szolgáltató konfiguráltsági állapotát definiálja."
+msgstr "Az AI szolgáltató konfiguráltsági állapotát definiálja."
 
 #: db/seeds/settings.rb:5058
 msgid ""
@@ -6045,7 +6046,7 @@ msgid ""
 "Defines the fixed instructions that guide the AI Writing Assistant on e.g. "
 "how to format its output."
 msgstr ""
-"Meghatározza azokat a fix utasításokat, amelyek az MI írásasszisztenst "
+"Meghatározza azokat a fix utasításokat, amelyek az AI írásasszisztenst "
 "irányítják, pl. hogyan formázza a kimenetet."
 
 #: db/seeds/settings.rb:290
@@ -6734,6 +6735,10 @@ msgstr "A nem mentett változtatásainak elvetése."
 #: lib/excel_sheet/ai/analytics/with_usage.rb:44
 msgid "Dislikes count"
 msgstr "Nemtetszések száma"
+
+#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:61
+msgid "Dismiss alert"
+msgstr "Figyelmeztetés elvetése"
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:7
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:7
@@ -7717,7 +7722,7 @@ msgstr "Írja be a kódot a kétfaktoros hitelesítési alkalmazásból."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:37
 msgid "Enter the instruction for the AI agent."
-msgstr "Adja meg az utasításokat az MI ügynöknek."
+msgstr "Adja meg az utasításokat az AI ügynöknek."
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:24
 msgid ""
@@ -7737,7 +7742,7 @@ msgstr ""
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:28
 msgid "Enter the role description of the AI agent."
-msgstr "Adja meg az MI ügynök szerepkörének leírását."
+msgstr "Adja meg az AI ügynök szerepkörének leírását."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:28
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:275
@@ -8234,7 +8239,7 @@ msgstr "Nem sikerült beállítani a QR-kódot. Kérjük, próbálja újra."
 msgid "Failed to update checklist item."
 msgstr "Ellenőrzőlista elem frissítése sikertelen."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:23
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageFailedUploadOverlay.vue:25
 msgid "Failed to upload."
 msgstr "Sikertelen feltöltés."
 
@@ -8329,6 +8334,12 @@ msgstr "Fájlrendszer"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:130
 msgid "Filter"
 msgstr "Szűrő"
+
+#: app/graphql/gql/queries/tickets/by_filter.rb:24
+msgid ""
+"Filtering by customer's organizations requires customer filter to be "
+"provided."
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 msgid "Find a ticket"
@@ -8478,7 +8489,7 @@ msgid ""
 "documentation. This is a highly advanced feature and should be used with "
 "caution."
 msgstr ""
-"Példákért kérjük, tekintse meg a beépített MI ügynöktípusokat vagy a "
+"Példákért kérjük, tekintse meg a beépített AI ügynöktípusokat vagy a "
 "dokumentációnkat. Ez egy rendkívül fejlett funkció, amelyet óvatosan kell "
 "használni."
 
@@ -9928,7 +9939,6 @@ msgstr "Infó: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:9
@@ -10014,6 +10024,10 @@ msgstr ""
 "Illessze be a widget kódját minden olyan oldal forráskódjába, amelyen a "
 "csevegés látható lesz. Az oldal forráskódjának végén kell elhelyezni a §</"
 "body>§ záró tag előtt."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:232
+msgid "Inserting image not possible due to source restrictions"
+msgstr "Kép beszúrása nem lehetséges a forráskorlátozások miatt"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
 msgid "Inserts a horizontal rule"
@@ -11077,11 +11091,11 @@ msgstr "Kezelés"
 
 #: db/seeds/permissions.rb:240
 msgid "Manage AI agents of your system."
-msgstr "MI ügynökök kezelése."
+msgstr "AI ügynökök kezelése."
 
 #: db/seeds/permissions.rb:222
 msgid "Manage AI provider of your system."
-msgstr "MI szolgáltatók kezelése."
+msgstr "AI szolgáltatók kezelése."
 
 #: db/seeds/permissions.rb:252
 msgid "Manage API of your system."
@@ -12071,7 +12085,7 @@ msgstr "Új és nyitott jegyek"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:55
 msgid "New AI Agent"
-msgstr "Új MI ügynök"
+msgstr "Új AI ügynök"
 
 #: app/assets/javascripts/app/controllers/api.coffee:190
 msgid "New Access Token is"
@@ -12385,14 +12399,14 @@ msgid ""
 "No AI agent available, please create a new one or activate an existing one "
 "at \"Manage > AI Agents\""
 msgstr ""
-"Nincs elérhető MI ügynök, kérjük, hozzon létre egy újat vagy aktiváljon egy "
-"meglévőt a \"Kezelés > MI ügynökök\" menüpontban"
+"Nincs elérhető AI ügynök, kérjük, hozzon létre egy újat vagy aktiváljon egy "
+"meglévőt a \"Kezelés > AI ügynökök\" menüpontban"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:70
 msgid "No AI provider is currently set up. Please contact your administrator."
 msgstr ""
-"Nincs beállítva MI szolgáltató. Kérjük, lépjen kapcsolatba a "
+"Nincs beállítva AI szolgáltató. Kérjük, lépjen kapcsolatba a "
 "rendszergazdájával."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:42
@@ -12607,6 +12621,7 @@ msgstr "Nincs eredmény erre a lekérdezésre."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:305
+#: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:66
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:480
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
@@ -13202,6 +13217,7 @@ msgstr "Jegy# %s megnyitása"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:122
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:120
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets.vue:35
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
 msgstr "Nyitott jegyek"
@@ -13371,6 +13387,7 @@ msgstr "A jegyek áttekintésének sorrendje"
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:13
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:70
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -13907,11 +13924,11 @@ msgstr "Rózsaszín"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary/SummarySkeleton.vue:9
 msgid "Placeholder for AI generated heading"
-msgstr "Helykitöltő az MI által generált címsorhoz"
+msgstr "Helykitöltő az AI által generált címsorhoz"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary/SummarySkeleton.vue:11
 msgid "Placeholder for AI generated text"
-msgstr "Helykitöltő az MI által generált szöveghez"
+msgstr "Helykitöltő az AI által generált szöveghez"
 
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee:3
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:5
@@ -14692,7 +14709,7 @@ msgstr "Kapcsolódó objektum azonosító"
 msgid "Related Object Type"
 msgstr "Kapcsolódó objektum típus"
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:97
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:139
 msgid "Related tickets"
 msgstr "Kapcsolódó jegyek"
 
@@ -14951,7 +14968,7 @@ msgstr "Jelszavas bejelentkezés kérése a rendszergazda számára?"
 
 #: app/assets/javascripts/app/views/login.jst.eco:106
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:280
-#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:159
+#: app/frontend/apps/mobile/pages/authentication/views/Login.vue:155
 msgid "Request the password login here."
 msgstr "Kérje a jelszavas bejelentkezést itt."
 
@@ -15138,7 +15155,7 @@ msgstr "Cikk panel átméretezése"
 msgid "Resize column"
 msgstr "Oszlop átméretezése"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:252
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue:263
 msgid "Resize frame"
 msgstr "Keret átméretezése"
 
@@ -15605,9 +15622,15 @@ msgstr "Keresési URL érvénytelen."
 msgid "Search URL is missing."
 msgstr "A keresési URL hiányzik."
 
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:87
+#, fuzzy
+#| msgid "Search"
+msgid "Search all"
+msgstr "Keresés"
+
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:48
 msgid "Search for AI agents"
-msgstr "MI ügynök keresése"
+msgstr "AI ügynök keresése"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:25
 msgid "Search for LDAP sources"
@@ -15790,7 +15813,7 @@ msgstr "Keresés…"
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:102
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:73
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:113
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:88
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1161
@@ -15965,7 +15988,7 @@ msgstr "Táblázat sor kiválasztása"
 msgid ""
 "Select the attribute whose value will be automatically set by the AI agent."
 msgstr ""
-"Válassza ki az MI ügynök által automatikusan beállított tulajdonságokat."
+"Válassza ki az AI ügynök által automatikusan beállított tulajdonságokat."
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:216
 msgid "Select the customer of the ticket or create one."
@@ -17055,7 +17078,7 @@ msgstr "Tárolás"
 
 #: db/seeds/settings.rb:6030
 msgid "Stores the AI provider configuration."
-msgstr "A MI ügynök konfigurációt tárolja."
+msgstr "Az AI ügynök konfigurációt tárolja."
 
 #: db/seeds/settings.rb:5085
 msgid "Stores the GitHub configuration."
@@ -17574,7 +17597,7 @@ msgstr ""
 
 #: lib/monitoring_helper/health_checker/ai_provider_accessible.rb:15
 msgid "The AI Provider is not accessible."
-msgstr "A MI ügynök nem érhető el."
+msgstr "Az AI ügynök nem érhető el."
 
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
@@ -17935,7 +17958,7 @@ msgid ""
 "which will be included in the instruction."
 msgstr ""
 "A kontextus egy JSON objektum, amely további objektum tulajdonság "
-"információkat tartalmaz az MI ügynök számára. Megadhat bármilyen objektumot "
+"információkat tartalmaz az AI ügynök számára. Megadhat bármilyen objektumot "
 "a rendszerben, amely szerepelni fog az utasításban."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:69
@@ -17944,7 +17967,7 @@ msgid ""
 "entity will be provided to the AI agent."
 msgstr ""
 "A kontextus egy JSON objektum, amely meghatározza, hogy az aktuális "
-"entitásról milyen információk kerüljenek átadásra az MI ügynöknek."
+"entitásról milyen információk kerüljenek átadásra az AI ügynöknek."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:400
@@ -17954,7 +17977,7 @@ msgstr "A megadott jelenlegi jelszó helytelen."
 
 #: app/services/service/ai/vectordb/create_table.rb:18
 msgid "The currently selected AI provider does not support embeddings."
-msgstr "A jelenleg kiválasztott MI szolgáltató nem támogatja a beágyazásokat."
+msgstr "A jelenleg kiválasztott AI szolgáltató nem támogatja a beágyazásokat."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:6
 msgid ""
@@ -17989,7 +18012,7 @@ msgid ""
 "The definition is a JSON object that defines the action to be performed by "
 "the AI agent."
 msgstr ""
-"A definíció egy JSON objektum, amely meghatározza az MI ügynök által "
+"A definíció egy JSON objektum, amely meghatározza az AI ügynök által "
 "végrehajtandó műveletet."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:29
@@ -17997,7 +18020,7 @@ msgid ""
 "The description defines the role of the AI agent. It is used to describe its "
 "purpose and behavior."
 msgstr ""
-"A leírás meghatározza az MI ügynök szerepét. A céljának és viselkedésének "
+"A leírás meghatározza az AI ügynök szerepét. A céljának és viselkedésének "
 "leírására szolgál."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:71
@@ -18438,7 +18461,7 @@ msgid ""
 "proceeding in |AI > Providers|."
 msgstr ""
 "Szolgáltató konfigurációja hiányzik. Kérjük, folytatás előtt állítsa be "
-"szolgáltatót a |MI > Szolgáltatók| menüpontban."
+"szolgáltatót a |AI > Szolgáltatók| menüpontban."
 
 #: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The public PGP key could not be found."
@@ -18724,7 +18747,7 @@ msgid ""
 "The structure is a JSON object that defines the result format to be returned "
 "by the AI agent."
 msgstr ""
-"A struktúra egy JSON objektum, amely meghatározza az MI ügynök által "
+"A struktúra egy JSON objektum, amely meghatározza az AI ügynök által "
 "visszaadandó eredményformátumot."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:5
@@ -18798,7 +18821,7 @@ msgid ""
 "The text defines the instruction for the AI agent. It is used to guide it "
 "and tell it what to do."
 msgstr ""
-"A szöveg meghatározza az MI ügynöknek szóló utasításokat. Ez vezeti és "
+"A szöveg meghatározza az AI ügynöknek szóló utasításokat. Ez vezeti és "
 "megmondja, hogy mit kell tennie."
 
 #: app/controllers/ai_assistance_controller.rb:12
@@ -19387,7 +19410,7 @@ msgid ""
 "parts. You can define the role description, instruction and its context, "
 "entity context, result structure, and action definition."
 msgstr ""
-"Ez egy egyéni MI ügynöktípus, amely teljes kontrollt biztosít az összes "
+"Ez egy egyéni AI ügynöktípus, amely teljes kontrollt biztosít az összes "
 "része felett. Meghatározhatja a szerepkör leírását, az utasítást és annak "
 "kontextusát, az entitás kontextusát, az eredménystruktúrát és a "
 "műveletdefiníciót."
@@ -19542,7 +19565,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:25
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr ""
-"Ez a szolgáltatás lehetővé teszi a Zammad összekapcsolását MI "
+"Ez a szolgáltatás lehetővé teszi a Zammad összekapcsolását AI "
 "szolgáltatókkal."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:43
@@ -19551,7 +19574,7 @@ msgid ""
 "and error details about failed AI requests."
 msgstr ""
 "Ez a szolgáltatás lehetővé teszi a visszajelzési ügynökök AI funkciókkal "
-"kapcsolatos adatainak és a sikertelen MI kérések hibaadatainak letöltését."
+"kapcsolatos adatainak és a sikertelen AI kérések hibaadatainak letöltését."
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:6
 msgid "This service enables Zammad to connect with your Exchange server."
@@ -19632,7 +19655,7 @@ msgid ""
 "This type of AI agent can categorize incoming tickets into an appropriate "
 "category based on their content and topic."
 msgstr ""
-"Ilyen típusú MI ügynök képes a bejövő jegyeket tartalmuk és témájuk alapján "
+"Ilyen típusú AI ügynök képes a bejövő jegyeket tartalmuk és témájuk alapján "
 "megfelelő kategóriába sorolni."
 
 #: app/models/ai/agent/type/ticket_group_dispatcher.rb:10
@@ -19640,7 +19663,7 @@ msgid ""
 "This type of AI agent can dispatch incoming tickets into an appropriate "
 "group based on their content and topic."
 msgstr ""
-"Ilyen típusú MI ügynök képes a bejövő jegyeket tartalmuk és témájuk alapján "
+"Ilyen típusú AI ügynök képes a bejövő jegyeket tartalmuk és témájuk alapján "
 "megfelelő csoportba sorolni."
 
 #: app/models/ai/agent/type/ticket_title_rewriter.rb:10
@@ -19648,14 +19671,14 @@ msgid ""
 "This type of AI agent can improve title of incoming tickets based on their "
 "content and topic."
 msgstr ""
-"Ilyen típusú MI ügynök javíthatja a bejövő jegyek címét a tartalmuk és a "
+"Ilyen típusú AI ügynök javíthatja a bejövő jegyek címét a tartalmuk és a "
 "témájuk alapján."
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:10
 msgid ""
 "This type of AI agent can prioritize incoming tickets based on their content."
 msgstr ""
-"Ilyen típusú MI ügynök a bejövő jegyeket a tartalmuk alapján tudja "
+"Ilyen típusú AI ügynök a bejövő jegyeket a tartalmuk alapján tudja "
 "rangsorolni."
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
@@ -19969,10 +19992,8 @@ msgid "Ticket failed to save: %s"
 msgstr "A jegy mentése nem sikerült: %s"
 
 #: app/frontend/apps/desktop/components/Ticket/TicketBarChart/useTicketStatsChart.ts:52
-#, fuzzy
-#| msgid "Ticket %s created!"
 msgid "Ticket frequency"
-msgstr "%s jegy létrehozva!"
+msgstr "Jegy gyakoriság"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue:96
 msgid "Ticket has %s viewers"
@@ -21469,6 +21490,7 @@ msgstr "Jegy megjelenítésekor használható"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar.vue:28
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:35
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
@@ -21810,7 +21832,6 @@ msgstr "Megtekintés a felhasználó szemszögéből"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:17

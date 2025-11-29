@@ -31,7 +31,7 @@ const { updateTitle } = useTicketEditTitle(ticketId)
     <div class="flex" :class="{ 'mt-1': !hideDetails }">
       <UserPopoverWithTrigger
         v-if="ticket.customer"
-        class="h-min z-[11]"
+        class="h-min z-11"
         :avatar-config="{
           size: hideDetails ? 'medium' : 'normal',
         }"
