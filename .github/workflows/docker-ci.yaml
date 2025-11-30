@@ -2,6 +2,11 @@ name: docker-ci
 
 on:
   pull_request:
+    paths:
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - '.dockerignore'
+      - '.github/workflows/docker-ci.yaml'
 
 jobs:
   docker-ci:
@@ -47,10 +52,16 @@ jobs:
           cd zammad-docker-compose
           docker load --input /tmp/zammad-local.tar
 
+          # Tag the loaded image so docker-compose doesn't try to pull it
+          docker tag zammad-local:latest zammad-local:latest
+
           cat - <<ENV_FILE >> .env
           IMAGE_REPO=zammad-local
           VERSION=latest
           ENV_FILE
+
+          # Skip pulling images since we loaded them locally
+          export DOCKER_COMPOSE_PULL_POLICY=never
 
           .github/tests/setup/default.sh
           .github/tests/default.sh

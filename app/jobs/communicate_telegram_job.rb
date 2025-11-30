@@ -16,7 +16,9 @@ class CommunicateTelegramJob < ApplicationJob
     ticket = Ticket.lookup(id: article.ticket_id)
     log_error(article, "Can't find ticket.preferences for Ticket.find(#{article.ticket_id})") if !ticket.preferences
     log_error(article, "Can't find ticket.preferences['telegram'] for Ticket.find(#{article.ticket_id})") if !ticket.preferences['telegram']
-    log_error(article, "Can't find ticket.preferences['telegram']['chat_id'] for Ticket.find(#{article.ticket_id})") if !ticket.preferences['telegram']['chat_id']
+    if !ticket.preferences['telegram']['chat_id']
+      log_error(article, "Can't find ticket.preferences['telegram']['chat_id'] for Ticket.find(#{article.ticket_id})")
+    end
     if ticket.preferences['telegram'] && ticket.preferences['telegram']['bid']
       channel = TelegramHelper.bot_by_bot_id(ticket.preferences['telegram']['bid'])
     end
