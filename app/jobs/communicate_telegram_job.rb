@@ -31,8 +31,54 @@ class CommunicateTelegramJob < ApplicationJob
     begin
       Telegram::Bot::Client.run(channel.options[:api_token]) do |bot|
         chat_id = ticket.preferences[:telegram][:chat_id]
-        result = bot.api.sendMessage(chat_id: chat_id, text: article.body)
 
+        # Prepare message content and options
+        message_text = article.body
+        message_options = { chat_id: chat_id, text: message_text }
+
+        # Apply template if specified
+        if article.preferences['telegram_template_id']
+          template = TelegramTemplate.find_by(id: article.preferences['telegram_template_id'])
+          if template && template.active
+            message_text = template.render(article: article)
+            message_options[:text] = message_text
+            message_options[:parse_mode] = template.parse_mode if template.parse_mode.present?
+
+            # Add inline keyboard if defined
+            keyboard = template.build_inline_keyboard
+            message_options[:reply_markup] = keyboard if keyboard
+          end
+        end
+
+        # Check for inline keyboard in article preferences (for ad-hoc keyboards)
+        if article.preferences['telegram_keyboard'] && article.preferences['telegram_keyboard'].present?
+          message_options[:reply_markup] = {
+            inline_keyboard: article.preferences['telegram_keyboard']
+          }
+        end
+
+        # Check for parse mode in article preferences (for ad-hoc formatting)
+        if article.preferences['telegram_parse_mode']
+          message_options[:parse_mode] = article.preferences['telegram_parse_mode']
+        end
+
+        # Send message
+        result = bot.api.sendMessage(message_options)
+
+        # Handle broadcast to multiple chat IDs
+        if article.preferences['telegram_broadcast_chat_ids'].present?
+          article.preferences['telegram_broadcast_chat_ids'].each do |broadcast_chat_id|
+            next if broadcast_chat_id == chat_id # Skip original chat
+
+            broadcast_options = message_options.dup
+            broadcast_options[:chat_id] = broadcast_chat_id
+            bot.api.sendMessage(broadcast_options)
+          rescue => e
+            Rails.logger.warn "Failed to broadcast to chat_id #{broadcast_chat_id}: #{e.message}"
+          end
+        end
+
+        # Send attachments
         article.attachments.each do |file|
           parts = file.filename.split(%r{^(.*)(\..+?)$})
           t = Tempfile.new([parts[1], parts[2]])

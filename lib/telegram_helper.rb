@@ -604,6 +604,11 @@ returns
   end
 
   def to_group(params, group_id, channel)
+    # Handle callback queries from inline keyboards
+    if params[:callback_query]
+      return handle_callback_query(params[:callback_query], channel)
+    end
+
     # begin import
     Rails.logger.debug { 'import message' }
 
@@ -820,6 +825,78 @@ returns
     return false if !result.success? || !result.body
 
     true
+  end
+
+  # Handle callback queries from inline keyboard buttons
+  def handle_callback_query(callback_query, channel)
+    Rails.logger.debug { "Handling callback query: #{callback_query.inspect}" }
+
+    # Extract callback data
+    callback_data = callback_query[:data]
+    from = callback_query[:from]
+    message = callback_query[:message]
+
+    return if callback_data.blank? || from.blank?
+
+    # Answer the callback query (required by Telegram to stop loading animation)
+    begin
+      Telegram::Bot::Client.run(@token) do |bot|
+        bot.api.answerCallbackQuery(callback_query_id: callback_query[:id])
+      end
+    rescue => e
+      Rails.logger.error "Failed to answer callback query: #{e.message}"
+    end
+
+    # Find or create user
+    user_params = {
+      message: {
+        from: from,
+        chat: message[:chat]
+      }
+    }
+    user = to_user(user_params)
+
+    # Find existing ticket for this conversation
+    ticket = Ticket.where(
+      customer_id: user.id,
+      preferences: { telegram: { chat_id: message[:chat][:id] } }
+    ).where.not(state_id: Ticket::State.where(name: %w[closed merged removed]).pluck(:id))
+      .order(:updated_at).last
+
+    # Create article documenting the button press
+    return if !ticket
+
+    article_body = "User pressed button: #{callback_data}"
+
+    article = Ticket::Article.create!(
+      ticket_id: ticket.id,
+      type: Ticket::Article::Type.find_by(name: 'telegram personal-message'),
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      body: article_body,
+      from: "@#{from[:username] || from[:id]}",
+      to: channel.options[:bot][:username] ? "@#{channel.options[:bot][:username]}" : '',
+      internal: false,
+      message_id: "telegram.callback.#{callback_query[:id]}",
+      preferences: {
+        telegram: {
+          callback_query_id: callback_query[:id],
+          callback_data: callback_data,
+          from_id: from[:id],
+          chat_id: message[:chat][:id],
+          message_id: message[:message_id]
+        }
+      },
+      created_by_id: user.id,
+      updated_by_id: user.id
+    )
+
+    Rails.logger.info "Created article for callback query: #{callback_data} from user #{user.id}"
+
+    article
+  rescue => e
+    Rails.logger.error "Error handling callback query: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    nil
   end
 
 end
