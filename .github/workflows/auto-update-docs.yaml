@@ -1,0 +1,309 @@
+name: Auto-Update Documentation
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+      - master
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Commit Information
+        id: extract
+        run: |
+          # Get the latest commit message
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          COMMIT_AUTHOR=$(git log -1 --pretty=%an)
+          COMMIT_DATE=$(git log -1 --pretty=%ad --date=short)
+          COMMIT_HASH=$(git log -1 --pretty=%h)
+
+          # Save to environment
+          echo "commit_msg<<EOF" >> $GITHUB_OUTPUT
+          echo "$COMMIT_MSG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+          echo "commit_author=$COMMIT_AUTHOR" >> $GITHUB_OUTPUT
+          echo "commit_date=$COMMIT_DATE" >> $GITHUB_OUTPUT
+          echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
+
+          # Determine commit type
+          COMMIT_TYPE="Other"
+          if echo "$COMMIT_MSG" | grep -iq "^feature:\|^feat:"; then
+            COMMIT_TYPE="Feature"
+          elif echo "$COMMIT_MSG" | grep -iq "^fix:\|^bugfix:"; then
+            COMMIT_TYPE="Bug Fix"
+          elif echo "$COMMIT_MSG" | grep -iq "^docs:\|^doc:"; then
+            COMMIT_TYPE="Documentation"
+          elif echo "$COMMIT_MSG" | grep -iq "^refactor:"; then
+            COMMIT_TYPE="Refactoring"
+          elif echo "$COMMIT_MSG" | grep -iq "^test:\|^tests:"; then
+            COMMIT_TYPE="Tests"
+          elif echo "$COMMIT_MSG" | grep -iq "^chore:"; then
+            COMMIT_TYPE="Chore"
+          fi
+
+          echo "commit_type=$COMMIT_TYPE" >> $GITHUB_OUTPUT
+
+      - name: Update CHANGELOG
+        if: steps.extract.outputs.commit_type != 'Chore'
+        run: |
+          CHANGELOG_FILE="CHANGELOG.md"
+          COMMIT_MSG="${{ steps.extract.outputs.commit_msg }}"
+          COMMIT_TYPE="${{ steps.extract.outputs.commit_type }}"
+          COMMIT_DATE="${{ steps.extract.outputs.commit_date }}"
+          COMMIT_HASH="${{ steps.extract.outputs.commit_hash }}"
+
+          # Create backup
+          cp "$CHANGELOG_FILE" "${CHANGELOG_FILE}.bak"
+
+          # Check if today's section exists
+          if ! grep -q "### $COMMIT_DATE" "$CHANGELOG_FILE"; then
+            # Add new date section after the header
+            sed -i "/^## Community Enhancements/a\\
+\\
+### $COMMIT_DATE\\
+" "$CHANGELOG_FILE"
+          fi
+
+          # Determine the section to add to
+          SECTION="#### Other Changes"
+          case "$COMMIT_TYPE" in
+            "Feature")
+              SECTION="#### Features"
+              ;;
+            "Bug Fix")
+              SECTION="#### Bug Fixes"
+              ;;
+            "Documentation")
+              SECTION="#### Documentation"
+              ;;
+            "Refactoring")
+              SECTION="#### Refactoring"
+              ;;
+            "Tests")
+              SECTION="#### Tests"
+              ;;
+          esac
+
+          # Check if section exists for today
+          if ! grep -A20 "### $COMMIT_DATE" "$CHANGELOG_FILE" | grep -q "$SECTION"; then
+            # Add section after the date
+            sed -i "/### $COMMIT_DATE/a\\
+\\
+$SECTION\\
+" "$CHANGELOG_FILE"
+          fi
+
+          # Get first line of commit message
+          FIRST_LINE=$(echo "$COMMIT_MSG" | head -1)
+
+          # Add entry to the section
+          # Find the section and add entry
+          awk -v date="$COMMIT_DATE" -v section="$SECTION" -v entry="- $FIRST_LINE (\`$COMMIT_HASH\`)" '
+            /^### / { in_date = ($0 ~ date) }
+            in_date && $0 ~ section { print; print entry; next }
+            { print }
+          ' "$CHANGELOG_FILE" > "${CHANGELOG_FILE}.tmp"
+
+          mv "${CHANGELOG_FILE}.tmp" "$CHANGELOG_FILE"
+
+          echo "✅ CHANGELOG updated"
+
+      - name: Detect and Document Migrations
+        id: migrations
+        run: |
+          # Check if this commit added migrations
+          MIGRATIONS=$(git diff-tree --no-commit-id --name-only -r HEAD | grep '^db/migrate/' || echo "")
+
+          if [ -n "$MIGRATIONS" ]; then
+            echo "migrations_found=true" >> $GITHUB_OUTPUT
+            echo "migrations<<EOF" >> $GITHUB_OUTPUT
+            echo "$MIGRATIONS" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+
+            # Create/update MIGRATIONS.md
+            MIGRATIONS_DOC="doc/MIGRATIONS.md"
+            mkdir -p doc
+
+            if [ ! -f "$MIGRATIONS_DOC" ]; then
+              cat > "$MIGRATIONS_DOC" << 'HEADER'
+# Database Migrations Log
+
+This file tracks database migrations added to the project.
+
+HEADER
+            fi
+
+            # Add migration entry
+            echo "" >> "$MIGRATIONS_DOC"
+            echo "## ${{ steps.extract.outputs.commit_date }} - ${{ steps.extract.outputs.commit_hash }}" >> "$MIGRATIONS_DOC"
+            echo "" >> "$MIGRATIONS_DOC"
+            echo "$MIGRATIONS" | while read -r migration; do
+              echo "- \`$migration\`" >> "$MIGRATIONS_DOC"
+            done
+            echo "" >> "$MIGRATIONS_DOC"
+            echo "**Commit**: ${{ steps.extract.outputs.commit_msg }}" >> "$MIGRATIONS_DOC"
+            echo "" >> "$MIGRATIONS_DOC"
+            echo "---" >> "$MIGRATIONS_DOC"
+
+            echo "✅ MIGRATIONS.md updated"
+          else
+            echo "migrations_found=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update README if Needed
+        if: contains(steps.extract.outputs.commit_msg, 'README') || contains(steps.extract.outputs.commit_type, 'Feature')
+        run: |
+          # Check if README has a "Recent Updates" section
+          if ! grep -q "## Recent Updates" README.md; then
+            # Add Recent Updates section after Fork Attribution
+            sed -i '/## Fork Attribution/i\
+## Recent Updates\
+\
+*Last updated: ${{ steps.extract.outputs.commit_date }}*\
+\
+' README.md
+          else
+            # Update the date
+            sed -i "s/\*Last updated:.*\*/\*Last updated: ${{ steps.extract.outputs.commit_date }}\*/" README.md
+          fi
+
+          echo "✅ README date updated"
+
+      - name: Generate Release Notes
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        run: |
+          RELEASE_NOTES="RELEASE_NOTES.md"
+
+          # Count commits since last tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+
+          if [ -n "$LAST_TAG" ]; then
+            COMMITS_SINCE=$(git rev-list --count "$LAST_TAG..HEAD")
+            echo "Commits since last tag ($LAST_TAG): $COMMITS_SINCE"
+
+            if [ "$COMMITS_SINCE" -ge 10 ]; then
+              echo "⚠️  $COMMITS_SINCE commits since last release - consider creating a new release"
+
+              # Generate draft release notes
+              cat > "$RELEASE_NOTES" << HEADER
+# Draft Release Notes
+
+**Generated**: ${{ steps.extract.outputs.commit_date }}
+**Commits since $LAST_TAG**: $COMMITS_SINCE
+
+## Changes
+
+HEADER
+
+              git log "$LAST_TAG..HEAD" --format="- %s (%h)" >> "$RELEASE_NOTES"
+
+              echo "" >> "$RELEASE_NOTES"
+              echo "---" >> "$RELEASE_NOTES"
+              echo "*Review and edit before creating release*" >> "$RELEASE_NOTES"
+
+              echo "✅ Draft release notes generated"
+            fi
+          fi
+
+      - name: Check for Changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No documentation changes needed"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Documentation changes detected"
+          fi
+
+      - name: Commit Documentation Updates
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add CHANGELOG.md README.md doc/ RELEASE_NOTES.md 2>/dev/null || true
+
+          git commit -m "Docs: Auto-update documentation from commit ${{ steps.extract.outputs.commit_hash }}
+
+Automatically updated:
+- CHANGELOG.md (${{ steps.extract.outputs.commit_type }})
+${{ steps.migrations.outputs.migrations_found == 'true' && '- doc/MIGRATIONS.md (new migrations detected)' || '' }}
+
+Generated by: .github/workflows/auto-update-docs.yaml"
+
+          git push
+
+          echo "✅ Documentation committed and pushed"
+
+      - name: Create Issue for Migrations
+        if: steps.migrations.outputs.migrations_found == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const migrations = `${{ steps.migrations.outputs.migrations }}`;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '⚠️  Database Migration Required',
+              body: `## Database Migration Detected
+
+New database migration(s) have been added in commit \`${{ steps.extract.outputs.commit_hash }}\`:
+
+\`\`\`
+${migrations}
+\`\`\`
+
+**Action Required:**
+Run the following command after deploying:
+
+\`\`\`bash
+rails db:migrate
+\`\`\`
+
+**Commit Message:**
+\`\`\`
+${{ steps.extract.outputs.commit_msg }}
+\`\`\`
+
+---
+*This issue was automatically created by the CI pipeline.*`,
+              labels: ['database', 'migration', 'deployment']
+            });
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## 📖 Documentation Auto-Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ steps.extract.outputs.commit_hash }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Type**: ${{ steps.extract.outputs.commit_type }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Author**: ${{ steps.extract.outputs.commit_author }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Date**: ${{ steps.extract.outputs.commit_date }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.changes.outputs.changed }}" == "true" ]; then
+            echo "✅ Documentation automatically updated" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️  No documentation updates needed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "${{ steps.migrations.outputs.migrations_found }}" == "true" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️  **Migration issue created** - Action required after deployment" >> $GITHUB_STEP_SUMMARY
+          fi
