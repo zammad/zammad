@@ -171,8 +171,44 @@ This fork maintains 100% compatibility with upstream Zammad while adding:
 - 🚀 Automated installation scripts for modern Linux distributions
 - 📖 Enhanced documentation for rapid deployment
 - 🛠️ Community-contributed infrastructure tooling
+- 📱 **Enhanced Telegram Integration** with templates and interactive features
 
 All original Zammad code and architecture is preserved. This fork is designed to be easily merged back upstream or kept as a community resource.
+
+### 📱 Enhanced Telegram Features
+
+This fork includes significant enhancements to the Telegram integration:
+
+#### Template System
+- **Dynamic Templates** with variable substitution (`{{ticket.number}}`, `{{customer.firstname}}`, etc.)
+- **Group-scoped Templates** for different support teams
+- **Multiple Formatting Modes** (Markdown, HTML)
+- **Auto-truncation** to Telegram limits
+
+#### Interactive Engagement
+- **Inline Keyboards** for one-tap actions
+- **Callback Query Handling** for button interactions
+- **Two Button Types**: Callback (in-app) and URL (external links)
+- Perfect for satisfaction surveys, quick actions, and workflows
+
+#### Broadcast Messaging
+- **Multi-recipient Support** - Send to multiple chats simultaneously
+- **Group Announcements** capability
+- **Graceful Error Handling** per recipient
+
+📖 **Full Documentation**: See [`doc/telegram_templates_and_engagement.md`](doc/telegram_templates_and_engagement.md)
+
+**Example Use Case - Satisfaction Survey:**
+```ruby
+TelegramTemplate.create!(
+  name: 'Survey',
+  content: 'Hi {{customer.firstname}}! How satisfied are you with ticket #{{ticket.number}}?',
+  keyboard_buttons: [[
+    { text: '😀 Very Satisfied', callback_data: 'survey_5' },
+    { text: '🙂 Satisfied', callback_data: 'survey_4' }
+  ]]
+)
+```
 
 ---
 
