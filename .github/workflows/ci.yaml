@@ -6,6 +6,12 @@ on:
     # Run every on Friday to ensure everything works as expected.
     - cron:  '0 6 * * 5'
 
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  checks: write
+
 jobs:
   CI:
     runs-on: ubuntu-latest
@@ -28,33 +34,157 @@ jobs:
       CI_SKIP_ASSETS_PRECOMPILE: 'true'
       # Avoid unnecessary DB resets.
       CI_SKIP_DB_RESET: 'true'
+      # CI reporting
+      CI_RESULTS_DIR: ci-results
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0  # Fetch all history for commit message analysis
+        continue-on-error: true
+
+      - name: Report Checkout Status
+        if: always()
+        run: |
+          if [ "${{ steps.checkout.outcome }}" == "success" ]; then
+            echo "✅ Checkout: SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "checkout=success" >> ci-status.env
+          else
+            echo "❌ Checkout: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "checkout=failed" >> ci-status.env
+          fi
+
       - name: Install pnpm
+        id: install-pnpm
         uses: pnpm/action-setup@v4
+        continue-on-error: true
+
+      - name: Report pnpm Install Status
+        if: always()
+        run: |
+          if [ "${{ steps.install-pnpm.outcome }}" == "success" ]; then
+            echo "✅ pnpm Installation: SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "pnpm=success" >> ci-status.env
+          else
+            echo "❌ pnpm Installation: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "pnpm=failed" >> ci-status.env
+          fi
+
       - name: Use Node.js 22
+        id: setup-node
         uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'pnpm'
+        continue-on-error: true
+
+      - name: Report Node Setup Status
+        if: always()
+        run: |
+          if [ "${{ steps.setup-node.outcome }}" == "success" ]; then
+            echo "✅ Node.js 22 Setup: SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "node=success" >> ci-status.env
+          else
+            echo "❌ Node.js 22 Setup: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "node=failed" >> ci-status.env
+          fi
+
       - name: Cache Rubygems
         id: cache-bundler
         uses: actions/cache@v4
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
-      - name: Pre
-        run: .github/workflows/ci/pre.sh
+        continue-on-error: true
+
+      - name: Report Bundler Cache Status
+        if: always()
+        run: |
+          if [ "${{ steps.cache-bundler.outputs.cache-hit }}" == "true" ]; then
+            echo "✅ Bundler Cache: HIT" >> $GITHUB_STEP_SUMMARY
+            echo "bundler_cache=hit" >> ci-status.env
+          elif [ "${{ steps.cache-bundler.outcome }}" == "success" ]; then
+            echo "⚠️ Bundler Cache: MISS (will rebuild)" >> $GITHUB_STEP_SUMMARY
+            echo "bundler_cache=miss" >> ci-status.env
+          else
+            echo "❌ Bundler Cache: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "bundler_cache=failed" >> ci-status.env
+          fi
+
+      - name: Pre-Setup
+        id: pre-setup
+        run: |
+          set -o pipefail
+          .github/workflows/ci/pre.sh 2>&1 | tee pre-setup.log
+        continue-on-error: true
+
+      - name: Report Pre-Setup Status
+        if: always()
+        run: |
+          if [ "${{ steps.pre-setup.outcome }}" == "success" ]; then
+            echo "✅ Pre-Setup (bundle install, pnpm install, db:init): SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "pre_setup=success" >> ci-status.env
+          else
+            echo "❌ Pre-Setup: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "pre_setup=failed" >> ci-status.env
+            if [ -f pre-setup.log ]; then
+              echo "<details><summary>Pre-Setup Error Log</summary>" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              tail -50 pre-setup.log >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              echo "</details>" >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
+
       - name: Cache ESLint
         id: cache-eslint
         uses: actions/cache@v4
         with:
           path: tmp/eslintcache.js
           key: ${{ runner.os }}-cache-eslint-${{ hashFiles('pnpm-lock.yaml') }}
+        continue-on-error: true
+
+      - name: Report ESLint Cache Status
+        if: always()
+        run: |
+          if [ "${{ steps.cache-eslint.outputs.cache-hit }}" == "true" ]; then
+            echo "✅ ESLint Cache: HIT" >> $GITHUB_STEP_SUMMARY
+            echo "eslint_cache=hit" >> ci-status.env
+          else
+            echo "⚠️ ESLint Cache: MISS" >> $GITHUB_STEP_SUMMARY
+            echo "eslint_cache=miss" >> ci-status.env
+          fi
+
       - name: Lint
-        run: .github/workflows/ci/lint.sh
+        id: lint
+        run: |
+          set -o pipefail
+          .github/workflows/ci/lint.sh 2>&1 | tee lint.log
+        continue-on-error: true
+
+      - name: Report Lint Status
+        if: always()
+        run: |
+          if [ "${{ steps.lint.outcome }}" == "success" ]; then
+            echo "✅ Linting (Rubocop, ESLint, Stylelint, Brakeman): SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "lint=success" >> ci-status.env
+          else
+            echo "❌ Linting: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "lint=failed" >> ci-status.env
+            if [ -f lint.log ]; then
+              echo "<details><summary>Linting Error Log</summary>" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              tail -100 lint.log >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              echo "</details>" >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
+
       - name: Markdownlint
+        id: markdownlint
         uses: DavidAnson/markdownlint-cli2-action@v21
         with:
           globs: |
@@ -63,5 +193,191 @@ jobs:
             #node_modules
             #**/node_modules
             #vendor
+        continue-on-error: true
+
+      - name: Report Markdownlint Status
+        if: always()
+        run: |
+          if [ "${{ steps.markdownlint.outcome }}" == "success" ]; then
+            echo "✅ Markdown Linting: SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "markdownlint=success" >> ci-status.env
+          else
+            echo "❌ Markdown Linting: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "markdownlint=failed" >> ci-status.env
+          fi
+
       - name: Test
-        run: .github/workflows/ci/test.sh
+        id: test
+        run: |
+          set -o pipefail
+          .github/workflows/ci/test.sh 2>&1 | tee test.log
+        continue-on-error: true
+
+      - name: Report Test Status
+        if: always()
+        run: |
+          if [ "${{ steps.test.outcome }}" == "success" ]; then
+            echo "✅ Tests (RSpec, Minitest, Frontend): SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "test=success" >> ci-status.env
+          else
+            echo "❌ Tests: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "test=failed" >> ci-status.env
+            if [ -f test.log ]; then
+              echo "<details><summary>Test Error Log</summary>" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              tail -200 test.log >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              echo "</details>" >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
+
+      - name: Generate CI Summary Report
+        if: always()
+        run: |
+          .github/workflows/ci/generate-summary.sh
+        continue-on-error: true
+
+      - name: Comment PR with Results
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            // Get PR number from context
+            const prNumber = context.payload.pull_request?.number;
+            if (!prNumber) {
+              console.log('No PR number found in context, skipping comment');
+              return;
+            }
+
+            let summary = '## 🔍 CI Pipeline Results\n\n';
+
+            // Read status file
+            if (fs.existsSync('ci-status.env')) {
+              const status = fs.readFileSync('ci-status.env', 'utf8');
+              const lines = status.split('\n').filter(line => line.trim());
+
+              summary += '### Step-by-Step Results\n\n';
+              summary += '| Step | Status | Details |\n';
+              summary += '|------|--------|----------|\n';
+
+              const stepMap = {
+                'checkout': 'Code Checkout',
+                'pnpm': 'pnpm Installation',
+                'node': 'Node.js Setup',
+                'bundler_cache': 'Bundler Cache',
+                'eslint_cache': 'ESLint Cache',
+                'pre_setup': 'Pre-Setup (Dependencies & DB)',
+                'lint': 'Linting (Rubocop, ESLint, etc.)',
+                'markdownlint': 'Markdown Linting',
+                'test': 'Tests (RSpec, Minitest)'
+              };
+
+              lines.forEach(line => {
+                const [key, value] = line.split('=');
+                if (key && value) {
+                  const stepName = stepMap[key] || key;
+                  let icon = '❓';
+                  let details = value;
+
+                  if (value === 'success') {
+                    icon = '✅';
+                    details = 'Passed';
+                  } else if (value === 'failed') {
+                    icon = '❌';
+                    details = 'Failed';
+                  } else if (value === 'hit') {
+                    icon = '✅';
+                    details = 'Cache Hit';
+                  } else if (value === 'miss') {
+                    icon = '⚠️';
+                    details = 'Cache Miss (rebuilt)';
+                  }
+
+                  summary += `| ${stepName} | ${icon} | ${details} |\n`;
+                }
+              });
+            } else {
+              summary += '⚠️ No status file found. Check workflow logs for details.\n\n';
+            }
+
+            summary += '\n### Overall Status\n\n';
+            const conclusion = '${{ job.status }}';
+            if (conclusion === 'success') {
+              summary += '✅ **All checks passed!** This PR is ready for review.\n';
+            } else {
+              summary += '❌ **Some checks failed.** Please review the errors above and update your PR.\n';
+            }
+
+            summary += '\n---\n';
+            summary += `*This comment is automatically generated by the CI pipeline.* Run ID: ${context.runId}\n`;
+
+            try {
+              // Find existing comment
+              const { data: comments } = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+              });
+
+              const botComment = comments.find(comment =>
+                comment.user.type === 'Bot' &&
+                comment.body.includes('CI Pipeline Results')
+              );
+
+              if (botComment) {
+                // Update existing comment
+                console.log(`Updating existing comment ${botComment.id}`);
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: botComment.id,
+                  body: summary
+                });
+              } else {
+                // Create new comment
+                console.log(`Creating new comment on PR #${prNumber}`);
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  body: summary
+                });
+              }
+              console.log('✅ PR comment posted successfully');
+            } catch (error) {
+              console.error('Failed to post PR comment:', error);
+              core.warning('Failed to post PR comment: ' + error.message);
+            }
+
+      - name: Generate Documentation from Commits
+        if: always() && github.event_name == 'pull_request'
+        run: |
+          .github/workflows/ci/generate-docs.sh
+        continue-on-error: true
+
+      - name: Upload CI Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-logs
+          path: |
+            *.log
+            ci-status.env
+            ci-summary.md
+          retention-days: 7
+        continue-on-error: true
+
+      - name: Final Status Check
+        if: always()
+        run: |
+          # Check if any critical steps failed
+          if grep -q "=failed" ci-status.env; then
+            echo "❌ CI Pipeline Failed - Check the steps above for details"
+            exit 1
+          else
+            echo "✅ CI Pipeline Passed Successfully"
+            exit 0
+          fi

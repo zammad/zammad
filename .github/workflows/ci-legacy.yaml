@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  pull_request:
+  schedule:
+    # Run every on Friday to ensure everything works as expected.
+    - cron:  '0 6 * * 5'
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    container:
+      image: zammad/zammad-ci:latest
+    services:
+      postgresql:
+        image: postgres:18
+        env:
+          POSTGRES_USER: zammad
+          POSTGRES_PASSWORD: zammad
+      redis:
+        image: redis:6
+    env:
+      RAILS_ENV: test
+      Z_LOCALES: "en-us:de-de"
+      TZ: 'Europe/London'
+      REDIS_URL: redis://redis:6379
+      # Compile assets only once.
+      CI_SKIP_ASSETS_PRECOMPILE: 'true'
+      # Avoid unnecessary DB resets.
+      CI_SKIP_DB_RESET: 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - name: Cache Rubygems
+        id: cache-bundler
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
+      - name: Pre
+        run: .github/workflows/ci/pre.sh
+      - name: Cache ESLint
+        id: cache-eslint
+        uses: actions/cache@v4
+        with:
+          path: tmp/eslintcache.js
+          key: ${{ runner.os }}-cache-eslint-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Lint
+        run: .github/workflows/ci/lint.sh
+      - name: Markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v21
+        with:
+          globs: |
+            *.md
+            **/*.md
+            #node_modules
+            #**/node_modules
+            #vendor
+      - name: Test
+        run: .github/workflows/ci/test.sh

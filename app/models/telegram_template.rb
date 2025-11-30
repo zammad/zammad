@@ -13,7 +13,7 @@ class TelegramTemplate < ApplicationModel
   validates :note, length: { maximum: 250 }
   sanitized_html :note
 
-  store :keyboard_buttons
+  # Note: keyboard_buttons is a JSON column, no need for store directive
 
   # Render template with variable substitution
   # Supported variables:
