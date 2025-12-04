@@ -1,0 +1,115 @@
+---
+- name: cnr - Saya tidak dapat menghubungi Anda...
+  keywords: ''
+  content:
+    Saya tidak dapat menghubungi Anda melalui telepon. Bisakah Anda mengirimkan email singkat
+    dan memberi tahu saya kapan Anda akan tersedia kembali?
+  note: ''
+- name: iq - Jika Anda memiliki pertanyaan...
+  keywords: ''
+  content: Jika Anda memiliki pertanyaan, jangan ragu untuk menghubungi saya
+  note: ''
+- name: ifq - jika ada pertanyaan lebih lanjut...
+  keywords: ''
+  content: Jika ada pertanyaan lebih lanjut jangan ragu untuk menghubungi saya
+  note: ''
+- name: kr - Salam hormat,
+  keywords: ''
+  content: Salam hormat,
+  note: ''
+- name: 'Hello - Halo #{ticket.customer.firstname},'
+  keywords: ''
+  content: 'Halo #{ticket.customer.firstname},'
+  note: ''
+- name: 'hello - Halo Ibu #{ticket.customer.firstname},'
+  keywords: ''
+  content: 'Halo Ibu #{ticket.customer.firstname},'
+  note: ''
+- name: ilf - Saya menantikan kabar dari Anda
+  keywords: ''
+  content: Saya menantikan kabar dari Anda
+  note: ''
+- name: 'dms- Ibu #{ticket.customer.lastname} yang terhormat,'
+  keywords: ''
+  content: 'Ibu #{ticket.customer.lastname} yang terhormat,'
+  note: ''
+- name: 'dmr - Bapak #{ticket.customer.lastname} yang terhormat,'
+  keywords: ''
+  content: 'Bapak #{ticket.customer.lastname} yang terhormat,'
+  note: ''
+- name: tfqr - Terima kasih atas balasan cepat Anda.
+  keywords: ''
+  content: Terima kasih atas balasan cepat Anda.
+  note: ''
+- name: tff - Terima kasih atas umpan balik
+  keywords: ''
+  content: Terima kasih atas umpan balik.
+  note: ''
+- name: tfyr - Terima kasih atas permintaan Anda.
+  keywords: ''
+  content: Terima kasih atas permintaan Anda.
+  note: ''
+- name: ilff - Saya menantikan umpan balik Anda
+  keywords: ''
+  content: Saya menantikan umpan balik Anda.
+  note: ''
+- name: fs - Saya menantikan umpan balik Anda mengenai langkah selanjutnya
+  keywords: ''
+  content: Saya menantikan umpan balik Anda mengenai langkah selanjutnya.
+  note: ''
+- name: br - Salam terbaik,
+  keywords: ''
+  content: Salam terbaik,
+  note: ''
+- name: sg - Salam cerah,
+  keywords: ''
+  content: Dengan salam cerah,
+  note: ''
+- name: sug - Salam musim panas,
+  keywords: ''
+  content: ' Dengan salam musim panas,'
+  note: ''
+- name: wg - Salam musim dingin,
+  keywords: ''
+  content: Dengan salam musim dingin,
+  note: ''
+- name: tybr - Terima kasih dan salam terbaik,
+  keywords: ''
+  content: Terima kasih dan salam terbaik,
+  note: ''
+- name: ifqp - Jika ada pertanyaan lebih lanjut...telepon
+  keywords: ''
+  content: Jika Anda memiliki pertanyaan, jangan ragu untuk menghubungi saya melalui telepon.
+  note: ''
+- name: ai - Analisis masalah
+  keywords: ''
+  content:
+    '<p>Terima kasih atas permintaan Anda.</p><p>Kami akan menganalisis masalah tersebut dan akan
+    menghubungi Anda sesegera mungkin.</p>'
+  note: ''
+- name: tya - Terima kasih sebelumnya
+  keywords: ''
+  content: Salam hormat dan terima kasih sebelumnya,
+  note: ''
+- name: iwlk - Saya ingin tahu
+  keywords: ''
+  content: Saya ingin tahu,
+  note: ''
+- name: wrt - Dengan mengacu pada
+  keywords: ''
+  content: Dengan mengacu pada
+  note: ''
+- name: mdi - informasi lebih rinci
+  keywords: ''
+  content:
+    Kami akan sangat menghargai jika Anda dapat mengirimkan kami informasi lebih rinci tentang
+    ...
+  note: ''
+- name: fa - bantuan lebih lanjut
+  keywords: ''
+  content: Jika Anda memerlukan bantuan tambahan, silakan hubungi saya
+  note: ''
+- name: reg - Salam
+  keywords: ''
+  content: Salam
+  note: ''

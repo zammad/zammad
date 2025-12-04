@@ -79,6 +79,11 @@
   name: Magyar
   active: true
   dir: ltr
+- locale: id
+  alias: ''
+  name: Bahasa Indonesia
+  active: true
+  dir: ltr
 - locale: it-it
   alias: it
   name: Italiano
