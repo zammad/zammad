@@ -1050,10 +1050,10 @@ class TicketSelectorTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    # search all with contains all
+    # search all with includes all
     condition = {
       'ticket.tags' => {
-        operator: 'contains all',
+        operator: 'includes all',
         value:    'contains_all_1, contains_all_2, contains_all_3',
       },
     }
@@ -1062,17 +1062,17 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     condition = {
       'ticket.tags' => {
-        operator: 'contains all',
+        operator: 'includes all',
         value:    'contains_all_1, contains_all_2, contains_all_3, xxx',
       },
     }
     ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(0, ticket_count)
 
-    # search all with contains one
+    # search all with includes any
     condition = {
       'ticket.tags' => {
-        operator: 'contains one',
+        operator: 'includes any',
         value:    'contains_all_1, contains_all_2, contains_all_3',
       },
     }
@@ -1081,17 +1081,17 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     condition = {
       'ticket.tags' => {
-        operator: 'contains one',
+        operator: 'includes any',
         value:    'contains_all_1, contains_all_2'
       },
     }
     ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: @agent1)
     assert_equal(1, ticket_count)
 
-    # search all with contains one not
+    # search all with excludes any
     condition = {
       'ticket.tags' => {
-        operator: 'contains one',
+        operator: 'includes any',
         value:    'contains_all_1, contains_all_3'
       },
     }
@@ -1100,7 +1100,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     condition = {
       'ticket.tags' => {
-        operator: 'contains one',
+        operator: 'includes any',
         value:    'contains_all_1, contains_all_2, contains_all_3'
       },
     }

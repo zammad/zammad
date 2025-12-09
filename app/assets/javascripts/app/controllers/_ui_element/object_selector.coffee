@@ -56,14 +56,14 @@ class App.UiElement.object_selector extends App.UiElement.ApplicationSelectorExp
       'integer$': [__('is'), __('is not'), __('is less than'), __('is less than or equal to'), __('is greater than'), __('is greater than or equal to')]
       '^radio$': [__('is'), __('is not')]
       '^select$': [__('is'), __('is not')]
-      '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
+      '^multiselect$': [__('includes all'), __('includes any'), __('excludes all'), __('excludes any')]
       '^tree_select$': [__('is'), __('is not')]
-      '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
+      '^multi_tree_select$': [__('includes all'), __('includes any'), __('excludes all'), __('excludes any')]
       '^autocompletion_ajax_external_data_source$': [__('is'), __('is not')]
       '^input$': [__('contains'), __('contains not'), __('is any of'), __('is none of'), __('starts with one of'), __('ends with one of')]
       '^richtext$': [__('contains'), __('contains not')]
       '^textarea$': [__('contains'), __('contains not')]
-      '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
+      '^tag$': [__('includes all'), __('includes any'), __('excludes all'), __('excludes any')]
 
     if attribute.hasChanged
       operators_type =
@@ -74,14 +74,14 @@ class App.UiElement.object_selector extends App.UiElement.ApplicationSelectorExp
         'integer$': [__('is'), __('is not'), __('is less than'), __('is less than or equal to'), __('is greater than'), __('is greater than or equal to'), __('has changed')]
         '^radio$': [__('is'), __('is not'), __('has changed')]
         '^select$': [__('is'), __('is not'), __('has changed')]
-        '^multiselect$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
+        '^multiselect$': [__('includes all'), __('includes any'), __('excludes all'), __('excludes any')]
         '^tree_select$': [__('is'), __('is not'), __('has changed')]
-        '^multi_tree_select$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
+        '^multi_tree_select$': [__('includes all'), __('includes any'), __('excludes all'), __('excludes any')]
         '^autocompletion_ajax_external_data_source$': [__('is'), __('is not'), __('has changed')]
         '^input$': [__('contains'), __('contains not'), __('has changed'), __('is any of'), __('is none of'), __('starts with one of'), __('ends with one of')]
         '^richtext$': [__('contains'), __('contains not'), __('has changed')]
         '^textarea$': [__('contains'), __('contains not'), __('has changed')]
-        '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
+        '^tag$': [__('includes all'), __('includes any'), __('excludes all'), __('excludes any')]
 
     if attribute.hasRegexOperators && App.Config.get('ticket_conditions_allow_regular_expression_operators')
       operators_type['^input$'].push(__('matches regex'), __('does not match regex'))

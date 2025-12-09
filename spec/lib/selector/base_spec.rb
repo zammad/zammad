@@ -507,7 +507,7 @@ RSpec.describe Selector::Base, searchindex: true do
         conditions: [
           {
             name:     attribute.to_s,
-            operator: 'contains all',
+            operator: 'includes all',
             value:    ['Incident', 'Incident::Hardware'],
           }
         ]
@@ -529,7 +529,7 @@ RSpec.describe Selector::Base, searchindex: true do
       searchindex_model_reload([Ticket, User, Organization])
     end
 
-    it 'does support contains one for all objects' do # rubocop:disable RSpec/NoExpectationExample
+    it 'does support includes any for all objects' do # rubocop:disable RSpec/NoExpectationExample
       check_condition("ticket.#{field_name}")
       check_condition("customer.#{field_name}")
       check_condition("organization.#{field_name}")
@@ -544,13 +544,13 @@ RSpec.describe Selector::Base, searchindex: true do
         searchindex_model_reload([Ticket])
       end
 
-      it 'does return ticket by contains all string value', :aggregate_failures do
+      it 'does return ticket by includes all string value', :aggregate_failures do
         condition = {
           operator:   'AND',
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all',
+              operator: 'includes all',
               value:    'AAA, BBB',
             }
           ]
@@ -574,13 +574,13 @@ RSpec.describe Selector::Base, searchindex: true do
         searchindex_model_reload([Ticket])
       end
 
-      it 'does return ticket by contains all array value', :aggregate_failures do
+      it 'does return ticket by includes all array value', :aggregate_failures do
         condition = {
           operator:   'AND',
           conditions: [
             {
               name:     "ticket.#{field_name}",
-              operator: 'contains all',
+              operator: 'includes all',
               value:    ['Incident', 'Incident::Hardware'],
             }
           ]
@@ -808,14 +808,14 @@ RSpec.describe Selector::Base, searchindex: true do
       searchindex_model_reload([Ticket])
     end
 
-    describe 'contains all' do
+    describe 'includes all' do
       it 'checks tags a = 2', :aggregate_failures do
         condition = {
           operator:   'AND',
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all',
+              operator: 'includes all',
               value:    'a',
             },
           ]
@@ -834,7 +834,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all',
+              operator: 'includes all',
               value:    'a,b',
             },
           ]
@@ -853,7 +853,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all',
+              operator: 'includes all',
               value:    'a,c',
             },
           ]
@@ -872,7 +872,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all',
+              operator: 'includes all',
               value:    'a,b,c',
             },
           ]
@@ -891,7 +891,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all',
+              operator: 'includes all',
               value:    'c,d',
             },
           ]
@@ -910,7 +910,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all',
+              operator: 'includes all',
               value:    'd',
             },
           ]
@@ -924,14 +924,14 @@ RSpec.describe Selector::Base, searchindex: true do
       end
     end
 
-    describe 'contains one' do
+    describe 'includes any' do
       it 'checks tags a = 2', :aggregate_failures do
         condition = {
           operator:   'AND',
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one',
+              operator: 'includes any',
               value:    'a',
             },
           ]
@@ -950,7 +950,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one',
+              operator: 'includes any',
               value:    'a,b',
             },
           ]
@@ -969,7 +969,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one',
+              operator: 'includes any',
               value:    'a,c',
             },
           ]
@@ -988,7 +988,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one',
+              operator: 'includes any',
               value:    'a,b,c',
             },
           ]
@@ -1007,7 +1007,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one',
+              operator: 'includes any',
               value:    'c,d',
             },
           ]
@@ -1026,7 +1026,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one',
+              operator: 'includes any',
               value:    'd',
             },
           ]
@@ -1040,14 +1040,14 @@ RSpec.describe Selector::Base, searchindex: true do
       end
     end
 
-    describe 'contains all not' do
+    describe 'excludes all' do
       it 'checks tags a = 1', :aggregate_failures do
         condition = {
           operator:   'AND',
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all not',
+              operator: 'excludes all',
               value:    'a',
             },
           ]
@@ -1066,7 +1066,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all not',
+              operator: 'excludes all',
               value:    'a,b',
             },
           ]
@@ -1085,7 +1085,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all not',
+              operator: 'excludes all',
               value:    'a,c',
             },
           ]
@@ -1104,7 +1104,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all not',
+              operator: 'excludes all',
               value:    'a,b,c',
             },
           ]
@@ -1123,7 +1123,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all not',
+              operator: 'excludes all',
               value:    'c,d',
             },
           ]
@@ -1142,7 +1142,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains all not',
+              operator: 'excludes all',
               value:    'd',
             },
           ]
@@ -1156,14 +1156,14 @@ RSpec.describe Selector::Base, searchindex: true do
       end
     end
 
-    describe 'contains one not' do
+    describe 'excludes any' do
       it 'checks tags a = 1', :aggregate_failures do
         condition = {
           operator:   'AND',
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one not',
+              operator: 'excludes any',
               value:    'a',
             },
           ]
@@ -1182,7 +1182,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one not',
+              operator: 'excludes any',
               value:    'a,b',
             },
           ]
@@ -1201,7 +1201,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one not',
+              operator: 'excludes any',
               value:    'a,c',
             },
           ]
@@ -1220,7 +1220,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one not',
+              operator: 'excludes any',
               value:    'a,b,c',
             },
           ]
@@ -1239,7 +1239,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one not',
+              operator: 'excludes any',
               value:    'c,d',
             },
           ]
@@ -1258,7 +1258,7 @@ RSpec.describe Selector::Base, searchindex: true do
           conditions: [
             {
               name:     'ticket.tags',
-              operator: 'contains one not',
+              operator: 'excludes any',
               value:    'd',
             },
           ]

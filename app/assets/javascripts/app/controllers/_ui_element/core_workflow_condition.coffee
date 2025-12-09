@@ -142,8 +142,8 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       '^multiselect$': [
         __('contains'),
         __('contains not'),
-        __('contains all'),
-        __('contains all not'),
+        __('includes all'),
+        __('excludes all'),
         __('is set'),
         __('not set'),
         __('is modified'),
@@ -164,8 +164,8 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       '^multi_tree_select$': [
         __('contains'),
         __('contains not'),
-        __('contains all'),
-        __('contains all not'),
+        __('includes all'),
+        __('excludes all'),
         __('is set'),
         __('not set'),
         __('is modified'),
@@ -212,10 +212,10 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
         __('just changed to')
       ]
       '^tag$': [
-        __('contains all'),
-        __('contains one'),
-        __('contains all not'),
-        __('contains one not')
+        __('includes all'),
+        __('includes any'),
+        __('excludes all'),
+        __('excludes any')
       ]
 
     operatorsName =

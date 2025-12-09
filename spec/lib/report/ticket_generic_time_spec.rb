@@ -143,11 +143,11 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         )
       end
 
-      context 'with contains all' do
+      context 'with includes all' do
         let(:selector) do
           {
             'ticket.tags' => {
-              'operator' => 'contains all',
+              'operator' => 'includes all',
               'value'    => 'tag1, tag2'
             }
           }
@@ -158,11 +158,11 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         it_behaves_like 'getting the correct aggregated results'
       end
 
-      context 'with contains one not' do
+      context 'with excludes any' do
         let(:selector) do
           {
             'ticket.tags' => {
-              'operator' => 'contains one not',
+              'operator' => 'excludes any',
               'value'    => 'tag1, tag2'
             }
           }
@@ -173,11 +173,11 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         it_behaves_like 'getting the correct aggregated results'
       end
 
-      context 'with contains one' do
+      context 'with includes any' do
         let(:selector) do
           {
             'ticket.tags' => {
-              'operator' => 'contains one',
+              'operator' => 'includes any',
               'value'    => 'tag1, tag2'
             }
           }
@@ -188,11 +188,11 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         it_behaves_like 'getting the correct aggregated results'
       end
 
-      context 'with contains all not' do
+      context 'with excludes all' do
         let(:selector) do
           {
             'ticket.tags' => {
-              'operator' => 'contains all not',
+              'operator' => 'excludes all',
               'value'    => 'tag1, tag2'
             }
           }
@@ -340,7 +340,7 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         selector:    {
           'tags' => {
-            'operator' => 'contains all',
+            'operator' => 'includes all',
             'value'    => 'aaa, bbb'
           }
         },
@@ -356,7 +356,7 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         selector:    {
           'tags' => {
-            'operator' => 'contains all not',
+            'operator' => 'excludes all',
             'value'    => 'aaa, bbb'
           }
         },
@@ -372,7 +372,7 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         selector:    {
           'tags' => {
-            'operator' => 'contains all',
+            'operator' => 'includes all',
             'value'    => 'aaa'
           }
         },
@@ -388,7 +388,7 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         selector:    {
           'tags' => {
-            'operator' => 'contains all not',
+            'operator' => 'excludes all',
             'value'    => 'aaa'
           }
         },
@@ -404,7 +404,7 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         selector:    {
           'tags' => {
-            'operator' => 'contains one not',
+            'operator' => 'excludes any',
             'value'    => 'aaa'
           }
         },
@@ -420,7 +420,7 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         selector:    {
           'tags' => {
-            'operator' => 'contains one not',
+            'operator' => 'excludes any',
             'value'    => 'aaa, bbb'
           }
         },
@@ -436,7 +436,7 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         selector:    {
           'tags' => {
-            'operator' => 'contains one',
+            'operator' => 'includes any',
             'value'    => 'aaa'
           }
         },
@@ -452,7 +452,7 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
         selector:    {
           'tags' => {
-            'operator' => 'contains one',
+            'operator' => 'includes any',
             'value'    => 'aaa, bbb'
           }
         },

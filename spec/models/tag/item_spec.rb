@@ -76,7 +76,7 @@ RSpec.describe Tag::Item do
 
       context "with reference to renamed tag in its #{method} hash (contains-one)" do
         let(:object)      { create(object_klass.name.underscore, method => { label => tag_matcher }) }
-        let(:tag_matcher) { { operator: 'contains one', value: 'test1' } }
+        let(:tag_matcher) { { operator: 'includes any', value: 'test1' } }
 
         it 'updates reference with new tag name' do
           expect { described_class.rename(id: item.id, name: 'test1_renamed') }
@@ -93,7 +93,7 @@ RSpec.describe Tag::Item do
                        conditions: [
                          {
                            name:     label,
-                           operator: 'contains one',
+                           operator: 'includes any',
                            value:    'test1',
                          },
                        ]
@@ -115,7 +115,7 @@ RSpec.describe Tag::Item do
                        'conditions' => [
                          {
                            'name'     => label,
-                           'operator' => 'contains one',
+                           'operator' => 'includes any',
                            'value'    => 'test2',
                          },
                          {
@@ -123,7 +123,7 @@ RSpec.describe Tag::Item do
                            'conditions' => [
                              {
                                'name'     => label,
-                               'operator' => 'contains one',
+                               'operator' => 'includes any',
                                'value'    => 'test1',
                              },
                            ],
@@ -143,7 +143,7 @@ RSpec.describe Tag::Item do
 
       context "with reference to renamed tag in its #{method} hash (contains-all)" do
         let(:object) { create(object_klass.name.underscore, method => { label => tag_matcher }) }
-        let(:tag_matcher) { { operator: 'contains all', value: 'test1, test2, test3' } }
+        let(:tag_matcher) { { operator: 'includes all', value: 'test1, test2, test3' } }
 
         it 'updates reference with new tag name' do
           expect { described_class.rename(id: item.id, name: 'test1_renamed') }
@@ -160,7 +160,7 @@ RSpec.describe Tag::Item do
                        conditions: [
                          {
                            name:     label,
-                           operator: 'contains all',
+                           operator: 'includes all',
                            value:    'test1, test2, test3',
                          },
                        ]
@@ -182,7 +182,7 @@ RSpec.describe Tag::Item do
                        'conditions' => [
                          {
                            'name'     => label,
-                           'operator' => 'contains one',
+                           'operator' => 'includes any',
                            'value'    => 'test2',
                          },
                          {
@@ -190,7 +190,7 @@ RSpec.describe Tag::Item do
                            'conditions' => [
                              {
                                'name'     => label,
-                               'operator' => 'contains one',
+                               'operator' => 'includes any',
                                'value'    => 'test1',
                              },
                            ],

@@ -16431,7 +16431,7 @@ msgstr ""
 msgid "The server presented a certificate that could not be verified."
 msgstr ""
 
-#: lib/user_agent.rb:236
+#: lib/user_agent.rb:235
 msgid "The server returned a redirect response, but the current operation does not allow redirects."
 msgstr ""
 
@@ -17947,7 +17947,7 @@ msgstr ""
 msgid "Token-based API access has been disabled by the administrator."
 msgstr ""
 
-#: lib/user_agent.rb:240
+#: lib/user_agent.rb:239
 msgid "Too many redirections for the original URL, halting."
 msgstr ""
 
@@ -19852,7 +19852,7 @@ msgstr ""
 msgid "Zammad Helpdesk"
 msgstr ""
 
-#: lib/user_agent.rb:126
+#: lib/user_agent.rb:125
 msgid "Zammad User Agent"
 msgstr ""
 
@@ -20080,40 +20080,16 @@ msgstr ""
 msgid "connected"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:143
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "contains"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:145
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
-msgid "contains all"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:146
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
-msgid "contains all not"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:144
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "contains not"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:216
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
-msgid "contains one"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:218
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
-msgid "contains one not"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
@@ -20329,6 +20305,18 @@ msgstr ""
 msgid "example macro"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:146
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+msgid "excludes all"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:218
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+msgid "excludes any"
+msgstr ""
+
 #: db/seeds/ticket_article_types.rb:16
 msgid "facebook direct-message"
 msgstr ""
@@ -20526,6 +20514,18 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
 msgid "inactive"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:145
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+msgid "includes all"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:216
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+msgid "includes any"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605

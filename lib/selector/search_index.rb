@@ -294,7 +294,7 @@ class Selector::SearchIndex < Selector::Base
       when 'is not', 'contains not', 'is none of'
         query_must_not.push t
       end
-    elsif ['contains all', 'contains one', 'contains all not', 'contains one not'].include?(data[:operator])
+    elsif ['includes all', 'includes any', 'excludes all', 'excludes any'].include?(data[:operator])
       values = data[:value]
       if data[:value].is_a?(String)
         values = values.split(',').map(&:strip)
@@ -302,16 +302,16 @@ class Selector::SearchIndex < Selector::Base
 
       t[:query_string] = {}
       case data[:operator]
-      when 'contains all'
+      when 'includes all'
         t[:query_string][:query] = "#{key_tmp}:(\"#{values.join('" AND "')}\")"
         query_must.push t
-      when 'contains one not'
+      when 'excludes any'
         t[:query_string][:query] = "#{key_tmp}:(\"#{values.join('" OR "')}\")"
         query_must_not.push t
-      when 'contains one'
+      when 'includes any'
         t[:query_string][:query] = "#{key_tmp}:(\"#{values.join('" OR "')}\")"
         query_must.push t
-      when 'contains all not'
+      when 'excludes all'
         t[:query_string][:query] = "#{key_tmp}:(\"#{values.join('" AND "')}\")"
         query_must_not.push t
       end

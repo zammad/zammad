@@ -6,11 +6,11 @@ class Selector::Sql < Selector::Base
     'after (relative)',
     'before (absolute)',
     'before (relative)',
-    'contains all not',
-    'contains all',
+    'excludes all',
+    'includes all',
     'contains not',
-    'contains one not',
-    'contains one',
+    'excludes any',
+    'includes any',
     'contains',
     'does not match regex',
     'ends with one of',
@@ -163,9 +163,9 @@ class Selector::Sql < Selector::Base
       block_condition[:value] = block_condition[:value].split(',').collect(&:strip)
     end
 
-    # Performance: use left join instead of sub select if tags value is only one element and contains all is used
-    if attribute_table == 'ticket' && attribute_name == 'tags' && block_condition[:operator] == 'contains all' && block_condition[:value].one?
-      block_condition[:operator] = 'contains one'
+    # Performance: use left join instead of sub select if tags value is only one element and includes all is used
+    if attribute_table == 'ticket' && attribute_name == 'tags' && block_condition[:operator] == 'includes all' && block_condition[:value].one?
+      block_condition[:operator] = 'includes any'
     end
 
     # User customer tickets last_contact_at
@@ -486,7 +486,7 @@ class Selector::Sql < Selector::Base
     elsif block_condition[:operator] == 'does not match regex'
       query << sql_helper.regex_match(attribute, negated: true)
       bind_params.push block_condition[:value]
-    elsif block_condition[:operator] == 'contains all'
+    elsif block_condition[:operator] == 'includes all'
       if attribute_table == 'ticket' && attribute_name == 'tags'
         query << "tickets.id IN (
                         SELECT
@@ -509,7 +509,7 @@ class Selector::Sql < Selector::Base
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_all(attribute_name, block_condition[:value])
       end
-    elsif block_condition[:operator] == 'contains one'
+    elsif block_condition[:operator] == 'includes any'
       if attribute_name == 'tags' && attribute_table == 'ticket'
         tables |= ["LEFT JOIN tags ON tickets.id = tags.o_id LEFT JOIN tag_objects ON tag_objects.id = tags.tag_object_id AND tag_objects.name = 'Ticket' LEFT JOIN tag_items ON tag_items.id = tags.tag_item_id"]
         query << 'tag_items.name IN (?)'
@@ -518,7 +518,7 @@ class Selector::Sql < Selector::Base
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_one(attribute_name, block_condition[:value])
       end
-    elsif block_condition[:operator] == 'contains all not'
+    elsif block_condition[:operator] == 'excludes all'
       if attribute_name == 'tags' && attribute_table == 'ticket'
         query << "tickets.id NOT IN (
                         SELECT
@@ -540,7 +540,7 @@ class Selector::Sql < Selector::Base
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_all(attribute_name, block_condition[:value], negated: true)
       end
-    elsif block_condition[:operator] == 'contains one not'
+    elsif block_condition[:operator] == 'excludes any'
       if attribute_name == 'tags' && attribute_table == 'ticket'
         query << "tickets.id NOT IN (
                         SELECT
