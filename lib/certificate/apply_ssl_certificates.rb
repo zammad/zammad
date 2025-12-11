@@ -22,7 +22,6 @@ class Certificate::ApplySSLCertificates
         # Build a new default store.
         store = OpenSSL::X509::Store.new
         store.set_default_paths
-        store.flags = OpenSSL::X509::V_FLAG_CRL_CHECK_ALL
         all_certificates.each { |cert| store.add_cert(cert.certificate_parsed) }
         Kernel.silence_warnings do
           OpenSSL::SSL::SSLContext.const_set(:DEFAULT_CERT_STORE, store)
