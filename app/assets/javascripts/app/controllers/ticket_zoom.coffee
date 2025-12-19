@@ -1052,7 +1052,7 @@ class App.TicketZoom extends App.Controller
 
     ticketState    = App.TicketState.find(macro?.perform?['ticket.state_id']?['value'] || ticket.state_id)
     isClosed       = ticketState.state_type.name is 'closed'
-    isPendingClose = ticketState.state_type.name is 'pending action' && App.TicketState.find(ticketState.next_state_id).state_type.name is 'closed'
+    isPendingClose = ticketState.state_type.name is 'pending action' && ticketState.next_state_id && App.TicketState.find(ticketState.next_state_id).state_type.name is 'closed'
     return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !isClosed && !isPendingClose
 
     checklist = App.Checklist.find ticket.checklist_id
