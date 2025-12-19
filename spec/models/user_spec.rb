@@ -548,7 +548,7 @@ RSpec.describe User, type: :model do
         before { user } # create user
 
         it 'does not attempt to update CallerId record' do
-          allow(Cti::CallerId).to receive(:build).with(any_args)
+          allow(Cti::CallerId).to receive(:add).with(any_args)
 
           expect(Cti::CallerId.where(object: 'User', o_id: user.id).count)
             .to eq(0)
@@ -556,7 +556,7 @@ RSpec.describe User, type: :model do
           expect { user.update(phone: new_number) }
             .not_to change { Cti::CallerId.where(object: 'User', o_id: user.id).count }
 
-          expect(Cti::CallerId).not_to have_received(:build)
+          expect(Cti::CallerId).not_to have_received(:add)
         end
       end
 
@@ -1126,17 +1126,17 @@ RSpec.describe User, type: :model do
       context 'with a #phone attribute' do
         subject(:user) { build(:user, phone: '1234567890') }
 
-        it 'adds CallerId record on creation (via Cti::CallerId.build)' do
-          expect(Cti::CallerId).to receive(:build).with(user)
+        it 'adds CallerId record on creation (via Cti::CallerId.add)' do
+          expect(Cti::CallerId).to receive(:add).with(user)
 
           user.save
         end
 
-        it 'does not update CallerId record on touch/update (via Cti::CallerId.build)' do
-          expect(Cti::CallerId).to receive(:build).with(user)
+        it 'does not update CallerId record on touch/update (via Cti::CallerId.add)' do
+          expect(Cti::CallerId).to receive(:add).with(user)
           user.save
 
-          expect(Cti::CallerId).not_to receive(:build).with(user)
+          expect(Cti::CallerId).not_to receive(:add).with(user)
           user.touch
         end
 

@@ -45,6 +45,14 @@ section like in the example below:
      proxy_set_header Host $http_host;
 ```
 
+### Disallow assigning the same organization as primary and secondary
+
+It is no longer allowed for the same organization to be assigned as both a primary and a secondary organization for a user.
+
+⚠️ Before upgrading, ensure that no users exist in this invalid state.
+User records with the same organization set as both primary and secondary must be fixed
+by removing the offending assignment. Otherwise, updating or persisting affected users may fail after upgrading.
+
 ## 6.5.2
 
 The following breaking changes occurred due to a security fix.

@@ -1271,10 +1271,10 @@ RSpec.describe Ticket, type: :model do
     describe 'Cti::CallerId syncing:', performs_jobs: true do
       subject(:ticket) { build(:ticket) }
 
-      before { allow(Cti::CallerId).to receive(:build) }
+      before { allow(Cti::CallerId).to receive(:add) }
 
-      it 'adds numbers in article bodies (via Cti::CallerId.build)' do
-        expect(Cti::CallerId).to receive(:build).with(ticket)
+      it 'adds numbers in article bodies (via Cti::CallerId.add)' do
+        expect(Cti::CallerId).to receive(:add).with(ticket)
 
         ticket.save
         perform_enqueued_jobs commit_transaction: true

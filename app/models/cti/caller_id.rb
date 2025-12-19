@@ -13,34 +13,6 @@ module Cti
 
 =begin
 
-  Cti::CallerId.maybe_add(
-    caller_id: '49123456789',
-    comment: 'Hairdresser Bob Smith, San Francisco', #optional
-    level: 'maybe', # known|maybe
-    user_id: 1, # optional
-    object: 'Ticket',
-    o_id: 123,
-  )
-
-=end
-
-    def self.maybe_add(data)
-      record = find_or_initialize_by(
-        caller_id: data[:caller_id],
-        level:     data[:level],
-        object:    data[:object],
-        o_id:      data[:o_id],
-        user_id:   data[:user_id],
-      )
-
-      return record if !record.new_record?
-
-      record.comment = data[:comment]
-      record.save!
-    end
-
-=begin
-
 get items (users) for a certain caller ID
 
   caller_id_records = Cti::CallerId.lookup('49123456789')
@@ -67,35 +39,16 @@ returns
 
 =begin
 
-  Cti::CallerId.build(ticket)
+  Cti::CallerId.add(record)
 
 =end
 
-    def self.build(record)
-      map = config
-      level = nil
-      model = nil
-      map.each do |item|
-        next if item[:model] != record.class
-
-        level = item[:level]
-        model = item[:model]
-      end
-      return if !level || !model
-
-      build_item(record, model, level)
-    end
-
-=begin
-
-  Cti::CallerId.build_item(record, model, level)
-
-=end
-
-    def self.build_item(record, model, level)
+    def self.add(record)
+      model = record.class.to_s
+      level = config.find { |item| item[:model] == record.class }&.dig(:level)
 
       # use first customer article
-      if model == Ticket
+      if record.instance_of?(Ticket)
         article = record.articles.first
         return if !article
         return if article.sender.name != 'Customer'
@@ -105,7 +58,7 @@ returns
 
       # set user id
       user_id = record[:created_by_id]
-      if model == User
+      if record.instance_of?(User)
         if record.destroyed?
           Cti::CallerId.where(user_id: user_id).destroy_all
           return
@@ -129,10 +82,10 @@ returns
 
       # search for caller IDs to keep
       caller_ids_to_add = []
-      existing_record_ids = Cti::CallerId.where(object: model.to_s, o_id: record.id).pluck(:id)
+      existing_record_ids = Cti::CallerId.where(object: model, o_id: record.id).pluck(:id)
       caller_ids.uniq.each do |caller_id|
         existing_record_id = Cti::CallerId.where(
-          object:    model.to_s,
+          object:    model,
           o_id:      record.id,
           caller_id: caller_id,
           level:     level,
@@ -152,10 +105,10 @@ returns
 
       # create new caller IDs
       caller_ids_to_add.each do |caller_id|
-        Cti::CallerId.maybe_add(
+        Cti::CallerId.create!(
           caller_id: caller_id,
           level:     level,
-          object:    model.to_s,
+          object:    model,
           o_id:      record.id,
           user_id:   user_id,
         )
@@ -173,10 +126,8 @@ returns
       transaction do
         delete_all
         config.each do |item|
-          level = item[:level]
-          model = item[:model]
           item[:model].find_each(batch_size: 500) do |record|
-            build_item(record, model, level)
+            add(record)
           end
         end
       end

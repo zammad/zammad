@@ -28,9 +28,9 @@ class App.TicketZoom extends App.Controller
     @init          = params.init
 
     # controllerLoadImmediately:
-    # true - does mean that the controller is the active content of the taskbar and is directly marked as delayed, this will trigger the fetch asap instead of post poning it
-    # false - controller is not active content of taskbar, so fetch will be post poned until user clicks on it
-    # If the ticket does not come with the taskbar init, we need to load it directly to check it's existance
+    # true - does mean that the controller is the active content of the taskbar and is directly marked as delayed, this will trigger the fetch asap instead of postponing it
+    # false - controller is not active content of taskbar, so fetch will be postponed until user clicks on it
+    # If the ticket does not come with the taskbar init, we need to load it directly to check it's existence
     @controllerLoadImmediately = params.shown || !App.Ticket.find(params.ticket_id)
 
     # if we are in init task startup, ignore overview_id
@@ -466,7 +466,7 @@ class App.TicketZoom extends App.Controller
 
     scroll = @main.scrollTop()
 
-    # if page header is not possible to use - mainScrollHeight to low - hide page header
+    # if page header is not possible to use - mainScrollHeight too low - hide page header
     if not mainScrollHeight > mainHeight + headerHeight
       @scrollPageHeader.css('transform', "translateY(#{-headerHeight}px)")
 
@@ -949,7 +949,7 @@ class App.TicketZoom extends App.Controller
 
     # validate ticket
     # we need to use the full ticket because
-    # the time accouting needs all attributes
+    # the time accounting needs all attributes
     # for condition check
     ticket = App.Ticket.fullLocal(@ticket_id)
 
@@ -998,11 +998,11 @@ class App.TicketZoom extends App.Controller
         @autosaveStart()
         return
 
-    editContollerForm = @sidebarWidget.get('100-TicketEdit').edit.controllerFormSidebarTicket
+    editControllerForm = @sidebarWidget.get('100-TicketEdit').edit.controllerFormSidebarTicket
 
     # validate ticket by model
     errors = ticket.validate(
-      controllerForm: editContollerForm
+      controllerForm: editControllerForm
       target: e.target
     )
     if errors
@@ -1039,16 +1039,16 @@ class App.TicketZoom extends App.Controller
     if @sidebarWidget && @sidebarWidget.postParams
       @sidebarWidget.postParams(ticket: ticket)
 
-    @submitChecklist(e, ticket, macro, editContollerForm)
+    @submitChecklist(e, ticket, macro, editControllerForm)
 
-  submitChecklist: (e, ticket, macro, editContollerForm) =>
-    return @submitTimeAccounting(e, ticket, macro, editContollerForm) if ticket.currentView() isnt 'agent'
-    return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !App.Config.get('checklist')
+  submitChecklist: (e, ticket, macro, editControllerForm) =>
+    return @submitTimeAccounting(e, ticket, macro, editControllerForm) if ticket.currentView() isnt 'agent'
+    return @submitTimeAccounting(e, ticket, macro, editControllerForm) if !App.Config.get('checklist')
 
     macroContainsStateChange = macro?.perform?.hasOwnProperty('ticket.state_id')
 
     # Warning modal should be considered only if the ticket state was changed.
-    return @submitTimeAccounting(e, ticket, macro, editContollerForm) if not @changed('ticket', 'state_id') and not macroContainsStateChange
+    return @submitTimeAccounting(e, ticket, macro, editControllerForm) if not @changed('ticket', 'state_id') and not macroContainsStateChange
 
     ticketState    = App.TicketState.find(macro?.perform?['ticket.state_id']?['value'] || ticket.state_id)
     isClosed       = ticketState.state_type.name is 'closed'
@@ -1057,7 +1057,7 @@ class App.TicketZoom extends App.Controller
 
     checklist = App.Checklist.find ticket.checklist_id
     if !checklist || checklist.open_items().length is 0
-      return @submitTimeAccounting(e, ticket, macro, editContollerForm)
+      return @submitTimeAccounting(e, ticket, macro, editControllerForm)
 
     new App.TicketZoomChecklistModal(
       container: @el.closest('.content')
@@ -1065,17 +1065,17 @@ class App.TicketZoom extends App.Controller
       cancelCallback: =>
         @submitEnable(e)
       submitCallback: =>
-        @submitTimeAccounting(e, ticket, macro, editContollerForm)
+        @submitTimeAccounting(e, ticket, macro, editControllerForm)
     )
 
-  submitTimeAccounting: (e, ticket, macro, editContollerForm) =>
+  submitTimeAccounting: (e, ticket, macro, editControllerForm) =>
     if !ticket.article
-      @submitPost(e, ticket, macro, editContollerForm)
+      @submitPost(e, ticket, macro, editControllerForm)
       return
 
     # verify if time accounting is enabled
-    if !editContollerForm.getFlag('time_accounting')
-      @submitPost(e, ticket, macro, editContollerForm)
+    if !editControllerForm.getFlag('time_accounting')
+      @submitPost(e, ticket, macro, editControllerForm)
       return
 
     new App.TicketZoomTimeAccountingModal(
@@ -1087,7 +1087,7 @@ class App.TicketZoom extends App.Controller
         ticket.article.time_unit              = params.time_unit
         ticket.article.accounted_time_type_id = params.accounted_time_type_id
 
-        @submitPost(e, ticket, macro, editContollerForm)
+        @submitPost(e, ticket, macro, editControllerForm)
     )
 
   saveDraft: (e) =>
@@ -1142,7 +1142,7 @@ class App.TicketZoom extends App.Controller
       error: =>
         @draftFetched()
 
-  submitPost: (e, ticket, macro, editContollerForm) =>
+  submitPost: (e, ticket, macro, editControllerForm) =>
     taskAction = @$('.js-secondaryActionButtonLabel').data('type')
 
     if macro?.ux_flow_next_up
@@ -1152,7 +1152,7 @@ class App.TicketZoom extends App.Controller
     if taskAction is 'closeNextInOverview' || taskAction is 'next_from_overview'
       nextTicket = @getNextTicketInOverview()
 
-    removedFields = editContollerForm.removedFields(editContollerForm.elReplace)
+    removedFields = editControllerForm.removedFields(editControllerForm.elReplace)
     removedFields = _.omit(removedFields, macro.performKeys().ticket) if macro?.id # https://github.com/zammad/zammad/issues/5880
     payload       = _.omit(ticket.attributes(), removedFields)
 

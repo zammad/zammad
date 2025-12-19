@@ -10,16 +10,16 @@ importers:
     devDependencies:
       '@frsource/cypress-plugin-visual-regression-diff':
         specifier: ^3.3.10
-        version: 3.3.10(cypress@15.7.1)
+        version: 3.3.10(cypress@15.8.0)
       '@testing-library/cypress':
         specifier: ^10.1.0
-        version: 10.1.0(cypress@15.7.1)
+        version: 10.1.0(cypress@15.8.0)
       cypress:
-        specifier: ^15.7.1
-        version: 15.7.1
+        specifier: ^15.8.0
+        version: 15.8.0
       cypress-real-events:
         specifier: ^1.15.0
-        version: 1.15.0(cypress@15.7.1)
+        version: 1.15.0(cypress@15.8.0)
 
 packages:
 
@@ -265,8 +265,8 @@ packages:
     peerDependencies:
       cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x || ^14.x || ^15.x
 
-  cypress@15.7.1:
-    resolution: {integrity: sha512-U3sYnJ+Cnpgr6IPycxsznTg//mGVXfPGeGV+om7VQCyp5XyVkhG4oPr3X3hTq1+OB0Om0O5DxusYmt7cbvwqMQ==}
+  cypress@15.8.0:
+    resolution: {integrity: sha512-/k/KT8IIvcxarRSNb5AIhT1Yxx1pXsNIrL96Ht/c0pBOO/XcsjgjD4ZlG16V/08dRmvU/gT7PW8FBz5YV+ahsA==}
     engines: {node: ^20.1.0 || ^22.0.0 || >=24.0.0}
     hasBin: true
 
@@ -975,10 +975,10 @@ snapshots:
 
   '@frsource/base64@1.0.17': {}
 
-  '@frsource/cypress-plugin-visual-regression-diff@3.3.10(cypress@15.7.1)':
+  '@frsource/cypress-plugin-visual-regression-diff@3.3.10(cypress@15.8.0)':
     dependencies:
       '@frsource/base64': 1.0.17
-      cypress: 15.7.1
+      cypress: 15.8.0
       glob: 8.1.0
       meta-png: 1.0.6
       move-file: 2.1.0
@@ -986,11 +986,11 @@ snapshots:
       pngjs: 7.0.0
       sharp: 0.32.1
 
-  '@testing-library/cypress@10.1.0(cypress@15.7.1)':
+  '@testing-library/cypress@10.1.0(cypress@15.8.0)':
     dependencies:
       '@babel/runtime': 7.17.9
       '@testing-library/dom': 10.1.0
-      cypress: 15.7.1
+      cypress: 15.8.0
 
   '@testing-library/dom@10.1.0':
     dependencies:
@@ -1182,11 +1182,11 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  cypress-real-events@1.15.0(cypress@15.7.1):
+  cypress-real-events@1.15.0(cypress@15.8.0):
     dependencies:
-      cypress: 15.7.1
+      cypress: 15.8.0
 
-  cypress@15.7.1:
+  cypress@15.8.0:
     dependencies:
       '@cypress/request': 3.0.9
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)

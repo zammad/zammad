@@ -7,7 +7,7 @@
   "devDependencies": {
     "@frsource/cypress-plugin-visual-regression-diff": "^3.3.10",
     "@testing-library/cypress": "^10.1.0",
-    "cypress": "^15.7.1",
+    "cypress": "^15.8.0",
     "cypress-real-events": "^1.15.0"
   },
   "imports": {

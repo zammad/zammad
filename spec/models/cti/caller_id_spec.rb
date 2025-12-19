@@ -219,40 +219,6 @@ RSpec.describe Cti::CallerId do
     end
   end
 
-  describe '.maybe_add' do
-    let(:attributes) { attributes_for(:caller_id) }
-
-    it 'wraps .find_or_initialize_by (passing only five defining attributes)' do
-      expect(described_class)
-        .to receive(:find_or_initialize_by)
-        .with(attributes.slice(:caller_id, :level, :object, :o_id, :user_id))
-        .and_call_original
-
-      described_class.maybe_add(attributes)
-    end
-
-    context 'if no matching record found' do
-      it 'adds given #comment attribute' do
-        expect { described_class.maybe_add(attributes.merge(comment: 'foo')) }
-          .to change(described_class, :count).by(1)
-
-        expect(described_class.last.comment).to eq('foo')
-      end
-    end
-
-    context 'if matching record found' do
-      let(:attributes) { caller_id.attributes.symbolize_keys }
-      let(:caller_id) { create(:caller_id) }
-
-      it 'ignores given #comment attribute' do
-        expect(described_class.maybe_add(attributes.merge(comment: 'foo')))
-          .to eq(caller_id)
-
-        expect(caller_id.comment).to be_blank
-      end
-    end
-  end
-
   describe '.known_agents_by_number' do
     context 'with known agent caller_id' do
       let!(:agent1) { create(:agent, phone: '0123456') }
