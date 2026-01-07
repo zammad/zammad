@@ -1,0 +1,13 @@
+FROM zammad/zammad:develop
+
+USER root
+
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  libssl-dev \
+  pkg-config \
+  nodejs \
+  npm \
+  && rm -rf /var/lib/apt/lists/*
+
+USER zammad

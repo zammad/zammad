@@ -1,0 +1,95 @@
+version: "3.8"
+
+services:
+  postgresql:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: zammad_development
+      POSTGRES_USER: zammad
+      POSTGRES_PASSWORD: zammad
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+
+  elasticsearch:
+    image: elasticsearch:8.19.4
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  zammad:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - zammad-init
+      - memcached
+      - postgresql
+      - redis
+      - elasticsearch
+    environment:
+      RAILS_ENV: development
+      POSTGRESQL_DB: zammad_development
+      POSTGRESQL_USER: zammad
+      POSTGRESQL_PASS: zammad
+      POSTGRESQL_HOST: postgresql
+      REDIS_URL: redis://redis:6379
+      ELASTICSEARCH_HOST: elasticsearch
+      ELASTICSEARCH_PORT: 9200
+      MEMCACHE_SERVERS: memcached:11211
+      ELASTICSEARCH_ENABLED: "false"
+
+
+    ports:
+      - "3000:3000" 
+    volumes:
+      - .:/opt/zammad
+      - storage:/opt/zammad/storage
+      - bundle:/usr/local/bundle
+
+    command: ["zammad-railsserver"]
+
+# change added 
+  zammad-init:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    user: root
+    depends_on:
+      - postgresql
+      - redis
+      - elasticsearch
+    environment:
+      ELASTICSEARCH_ENABLED: "false"
+      RAILS_ENV: development
+      POSTGRESQL_DB: zammad_development
+      POSTGRESQL_USER: zammad
+      POSTGRESQL_PASS: zammad
+      POSTGRESQL_HOST: postgresql
+      MEMCACHE_SERVERS: memcached:11211
+      REDIS_URL: redis://redis:6379
+      ELASTICSEARCH_HOST: elasticsearch
+      ELASTICSEARCH_PORT: 9200
+    volumes:
+      - .:/opt/zammad
+      - bundle:/usr/local/bundle
+      - storage:/opt/zammad/storage
+    command: ["zammad-init"]
+
+  memcached:
+    image: memcached:1.6-alpine
+    command: memcached -m 128
+
+volumes:
+  pgdata:
+  esdata:
+  storage:
+  bundle:
+
+
+
