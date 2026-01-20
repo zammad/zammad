@@ -71,7 +71,7 @@ For further details see:
 
 Linting ensures consistent code style and readability. They are optional but recommended:
 
-- [CoffeeLint](http://www.coffeelint.org/)
+- [CoffeeLint](https://github.com/coffeelint/coffeelint)
 - [Stylelint](https://stylelint.io/)
 - [ESLint](https://eslint.org/)
 - [Markdownlint](https://github.com/DavidAnson/markdownlint)

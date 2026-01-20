@@ -34,23 +34,23 @@ For more information, see [devcontainer setup guide](devcontainer-setup.md)
 
 ### 4. Launching Zammad
 
-You can start Zammad development services with:
-
 #### Devcontainer setup
 
-```sh
-dev
-```
+Open a new terminal in `VS Code`. You should now run a `bash` shell attached to your devcontainer.
 
-#### Manual setup
+#### Start development services
 
-```sh
+You can start Zammad all development services with a single command for either devcontainer or manual setup:
+
+```bash
 bin/dev
 ```
 
 ### 5. Login
 
-Once the application is running, open it in your browser at `http://localhost:3000` and use the default development credentials:
+Once the application is running, open it in your browser at either `http://localhost:3000/desktop` (new stack) or `http://localhost:3000` (old stack).
+
+Then use the default development credentials to login:
 
 ```text
 Username / Email: admin@example.com
