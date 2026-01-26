@@ -11,7 +11,7 @@ services:
       SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
       SE_VNC_NO_PASSWORD: 'true'
     ports:
-      - 4444:4444
+      - 127.0.0.1:4444:4444
     restart: unless-stopped
 
   selenium-firefox:
@@ -23,5 +23,5 @@ services:
       SE_OPTS: '--port 4445'
       SE_VNC_NO_PASSWORD: 'true'
     ports:
-      - 4445:4445
+      - 127.0.0.1:4445:4445
     restart: unless-stopped

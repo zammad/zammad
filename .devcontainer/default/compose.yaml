@@ -42,7 +42,7 @@ services:
     restart: unless-stopped
     ports:
       # Expose the ES service for direct access if needed, but avoid conflicts with host services.
-      - 19200:9200
+      - 127.0.0.1:19200:9200
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
 

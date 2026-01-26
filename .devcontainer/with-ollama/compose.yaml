@@ -19,7 +19,7 @@ services:
   ollama:
     image: docker.io/ollama/ollama:latest
     ports:
-      - 11434:11434
+      - 127.0.0.1:11434:11434
     volumes:
       - ollama-data:/root/.ollama
     restart: unless-stopped
