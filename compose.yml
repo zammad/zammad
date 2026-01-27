@@ -1,0 +1,12 @@
+services:
+  app:
+    image: zammad-stk:latest
+    build:
+      context: .
+      args:
+        COMMIT_SHA: local
+    depends_on:
+      - redis
+
+  redis:
+    image: registry.hub.docker.com/library/redis:7

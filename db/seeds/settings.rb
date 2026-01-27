@@ -5020,6 +5020,46 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
+  title:       __('Snipe-IT integration'),
+  name:        'snipeit_integration',
+  area:        'Integration::Switch',
+  description: __('Defines if the Snipe-IT (https://snipeitapp.com/) integration is enabled or not.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'snipeit_integration',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:           1,
+    authentication: true,
+    permission:     ['admin.integration'],
+  },
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('Snipe-IT config'),
+  name:        'snipeit_config',
+  area:        'Integration::Snipeit',
+  description: __('Defines the Snipe-IT config.'),
+  options:     {},
+  state:       {},
+  preferences: {
+    prio:       2,
+    permission: ['admin.integration'],
+  },
+  frontend:    false,
+)
+Setting.create_if_not_exists(
   title:       __('GitLab integration'),
   name:        'gitlab_integration',
   area:        'Integration::Switch',
