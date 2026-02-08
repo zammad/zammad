@@ -45,7 +45,11 @@ function check_zammad_ready {
 
 function check_postgresql_ready {
   echo 'Checking if PostgreSQL is ready...'
-  until (echo > /dev/tcp/"${POSTGRESQL_HOST}"/"${POSTGRESQL_PORT}") &> /dev/null; do
+
+  # Strip possible surrounding brackets from IPv6 addresses.
+  CLEAN_POSTGRESQL_HOST=${POSTGRESQL_HOST#[}; CLEAN_POSTGRESQL_HOST=${CLEAN_POSTGRESQL_HOST%]}
+
+  until (pg_isready -q -h $CLEAN_POSTGRESQL_HOST -p $POSTGRESQL_PORT); do
     echo "  waiting for postgresql server to be ready..."
     sleep 1
   done

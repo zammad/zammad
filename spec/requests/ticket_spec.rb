@@ -2765,18 +2765,28 @@ RSpec.describe 'Ticket', type: :request do
             expect(params.to_h).to eq('title' => 'Updated title')
           end
       end
+
+      context 'when agent has no access to the ticket' do
+        let(:agent) { create(:agent) }
+
+        it 'access is forbidden' do
+          put "/api/v1/tickets/#{ticket.id}/update_title", params: { title: }
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
     end
 
     context 'with a customer', authenticated_as: -> { ticket.customer } do
-      it 'access is forbidden' do
-        put "/api/v1/tickets/#{ticket.id}/update_title", params: { title: }
-        expect(response).to have_http_status(:forbidden)
+      it 'updates the title' do
+        expect { put "/api/v1/tickets/#{ticket.id}/update_title", params: { title: }, as: :json }
+          .to change { ticket.reload.title }
+          .to(title)
       end
     end
   end
 
   describe 'PUT /api/v1/update_customer' do
-    let(:ticket) { create(:ticket) }
+    let(:ticket)             { create(:ticket) }
     let(:agent)              { create(:agent, groups: [ticket.group]) }
     let(:title)              { 'Updated title' }
     let(:customer)           { create(:customer, organization:, organizations: [other_organization]) }
@@ -2837,7 +2847,7 @@ RSpec.describe 'Ticket', type: :request do
 
     context 'with a customer', authenticated_as: -> { ticket.customer } do
       it 'access is forbidden' do
-        put "/api/v1/tickets/#{ticket.id}/update_title", params: { title: }
+        put "/api/v1/tickets/#{ticket.id}/update_customer", params: { title: }
         expect(response).to have_http_status(:forbidden)
       end
     end

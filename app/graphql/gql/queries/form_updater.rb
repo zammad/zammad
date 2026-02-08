@@ -14,6 +14,10 @@ module Gql::Queries
 
     type Gql::Types::FormUpdaterResultType, null: false
 
+    requires_authentication lambda { |ctx, _obj|
+      ctx[:current_arguments][:form_updater_id].requires_authentication
+    }
+
     def initialize(...)
       super
 
@@ -30,21 +34,12 @@ module Gql::Queries
       raise ActiveRecord::RecordNotFound, __('FormSchema could not be found.') if !@form_updater
     end
 
-    def self.authorize(_obj, ctx)
-      # Per default the queries require a authenticated user.
-      if !ctx[:current_arguments][:form_updater_id].requires_authentication
-        return true
-      end
-
-      super
-    end
-
     def authorized?(...)
       if form_updater.respond_to?(:authorized?)
-        return form_updater.authorized? && super
+        return form_updater.authorized?
       end
 
-      super
+      true
     end
 
     def resolve(...)

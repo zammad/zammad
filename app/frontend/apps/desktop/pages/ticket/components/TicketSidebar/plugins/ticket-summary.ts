@@ -8,7 +8,7 @@ import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 import type { TicketSidebarPlugin } from './types.ts'
 
 export default <TicketSidebarPlugin>{
-  title: __('Summary'),
+  title: __('AI summary'),
   component: TicketSidebarSummary,
   permissions: ['ticket.agent'],
   screens: [TicketSidebarScreenType.TicketDetailView],

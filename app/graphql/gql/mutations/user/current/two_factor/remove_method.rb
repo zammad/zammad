@@ -10,9 +10,7 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'This indicates if removing authentication method was successful'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.two_factor_authentication')
-    end
+    requires_permission 'user_preferences.two_factor_authentication'
 
     def resolve(method_name:, token:)
       token_object = verify_token!(token)

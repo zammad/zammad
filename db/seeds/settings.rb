@@ -6094,8 +6094,8 @@ Setting.create_if_not_exists(
   description: __('Stores the ticket summarization options (e.g. which content is visible).'),
   options:     {},
   state:       {
-    open_questions:     true,
-    upcoming_events:    true,
+    open_questions:     false,
+    upcoming_events:    false,
     customer_sentiment: true,
     generate_on:        'on_ticket_detail_opening',
   },

@@ -106,8 +106,9 @@ const renderRenderTicketSidebarSummary = (ticket: Partial<TicketById> = defaultT
 const ticketAIAssistanceSummarizeMock = {
   summary: {
     customerRequest: 'Order not received after payment',
-    conversationSummary:
+    conversationSummary: [
       'The customer paid for an order but claims to have not received it. They provided the order number and requested assistance with tracking.',
+    ],
     openQuestions: ['What was the payment method used?'],
     upcomingEvents: [
       'Check the order status in the system',
@@ -167,7 +168,7 @@ describe('TicketSidebarSummary', () => {
 
     const content = [
       ticketAIAssistanceSummarizeMock.summary.customerRequest,
-      ticketAIAssistanceSummarizeMock.summary.conversationSummary,
+      ...ticketAIAssistanceSummarizeMock.summary.conversationSummary,
       ...ticketAIAssistanceSummarizeMock.summary.openQuestions,
       ...ticketAIAssistanceSummarizeMock.summary.upcomingEvents,
       `${ticketAIAssistanceSummarizeMock.summary.customerEmotion} ${ticketAIAssistanceSummarizeMock.summary.customerMood}`,

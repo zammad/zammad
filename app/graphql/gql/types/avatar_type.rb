@@ -13,10 +13,6 @@ module Gql::Types
     field :image_resize, String
     field :image_hash, String, method: :store_hash
 
-    def self.authorize(_object, ctx)
-      ctx.current_user
-    end
-
     def image_full
       return if object.store_full_id.blank?
 

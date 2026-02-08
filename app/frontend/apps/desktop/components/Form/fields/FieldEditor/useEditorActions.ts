@@ -5,6 +5,7 @@ import { computed, nextTick, onUnmounted, toRef } from 'vue'
 import useEditorActionHelper from '#shared/components/Form/fields/FieldEditor/composables/useEditorActionHelper.ts'
 import { EXTENSION_NAME as AiAssistanceTextToolsName } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import { EXTENSION_NAME as KnowledgeBaseMentionName } from '#shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts'
+import { TableKitExtensionName } from '#shared/components/Form/fields/FieldEditor/extensions/TableKit.ts'
 import { EXTENSION_NAME as TextModuleMentionName } from '#shared/components/Form/fields/FieldEditor/extensions/TextModuleSuggestion.ts'
 import { EXTENSION_NAME as UserMentionName } from '#shared/components/Form/fields/FieldEditor/extensions/UserMention.ts'
 import AiAssistantTextTools from '#shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantTextTools/AiAssistantTextTools.vue'
@@ -64,12 +65,12 @@ export default function useEditorActions(
       id: getUuid(),
       name: AiAssistanceTextToolsName,
       contentType: ['text/html', 'text/plain'],
-      label: __('Writing assistant tools'),
+      label: __('AI writing assistant tools'),
       showDivider: true,
       dividerClass:
         'bg-linear-to-t from-pink-200 to-blue-800 [button[aria-expanded=true]+&]:animate-ai-stripe-vertical [button:hover+&]:animate-ai-stripe-vertical [button:focus-visible+&]:animate-ai-stripe-vertical',
       permission: 'ticket.agent',
-      show: (config) => config?.ai_assistance_text_tools && !!config.ai_provider,
+      show: (config) => !!(config?.ai_assistance_text_tools && config.ai_provider),
       icon: 'smart-assist-elaborate',
       subMenu: AiAssistantTextTools,
     },
@@ -302,7 +303,7 @@ export default function useEditorActions(
     },
     {
       id: getUuid(),
-      name: 'tableKit',
+      name: TableKitExtensionName,
       contentType: ['text/html'],
       label: __('Insert table'),
       icon: 'editor-table',

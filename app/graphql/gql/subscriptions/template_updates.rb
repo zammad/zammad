@@ -11,9 +11,7 @@ module Gql::Subscriptions
 
     field :templates, [Gql::Types::TemplateType, { null: false }], description: 'Current ticket templates'
 
-    def authorized?(only_active:)
-      context.current_user.permissions?(['ticket.agent', 'ticket.customer'])
-    end
+    requires_permission 'ticket.agent', 'ticket.customer'
 
     def update(only_active:)
       {

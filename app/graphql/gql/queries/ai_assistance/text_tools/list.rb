@@ -11,9 +11,7 @@ module Gql::Queries
 
     type [Gql::Types::AI::TextToolType], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(limit: 50, group: nil, ticket_id: nil)
       permission = ticket_id.present? ? :read : :create

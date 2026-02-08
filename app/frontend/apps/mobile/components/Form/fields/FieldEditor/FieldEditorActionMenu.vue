@@ -1,7 +1,6 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { findParentNodeClosestToPos } from '@tiptap/core'
 import { useEventListener } from '@vueuse/core'
 import { computed, ref } from 'vue'
 
@@ -29,47 +28,36 @@ const handleClose = () => {
 
 const messages = computed<PopupItemDescriptor[]>(() =>
   Array.isArray(props.actions)
-    ? props.actions?.map((action) => ({
-        type: 'button',
-        label: action.label || action.name,
-        buttonVariant: 'secondary',
-        buttonPrefixIcon: action.icon,
-        buttonAlign: 'start',
-        onAction: () => {
-          action.command?.(new MouseEvent('click'))
-        },
-      }))
+    ? props.actions?.reduce((acc, action) => {
+        if (!action.show || action.show()) {
+          acc.push({
+            type: 'button',
+            label: action.label || action.name,
+            buttonVariant: 'secondary',
+            buttonPrefixIcon: action.icon,
+            buttonAlign: 'start',
+            onAction: () => {
+              action.command?.(new MouseEvent('click'))
+            },
+          })
+        }
+        return acc
+      }, [] as PopupItemDescriptor[])
     : [],
 )
 
 useEventListener('click', (event: MouseEvent) => {
   const { editor } = props
 
-  if (!editor) return
+  if (!editor || !props.targetId) return
+  if (showPopup.value) return
 
   const { target } = event
 
-  if (!(target as HTMLElement).closest('[data-type="editor"]')) return
+  const targetElementWithId = (target as HTMLElement)?.closest(`#${CSS.escape(props.targetId)}`)
 
-  const nearestTableParent = findParentNodeClosestToPos(
-    editor.state.selection.$anchor,
-    (node) => node.type.name === props.typeName,
-  )
-
-  if (!nearestTableParent) {
-    showPopup.value = false
-  } else {
-    const wrapperDomNode = editor.view.nodeDOM(nearestTableParent.pos) as
-      | HTMLElement
-      | null
-      | undefined
-
-    const tableDomNode = wrapperDomNode?.querySelector('table')
-
-    if (tableDomNode) {
-      showPopup.value = true
-    }
-  }
+  if (!targetElementWithId) return
+  showPopup.value = true
 })
 
 defineExpose({

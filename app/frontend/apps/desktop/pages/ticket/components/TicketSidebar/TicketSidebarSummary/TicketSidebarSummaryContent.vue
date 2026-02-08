@@ -108,6 +108,7 @@ const titleClass = computed(() => {
                   : summary[item.key]!
               "
               :label="item.label"
+              :type="item.type"
             />
           </article>
         </template>

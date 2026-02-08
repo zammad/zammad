@@ -112,6 +112,8 @@ class ChannelChat extends App.ControllerSubContent
 
   constructor: ->
     super
+
+    @title __('Chat'), true
     if @Session.get('email')
       @previewUrl = "www.#{@Session.get('email').replace(/^.+?\@/, '')}"
 

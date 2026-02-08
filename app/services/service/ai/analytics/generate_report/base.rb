@@ -55,11 +55,10 @@ class Service::AI::Analytics::GenerateReport::Base < Service::Base
 
   def query_records(&)
     base_scope
-      .reorder(id: :desc)
-      .in_batches(of: BATCH_SIZE)
+      .in_batches(of: BATCH_SIZE, order: :desc)
       .take(RESULT_SIZE / BATCH_SIZE)
       .each do |batch|
-        enrich_batch(batch).each(&)
+        enrich_batch(batch).reorder(id: :desc).each(&)
       end
   end
 

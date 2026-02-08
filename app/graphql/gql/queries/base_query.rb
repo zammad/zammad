@@ -5,14 +5,12 @@ module Gql::Queries
     include GraphQL::FragmentCache::ObjectHelpers
 
     include Gql::Concerns::HandlesAuthorization
+    include Gql::Concerns::HandlesSettingCheck
     include Gql::Concerns::HasNestedGraphqlName
 
     description 'Base class for all queries'
 
     argument_class Gql::Types::BaseArgument
-
-    # Require authentication by default for queries.
-    requires_authentication true
 
     def self.register_in_schema(schema)
       schema.field graphql_field_name, resolver: self

@@ -30,6 +30,8 @@ const mockActiveAvatar = async (deletable = true) => {
   })
 }
 
+// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
+
 describe('testing account a11y', () => {
   beforeEach(() => {
     mockUserCurrent({

@@ -2,13 +2,13 @@
 
 module Gql::Queries
   class Ticket::History < BaseQuery
-    include Gql::Concerns::RequiresTicketAgentPermission
-
     description 'Fetch history of a ticket'
 
     argument :ticket_id, ID, loads: Gql::Types::TicketType, description: 'Ticket ID'
 
     type [Gql::Types::HistoryGroupType], null: false
+
+    requires_permission 'ticket.agent'
 
     def resolve(ticket:)
       Service::History::Group

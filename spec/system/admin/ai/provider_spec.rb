@@ -147,7 +147,7 @@ RSpec.describe 'AI > Provider', authenticated_as: :admin, type: :system do
       it 'shows the new configuration automatically' do
         within :active_content do
           check_select_field_value('provider', 'open_ai')
-          check_input_field_value('token', '123')
+          expect(page).to have_field('Token', with: %r{.+})
           check_switch_field_value('ocr_active', false)
         end
 

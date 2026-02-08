@@ -7,6 +7,8 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
+// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
+
 describe('testing password a11y view', () => {
   beforeEach(() => {
     mockUserCurrent({
@@ -21,7 +23,7 @@ describe('testing password a11y view', () => {
     })
   })
 
-  it('has no accessibility violations', async () => {
+  it.skip('has no accessibility violations', async () => {
     const view = await visitView('/personal-setting/password')
     const results = await axe(view.html())
     expect(results).toHaveNoViolations()

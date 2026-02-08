@@ -10,6 +10,8 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { mockUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentOverviewList.mocks.ts'
 
+// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
+
 const userCurrentTicketOverviews = [
   {
     id: convertToGraphQLId('Overview', 1),
@@ -34,7 +36,7 @@ describe('personal settings for token access', () => {
     mockPermissions(['user_preferences.overview_sorting'])
   })
 
-  it('has no accessibility violations', async () => {
+  it.skip('has no accessibility violations', async () => {
     mockUserCurrentOverviewListQuery({ userCurrentTicketOverviews })
 
     const view = await visitView('/personal-setting/ticket-overviews')

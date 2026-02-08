@@ -506,6 +506,31 @@ Zammad/EnsuresTimeZoneAtSpecTopLevel:
   Include:
     - 'spec/system/**/*.rb'
 
+Zammad/GraphqlAuthorizeAllowPublicAccess:
+  Enabled: true
+  Include:
+    - "app/graphql/gql/**/*.rb"
+
+Zammad/GraphqlAuthorizeDisallowed:
+  Enabled: true
+  Include:
+    - "app/graphql/gql/**/*.rb"
+
+Zammad/GraphqlAuthorizeRequiresPermission:
+  Enabled: true
+  Include:
+    - "app/graphql/gql/**/*.rb"
+
+Zammad/GraphqlAuthorizedRequiresEnabledSetting:
+  Enabled: true
+  Include:
+    - "app/graphql/gql/**/*.rb"
+
+Zammad/GraphqlCsrfSkipVerification:
+  Enabled: true
+  Include:
+    - "app/graphql/gql/**/*.rb"
+
 Capybara/NegationMatcherAfterVisit:
   Description: 'Allow to use negated matcher after visit'
   Enabled: false

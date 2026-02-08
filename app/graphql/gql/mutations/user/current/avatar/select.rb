@@ -8,9 +8,7 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Was the avatar selection successful?'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.avatar')
-    end
+    requires_permission 'user_preferences.avatar'
 
     def resolve(id:)
       avatar_id = Gql::ZammadSchema.verified_object_from_id(id, type: Avatar).id

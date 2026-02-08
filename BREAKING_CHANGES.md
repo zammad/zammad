@@ -47,11 +47,13 @@ section like in the example below:
 
 ### Disallow assigning the same organization as primary and secondary
 
-It is no longer allowed for the same organization to be assigned as both a primary and a secondary organization for a user.
+It is no longer allowed for the same organization to be assigned as both a primary and a
+secondary organization of a user. An automatic migration makes sure the user data is in a consistent
+state after the update.
 
-⚠️ Before upgrading, ensure that no users exist in this invalid state.
-User records with the same organization set as both primary and secondary must be fixed
-by removing the offending assignment. Otherwise, updating or persisting affected users may fail after upgrading.
+⚠️ Before upgrading, ensure that no calls to the API are used that try to put users in this invalid state.
+User records cannot have the same organization set as both primary and secondary anymore, and trying to
+do this will now result in an API error.
 
 ## 6.5.2
 

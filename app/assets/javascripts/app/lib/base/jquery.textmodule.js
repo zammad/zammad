@@ -368,15 +368,25 @@
           nnode.innerHTML = string
     }
     else if (document.queryCommandSupported && document.queryCommandSupported('insertHTML')) {
-      if(!!window.chrome) { // Is Chrome-like browser? It will eat up the single trailing space!
+
+      // Both Chrome-like and Firefox browsers now eat up a single leading space when inserting content.
+      //   To circumvent this, we prepend an `&nbsp;` entity, if the last character is a space.
+      //   https://github.com/zammad/zammad/issues/3862
+      //   https://github.com/zammad/zammad/issues/5935
+      if(!!window.chrome || !!window.netscape) {
         range = document.getSelection().getRangeAt(0)
 
-        var walker         = document.createTreeWalker(document.body, NodeFilter.SHOW_ALL);
-        walker.currentNode = range.startContainer;
-        var previousNode   = walker.previousNode()
+        // Chrome also eats up double line breaks when inserting at the beginning of a new line.
+        //   To circumvent this, we insert two `<br>` elements, if the insertion point is at the
+        //   beginning of a new line following an empty paragraph or div.
+        if (!!window.chrome) {
+          var walker         = document.createTreeWalker(document.body, NodeFilter.SHOW_ALL);
+          walker.currentNode = range.startContainer;
+          var previousNode   = walker.previousNode()
 
-        if(previousNode && !range.startContainer.previousSibling && ['<p></p>', '<div></div>'].includes(previousNode.outerHTML)) {
-          document.execCommand('insertHTML', false, "<br><br>")
+          if(previousNode && !range.startContainer.previousSibling && ['<p></p>', '<div></div>'].includes(previousNode.outerHTML)) {
+            document.execCommand('insertHTML', false, "<br><br>")
+          }
         }
 
         if(range && range.endContainer.textContent && range.endContainer.textContent.match(/(?<=\S) $/)) {

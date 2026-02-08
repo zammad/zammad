@@ -11,9 +11,7 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'This indicates if the password update was successful.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(token:, password:)
       update = Service::User::PasswordReset::Update.new(token: token, password: password)

@@ -1,8 +1,13 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { sanitizedContentType } from './files.ts'
+
 export const getIconByContentType = (type?: Maybe<string>) => {
-  if (!type) return 'file'
-  const contentType = type.replace(/^(.+?\/.+?)(\b|\s).+?$/, '$1')
+  const fallbackIcon = 'file'
+  if (!type) return fallbackIcon
+
+  const contentType = sanitizedContentType(type)
+  if (!contentType) return fallbackIcon
 
   const icons: Record<string, string> = {
     // image
@@ -46,5 +51,6 @@ export const getIconByContentType = (type?: Maybe<string>) => {
     'application/gzip': 'attachment',
     'application/zip': 'attachment',
   }
-  return icons[contentType] || 'file'
+
+  return icons[contentType] || fallbackIcon
 }

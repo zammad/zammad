@@ -12,13 +12,11 @@ import { useSignatureHandling } from '#shared/components/Form/fields/FieldEditor
 import { EXTENSION_NAME as userMentionExtensionName } from '#shared/components/Form/fields/FieldEditor/extensions/UserMention.ts'
 import {
   imageExtensionName,
-  tableKitExtensionName,
   getCustomExtensions,
   getHtmlExtensions,
   getPlainExtensions,
   PlaceholderExtensionName,
 } from '#shared/components/Form/fields/FieldEditor/extensions.ts'
-import FieldEditorTableMenu from '#shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue'
 import FieldEditorFooter from '#shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue'
 import type {
   EditorContentType,
@@ -35,6 +33,7 @@ import { getButtonGroup } from '#shared/components/ObjectAttributes/attributes/A
 import { useSessionStore } from '#shared/stores/session.ts'
 import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
 
+import { TableKitExtensionName } from './extensions/TableKit.ts'
 import { useInlineMode } from './useInlineMode.ts'
 
 interface Props {
@@ -91,7 +90,7 @@ if (props.context.extensionSet === 'basic') {
     disableExtension(extension.name as EditorCustomExtensions),
   )
 
-  disableExtension(tableKitExtensionName)
+  disableExtension(TableKitExtensionName)
 }
 
 if (placeholder === '') disableExtension(PlaceholderExtensionName)
@@ -121,10 +120,6 @@ const editorValue = ref<string>(VITE_TEST_MODE ? props.context._value : '')
 const { hasImageExtension, loadFiles } = useAttachments(
   editorExtensions.value,
   props.context.formId,
-)
-
-const hasTableExtension = computed(() =>
-  editorExtensions.value.some((ext) => ext.name === 'tableKit'),
 )
 
 const editor = useEditor({
@@ -223,7 +218,6 @@ if (VITE_TEST_MODE) {
     },
   )
 }
-
 watch(
   () => props.context.disabled,
   (disabled) => {
@@ -420,12 +414,6 @@ const reclaimEditorFocus = (event: MouseEvent) => {
         :characters="characters"
       />
 
-      <FieldEditorTableMenu
-        v-if="editor && hasTableExtension"
-        :editor="editor"
-        :content-type="contentType"
-      />
-
       <!-- BUTTON group is only implemented in DESKTOP -->
       <component
         :is="buttonGroup"
@@ -519,6 +507,7 @@ const reclaimEditorFocus = (event: MouseEvent) => {
 }
 
 .tableWrapper {
+  position: relative;
   overflow-x: auto;
   max-width: 100%;
 }

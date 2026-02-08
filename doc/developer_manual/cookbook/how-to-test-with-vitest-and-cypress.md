@@ -1,5 +1,11 @@
 # How to Test With Vitest and Cypress
 
+We assume you are using our recommended [Devcontainer Setup](../development_environment/devcontainer-setup.md)
+and are starting from `develop` branch.
+
+Switching between running tests and doing development work (by running `dev` from `/bin`)
+should be effortless without any issues.
+
 The frontend tests are implemented in Vitest.
 For the Vue.js 3 component tests we use the "Testing Library", which is an offset of the Vue test utils suite.
 
@@ -16,13 +22,30 @@ The tests will be executed in watch mode by default.
 
 - Run a single test: `pnpm test CommonLink.spec.ts`
 - Run a single test case from one test file: `pnpm test FieldSelect.spec.ts -t "supports keyboard navigation"`
-- Run all tests: `pnpm test`
+
+> [!WARNING]
+>
+> Next command should only be run in a CI environment,
+> because it consumes a lot of resources.
+>
+> - Run all tests: `pnpm test`
 
 Check the Vitest [CLI documentation](https://vitest.dev/guide/cli.html#options) for more possibilities.
 
+#### Troubleshooting
+
+##### TypeError: localStorage.getItem is not a function
+
+Solution: use `node --version` < 25
+
 ### Cypress
 
-First, the Cypress dependencies needs to be installed: `pnpm cypress:install`.
+> [!WARNING]
+>
+> Cypress doesn't work from inside `devcontainer-setup`.
+> First, the Cypress dependencies needs to be installed:
+>
+> - `pnpm cypress:install`
 
 Then you can run `pnpm test:ct`, which opens an UI in the selected browser. Here the different tests can be executed.
 

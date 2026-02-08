@@ -314,6 +314,9 @@ export type FieldEditorClass = {
     container: string
     inlineContainer: string
   }
+  tableMenu: {
+    triggerButton: string
+  }
 }
 
 export type FieldEditorProps = {

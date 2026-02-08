@@ -5,28 +5,17 @@ module Gql::Concerns::HandlesAuthorization
 
   included do
     class_attribute :required_permissions, default: []
-    class_attribute :require_authentication, default: false
+    class_attribute :require_authentication, default: true
 
     #
     # Custom static authorization handling.
     #
     class << self
-      # Override this method to implement additional handlers.
-      def before_authorize(...)
-        true
-      end
-
-      # Override this method if an object requires custom authorization, e.g. based on Pundit.
-      def authorize(_obj, ctx)
+      def authorize(obj, ctx)
         # Public queries override this to allow unauthenticated access.
-        return true if !require_authentication?
+        return true if !evaluate_require_authentication(ctx, obj)
 
-        # throws exception if not authorized
-        user = ctx.current_user
-        # Default authorization: require authentication, and optionally permissions.
-        return true if required_permissions.blank?
-
-        user&.permissions?(required_permissions)
+        validate_user(ctx, obj) && validate_permissions(ctx, obj)
       end
 
       #
@@ -36,10 +25,11 @@ module Gql::Concerns::HandlesAuthorization
       # This method is used by GraphQL to perform authorization on the various objects.
       # This may be called with 2 or 3 params, context is last.
       def authorized?(*)
-        before_authorize(*)
-        authorize(*)
-      rescue Pundit::NotAuthorizedError
-        raise Exceptions::Forbidden, "Access forbidden by #{name}"
+        begin
+          authorize(*)
+        rescue Pundit::NotAuthorizedError # Some old code may raise this instead of returning false
+          false
+        end || raise(Exceptions::Forbidden, "Access forbidden by #{name}")
       end
     end
 
@@ -67,6 +57,29 @@ module Gql::Concerns::HandlesAuthorization
 
     def requires_authentication(value)
       self.require_authentication = value
+    end
+
+    def allow_public_access!
+      self.require_authentication = false
+    end
+
+    def evaluate_require_authentication(ctx, obj)
+      if require_authentication.is_a?(Proc)
+        return require_authentication.call(ctx, obj)
+      end
+
+      !!require_authentication
+    end
+
+    def validate_user(ctx, _obj)
+      # throws Exceptions::NotAuthorized if not authorized
+      ctx.current_user
+    end
+
+    def validate_permissions(ctx, _obj)
+      return true if required_permissions.blank?
+
+      ctx.current_user.permissions?(required_permissions)
     end
   end
 end

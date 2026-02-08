@@ -191,7 +191,7 @@ describe('basic toolbar testing', () => {
       })
 
       expect(
-        wrapper.queryByRole('button', { name: 'Writing Assistant Tools' }),
+        wrapper.queryByRole('button', { name: 'AI writing assistant tools' }),
       ).not.toBeInTheDocument()
     })
 
@@ -213,7 +213,7 @@ describe('basic toolbar testing', () => {
       })
 
       expect(
-        wrapper.queryByRole('button', { name: 'Writing Assistant Tools' }),
+        wrapper.queryByRole('button', { name: 'AI writing assistant tools' }),
       ).not.toBeInTheDocument()
     })
 
@@ -235,7 +235,7 @@ describe('basic toolbar testing', () => {
       })
 
       expect(
-        wrapper.queryByRole('button', { name: 'Writing Assistant Tools' }),
+        wrapper.queryByRole('button', { name: 'AI writing assistant tools' }),
       ).not.toBeInTheDocument()
     })
   })

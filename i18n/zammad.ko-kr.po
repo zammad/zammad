@@ -476,7 +476,7 @@ msgstr "%s 자격 증명"
 msgid "%s days ago"
 msgstr "%s 일 전"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:60
 msgid "%s deselected."
 msgstr "%s가 선택 해제되었습니다."
 
@@ -602,7 +602,7 @@ msgstr ""
 msgid "%s required!"
 msgstr "%S가 필요합니다!"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:46
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
 "%s가 선택되었습니다. 화살표 키로 드롭 위치를 선택한 다음 스페이스바를 누르세"
@@ -963,7 +963,7 @@ msgstr ""
 "테스트 Ticket은 당신이 당신의 Overview \"%s\"%s 리터에서 찾을 수 있습니다, 작"
 "성되었습니다."
 
-#: app/models/ticket.rb:297
+#: app/models/ticket.rb:299
 msgid "A ticket cannot be merged into itself."
 msgstr "티켓을 자기 자신과 병합할 수 없습니다."
 
@@ -1583,8 +1583,8 @@ msgstr "모든 값 추가"
 msgid "Add attachment option to upload."
 msgstr "업로드 첨부 파일 옵션을 추가합니다."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:250
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:247
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:251
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:248
 msgid "Add bullet list"
 msgstr "글머리 기호 목록 추가"
 
@@ -1611,13 +1611,13 @@ msgstr "빈 체크리스트 추가"
 msgid "Add from a template"
 msgstr "템플릿에서 추가"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:108
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:108
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:109
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:109
 msgid "Add heading"
 msgstr "제목 추가"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:280
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:277
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:281
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:278
 msgid "Add image"
 msgstr "이미지 추가"
 
@@ -1625,9 +1625,9 @@ msgstr "이미지 추가"
 msgid "Add internal note"
 msgstr "내부 메모 추가"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:299
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:300
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:296
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:174
 msgid "Add link"
 msgstr "링크 추가"
@@ -1642,8 +1642,8 @@ msgid "Add note"
 msgstr "메모 추가"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:151
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:237
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:234
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:238
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:235
 msgid "Add ordered list"
 msgstr "번호 매기기 목록 추가"
 
@@ -1877,7 +1877,7 @@ msgstr "에이전트"
 msgid "Agents with \"%s\" permission"
 msgstr "에이전트 \"%s\"로 허락"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:113
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:103
 msgid "Agree & join"
 msgstr ""
 
@@ -2076,7 +2076,7 @@ msgstr "오픈-소스 모니터링 도구."
 msgid "An unexpected error has occurred."
 msgstr "예상치 못한 에러가 발생했습니다."
 
-#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:26
+#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:24
 msgid "An unexpected error occurred during system setup."
 msgstr "시스템 설정 중 예기치 못한 오류가 발생했습니다."
 
@@ -2870,8 +2870,8 @@ msgstr "새 티켓에 사용 가능한 유형"
 msgid "Avatar"
 msgstr "아바타"
 
-#: app/graphql/gql/mutations/user/current/avatar/delete.rb:18
-#: app/graphql/gql/mutations/user/current/avatar/select.rb:18
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb:16
+#: app/graphql/gql/mutations/user/current/avatar/select.rb:16
 msgid "Avatar could not be found."
 msgstr "아바타를 찾을 수 없습니다."
 
@@ -2907,6 +2907,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "모든 발신 이메일의 BCC 주소"
 
 #: app/assets/javascripts/app/controllers/_manage/beta_ui.coffee:2
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:46
 #, fuzzy
 #| msgid "New BETA UI"
 msgid "BETA UI"
@@ -2916,7 +2917,11 @@ msgstr "새 BETA UI"
 msgid "BETA UI Availability"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:56
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:73
+msgid "BETA UI feedback program"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:46
 #, fuzzy
 #| msgid "CTI integration"
 msgid "BETA UI illustration"
@@ -3293,6 +3298,10 @@ msgstr "카메라"
 msgid "Can be in any CSS color format."
 msgstr "모든 CSS 색상 형식을 사용할 수 있습니다."
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:37
+msgid "Can you tell us what are you missing in the BETA UI?"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:87
 msgid "Can't create user!"
 msgstr "사용자를 생성할 수 없습니다!"
@@ -3496,8 +3505,8 @@ msgstr "비밀번호 변경"
 msgid "Change personal account password."
 msgstr "개인 계정 비밀번호 변경."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:185
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:182
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:183
 msgid "Change text color"
 msgstr "텍스트 색상 변경"
 
@@ -3910,7 +3919,7 @@ msgstr "여기를 클릭하세요"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "이중 인증 방법을 설정하려면 여기를 클릭하세요."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:49
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:48
 msgid "Click to edit…"
 msgstr "편집하려면 클릭하세요…"
 
@@ -4056,7 +4065,7 @@ msgid "Commas and stars are not allowed in name."
 msgstr "이름에 쉼표와 별표는 허용되지 않습니다."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:32
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:22
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:57
 msgid "Comment"
 msgstr "코멘트"
@@ -4534,7 +4543,7 @@ msgid "Could not find the channel."
 msgstr "채널을 찾을 수 없습니다."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:37
-#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:23
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:21
 msgid "Could not generate recovery codes"
 msgstr "복구 코드를 생성할 수 없습니다"
 
@@ -4583,7 +4592,7 @@ msgid "Could not set two-factor authentication method as default"
 msgstr "이중 인증 방법을 기본값으로 설정할 수 없습니다"
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:108
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:111
 msgid "Couldn't save changes"
 msgstr "변경사항을 저장할 수 없습니다"
 
@@ -4964,7 +4973,8 @@ msgstr "현재 역할에 할당된 개요가 없습니다. 관리자에게 문�
 msgid "Currently processing this ticket…"
 msgstr "현재 이 티켓을 처리 중입니다…"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:130
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:146
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:131
 msgid ""
 "Currently, no overviews are assigned to your roles. Please contact your "
 "administrator."
@@ -6252,6 +6262,18 @@ msgstr "일치하는 티켓이 있을 때 경고를 받을 사용자 역할을 �
 msgid "Delete"
 msgstr "삭제"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:89
+#, fuzzy
+#| msgid "Delete column"
+msgid "Delete %s columns"
+msgstr "열 삭제"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
+#, fuzzy
+#| msgid "Delete row"
+msgid "Delete %s rows"
+msgstr "행 삭제"
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:47
 msgid "Delete Avatar?"
 msgstr "아바타를 삭제하시겠습니까?"
@@ -6294,7 +6316,7 @@ msgstr "글 삭제"
 msgid "Delete avatar"
 msgstr "아바타 삭제"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:82
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:90
 msgid "Delete column"
 msgstr "열 삭제"
 
@@ -6352,11 +6374,11 @@ msgstr "소속 삭제?"
 msgid "Delete records"
 msgstr "기록 삭제"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:54
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
 msgid "Delete row"
 msgstr "행 삭제"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:139
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:150
 msgid "Delete table"
 msgstr "테이블 삭제"
 
@@ -6614,7 +6636,7 @@ msgstr "해제"
 msgid "Disable Notifications"
 msgstr "알림 취소"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:36
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:64
 msgid "Disable the banner for the BETA switch"
 msgstr "베타 전환 배너 숨기기"
 
@@ -6695,14 +6717,22 @@ msgstr "디스플레이"
 msgid "Display Zammad in the New BETA User Interface"
 msgstr "새 베타 사용자 인터페이스에서 Zammad 표시"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:21
-msgid "Display Zammad with the New BETA User Interface"
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:52
+#, fuzzy
+#| msgid "Display Zammad with the New BETA User Interface"
+msgid "Display Zammad with the new BETA user interface"
 msgstr "새 베타 사용자 인터페이스로 Zammad 표시"
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
 #: db/seeds/settings.rb:1883
 msgid "Display name"
 msgstr "표시 이름"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:88
+#, fuzzy
+#| msgid "Send Feedback"
+msgid "Do not ask automatically for feedback on the BETA UI"
+msgstr "피드백 보내기"
 
 #: app/assets/javascripts/app/lib/mixins/destination_group_email_address.coffee:26
 msgid "Do not change email address (%s)"
@@ -6874,11 +6904,7 @@ msgstr "초안을 업데이트할 수 없습니다."
 msgid "Drafts"
 msgstr "초안들"
 
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:52
-msgid "Drag and drop to reorder ticket overview list items."
-msgstr "끌어서 티켓 개요 항목의 순서를 변경하세요."
-
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:63
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 msgid "Drag ended for %s."
 msgstr "%s에 대한 드래그가 종료되었습니다."
 
@@ -7283,7 +7309,7 @@ msgstr ""
 msgid "Empty"
 msgstr "공백"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:423
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
 #, fuzzy
 #| msgid "Empty Overview"
 msgid "Empty overview"
@@ -7414,7 +7440,7 @@ msgstr "티켓 요약 기능을 켜거나 끕니다."
 msgid "Enable or disable the writing assistant text tools."
 msgstr "글쓰기 도우미 텍스트 도구를 켜거나 끕니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:65
 msgid "Enable the banner for the BETA switch"
 msgstr "베타 전환 배너를 표시합니다"
 
@@ -7638,7 +7664,7 @@ msgstr "유효한 이메일 주소를 입력하세요."
 msgid "Enter credentials"
 msgstr "자격 증명을 입력"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:300
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:301
 msgid "Enter link URL"
 msgstr "링크 URL을 입력하세요"
 
@@ -7902,7 +7928,7 @@ msgstr "에스컬레이션 시점(업데이트 기준)"
 msgid "Escalation times"
 msgstr "에스컬레이션 시간"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:123
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:130
 msgid "Escape pressed. No item selected."
 msgstr "Esc 키가 눌렸습니다. 선택된 항목이 없습니다."
 
@@ -8104,7 +8130,7 @@ msgstr "확장 검색"
 msgid "External data source field"
 msgstr "외부 데이터 소스 필드"
 
-#: lib/search_index_backend.rb:758
+#: lib/search_index_backend.rb:754
 msgid "Extract zammad-attachment information from arrays"
 msgstr "배열에서 zammad 첨부 정보를 추출"
 
@@ -8242,6 +8268,7 @@ msgid "February"
 msgstr "2월"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:34
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:62
 msgid "Feedback"
 msgstr "피드백"
 
@@ -8406,7 +8433,7 @@ msgstr "고정 전자 메일 계정"
 msgid "Flat Design"
 msgstr "평면 디자인"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:90
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:97
 msgid "Focus on %s"
 msgstr "%s에 집중"
 
@@ -8536,7 +8563,7 @@ msgstr "형태"
 msgid "Form Allowed Parameters"
 msgstr ""
 
-#: app/graphql/gql/queries/form_updater.rb:30
+#: app/graphql/gql/queries/form_updater.rb:34
 msgid "FormSchema could not be found."
 msgstr "FormSchema를 찾을 수 없습니다."
 
@@ -8553,8 +8580,8 @@ msgid "Format as _underlined_"
 msgstr "밑줄 형식으로 표시"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:93
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:153
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:150
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:154
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:151
 msgid "Format as bold"
 msgstr "텍스트를 굵게 표시"
 
@@ -8571,8 +8598,8 @@ msgid "Format as h3 heading"
 msgstr "H3 제목으로 서식 지정"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:100
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:161
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:158
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:162
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:159
 msgid "Format as italic"
 msgstr "텍스트를 이탤릭체로 표시"
 
@@ -8580,20 +8607,20 @@ msgstr "텍스트를 이탤릭체로 표시"
 msgid "Format as ordered list"
 msgstr "번호 목록으로 서식 지정"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:193
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:190
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:191
 msgid "Format as quoted text"
 msgstr "인용문 형식으로 표시"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:114
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:177
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:174
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:178
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:175
 msgid "Format as strikethrough"
 msgstr "취소선 형식으로 표시"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:107
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:169
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:166
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:170
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:167
 msgid "Format as underlined"
 msgstr "_underlined_ 같은 형식"
 
@@ -8840,6 +8867,12 @@ msgstr "GitLab 요청에 실패했습니다. 자세한 내용은 로그 파일�
 msgid "GitLab: Link issue"
 msgstr "GitLab: 이슈 연결"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:100
+#, fuzzy
+#| msgid "Negative Feedback"
+msgid "Give feedback"
+msgstr "부정적 피드백"
+
 #: app/controllers/selectors_controller.rb:43
 msgid "Given object does not support selector"
 msgstr "지정한 객체는 셀렉터를 지원하지 않습니다"
@@ -8930,7 +8963,7 @@ msgstr "Google 이메일"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:188
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:46
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:87
 msgid "Got it"
 msgstr "알겠습니다"
 
@@ -9120,12 +9153,6 @@ msgstr "최신 업데이트가 있음"
 msgid "Have a nice day."
 msgstr "좋은 하루 되세요."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:31
-msgid ""
-"Have the BETA switch between the old and the new UI always available in the "
-"Primary Navigation"
-msgstr "주 내비게이션에 항상 구·신 UI 전환을 표시합니다"
-
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:21
 msgid ""
 "Have the BETA switch between the old and the new UI always available in the "
@@ -9155,20 +9182,20 @@ msgid "Header Menu"
 msgstr "헤더 메뉴"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:129
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:115
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:115
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:116
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:116
 msgid "Heading 1"
 msgstr "제목 1"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:136
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:127
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:126
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:128
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:127
 msgid "Heading 2"
 msgstr "제목 2"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:143
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:139
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:137
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:140
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:138
 msgid "Heading 3"
 msgstr "제목 3"
 
@@ -9199,7 +9226,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:184
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:40
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:45
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:86
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:22
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
 msgid "Help"
@@ -9213,7 +9240,7 @@ msgstr "도와줘요! 저는 예시 티켓이에요 🎓"
 msgid "Help to improve Zammad!"
 msgstr "Zammad 개선에 힘을 보태주세요!"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:109
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:99
 msgid "Help us shape the future of Zammad!"
 msgstr ""
 
@@ -9294,7 +9321,7 @@ msgstr ""
 "사용해보시고 피드백을 보내주세요.¶¶아래 스위치를 사용하여 언제든지 돌아올 수 "
 "있습니다."
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:67
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:57
 msgid ""
 "Hey, we have something to show you! Our team has been working on the new "
 "Zammad UI for a while, and we’re very eager for you to try it and send some "
@@ -9306,7 +9333,7 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr "안녕하세요! 어떤 제품이 궁금하신가요?"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:51
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:69
 #, fuzzy
 #| msgid "Hide Beta UI switch"
 msgid "Hide BETA UI switch"
@@ -9891,8 +9918,8 @@ msgstr "분 값을 증가"
 msgid "Increment seconds value"
 msgstr "초 값을 증가"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:263
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:260
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:264
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:261
 msgid "Indent text"
 msgstr "텍스트 들여쓰기"
 
@@ -9940,51 +9967,51 @@ msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 "입력 필드는 text, password, tel, fax, email, url 타입 중 하나여야 합니다."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:220
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:217
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
 msgstr "코드 블록 삽입"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:73
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:78
 msgid "Insert column after"
 msgstr "뒤에 열 삽입"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:64
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:69
 msgid "Insert column before"
 msgstr "앞에 열 삽입"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:228
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:229
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr "구분선 삽입"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:209
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:206
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
 msgid "Insert inline code"
 msgstr "인라인 코드 삽입"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:36
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:41
 msgid "Insert row above"
 msgstr "위에 행 삽입"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:45
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:50
 msgid "Insert row below"
 msgstr "아래에 행 삽입"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:307
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:328
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:329
 msgid "Insert table"
 msgstr "표 삽입"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:89
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:90
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:90
 #, fuzzy
 #| msgid "Inserts knowledge base answer"
 msgid "Insert text from knowledge base answer"
 msgstr "지식 베이스 답변을 삽입"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:98
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Insert text from text module"
 msgstr "텍스트 모듈에서 텍스트 삽입"
 
@@ -10346,7 +10373,7 @@ msgstr "시스템 사용자는 삭제할 수 없습니다."
 msgid "It is not possible to delete your current account."
 msgstr "현재 계정은 삭제할 수 없습니다."
 
-#: app/models/ticket.rb:295
+#: app/models/ticket.rb:297
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "이미 병합된 티켓으로 병합할 수 없습니다."
 
@@ -10383,6 +10410,12 @@ msgstr "존 스미스"
 msgid "Join %s"
 msgstr "%s 가입"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:107
+#, fuzzy
+#| msgid "Feedback Form"
+msgid "Join feedback program"
+msgstr "피드백 폼"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
@@ -10407,6 +10440,10 @@ msgstr "6월"
 msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "그냥 마커로 클릭하고 바로 자리에 단어를 업데이트합니다. 즐겨!"
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:94
+msgid "Just switch back"
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts:11
 msgid "Kayako"
@@ -10648,6 +10685,10 @@ msgstr "레이아웃 참조"
 msgid "Learn More"
 msgstr "더 알아보기"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:40
+msgid "Leave BETA UI feedback program?"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:207
 #, fuzzy
 #| msgid "URL (Completions)"
@@ -10656,6 +10697,10 @@ msgstr "%s (옵션)"
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:197
 msgid "Leave empty to use the base model"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:39
+msgid "Leave program"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:199
@@ -10921,7 +10966,7 @@ msgstr "로컬 MTA(Sendmail/Postfix/Exim/…) - 서버 설정 사용"
 msgid "Locale"
 msgstr "로케일"
 
-#: app/graphql/gql/mutations/user/current/locale.rb:17
+#: app/graphql/gql/mutations/user/current/locale.rb:15
 msgid "Locale could not be found."
 msgstr "로케일을 찾을 수 없습니다."
 
@@ -11510,7 +11555,7 @@ msgstr "개요에 표시되는 최대 티켓 수"
 msgid "May"
 msgstr "5월"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:114
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:104
 msgid "Maybe later"
 msgstr ""
 
@@ -11551,8 +11596,8 @@ msgstr "멤버"
 msgid "Mention for"
 msgstr "언급 대상"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:80
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:81
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:81
 msgid "Mention user"
 msgstr "사용자 언급"
 
@@ -11563,7 +11608,13 @@ msgstr "사용자 언급"
 msgid "Merge"
 msgstr "병합"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:101
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:111
+#, fuzzy
+#| msgid "Merge cells"
+msgid "Merge %s cells"
+msgstr "셀 병합"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:112
 msgid "Merge cells"
 msgstr "셀 병합"
 
@@ -12114,9 +12165,8 @@ msgstr "새 속성"
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:3
 #: app/assets/javascripts/app/controllers/clues/desktop_beta_switch_clues.coffee:5
 #: app/assets/javascripts/app/views/profile/newbetaui.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:36
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:11
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:20
 msgid "New BETA UI"
 msgstr "새 BETA UI"
 
@@ -12609,7 +12659,8 @@ msgstr "멤버를 찾을 수 없음"
 msgid "No organizations found"
 msgstr "조직을 찾을 수 없음"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:127
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:128
 #, fuzzy
 #| msgid "No Overviews"
 msgid "No overviews"
@@ -12702,7 +12753,7 @@ msgstr "아직 태그가 추가되지 않았습니다."
 msgid "No template created yet."
 msgstr "아직 템플릿이 생성되지 않았습니다."
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:425
 msgid "No tickets in this state."
 msgstr "이 상태의 티켓 없음."
 
@@ -12714,7 +12765,7 @@ msgstr "토큰 없음!"
 msgid "No translation for this locale available"
 msgstr "이 로케일에 대한 번역을 사용할 수 없음"
 
-#: app/models/ticket.rb:420
+#: app/models/ticket.rb:422
 msgid "No triggers active"
 msgstr "활성 트리거 없음"
 
@@ -13196,12 +13247,12 @@ msgid "Only visible to editors"
 msgstr "편집자에게만 표시"
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:19
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:77
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:103
 msgid "Only when out of office replacement"
 msgstr "부재 대체 시에만"
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:12
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:74
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:100
 msgid "Only when shared organization member"
 msgstr "공유 조직 멤버일 때만"
 
@@ -13380,7 +13431,7 @@ msgstr "개요 순서"
 msgid "Order of overviews"
 msgstr "개요 순서"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:127
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:120
 msgid "Order of ticket overviews"
 msgstr "티켓 개요 순서"
 
@@ -13596,8 +13647,8 @@ msgstr "아웃바운드:"
 msgid "Outdated Browser"
 msgstr "구형 브라우저"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:271
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:268
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:272
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:269
 msgid "Outdent text"
 msgstr "들여쓰기 줄이기"
 
@@ -13620,6 +13671,12 @@ msgstr "개요 일괄 마스크"
 msgid "Overview navigation list"
 msgstr "개요 내비게이션 목록"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:70
+#, fuzzy
+#| msgid "Overview navigation list"
+msgid "Overview order list"
+msgstr "개요 내비게이션 목록"
+
 #: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:380
 msgid "Overview: %s"
 msgstr "개요: %s"
@@ -13630,7 +13687,7 @@ msgstr "개요: %s"
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:30
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:31
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:78
 #: db/seeds/permissions.rb:35
@@ -14615,6 +14672,10 @@ msgstr "실시간"
 msgid "Reason for absence"
 msgstr "부재 사유"
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:78
+msgid "Reason to switch back"
+msgstr ""
+
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:39
 #: app/assets/javascripts/app/views/google/list.jst.eco:112
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:113
@@ -14878,8 +14939,8 @@ msgid "Remove checklist"
 msgstr "체크리스트 제거"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:121
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:201
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:198
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:202
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:199
 msgid "Remove formatting"
 msgstr "서식 제거"
 
@@ -15106,7 +15167,7 @@ msgid "Reset Password failed!"
 msgstr "비밀번호 재설정에 실패했습니다!"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:136
 msgid "Reset overview order"
 msgstr "개요 순서 재설정"
 
@@ -15219,7 +15280,7 @@ msgstr ""
 "<br>\n"
 "<div>#{config.product_name} 팀</div>\n"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:96
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:89
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "티켓 개요 순서 재설정에 실패했습니다."
 
@@ -16108,7 +16169,7 @@ msgstr "선택한 객체가 이미 삭제 대기열에 있습니다."
 msgid "Selected tickets do not match any macros."
 msgstr "선택한 티켓이 어떤 매크로와도 일치하지 않습니다."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:120
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:127
 msgid "Selection cancelled for %s."
 msgstr "%s에 대한 선택이 취소되었습니다."
 
@@ -16166,10 +16227,15 @@ msgid "Send email: %s"
 msgstr "이메일 보내기: %s"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:121
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:44
 #, fuzzy
 #| msgid "Send Feedback"
 msgid "Send feedback"
+msgstr "피드백 보내기"
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:93
+#, fuzzy
+#| msgid "Send Feedback"
+msgid "Send feedback & switch back"
 msgstr "피드백 보내기"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:121
@@ -16520,7 +16586,7 @@ msgstr "공유 초안이 성공적으로 업데이트되었습니다."
 msgid "Shared drafts"
 msgstr "공유"
 
-#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:20
+#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:17
 msgid "Shared drafts are not activated for the selected group"
 msgstr "선택한 그룹에 대해 공유 초안이 활성화되지 않았습니다"
 
@@ -16631,6 +16697,15 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
 msgid "Show previous tab"
 msgstr "이전 탭 표시"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:61
+#, fuzzy
+#| msgid ""
+#| "Have the BETA switch between the old and the new UI always available in "
+#| "the primary navigation"
+msgid ""
+"Show the BETA switch between the old and the new UI in the primary navigation"
+msgstr "주 내비게이션에 항상 구·신 UI 전환을 표시합니다"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:43
 msgid "Show the chat when ready."
@@ -16915,7 +16990,7 @@ msgstr "죄송합니다. 모든 필드가 올바르게 입력되지 않았습니
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "죄송합니다. 현재 활성화된 CTI 백엔드가 없습니다."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:139
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:146
 msgid ""
 "Sortable list focused. Use up and down arrows to navigate items. Press Space "
 "to select and item and again on another item to swap them."
@@ -16923,7 +16998,7 @@ msgstr ""
 "정렬 가능한 목록에 포커스됨. 위/아래 화살표로 항목 탐색. Space를 눌러 항목을 "
 "선택하고 다른 항목에서 다시 눌러 교체."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:46
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:50
 msgid "Sorted %s in user taskbar list to position %s."
 msgstr "사용자 작업 표시줄 목록에서 %s을(를) 위치 %s로 정렬했습니다."
 
@@ -16970,7 +17045,7 @@ msgstr "가져올 폴더를 지정하거나 비워두면 ||받은 편지함||에
 msgid "Split"
 msgstr "분할"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:92
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:100
 msgid "Split cells"
 msgstr "셀 분할"
 
@@ -17363,7 +17438,7 @@ msgstr "일요일"
 msgid "Support of multilingual Knowledge Base."
 msgstr "다국어 지식 베이스 지원"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:71
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:78
 msgid "Swapped %s with %s. %s moved to position %s."
 msgstr "%s과(와) %s을(를) 교체했습니다. %s이(가) 위치 %s로 이동했습니다."
 
@@ -17462,6 +17537,12 @@ msgstr "티켓 작업 후 탭 동작"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:133
 msgid "Tab has changed, do you really want to close it?"
 msgstr "탭이 변경되었습니다. 정말 닫으시겠습니까?"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuTrigger.vue:33
+#, fuzzy
+#| msgid "add option"
+msgid "Table options"
+msgstr "옵션 추가"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:257
 msgid "Tabs"
@@ -17737,7 +17818,7 @@ msgstr "지식 베이스를 생성할 수 없습니다."
 msgid "The MIME type of the image is invalid."
 msgstr "이미지의 MIME 유형이 유효하지 않습니다."
 
-#: app/graphql/gql/queries/system/import/state.rb:39
+#: app/graphql/gql/queries/system/import/state.rb:37
 msgid "The OTRS import failed."
 msgstr "OTRS 가져오기에 실패했습니다."
 
@@ -18029,6 +18110,17 @@ msgstr ""
 "서버에 대한 연결이 설정되고 대화할 운영자가 온라인 상태일 때 채팅이 표시됩니"
 "다."
 
+#: app/graphql/gql/mutations/ticket/checklist/add.rb:13
+#: app/graphql/gql/mutations/ticket/checklist/base.rb:7
+#: app/graphql/gql/queries/checklist/templates.rb:11
+#: app/graphql/gql/queries/ticket/checklist.rb:11
+#: app/graphql/gql/subscriptions/checklist/template_updates.rb:12
+#: app/graphql/gql/subscriptions/ticket/checklist_updates.rb:13
+#, fuzzy
+#| msgid "This feature is not enabled."
+msgid "The checklist feature is not active"
+msgstr "이 기능이 활성화되어 있지 않습니다."
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:33
 msgid ""
 "The chosen unit will be used for display only and will not affect stored "
@@ -18079,7 +18171,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:400
-#: app/graphql/gql/mutations/user/current/change_password.rb:30
+#: app/graphql/gql/mutations/user/current/change_password.rb:28
 msgid "The current password you provided is incorrect."
 msgstr "제공한 현재 비밀번호가 올바르지 않습니다."
 
@@ -18096,8 +18188,8 @@ msgstr ""
 "데이터는 쉼표로 구분된 값(CSV) 형식이어야 하며 UTF-8로 저장해야 합니다. CSV "
 "파일을 가져오거나 텍스트 영역에 직접 데이터를 붙여넣을 수 있습니다."
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:76
-msgid "The data we need to collect includes:"
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:66
+msgid "The data we need to collect consists of:"
 msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:294
@@ -18291,11 +18383,11 @@ msgid ""
 msgstr ""
 "티켓의 식별자입니다. 예: Ticket#, Call#, MyTicket#. 기본값은 Ticket#입니다."
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:34
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:30
 msgid "The idoit object could not be found."
 msgstr "idoit 객체를 찾을 수 없습니다."
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:28
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:24
 msgid "The idoit object is already present on the ticket."
 msgstr "idoit 객체가 이미 티켓에 있습니다."
 
@@ -18336,11 +18428,11 @@ msgid "The issue could not be saved."
 msgstr "이슈를 저장할 수 없습니다."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:26
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:24
 msgid "The issue reference already exists."
 msgstr "이슈 참조가 이미 존재합니다."
 
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:42
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:40
 msgid "The issue reference could not be found."
 msgstr "이슈 참조를 찾을 수 없습니다."
 
@@ -18416,13 +18508,9 @@ msgstr "%s 객체 (들) 업데이트됩니다."
 msgid "The online notification could not be marked as seen."
 msgstr "%s 객체 (들) 업데이트됩니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:105
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:98
 msgid "The order of your ticket overviews was reset."
 msgstr "The order of your ticket overviews was reset."
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:85
-msgid "The order of your ticket overviews was updated."
-msgstr "티켓 개요의 순서가 업데이트되었습니다."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:248
 msgid "The page is not available anymore"
@@ -18532,7 +18620,7 @@ msgstr "제공된 엔드포인트가 유효하지 않습니다."
 msgid "The provided match operator is missing or invalid."
 msgstr "제공된 일치 연산자가 없거나 유효하지 않습니다."
 
-#: app/graphql/gql/mutations/user/current/password_check.rb:28
+#: app/graphql/gql/mutations/user/current/password_check.rb:26
 msgid "The provided password is incorrect."
 msgstr "제공된 비밀번호가 유효하지 않습니다."
 
@@ -18664,7 +18752,7 @@ msgstr "필수 매개변수 'group_id'이(가) 없습니다."
 msgid "The required parameter 'id' is missing."
 msgstr "필수 매개변수 'id'이(가) 없습니다."
 
-#: lib/search_index_backend.rb:681
+#: lib/search_index_backend.rb:677
 msgid "The required parameter 'key' is missing."
 msgstr "필수 매개변수 'key'이(가) 없습니다."
 
@@ -18720,7 +18808,7 @@ msgstr "필수 매개변수 'ticket_number'이(가) 없습니다."
 msgid "The required parameter 'user_id' is missing."
 msgstr "필수 매개변수 'user_id'이(가) 없습니다."
 
-#: lib/search_index_backend.rb:682
+#: lib/search_index_backend.rb:678
 msgid "The required parameter 'value' is missing."
 msgstr "필수 매개변수 'value'이(가) 없습니다."
 
@@ -18958,7 +19046,7 @@ msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "이 사용자에 대해 이중 인증 방법 \"%s\"이(가) 제거되었습니다."
 
 #: app/controllers/sessions_controller.rb:249
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:34
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
 msgid "The two-factor authentication method is not enabled."
@@ -18994,7 +19082,7 @@ msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "사용자의 'preferred_username'을(를) 'id_token'에서 추출할 수 없습니다."
 
 #: app/controllers/sessions_controller.rb:245
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:29
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "사용자 이름 또는 비밀번호가 올바르지 않습니다."
 
@@ -19292,7 +19380,7 @@ msgstr "이 기기"
 msgid "This entry already exists!"
 msgstr "이 항목이 이미 존재합니다!"
 
-#: app/services/service/check_feature_enabled.rb:8
+#: app/services/service/check_feature_enabled.rb:6
 msgid "This feature is not enabled."
 msgstr "이 기능이 활성화되어 있지 않습니다."
 
@@ -19637,7 +19725,7 @@ msgid ""
 "Each of the users can then provide consent or not for the participation in "
 "the BETA program.\n"
 "\n"
-"Answers will be anonymized and the data collected may include:\n"
+"Answers will be anonymized and the data collected consists of:\n"
 "- Zammad instance name\n"
 "- star rating of the new UI\n"
 "- text comments on the new UI\n"
@@ -19673,14 +19761,6 @@ msgid ""
 "This service shows you contacts of incoming calls and a caller list in "
 "realtime."
 msgstr "이 서비스는 실시간으로 수신 전화의 연락처와 발신자 목록을 보여줍니다."
-
-#: app/services/service/concerns/handles_setting.rb:22
-msgid "This setting is not disabled."
-msgstr "이 설정이 비활성화되지 않았습니다."
-
-#: app/services/service/concerns/handles_setting.rb:18
-msgid "This setting is not enabled."
-msgstr "이 설정이 활성화되지 않았습니다."
 
 #: app/assets/javascripts/app/models/group.coffee:13
 msgid "This signature is inactive, it won't be included in the reply."
@@ -20582,15 +20662,15 @@ msgstr "다크 모드 전환"
 msgid "Toggle group"
 msgstr "그룹 전환"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:129
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:140
 msgid "Toggle header cell"
 msgstr "헤더 셀 전환"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:120
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:131
 msgid "Toggle header column"
 msgstr "헤더 열 전환"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:111
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:122
 msgid "Toggle header row"
 msgstr "헤더 행 전환"
 
@@ -20689,7 +20769,7 @@ msgstr "체크리스트 항목으로 추적됨"
 msgid "Transfer conversation to another chat:"
 msgstr "대화를 다른 채팅으로 전송:"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:55
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:59
 msgid "Transferred %s from user taskbar list %s at position %s."
 msgstr "%s을(를) 사용자 작업 표시줄 목록 %s의 위치 %s에서 전송했습니다."
 
@@ -21427,7 +21507,7 @@ msgstr ""
 msgid "Updating Database"
 msgstr "데이터베이스 업데이트 중"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:73
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:74
 msgid "Updating the order of your ticket overviews failed."
 msgstr "티켓 개요 순서 업데이트에 실패했습니다."
 
@@ -21995,7 +22075,7 @@ msgstr "대기 고객"
 msgid "Waiting in %s"
 msgstr "%s에서 대기 중"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:44
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:34
 msgid "Want to join the BETA UI feedback program?"
 msgstr ""
 
@@ -22325,6 +22405,12 @@ msgstr "워크플로우"
 msgid "Workflows"
 msgstr "워크플로우"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:104
+#, fuzzy
+#| msgid "Send Feedback"
+msgid "Would you like to give us feedback on the BETA UI? "
+msgstr "피드백 보내기"
+
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:16
 #: db/seeds/permissions.rb:245 db/seeds/settings.rb:6103
 msgid "Writing Assistant"
@@ -22377,8 +22463,8 @@ msgid ""
 msgstr ""
 "요약을 생성할 수 없습니다. 나중에 다시 시도하거나 관리자에게 문의하세요."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:67
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:67
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:68
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:68
 #, fuzzy
 #| msgid "Writing Assistant Tools"
 msgid "Writing assistant tools"
@@ -22428,6 +22514,10 @@ msgstr "이 %s을(를) 열 권한이 없습니다."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "대기 목록 위치 <strong>%s</strong>에 있습니다."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:78
+msgid "You are part of the BETA UI feedback program."
+msgstr ""
+
 #: app/models/transaction/notification.rb:111
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
@@ -22451,9 +22541,8 @@ msgstr "이 티켓에서 언급되었기 때문에 이 알림을 받고 있습�
 msgid "You calendar subscription settings were updated."
 msgstr "캘린더 구독 설정이 업데이트되었습니다."
 
-#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:69
-msgid ""
-"You can always send your feedback using the button next to the BETA switch."
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
+msgid "You can always re-join later."
 msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco:7
@@ -22631,6 +22720,16 @@ msgstr "비밀번호를 요청할 수 있습니다"
 msgid "You can request your password here."
 msgstr "여기서 비밀번호를 요청할 수 있습니다."
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:87
+msgid ""
+"You can return to the new BETA UI using the switch at the bottom of your "
+"taskbar or in your profile settings."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:69
+msgid "You can send feedback from the BETA button or profile settings."
+msgstr ""
+
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:3
 msgid ""
 "You can switch between the following backends for new attachments even on a "
@@ -22647,7 +22746,7 @@ msgstr ""
 "프로필 > 새 BETA UI 섹션에서 언제든지 이전 UI와 새 BETA UI 간에 전환할 수 있"
 "습니다."
 
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:41
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:82
 msgid ""
 "You can switch between the old and the New BETA UI at any moment in the "
 "Profile Settings > New BETA UI section."
@@ -22829,16 +22928,16 @@ msgid ""
 "your experience so far?"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:15
+msgid "You were using the new BETA UI for 5 hours."
+msgstr ""
+
 #: app/assets/javascripts/app/views/login.jst.eco:96
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:158
 msgid ""
 "You're already registered with your email address if you've been in touch "
 "with our Support team."
 msgstr "지원 팀과 연락한 적이 있다면 이미 이메일 주소로 등록되어 있습니다."
-
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:25
-msgid "You've been using the new UI for 2 hours."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee:13
 msgid "YouTube or Vimeo address"
@@ -22919,6 +23018,7 @@ msgid ""
 msgstr "계정이 확인되지 않았습니다. 확인 이메일의 링크를 클릭하세요."
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:60
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:40
 msgid "Your answer will be submitted to Zammad GmbH in an anonymized way."
 msgstr ""
 
@@ -23161,13 +23261,13 @@ msgstr "모든 구독자"
 msgid "and"
 msgstr "및"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:83
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:73
 msgid ""
 "anonymized rating and comment on the new UI, repeated in a few timely "
 "iterations"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:90
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:80
 msgid "anonymized tracked usage time of the new UI"
 msgstr ""
 
@@ -23693,6 +23793,16 @@ msgstr "i-doit 구성"
 msgid "i-doit integration"
 msgstr "i-doit 통합"
 
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:12
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_remove.rb:12
+#: app/graphql/gql/queries/autocomplete_search/idoit_object_types.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_list.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_search.rb:15
+#, fuzzy
+#| msgid "i-doit integration"
+msgid "i-doit integration is not enabled"
+msgstr "i-doit 통합"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:172
 msgid "i-doit: Link objects"
 msgstr "i-doit: 객체 연결"
@@ -24072,7 +24182,7 @@ msgstr "프로토콜(예: \"http://\" 또는 \"https://\")을 포함하면 안 �
 msgid "my own note"
 msgstr "내 메모"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:95
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:85
 msgid "name of the Zammad instance with tracked usage time of the new UI."
 msgstr ""
 
@@ -24696,6 +24806,28 @@ msgstr "…전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#~ msgid "This setting is not disabled."
+#~ msgstr "이 설정이 비활성화되지 않았습니다."
+
+#~ msgid "This setting is not enabled."
+#~ msgstr "이 설정이 활성화되지 않았습니다."
+
+#~ msgid "Drag and drop to reorder ticket overview list items."
+#~ msgstr "끌어서 티켓 개요 항목의 순서를 변경하세요."
+
+#, fuzzy
+#~| msgid "New BETA UI"
+#~ msgid "NEW BETA UI"
+#~ msgstr "새 BETA UI"
+
+#~ msgid "The order of your ticket overviews was updated."
+#~ msgstr "티켓 개요의 순서가 업데이트되었습니다."
+
+#~ msgid ""
+#~ "Have the BETA switch between the old and the new UI always available in "
+#~ "the Primary Navigation"
+#~ msgstr "주 내비게이션에 항상 구·신 UI 전환을 표시합니다"
 
 #, fuzzy
 #~| msgid "Cancel & Go Back"

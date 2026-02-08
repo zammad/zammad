@@ -555,10 +555,14 @@ class App.Utils
 
   # signatureNeeded = App.Utils.signatureCheck(message, signature)
   @signatureCheck: (message, signature) ->
-    messageText   = $('<div>' + message + '</div>').text().trim()
-    messageText   = messageText.replace(/(\n|\r|\t)/g, '')
-    signatureText = $('<div>' + signature + '</div>').text().trim()
-    signatureText = signatureText.replace(/(\n|\r|\t)/g, '')
+    messageText   = message.replace(/<[^>]+>/g, ' ')
+    messageText   = $('<div>' + messageText + '</div>').text().trim()
+    # New UI editor treats new lines differently.
+    # Thus the only way to match signature between new & old is to remove any white space characters.
+    messageText   = messageText.replace(/\s+/g, ' ')
+    signatureText = signature.replace(/<[^>]+>/g, ' ')
+    signatureText = $('<div>' + signatureText + '</div>').text().trim()
+    signatureText = signatureText.replace(/\s+/g, ' ')
 
     quote = (str) ->
       (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")

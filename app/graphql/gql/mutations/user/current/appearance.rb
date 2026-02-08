@@ -8,9 +8,7 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Profile appearance settings updated successfully?'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.appearance')
-    end
+    requires_permission 'user_preferences.appearance'
 
     def resolve(theme:)
       user = context.current_user

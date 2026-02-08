@@ -7,9 +7,7 @@ module Gql::Queries
 
     type String, null: false
 
-    def self.authorize(...)
-      true # This query should be available for all (including unauthenticated) users.
-    end
+    allow_public_access!
 
     def resolve(...)
       # Use a stable identifier for the development environment, as we use hot reloading there instead.

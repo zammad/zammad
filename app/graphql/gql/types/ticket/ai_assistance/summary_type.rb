@@ -5,7 +5,7 @@ module Gql::Types::Ticket::AIAssistance
     description 'The ticket summary'
 
     field :customer_request, String, null: true
-    field :conversation_summary, String, null: true
+    field :conversation_summary, [String], null: true
     field :open_questions, [String], null: true
     field :upcoming_events, [String], null: true
     field :customer_mood, String, null: true

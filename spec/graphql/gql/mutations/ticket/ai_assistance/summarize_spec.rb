@@ -66,7 +66,7 @@ RSpec.describe Gql::Mutations::Ticket::AIAssistance::Summarize, :aggregate_failu
       let(:expected_cache) do
         {
           'customer_request'     => 'example',
-          'conversation_summary' => 'example',
+          'conversation_summary' => ['example'],
           'open_questions'       => ['example'],
           'upcoming_events'      => ['example'],
           'customer_mood'        => 'example',
@@ -78,7 +78,7 @@ RSpec.describe Gql::Mutations::Ticket::AIAssistance::Summarize, :aggregate_failu
         expect(gql.result.data).to eq(
           'summary'   => {
             'customerRequest'     => 'example',
-            'conversationSummary' => 'example',
+            'conversationSummary' => ['example'],
             'openQuestions'       => ['example'],
             'upcomingEvents'      => ['example'],
             'customerMood'        => 'example',
@@ -111,7 +111,7 @@ RSpec.describe Gql::Mutations::Ticket::AIAssistance::Summarize, :aggregate_failu
             expect(gql.result.data).to eq(
               'summary'   => {
                 'customerRequest'     => 'example',
-                'conversationSummary' => 'example',
+                'conversationSummary' => ['example'],
                 'openQuestions'       => ['example'],
                 'upcomingEvents'      => ['example'],
                 'customerMood'        => 'example',
@@ -137,7 +137,7 @@ RSpec.describe Gql::Mutations::Ticket::AIAssistance::Summarize, :aggregate_failu
             expect(gql.result.data).to eq(
               'summary'   => {
                 'customerRequest'     => 'example',
-                'conversationSummary' => 'example',
+                'conversationSummary' => ['example'],
                 'openQuestions'       => ['example'],
                 'upcomingEvents'      => ['example'],
                 'customerMood'        => 'example',

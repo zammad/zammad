@@ -10,16 +10,16 @@ importers:
     devDependencies:
       '@frsource/cypress-plugin-visual-regression-diff':
         specifier: ^3.3.10
-        version: 3.3.10(cypress@15.9.0)
+        version: 3.3.10(cypress@15.10.0)
       '@testing-library/cypress':
         specifier: ^10.1.0
-        version: 10.1.0(cypress@15.9.0)
+        version: 10.1.0(cypress@15.10.0)
       cypress:
-        specifier: ^15.9.0
-        version: 15.9.0
+        specifier: ^15.10.0
+        version: 15.10.0
       cypress-real-events:
         specifier: ^1.15.0
-        version: 1.15.0(cypress@15.9.0)
+        version: 1.15.0(cypress@15.10.0)
 
 packages:
 
@@ -265,8 +265,8 @@ packages:
     peerDependencies:
       cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x || ^14.x || ^15.x
 
-  cypress@15.9.0:
-    resolution: {integrity: sha512-Ks6Bdilz3TtkLZtTQyqYaqtL/WT3X3APKaSLhTV96TmTyudzSjc6EJsJCHmBb7DxO+3R12q3Jkbjgm/iPgmwfg==}
+  cypress@15.10.0:
+    resolution: {integrity: sha512-OtUh7OMrfEjKoXydlAD1CfG2BvKxIqgWGY4/RMjrqQ3BKGBo5JFKoYNH+Tpcj4xKxWH4XK0Xri+9y8WkxhYbqQ==}
     engines: {node: ^20.1.0 || ^22.0.0 || >=24.0.0}
     hasBin: true
 
@@ -433,7 +433,7 @@ packages:
   glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
     engines: {node: '>=12'}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   global-dirs@3.0.0:
     resolution: {integrity: sha512-v8ho2DS5RiCjftj1nD9NmnfaOzTdud7RRnVd9kFNOjqZbISlx5DQ+OrTkywgd0dIt7oFCvKetZSHoHcP3sDdiA==}
@@ -562,8 +562,8 @@ packages:
   lodash.once@4.1.1:
     resolution: {integrity: sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==}
 
-  lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+  lodash@4.17.23:
+    resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
 
   log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
@@ -975,10 +975,10 @@ snapshots:
 
   '@frsource/base64@1.0.17': {}
 
-  '@frsource/cypress-plugin-visual-regression-diff@3.3.10(cypress@15.9.0)':
+  '@frsource/cypress-plugin-visual-regression-diff@3.3.10(cypress@15.10.0)':
     dependencies:
       '@frsource/base64': 1.0.17
-      cypress: 15.9.0
+      cypress: 15.10.0
       glob: 8.1.0
       meta-png: 1.0.6
       move-file: 2.1.0
@@ -986,11 +986,11 @@ snapshots:
       pngjs: 7.0.0
       sharp: 0.32.1
 
-  '@testing-library/cypress@10.1.0(cypress@15.9.0)':
+  '@testing-library/cypress@10.1.0(cypress@15.10.0)':
     dependencies:
       '@babel/runtime': 7.17.9
       '@testing-library/dom': 10.1.0
-      cypress: 15.9.0
+      cypress: 15.10.0
 
   '@testing-library/dom@10.1.0':
     dependencies:
@@ -1182,11 +1182,11 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  cypress-real-events@1.15.0(cypress@15.9.0):
+  cypress-real-events@1.15.0(cypress@15.10.0):
     dependencies:
-      cypress: 15.9.0
+      cypress: 15.10.0
 
-  cypress@15.9.0:
+  cypress@15.10.0:
     dependencies:
       '@cypress/request': 3.0.10
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
@@ -1216,7 +1216,7 @@ snapshots:
       hasha: 5.2.2
       is-installed-globally: 0.4.0
       listr2: 3.14.0(enquirer@2.3.6)
-      lodash: 4.17.21
+      lodash: 4.17.23
       log-symbols: 4.1.0
       minimist: 1.2.8
       ospath: 1.2.2
@@ -1511,7 +1511,7 @@ snapshots:
 
   lodash.once@4.1.1: {}
 
-  lodash@4.17.21: {}
+  lodash@4.17.23: {}
 
   log-symbols@4.1.0:
     dependencies:

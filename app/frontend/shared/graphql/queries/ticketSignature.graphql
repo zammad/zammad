@@ -1,6 +1,0 @@
-query ticketSignature($groupId: ID!, $ticketId: ID) {
-  ticketSignature(groupId: $groupId) {
-    id
-    renderedBody(ticketId: $ticketId, groupId: $groupId)
-  }
-}

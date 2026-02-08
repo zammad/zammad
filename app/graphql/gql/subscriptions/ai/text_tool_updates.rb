@@ -8,10 +8,6 @@ module Gql::Subscriptions
     field :group_ids, [GraphQL::Types::ID], description: 'The group IDs from the updated AI text tool'
     field :remove_text_tool_id, GraphQL::Types::ID, description: 'The AI text tool ID that was removed'
 
-    def authorized?
-      true
-    end
-
     class << self
       # Helper methods for triggering with custom payload.
       def trigger_after_create_or_update(text_tool)

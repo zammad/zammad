@@ -6,9 +6,7 @@ module Gql::Queries
 
     type String, null: false
 
-    def self.authorize(_obj, ctx)
-      VersionPolicy.new(ctx.current_user, nil).show?
-    end
+    requires_permission 'admin'
 
     def resolve(...)
       Version.get

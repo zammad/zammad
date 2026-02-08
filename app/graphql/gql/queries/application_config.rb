@@ -7,9 +7,7 @@ module Gql::Queries
 
     type [Gql::Types::KeyComplexValueType, { null: false }], null: false
 
-    def self.authorize(...)
-      true # This query should be available for all (including unauthenticated) users.
-    end
+    allow_public_access!
 
     # Reimplemented from sessions_controller#config_frontend.
     def resolve(...)

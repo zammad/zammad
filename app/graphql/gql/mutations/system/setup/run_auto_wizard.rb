@@ -10,9 +10,7 @@ module Gql::Mutations
 
     field :session, Gql::Types::SessionType, description: 'The current session, if the auto wizard was successfully executed.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(token: nil)
       user = Service::System::RunAutoWizard.new.execute(token:)

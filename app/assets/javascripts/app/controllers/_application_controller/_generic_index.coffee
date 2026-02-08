@@ -167,6 +167,7 @@ class App.ControllerGenericIndex extends App.Controller
       @html App.view('generic/admin/index')(
         head:              @pageData.objects
         buttons:           @pageData.buttons
+        leftButtons:       @pageData.leftButtons
         subHead:           @pageData.subHead
         topAlert:          @pageData.topAlert
         showDescription:   showDescription

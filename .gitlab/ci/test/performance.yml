@@ -35,7 +35,7 @@ performance:
     - bundle exec rails r tmp/performance/run_tests.rb || true
     # Then, switch to the current commit, migrate to it and run a few selected tests.
     - git checkout $CI_COMMIT_SHA
-    - rvm use 3.4.7
+    - rvm use 3.4.8
     - !reference [.scripts, bundle_install]
     # Force redis usage, even if it was disabled by the initial configure_environment script of stable.
     - export REDIS_URL=redis://redis

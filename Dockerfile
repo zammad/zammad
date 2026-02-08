@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
-ARG RUBY_VERSION=3.4.7
+ARG RUBY_VERSION=3.4.8
 ARG NODE_VERSION=22
 
 FROM docker.io/library/ruby:$RUBY_VERSION-slim-trixie AS base
@@ -80,6 +80,11 @@ RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
 # Final stage for app image
 FROM base
+
+# Ensure latest patches are applied.
+RUN apt-get update -qq && \
+    apt-get upgrade -y && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Application variables with defaults matching the Zammad docker stack.
 ENV POSTGRESQL_DB=zammad_production \

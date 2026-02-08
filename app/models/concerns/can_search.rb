@@ -197,7 +197,7 @@ returns
       # try search index backend
       # we only search in elastic search when we have a query present
       # else we try to use the database result, since it is more up to date
-      object_ids, object_count = if SearchIndexBackend.enabled? && included_modules.include?(HasSearchIndexBackend) && params[:query]&.delete('*').present?
+      object_ids, object_count = if SearchIndexBackend.enabled? && include?(HasSearchIndexBackend) && params[:query]&.delete('*').present?
                                    search_es(params)
                                  else
                                    search_sql(params)

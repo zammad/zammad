@@ -8,9 +8,7 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Is the configuration valid?'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(configuration:)
       klass_name = "Service::System::Import::Apply#{configuration.source.camelize}Configuration"

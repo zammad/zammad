@@ -17,7 +17,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
   let(:initial_content) do
     {
       'customer_request'     => article.body_as_text,
-      'conversation_summary' => initial_summary,
+      'conversation_summary' => [initial_summary],
       'open_questions'       => [],
       'upcoming_events'      => [],
       'customer_mood'        => 'Neutral',
@@ -29,7 +29,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
   let(:updated_content) do
     {
       'customer_request'     => 'Customer is facing an issue with the product.',
-      'conversation_summary' => updated_summary,
+      'conversation_summary' => [updated_summary],
       'open_questions'       => ['What is the issue?', 'How can we help?'],
       'upcoming_events'      => ['Next meeting on Friday', 'Follow-up call next week'],
       'customer_mood'        => 'Happy',

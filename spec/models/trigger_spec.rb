@@ -256,8 +256,56 @@ RSpec.describe Trigger, type: :model do
         end
       end
 
+      context 'when ticket is created via Channel::EmailParser.process with inline image and trigger is a note (#5918)' do
+        let(:perform) do
+          { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'some body with #{article.body_as_html}' } } # rubocop:disable Lint/InterpolationCheck
+        end
+
+        let(:raw_email) { Rails.root.join('test/data/mail/mail010.box').read }
+
+        it 'fires (without altering ticket state)' do
+          expect { Channel::EmailParser.new.process({}, raw_email) }
+            .to change(Ticket, :count).by(1)
+            .and change(Ticket::Article, :count).by(2)
+
+          expect(Ticket.last.state.name).to eq('new')
+
+          article = Ticket::Article.last
+          expect(article.type.name).to eq('note')
+          expect(article.sender.name).to eq('System')
+          expect(article.attachments.count).to eq(1)
+          expect(article.attachments[0].filename).to eq('image001.jpg')
+          expect(article.attachments[0].preferences['Content-ID']).to eq('image001.jpg@01CDB132.D8A510F0')
+          expect(article.body).to include('image001.jpg@01CDB132.D8A510F0')
+        end
+
+        context 'when first article' do
+          let(:perform) do
+            { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'some body with #{first_article.body_as_html}' } } # rubocop:disable Lint/InterpolationCheck
+          end
+
+          let(:raw_email) { Rails.root.join('test/data/mail/mail010.box').read }
+
+          it 'fires (without altering ticket state)' do
+            expect { Channel::EmailParser.new.process({}, raw_email) }
+              .to change(Ticket, :count).by(1)
+              .and change(Ticket::Article, :count).by(2)
+
+            expect(Ticket.last.state.name).to eq('new')
+
+            article = Ticket::Article.last
+            expect(article.type.name).to eq('note')
+            expect(article.sender.name).to eq('System')
+            expect(article.attachments.count).to eq(1)
+            expect(article.attachments[0].filename).to eq('image001.jpg')
+            expect(article.attachments[0].preferences['Content-ID']).to eq('image001.jpg@01CDB132.D8A510F0')
+            expect(article.body).to include('image001.jpg@01CDB132.D8A510F0')
+          end
+        end
+      end
+
       context 'notification.email recipient' do
-        let!(:ticket) { create(:ticket) }
+        let!(:ticket)     { create(:ticket) }
         let!(:recipient1) { create(:user, email: 'test1@zammad-test.com') }
         let!(:recipient2) { create(:user, email: 'test2@zammad-test.com') }
         let!(:recipient3) { create(:user, email: 'test3@zammad-test.com') }

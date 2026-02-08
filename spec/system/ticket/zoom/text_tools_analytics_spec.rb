@@ -52,7 +52,7 @@ RSpec.describe 'Ticket Zoom > Text Tools Analytics', authenticated_as: :authenti
   end
 
   def trigger_text_tools_modal
-    find("[aria-label='Writing Assistant Tools']").click
+    find("[aria-label='AI Writing Assistant Tools']").click
     find('.js-action', text: 'Dummy').click
 
     modal_ready

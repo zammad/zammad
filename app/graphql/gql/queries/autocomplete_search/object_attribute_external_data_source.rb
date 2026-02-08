@@ -9,8 +9,8 @@ module Gql::Queries
 
     type [Gql::Types::AutocompleteSearch::ExternalDataSourceEntryType], null: false
 
-    def self.authorize(_obj, ctx)
-      ExternalDataSourcePolicy.new(ctx.current_user, ctx[:current_arguments][:object])
+    def authorized?(input:)
+      ExternalDataSourcePolicy.new(context.current_user, input.object).fetch?
     end
 
     def resolve(input:)

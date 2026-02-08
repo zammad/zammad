@@ -8,9 +8,7 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Was the submission successful?'
 
-    def authorized?(...)
-      Setting.get('ui_desktop_beta_switch') && super
-    end
+    requires_enabled_setting 'ui_desktop_beta_switch'
 
     def resolve(input:)
       {

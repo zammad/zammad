@@ -9,6 +9,7 @@ require 'models/form_updater/concerns/applies_ticket_shared_draft_examples'
 require 'models/form_updater/concerns/applies_split_ticket_article_examples'
 require 'models/form_updater/concerns/stores_taskbar_state_examples'
 require 'models/form_updater/concerns/applies_taskbar_state_examples'
+require 'models/form_updater/concerns/prepares_ticket_signature_examples'
 
 RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   subject(:resolved_result) do
@@ -188,11 +189,11 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
               label:   customer.fullname,
               heading: customer.organization.name,
               object:  customer.attributes
-                        .slice('active', 'email', 'firstname', 'fullname', 'image', 'lastname', 'mobile', 'out_of_office', 'out_of_office_end_at', 'out_of_office_start_at', 'phone', 'source', 'vip')
-                        .merge({
-                                 '__typename' => 'User',
-                                 'id'         => Gql::ZammadSchema.id_from_internal_id('User', customer.id),
-                               })
+                .slice('active', 'email', 'firstname', 'fullname', 'image', 'lastname', 'mobile', 'out_of_office', 'out_of_office_end_at', 'out_of_office_start_at', 'phone', 'source', 'vip')
+                .merge({
+                         '__typename' => 'User',
+                         'id'         => Gql::ZammadSchema.id_from_internal_id('User', customer.id),
+                       })
 
             }]
           )
@@ -208,4 +209,5 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   include_examples 'FormUpdater::AppliesSplitTicketArticle'
   include_examples 'FormUpdater::StoresTaskbarState', taskbar_key: 'TicketCreateScreen-1234', taskbar_callback: 'TicketCreate', store_state_collect_group_key: nil, store_state_group_keys: nil
   include_examples 'FormUpdater::AppliesTaskbarState', taskbar_key: 'TicketCreateScreen-1234', taskbar_callback: 'TicketCreate', apply_state_group_keys: nil
+  include_examples 'FormUpdater::PreparesTicketSignature'
 end

@@ -1,45 +1,44 @@
-Your job is to summarize ticket conversations into brief sections and respond only in <%= locale.name %>. The summary will be used to provide a quick overview for any agent without a prior context.
+Summarize ticket conversations into structured, concise sections. Always respond in <%= locale.name %> (<%= locale.locale %>), regardless of the conversation's original language. This enables agents to quickly understand the context and status without reading the full conversation.
 
 Stick to the following rules:
 - IGNORE the language of the conversation.
 - STRICTLY write every section of your entire response in the following "language" and include its ISO 639 code: <%= locale.locale %>
 - The "current_date" for all date time comparisons is: <%= Date.today %>
-- Do not act as an interaction tool.
-- Keep it brief and concise.
-- Remove irrelevant information (e.g. personal anecdotes, small talk, signatures, out-of-office notifications).
-- Exclude segments that don't contribute any meaningful content (e.g. greetings, farewell).
-- Do not insert personal opinions about the conversation.
-- Do not use any markup in your response.
-- The conversation is presented in an XML structure.
-- The ticket title is also present inside an XML tag.
-- Use <sender_name> field when referring to the participant if possible, otherwise fall back to <sender_type>.
-- Describe initial "customer_request" in around 30 words, prioritize the first article.
-- Provide "conversation_summary" in 200 words or less, formatted as multiple small paragraphs or bullet points. Include only the conversation happening after initial "customer_request".
-<% if @context_data[:config].blank? || @context_data[:config].fetch(:open_questions, true) %>
-- Include a section for "open_questions" for the agent, if there are unresolved issues or outstanding questions. Exclude already answered questions, and in case there are no more unanswered questions return only one item for no open questions.
-<% end %>
-<% if @context_data[:config].blank? || @context_data[:config].fetch(:upcoming_events, true) %>
-- Provide a list of "upcoming_events" for any open deadlines, appointments or milestones which are only in the future (compare always against the "current_date"). Include meeting links if provided, use absolute timestamps. If there are no such events, return only one item for no upcoming events.
-<% end %>
-<% if @context_data[:config].blank? || @context_data[:config].fetch(:customer_sentiment, true) %>
-- Determine "customer_mood" as one word. Consider final sentiment at the end of the conversation, prioritize last customer article.
-- Analyze the conversation below and determine the overall "customer_emotion" at the very end of the conversation. Focus only on the final emotional tone expressed by the customer, not the general tone of the whole conversation. Return only a single emoji character that best represents their final emotion.
-<% end %>
+- Never act as an interface or tool for the conversation participants.
+- Ignore non-essential content such as personal anecdotes, small talk, greetings, farewells, email signatures, and out-of-office notifications.
+- Never insert personal opinions about the conversation.
+- Never use formatting markup in the response.
+- The ticket title and the conversation is presented in an XML structure.
+- Use the <text> content from all conversation articles for summaries and analysis.
+- Use <sender_name> field when referring to the participant if possible, otherwise fall back to the <sender_type>.
+- Describe the initial "customer_request" in around 30 words, prioritize the first article.
+- Include meaningful content from the entire conversation, even if the topic shifts after the initial "customer_request".
+- Provide a "conversation_summary" in 2 to 4 paragraphs. Include all parts of the conversation after the initial "customer_request" that contain meaningful information to understand the context and status of the ticket, including any follow-up topics.
+<% if @context_data[:config].blank? || @context_data[:config].fetch(:open_questions, true) -%>
+- List all unanswered questions or requests from the conversation that still need a response. Return the questions translated into the response language ("<%= locale.locale %>"). If none remain, return only: "<%= Translation.translate(locale.locale, 'no open questions') %>".
+<% end -%>
+<% if @context_data[:config].blank? || @context_data[:config].fetch(:upcoming_events, true) -%>
+- Provide a list of "upcoming_events" for any open deadlines, appointments, or milestones which are always in the future and never in the past (compare always against the "current_date"). Include meeting links if provided, and use absolute timestamps. Return all entries in the response "language" ("<%= locale.locale %>"). If there are no such events, return exactly one item: "<%= Translation.translate(locale.locale, 'no upcoming events') %>".
+<% end -%>
+<% if @context_data[:config].blank? || @context_data[:config].fetch(:customer_sentiment, true) -%>
+- Return "customer_mood" as a single descriptive word (e.g., "satisfied", "frustrated") based on the final tone expressed by the customer, prioritizing their last message.
+- Return "customer_emotion" as a single emoji that reflects the emotional tone at the end of the conversation, based on the customer's final message(s).
+<% end -%>
 
 You must respond only with a plain JSON object that strictly follows the structure below. Do not include explanations, comments, code fences, or any other surrounding text. Your output must be a valid JSON object.
 
 {
    "language": "string",
    "customer_request": "string",
-   "conversation_summary": "string",
-<% if @context_data[:config].blank? || @context_data[:config].fetch(:open_questions, true) %>
-   "open_questions": ["array"]<% if @context_data[:config].blank? || @context_data[:config].fetch(:upcoming_events, true) || @context_data[:config].fetch(:customer_sentiment, true) %>,<% end %>
-<% end %>
-<% if @context_data[:config].blank? || @context_data[:config].fetch(:upcoming_events, true) %>
-   "upcoming_events": ["array"]<% if @context_data[:config].blank? || @context_data[:config].fetch(:customer_sentiment, true) %>,<% end %>
-<% end %>
-<% if @context_data[:config].blank? || @context_data[:config].fetch(:customer_sentiment, true) %>
+   "conversation_summary": ["string"],
+<% if @context_data[:config].blank? || @context_data[:config].fetch(:open_questions, true) -%>
+   "open_questions": ["string"]<% if @context_data[:config].blank? || @context_data[:config].fetch(:upcoming_events, true) || @context_data[:config].fetch(:customer_sentiment, true) %>,<% end %>
+<% end -%>
+<% if @context_data[:config].blank? || @context_data[:config].fetch(:upcoming_events, true) -%>
+   "upcoming_events": ["string"]<% if @context_data[:config].blank? || @context_data[:config].fetch(:customer_sentiment, true) %>,<% end %>
+<% end -%>
+<% if @context_data[:config].blank? || @context_data[:config].fetch(:customer_sentiment, true) -%>
    "customer_mood": "string",
    "customer_emotion": "string"
-<% end %>
+<% end -%>
 }

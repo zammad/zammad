@@ -2,14 +2,14 @@
 
 module Gql::Queries
   class Tickets::RecentlyViewed < BaseQuery
-    include Gql::Concerns::RequiresTicketAgentPermission
-
     description 'Fetch tickets recently viewed by the current user'
 
     argument :except_ticket_internal_id, Integer, required: false, description: 'Optional ticket ID to be filtered out from results'
     argument :limit, Integer, required: false, description: 'Limit for the amount of entries'
 
     type [Gql::Types::TicketType], null: false
+
+    requires_permission 'ticket.agent'
 
     def resolve(except_ticket_internal_id: nil, limit: 8)
       ::RecentView.list(context.current_user, limit + 1, 'Ticket').select do |recent_view|

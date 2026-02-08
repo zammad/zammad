@@ -6,6 +6,7 @@ import { textToHtml } from '#shared/utils/helpers.ts'
 interface Props {
   summary: string | string[]
   label: string
+  type?: 'list' | 'paragraphs'
 }
 
 defineProps<Props>()
@@ -16,7 +17,10 @@ defineProps<Props>()
     <CommonLabel class="mb-3 block! text-black! dark:text-white!" tag="h3">{{
       $t(label)
     }}</CommonLabel>
-    <ol v-if="Array.isArray(summary)" class="space-y-3 text-gray-100 dark:text-neutral-400">
+    <ol
+      v-if="type === 'list' && Array.isArray(summary)"
+      class="space-y-3 text-gray-100 dark:text-neutral-400"
+    >
       <li
         v-for="content in summary"
         :key="content"
@@ -28,8 +32,12 @@ defineProps<Props>()
         <slot name="item-trailing" :content="content" />
       </li>
     </ol>
-    <!-- eslint-disable-next-line vue/no-v-text-v-html-on-component, vue/no-v-html -->
-    <CommonLabel v-else class="block!" tag="p" v-html="summary" />
+    <div v-else-if="type === 'paragraphs' && Array.isArray(summary)" class="space-y-2">
+      <CommonLabel v-for="content in summary" :key="content" class="block!" tag="p">{{
+        content
+      }}</CommonLabel>
+    </div>
+    <CommonLabel v-else class="block!" tag="p">{{ summary }}</CommonLabel>
     <slot name="trailing" />
   </div>
 </template>

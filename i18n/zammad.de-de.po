@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-01-21 10:51+0000\n"
+"PO-Revision-Date: 2026-02-03 09:00+0000\n"
 "Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -486,7 +486,7 @@ msgstr "%s-Anmeldeinformationen"
 msgid "%s days ago"
 msgstr "vor %s Tagen"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:60
 msgid "%s deselected."
 msgstr "%s abgewählt."
 
@@ -612,7 +612,7 @@ msgstr ""
 msgid "%s required!"
 msgstr "%s wird benötigt!"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:46
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
 "%s ausgewählt. Benutzen Sie die Pfeiltasten, um eine Option aus dem Dropdown-"
@@ -871,10 +871,8 @@ msgid "2 weeks"
 msgstr "2 Wochen"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:34
-#, fuzzy
-#| msgid "2 hours"
 msgid "20 hours"
-msgstr "2 Stunden"
+msgstr "20 Stunden"
 
 #: db/seeds/ticket_priorities.rb:5
 msgid "3 high"
@@ -889,10 +887,8 @@ msgid "4 weeks"
 msgstr "4 Wochen"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:33
-#, fuzzy
-#| msgid "2 hours"
 msgid "5 hours"
-msgstr "2 Stunden"
+msgstr "5 Stunden"
 
 #: public/assets/chat/chat-no-jquery.coffee:167
 #: public/assets/chat/chat.coffee:165
@@ -987,7 +983,7 @@ msgid ""
 msgstr ""
 "Ein Test-Ticket wurde erstellt. Sie finden es in der Übersicht \"%s\" %l."
 
-#: app/models/ticket.rb:297
+#: app/models/ticket.rb:299
 msgid "A ticket cannot be merged into itself."
 msgstr "Ein Ticket kann nicht mit sich selbst zusammengefasst werden."
 
@@ -1596,8 +1592,8 @@ msgstr "Alle Werte hinzufügen"
 msgid "Add attachment option to upload."
 msgstr "Hinzufügen einer Option für Anhänge."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:250
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:247
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:251
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:248
 msgid "Add bullet list"
 msgstr "Aufzählungsliste hinzufügen"
 
@@ -1624,13 +1620,13 @@ msgstr "Leere Checkliste hinzufügen"
 msgid "Add from a template"
 msgstr "Aus einer Vorlage hinzufügen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:108
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:108
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:109
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:109
 msgid "Add heading"
 msgstr "Überschrift hinzufügen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:280
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:277
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:281
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:278
 msgid "Add image"
 msgstr "Bild hinzufügen"
 
@@ -1638,9 +1634,9 @@ msgstr "Bild hinzufügen"
 msgid "Add internal note"
 msgstr "Interne Notiz hinzufügen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:299
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:300
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:296
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:174
 msgid "Add link"
 msgstr "Verknüpfung hinzufügen"
@@ -1655,8 +1651,8 @@ msgid "Add note"
 msgstr "Notiz hinzufügen"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:151
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:237
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:234
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:238
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:235
 msgid "Add ordered list"
 msgstr "Sortierte Liste hinzufügen"
 
@@ -1895,7 +1891,7 @@ msgstr "Agenten"
 msgid "Agents with \"%s\" permission"
 msgstr "Agenten mit \"%s\"-Berechtigung"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:113
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:103
 msgid "Agree & join"
 msgstr "Zustimmen & mitmachen"
 
@@ -2107,7 +2103,7 @@ msgstr "Ein Open Source Monitoring-Werkzeug."
 msgid "An unexpected error has occurred."
 msgstr "Es ist ein unerwarteter Fehler aufgetreten."
 
-#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:26
+#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:24
 msgid "An unexpected error occurred during system setup."
 msgstr "Während der Systemeinrichtung ist ein unerwarteter Fehler aufgetreten."
 
@@ -2912,8 +2908,8 @@ msgstr "Verfügbare Typen für ein neues Ticket"
 msgid "Avatar"
 msgstr "Avatar"
 
-#: app/graphql/gql/mutations/user/current/avatar/delete.rb:18
-#: app/graphql/gql/mutations/user/current/avatar/select.rb:18
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb:16
+#: app/graphql/gql/mutations/user/current/avatar/select.rb:16
 msgid "Avatar could not be found."
 msgstr "Avatar konnte nicht gefunden werden."
 
@@ -2947,6 +2943,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "BCC-Adresse für alle ausgehenden E-Mails"
 
 #: app/assets/javascripts/app/controllers/_manage/beta_ui.coffee:2
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:46
 msgid "BETA UI"
 msgstr "BETA UI"
 
@@ -2954,7 +2951,11 @@ msgstr "BETA UI"
 msgid "BETA UI Availability"
 msgstr "BETA UI Verfügbarkeit"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:56
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:73
+msgid "BETA UI feedback program"
+msgstr "Feedback-Programm BETA-Benutzeroberfläche"
+
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:46
 msgid "BETA UI illustration"
 msgstr "BETA UI-Illustration"
 
@@ -3328,6 +3329,11 @@ msgstr "Kamera"
 msgid "Can be in any CSS color format."
 msgstr "Kann jegliche CSS-Farbe sein."
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:37
+msgid "Can you tell us what are you missing in the BETA UI?"
+msgstr ""
+"Können Sie uns sagen, was Sie in der BETA-Benutzeroberfläche vermissen?"
+
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:87
 msgid "Can't create user!"
 msgstr "Kann Benutzer nicht erstellen!"
@@ -3525,8 +3531,8 @@ msgstr "Passwort ändern"
 msgid "Change personal account password."
 msgstr "Passwort für persönliches Konto ändern."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:185
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:182
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:183
 msgid "Change text color"
 msgstr "Textfarbe ändern"
 
@@ -3947,7 +3953,7 @@ msgid "Click here to set up a two-factor authentication method."
 msgstr ""
 "Hier klicken zum Einrichten einer Methode für Zwei-Faktor-Authentifizierung."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:49
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:48
 msgid "Click to edit…"
 msgstr "Zum Bearbeiten klicken…"
 
@@ -4091,7 +4097,7 @@ msgid "Commas and stars are not allowed in name."
 msgstr "Kommas und Sternchen sind im Namen nicht erlaubt."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:32
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:22
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:57
 msgid "Comment"
 msgstr "Kommentar"
@@ -4556,7 +4562,7 @@ msgid "Could not find the channel."
 msgstr "Kanal konnte nicht gefunden werden."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:37
-#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:23
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:21
 msgid "Could not generate recovery codes"
 msgstr "Wiederherstellungscodes konnten nicht erzeugt werden"
 
@@ -4618,7 +4624,7 @@ msgstr ""
 "einrichten"
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:108
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:111
 msgid "Couldn't save changes"
 msgstr "Änderungen konnten nicht gespeichert werden"
 
@@ -5000,7 +5006,8 @@ msgstr ""
 msgid "Currently processing this ticket…"
 msgstr "Dieses Ticket wird derzeit bearbeitet…"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:130
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:146
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:131
 msgid ""
 "Currently, no overviews are assigned to your roles. Please contact your "
 "administrator."
@@ -6393,6 +6400,14 @@ msgstr ""
 msgid "Delete"
 msgstr "Löschen"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:89
+msgid "Delete %s columns"
+msgstr "%s Spalten löschen"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
+msgid "Delete %s rows"
+msgstr "%s Zeilen löschen"
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:47
 msgid "Delete Avatar?"
 msgstr "Avatar löschen?"
@@ -6435,7 +6450,7 @@ msgstr "Artikel löschen"
 msgid "Delete avatar"
 msgstr "Avatar löschen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:82
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:90
 msgid "Delete column"
 msgstr "Spalte löschen"
 
@@ -6491,11 +6506,11 @@ msgstr "Organisation löschen?"
 msgid "Delete records"
 msgstr "Datensätze löschen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:54
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
 msgid "Delete row"
 msgstr "Zeile löschen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:139
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:150
 msgid "Delete table"
 msgstr "Tabelle löschen"
 
@@ -6757,7 +6772,7 @@ msgstr "Deaktivieren"
 msgid "Disable Notifications"
 msgstr "Benachrichtigungen deaktivieren"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:36
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:64
 msgid "Disable the banner for the BETA switch"
 msgstr "Deaktivieren Sie das Banner für den BETA-Schalter"
 
@@ -6839,14 +6854,18 @@ msgstr "Anzeige"
 msgid "Display Zammad in the New BETA User Interface"
 msgstr "Zammad in der neuen BETA-Benutzeroberfläche anzeigen"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:21
-msgid "Display Zammad with the New BETA User Interface"
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:52
+msgid "Display Zammad with the new BETA user interface"
 msgstr "Zammad in der neuen BETA-Benutzeroberfläche anzeigen"
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
 #: db/seeds/settings.rb:1883
 msgid "Display name"
 msgstr "Anzeigename"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:88
+msgid "Do not ask automatically for feedback on the BETA UI"
+msgstr "Nicht automatisch nach Feedback zur BETA-Benutzeroberfläche fragen"
 
 #: app/assets/javascripts/app/lib/mixins/destination_group_email_address.coffee:26
 msgid "Do not change email address (%s)"
@@ -7023,13 +7042,7 @@ msgstr "Entwurf konnte nicht aktualisiert werden."
 msgid "Drafts"
 msgstr "Entwürfe"
 
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:52
-msgid "Drag and drop to reorder ticket overview list items."
-msgstr ""
-"Durch Ziehen und Ablegen kann die Reihenfolge der Übersichten neu angeordnet "
-"werden."
-
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:63
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 msgid "Drag ended for %s."
 msgstr "Ziehen für %s beendet."
 
@@ -7425,7 +7438,7 @@ msgstr ""
 msgid "Empty"
 msgstr "Leer"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:423
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
 msgid "Empty overview"
 msgstr "Leere Übersicht"
 
@@ -7566,7 +7579,7 @@ msgstr "Aktivieren oder deaktivieren Sie die Ticket-Zusammenfassung."
 msgid "Enable or disable the writing assistant text tools."
 msgstr "Aktivieren oder deaktivieren Sie die Schreibassistent-Werkzeuge."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:65
 msgid "Enable the banner for the BETA switch"
 msgstr "Aktivieren Sie das Banner für den BETA-Schalter"
 
@@ -7801,7 +7814,7 @@ msgstr "Geben Sie eine gültige E-Mail-Adresse ein."
 msgid "Enter credentials"
 msgstr "Anmeldeinformationen eingeben"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:300
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:301
 msgid "Enter link URL"
 msgstr "Verknüpfungs-URL angeben"
 
@@ -8079,7 +8092,7 @@ msgstr "Eskalation am (Aktualisierungszeit)"
 msgid "Escalation times"
 msgstr "Eskalationszeiten"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:123
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:130
 msgid "Escape pressed. No item selected."
 msgstr "Escape gedrückt. Kein Element ausgewählt."
 
@@ -8287,7 +8300,7 @@ msgstr "Erweiterte Suche"
 msgid "External data source field"
 msgstr "Feld für externe Datenquelle"
 
-#: lib/search_index_backend.rb:758
+#: lib/search_index_backend.rb:754
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Extrahieren von Zammad-Anhangsinformationen aus Arrays"
 
@@ -8424,6 +8437,7 @@ msgid "February"
 msgstr "Februar"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:34
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:62
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -8579,7 +8593,7 @@ msgstr "Feste E-Mail-Konten"
 msgid "Flat Design"
 msgstr "Flaches Design"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:90
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:97
 msgid "Focus on %s"
 msgstr "Fokus auf %s"
 
@@ -8710,7 +8724,7 @@ msgstr "Formular"
 msgid "Form Allowed Parameters"
 msgstr "Erlaubte Formular-Parameter"
 
-#: app/graphql/gql/queries/form_updater.rb:30
+#: app/graphql/gql/queries/form_updater.rb:34
 msgid "FormSchema could not be found."
 msgstr "FormSchema konnte nicht gefunden werden."
 
@@ -8727,8 +8741,8 @@ msgid "Format as _underlined_"
 msgstr "Formatieren als _unterstrichen_"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:93
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:153
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:150
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:154
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:151
 msgid "Format as bold"
 msgstr "Formatieren als fett"
 
@@ -8745,8 +8759,8 @@ msgid "Format as h3 heading"
 msgstr "Formatieren als h3-Überschrift"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:100
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:161
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:158
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:162
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:159
 msgid "Format as italic"
 msgstr "Formatieren als kursiv"
 
@@ -8754,20 +8768,20 @@ msgstr "Formatieren als kursiv"
 msgid "Format as ordered list"
 msgstr "Formatieren als sortierte Liste"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:193
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:190
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:191
 msgid "Format as quoted text"
 msgstr "Formatieren als Zitat"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:114
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:177
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:174
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:178
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:175
 msgid "Format as strikethrough"
 msgstr "Formatieren als durchgestrichen"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:107
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:169
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:166
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:170
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:167
 msgid "Format as underlined"
 msgstr "Formatieren als unterstrichen"
 
@@ -9016,6 +9030,10 @@ msgstr ""
 msgid "GitLab: Link issue"
 msgstr "GitLab: Issue verknüpfen"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:100
+msgid "Give feedback"
+msgstr "Feedback geben"
+
 #: app/controllers/selectors_controller.rb:43
 msgid "Given object does not support selector"
 msgstr "Das gegebene Objekt unterstützt den Selektor nicht"
@@ -9104,7 +9122,7 @@ msgstr "Google E-Mail"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:188
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:46
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:87
 msgid "Got it"
 msgstr "Verstanden"
 
@@ -9297,14 +9315,6 @@ msgstr "Hat Aktualisierung"
 msgid "Have a nice day."
 msgstr "Auf Wiedersehen."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:31
-msgid ""
-"Have the BETA switch between the old and the new UI always available in the "
-"Primary Navigation"
-msgstr ""
-"Den BETA-Umschalter zwischen der alten und der neuen Benutzeroberfläche "
-"immer in der Hauptnavigation anzeigen"
-
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:21
 msgid ""
 "Have the BETA switch between the old and the new UI always available in the "
@@ -9336,20 +9346,20 @@ msgid "Header Menu"
 msgstr "Kopfzeilen-Menü"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:129
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:115
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:115
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:116
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:116
 msgid "Heading 1"
 msgstr "Überschrift 1"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:136
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:127
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:126
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:128
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:127
 msgid "Heading 2"
 msgstr "Überschrift 2"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:143
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:139
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:137
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:140
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:138
 msgid "Heading 3"
 msgstr "Überschrift 3"
 
@@ -9380,7 +9390,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:184
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:40
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:45
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:86
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:22
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
 msgid "Help"
@@ -9394,7 +9404,7 @@ msgstr "Hilfe! Ich bin ein Beispiel-Ticket 🎓"
 msgid "Help to improve Zammad!"
 msgstr "Helfen Sie mit, Zammad zu verbessern!"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:109
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:99
 msgid "Help us shape the future of Zammad!"
 msgstr "Helfen Sie uns, die Zukunft von Zammad zu gestalten!"
 
@@ -9480,7 +9490,7 @@ msgstr ""
 "probieren Sie sie frühzeitig aus und senden Sie uns Ihr Feedback dazu.¶¶Sie "
 "können jederzeit zurückwechseln, indem Sie den Schalter unten benutzen."
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:67
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:57
 msgid ""
 "Hey, we have something to show you! Our team has been working on the new "
 "Zammad UI for a while, and we’re very eager for you to try it and send some "
@@ -9497,7 +9507,7 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr "Hallo! Welches von unseren Produkten?"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:51
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:69
 msgid "Hide BETA UI switch"
 msgstr "BETA UI-Schalter ausblenden"
 
@@ -10104,8 +10114,8 @@ msgstr "Minutenwert erhöhen"
 msgid "Increment seconds value"
 msgstr "Sekundenwert erhöhen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:263
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:260
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:264
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:261
 msgid "Indent text"
 msgstr "Text einrücken"
 
@@ -10154,49 +10164,49 @@ msgstr ""
 "Das Eingabefeld muss vom Typ Text, Passwort, Telefon, Fax, E-Mail oder URL "
 "sein."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:220
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:217
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
 msgstr "Codeblock einfügen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:73
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:78
 msgid "Insert column after"
 msgstr "Spalte danach einfügen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:64
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:69
 msgid "Insert column before"
 msgstr "Spalte davor einfügen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:228
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:229
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr "Trenner einfügen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:209
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:206
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
 msgid "Insert inline code"
 msgstr "Inline-Code einfügen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:36
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:41
 msgid "Insert row above"
 msgstr "Zeile darüber einfügen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:45
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:50
 msgid "Insert row below"
 msgstr "Zeile darunter einfügen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:307
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:328
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:329
 msgid "Insert table"
 msgstr "Tabelle einfügen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:89
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:90
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:90
 msgid "Insert text from knowledge base answer"
 msgstr "Text aus Knowledge Base-Antwort einfügen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:98
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Insert text from text module"
 msgstr "Text aus Textbaustein einfügen"
 
@@ -10564,7 +10574,7 @@ msgstr "Es ist nicht möglich, den Systembenutzer zu löschen."
 msgid "It is not possible to delete your current account."
 msgstr "Es ist nicht möglich, Ihr aktuelles Konto zu löschen."
 
-#: app/models/ticket.rb:295
+#: app/models/ticket.rb:297
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 "Mit einem bereits zusammengefassten Ticket kann nicht zusammengefasst werden."
@@ -10602,6 +10612,10 @@ msgstr "Johann Schmidt"
 msgid "Join %s"
 msgstr "%s beitreten"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:107
+msgid "Join feedback program"
+msgstr "Am Feedback-Programm teilnehmen"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
@@ -10627,6 +10641,10 @@ msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr ""
 "Einfach in die Markierung klicken und den Text direkt bearbeiten. Viel Spaß!"
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:94
+msgid "Just switch back"
+msgstr "Einfach zurückwechseln"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts:11
 msgid "Kayako"
@@ -10870,6 +10888,10 @@ msgstr "Layout-Referenz"
 msgid "Learn More"
 msgstr "Mehr erfahren"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:40
+msgid "Leave BETA UI feedback program?"
+msgstr "Feedback-Programm der BETA-Benutzeroberfläche verlassen?"
+
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:207
 msgid "Leave empty to use URL (Completions)"
 msgstr "Leer lassen, um URL (Completions) zu verwenden"
@@ -10877,6 +10899,10 @@ msgstr "Leer lassen, um URL (Completions) zu verwenden"
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:197
 msgid "Leave empty to use the base model"
 msgstr "Leer lassen, um Basismodel zu verwenden"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:39
+msgid "Leave program"
+msgstr "Programm verlassen"
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:199
 msgid "Library"
@@ -11136,7 +11162,7 @@ msgstr "Lokaler MTA (Sendmail/Postfix/Exim/...) - Servereinrichtung verwenden"
 msgid "Locale"
 msgstr "Sprache"
 
-#: app/graphql/gql/mutations/user/current/locale.rb:17
+#: app/graphql/gql/mutations/user/current/locale.rb:15
 msgid "Locale could not be found."
 msgstr "Gebietsschema konnte nicht gefunden werden."
 
@@ -11729,7 +11755,7 @@ msgstr "Maximalanzahl angezeigter Tickets in Übersichten"
 msgid "May"
 msgstr "Mai"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:114
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:104
 msgid "Maybe later"
 msgstr "Vielleicht später"
 
@@ -11769,8 +11795,8 @@ msgstr "Mitglieder"
 msgid "Mention for"
 msgstr "Erwähnung für"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:80
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:81
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:81
 msgid "Mention user"
 msgstr "Benutzer erwähnen"
 
@@ -11781,7 +11807,11 @@ msgstr "Benutzer erwähnen"
 msgid "Merge"
 msgstr "Zusammenfassen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:101
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:111
+msgid "Merge %s cells"
+msgstr "%s Zellen zusammenführen"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:112
 msgid "Merge cells"
 msgstr "Zellen verbinden"
 
@@ -12280,7 +12310,7 @@ msgstr "Netzwerk"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:66
 msgid "Never ask me again"
-msgstr ""
+msgstr "Nicht mehr danach fragen"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:12
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:12
@@ -12323,9 +12353,8 @@ msgstr "Neues Attribut"
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:3
 #: app/assets/javascripts/app/controllers/clues/desktop_beta_switch_clues.coffee:5
 #: app/assets/javascripts/app/views/profile/newbetaui.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:36
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:11
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:20
 msgid "New BETA UI"
 msgstr "Neue BETA UI"
 
@@ -12810,7 +12839,8 @@ msgstr "Keine Mitglieder gefunden"
 msgid "No organizations found"
 msgstr "Keine Organisationen gefunden"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:127
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:128
 msgid "No overviews"
 msgstr "Keine Übersichten"
 
@@ -12905,7 +12935,7 @@ msgstr "Bisher wurden keine Tags hinzugefügt."
 msgid "No template created yet."
 msgstr "Bisher wurde keine Vorlage angelegt."
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:425
 msgid "No tickets in this state."
 msgstr "Keine Tickets in diesem Status."
 
@@ -12917,7 +12947,7 @@ msgstr "Kein Token!"
 msgid "No translation for this locale available"
 msgstr "Keine Übersetzung für dieses Gebietsschema verfügbar"
 
-#: app/models/ticket.rb:420
+#: app/models/ticket.rb:422
 msgid "No triggers active"
 msgstr "Keine Trigger aktiv"
 
@@ -13411,12 +13441,12 @@ msgid "Only visible to editors"
 msgstr "Nur für Redakteure sichtbar"
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:19
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:77
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:103
 msgid "Only when out of office replacement"
 msgstr "Nur bei Abwesenheitsvertretung"
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:12
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:74
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:100
 msgid "Only when shared organization member"
 msgstr "Nur bei Mitglied teilender Organisation"
 
@@ -13594,7 +13624,7 @@ msgstr "Reihenfolge der Übersichten"
 msgid "Order of overviews"
 msgstr "Reihenfolge der Übersichten"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:127
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:120
 msgid "Order of ticket overviews"
 msgstr "Reihenfolge der Ticket-Übersichten"
 
@@ -13800,8 +13830,8 @@ msgstr "Ausgehend:"
 msgid "Outdated Browser"
 msgstr "Veralteter Browser"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:271
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:268
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:272
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:269
 msgid "Outdent text"
 msgstr "Einrückung reduzieren"
 
@@ -13824,6 +13854,10 @@ msgstr "Übersicht Bulk-Maske"
 msgid "Overview navigation list"
 msgstr "Navigationsliste der Übersichten"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:70
+msgid "Overview order list"
+msgstr "Liste Reihenfolge der Übersichten"
+
 #: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:380
 msgid "Overview: %s"
 msgstr "Übersicht: %s"
@@ -13834,7 +13868,7 @@ msgstr "Übersicht: %s"
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:30
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:31
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:78
 #: db/seeds/permissions.rb:35
@@ -14827,6 +14861,10 @@ msgstr "Echtzeit"
 msgid "Reason for absence"
 msgstr "Grund der Abwesenheit"
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:78
+msgid "Reason to switch back"
+msgstr "Grund für den Wechsel zurück"
+
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:39
 #: app/assets/javascripts/app/views/google/list.jst.eco:112
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:113
@@ -15083,8 +15121,8 @@ msgid "Remove checklist"
 msgstr "Checkliste entfernen"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:121
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:201
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:198
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:202
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:199
 msgid "Remove formatting"
 msgstr "Formatierung entfernen"
 
@@ -15305,7 +15343,7 @@ msgid "Reset Password failed!"
 msgstr "Zurücksetzen des Passworts fehlgeschlagen!"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:136
 msgid "Reset overview order"
 msgstr "Reihenfolge der Übersichten zurücksetzen"
 
@@ -15418,7 +15456,7 @@ msgstr ""
 "<br>\n"
 "<div>Ihr #{config.product_name}-Team</div>\n"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:96
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:89
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 "Das Zurücksetzen der Reihenfolge der Ticket-Übersichten ist fehlgeschlagen."
@@ -16317,7 +16355,7 @@ msgstr "Das ausgewählte Objekt steht bereits in der Warteschlange zum Löschen.
 msgid "Selected tickets do not match any macros."
 msgstr "Keine Makros passen zu den ausgewählten Tickets."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:120
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:127
 msgid "Selection cancelled for %s."
 msgstr "Auswahl für %s abgebrochen."
 
@@ -16371,15 +16409,16 @@ msgid "Send email: %s"
 msgstr "E-Mail versenden: %s"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:121
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:44
 msgid "Send feedback"
 msgstr "Feedback senden"
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:93
+msgid "Send feedback & switch back"
+msgstr "Feedback senden & zurückwechseln"
+
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:121
-#, fuzzy
-#| msgid "Send feedback"
 msgid "Send feedback on the BETA UI"
-msgstr "Feedback senden"
+msgstr "Feedback zur BETA-Benutzeroberfläche senden"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:85
 msgid "Send invitation"
@@ -16722,7 +16761,7 @@ msgstr "Der gemeinsam Entwurf wurde erfolgreich aktualisiert."
 msgid "Shared drafts"
 msgstr "Gemeinsame Entwürfe"
 
-#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:20
+#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:17
 msgid "Shared drafts are not activated for the selected group"
 msgstr "Gemeinsame Entwürfe sind für die ausgewählte Gruppe nicht aktiviert"
 
@@ -16834,6 +16873,13 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
 msgid "Show previous tab"
 msgstr "Vorherigen Tab anzeigen"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:61
+msgid ""
+"Show the BETA switch between the old and the new UI in the primary navigation"
+msgstr ""
+"Anzeige des BETA-Umschalters zum Wechsel zwischen der alten und der neuen "
+"Benutzeroberfläche in der Navigationsleiste"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:43
 msgid "Show the chat when ready."
@@ -17124,7 +17170,7 @@ msgstr "Entschuldigung, nicht alle Felder sind korrekt ausgefüllt."
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "Entschuldigung, aktuell ist keine CTI-Schnittstelle aktiviert."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:139
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:146
 msgid ""
 "Sortable list focused. Use up and down arrows to navigate items. Press Space "
 "to select and item and again on another item to swap them."
@@ -17134,7 +17180,7 @@ msgstr ""
 "ein Element auszuwählen, und erneut auf ein anderes Element, um sie zu "
 "vertauschen."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:46
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:50
 msgid "Sorted %s in user taskbar list to position %s."
 msgstr "%s in der Benutzer-Taskleiste auf Position %s angeordnet."
 
@@ -17183,7 +17229,7 @@ msgstr ""
 msgid "Split"
 msgstr "Abspalten"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:92
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:100
 msgid "Split cells"
 msgstr "Zellen teilen"
 
@@ -17565,7 +17611,7 @@ msgstr "Sonntag"
 msgid "Support of multilingual Knowledge Base."
 msgstr "Unterstützung einer mehrsprachigen Knowledge Base."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:71
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:78
 msgid "Swapped %s with %s. %s moved to position %s."
 msgstr "%s und %s getauscht. %s auf Position %s verschoben."
 
@@ -17667,6 +17713,10 @@ msgid "Tab has changed, do you really want to close it?"
 msgstr ""
 "Inhalte des Tabs haben sich geändert, wollen Sie diese Änderungen wirklich "
 "verwerfen?"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuTrigger.vue:33
+msgid "Table options"
+msgstr "Tabellenoptionen"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:257
 msgid "Tabs"
@@ -17942,7 +17992,7 @@ msgstr "Die Knowledge Base konnte nicht erzeugt werden."
 msgid "The MIME type of the image is invalid."
 msgstr "Der MIME-Typ des Bildes ist ungültig."
 
-#: app/graphql/gql/queries/system/import/state.rb:39
+#: app/graphql/gql/queries/system/import/state.rb:37
 msgid "The OTRS import failed."
 msgstr "Der OTRS-Import ist fehlgeschlagen."
 
@@ -18251,6 +18301,15 @@ msgstr ""
 "Der Chat wird angezeigt, sobald eine Verbindung zu Zammad hergestellt werden "
 "konnte und ein Agent für den Chat online ist."
 
+#: app/graphql/gql/mutations/ticket/checklist/add.rb:13
+#: app/graphql/gql/mutations/ticket/checklist/base.rb:7
+#: app/graphql/gql/queries/checklist/templates.rb:11
+#: app/graphql/gql/queries/ticket/checklist.rb:11
+#: app/graphql/gql/subscriptions/checklist/template_updates.rb:12
+#: app/graphql/gql/subscriptions/ticket/checklist_updates.rb:13
+msgid "The checklist feature is not active"
+msgstr "Die Checklisten-Funktion ist nicht aktiv"
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:33
 msgid ""
 "The chosen unit will be used for display only and will not affect stored "
@@ -18307,7 +18366,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:400
-#: app/graphql/gql/mutations/user/current/change_password.rb:30
+#: app/graphql/gql/mutations/user/current/change_password.rb:28
 msgid "The current password you provided is incorrect."
 msgstr "Das aktuelle Passwort, das Sie angegeben haben, ist falsch."
 
@@ -18325,11 +18384,9 @@ msgstr ""
 "UTF-8 gespeichert werden. Es kann eine CSV-Datei importiert oder die Daten "
 "direkt in das Textfeld einfügt werden."
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:76
-#, fuzzy
-#| msgid "Anonymized data we need to collect is:"
-msgid "The data we need to collect includes:"
-msgstr "Anonymisierte Daten, die wir erheben, sind:"
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:66
+msgid "The data we need to collect consists of:"
+msgstr "Die Daten, die wir sammeln, sind:"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:294
 msgid ""
@@ -18543,11 +18600,11 @@ msgstr ""
 "Die Bezeichnung eines Tickets, z.B. Ticket#, Call#, MyTicket#. Der Standard "
 "ist Ticket#."
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:34
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:30
 msgid "The idoit object could not be found."
 msgstr "Das idoit-Objekt konnte nicht gefunden werden."
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:28
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:24
 msgid "The idoit object is already present on the ticket."
 msgstr "Das idoit-Objekt ist bereits im Ticket vorhanden."
 
@@ -18589,11 +18646,11 @@ msgid "The issue could not be saved."
 msgstr "Das Issue konnte nicht angelegt werden."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:26
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:24
 msgid "The issue reference already exists."
 msgstr "Das verlinkte Issue existiert bereits."
 
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:42
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:40
 msgid "The issue reference could not be found."
 msgstr "Das verlinkte Issue konnte nicht gefunden werden."
 
@@ -18671,13 +18728,9 @@ msgstr "Das Objekt konnte nicht aktualisiert werden."
 msgid "The online notification could not be marked as seen."
 msgstr "Die Benachrichtigung konnte nicht als gelesen markiert werden."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:105
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:98
 msgid "The order of your ticket overviews was reset."
 msgstr "Die Reihenfolge der Ticket-Übersichten wurde zurückgesetzt."
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:85
-msgid "The order of your ticket overviews was updated."
-msgstr "Die Reihenfolge der Ticket-Übersichten wurde aktualisiert."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:248
 msgid "The page is not available anymore"
@@ -18794,7 +18847,7 @@ msgstr "Der angegebene Endpunkt ist ungültig."
 msgid "The provided match operator is missing or invalid."
 msgstr "Der angegebene Übereinstimmungs-Operator fehlt oder ist ungültig."
 
-#: app/graphql/gql/mutations/user/current/password_check.rb:28
+#: app/graphql/gql/mutations/user/current/password_check.rb:26
 msgid "The provided password is incorrect."
 msgstr "Das angegebene Passwort ist falsch."
 
@@ -18927,7 +18980,7 @@ msgstr "Der erforderliche Parameter 'group_id' fehlt."
 msgid "The required parameter 'id' is missing."
 msgstr "Der erforderliche Parameter 'id' fehlt."
 
-#: lib/search_index_backend.rb:681
+#: lib/search_index_backend.rb:677
 msgid "The required parameter 'key' is missing."
 msgstr "Der erforderliche Parameter 'key' fehlt."
 
@@ -18983,7 +19036,7 @@ msgstr "Der erforderliche Parameter 'ticket_number' fehlt."
 msgid "The required parameter 'user_id' is missing."
 msgstr "Der erforderliche Parameter 'user_id' fehlt."
 
-#: lib/search_index_backend.rb:682
+#: lib/search_index_backend.rb:678
 msgid "The required parameter 'value' is missing."
 msgstr "Der erforderliche Parameter 'value' fehlt."
 
@@ -19244,7 +19297,7 @@ msgstr ""
 "Benutzer entfernt."
 
 #: app/controllers/sessions_controller.rb:249
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:34
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
 msgid "The two-factor authentication method is not enabled."
@@ -19283,7 +19336,7 @@ msgstr ""
 "Das Feld 'preferred_username' kann nicht aus 'id_token' erkannt werden."
 
 #: app/controllers/sessions_controller.rb:245
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:29
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "Benutzername oder Passwort ist ungültig."
 
@@ -19596,7 +19649,7 @@ msgstr "Dieses Gerät"
 msgid "This entry already exists!"
 msgstr "Dieser Eintrag existiert bereits!"
 
-#: app/services/service/check_feature_enabled.rb:8
+#: app/services/service/check_feature_enabled.rb:6
 msgid "This feature is not enabled."
 msgstr "Diese Funktion ist nicht aktiviert."
 
@@ -19966,7 +20019,7 @@ msgid ""
 "Each of the users can then provide consent or not for the participation in "
 "the BETA program.\n"
 "\n"
-"Answers will be anonymized and the data collected may include:\n"
+"Answers will be anonymized and the data collected consists of:\n"
 "- Zammad instance name\n"
 "- star rating of the new UI\n"
 "- text comments on the new UI\n"
@@ -19981,8 +20034,7 @@ msgstr ""
 "Jeder Benutzer kann dann sein Einverständnis für die Teilnahme am BETA-"
 "Programm geben oder nicht.\n"
 "\n"
-"Die Antworten werden anonymisiert und die gesammelten Daten können "
-"beinhalten:\n"
+"Die Antworten werden anonymisiert und die gesammelten Daten beinhalten:\n"
 "- Name der Zammad-Instanz\n"
 "- Sterne-Bewertung der neuen Benutzeroberfläche\n"
 "- Textkommentare zur neuen Benutzeroberfläche\n"
@@ -20018,14 +20070,6 @@ msgid ""
 "This service shows you contacts of incoming calls and a caller list in "
 "realtime."
 msgstr "Dieser Dienst zeigt eingehende und ausgehende Anrufe in Echtzeit an."
-
-#: app/services/service/concerns/handles_setting.rb:22
-msgid "This setting is not disabled."
-msgstr "Diese Einstellung ist nicht deaktiviert."
-
-#: app/services/service/concerns/handles_setting.rb:18
-msgid "This setting is not enabled."
-msgstr "Diese Einstellung ist nicht aktiviert."
 
 #: app/assets/javascripts/app/models/group.coffee:13
 msgid "This signature is inactive, it won't be included in the reply."
@@ -20941,15 +20985,15 @@ msgstr "Dunklen Modus umschalten"
 msgid "Toggle group"
 msgstr "Gruppe umschalten"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:129
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:140
 msgid "Toggle header cell"
 msgstr "Zelle als Kopf umschalten"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:120
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:131
 msgid "Toggle header column"
 msgstr "Kopfspalte umschalten"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:111
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:122
 msgid "Toggle header row"
 msgstr "Kopfzeile umschalten"
 
@@ -21044,7 +21088,7 @@ msgstr "Nachverfolgt als Checklisten-Element in"
 msgid "Transfer conversation to another chat:"
 msgstr "Gespräch in einen anderen Chat übertragen:"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:55
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:59
 msgid "Transferred %s from user taskbar list %s at position %s."
 msgstr "%s von der Benutzer-Taskleistenliste %s an Position %s verschoben."
 
@@ -21773,7 +21817,7 @@ msgstr ""
 msgid "Updating Database"
 msgstr "Datenbank wird aktualisiert"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:73
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:74
 msgid "Updating the order of your ticket overviews failed."
 msgstr ""
 "Die Aktualisierung der Reihenfolge der Ticket-Übersichten ist fehlgeschlagen."
@@ -22348,7 +22392,7 @@ msgstr "Wartende Kunden"
 msgid "Waiting in %s"
 msgstr "Warten in %s"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:44
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:34
 msgid "Want to join the BETA UI feedback program?"
 msgstr "Möchten Sie am BETA UI Feedback-Programm teilnehmen?"
 
@@ -22686,6 +22730,10 @@ msgstr "Workflow"
 msgid "Workflows"
 msgstr "Workflows"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:104
+msgid "Would you like to give us feedback on the BETA UI? "
+msgstr "Möchten Sie uns Feedback zur BETA-Benutzeroberfläche geben? "
+
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:16
 #: db/seeds/permissions.rb:245 db/seeds/settings.rb:6103
 msgid "Writing Assistant"
@@ -22734,8 +22782,8 @@ msgstr ""
 "Der Schreibassistent konnte keinen Text erzeugen. Bitte versuchen Sie es "
 "erneut oder kontaktieren Sie Ihren Administrator."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:67
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:67
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:68
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:68
 msgid "Writing assistant tools"
 msgstr "Schreibassistent-Werkzeuge"
 
@@ -22783,6 +22831,10 @@ msgstr "Sie sind nicht berechtigt, %s zu öffnen."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Sie sind in der Warteliste auf Position <strong>%s</strong>."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:78
+msgid "You are part of the BETA UI feedback program."
+msgstr "Sie nehmen Teil am Feedback-Programm zur BETA-Benutzeroberfläche."
+
 #: app/models/transaction/notification.rb:111
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
@@ -22808,10 +22860,9 @@ msgstr "Sie erhalten dies, weil Sie in diesem Ticket erwähnt wurden."
 msgid "You calendar subscription settings were updated."
 msgstr "Ihre Kalenderabonnementeinstellungen wurden aktualisiert."
 
-#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:69
-msgid ""
-"You can always send your feedback using the button next to the BETA switch."
-msgstr ""
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
+msgid "You can always re-join later."
+msgstr "Sie können später jederzeit wieder mitmachen."
 
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco:7
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:9
@@ -23004,6 +23055,21 @@ msgstr "Beantragen eines neuen Passworts"
 msgid "You can request your password here."
 msgstr "Sie können Ihr Passwort hier anfordern."
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:87
+msgid ""
+"You can return to the new BETA UI using the switch at the bottom of your "
+"taskbar or in your profile settings."
+msgstr ""
+"Sie können zur neuen BETA-Benutzeroberfläche zurückkehren, indem Sie den "
+"Schalter unten in Ihrer Navigationsleiste oder in Ihren Profileinstellungen "
+"betätigen."
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:69
+msgid "You can send feedback from the BETA button or profile settings."
+msgstr ""
+"Sie können über die BETA-Schaltfläche oder die Profileinstellungen Feedback "
+"senden."
+
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:3
 msgid ""
 "You can switch between the following backends for new attachments even on a "
@@ -23020,7 +23086,7 @@ msgstr ""
 "Sie können jederzeit zwischen der alten und der neuen BETA-"
 "Benutzeroberfläche im Bereich Profil > Neue BETA UI wechseln."
 
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:41
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:82
 msgid ""
 "You can switch between the old and the New BETA UI at any moment in the "
 "Profile Settings > New BETA UI section."
@@ -23209,6 +23275,12 @@ msgid ""
 "You were using the new BETA UI for %s. Considering that, how would you rate "
 "your experience so far?"
 msgstr ""
+"Sie haben die neue BETA-Benutzeroberfläche für %s verwendet. Wie würden Sie "
+"Ihre bisherigen Erfahrungen bewerten?"
+
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:15
+msgid "You were using the new BETA UI for 5 hours."
+msgstr "Sie haben die neue BETA-Benutzeroberfläche 5 Stunden lang verwendet."
 
 #: app/assets/javascripts/app/views/login.jst.eco:96
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:158
@@ -23218,10 +23290,6 @@ msgid ""
 msgstr ""
 "Sie sind bereits mit Ihrer E-Mail-Adresse registriert, wenn Sie mit unserem "
 "Support-Team Kontakt hatten."
-
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:25
-msgid "You've been using the new UI for 2 hours."
-msgstr "Sie haben die neue Benutzeroberfläche seit 2 Stunden verwendet."
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee:13
 msgid "YouTube or Vimeo address"
@@ -23303,8 +23371,10 @@ msgstr ""
 "Verifizierungs-E-Mail."
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:60
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:40
 msgid "Your answer will be submitted to Zammad GmbH in an anonymized way."
 msgstr ""
+"Ihre Antwort wird in anonymisierter Form an die Zammad GmbH übermittelt."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:172
 msgid "Your avatar"
@@ -23358,7 +23428,7 @@ msgstr "Ihr persönlicher Zugangs-Token"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:50
 msgid "Your rating of the new BETA UI"
-msgstr ""
+msgstr "Ihre Bewertung der neuen BETA-Benutzeroberfläche"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:28
 msgid "Your theme has been updated."
@@ -23551,22 +23621,17 @@ msgstr "alle Abonnenten"
 msgid "and"
 msgstr "und"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:83
-#, fuzzy
-#| msgid "star rating of the new UI, repeated in a few timely iterations"
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:73
 msgid ""
 "anonymized rating and comment on the new UI, repeated in a few timely "
 "iterations"
 msgstr ""
-"Sterne-Bewertung der neuen Benutzeroberfläche, mehrfach abgefragt nach "
-"bestimmter Nutzungsdauer"
+"Anonymisierte Bewertung und Kommentar zur neuen Benutzeroberfläche, die in "
+"ein paar Mal wiederholt werden"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:90
-#, fuzzy
-#| msgid "for this, we need to track the usage time of the new UI"
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:80
 msgid "anonymized tracked usage time of the new UI"
-msgstr ""
-"Dazu müssen wir die Nutzungszeit in der neuen Benutzeroberfläche erheben"
+msgstr "anonymisierte Nutzungszeit der neuen Benutzeroberfläche"
 
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:70
 msgid "apply filter"
@@ -24089,6 +24154,14 @@ msgstr "i-doit-Konfiguration"
 msgid "i-doit integration"
 msgstr "i-doit-Integration"
 
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:12
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_remove.rb:12
+#: app/graphql/gql/queries/autocomplete_search/idoit_object_types.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_list.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_search.rb:15
+msgid "i-doit integration is not enabled"
+msgstr "i-doit Integration ist nicht aktiviert"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:172
 msgid "i-doit: Link objects"
 msgstr "i-doit: Objekte verknüpfen"
@@ -24469,13 +24542,9 @@ msgstr "darf kein Protokoll beinhalten (z.B. \"http://\" oder \"https://\")"
 msgid "my own note"
 msgstr "Meine eigene Notiz"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:95
-#, fuzzy
-#| msgid "the Zammad instance where the usage of the new UI is tracked."
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:85
 msgid "name of the Zammad instance with tracked usage time of the new UI."
-msgstr ""
-"die Zammad-Instanz, in der die Nutzung der neuen Benutzeroberfläche erhoben "
-"wird."
+msgstr "Name der Zammad-Instanz mit Nutzungszeit der neuen Benutzeroberfläche."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorNew.vue:5
 #: db/seeds/ticket_state_types.rb:3 db/seeds/ticket_states.rb:5
@@ -25096,6 +25165,30 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "This setting is not disabled."
+#~ msgstr "Diese Einstellung ist nicht deaktiviert."
+
+#~ msgid "This setting is not enabled."
+#~ msgstr "Diese Einstellung ist nicht aktiviert."
+
+#~ msgid "Drag and drop to reorder ticket overview list items."
+#~ msgstr ""
+#~ "Durch Ziehen und Ablegen kann die Reihenfolge der Übersichten neu "
+#~ "angeordnet werden."
+
+#~ msgid "NEW BETA UI"
+#~ msgstr "Neue BETA-Benutzeroberfläche"
+
+#~ msgid "The order of your ticket overviews was updated."
+#~ msgstr "Die Reihenfolge der Ticket-Übersichten wurde aktualisiert."
+
+#~ msgid ""
+#~ "Have the BETA switch between the old and the new UI always available in "
+#~ "the Primary Navigation"
+#~ msgstr ""
+#~ "Den BETA-Umschalter zwischen der alten und der neuen Benutzeroberfläche "
+#~ "immer in der Hauptnavigation anzeigen"
 
 #~ msgid "Any additional feedback?"
 #~ msgstr "Haben Sie weiteres Feedback?"

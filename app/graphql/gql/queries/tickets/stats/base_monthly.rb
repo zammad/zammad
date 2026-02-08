@@ -2,11 +2,11 @@
 
 module Gql::Queries
   class Tickets::Stats::BaseMonthly < BaseQuery
-    include Gql::Concerns::RequiresTicketAgentPermission
-
     description 'Base class for monthly ticket stats queries'
 
     type [Gql::Types::Ticket::StatsMonthlyType], null: false
+
+    requires_permission 'ticket.agent'
 
     def resolve_stats(conditions:)
       Service::Ticket::Stats::Monthly.new(current_user: context.current_user).execute(conditions:)

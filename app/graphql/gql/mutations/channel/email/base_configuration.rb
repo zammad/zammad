@@ -4,9 +4,7 @@ module Gql::Mutations
   class Channel::Email::BaseConfiguration < BaseMutation
     description 'Base class for configuration mutations'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('admin.channel_email')
-    end
+    requires_permission 'admin.channel_email'
 
     protected
 

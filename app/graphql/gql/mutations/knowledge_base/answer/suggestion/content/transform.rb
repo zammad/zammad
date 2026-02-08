@@ -10,9 +10,7 @@ module Gql::Mutations
     field :body, String, null: true, description: 'Answer translation content'
     field :attachments, [Gql::Types::StoredFileType], null: true, description: 'Attachments of the answer'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(translation_id:, form_id:)
       translation = Gql::ZammadSchema.verified_object_from_id(translation_id, type: ::KnowledgeBase::Answer::Translation)

@@ -1,4 +1,4 @@
-class App.BetaUI extends App.ControllerAIFeatureBase
+class App.BetaUI extends App.ControllerSubContent
   header: __('BETA UI Availability')
   description: __('''
 This service configures the usage and consent to participate in the BETA research of the new UI.
@@ -32,6 +32,11 @@ Answers will be anonymized and the data collected consists of:
 
       @betaUISettingUpdated = false if @betaUISettingUpdated
       @betaUIRolesSettingUpdated = false if @betaUIRolesSettingUpdated
+    )
+
+    App.Setting.fetchFull(
+      @render
+      force: false
     )
 
   render: =>

@@ -475,7 +475,7 @@ msgstr "%s 证书"
 msgid "%s days ago"
 msgstr "%s 天之前"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:60
 msgid "%s deselected."
 msgstr "%s 取消选择"
 
@@ -599,7 +599,7 @@ msgstr "%s 推荐使用OAuth方式。 %s 未来将停止支持简单鉴权方式
 msgid "%s required!"
 msgstr "需要 ％s！"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:46
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr "%s 已选中。使用箭头键选择放置位置，然后按空格键。"
 
@@ -946,7 +946,7 @@ msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr "测试工单已建立，您可以在工单概览 \"%s\" %l 中找到它。"
 
-#: app/models/ticket.rb:297
+#: app/models/ticket.rb:299
 msgid "A ticket cannot be merged into itself."
 msgstr "一个工单不能与它本身合并。"
 
@@ -1582,8 +1582,8 @@ msgstr "添加所有值"
 msgid "Add attachment option to upload."
 msgstr "允许上传附件。"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:250
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:247
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:251
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:248
 msgid "Add bullet list"
 msgstr "添加项目符号列表"
 
@@ -1618,13 +1618,13 @@ msgstr "添加项目符号列表"
 msgid "Add from a template"
 msgstr "保存为模板"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:108
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:108
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:109
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:109
 msgid "Add heading"
 msgstr "新增标题"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:280
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:277
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:281
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:278
 msgid "Add image"
 msgstr "添加图片"
 
@@ -1634,9 +1634,9 @@ msgstr "添加图片"
 msgid "Add internal note"
 msgstr "增加注释"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:299
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:300
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:296
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:174
 msgid "Add link"
 msgstr "添加链接"
@@ -1655,8 +1655,8 @@ msgid "Add note"
 msgstr "添加机器人"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:151
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:237
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:234
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:238
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:235
 msgid "Add ordered list"
 msgstr "添加有序列表"
 
@@ -1894,7 +1894,7 @@ msgstr "客服人员"
 msgid "Agents with \"%s\" permission"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:113
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:103
 msgid "Agree & join"
 msgstr ""
 
@@ -2091,7 +2091,7 @@ msgstr "一个开源监控工具。"
 msgid "An unexpected error has occurred."
 msgstr "发生意外的错误。"
 
-#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:26
+#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:24
 msgid "An unexpected error occurred during system setup."
 msgstr "系统设置期间发生意外错误。"
 
@@ -2895,8 +2895,8 @@ msgstr "新工单的可用类型"
 msgid "Avatar"
 msgstr "头像"
 
-#: app/graphql/gql/mutations/user/current/avatar/delete.rb:18
-#: app/graphql/gql/mutations/user/current/avatar/select.rb:18
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb:16
+#: app/graphql/gql/mutations/user/current/avatar/select.rb:16
 msgid "Avatar could not be found."
 msgstr "找不到头像。"
 
@@ -2932,6 +2932,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "所有外发电子邮件的密件抄送地址"
 
 #: app/assets/javascripts/app/controllers/_manage/beta_ui.coffee:2
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:46
 #, fuzzy
 #| msgid "New tab"
 msgid "BETA UI"
@@ -2941,7 +2942,11 @@ msgstr "新标签"
 msgid "BETA UI Availability"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:56
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:73
+msgid "BETA UI feedback program"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:46
 #, fuzzy
 #| msgid "CTI integration"
 msgid "BETA UI illustration"
@@ -3312,6 +3317,10 @@ msgstr "摄像头"
 msgid "Can be in any CSS color format."
 msgstr "可以是任何CSS颜色格式。"
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:37
+msgid "Can you tell us what are you missing in the BETA UI?"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:87
 msgid "Can't create user!"
 msgstr "不能创建用户！"
@@ -3515,8 +3524,8 @@ msgstr "更改登录密码"
 msgid "Change personal account password."
 msgstr "修改个人账户密码。"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:185
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:182
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:183
 msgid "Change text color"
 msgstr "更改字体颜色"
 
@@ -3956,7 +3965,7 @@ msgstr "点击这里"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "单击此处设置双因素身份验证方法。"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:49
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:48
 msgid "Click to edit…"
 msgstr ""
 
@@ -4106,7 +4115,7 @@ msgid "Commas and stars are not allowed in name."
 msgstr "不允许使用空格"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:32
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:22
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:57
 msgid "Comment"
 msgstr "注释"
@@ -4591,7 +4600,7 @@ msgid "Could not find the channel."
 msgstr "無法保存更改"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:37
-#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:23
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:21
 msgid "Could not generate recovery codes"
 msgstr "无法生成恢复代码"
 
@@ -4640,7 +4649,7 @@ msgid "Could not set two-factor authentication method as default"
 msgstr "无法将双因素身份验证方法设置为默认方法"
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:108
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:111
 #, fuzzy
 #| msgid "Unable to save changes."
 msgid "Couldn't save changes"
@@ -5027,7 +5036,8 @@ msgstr "当前没有概述分配给您的角色。请联系您的管理员。"
 msgid "Currently processing this ticket…"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:130
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:146
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:131
 #, fuzzy
 #| msgid ""
 #| "Currently no overview is assigned to your roles. Please contact your "
@@ -6283,6 +6293,18 @@ msgstr "定义哪些用户角色将在匹配机票的情况下会收到警告。
 msgid "Delete"
 msgstr "删除"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:89
+#, fuzzy
+#| msgid "Delete column"
+msgid "Delete %s columns"
+msgstr "删除列"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
+#, fuzzy
+#| msgid "Delete row"
+msgid "Delete %s rows"
+msgstr "删除行"
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:47
 msgid "Delete Avatar?"
 msgstr "删除头像？"
@@ -6325,7 +6347,7 @@ msgstr "删除文章"
 msgid "Delete avatar"
 msgstr "删除头像"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:82
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:90
 msgid "Delete column"
 msgstr "删除列"
 
@@ -6385,11 +6407,11 @@ msgstr "删除组织？"
 msgid "Delete records"
 msgstr "刪除紀錄"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:54
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
 msgid "Delete row"
 msgstr "删除行"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:139
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:150
 msgid "Delete table"
 msgstr "删除表"
 
@@ -6652,7 +6674,7 @@ msgstr "关闭"
 msgid "Disable Notifications"
 msgstr "关闭提醒"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:36
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:64
 msgid "Disable the banner for the BETA switch"
 msgstr ""
 
@@ -6739,14 +6761,20 @@ msgstr "显示"
 msgid "Display Zammad in the New BETA User Interface"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:21
-msgid "Display Zammad with the New BETA User Interface"
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:52
+msgid "Display Zammad with the new BETA user interface"
 msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
 #: db/seeds/settings.rb:1883
 msgid "Display name"
 msgstr "顯示名稱"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:88
+#, fuzzy
+#| msgid "Feedback"
+msgid "Do not ask automatically for feedback on the BETA UI"
+msgstr "回饋意見"
 
 #: app/assets/javascripts/app/lib/mixins/destination_group_email_address.coffee:26
 #, fuzzy
@@ -6931,11 +6959,7 @@ msgstr "％s 对象已创建。"
 msgid "Drafts"
 msgstr "草稿"
 
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:52
-msgid "Drag and drop to reorder ticket overview list items."
-msgstr "拖放以重新排序票务概述列表项目。"
-
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:63
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 msgid "Drag ended for %s."
 msgstr ""
 
@@ -7351,7 +7375,7 @@ msgstr ""
 msgid "Empty"
 msgstr "空的"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:423
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
 #, fuzzy
 #| msgid "Overview"
 msgid "Empty overview"
@@ -7476,7 +7500,7 @@ msgstr ""
 msgid "Enable or disable the writing assistant text tools."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:65
 msgid "Enable the banner for the BETA switch"
 msgstr ""
 
@@ -7698,7 +7722,7 @@ msgstr "输入一个有效的电子邮件地址。"
 msgid "Enter credentials"
 msgstr "輸入憑證"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:300
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:301
 msgid "Enter link URL"
 msgstr "输入链接URL"
 
@@ -7963,7 +7987,7 @@ msgstr "在（启动时）上升级"
 msgid "Escalation times"
 msgstr "SLA層級提升時間"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:123
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:130
 msgid "Escape pressed. No item selected."
 msgstr ""
 
@@ -8181,7 +8205,7 @@ msgstr "擴展搜尋"
 msgid "External data source field"
 msgstr "外部数据源字段"
 
-#: lib/search_index_backend.rb:758
+#: lib/search_index_backend.rb:754
 msgid "Extract zammad-attachment information from arrays"
 msgstr "从阵列中提取Zammad-Attachment信息"
 
@@ -8327,6 +8351,7 @@ msgid "February"
 msgstr "二月"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:34
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:62
 msgid "Feedback"
 msgstr "回饋意見"
 
@@ -8496,7 +8521,7 @@ msgstr "固定電子郵件帳號"
 msgid "Flat Design"
 msgstr "扁平风格"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:90
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:97
 msgid "Focus on %s"
 msgstr ""
 
@@ -8622,7 +8647,7 @@ msgstr "表单"
 msgid "Form Allowed Parameters"
 msgstr ""
 
-#: app/graphql/gql/queries/form_updater.rb:30
+#: app/graphql/gql/queries/form_updater.rb:34
 msgid "FormSchema could not be found."
 msgstr "无法找到 FormSchema。"
 
@@ -8639,8 +8664,8 @@ msgid "Format as _underlined_"
 msgstr "_下划线_格式"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:93
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:153
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:150
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:154
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:151
 msgid "Format as bold"
 msgstr "粗体"
 
@@ -8657,8 +8682,8 @@ msgid "Format as h3 heading"
 msgstr "格式化為h3標題"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:100
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:161
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:158
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:162
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:159
 msgid "Format as italic"
 msgstr "斜体"
 
@@ -8666,22 +8691,22 @@ msgstr "斜体"
 msgid "Format as ordered list"
 msgstr "格式化為排序列表"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:193
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:190
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:191
 #, fuzzy
 #| msgid "Format as unordered list"
 msgid "Format as quoted text"
 msgstr "格式化為非排序列表"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:114
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:177
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:174
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:178
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:175
 msgid "Format as strikethrough"
 msgstr "删除线"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:107
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:169
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:166
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:170
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:167
 msgid "Format as underlined"
 msgstr "下划线"
 
@@ -8948,6 +8973,12 @@ msgstr "GitLab请求失败！请查看日志文件以获取详细信息"
 msgid "GitLab: Link issue"
 msgstr "链接问题"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:100
+#, fuzzy
+#| msgid "Feedback"
+msgid "Give feedback"
+msgstr "回饋意見"
+
 #: app/controllers/selectors_controller.rb:43
 msgid "Given object does not support selector"
 msgstr "给定的对象不支持选择器"
@@ -9040,7 +9071,7 @@ msgstr "谷歌"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:188
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:46
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:87
 msgid "Got it"
 msgstr ""
 
@@ -9232,12 +9263,6 @@ msgstr "有更新"
 msgid "Have a nice day."
 msgstr "祝你今天过得愉快。"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:31
-msgid ""
-"Have the BETA switch between the old and the new UI always available in the "
-"Primary Navigation"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:21
 msgid ""
 "Have the BETA switch between the old and the new UI always available in the "
@@ -9267,24 +9292,24 @@ msgid "Header Menu"
 msgstr "标题菜单"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:129
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:115
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:115
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:116
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:116
 #, fuzzy
 #| msgid "pending"
 msgid "Heading 1"
 msgstr "待處理"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:136
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:127
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:126
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:128
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:127
 #, fuzzy
 #| msgid "pending"
 msgid "Heading 2"
 msgstr "待處理"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:143
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:139
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:137
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:140
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:138
 #, fuzzy
 #| msgid "pending"
 msgid "Heading 3"
@@ -9315,7 +9340,7 @@ msgstr "您好，此对话的客服窗口即将到期，请回复以保持打开
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:184
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:40
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:45
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:86
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:22
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
 msgid "Help"
@@ -9329,7 +9354,7 @@ msgstr ""
 msgid "Help to improve Zammad!"
 msgstr "帮助改善Zammad！"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:109
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:99
 msgid "Help us shape the future of Zammad!"
 msgstr ""
 
@@ -9401,7 +9426,7 @@ msgid ""
 "switch below."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:67
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:57
 msgid ""
 "Hey, we have something to show you! Our team has been working on the new "
 "Zammad UI for a while, and we’re very eager for you to try it and send some "
@@ -9413,7 +9438,7 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr "嗨！ 我们的哪一款产品？"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:51
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:69
 msgid "Hide BETA UI switch"
 msgstr ""
 
@@ -9999,8 +10024,8 @@ msgstr "增加分钟值"
 msgid "Increment seconds value"
 msgstr "增加秒值"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:263
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:260
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:264
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:261
 msgid "Indent text"
 msgstr "缩进文本"
 
@@ -10046,53 +10071,53 @@ msgstr "无法生成内联内容。"
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:220
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:217
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
 msgstr "插入代码块"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:73
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:78
 msgid "Insert column after"
 msgstr "在此列后插入列"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:64
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:69
 msgid "Insert column before"
 msgstr "在此列前插入列"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:228
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:229
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 #, fuzzy
 #| msgid "Insert inline code"
 msgid "Insert divider"
 msgstr "插入内联代码"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:209
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:206
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
 msgid "Insert inline code"
 msgstr "插入内联代码"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:36
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:41
 msgid "Insert row above"
 msgstr "在上方插入行"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:45
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:50
 msgid "Insert row below"
 msgstr "在下方插入行"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:307
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:328
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:329
 msgid "Insert table"
 msgstr "插入表格"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:89
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:90
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:90
 #, fuzzy
 #| msgid "Inserts knowledge base answer"
 msgid "Insert text from knowledge base answer"
 msgstr "插入知识库答案"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:98
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Insert text from text module"
 msgstr "从文本模块插入文本"
 
@@ -10466,7 +10491,7 @@ msgstr "无法删除系统用户。"
 msgid "It is not possible to delete your current account."
 msgstr "无法删除您当前的帐户。"
 
-#: app/models/ticket.rb:295
+#: app/models/ticket.rb:297
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "不可能合并成已经合并的票。"
 
@@ -10503,6 +10528,12 @@ msgstr "John Smith"
 msgid "Join %s"
 msgstr "加入%s"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:107
+#, fuzzy
+#| msgid "Feedback Form"
+msgid "Join feedback program"
+msgstr "回饋意見表"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
@@ -10527,6 +10558,10 @@ msgstr "六月"
 msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "只需单击突出显示的区域并更新那里的文字即可。享受它！"
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:94
+msgid "Just switch back"
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts:11
 msgid "Kayako"
@@ -10778,6 +10813,10 @@ msgstr "布局参考"
 msgid "Learn More"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:40
+msgid "Leave BETA UI feedback program?"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:207
 #, fuzzy
 #| msgid "%s (option)"
@@ -10786,6 +10825,10 @@ msgstr "%s（选项）"
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:197
 msgid "Leave empty to use the base model"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:39
+msgid "Leave program"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:199
@@ -11074,7 +11117,7 @@ msgstr "本地MTA（sendmail/postfix/exim/…） - 使用服务器设置"
 msgid "Locale"
 msgstr "語言環境"
 
-#: app/graphql/gql/mutations/user/current/locale.rb:17
+#: app/graphql/gql/mutations/user/current/locale.rb:15
 msgid "Locale could not be found."
 msgstr "找不到语言环境。"
 
@@ -11765,7 +11808,7 @@ msgstr "概述中显示的最大门票数量"
 msgid "May"
 msgstr "五月"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:114
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:104
 msgid "Maybe later"
 msgstr ""
 
@@ -11810,8 +11853,8 @@ msgstr "成员"
 msgid "Mention for"
 msgstr "提及用户"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:80
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:81
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:81
 msgid "Mention user"
 msgstr "提及用户"
 
@@ -11822,7 +11865,13 @@ msgstr "提及用户"
 msgid "Merge"
 msgstr "合并"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:101
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:111
+#, fuzzy
+#| msgid "Merge to Ticket#"
+msgid "Merge %s cells"
+msgstr "合併到工單"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:112
 #, fuzzy
 #| msgid "Merge to Ticket#"
 msgid "Merge cells"
@@ -12408,9 +12457,8 @@ msgstr "增加新对象"
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:3
 #: app/assets/javascripts/app/controllers/clues/desktop_beta_switch_clues.coffee:5
 #: app/assets/javascripts/app/views/profile/newbetaui.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:36
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:11
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:20
 msgid "New BETA UI"
 msgstr ""
 
@@ -13006,7 +13054,8 @@ msgstr "找不到相机。"
 msgid "No organizations found"
 msgstr "客户公司"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:127
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:128
 #, fuzzy
 #| msgid "Overviews"
 msgid "No overviews"
@@ -13113,7 +13162,7 @@ msgstr "暂时还没有模板."
 msgid "No template created yet."
 msgstr "暂时还没有模板."
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:425
 #, fuzzy
 #| msgid "Match tickets in following states"
 msgid "No tickets in this state."
@@ -13127,7 +13176,7 @@ msgstr "不象征！"
 msgid "No translation for this locale available"
 msgstr "無法翻譯此語言環境"
 
-#: app/models/ticket.rb:420
+#: app/models/ticket.rb:422
 msgid "No triggers active"
 msgstr "没有触发器活动"
 
@@ -13674,14 +13723,14 @@ msgid "Only visible to editors"
 msgstr "只有編輯者可見"
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:19
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:77
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:103
 #, fuzzy
 #| msgid "Out of office replacement"
 msgid "Only when out of office replacement"
 msgstr "外出备份"
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:12
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:74
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:100
 #, fuzzy
 #| msgid "Shared organization"
 msgid "Only when shared organization member"
@@ -13896,7 +13945,7 @@ msgstr "概览顺序"
 msgid "Order of overviews"
 msgstr "概览顺序"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:127
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:120
 #, fuzzy
 #| msgid "Overviews"
 msgid "Order of ticket overviews"
@@ -14122,8 +14171,8 @@ msgstr "发送:"
 msgid "Outdated Browser"
 msgstr "过旧的浏览器"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:271
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:268
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:272
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:269
 msgid "Outdent text"
 msgstr "减少缩进文本"
 
@@ -14150,6 +14199,12 @@ msgstr "概述散装面具"
 msgid "Overview navigation list"
 msgstr "概览"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:70
+#, fuzzy
+#| msgid "Overviews"
+msgid "Overview order list"
+msgstr "概览"
+
 #: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:380
 #, fuzzy
 #| msgid "Overviews"
@@ -14162,7 +14217,7 @@ msgstr "概览"
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:30
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:31
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:78
 #: db/seeds/permissions.rb:35
@@ -15170,6 +15225,10 @@ msgstr "实时"
 msgid "Reason for absence"
 msgstr "缺席的原因"
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:78
+msgid "Reason to switch back"
+msgstr ""
+
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:39
 #: app/assets/javascripts/app/views/google/list.jst.eco:112
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:113
@@ -15461,8 +15520,8 @@ msgid "Remove checklist"
 msgstr "删除%s"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:121
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:201
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:198
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:202
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:199
 msgid "Remove formatting"
 msgstr "删除格式"
 
@@ -15705,7 +15764,7 @@ msgid "Reset Password failed!"
 msgstr "重置密码失败！"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:136
 msgid "Reset overview order"
 msgstr "重置概览顺序"
 
@@ -15817,7 +15876,7 @@ msgstr ""
 "<br>\n"
 "<div>您的#{config.product_name}团队</div>\n"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:96
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:89
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "重置机票概述的顺序失败。"
 
@@ -16770,7 +16829,7 @@ msgstr "所选对象已经排队以删除。"
 msgid "Selected tickets do not match any macros."
 msgstr "选定的门票与任何宏不匹配。"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:120
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:127
 #, fuzzy
 #| msgid "Deletion failed."
 msgid "Selection cancelled for %s."
@@ -16830,10 +16889,15 @@ msgid "Send email: %s"
 msgstr "发送邮件"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:121
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:44
 #, fuzzy
 #| msgid "Feedback"
 msgid "Send feedback"
+msgstr "回饋意見"
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:93
+#, fuzzy
+#| msgid "Feedback"
+msgid "Send feedback & switch back"
 msgstr "回饋意見"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:121
@@ -17204,7 +17268,7 @@ msgstr "測試運行成功"
 msgid "Shared drafts"
 msgstr "共享草稿"
 
-#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:20
+#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:17
 #, fuzzy
 #| msgid "Shared draft cannot be selected for this ticket."
 msgid "Shared drafts are not activated for the selected group"
@@ -17321,6 +17385,11 @@ msgstr "在登录页面上显示用户的密码登录。仅当启用第三方身
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
 msgid "Show previous tab"
 msgstr "显示上一个选项卡"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:61
+msgid ""
+"Show the BETA switch between the old and the new UI in the primary navigation"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:43
 msgid "Show the chat when ready."
@@ -17611,13 +17680,13 @@ msgstr "抱歉，并非所有字段都填写正确。"
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "抱歉，目前没有启用 CTI 后端。"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:139
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:146
 msgid ""
 "Sortable list focused. Use up and down arrows to navigate items. Press Space "
 "to select and item and again on another item to swap them."
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:46
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:50
 msgid "Sorted %s in user taskbar list to position %s."
 msgstr ""
 
@@ -17664,7 +17733,7 @@ msgstr ""
 msgid "Split"
 msgstr "拆分"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:92
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:100
 #, fuzzy
 #| msgid "split"
 msgid "Split cells"
@@ -18083,7 +18152,7 @@ msgstr "星期天"
 msgid "Support of multilingual Knowledge Base."
 msgstr "支持多语言知识库。"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:71
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:78
 msgid "Swapped %s with %s. %s moved to position %s."
 msgstr ""
 
@@ -18184,6 +18253,12 @@ msgstr "门票后行为行为"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:133
 msgid "Tab has changed, do you really want to close it?"
 msgstr "页面存在更新，确定要关闭此页面么?"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuTrigger.vue:33
+#, fuzzy
+#| msgid "add option"
+msgid "Table options"
+msgstr "增加选项"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:257
 msgid "Tabs"
@@ -18467,7 +18542,7 @@ msgstr "无法创建知识库。"
 msgid "The MIME type of the image is invalid."
 msgstr "图像的MIME类型无效。"
 
-#: app/graphql/gql/queries/system/import/state.rb:39
+#: app/graphql/gql/queries/system/import/state.rb:37
 msgid "The OTRS import failed."
 msgstr "OTRS 导入失败。"
 
@@ -18760,6 +18835,17 @@ msgid ""
 "if there is an operator online to chat with."
 msgstr "一旦与服务器的连接建立并且有操作员在线聊天，聊天就会显示。"
 
+#: app/graphql/gql/mutations/ticket/checklist/add.rb:13
+#: app/graphql/gql/mutations/ticket/checklist/base.rb:7
+#: app/graphql/gql/queries/checklist/templates.rb:11
+#: app/graphql/gql/queries/ticket/checklist.rb:11
+#: app/graphql/gql/subscriptions/checklist/template_updates.rb:12
+#: app/graphql/gql/subscriptions/ticket/checklist_updates.rb:13
+#, fuzzy
+#| msgid "Time Accounting"
+msgid "The checklist feature is not active"
+msgstr "工时"
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:33
 msgid ""
 "The chosen unit will be used for display only and will not affect stored "
@@ -18805,7 +18891,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:400
-#: app/graphql/gql/mutations/user/current/change_password.rb:30
+#: app/graphql/gql/mutations/user/current/change_password.rb:28
 msgid "The current password you provided is incorrect."
 msgstr "您提供的当前密码不正确。"
 
@@ -18822,8 +18908,8 @@ msgstr ""
 "數據必須採用逗號分隔值(CSV)格式，並另存為UTF-8。您可以導入CSV文件或將數據直接"
 "黏貼到文字域"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:76
-msgid "The data we need to collect includes:"
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:66
+msgid "The data we need to collect consists of:"
 msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:294
@@ -19020,13 +19106,13 @@ msgid ""
 "Ticket#."
 msgstr "工單的標示符號, e.g. Ticket#, Call#, MyTicket#. 預設是 Ticket#"
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:34
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:30
 #, fuzzy
 #| msgid "The object could not be found."
 msgid "The idoit object could not be found."
 msgstr "无法找到该对象。"
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:28
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:24
 #, fuzzy
 #| msgid "Another ticket was merged into ticket |%s|"
 msgid "The idoit object is already present on the ticket."
@@ -19068,13 +19154,13 @@ msgid "The issue could not be saved."
 msgstr "该问题无法保存。"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:26
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:24
 #, fuzzy
 #| msgid "Account already exists!"
 msgid "The issue reference already exists."
 msgstr "帐号已经存在！"
 
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:42
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:40
 #, fuzzy
 #| msgid "The source ticket could not be found."
 msgid "The issue reference could not be found."
@@ -19160,15 +19246,11 @@ msgstr "无法更新该对象。"
 msgid "The online notification could not be marked as seen."
 msgstr "在线通知无法标记为已查看。"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:105
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:98
 #, fuzzy
 #| msgid "Overviews"
 msgid "The order of your ticket overviews was reset."
 msgstr "概览"
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:85
-msgid "The order of your ticket overviews was updated."
-msgstr "\"您在这里可以浏览处理中的工单"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:248
 msgid "The page is not available anymore"
@@ -19279,7 +19361,7 @@ msgstr "提供的端点无效。"
 msgid "The provided match operator is missing or invalid."
 msgstr "提供的匹配操作员缺失或无效。"
 
-#: app/graphql/gql/mutations/user/current/password_check.rb:28
+#: app/graphql/gql/mutations/user/current/password_check.rb:26
 #, fuzzy
 #| msgid "Signature"
 msgid "The provided password is incorrect."
@@ -19416,7 +19498,7 @@ msgstr "缺少所需的参数“ group_id”。"
 msgid "The required parameter 'id' is missing."
 msgstr "缺少所需的参数“ ID”。"
 
-#: lib/search_index_backend.rb:681
+#: lib/search_index_backend.rb:677
 msgid "The required parameter 'key' is missing."
 msgstr "所需的参数“键”丢失。"
 
@@ -19474,7 +19556,7 @@ msgstr "缺少所需的参数“ ticket_number”。"
 msgid "The required parameter 'user_id' is missing."
 msgstr "缺少所需的参数“ user_id”。"
 
-#: lib/search_index_backend.rb:682
+#: lib/search_index_backend.rb:678
 msgid "The required parameter 'value' is missing."
 msgstr "缺少所需的参数“值”。"
 
@@ -19720,7 +19802,7 @@ msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "验证"
 
 #: app/controllers/sessions_controller.rb:249
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:34
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
 msgid "The two-factor authentication method is not enabled."
@@ -19760,7 +19842,7 @@ msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "无法从“ ID_Token”中提取用户的“ preferred_username”。"
 
 #: app/controllers/sessions_controller.rb:245
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:29
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "用户名或密码不正确。"
 
@@ -20115,7 +20197,7 @@ msgstr "这个设备"
 msgid "This entry already exists!"
 msgstr "帐号已经存在！"
 
-#: app/services/service/check_feature_enabled.rb:8
+#: app/services/service/check_feature_enabled.rb:6
 #, fuzzy
 #| msgid "Time Accounting"
 msgid "This feature is not enabled."
@@ -20493,7 +20575,7 @@ msgid ""
 "Each of the users can then provide consent or not for the participation in "
 "the BETA program.\n"
 "\n"
-"Answers will be anonymized and the data collected may include:\n"
+"Answers will be anonymized and the data collected consists of:\n"
 "- Zammad instance name\n"
 "- star rating of the new UI\n"
 "- text comments on the new UI\n"
@@ -20529,18 +20611,6 @@ msgid ""
 "This service shows you contacts of incoming calls and a caller list in "
 "realtime."
 msgstr "此服務可以即時顯示來電聯繫人和呼叫者列表"
-
-#: app/services/service/concerns/handles_setting.rb:22
-#, fuzzy
-#| msgid "Time Accounting"
-msgid "This setting is not disabled."
-msgstr "工时"
-
-#: app/services/service/concerns/handles_setting.rb:18
-#, fuzzy
-#| msgid "Time Accounting"
-msgid "This setting is not enabled."
-msgstr "工时"
 
 #: app/assets/javascripts/app/models/group.coffee:13
 msgid "This signature is inactive, it won't be included in the reply."
@@ -21607,19 +21677,19 @@ msgstr "切换暗模式"
 msgid "Toggle group"
 msgstr "父"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:129
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:140
 #, fuzzy
 #| msgid "Open note box"
 msgid "Toggle header cell"
 msgstr "打开注释输入框"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:120
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:131
 #, fuzzy
 #| msgid "Open note box"
 msgid "Toggle header column"
 msgstr "打开注释输入框"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:111
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:122
 #, fuzzy
 #| msgid "Toggle dark mode"
 msgid "Toggle header row"
@@ -21726,7 +21796,7 @@ msgstr "校验"
 msgid "Transfer conversation to another chat:"
 msgstr "将对话转移到另一个聊天中："
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:55
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:59
 msgid "Transferred %s from user taskbar list %s at position %s."
 msgstr ""
 
@@ -22554,7 +22624,7 @@ msgstr ""
 msgid "Updating Database"
 msgstr "正在更新数据库"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:73
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:74
 msgid "Updating the order of your ticket overviews failed."
 msgstr "更新机票概述的顺序失败。"
 
@@ -23200,7 +23270,7 @@ msgstr "正在等候的客户"
 msgid "Waiting in %s"
 msgstr "等待％s"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:44
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:34
 msgid "Want to join the BETA UI feedback program?"
 msgstr ""
 
@@ -23551,6 +23621,12 @@ msgstr "工作流程"
 msgid "Workflows"
 msgstr "工作流程"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:104
+#, fuzzy
+#| msgid "Feedback"
+msgid "Would you like to give us feedback on the BETA UI? "
+msgstr "回饋意見"
+
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:16
 #: db/seeds/permissions.rb:245 db/seeds/settings.rb:6103
 #, fuzzy
@@ -23606,8 +23682,8 @@ msgid ""
 "administrator."
 msgstr "无法设置密码。请联系您的管理员。"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:67
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:67
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:68
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:68
 #, fuzzy
 #| msgid "Waiting in %s"
 msgid "Writing assistant tools"
@@ -23663,6 +23739,10 @@ msgstr "您没有足够的权利来查看这张票。"
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "您目前的等候位置是第 <strong>%s</strong> 位."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:78
+msgid "You are part of the BETA UI feedback program."
+msgstr ""
+
 #: app/models/transaction/notification.rb:111
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
@@ -23688,9 +23768,8 @@ msgstr "您之所以收到此消息，是因为您在这张票中提到过。"
 msgid "You calendar subscription settings were updated."
 msgstr "定义默认的日历票务订阅设置。"
 
-#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:69
-msgid ""
-"You can always send your feedback using the button next to the BETA switch."
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
+msgid "You can always re-join later."
 msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco:7
@@ -23870,6 +23949,16 @@ msgstr "您可以尝试通过邮件重设密码"
 msgid "You can request your password here."
 msgstr "您可以尝试通过邮件重设密码"
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:87
+msgid ""
+"You can return to the new BETA UI using the switch at the bottom of your "
+"taskbar or in your profile settings."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:69
+msgid "You can send feedback from the BETA button or profile settings."
+msgstr ""
+
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:3
 #, fuzzy
 #| msgid ""
@@ -23888,7 +23977,7 @@ msgid ""
 "Profile > New BETA UI section."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:41
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:82
 msgid ""
 "You can switch between the old and the New BETA UI at any moment in the "
 "Profile Settings > New BETA UI section."
@@ -24081,16 +24170,16 @@ msgid ""
 "your experience so far?"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:15
+msgid "You were using the new BETA UI for 5 hours."
+msgstr ""
+
 #: app/assets/javascripts/app/views/login.jst.eco:96
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:158
 msgid ""
 "You're already registered with your email address if you've been in touch "
 "with our Support team."
 msgstr "\"如果您已经使用电子邮件和我们联系过"
-
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:25
-msgid "You've been using the new UI for 2 hours."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee:13
 msgid "YouTube or Vimeo address"
@@ -24192,6 +24281,7 @@ msgid ""
 msgstr "您的账户已经验证！请点击验证邮件中的链接。"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:60
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:40
 msgid "Your answer will be submitted to Zammad GmbH in an anonymized way."
 msgstr ""
 
@@ -24467,13 +24557,13 @@ msgstr "关注"
 msgid "and"
 msgstr "和"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:83
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:73
 msgid ""
 "anonymized rating and comment on the new UI, repeated in a few timely "
 "iterations"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:90
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:80
 msgid "anonymized tracked usage time of the new UI"
 msgstr ""
 
@@ -25040,6 +25130,16 @@ msgstr "i-doit config"
 msgid "i-doit integration"
 msgstr "i-doit集成"
 
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:12
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_remove.rb:12
+#: app/graphql/gql/queries/autocomplete_search/idoit_object_types.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_list.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_search.rb:15
+#, fuzzy
+#| msgid "i-doit integration"
+msgid "i-doit integration is not enabled"
+msgstr "i-doit集成"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:172
 #, fuzzy
 #| msgid "Used in object views"
@@ -25485,7 +25585,7 @@ msgstr "不得包含协议（例如“http://”或“https://”）"
 msgid "my own note"
 msgstr "我自己的笔记"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:95
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:85
 msgid "name of the Zammad instance with tracked usage time of the new UI."
 msgstr ""
 
@@ -26179,6 +26279,27 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#, fuzzy
+#~| msgid "Time Accounting"
+#~ msgid "This setting is not disabled."
+#~ msgstr "工时"
+
+#, fuzzy
+#~| msgid "Time Accounting"
+#~ msgid "This setting is not enabled."
+#~ msgstr "工时"
+
+#~ msgid "Drag and drop to reorder ticket overview list items."
+#~ msgstr "拖放以重新排序票务概述列表项目。"
+
+#, fuzzy
+#~| msgid "New tab"
+#~ msgid "NEW BETA UI"
+#~ msgstr "新标签"
+
+#~ msgid "The order of your ticket overviews was updated."
+#~ msgstr "\"您在这里可以浏览处理中的工单"
 
 #, fuzzy
 #~| msgid "Cancel & Go Back"

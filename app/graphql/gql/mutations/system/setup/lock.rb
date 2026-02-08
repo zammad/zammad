@@ -13,9 +13,7 @@ module Gql::Mutations
     field :resource, String, 'Critical section resoure name.', null: true
     field :value, String, 'Critical section resoure value.', null: true
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(ttl: TTL)
       Service::System::CheckSetup.new!

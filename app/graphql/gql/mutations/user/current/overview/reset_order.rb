@@ -7,9 +7,7 @@ module Gql::Mutations
     field :success, Boolean, null: false, description: 'Was the reset successful?'
     field :overviews, [Gql::Types::OverviewType], null: true, description: 'List of overview sortings for the user'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.overview_sorting')
-    end
+    requires_permission 'user_preferences.overview_sorting'
 
     def resolve
       ActiveRecord::Base.transaction do

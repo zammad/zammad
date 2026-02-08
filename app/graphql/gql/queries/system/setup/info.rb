@@ -6,11 +6,7 @@ module Gql::Queries
 
     type Gql::Types::SystemSetupInfoType, null: false
 
-    # TODO: Create a new base query class for queries that do not require
-    # authorization???
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve
       setup = Service::System::CheckSetup.new

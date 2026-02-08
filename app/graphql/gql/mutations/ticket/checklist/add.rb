@@ -10,9 +10,7 @@ module Gql::Mutations
 
     field :checklist, Gql::Types::ChecklistType, null: true, description: 'Created checklist'
 
-    def authorized?(ticket:, create_first_item: false, template_id: nil)
-      Setting.get('checklist') && super
-    end
+    requires_enabled_setting 'checklist', error_message: __('The checklist feature is not active')
 
     def resolve(ticket:, create_first_item: false, template_id: nil)
       checklist = if template_id

@@ -5,16 +5,13 @@ module Gql::Subscriptions
     description 'Updates to ticket records'
 
     argument :group_id, GraphQL::Types::ID,
-             loads:       Gql::Types::GroupType,
-             description: 'A group to filter by'
+             loads:               Gql::Types::GroupType,
+             loads_pundit_method: :create_tickets?,
+             description:         'A group to filter by'
 
     field :shared_draft_starts,
           [Gql::Types::Ticket::SharedDraftStartType, { null: false }],
           description: 'Up-to-date drafts in the given'
-
-    def authorized?(group:)
-      context.current_user.group_access? group.id, :create
-    end
 
     def update(group:)
       drafts = ::Ticket::SharedDraftStartPolicy::Scope

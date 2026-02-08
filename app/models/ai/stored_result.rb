@@ -15,7 +15,8 @@ class AI::StoredResult < ApplicationModel
   # @diff [Integer] number of seconds to look back for records to delete, also takes Rails helpers like 1.year.
   # @locale [Locale] to filter by
   # @object [ApplicationModel] to filter by
-  def self.cleanup(diff: nil, locale: nil, object: nil)
+  # @identifier [String] to filter by
+  def self.cleanup(diff: nil, locale: nil, object: nil, identifier: nil)
     scope = all
 
     if diff.present?
@@ -28,6 +29,10 @@ class AI::StoredResult < ApplicationModel
 
     if object.present?
       scope = scope.where(related_object: object)
+    end
+
+    if identifier.present?
+      scope = scope.where(identifier:)
     end
 
     scope.delete_all

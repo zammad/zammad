@@ -27,7 +27,11 @@
         <% if !_.isEmpty(values): %>
           <div class="ticket-summary-sidebar-item">
             <h3><%- @T(item.name) %></h3>
-            <% if item.type is 'list': %>
+            <% if item.type is 'paragraphs': %>
+              <% for localParagraph in values: %>
+                <p><%- localParagraph %></p>
+              <% end %>
+            <% else if item.type is 'list': %>
               <ul>
                 <% for localList in values: %>
                   <li><%- @L(localList) %></li>

@@ -5,8 +5,10 @@ import { axe } from 'vitest-axe'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
+
 describe('testing avatar a11y view', () => {
-  it('has no accessibility violations', async () => {
+  it.skip('has no accessibility violations', async () => {
     await visitView('/personal-setting/avatar')
 
     const results = await axe(document.body)

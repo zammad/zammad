@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'mobile app: reply article' do |type_label, note, internal: false, attachments: false|
+RSpec.shared_examples 'mobile app: reply article' do |type_label, note, internal: false, attachments: false, form_updater_gql_number: 2, no_form_updater: false|
   let(:attributes) do
     attributes = {
       type_id:     type_id,
@@ -44,21 +44,26 @@ RSpec.shared_examples 'mobile app: reply article' do |type_label, note, internal
 
     assert_fields(type_label, internal)
 
-    find_editor('Text').type(new_text, click: Capybara.current_driver == :zammad_firefox) if new_text
-
-    find_autocomplete('To').search_for_option(new_to) if new_to.present?
-    find_field('Subject', visible: :all).input(new_subject) if new_subject.present?
-
-    if attachments
-      find_field('attachments', visible: :all).attach_file('spec/fixtures/files/image/small.png')
-
-      # need to wait until the file is uploaded
-      expect(page).to have_text('small.png', wait: 60)
+    if no_form_updater
+      find_editor('Text').type(new_text) if new_text
     else
-      expect(page).to have_no_field('attachments', visible: :all)
+      within_form(form_updater_gql_number:) do
+        find_editor('Text').type(new_text) if new_text
+
+        find_autocomplete('To').search_for_option(new_to) if new_to.present?
+        find_field('Subject', visible: :all).input(new_subject) if new_subject.present?
+
+        if attachments
+          find_field('attachments', visible: :all).attach_file('spec/fixtures/files/image/small.png')
+
+          # need to wait until the file is uploaded
+          expect(page).to have_text('small.png', wait: 60)
+        else
+          expect(page).to have_no_field('attachments', visible: :all)
+        end
+      end
     end
 
-    find_button('Done', wait: 20).click
     find_button('Save', wait: 20).click
 
     wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')

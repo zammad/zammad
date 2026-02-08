@@ -43,7 +43,7 @@ RSpec.describe Gql::Mutations::User::Current::AccessToken::Add, type: :graphql d
 
       it 'returns an error' do
         expect(execute_graphql_query.error_message)
-          .to include("Failed Gql::EntryPoints::Mutations's authorization check")
+          .to include('Access forbidden by Gql::Mutations::User::Current::AccessToken::Add')
       end
     end
 

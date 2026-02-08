@@ -6,6 +6,8 @@ import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import '#tests/graphql/builders/mocks.ts'
 
+// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
+
 describe('testing admin password request a11y', () => {
   beforeEach(() => {
     mockApplicationConfig({
@@ -14,7 +16,7 @@ describe('testing admin password request a11y', () => {
     })
   })
 
-  it('has no accessibility violations', async () => {
+  it.skip('has no accessibility violations', async () => {
     const view = await visitView('/admin-password-auth')
     const results = await axe(view.html())
     expect(results).toHaveNoViolations()

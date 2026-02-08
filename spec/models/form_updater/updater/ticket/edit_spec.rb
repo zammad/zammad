@@ -7,6 +7,7 @@ require 'models/form_updater/concerns/has_security_options_examples'
 require 'models/form_updater/concerns/applies_ticket_shared_draft_examples'
 require 'models/form_updater/concerns/stores_taskbar_state_examples'
 require 'models/form_updater/concerns/applies_taskbar_state_examples'
+require 'models/form_updater/concerns/prepares_ticket_signature_examples'
 
 RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
   subject(:resolved_result) do
@@ -372,5 +373,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
 
     include_examples 'FormUpdater::StoresTaskbarState', taskbar_key: 'TicketZoom-1234', taskbar_callback: 'Ticket', store_state_collect_group_key: 'ticket', store_state_group_keys: ['article'] # gitleaks:allow
     include_examples 'FormUpdater::AppliesTaskbarState', taskbar_key: 'TicketZoom-1234', taskbar_callback: 'Ticket', apply_state_group_keys: %w[ticket article] # gitleaks:allow
+    include_examples 'FormUpdater::PreparesTicketSignature'
+
   end
 end

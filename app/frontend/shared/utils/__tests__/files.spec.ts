@@ -1,10 +1,14 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import {
   getAcceptableFileTypesString,
   humanizeFileSize,
   validateFileSizes,
   type AllowedFile,
+  sanitizedContentType,
+  canPreviewFile,
 } from '#shared/utils/files.ts'
 
 describe('files utility', () => {
@@ -80,6 +84,56 @@ describe('files utility', () => {
         { file: file1, label: 'Text', maxSize: 5000000 },
         { file: file2, label: 'Image', maxSize: 5000000 },
       ])
+    })
+  })
+
+  describe('sanitizedContentType', () => {
+    it('returns the sanitized content type without parameters', () => {
+      const type = 'image/jpeg; charset=UTF-8'
+      const result = sanitizedContentType(type)
+      expect(result).toBe('image/jpeg')
+    })
+
+    it('returns the original content type if no parameters are present', () => {
+      const type = 'application/pdf'
+      const result = sanitizedContentType(type)
+      expect(result).toBe('application/pdf')
+    })
+
+    it('returns undefined when input is undefined', () => {
+      const result = sanitizedContentType(undefined)
+      expect(result).toBeUndefined()
+    })
+  })
+
+  describe('canPreviewFile', () => {
+    beforeEach(() => {
+      mockApplicationConfig({
+        'active_storage.web_image_content_types': [
+          'image/png',
+          'image/jpeg',
+          'image/gif',
+          'image/webp',
+        ],
+      })
+    })
+
+    it('returns "image" for allowed image type', () => {
+      const type = 'image/png'
+      const result = canPreviewFile(type)
+      expect(result).toBe('image')
+    })
+
+    it('returns "calendar" for allowed calendar type', () => {
+      const type = 'text/calendar; charset=UTF-8'
+      const result = canPreviewFile(type)
+      expect(result).toBe('calendar')
+    })
+
+    it('returns false for disallowed file type', () => {
+      const type = 'application/octet-stream'
+      const result = canPreviewFile(type)
+      expect(result).toBe(false)
     })
   })
 })

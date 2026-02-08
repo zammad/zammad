@@ -8,9 +8,7 @@ module Gql::Subscriptions
 
     field :list_changed, Boolean, description: 'Signals that the customer tickets list has changed'
 
-    def authorized?(...)
-      context.current_user.permissions?(['ticket.agent'])
-    end
+    requires_permission 'ticket.agent'
 
     def update(customer:)
       { list_changed: true }

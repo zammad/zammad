@@ -12,9 +12,7 @@ module Gql::Subscriptions
 
     field :live_users, [Gql::Types::Ticket::LiveUserType], description: 'Current live users from the ticket.'
 
-    def authorized?(key:, app:)
-      context.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def subscribe(key:, app:)
       response(Taskbar.find_by(key: key, user_id: context.current_user.id, app: app))

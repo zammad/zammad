@@ -22,9 +22,8 @@ class Zammad::TranslationCatalog::Extractor::Ruby < Zammad::TranslationCatalog::
 
   def find_files
     %w[config app db lib]
-      .map do |dir|
-        Dir.glob("#{base_path}/#{dir}/**/*.rb")
+      .flat_map do |dir|
+        Dir.glob("#{base_path}/#{dir}/**/*.rb") + Dir.glob("#{base_path}/#{dir}/**/*.txt.erb")
       end
-      .flatten
   end
 end

@@ -21,6 +21,9 @@ class TextTool extends App.ControllerAIFeatureBase
         pagerSelected: ( @page || 1 )
         pagerPerPage: 50
         navupdate: '#ai/text_tools'
+        leftButtons: [
+          { name: __('Legal Information'), 'data-type': 'legal-information', class: 'btn--info' }
+        ]
         buttons: [
           { name: __('New Writing Assistant Tool'), 'data-type': 'new', class: 'btn--success' }
         ]

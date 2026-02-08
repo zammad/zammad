@@ -64,7 +64,22 @@ const removeWordMarkup = (parent: Element) => {
   return parent
 }
 
-export const htmlCleanup = (html: string, removeImages = false): string => {
+const replaceEmptyTableCells = (parent: Element) => {
+  parent.querySelectorAll('td, th').forEach((cell) => {
+    if (cell.innerHTML.trim() !== '') return
+
+    // TODO: TipTap has parsing issues with completely empty table cells, so we add a non-breaking space.
+    //   Consider dropping this workaround if the upstream issue gets fixed:
+    //   https://github.com/ueberdosis/tiptap/issues/6237
+    cell.innerHTML = '&nbsp;'
+  })
+}
+
+export const htmlCleanup = (
+  html: string,
+  removeImages = false,
+  returnElement = false,
+): string | Element => {
   const element = document.createElement('div') as Element
   element.innerHTML = html
 
@@ -79,8 +94,11 @@ export const htmlCleanup = (html: string, removeImages = false): string => {
     'svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset',
   )
   removeTrailingLineBreaks(element)
+  replaceEmptyTableCells(element)
 
   // we don't need to remove attributes here, because the editor doesn't put unknown attributes on html elements
+
+  if (returnElement) return element
 
   // remove empty new lines, editor considers them actual new lines
   // and this will affect lists, where new line is a new list item

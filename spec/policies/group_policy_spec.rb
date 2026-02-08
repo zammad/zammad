@@ -11,6 +11,7 @@ describe GroupPolicy do
     let(:user) { create(:admin) }
 
     it { is_expected.to permit_actions(:show) }
+    it { is_expected.to forbid_actions(:create_tickets) }
   end
 
   context 'when user is agent' do
@@ -25,36 +26,38 @@ describe GroupPolicy do
       context 'with full access' do
         let(:permissions) { ['full'] }
 
-        it { is_expected.to permit_actions(:show) }
+        it { is_expected.to permit_actions(:show, :create_tickets) }
       end
 
       context 'with read access' do
         let(:permissions) { ['read'] }
 
         it { is_expected.to permit_actions(:show) }
+        it { is_expected.to forbid_actions(:create_tickets) }
       end
 
       context 'with create access' do
         let(:permissions) { ['create'] }
 
-        it { is_expected.to permit_actions(:show) }
+        it { is_expected.to permit_actions(:show, :create_tickets) }
       end
 
       context 'with change access' do
         let(:permissions) { ['change'] }
 
         it { is_expected.to permit_actions(:show) }
+        it { is_expected.to forbid_actions(:create_tickets) }
       end
 
       context 'with overview access' do
         let(:permissions) { ['overview'] }
 
-        it { is_expected.to forbid_actions(:show) }
+        it { is_expected.to forbid_actions(:show, :create_tickets) }
       end
     end
 
     context 'when user does not have access to group' do
-      it { is_expected.to forbid_actions(:show) }
+      it { is_expected.to forbid_actions(:show, :create_tickets) }
     end
   end
 
@@ -72,6 +75,7 @@ describe GroupPolicy do
       before { create(:ticket, group: record, customer: user) }
 
       it { is_expected.to permit_actions(:show) }
+      it { is_expected.to forbid_actions(:create_tickets) }
 
       include_examples 'restricts fields', :show?
     end
@@ -92,6 +96,7 @@ describe GroupPolicy do
       end
 
       it { is_expected.to permit_actions(:show) }
+      it { is_expected.to forbid_actions(:create_tickets) }
 
       include_examples 'restricts fields', :show?
     end
@@ -102,7 +107,7 @@ describe GroupPolicy do
       end
 
       context 'when has no ticket in a group' do
-        it { is_expected.to forbid_actions(:show) }
+        it { is_expected.to forbid_actions(:show, :create_tickets) }
       end
     end
   end

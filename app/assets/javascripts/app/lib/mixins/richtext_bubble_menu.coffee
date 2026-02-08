@@ -79,7 +79,7 @@ App.RichtextBubbleMenu =
       {
         type: 'dropup'
         key: 'ai-text-tools'
-        label: __('Writing Assistant Tools')
+        label: __('AI Writing Assistant Tools')
         icon: 'smart-assist-elaborate'
         divider: true
         dividerClass: 'divider--full-height ai-vertical-gradient'

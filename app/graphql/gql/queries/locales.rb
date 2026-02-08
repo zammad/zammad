@@ -9,9 +9,7 @@ module Gql::Queries
 
     type [Gql::Types::LocaleType, { null: false }], null: false
 
-    def self.authorize(...)
-      true # This query should be available for all (including unauthenticated) users.
-    end
+    allow_public_access!
 
     def resolve(only_active:)
       return Locale.where(active: true) if only_active

@@ -9,9 +9,7 @@ module Gql::Mutations
     field :token_value, String, null: false, description: 'The token itself, shown once'
     field :token, Gql::Types::TokenType, description: 'The token data'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.access_token')
-    end
+    requires_permission 'user_preferences.access_token'
 
     def resolve(input:)
       token = Service::User::AccessToken::Create

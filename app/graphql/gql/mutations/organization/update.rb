@@ -9,10 +9,7 @@ module Gql::Mutations
 
     field :organization, Gql::Types::OrganizationType, description: 'The updated organization.'
 
-    # TODO/FIXME: Remove this again when we have a proper solution to deal with Pundit stuff in GraphQL mutations.
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['admin.organization', 'ticket.agent'])
-    end
+    requires_permission 'admin.organization', 'ticket.agent'
 
     def resolve(current_organization:, input:)
       { organization: update(current_organization, input) }

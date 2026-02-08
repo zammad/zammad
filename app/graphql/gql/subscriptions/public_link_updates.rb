@@ -11,9 +11,7 @@ module Gql::Subscriptions
 
     field :public_links, [Gql::Types::PublicLinkType], description: 'Current available public links'
 
-    def self.authorize(...)
-      true # This subscription should be available for all (including unauthenticated) users.
-    end
+    allow_public_access!
 
     def update(screen:)
       { public_links: PublicLink.select { |link| link[:screen].include?(screen) } }

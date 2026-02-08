@@ -51,6 +51,17 @@ export const useTicketArticleReplyAction = (
 
     formNode.emit('article-reply-open', articleType)
 
+    //.Required for firefox to stabilize the quoted text
+    if (changedArticleFields.body?.value !== undefined) {
+      const bodyValue = changedArticleFields.body.value
+
+      formNode?.settled?.then(() => {
+        const bodyNode = form.value?.getNodeByName('body')
+        if (!bodyNode || bodyNode.value === bodyValue) return
+        bodyNode.input(bodyValue, false)
+      })
+    }
+
     const context = formNode.find('body', 'name')?.context as FieldEditorContext | undefined
 
     context?.focus()

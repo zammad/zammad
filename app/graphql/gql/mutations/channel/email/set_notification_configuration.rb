@@ -8,11 +8,7 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'Was the operation successful?'
 
-    def ready?(...)
-      raise Exceptions::Forbidden if Setting.get('system_online_service')
-
-      true
-    end
+    requires_disabled_setting 'system_online_service'
 
     def resolve(outbound_configuration:)
       Service::System::SetEmailNotificationConfiguration

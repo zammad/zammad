@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::Updater::Ticket::Create < FormUpdater::Updater
+  include FormUpdater::Concerns::PreparesTicketSignature
   include FormUpdater::Concerns::AppliesTaskbarState
   include FormUpdater::Concerns::AppliesTicketTemplate
   include FormUpdater::Concerns::AppliesTicketSharedDraft

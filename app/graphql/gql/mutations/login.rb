@@ -11,9 +11,7 @@ module Gql::Mutations
     field :session, Gql::Types::SessionType, description: 'The current session, if the login was successful.'
     field :two_factor_required, Gql::Types::User::LoginTwoFactorMethodsType, description: 'Two factor authentication methods available for the user about to log-in.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(input:)
       authenticate(**input)

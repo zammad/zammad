@@ -17,10 +17,6 @@ module Gql::Types
     field :user_agent, String
     field :ip, String
 
-    def self.authorize(_object, ctx)
-      ctx.current_user
-    end
-
     def location
       return object.location if object.location_details['city_name'].blank?
 

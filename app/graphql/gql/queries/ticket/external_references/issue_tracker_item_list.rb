@@ -10,9 +10,7 @@ module Gql::Queries
 
     type [Gql::Types::Ticket::ExternalReferences::IssueTrackerItemType], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(issue_tracker_type:, input:)
       if input.ticket.present?

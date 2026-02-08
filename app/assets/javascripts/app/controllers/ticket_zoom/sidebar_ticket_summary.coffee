@@ -1,7 +1,7 @@
 class App.SidebarTicketSummary extends App.Controller
   DISPLAY_STRUCTURE: [
     { key: 'customer_request', name: __('Customer Intent'), value: 'customer_request' },
-    { key: 'conversation_summary', name: __('Conversation Summary'), value: 'conversation_summary' },
+    { key: 'conversation_summary', name: __('Conversation Summary'), value: 'conversation_summary', type: 'paragraphs' },
     { key: 'open_questions', name: __('Open Questions'), value: 'open_questions', type: 'list' },
     { key: 'upcoming_events', name: __('Upcoming Events'), value: 'upcoming_events', type: 'list' },
     { key: 'customer_sentiment', name: __('Customer Sentiment'), value: ['customer_emotion', 'customer_mood'] },
@@ -107,7 +107,7 @@ class App.SidebarTicketSummary extends App.Controller
       name:           'summary'
       badgeIcon:      'smart-assist'
       badgeCallback:  @badgeRender
-      sidebarHead:     __('Summary')
+      sidebarHead:     __('AI Summary')
       sidebarCallback: @sidebarCallback
       sidebarActions:  []
     }

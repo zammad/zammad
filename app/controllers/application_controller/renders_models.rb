@@ -12,7 +12,7 @@ module ApplicationController::RendersModels
 
     clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
-    if object.included_modules.include?(ChecksCoreWorkflow)
+    if object.include?(ChecksCoreWorkflow)
       clean_params[:screen] = 'create'
     end
 
@@ -49,7 +49,7 @@ module ApplicationController::RendersModels
 
     clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
-    if object.included_modules.include?(ChecksCoreWorkflow)
+    if object.include?(ChecksCoreWorkflow)
       clean_params[:screen] = 'edit'
     end
 

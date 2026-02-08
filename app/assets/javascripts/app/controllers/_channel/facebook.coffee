@@ -12,6 +12,7 @@ class ChannelFacebook extends App.ControllerSubContent
   constructor: ->
     super
 
+    @title __('Facebook'), true
     #@interval(@load, 60000)
     @load()
 

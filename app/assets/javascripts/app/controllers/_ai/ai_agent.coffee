@@ -62,6 +62,9 @@ class AIAgent extends App.ControllerAIFeatureBase
           pagerSelected: ( @page || 1 )
           pagerPerPage: 50
           navupdate: '#ai/ai_agents'
+          leftButtons: [
+            { name: __('Legal Information'), 'data-type': 'legal-information', class: 'btn--info' }
+          ]
           buttons: [
             { name: __('New AI Agent'), 'data-type': 'new', class: 'btn--success' }
           ]

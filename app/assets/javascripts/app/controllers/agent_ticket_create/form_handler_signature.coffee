@@ -23,13 +23,14 @@ class TicketCreateFormHandlerSignature
 
       currentBody = ui.el.closest('.content').find('[data-name=body]')
       if !_.isEmpty(currentBody)
+        # Always remove any existing signature first (from old or new editor format)
+        # before checking and potentially adding a new one
+        ui.el.closest('.content').find('[data-signature="true"]').remove()
+
+        # Refresh currentBody reference after removal
+        currentBody = ui.el.closest('.content').find('[data-name=body]')
+        
         if App.Utils.signatureCheck(currentBody.html() || '', signatureFinished)
-
-          # if signature has changed, in case remove old signature
-          ui.el.closest('.content').find('[data-signature="true"]').remove()
-
-          if !App.Utils.htmlLastLineEmpty(currentBody)
-            currentBody.append('<br><br>')
           signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
           App.Utils.htmlStrip(signature)
           currentBody.append(signature)

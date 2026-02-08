@@ -5,7 +5,6 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import Color from '@tiptap/extension-color'
 import Paragraph from '@tiptap/extension-paragraph'
 import Placeholder from '@tiptap/extension-placeholder'
-import { TableKit } from '@tiptap/extension-table'
 import { TextStyle } from '@tiptap/extension-text-style'
 import StarterKit from '@tiptap/starter-kit'
 import { common, createLowlight } from 'lowlight'
@@ -31,12 +30,12 @@ import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
 import { HtmlCharacterCount } from './extensions/CharacterCount/HtmlCharacterCount.ts'
 import { PlainCharacterCount } from './extensions/CharacterCount/PlainCharacterCount.ts'
+import { TableKit } from './extensions/TableKit.ts'
 
 import type { Extensions } from '@tiptap/core'
 import type { Ref } from 'vue'
 
 export const imageExtensionName = Image.name
-export const tableKitExtensionName = TableKit.name
 export const PlaceholderExtensionName = Placeholder.name
 
 export const lowlight = createLowlight(common)
@@ -123,18 +122,18 @@ export const getHtmlExtensions = (placeholder = '', meta: FieldEditorProps['meta
       }
     },
   }),
-  TableKit.configure({
-    table: {
-      resizable: true,
-      allowTableNodeSelection: true,
-    },
-  }),
   Link,
   TextStyle,
   UserLink,
   PasteHandler,
   Placeholder.configure({
     placeholder,
+  }),
+  TableKit.configure({
+    table: {
+      resizable: true,
+      allowTableNodeSelection: true,
+    },
   }),
 ]
 

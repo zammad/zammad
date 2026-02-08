@@ -2,7 +2,6 @@
 
 module Gql::Types
   class BaseObject < GraphQL::Schema::Object
-    include Gql::Concerns::HandlesAuthorization
     include Gql::Concerns::HasNestedGraphqlName
     include Gql::Types::Concerns::HasModelRelations
 

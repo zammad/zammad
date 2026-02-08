@@ -3065,8 +3065,6 @@ export type Queries = {
   ticketSharedDraftStartSingle: TicketSharedDraftStart;
   /** Get a single ticket shared draft in detail view */
   ticketSharedDraftZoomShow: TicketSharedDraftZoom;
-  /** Fetch a ticket signature by group ID */
-  ticketSignature?: Maybe<Signature>;
   /** Fetch tickets of a given customer with optional filters */
   ticketsByCustomer: TicketConnection;
   /** Fetch tickets of a given organization with optional filters */
@@ -3383,13 +3381,6 @@ export type QueriesTicketSharedDraftZoomShowArgs = {
 
 
 /** All available queries */
-export type QueriesTicketSignatureArgs = {
-  groupId: Scalars['ID']['input'];
-  ticketId?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** All available queries */
 export type QueriesTicketsByCustomerArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3566,33 +3557,6 @@ export type SessionAfterAuth = {
   __typename?: 'SessionAfterAuth';
   data?: Maybe<Scalars['JSON']['output']>;
   type: EnumAfterAuthType;
-};
-
-/** Signature */
-export type Signature = {
-  __typename?: 'Signature';
-  active: Scalars['Boolean']['output'];
-  body?: Maybe<Scalars['String']['output']>;
-  /** Create date/time of the record */
-  createdAt: Scalars['ISO8601DateTime']['output'];
-  /** User that created this record */
-  createdBy?: Maybe<User>;
-  id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-  /** Internal note */
-  note?: Maybe<Scalars['String']['output']>;
-  renderedBody?: Maybe<Scalars['String']['output']>;
-  /** Last update date/time of the record */
-  updatedAt: Scalars['ISO8601DateTime']['output'];
-  /** Last user that updated this record */
-  updatedBy?: Maybe<User>;
-};
-
-
-/** Signature */
-export type SignatureRenderedBodyArgs = {
-  groupId?: InputMaybe<Scalars['ID']['input']>;
-  ticketId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Represents a stored file. */
@@ -4099,7 +4063,7 @@ export type TicketAiAssistanceSummarizePayload = {
 /** The ticket summary */
 export type TicketAiAssistanceSummary = {
   __typename?: 'TicketAIAssistanceSummary';
-  conversationSummary?: Maybe<Scalars['String']['output']>;
+  conversationSummary?: Maybe<Array<Scalars['String']['output']>>;
   customerEmotion?: Maybe<Scalars['String']['output']>;
   customerMood?: Maybe<Scalars['String']['output']>;
   customerRequest?: Maybe<Scalars['String']['output']>;
@@ -6768,7 +6732,7 @@ export type TicketAiAssistanceSummarizeMutationVariables = Exact<{
 }>;
 
 
-export type TicketAiAssistanceSummarizeMutation = { __typename?: 'Mutations', ticketAIAssistanceSummarize?: { __typename?: 'TicketAIAssistanceSummarizePayload', summary?: { __typename?: 'TicketAIAssistanceSummary', customerRequest?: string | null, conversationSummary?: string | null, openQuestions?: Array<string> | null, upcomingEvents?: Array<string> | null, customerMood?: string | null, customerEmotion?: string | null } | null, analytics?: { __typename?: 'AIAnalyticsMetadata', isUnread?: boolean | null, run?: { __typename?: 'AIAnalyticsRun', id: string } | null, usage?: { __typename?: 'AIAnalyticsUsage', userHasProvidedFeedback?: boolean | null } | null } | null } | null };
+export type TicketAiAssistanceSummarizeMutation = { __typename?: 'Mutations', ticketAIAssistanceSummarize?: { __typename?: 'TicketAIAssistanceSummarizePayload', summary?: { __typename?: 'TicketAIAssistanceSummary', customerRequest?: string | null, conversationSummary?: Array<string> | null, openQuestions?: Array<string> | null, upcomingEvents?: Array<string> | null, customerMood?: string | null, customerEmotion?: string | null } | null, analytics?: { __typename?: 'AIAnalyticsMetadata', isUnread?: boolean | null, run?: { __typename?: 'AIAnalyticsRun', id: string } | null, usage?: { __typename?: 'AIAnalyticsUsage', userHasProvidedFeedback?: boolean | null } | null } | null } | null };
 
 export type TicketChecklistAddMutationVariables = Exact<{
   ticketId: Scalars['ID']['input'];
@@ -6999,7 +6963,7 @@ export type TicketAiAssistanceSummaryUpdatesSubscriptionVariables = Exact<{
 }>;
 
 
-export type TicketAiAssistanceSummaryUpdatesSubscription = { __typename?: 'Subscriptions', ticketAIAssistanceSummaryUpdates: { __typename?: 'TicketAIAssistanceSummaryUpdatesPayload', summary?: { __typename?: 'TicketAIAssistanceSummary', customerRequest?: string | null, conversationSummary?: string | null, openQuestions?: Array<string> | null, upcomingEvents?: Array<string> | null, customerMood?: string | null, customerEmotion?: string | null } | null, error?: { __typename?: 'AsyncExecutionError', message: string, exception: string } | null, analytics?: { __typename?: 'AIAnalyticsMetadata', isUnread?: boolean | null, run?: { __typename?: 'AIAnalyticsRun', id: string } | null, usage?: { __typename?: 'AIAnalyticsUsage', userHasProvidedFeedback?: boolean | null } | null } | null } };
+export type TicketAiAssistanceSummaryUpdatesSubscription = { __typename?: 'Subscriptions', ticketAIAssistanceSummaryUpdates: { __typename?: 'TicketAIAssistanceSummaryUpdatesPayload', summary?: { __typename?: 'TicketAIAssistanceSummary', customerRequest?: string | null, conversationSummary?: Array<string> | null, openQuestions?: Array<string> | null, upcomingEvents?: Array<string> | null, customerMood?: string | null, customerEmotion?: string | null } | null, error?: { __typename?: 'AsyncExecutionError', message: string, exception: string } | null, analytics?: { __typename?: 'AIAnalyticsMetadata', isUnread?: boolean | null, run?: { __typename?: 'AIAnalyticsRun', id: string } | null, usage?: { __typename?: 'AIAnalyticsUsage', userHasProvidedFeedback?: boolean | null } | null } | null } };
 
 export type TicketChecklistUpdatesSubscriptionVariables = Exact<{
   ticketId: Scalars['ID']['input'];
@@ -7902,14 +7866,6 @@ export type SessionQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SessionQuery = { __typename?: 'Queries', session: { __typename?: 'Session', id: string, afterAuth?: { __typename?: 'SessionAfterAuth', type: EnumAfterAuthType, data?: any | null } | null } };
-
-export type TicketSignatureQueryVariables = Exact<{
-  groupId: Scalars['ID']['input'];
-  ticketId?: InputMaybe<Scalars['ID']['input']>;
-}>;
-
-
-export type TicketSignatureQuery = { __typename?: 'Queries', ticketSignature?: { __typename?: 'Signature', id: string, renderedBody?: string | null } | null };
 
 export type TranslationsQueryVariables = Exact<{
   locale: Scalars['String']['input'];

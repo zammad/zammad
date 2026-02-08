@@ -3,6 +3,7 @@
 module Gql::Subscriptions
   class BaseSubscription < GraphQL::Schema::Subscription
     include Gql::Concerns::HandlesAuthorization
+    include Gql::Concerns::HandlesSettingCheck
     include Gql::Concerns::HasNestedGraphqlName
 
     object_class   Gql::Types::BaseObject
@@ -10,9 +11,6 @@ module Gql::Subscriptions
     argument_class Gql::Types::BaseArgument
 
     description 'Base class for all subscriptions'
-
-    # Require authentication by default for subscriptions.
-    requires_authentication true
 
     # Add DSL to specify if a subscription is broadcastable.
     def self.broadcastable(broadcastable = nil)

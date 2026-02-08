@@ -8,9 +8,7 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'This indicates if setting authentication method as default was successful'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.two_factor_authentication')
-    end
+    requires_permission 'user_preferences.two_factor_authentication'
 
     def resolve(method_name:)
       Service::User::TwoFactor::SetDefaultMethod

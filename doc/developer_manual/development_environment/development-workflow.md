@@ -54,17 +54,10 @@ Run tests frequently to verify your changes and avoid regressions.
 
 Before running tests for the first time, prepare the test database and compile assets:
 
-```sh
-RAILS_ENV=test rails db:drop db:create zammad:ci:test:prepare
-```
+- [How to test with Rspec and Capybara](../cookbook/how-to-test-with-rspec-and-capybara.md#running)
 
-```sh
-RAILS_ENV=test rails assets:precompile
-```
+Further testing:
 
-For further details see:
-
-- [How to test with Rspec and Capybara](../cookbook/how-to-test-with-rspec-and-capybara.md)
 - [How to test with Vitest and Cypress](../cookbook/how-to-test-with-vitest-and-cypress.md)
 
 ## Linting

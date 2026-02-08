@@ -9,9 +9,7 @@ module Gql::Queries
 
     type [Gql::Types::UserType], null: true
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(query:, group:)
       ::User.search({

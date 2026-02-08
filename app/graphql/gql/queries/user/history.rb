@@ -10,9 +10,7 @@ module Gql::Queries
 
     type [Gql::Types::HistoryGroupType], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['ticket.agent', 'admin.user'])
-    end
+    requires_permission 'ticket.agent', 'admin.user'
 
     def resolve(user:)
       Service::History::Group

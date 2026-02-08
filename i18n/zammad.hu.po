@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-01-19 06:59+0000\n"
+"PO-Revision-Date: 2026-02-02 09:00+0000\n"
 "Last-Translator: Karoly Nagy <cpt.charlesg@gmail.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hu/>\n"
@@ -490,7 +490,7 @@ msgstr "%s hitelesítő adatok"
 msgid "%s days ago"
 msgstr "%s napja"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:60
 msgid "%s deselected."
 msgstr "%s kijelölés megszüntetve."
 
@@ -616,7 +616,7 @@ msgstr ""
 msgid "%s required!"
 msgstr "%s kötelező!"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:46
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
 "%s kijelölve. Nyilakkal válassza ki a pozíciót, majd nyomja meg a szóközt."
@@ -875,10 +875,8 @@ msgid "2 weeks"
 msgstr "2 hét"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:34
-#, fuzzy
-#| msgid "2 hours"
 msgid "20 hours"
-msgstr "2 óra"
+msgstr "20 óra"
 
 #: db/seeds/ticket_priorities.rb:5
 msgid "3 high"
@@ -893,10 +891,8 @@ msgid "4 weeks"
 msgstr "4 hét"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:33
-#, fuzzy
-#| msgid "2 hours"
 msgid "5 hours"
-msgstr "2 óra"
+msgstr "20 óra"
 
 #: public/assets/chat/chat-no-jquery.coffee:167
 #: public/assets/chat/chat.coffee:165
@@ -985,7 +981,7 @@ msgid ""
 msgstr ""
 "Létrehoztunk egy tesztjegyet, amely megtalálható az áttekintésben \"%s\" %l."
 
-#: app/models/ticket.rb:297
+#: app/models/ticket.rb:299
 msgid "A ticket cannot be merged into itself."
 msgstr "Egy jegy nem egyesíthető önmagába."
 
@@ -1595,8 +1591,8 @@ msgstr "Minden érték hozzáadása"
 msgid "Add attachment option to upload."
 msgstr "Feltölthető csatolmány lehetőség hozzáadása."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:250
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:247
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:251
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:248
 msgid "Add bullet list"
 msgstr "Felsorolási lista hozzáadása"
 
@@ -1623,13 +1619,13 @@ msgstr "Üres ellenőrzőlista hozzáadása"
 msgid "Add from a template"
 msgstr "Hozzáadás sablonból"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:108
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:108
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:109
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:109
 msgid "Add heading"
 msgstr "Címsor hozzáadása"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:280
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:277
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:281
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:278
 msgid "Add image"
 msgstr "Kép hozzáadása"
 
@@ -1637,9 +1633,9 @@ msgstr "Kép hozzáadása"
 msgid "Add internal note"
 msgstr "Belső megjegyzés hozzáadása"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:299
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:300
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:296
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:174
 msgid "Add link"
 msgstr "Hivatkozás hozzáadása"
@@ -1654,8 +1650,8 @@ msgid "Add note"
 msgstr "Megjegyzés hozzáadása"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:151
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:237
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:234
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:238
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:235
 msgid "Add ordered list"
 msgstr "Rendezett lista hozzáadása"
 
@@ -1893,7 +1889,7 @@ msgstr "Ügynökök"
 msgid "Agents with \"%s\" permission"
 msgstr "Ügynökök \"%s\" joggal"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:113
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:103
 msgid "Agree & join"
 msgstr "Elfogadás & csatlakozás"
 
@@ -2082,10 +2078,8 @@ msgid "An error occurred during the operation."
 msgstr "Hiba történt a művelet során."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:251
-#, fuzzy
-#| msgid "An error occurred during the operation."
 msgid "An error occurred while fetching the website preview."
-msgstr "Hiba történt a művelet során."
+msgstr "Hiba történt a weboldal előnézetének betöltése során."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:990
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:5
@@ -2104,7 +2098,7 @@ msgstr "Egy nyílt forráskódú felügyeleti eszköz."
 msgid "An unexpected error has occurred."
 msgstr "Váratlan hiba történt."
 
-#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:26
+#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:24
 msgid "An unexpected error occurred during system setup."
 msgstr "Váratlan hiba történt a rendszer beállítása során."
 
@@ -2903,8 +2897,8 @@ msgstr "Új jegyhez rendelkezésre álló típusok"
 msgid "Avatar"
 msgstr "Avatár"
 
-#: app/graphql/gql/mutations/user/current/avatar/delete.rb:18
-#: app/graphql/gql/mutations/user/current/avatar/select.rb:18
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb:16
+#: app/graphql/gql/mutations/user/current/avatar/select.rb:16
 msgid "Avatar could not be found."
 msgstr "Az avatár nem található."
 
@@ -2938,6 +2932,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "Titkos másolat cím minden kimenő e-mailhez"
 
 #: app/assets/javascripts/app/controllers/_manage/beta_ui.coffee:2
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:46
 msgid "BETA UI"
 msgstr "BÉTA UI"
 
@@ -2945,7 +2940,11 @@ msgstr "BÉTA UI"
 msgid "BETA UI Availability"
 msgstr "BÉTA UI Elérhetőség"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:56
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:73
+msgid "BETA UI feedback program"
+msgstr "BÉTA UI visszajelzés program"
+
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:46
 msgid "BETA UI illustration"
 msgstr "BÉTA UI illusztráció"
 
@@ -3323,6 +3322,10 @@ msgstr "Kamera"
 msgid "Can be in any CSS color format."
 msgstr "Bármilyen CSS színformátumban lehet."
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:37
+msgid "Can you tell us what are you missing in the BETA UI?"
+msgstr "Mi hiányzik a BÉTA felhasználói felületből?"
+
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:87
 msgid "Can't create user!"
 msgstr "Nem lehet felhasználót létrehozni!"
@@ -3519,8 +3522,8 @@ msgstr "Jelszó megváltoztatása"
 msgid "Change personal account password."
 msgstr "Személyes fiók jelszavának módosítása."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:185
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:182
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:183
 msgid "Change text color"
 msgstr "Szövegszín módosítása"
 
@@ -3939,7 +3942,7 @@ msgstr "Kattintson ide"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "Kattintson ide a kétfaktoros hitelesítési módszer beállításához."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:49
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:48
 msgid "Click to edit…"
 msgstr "Szerkesztés…"
 
@@ -4085,7 +4088,7 @@ msgid "Commas and stars are not allowed in name."
 msgstr "Vesszők és csillagok nem megengedettek a nevekben."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:32
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:22
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:57
 msgid "Comment"
 msgstr "Megjegyzés"
@@ -4550,7 +4553,7 @@ msgid "Could not find the channel."
 msgstr "Csatorna nem található."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:37
-#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:23
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:21
 msgid "Could not generate recovery codes"
 msgstr "Nem sikerült helyreállítási kódokat generálni"
 
@@ -4610,7 +4613,7 @@ msgstr ""
 "módszert"
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:108
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:111
 msgid "Couldn't save changes"
 msgstr "Változások mentése nem sikerült"
 
@@ -4996,7 +4999,8 @@ msgstr ""
 msgid "Currently processing this ticket…"
 msgstr "Jegy feldolgozása folyamatban…"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:130
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:146
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:131
 msgid ""
 "Currently, no overviews are assigned to your roles. Please contact your "
 "administrator."
@@ -6417,6 +6421,14 @@ msgstr ""
 msgid "Delete"
 msgstr "Törlés"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:89
+msgid "Delete %s columns"
+msgstr "%s oszlop törlése"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
+msgid "Delete %s rows"
+msgstr "%s sor törlése"
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:47
 msgid "Delete Avatar?"
 msgstr "Avatár törlése?"
@@ -6458,7 +6470,7 @@ msgstr "Cikk törlése"
 msgid "Delete avatar"
 msgstr "Avatár törlése"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:82
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:90
 msgid "Delete column"
 msgstr "Oszlop törlése"
 
@@ -6514,11 +6526,11 @@ msgstr "Szervezet törlése?"
 msgid "Delete records"
 msgstr "Bejegyzések törlése"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:54
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
 msgid "Delete row"
 msgstr "Sor törlése"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:139
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:150
 msgid "Delete table"
 msgstr "Táblázat törlése"
 
@@ -6779,7 +6791,7 @@ msgstr "Letilt"
 msgid "Disable Notifications"
 msgstr "Értesítések kikapcsolása"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:36
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:64
 msgid "Disable the banner for the BETA switch"
 msgstr "Tiltsa le a BÉTA kapcsoló bannert"
 
@@ -6860,14 +6872,18 @@ msgstr "Megjelenítés"
 msgid "Display Zammad in the New BETA User Interface"
 msgstr "Zammad megjelenítése az új BÉTA felhasználói felületen"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:21
-msgid "Display Zammad with the New BETA User Interface"
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:52
+msgid "Display Zammad with the new BETA user interface"
 msgstr "Zammad megjelenítése az új BÉTA felhasználói felülettel"
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
 #: db/seeds/settings.rb:1883
 msgid "Display name"
 msgstr "Megjelenítendő név"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:88
+msgid "Do not ask automatically for feedback on the BETA UI"
+msgstr "Ne kérdezzen automatikusan a BÉTA UI visszajelzés küldéséről"
 
 #: app/assets/javascripts/app/lib/mixins/destination_group_email_address.coffee:26
 msgid "Do not change email address (%s)"
@@ -7040,11 +7056,7 @@ msgstr "A piszkozatot nem sikerült frissíteni."
 msgid "Drafts"
 msgstr "Piszkozat"
 
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:52
-msgid "Drag and drop to reorder ticket overview list items."
-msgstr "Húzással átrendezheti a jegyek áttekintő listájának elemeit."
-
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:63
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 msgid "Drag ended for %s."
 msgstr "%s húzása befejeződött."
 
@@ -7441,7 +7453,7 @@ msgstr ""
 msgid "Empty"
 msgstr "Üres"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:423
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
 msgid "Empty overview"
 msgstr "Üres áttekintő"
 
@@ -7582,7 +7594,7 @@ msgstr "Jegy összefoglaló engedélyezése vagy letiltása."
 msgid "Enable or disable the writing assistant text tools."
 msgstr "Az írássegéd szövegeszközeinek engedélyezése vagy letiltása."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:65
 msgid "Enable the banner for the BETA switch"
 msgstr "Engedélyezze a BÉTA kapcsoló bannert"
 
@@ -7818,7 +7830,7 @@ msgstr "Adjon meg egy érvényes e-mail címet."
 msgid "Enter credentials"
 msgstr "Adja meg a hitelesítő adatokat"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:300
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:301
 msgid "Enter link URL"
 msgstr "Adja meg a kapcsolat URL címét"
 
@@ -8090,7 +8102,7 @@ msgstr "Eszkaláció ekkor (frissítés időpontja)"
 msgid "Escalation times"
 msgstr "Eszkalációs idő"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:123
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:130
 msgid "Escape pressed. No item selected."
 msgstr "Escape lenyomva. Nincs kijelölve elem."
 
@@ -8298,7 +8310,7 @@ msgstr "Kibővített keresés"
 msgid "External data source field"
 msgstr "Külső adatbázis forrása mező"
 
-#: lib/search_index_backend.rb:758
+#: lib/search_index_backend.rb:754
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Zammad-csatolmány információk kinyerése tömbökből"
 
@@ -8435,6 +8447,7 @@ msgid "February"
 msgstr "február"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:34
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:62
 msgid "Feedback"
 msgstr "Visszajelzés"
 
@@ -8590,7 +8603,7 @@ msgstr "Fix e-mail fiókok"
 msgid "Flat Design"
 msgstr "Flat Design"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:90
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:97
 msgid "Focus on %s"
 msgstr "%s a fókuszban"
 
@@ -8721,7 +8734,7 @@ msgstr "Űrlap"
 msgid "Form Allowed Parameters"
 msgstr "Űrlap engedélyezett paraméterei"
 
-#: app/graphql/gql/queries/form_updater.rb:30
+#: app/graphql/gql/queries/form_updater.rb:34
 msgid "FormSchema could not be found."
 msgstr "A FormSchema nem található."
 
@@ -8738,8 +8751,8 @@ msgid "Format as _underlined_"
 msgstr "Formázás _aláhúzottként_"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:93
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:153
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:150
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:154
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:151
 msgid "Format as bold"
 msgstr "Formázás félkövérként"
 
@@ -8756,8 +8769,8 @@ msgid "Format as h3 heading"
 msgstr "Formázás h3 címsorként"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:100
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:161
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:158
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:162
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:159
 msgid "Format as italic"
 msgstr "Formázás dőlt betűsként"
 
@@ -8765,20 +8778,20 @@ msgstr "Formázás dőlt betűsként"
 msgid "Format as ordered list"
 msgstr "Formázás rendezett listaként"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:193
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:190
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:191
 msgid "Format as quoted text"
 msgstr "Formázás idézett szövegként"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:114
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:177
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:174
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:178
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:175
 msgid "Format as strikethrough"
 msgstr "Formázás áthúzásként"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:107
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:169
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:166
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:170
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:167
 msgid "Format as underlined"
 msgstr "Formázás aláhúzottként"
 
@@ -9025,6 +9038,10 @@ msgstr ""
 msgid "GitLab: Link issue"
 msgstr "GitLab: hivatkozás probléma"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:100
+msgid "Give feedback"
+msgstr "Adjon visszajelzést"
+
 #: app/controllers/selectors_controller.rb:43
 msgid "Given object does not support selector"
 msgstr "Az adott objektum nem támogatja a kiválasztót"
@@ -9113,7 +9130,7 @@ msgstr "Google Email"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:188
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:46
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:87
 msgid "Got it"
 msgstr "Értettem"
 
@@ -9305,14 +9322,6 @@ msgstr "Van frissítés"
 msgid "Have a nice day."
 msgstr "További szép napot."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:31
-msgid ""
-"Have the BETA switch between the old and the new UI always available in the "
-"Primary Navigation"
-msgstr ""
-"A régi és az új felhasználói felület közötti BÉTA kapcsoló mindig elérhető "
-"legyen az elsődleges navigációban"
-
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:21
 msgid ""
 "Have the BETA switch between the old and the new UI always available in the "
@@ -9344,20 +9353,20 @@ msgid "Header Menu"
 msgstr "Fejléc menü"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:129
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:115
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:115
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:116
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:116
 msgid "Heading 1"
 msgstr "Címsor 1"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:136
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:127
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:126
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:128
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:127
 msgid "Heading 2"
 msgstr "Címsor 2"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:143
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:139
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:137
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:140
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:138
 msgid "Heading 3"
 msgstr "Címsor 3"
 
@@ -9390,7 +9399,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:184
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:40
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:45
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:86
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:22
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
 msgid "Help"
@@ -9404,7 +9413,7 @@ msgstr "Segíts nekem! Egy teszt jegy vagyok 🎓"
 msgid "Help to improve Zammad!"
 msgstr "Segítsen a Zammad tökéletesítésében!"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:109
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:99
 msgid "Help us shape the future of Zammad!"
 msgstr "Segítsen a Zammad jövőjének formálásában!"
 
@@ -9490,7 +9499,7 @@ msgstr ""
 "¶Kérjük, próbáld ki korábban, és küldj visszajelzést róla.¶¶Az alábbi "
 "kapcsoló segítségével bármikor visszatérhetsz."
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:67
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:57
 msgid ""
 "Hey, we have something to show you! Our team has been working on the new "
 "Zammad UI for a while, and we’re very eager for you to try it and send some "
@@ -9506,7 +9515,7 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr "Üdvözlöm! Melyik termékünk?"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:51
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:69
 msgid "Hide BETA UI switch"
 msgstr "BÉTA UI kapcsoló elrejtése"
 
@@ -10110,8 +10119,8 @@ msgstr "Percek értékének növelése"
 msgid "Increment seconds value"
 msgstr "Másodpercek értékének növelése"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:263
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:260
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:264
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:261
 msgid "Indent text"
 msgstr "Szöveg behúzása"
 
@@ -10160,49 +10169,49 @@ msgstr ""
 "A beviteli mezőnek szöveg, jelszó, telefon, fax, e-mail vagy URL típusúnak "
 "kell lennie."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:220
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:217
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
 msgstr "Kód blokk beillesztése"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:73
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:78
 msgid "Insert column after"
 msgstr "Oszlop beillesztése utána"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:64
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:69
 msgid "Insert column before"
 msgstr "Oszlop beillesztése előtte"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:228
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:229
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr "Elválasztó beszúrása"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:209
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:206
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
 msgid "Insert inline code"
 msgstr "Kód beszúrása"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:36
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:41
 msgid "Insert row above"
 msgstr "Sor beillesztése előtte"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:45
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:50
 msgid "Insert row below"
 msgstr "Sor beillesztése utána"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:307
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:328
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:329
 msgid "Insert table"
 msgstr "Táblázat beszúrása"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:89
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:90
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:90
 msgid "Insert text from knowledge base answer"
 msgstr "Szöveg beszúrása tudásbázis válaszból"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:98
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Insert text from text module"
 msgstr "Szöveg beszúrása szövegmodulból"
 
@@ -10565,7 +10574,7 @@ msgstr "A rendszerfelhasználó törlése nem lehetséges."
 msgid "It is not possible to delete your current account."
 msgstr "A jelenlegi fiókját nem lehet törölni."
 
-#: app/models/ticket.rb:295
+#: app/models/ticket.rb:297
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "Nem lehetséges egyesíteni egy már egyesített jegybe."
 
@@ -10602,6 +10611,10 @@ msgstr "John Smith"
 msgid "Join %s"
 msgstr "Csatlakozzon: %s"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:107
+msgid "Join feedback program"
+msgstr "Csatlakozás a visszajelzési programba"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
@@ -10627,6 +10640,10 @@ msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr ""
 "Csak kattintson a kiemelt területre, és frissítse a szavakat. Sok sikert!"
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:94
+msgid "Just switch back"
+msgstr "Csak váltson vissza"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts:11
 msgid "Kayako"
@@ -10870,6 +10887,10 @@ msgstr "Elrendezési hivatkozás"
 msgid "Learn More"
 msgstr "Tudjon meg többet"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:40
+msgid "Leave BETA UI feedback program?"
+msgstr "Elhagyja a BÉTA UI visszajelzés programot?"
+
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:207
 msgid "Leave empty to use URL (Completions)"
 msgstr "URL használatához hagyja üresen (befejezések)"
@@ -10877,6 +10898,10 @@ msgstr "URL használatához hagyja üresen (befejezések)"
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:197
 msgid "Leave empty to use the base model"
 msgstr "Alap modell használatához hagyja üresen"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:39
+msgid "Leave program"
+msgstr "Program elhagyása"
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:199
 msgid "Library"
@@ -11136,7 +11161,7 @@ msgstr "Helyi MTA (Sendmail/Postfix/Exim/...) - szerver beállítás használata
 msgid "Locale"
 msgstr "Nyelvterület"
 
-#: app/graphql/gql/mutations/user/current/locale.rb:17
+#: app/graphql/gql/mutations/user/current/locale.rb:15
 msgid "Locale could not be found."
 msgstr "A nyelvterület nem található."
 
@@ -11727,7 +11752,7 @@ msgstr "Az áttekintésekben megjelenített jegyek maximális száma"
 msgid "May"
 msgstr "május"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:114
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:104
 msgid "Maybe later"
 msgstr "Talán később"
 
@@ -11766,8 +11791,8 @@ msgstr "Tagok"
 msgid "Mention for"
 msgstr "Említések"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:80
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:81
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:81
 msgid "Mention user"
 msgstr "Felhasználó említése"
 
@@ -11778,7 +11803,11 @@ msgstr "Felhasználó említése"
 msgid "Merge"
 msgstr "Egyesítés"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:101
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:111
+msgid "Merge %s cells"
+msgstr "%s cellák egyesítése"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:112
 msgid "Merge cells"
 msgstr "Cellák egyesítése"
 
@@ -12279,7 +12308,7 @@ msgstr "Hálózat"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:66
 msgid "Never ask me again"
-msgstr ""
+msgstr "Ne kérdezzen újra"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:12
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:12
@@ -12322,9 +12351,8 @@ msgstr "Új tulajdonság"
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:3
 #: app/assets/javascripts/app/controllers/clues/desktop_beta_switch_clues.coffee:5
 #: app/assets/javascripts/app/views/profile/newbetaui.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:36
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:11
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:20
 msgid "New BETA UI"
 msgstr "Új BÉTA UI"
 
@@ -12808,7 +12836,8 @@ msgstr "Nem található tag"
 msgid "No organizations found"
 msgstr "Nem található szervezet"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:127
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:128
 msgid "No overviews"
 msgstr "Nincsenek áttekintések"
 
@@ -12900,7 +12929,7 @@ msgstr "Még nincsenek címkék."
 msgid "No template created yet."
 msgstr "Még nem készült sablon."
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:425
 msgid "No tickets in this state."
 msgstr "Nincs ilyen állapotú jegy."
 
@@ -12912,7 +12941,7 @@ msgstr "Nincs token!"
 msgid "No translation for this locale available"
 msgstr "Nem áll rendelkezésre fordítás ehhez a nyelvterülethez"
 
-#: app/models/ticket.rb:420
+#: app/models/ticket.rb:422
 msgid "No triggers active"
 msgstr "Nincsenek aktív eseményindítók"
 
@@ -13406,12 +13435,12 @@ msgid "Only visible to editors"
 msgstr "Csak a szerkesztők számára látható"
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:19
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:77
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:103
 msgid "Only when out of office replacement"
 msgstr "Csak házon kívüli helyettesítéskor"
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:12
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:74
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:100
 msgid "Only when shared organization member"
 msgstr "Csak megosztott szervezet tag esetén"
 
@@ -13587,7 +13616,7 @@ msgstr "Az áttekintések sorrendje"
 msgid "Order of overviews"
 msgstr "Áttekintések sorrendje"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:127
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:120
 msgid "Order of ticket overviews"
 msgstr "A jegyek áttekintésének sorrendje"
 
@@ -13794,8 +13823,8 @@ msgstr "Kimenő:"
 msgid "Outdated Browser"
 msgstr "Elavult böngésző"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:271
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:268
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:272
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:269
 msgid "Outdent text"
 msgstr "Kihúzott szöveg"
 
@@ -13818,6 +13847,10 @@ msgstr "Tömeges maszk áttekintése"
 msgid "Overview navigation list"
 msgstr "Áttekintés navigációs lista"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:70
+msgid "Overview order list"
+msgstr "Áttekintés rendezés lista"
+
 #: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:380
 msgid "Overview: %s"
 msgstr "Áttekintés: %s"
@@ -13828,7 +13861,7 @@ msgstr "Áttekintés: %s"
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:30
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:31
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:78
 #: db/seeds/permissions.rb:35
@@ -14811,6 +14844,10 @@ msgstr "Valós idejű"
 msgid "Reason for absence"
 msgstr "A távollét oka"
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:78
+msgid "Reason to switch back"
+msgstr "Visszaváltás oka"
+
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:39
 #: app/assets/javascripts/app/views/google/list.jst.eco:112
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:113
@@ -15066,8 +15103,8 @@ msgid "Remove checklist"
 msgstr "Ellenőrzőlista eltávolítása"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:121
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:201
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:198
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:202
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:199
 msgid "Remove formatting"
 msgstr "Formázás eltávolítása"
 
@@ -15288,7 +15325,7 @@ msgid "Reset Password failed!"
 msgstr "A jelszó visszaállítása nem sikerült!"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:136
 msgid "Reset overview order"
 msgstr "Áttekintési sorrend visszaállítása"
 
@@ -15403,7 +15440,7 @@ msgstr ""
 "<br>\n"
 "<div>Az Ön #{config.product_name} csapata</div>\n"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:96
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:89
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "A jegyáttekintések sorrendjének visszaállítása sikertelen."
 
@@ -16291,7 +16328,7 @@ msgstr "A kiválasztott objektum már törlésre vár."
 msgid "Selected tickets do not match any macros."
 msgstr "A kiválasztott jegyek nem felelnek meg egyetlen makrónak sem."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:120
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:127
 msgid "Selection cancelled for %s."
 msgstr "%s kijelölése megszüntetve."
 
@@ -16345,15 +16382,16 @@ msgid "Send email: %s"
 msgstr "E-mail küldése: %s"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:121
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:44
 msgid "Send feedback"
 msgstr "Visszajelzés küldése"
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:93
+msgid "Send feedback & switch back"
+msgstr "Visszajelzés küldése és visszaváltás"
+
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:121
-#, fuzzy
-#| msgid "Send feedback"
 msgid "Send feedback on the BETA UI"
-msgstr "Visszajelzés küldése"
+msgstr "Visszajelzés küldése a BÉTA felhasználói felületről"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:85
 msgid "Send invitation"
@@ -16693,7 +16731,7 @@ msgstr "Megosztott piszkozat sikeresen frissítve."
 msgid "Shared drafts"
 msgstr "Megosztott piszkozatok"
 
-#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:20
+#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:17
 msgid "Shared drafts are not activated for the selected group"
 msgstr "Megosztott piszkozat nincsenek aktiválva a kiválasztott csoporthoz"
 
@@ -16805,6 +16843,13 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
 msgid "Show previous tab"
 msgstr "Előző lap megjelenítése"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:61
+msgid ""
+"Show the BETA switch between the old and the new UI in the primary navigation"
+msgstr ""
+"A régi és az új felhasználói felület közötti BÉTA kapcsoló megjelenítése az "
+"elsődleges navigációban"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:43
 msgid "Show the chat when ready."
@@ -17094,7 +17139,7 @@ msgstr "Sajnáljuk, nem minden mező van helyesen kitöltve."
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "Sajnáljuk, jelenleg nincs engedélyezve a CTI háttérrendszer."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:139
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:146
 msgid ""
 "Sortable list focused. Use up and down arrows to navigate items. Press Space "
 "to select and item and again on another item to swap them."
@@ -17103,7 +17148,7 @@ msgstr ""
 "között. Nyomja meg a szóköz billentyűt egy elem kiválasztásához, majd ismét "
 "egy másik elemnél a felcseréléshez."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:46
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:50
 msgid "Sorted %s in user taskbar list to position %s."
 msgstr "Felhasználói tálca listában %s elemet %s következő pozícióra rendezte."
 
@@ -17152,7 +17197,7 @@ msgstr ""
 msgid "Split"
 msgstr "Felosztás"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:92
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:100
 msgid "Split cells"
 msgstr "Cellák felosztása"
 
@@ -17533,7 +17578,7 @@ msgstr "vasárnap"
 msgid "Support of multilingual Knowledge Base."
 msgstr "Többnyelvű Tudásbázis támogatása."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:71
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:78
 msgid "Swapped %s with %s. %s moved to position %s."
 msgstr "%s kicserélve ezzel: %s. %s a %s pozícióba került."
 
@@ -17633,6 +17678,10 @@ msgstr "A lap viselkedése a jegykezelés után"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:133
 msgid "Tab has changed, do you really want to close it?"
 msgstr "A lap megváltozott, valóban be szeretné zárni?"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuTrigger.vue:33
+msgid "Table options"
+msgstr "Táblázat opciók"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:257
 msgid "Tabs"
@@ -17911,7 +17960,7 @@ msgstr "A Tudásbázist nem lehetett létrehozni."
 msgid "The MIME type of the image is invalid."
 msgstr "A kép MIME típusa érvénytelen."
 
-#: app/graphql/gql/queries/system/import/state.rb:39
+#: app/graphql/gql/queries/system/import/state.rb:37
 msgid "The OTRS import failed."
 msgstr "Az OTRS- importálás nem sikerült."
 
@@ -18213,6 +18262,15 @@ msgstr ""
 "A csevegő akkor jelenik meg, ha a kapcsolat létrejött a szerverrel, és ha "
 "van online egy operátor, akivel cseveghetsz."
 
+#: app/graphql/gql/mutations/ticket/checklist/add.rb:13
+#: app/graphql/gql/mutations/ticket/checklist/base.rb:7
+#: app/graphql/gql/queries/checklist/templates.rb:11
+#: app/graphql/gql/queries/ticket/checklist.rb:11
+#: app/graphql/gql/subscriptions/checklist/template_updates.rb:12
+#: app/graphql/gql/subscriptions/ticket/checklist_updates.rb:13
+msgid "The checklist feature is not active"
+msgstr "Az ellenőrzőlista funkció nem aktív"
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:33
 msgid ""
 "The chosen unit will be used for display only and will not affect stored "
@@ -18267,7 +18325,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:400
-#: app/graphql/gql/mutations/user/current/change_password.rb:30
+#: app/graphql/gql/mutations/user/current/change_password.rb:28
 msgid "The current password you provided is incorrect."
 msgstr "A megadott jelenlegi jelszó helytelen."
 
@@ -18285,11 +18343,9 @@ msgstr ""
 "és UTF-8 formátumban kell elmenteni őket. A CSV-fájlt importálhatja, vagy az "
 "adatokat közvetlenül a szövegmezőbe illesztheti be."
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:76
-#, fuzzy
-#| msgid "Anonymized data we need to collect is:"
-msgid "The data we need to collect includes:"
-msgstr "Az általunk gyűjtött anonimizált adat:"
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:66
+msgid "The data we need to collect consists of:"
+msgstr "Az általunk gyűjtött adatok az alábbiakból állnak:"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:294
 msgid ""
@@ -18492,11 +18548,11 @@ msgstr ""
 "A jegy azonosítója, pl. Ticket#, Call#, MyTicket#. Az alapértelmezett érték "
 "a Ticket#."
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:34
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:30
 msgid "The idoit object could not be found."
 msgstr "Az idiot objektum nem található."
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:28
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:24
 msgid "The idoit object is already present on the ticket."
 msgstr "Az idiot objektum már szerepel a jegyen."
 
@@ -18538,11 +18594,11 @@ msgid "The issue could not be saved."
 msgstr "A problémát nem lehetett elmenteni."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:26
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:24
 msgid "The issue reference already exists."
 msgstr "A hiba referencia már létezik."
 
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:42
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:40
 msgid "The issue reference could not be found."
 msgstr "A hiba referencia nem található."
 
@@ -18620,13 +18676,9 @@ msgstr "Az objektumot nem lehetett frissíteni."
 msgid "The online notification could not be marked as seen."
 msgstr "Az online értesítést nem sikerült megtekintettként megjelölni."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:105
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:98
 msgid "The order of your ticket overviews was reset."
 msgstr "Jegy áttekintések sorrendje visszaállítva."
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:85
-msgid "The order of your ticket overviews was updated."
-msgstr "A jegy áttekintőinek sorrendje frissítve lett."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:248
 msgid "The page is not available anymore"
@@ -18739,7 +18791,7 @@ msgstr "A megadott végpont érvénytelen."
 msgid "The provided match operator is missing or invalid."
 msgstr "A megadott egyeztető operátor hiányzik vagy érvénytelen."
 
-#: app/graphql/gql/mutations/user/current/password_check.rb:28
+#: app/graphql/gql/mutations/user/current/password_check.rb:26
 msgid "The provided password is incorrect."
 msgstr "A megadott jelszó helytelen."
 
@@ -18873,7 +18925,7 @@ msgstr "A kötelező 'group_id' paraméter hiányzik."
 msgid "The required parameter 'id' is missing."
 msgstr "A kötelező 'id' paraméter hiányzik."
 
-#: lib/search_index_backend.rb:681
+#: lib/search_index_backend.rb:677
 msgid "The required parameter 'key' is missing."
 msgstr "A kötelező 'key' paraméter hiányzik."
 
@@ -18929,7 +18981,7 @@ msgstr "A kötelező 'ticket_number' paraméter hiányzik."
 msgid "The required parameter 'user_id' is missing."
 msgstr "A kötelező 'user_id' paraméter hiányzik."
 
-#: lib/search_index_backend.rb:682
+#: lib/search_index_backend.rb:678
 msgid "The required parameter 'value' is missing."
 msgstr "A kötelező 'value' paraméter hiányzik."
 
@@ -19183,7 +19235,7 @@ msgstr ""
 "került: %s."
 
 #: app/controllers/sessions_controller.rb:249
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:34
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
 msgid "The two-factor authentication method is not enabled."
@@ -19224,7 +19276,7 @@ msgstr ""
 "'id_token'-ből."
 
 #: app/controllers/sessions_controller.rb:245
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:29
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "A felhasználónév vagy a jelszó helytelen."
 
@@ -19531,7 +19583,7 @@ msgstr "Ez az eszköz"
 msgid "This entry already exists!"
 msgstr "Ez a bejegyzés már létezik!"
 
-#: app/services/service/check_feature_enabled.rb:8
+#: app/services/service/check_feature_enabled.rb:6
 msgid "This feature is not enabled."
 msgstr "Ez a funkció nincs engedélyezve."
 
@@ -19894,7 +19946,7 @@ msgid ""
 "Each of the users can then provide consent or not for the participation in "
 "the BETA program.\n"
 "\n"
-"Answers will be anonymized and the data collected may include:\n"
+"Answers will be anonymized and the data collected consists of:\n"
 "- Zammad instance name\n"
 "- star rating of the new UI\n"
 "- text comments on the new UI\n"
@@ -19909,8 +19961,7 @@ msgstr ""
 "A felhasználók ezután dönthetnek, hogy hozzájárulnak-e a BÉTA programban "
 "való részvételhez.\n"
 "\n"
-"A válaszok anonimizálva lesznek, a gyűjtött adatok a következőket "
-"tartalmazhatják:\n"
+"A válaszok anonimizálva lesznek, a gyűjtött adatok a következőkből állnak\n"
 "- Zammad példány neve\n"
 "- az új felhasználói felület csillagos értékelése\n"
 "- szöveges megjegyzések az új felhasználói felületről\n"
@@ -19949,14 +20000,6 @@ msgid ""
 msgstr ""
 "Ez a szolgáltatás valós időben mutatja a bejövő hívások névjegyeit és a "
 "hívólistát."
-
-#: app/services/service/concerns/handles_setting.rb:22
-msgid "This setting is not disabled."
-msgstr "Ez a beállítás nincs letiltva."
-
-#: app/services/service/concerns/handles_setting.rb:18
-msgid "This setting is not enabled."
-msgstr "Ez a beállítás nincs engedélyezve."
 
 #: app/assets/javascripts/app/models/group.coffee:13
 msgid "This signature is inactive, it won't be included in the reply."
@@ -20861,15 +20904,15 @@ msgstr "Sötét üzemmód bekapcsolása"
 msgid "Toggle group"
 msgstr "Csoport váltása"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:129
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:140
 msgid "Toggle header cell"
 msgstr "Fejléc cella ki/bekapcsolása"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:120
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:131
 msgid "Toggle header column"
 msgstr "Fejléc oszlop ki/bekapcsolása"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:111
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:122
 msgid "Toggle header row"
 msgstr "Fejléc sor ki/bekapcsolása"
 
@@ -20964,7 +21007,7 @@ msgstr "Ellenőrzőlista elemként követve ebben"
 msgid "Transfer conversation to another chat:"
 msgstr "Beszélgetés átvitele egy másik csevegésbe:"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:55
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:59
 msgid "Transferred %s from user taskbar list %s at position %s."
 msgstr "%s áthelyezve a felhasználói tálca listájáról %s a %s pozícióban."
 
@@ -21685,7 +21728,7 @@ msgstr ""
 msgid "Updating Database"
 msgstr "Adatbázis frissítése"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:73
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:74
 msgid "Updating the order of your ticket overviews failed."
 msgstr "A jegy áttekintések sorrendjének frissítése sikertelen."
 
@@ -22256,7 +22299,7 @@ msgstr "Várakozó ügyfelek"
 msgid "Waiting in %s"
 msgstr "Várakozás ebben: %s"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:44
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:34
 msgid "Want to join the BETA UI feedback program?"
 msgstr "Csatlakoznál a BÉTA UI visszajelzés programba?"
 
@@ -22594,6 +22637,10 @@ msgstr "Munkafolyamat"
 msgid "Workflows"
 msgstr "Munkafolyamatok"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:104
+msgid "Would you like to give us feedback on the BETA UI? "
+msgstr "Szeretne visszajelzést küldeni a BÉTA felhasználói felületről? "
+
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:16
 #: db/seeds/permissions.rb:245 db/seeds/settings.rb:6103
 msgid "Writing Assistant"
@@ -22642,8 +22689,8 @@ msgstr ""
 "Az írássegéd nem tudott szöveget generálni. Kérjük, próbálja meg újra később "
 "vagy lépjen kapcsolatba a rendszergazdájával."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:67
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:67
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:68
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:68
 msgid "Writing assistant tools"
 msgstr "Írássegéd eszközök"
 
@@ -22691,6 +22738,10 @@ msgstr "Nincs jogosultsága megnyitni az alábbit: %s."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Ön a várólistán a <strong>%s</strong> helyen szerepel."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:78
+msgid "You are part of the BETA UI feedback program."
+msgstr "Ön a BÉTA UI visszajelzési program tagja."
+
 #: app/models/transaction/notification.rb:111
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
@@ -22716,10 +22767,9 @@ msgstr "Ezt azért kapja, mert Önt megemlítették ebben a jegyben."
 msgid "You calendar subscription settings were updated."
 msgstr "Naptár feliratkozási beállításai frissítve."
 
-#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:69
-msgid ""
-"You can always send your feedback using the button next to the BETA switch."
-msgstr ""
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
+msgid "You can always re-join later."
+msgstr "Bármikor újra csatlakozhat."
 
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco:7
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:9
@@ -22902,6 +22952,18 @@ msgstr "Jelszavát igényelheti"
 msgid "You can request your password here."
 msgstr "A jelszavát itt igényelheti."
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:87
+msgid ""
+"You can return to the new BETA UI using the switch at the bottom of your "
+"taskbar or in your profile settings."
+msgstr ""
+"Az új BÉTA felhasználói felületre a tálca alján található kapcsolóval vagy a "
+"profilbeállításokban térhet vissza."
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:69
+msgid "You can send feedback from the BETA button or profile settings."
+msgstr "Visszajelzést küldhet a BÉTA gombbal vagy a profil beállításoknál."
+
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:3
 msgid ""
 "You can switch between the following backends for new attachments even on a "
@@ -22918,7 +22980,7 @@ msgstr ""
 "Válthat a régi és az új BÉTA UI közt bármikor a Profil beállítások > Új BÉTA "
 "UI menüpontban."
 
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:41
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:82
 msgid ""
 "You can switch between the old and the New BETA UI at any moment in the "
 "Profile Settings > New BETA UI section."
@@ -23108,6 +23170,12 @@ msgid ""
 "You were using the new BETA UI for %s. Considering that, how would you rate "
 "your experience so far?"
 msgstr ""
+"%s óta az új BÉTA felhasználói felületet használta. Ennek fényében hogyan "
+"értékelné az eddigi tapasztalatait?"
+
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:15
+msgid "You were using the new BETA UI for 5 hours."
+msgstr "5 órája használod az új BÉTA felhasználói felületet."
 
 #: app/assets/javascripts/app/views/login.jst.eco:96
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:158
@@ -23117,10 +23185,6 @@ msgid ""
 msgstr ""
 "Ön már regisztrált az e-mail címével, amennyiben kapcsolatba lépett "
 "Ügyfélszolgálati csapatunkkal."
-
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:25
-msgid "You've been using the new UI for 2 hours."
-msgstr "2 órája használod az új felhasználói felületet."
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee:13
 msgid "YouTube or Vimeo address"
@@ -23202,8 +23266,9 @@ msgstr ""
 "található hivatkozásra."
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:60
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:40
 msgid "Your answer will be submitted to Zammad GmbH in an anonymized way."
-msgstr ""
+msgstr "Válasza a Zammad GmbH részére kerül továbbításra anonimizált módon."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:172
 msgid "Your avatar"
@@ -23255,7 +23320,7 @@ msgstr "Az Ön személyes hozzáférési tokenje"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:50
 msgid "Your rating of the new BETA UI"
-msgstr ""
+msgstr "Az új BÉTA UI értékelése"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:28
 msgid "Your theme has been updated."
@@ -23447,19 +23512,17 @@ msgstr "összes feliratkozó"
 msgid "and"
 msgstr "és"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:83
-#, fuzzy
-#| msgid "star rating of the new UI, repeated in a few timely iterations"
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:73
 msgid ""
 "anonymized rating and comment on the new UI, repeated in a few timely "
 "iterations"
-msgstr "csillagos értékelés az új felületről, időnként megismételve"
+msgstr ""
+"anonimizált értékelés és megjegyzés az új felületről, időnként megismételve"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:90
-#, fuzzy
-#| msgid "for this, we need to track the usage time of the new UI"
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:80
 msgid "anonymized tracked usage time of the new UI"
-msgstr "ehhez szükségünk van az új felületen töltött idő mérésére"
+msgstr ""
+"az új felhasználói felület anonimizált nyomon követett használati ideje"
 
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:70
 msgid "apply filter"
@@ -23848,10 +23911,8 @@ msgid "example macro"
 msgstr "példa makró"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/facebookDirectMessage.ts:6
-#, fuzzy
-#| msgid "Facebook direct message"
 msgid "facebook direct message"
-msgstr "Facebook közvetlen üzenet"
+msgstr "facebook közvetlen üzenet"
 
 #: db/seeds/ticket_article_types.rb:16
 msgid "facebook direct-message"
@@ -23982,6 +24043,14 @@ msgstr "i-doit konfiguráció"
 #: db/seeds/settings.rb:4982
 msgid "i-doit integration"
 msgstr "i-doit integráció"
+
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:12
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_remove.rb:12
+#: app/graphql/gql/queries/autocomplete_search/idoit_object_types.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_list.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_search.rb:15
+msgid "i-doit integration is not enabled"
+msgstr "i-doit integráció nincs engedélyezve"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:172
 msgid "i-doit: Link objects"
@@ -24364,12 +24433,11 @@ msgstr "nem tartalmazhat protokollt (pl. \"http://\" vagy \"https://\")"
 msgid "my own note"
 msgstr "saját megjegyzésem"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:95
-#, fuzzy
-#| msgid "the Zammad instance where the usage of the new UI is tracked."
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:85
 msgid "name of the Zammad instance with tracked usage time of the new UI."
 msgstr ""
-"a Zammad példány, ahol az új felhasználói felület használatát követik nyomon."
+"a Zammad példány neve, ahol az új felhasználói felület használatának idejét "
+"nyomon követik."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorNew.vue:5
 #: db/seeds/ticket_state_types.rb:3 db/seeds/ticket_states.rb:5
@@ -24760,10 +24828,8 @@ msgid "system"
 msgstr "rendszer"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/telegramPersonalMessage.ts:6
-#, fuzzy
-#| msgid "Telegram"
 msgid "telegram"
-msgstr "Telegram"
+msgstr "telegram"
 
 #: db/seeds/ticket_article_types.rb:15
 msgid "telegram personal-message"
@@ -24850,10 +24916,8 @@ msgid "try again"
 msgstr "próbálja meg újra"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/twitterDirectMessage.ts:6
-#, fuzzy
-#| msgid "Twitter direct message"
 msgid "twitter direct message"
-msgstr "Twitter közvetlen üzenet"
+msgstr "twitter közvetlen üzenet"
 
 #: db/seeds/ticket_article_types.rb:10
 msgid "twitter direct-message"
@@ -24996,6 +25060,28 @@ msgstr "...a teljes szövegterületből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
+
+#~ msgid "This setting is not disabled."
+#~ msgstr "Ez a beállítás nincs letiltva."
+
+#~ msgid "This setting is not enabled."
+#~ msgstr "Ez a beállítás nincs engedélyezve."
+
+#~ msgid "Drag and drop to reorder ticket overview list items."
+#~ msgstr "Húzással átrendezheti a jegyek áttekintő listájának elemeit."
+
+#~ msgid "NEW BETA UI"
+#~ msgstr "ÚJ BÉTA UI"
+
+#~ msgid "The order of your ticket overviews was updated."
+#~ msgstr "A jegy áttekintőinek sorrendje frissítve lett."
+
+#~ msgid ""
+#~ "Have the BETA switch between the old and the new UI always available in "
+#~ "the Primary Navigation"
+#~ msgstr ""
+#~ "A régi és az új felhasználói felület közötti BÉTA kapcsoló mindig "
+#~ "elérhető legyen az elsődleges navigációban"
 
 #~ msgid "Any additional feedback?"
 #~ msgstr "Bármilyen további visszajelzés?"

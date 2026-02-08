@@ -10,9 +10,7 @@ module Gql::Queries
 
     type [Gql::Types::MacroType], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(groups:)
       macros_with_any_group = Macro.available_in_groups(groups)

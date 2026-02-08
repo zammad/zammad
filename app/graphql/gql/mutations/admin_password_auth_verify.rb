@@ -9,9 +9,7 @@ module Gql::Mutations
 
     field :login, String, null: true, description: 'Login of the user'
 
-    def self.authorize(_obj, _ctx)
-      true
-    end
+    allow_public_access!
 
     def resolve(token:)
       verify = Service::Auth::VerifyAdminToken.new(token: token)

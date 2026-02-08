@@ -51,7 +51,13 @@ class AI::Provider
     return result if !options[:json_response]
 
     begin
-      JSON.parse(result)
+      begin
+        JSON.parse(result)
+      rescue JSON::ParserError
+        # If initial parsing fails, try to strip markdown code blocks and try again.
+        cleaned_result = transform_json_response(result)
+        JSON.parse(cleaned_result)
+      end
     rescue => e
       Rails.logger.error "Unable to parse JSON response: #{e.inspect}"
       Rails.logger.error "Response: #{result}"
@@ -72,6 +78,12 @@ class AI::Provider
   end
 
   private
+
+  def transform_json_response(result)
+    return result if result.blank?
+
+    result.strip.sub(%r{\A`{1,3}(?:json)?\s*(.*?)\s*`{1,3}\z}m, '\1').strip
+  end
 
   def specific_metadata
     {}

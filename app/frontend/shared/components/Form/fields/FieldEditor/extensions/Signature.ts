@@ -3,6 +3,10 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { DOMParser, type Node as ProseNode } from '@tiptap/pm/model'
 
+import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
+
+import { getPreviousNodeFromPosition } from '../utils.ts'
+
 import type { Range } from '@tiptap/core'
 
 export default Node.create({
@@ -13,22 +17,64 @@ export default Node.create({
       addSignature:
         (signature) =>
         ({ editor, chain }) => {
-          const element = document.createElement('div')
-          element.innerHTML = `<div>${signature.body}</div>`
-          const slice = DOMParser.fromSchema(editor.state.schema).parseSlice(element).toJSON()
+          const signatureElement = htmlCleanup(
+            `<div>${signature.renderedBody}</div>`,
+            false,
+            true, // return as element due to DOMParser requirement below
+          ) as Element
+
+          const slice = DOMParser.fromSchema(editor.state.schema)
+            .parseSlice(signatureElement)
+            .toJSON()
+
           if (!slice) return false
-          const needBr =
-            signature.position === 'before' || slice.content[0]?.content?.[0].type !== 'hardBreak'
+
+          const leadingNode = getPreviousNodeFromPosition(editor, signature.from)
+          const trailingNode = editor.state.doc.resolve(signature.from).nodeAfter
+
+          const isEmptyParagraphOrHardBreak = (node?: ProseNode | null) =>
+            !!(
+              node &&
+              (node.type.name === 'paragraph' || node.type.name === 'hardBreak') &&
+              !node.content.size &&
+              !node.marks.length
+            )
+
+          const hasSingleHardBreakParagraph = (node?: ProseNode | null) =>
+            !!(
+              node &&
+              node.type.name === 'paragraph' &&
+              node.content.size === 1 &&
+              node.firstChild?.type.name === 'hardBreak' &&
+              !node.marks.length
+            )
+
+          // Especially important when we use reply with selected content
+          // Also with full quotes we have the situation
+          const leadingHasSpacing =
+            isEmptyParagraphOrHardBreak(leadingNode) || hasSingleHardBreakParagraph(leadingNode)
+
+          const trailingHasSpacing =
+            isEmptyParagraphOrHardBreak(trailingNode) || hasSingleHardBreakParagraph(trailingNode)
+
+          // trailing br tags are getting removed in htmlCleanup -> removeTrailingLineBreaks
+          // 'before position' handles the scenario where you want to insert the signature at the top of the block instead of at the bottom
+          // e.g reply with full quotes,
+          const leadingBreak = signature.position === 'before' || !leadingHasSpacing
+
+          // for full quote we need to add a trailing break
+          const trailingBreak = signature.position === 'before' && !trailingHasSpacing
           return chain()
             .insertContentAt(signature.from, [
-              ...(needBr ? [{ type: 'paragraph' }] : []),
+              ...(leadingBreak ? [{ type: 'paragraph' }] : []),
               {
                 type: 'signature',
                 content: slice.content,
                 attrs: {
-                  signatureId: signature.id,
+                  signatureId: signature.internalId,
                 },
               },
+              ...(trailingBreak ? [{ type: 'paragraph' }] : []),
             ])
             .run()
         },
@@ -110,8 +156,14 @@ export default Node.create({
   parseHTML() {
     return [
       {
-        tag: 'div.signature',
-        attrs: { class: 'signature', 'data-signature': 'true' },
+        tag: 'div',
+        getAttrs: (element) => {
+          // Match both formats: old (no class) and new (with class)
+          return element.getAttribute('data-signature') === 'true' ? {} : false
+          // Because no attributes from the HTML element need to be
+          //  extracted or stored in the node's data. The mere presence of the `data-signature`
+          //  attribute is sufficient to identify and parse the element as a signature node.
+        },
         consuming: false,
       },
     ]

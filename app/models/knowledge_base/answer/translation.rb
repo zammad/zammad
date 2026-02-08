@@ -97,8 +97,7 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
 
   scope :apply_kb_scope, lambda { |scope|
     if scope.present?
-      output
-        .joins(:answer)
+      joins(:answer)
         .where(knowledge_base_answers: { category_id: scope })
     end
   }

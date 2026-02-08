@@ -14,7 +14,7 @@ defineProps<Props>()
   <div>
     <img
       v-if="withIllustration"
-      class="mx-auto w-full h-full"
+      class="mx-auto w-152 max-h-99"
       src="./assets/confetti.svg"
       alt="confetti"
     />

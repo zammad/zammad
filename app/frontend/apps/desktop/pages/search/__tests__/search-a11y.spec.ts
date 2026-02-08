@@ -11,8 +11,10 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { mockDetailSearchQuery } from '#desktop/components/Search/graphql/queries/detailSearch.mocks.ts'
 import { mockSearchCountsQuery } from '#desktop/components/Search/graphql/queries/searchCounts.mocks.ts'
 
+// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
+
 describe('search view', () => {
-  it('has no accessibility violations in main content', async () => {
+  it.skip('has no accessibility violations in main content', async () => {
     mockPermissions(['ticket.agent'])
 
     mockSearchCountsQuery({

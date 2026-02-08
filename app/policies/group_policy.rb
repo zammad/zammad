@@ -13,6 +13,10 @@ class GroupPolicy < ApplicationPolicy
     false
   end
 
+  def create_tickets?
+    show? && user.group_access?(record.id, :create)
+  end
+
   private
 
   def admin?

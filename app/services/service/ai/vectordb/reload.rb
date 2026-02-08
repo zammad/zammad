@@ -13,7 +13,7 @@ module Service::AI::VectorDB
     def execute
       ai_vector_db.ping!
 
-      Models.all.keys.select { |model| model.included_modules.include?(HasVectorIndex) }.each do |model|
+      Models.all.keys.select { |model| model.include?(HasVectorIndex) }.each do |model|
         model.vector_index_reload(worker:)
       end
     end

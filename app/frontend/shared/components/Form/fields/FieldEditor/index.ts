@@ -32,6 +32,7 @@ const fieldDefinition = createInput(
     'ticketId',
     'customerId',
     'organizationId',
+    'signature',
     'meta',
     'contentType',
     'inline',

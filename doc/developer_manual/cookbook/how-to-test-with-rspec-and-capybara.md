@@ -1,5 +1,11 @@
 # How to Test with RSpec and Capybara
 
+We assume you are using our recommended [Devcontainer Setup](../development_environment/devcontainer-setup.md)
+and are starting from `develop` branch.
+
+Switching between running tests and doing development work (by running `dev` from `/bin`)
+should be effortless without any issues.
+
 RSpec is the recommended way of writing back end tests for Zammad,
 and in combination with Capybara also Selenium based end-to-end tests.
 
@@ -7,10 +13,11 @@ This page explains some Zammad specific extensions that make testing easier.
 
 ## Running
 
-To run tests locally in the test environment, you need to first ensure the `test` database is in the expected state:
+To run tests you need to first ensure the `test` database and all assets are in the expected state:
 
 ```sh
 RAILS_ENV=test bundle exec rake db:drop db:create zammad:ci:test:prepare
+RAILS_ENV=test rails assets:precompile
 ```
 
 Now, running a single test can be done via the following command:
@@ -46,6 +53,12 @@ RSpec will populate the database at startup. These users are available in any te
 - agent: `agent1@example.com`
 - client: `nicole.braun@zammad.org`
 
+## Re-initialize database
+
+To reset an existing development database (without running `auto_wizard`)
+
+- [Run db:init again](../development_environment/development-workflow.md#database-tasks)
+
 ## RSpec Meta Attributes
 
 ### `authenticated_as`
@@ -77,8 +90,8 @@ this way. MySQL is especially bad at this.
 
 - `db_strategy: :reset` will reset database after each example
 - `db_strategy: :reset_all` will reset database only once after whole context! This is a great way to increase
-performance. But easy to shoot yourself in a foot too! Use custom `before :all` and `after :all` to setup and tear down
-environment
+  performance. But easy to shoot yourself in the foot too! Use custom `before :all` and `after :all` to setup and tear down
+  environment
 
 ### `performs_jobs`
 

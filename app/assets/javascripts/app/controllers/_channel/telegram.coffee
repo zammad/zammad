@@ -10,6 +10,7 @@ class ChannelTelegram extends App.ControllerSubContent
   constructor: ->
     super
 
+    @title __('Telegram'), true
     #@interval(@load, 60000)
     @load()
 

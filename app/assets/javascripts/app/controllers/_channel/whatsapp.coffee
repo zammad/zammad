@@ -10,6 +10,7 @@ class ChannelWhatsapp extends App.ControllerSubContent
   constructor: ->
     super
 
+    @title __('WhatsApp'), true
     @load()
 
   load: =>

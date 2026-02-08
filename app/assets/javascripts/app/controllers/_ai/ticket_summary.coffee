@@ -36,6 +36,9 @@ class App.TicketSummary extends App.ControllerAIFeatureBase
     content = $(App.view('ai/ticket_summary')(
       description: App.i18n.translateContent(@description)
       serviceOptions: @serviceOptions(service_config)
+      buttons: [
+        { name: __('Legal Information'), 'data-type': 'legal-information', class: 'btn--info' }
+      ]
     ))
 
     select = App.UiElement.select.render(

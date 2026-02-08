@@ -12,9 +12,7 @@ module Gql::Queries
 
     type [Gql::Types::TextModuleType], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(query:, group: nil, ticket_id: nil, template_render_context: nil, limit: 10)
       permission = ticket_id.present? ? :read : :create

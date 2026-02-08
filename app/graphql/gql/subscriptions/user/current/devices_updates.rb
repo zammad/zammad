@@ -9,9 +9,7 @@ module Gql::Subscriptions
 
     field :devices, [Gql::Types::UserDeviceType], null: true, description: 'List of devices for the user'
 
-    def authorized?
-      context.current_user.permissions?('user_preferences.device')
-    end
+    requires_permission 'user_preferences.device'
 
     def update
       { devices: UserDevice.where(user_id: context.current_user.id).reorder(updated_at: :desc, name: :asc) }

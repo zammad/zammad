@@ -13,13 +13,57 @@ RSpec.describe AI::Provider do
   end
 
   describe '#ask' do
-    it 'raises an error' do
+    let(:prompt_system) { 'system' }
+    let(:prompt_user)   { 'user' }
+
+    it 'raises an error when chat is not implemented' do
       expect do
-        ai_provider.ask(
-          prompt_system: Faker::Lorem.sentence,
-          prompt_user:   Faker::Lorem.sentence
-        )
+        ai_provider.ask(prompt_system:, prompt_user:)
       end.to raise_error(RuntimeError, 'not implemented')
+    end
+
+    context 'when json_response option is false' do
+      subject(:ai_provider) { described_class.new(options: { json_response: false }) }
+
+      it 'returns the raw result' do
+        allow(ai_provider).to receive(:chat).and_return('raw result')
+        expect(ai_provider.ask(prompt_system:, prompt_user:)).to eq('raw result')
+      end
+    end
+
+    context 'when json_response option is true' do
+      subject(:ai_provider) { described_class.new(options: { json_response: true }) }
+
+      it 'returns parsed JSON for correct format' do
+        allow(ai_provider).to receive(:chat).and_return('{"key": "value"}')
+        expect(ai_provider.ask(prompt_system:, prompt_user:)).to eq({ 'key' => 'value' })
+      end
+
+      it 'removes json code markers and parses JSON' do
+        allow(ai_provider).to receive(:chat).and_return("```json\n{\"key\": \"value\"}\n```")
+        expect(ai_provider.ask(prompt_system:, prompt_user:)).to eq({ 'key' => 'value' })
+      end
+
+      it 'removes generic code markers and parses JSON' do
+        allow(ai_provider).to receive(:chat).and_return("```\n{\"key\": \"value\"}\n```")
+        expect(ai_provider.ask(prompt_system:, prompt_user:)).to eq({ 'key' => 'value' })
+      end
+
+      it 'removes single backtick markers and parses JSON' do
+        allow(ai_provider).to receive(:chat).and_return('`{"key": "value"}`')
+        expect(ai_provider.ask(prompt_system:, prompt_user:)).to eq({ 'key' => 'value' })
+      end
+
+      it 'handles extra whitespace and newlines around markers' do
+        allow(ai_provider).to receive(:chat).and_return("  \n```json\n  {\"key\": \"value\"}  \n```  \n")
+        expect(ai_provider.ask(prompt_system:, prompt_user:)).to eq({ 'key' => 'value' })
+      end
+
+      it 'raises OutputFormatError for invalid JSON' do
+        allow(ai_provider).to receive(:chat).and_return('invalid json')
+        expect { ai_provider.ask(prompt_system:, prompt_user:) }
+          .to raise_error(AI::Provider::OutputFormatError, 'The response could not be processed.')
+      end
     end
   end
 

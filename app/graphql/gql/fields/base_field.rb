@@ -2,8 +2,6 @@
 
 module Gql::Fields
   class BaseField < GraphQL::Schema::Field
-    include Gql::Concerns::HandlesAuthorization
-
     argument_class Gql::Types::BaseArgument
 
     # Make sure that on field resultion infrormation about 'is_dependent_field' is

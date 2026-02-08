@@ -9,14 +9,10 @@ module Gql::Mutations
 
     field :idoit_objects, [Gql::Types::Ticket::ExternalReferences::IdoitObjectType], description: 'The added / resolved idoit objects'
 
-    def self.authorize(_obj, _ctx)
-      Setting.get('idoit_integration')
-    end
+    requires_enabled_setting 'idoit_integration', error_message: __('i-doit integration is not enabled')
 
     def authorized?(idoit_object_ids:, ticket: nil)
-      return super if ticket.present?
-
-      context.current_user.permissions?('ticket.agent') && super
+      ticket.present? || context.current_user.permissions?('ticket.agent')
     end
 
     def resolve(idoit_object_ids:, ticket: nil)

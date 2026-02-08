@@ -23,10 +23,6 @@ module Gql::Types::User
     field :changed, Boolean, null: false
     field :dirty, Boolean, null: false
 
-    def self.authorize(_object, ctx)
-      ctx.current_user
-    end
-
     def entity
       object_entity!
     rescue

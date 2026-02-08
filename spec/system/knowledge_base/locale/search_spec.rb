@@ -34,4 +34,18 @@ RSpec.describe 'Knowledge Base Locale Search', type: :system do
       include_examples 'check search result'
     end
   end
+
+  context 'when coming back from an answer to inline search results' do
+    before do
+      visit "#knowledge_base/#{knowledge_base.id}/locale/#{locale_name}/search-inline/blablabla"
+    end
+
+    it 'renders KB root link correctly' do
+      within '.knowledge-base-navigation' do
+        expect(page).to have_css('.breadcrumb:first-child') do |elem|
+          elem[:href].end_with? "#knowledge_base/#{knowledge_base.id}/locale/#{locale_name}"
+        end
+      end
+    end
+  end
 end

@@ -44,7 +44,7 @@ RSpec.describe Gql::Queries::User::Current::AccessToken::List, type: :graphql do
         gql.execute(query)
 
         expect(gql.result.error_message)
-          .to include("Failed Gql::EntryPoints::Queries's authorization check")
+          .to include('Access forbidden by Gql::Queries::User::Current::AccessToken::List')
       end
     end
   end

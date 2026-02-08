@@ -48,7 +48,6 @@ RSpec.shared_examples 'mobile app: create article' do |type_label, internal: fal
       article
     end
 
-    # rubocop:disable RSpec/ExampleLength
     it "can create article #{type_label}" do
       open_article_dialog
 
@@ -106,6 +105,5 @@ RSpec.shared_examples 'mobile app: create article' do |type_label, internal: fal
 
       expect(Ticket::Article.last).to have_attributes(attributes)
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 end

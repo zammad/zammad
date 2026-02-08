@@ -80,7 +80,7 @@ module Gql::Queries
       end
 
       def core_workflow?
-        @core_workflow ||= object_class.included_modules.include?(ChecksCoreWorkflow)
+        @core_workflow ||= object_class.include?(ChecksCoreWorkflow)
       end
 
       def object_class

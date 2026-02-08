@@ -8,10 +8,6 @@ module Gql::Subscriptions
     field :group_ids, [GraphQL::Types::ID], description: 'The group IDs from the updated macro'
     field :remove_macro_id, GraphQL::Types::ID, description: 'The macro ID that was removed'
 
-    def authorized?
-      true
-    end
-
     class << self
       # Helper methods for triggering with custom payload.
       def trigger_after_create_or_update(macro)

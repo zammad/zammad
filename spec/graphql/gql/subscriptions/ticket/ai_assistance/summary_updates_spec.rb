@@ -56,7 +56,7 @@ RSpec.describe Gql::Subscriptions::Ticket::AIAssistance::SummaryUpdates, authent
       let(:expected_summary) do
         {
           'customer_request'     => 'Houston we got a problem',
-          'conversation_summary' => 'short summary',
+          'conversation_summary' => ['short summary'],
           'open_questions'       => ['question 1', 'question 2'],
           'upcoming_events'      => ['do this and that'],
           'customer_mood'        => 'example',
@@ -75,7 +75,7 @@ RSpec.describe Gql::Subscriptions::Ticket::AIAssistance::SummaryUpdates, authent
       let(:expected_broadcasted_summary) do
         {
           'customerRequest'     => 'Houston we got a problem',
-          'conversationSummary' => 'short summary',
+          'conversationSummary' => ['short summary'],
           'openQuestions'       => ['question 1', 'question 2'],
           'upcomingEvents'      => ['do this and that'],
           'customerMood'        => 'example',

@@ -1,8 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Gql::Resolvers::BelongsToResolver < GraphQL::Schema::Resolver
-  include Gql::Types::Concerns::HasPunditAuthorization
-
   description "resolver for Rails' belongs_to relationship"
 
   def resolve

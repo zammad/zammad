@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { findParentNodeClosestToPos } from '@tiptap/core'
+// import { findParentNodeClosestToPos } from '@tiptap/core'
 import { onKeyUp, useEventListener } from '@vueuse/core'
 import { computed, nextTick, toRef, type Component } from 'vue'
 
@@ -68,34 +68,6 @@ const setPopoverTarget = (target?: HTMLDivElement) => {
       })
     }
     return
-  }
-
-  const nearestTableParent = findParentNodeClosestToPos(
-    props.editor.state.selection.$anchor,
-    (node) => node.type.name === props.typeName,
-  )
-
-  if (!nearestTableParent) {
-    popoverTarget.value = undefined
-    if (isOpen.value) close()
-    return
-  }
-
-  if (nearestTableParent) {
-    const wrapperDomNode = props.editor.view.nodeDOM(nearestTableParent.pos) as
-      | HTMLElement
-      | null
-      | undefined
-
-    const tableDomNode = wrapperDomNode?.querySelector('table')
-
-    if (tableDomNode) {
-      popoverTarget.value = tableDomNode
-    }
-
-    if (popoverTarget.value && !isOpen.value) {
-      nextTick(() => open())
-    }
   }
 }
 

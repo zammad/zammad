@@ -10,9 +10,7 @@ module Gql::Queries
 
     type GraphQL::Types::JSON, null: true
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.two_factor_authentication')
-    end
+    requires_permission 'user_preferences.two_factor_authentication'
 
     def resolve(method_name:, token:)
       verify_token!(token)

@@ -10,9 +10,7 @@ module Gql::Mutations
 
     field :session, Gql::Types::SessionType, description: 'The current session, if the verification was successful.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(token:)
       verify = Service::User::SignupVerify.new(token: token)

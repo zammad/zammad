@@ -6,9 +6,7 @@ module Gql::Mutations
 
     field :user, Gql::Types::UserType, null: false, description: 'Updated user object'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.notifications+ticket.agent')
-    end
+    requires_permission 'user_preferences.notifications+ticket.agent'
 
     def resolve
       ::User.reset_notifications_preferences!(context.current_user)

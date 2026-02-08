@@ -217,6 +217,7 @@ Metrics/BlockLength:
     - 'lib/sessions.rb'
     - 'lib/sessions/backend/ticket_overview_list.rb'
     - 'lib/sessions/client.rb'
+    - 'lib/tasks/cache/measure_io_performance.rake'
     - 'lib/tasks/zammad/search_index_es.rake'
     - 'lib/transaction_dispatcher.rb'
     - 'script/websocket-server.rb'

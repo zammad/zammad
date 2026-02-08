@@ -4,6 +4,7 @@ module Gql::Mutations
   # class BaseMutation < GraphQL::Schema::RelayClassicMutation
   class BaseMutation < GraphQL::Schema::Mutation
     include Gql::Concerns::HandlesAuthorization
+    include Gql::Concerns::HandlesSettingCheck
     include Gql::Concerns::HasNestedGraphqlName
 
     # FIXME: Remove when all mutations are using services which are taking care of this flag.
@@ -18,32 +19,43 @@ module Gql::Mutations
 
     field :errors, [Gql::Types::UserErrorType], description: 'Errors encountered during execution of the mutation.'
 
-    # Require authentication by default for mutations.
-    requires_authentication true
+    # Set this to false for mutations that don't need CSRF verification.
+    class_attribute :requires_csrf_verification, default: true
 
-    # Override this for mutations that don't need CSRF verification.
-    def self.requires_csrf_verification?
-      true
+    def ready?(...)
+      throttle_if_needed!(...)
+      verify_csrf_token_if_needed!
+
+      super
     end
 
-    def self.before_authorize(*args)
-      ctx = args[-1] # This may be called with 2 or 3 params, context is last.
-      # CSRF - since this is expensive it is only called by mutations.
-      verify_csrf_token(ctx) if requires_csrf_verification?
+    # Override this for mutations that need throttling.
+    def throttle_if_needed!(...)
+      # no-op
     end
 
-    def self.verify_csrf_token(ctx)
-      return true if ctx[:is_graphql_introspection_generator]
+    def verify_csrf_token_if_needed!
+      return if !requires_csrf_verification?
+
+      verify_csrf_token!
+    end
+
+    def verify_csrf_token!
+      return true if context[:is_graphql_introspection_generator]
       # Support :graphql type tests that don't use HTTP.
-      return true if Rails.env.test? && !ctx[:controller]
+      return true if Rails.env.test? && !context[:controller]
       # Support developer workflows that need to turn off CSRF.
-      return true if Rails.env.development? && ctx[:controller].request.headers['SkipAuthenticityTokenCheck'] == 'true'
+      return true if Rails.env.development? && context[:controller].request.headers['SkipAuthenticityTokenCheck'] == 'true'
 
-      ctx[:controller].send(:verify_csrf_token) # verify_csrf_token is private :(
+      context[:controller].send(:verify_csrf_token) # verify_csrf_token is private :(
     end
 
     def self.register_in_schema(schema)
       schema.field graphql_field_name, mutation: self
+    end
+
+    def self.skip_csrf_verification!
+      self.requires_csrf_verification = false
     end
 
     # Generate a response with user errors

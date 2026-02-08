@@ -8,9 +8,7 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Was the reset successful?'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.overview_sorting')
-    end
+    requires_permission 'user_preferences.overview_sorting'
 
     def resolve(overview_ids:)
       Service::User::Overview::UpdateOrder

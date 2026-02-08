@@ -502,7 +502,7 @@ class TicketsController < ApplicationController
   # PUT /api/v1/tickets/1/update_title
   def update_title
     ticket = Ticket.find(params[:id])
-    authorize!(ticket, :agent_update_access?)
+    authorize!(ticket, :update?)
 
     Service::Ticket::ForcedUpdate
       .new(ticket, params.permit(:title))

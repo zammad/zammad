@@ -62,6 +62,13 @@ RSpec.describe AI::StoredResult, type: :model do
       end
     end
 
+    context 'when identifier is provided' do
+      it 'deletes records matching the specified identifier' do
+        expect { described_class.cleanup(identifier: record_a.identifier) }
+          .to change(described_class, :all).to [record_b, record_c]
+      end
+    end
+
     context 'when no criteria are provided' do
       it 'deletes all records' do
         expect { described_class.cleanup }.to change(described_class, :all).to []

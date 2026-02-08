@@ -258,9 +258,10 @@ class ProviderForm extends App.Controller
       fullFormSubmitAdditionalClasses: 'btn--primary js-provider-submit',
     )
 
-    $('.js-provider-submit').on('click', @update)
-    $('select[name=provider]').on('change', (e) =>
-      @render($(e.target).val()))
+    $('.js-provider-submit').off('click.provider').on('click.provider', @update)
+    $('select[name=provider]').off('change.provider').on('change.provider', (e) =>
+      @render($(e.target).val())
+    )
 
   update: (e) =>
     e.preventDefault()
@@ -293,10 +294,8 @@ class ProviderForm extends App.Controller
     if has_provider && !params.hasOwnProperty('token') && savedProviderConfig.provider == params.provider && savedProviderConfig.token
       params.token = savedProviderConfig.token
 
-    App.Setting.set('ai_provider_config', params, done: =>
+    App.Setting.set('ai_provider_config', params, done: ->
       App.Setting.set('ai_provider', has_provider, notify: true)
-
-      @render()
     )
 
 App.Config.set('Provider', { prio: 1000, name: __('Provider'), parent: '#ai', target: '#ai/provider', controller: ChannelAiProvider, permission: ['admin.ai_provider'] }, 'NavBarAdmin')

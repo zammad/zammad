@@ -9,9 +9,7 @@ module Gql::Subscriptions
 
     field :configuration, Gql::Types::User::ConfigurationTwoFactorType, description: 'Configuration information for the current user.'
 
-    def authorized?
-      context.current_user.permissions?('user_preferences.two_factor_authentication')
-    end
+    requires_permission 'user_preferences.two_factor_authentication'
 
     def subscribe
       response

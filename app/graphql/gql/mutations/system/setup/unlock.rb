@@ -11,9 +11,7 @@ module Gql::Mutations
 
     field :success, Boolean, 'Success.', null: true
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(value:)
       return { success: false } if !Service::ExecuteLockedBlock.locked?(RESOURCE)

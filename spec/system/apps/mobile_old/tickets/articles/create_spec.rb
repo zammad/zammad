@@ -111,16 +111,22 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
 
       it 'creates a public email (default)' do
         visit "/tickets/#{ticket.id}"
+
+        wait_for_form_to_settle('form-ticket-edit')
+
         find_button('Add reply').click
+
+        wait_for_form_updater(2)
 
         find_select('Channel', visible: :all).select_option('Email')
 
-        wait_for_test_flag('editor.signatureAdd')
+        wait_for_form_updater(3)
 
-        find_editor('Text').type('This is a note!')
-
-        find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
-        find_autocomplete('CC').search_for_option('zammad_test_cc@zammad.com', gql_number: 2)
+        within_form(form_updater_gql_number: 3) do
+          find_editor('Text').type('This is a note!')
+          find_autocomplete('To').search_for_option('zammad_test_to@zammad.com')
+          find_autocomplete('CC').search_for_option('zammad_test_cc@zammad.com')
+        end
 
         find_button('Save').click
 
@@ -132,26 +138,33 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
           cc:           'zammad_test_cc@zammad.com',
           internal:     false,
           content_type: 'text/html',
-          body:         start_with("<p dir=\"auto\">This is a note!</p><p dir=\"auto\"></p><div data-signature=\"true\" dir=\"auto\" data-signature-id=\"#{signature.id}\"><p dir=\"auto\">#{agent.firstname}<br dir=\"auto\">Signature!</p></div><p dir=\"auto\"></p>"),
+          body:         start_with("<p dir=\"auto\">This is a note!</p><div data-signature=\"true\" dir=\"auto\" data-signature-id=\"#{signature.id}\"><p dir=\"auto\">#{agent.firstname}<br dir=\"auto\">Signature!</p></div><p dir=\"auto\"></p>"),
         )
       end
 
       it 'creates an internal email' do
         visit "/tickets/#{ticket.id}"
+
+        wait_for_form_to_settle('form-ticket-edit')
+
         find_button('Add reply').click
+
+        wait_for_form_updater(2)
 
         find_select('Channel', visible: :all).select_option('Email')
 
-        wait_for_test_flag('editor.signatureAdd')
+        wait_for_form_updater(3)
 
-        find_editor('Text').type('This is a note!')
+        within_form(form_updater_gql_number: 3) do
+          find_editor('Text').type('This is a note!')
 
-        find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
+          find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
 
-        visibility = find_select('Visibility', visible: :all)
-        expect(visibility).to have_selected_option('Public')
+          visibility = find_select('Visibility', visible: :all)
+          expect(visibility).to have_selected_option('Public')
 
-        visibility.select_option('Internal')
+          visibility.select_option('Internal')
+        end
 
         find_button('Save').click
 
@@ -161,7 +174,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
           type_id:      Ticket::Article::Type.lookup(name: 'email').id,
           internal:     true,
           content_type: 'text/html',
-          body:         start_with("<p dir=\"auto\">This is a note!</p><p dir=\"auto\"></p><div data-signature=\"true\" dir=\"auto\" data-signature-id=\"#{signature.id}\"><p dir=\"auto\">#{agent.firstname}<br dir=\"auto\">Signature!</p></div><p dir=\"auto\"></p>"),
+          body:         start_with("<p dir=\"auto\">This is a note!</p><div data-signature=\"true\" dir=\"auto\" data-signature-id=\"#{signature.id}\"><p dir=\"auto\">#{agent.firstname}<br dir=\"auto\">Signature!</p></div><p dir=\"auto\"></p>"),
         )
       end
     end

@@ -2,7 +2,6 @@
 
 module Gql::Subscriptions
   class Checklist::TemplateUpdates < BaseSubscription
-    include Gql::Concerns::EnsuresChecklistFeatureActive
 
     description 'Subscription for checklist template changes.'
 
@@ -10,15 +9,8 @@ module Gql::Subscriptions
 
     field :checklist_templates, [Gql::Types::Checklist::TemplateType, { null: false }], description: 'Checklist templates'
 
-    def self.authorize(_obj, ctx)
-      ensure_checklist_feature_active!
-
-      super
-    end
-
-    def authorized?(only_active:)
-      context.current_user.permissions?('ticket.agent')
-    end
+    requires_enabled_setting 'checklist', error_message: __('The checklist feature is not active')
+    requires_permission 'ticket.agent'
 
     def update(only_active:)
       { checklist_templates: only_active ? ::ChecklistTemplate.where(active: true) : ::ChecklistTemplate.all }

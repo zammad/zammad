@@ -8,7 +8,9 @@
       "moby": false
     },
     "ghcr.io/devcontainers-extra/features/shellcheck:1": {},
-    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "installYarnUsingApt": "false"
+    },
     "ghcr.io/joshuanianji/devcontainer-features/mount-pnpm-store:1": {},
     // Can't use bundler cache, it breaks overcommit:
     //   https://github.com/rails/devcontainer/issues/55

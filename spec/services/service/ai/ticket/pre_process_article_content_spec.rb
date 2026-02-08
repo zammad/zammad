@@ -165,5 +165,23 @@ RSpec.describe Service::AI::Ticket::PreProcessArticleContent do
         expect(result.second[:text]).not_to include('<p>')
       end
     end
+
+    context 'with plain text articles' do
+      let(:ocr_active) { false }
+
+      let(:articles) do
+        [
+          create(:ticket_article, :inbound_email, ticket: ticket, content_type: 'text/plain', body: "This is a plain text message \n >quoted line \n >another quoted line"),
+          create(:ticket_article, :inbound_email, ticket: ticket, content_type: 'text/plain', body: "Another plain text \n\n > quoted line"),
+        ]
+      end
+
+      it 'does not convert plaintext to HTML or strip tags', aggregate_failures: true do
+        result = described_class.new(articles: articles).execute
+
+        expect(result.first[:text]).to eq('This is a plain text message')
+        expect(result.second[:text]).to eq('Another plain text')
+      end
+    end
   end
 end

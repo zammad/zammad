@@ -11,9 +11,8 @@ module Gql::Queries
 
     type [Gql::Types::Ticket::ExternalReferences::IdoitObjectType], null: false
 
-    def self.authorize(_obj, ctx)
-      Setting.get('idoit_integration') && ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
+    requires_enabled_setting 'idoit_integration', error_message: __('i-doit integration is not enabled')
 
     def resolve(query: '', limit: 10, idoit_type_id: nil)
       Idoit.query('cmdb.objects', build_filter(idoit_type_id:, query:))['result']&.first(limit)

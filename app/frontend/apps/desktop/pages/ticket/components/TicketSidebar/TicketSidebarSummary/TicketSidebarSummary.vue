@@ -82,16 +82,19 @@ const headings = computed<SummaryItem[]>(() => [
     key: 'conversationSummary',
     label: __('Conversation summary'),
     active: true,
+    type: 'paragraphs',
   },
   {
     key: 'openQuestions',
     label: __('Open questions'),
     active: summaryConfig.value.open_questions,
+    type: 'list',
   },
   {
     key: 'upcomingEvents',
     label: __('Upcoming events'),
     active: summaryConfig.value.upcoming_events,
+    type: 'list',
   },
   {
     key: ['customerEmotion', 'customerMood'],

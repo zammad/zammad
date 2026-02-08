@@ -10,11 +10,9 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'This indicates if sending of the token via email was successful.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
-    def ready?(email:)
+    def throttle_if_needed!(email:)
       throttle!(limit: 3, period: 1.minute, by_identifier: email)
     end
 

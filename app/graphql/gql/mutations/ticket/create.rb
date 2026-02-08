@@ -10,9 +10,7 @@ module Gql::Mutations
 
     field :ticket, Gql::Types::TicketType, description: 'The created ticket. If this is present but empty, the mutation was successful but the user has no rights to view the new ticket.'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['ticket.agent', 'ticket.customer'])
-    end
+    requires_permission 'ticket.agent', 'ticket.customer'
 
     def resolve(input:)
       return group_has_no_email_error if !group_has_email?(input: input)

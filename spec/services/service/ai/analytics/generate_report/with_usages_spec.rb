@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require_relative 'ordering_examples'
 
 RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
   describe '#execute' do
@@ -135,5 +136,9 @@ RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
           )
       end
     end
+  end
+
+  it_behaves_like 'ordering items correctly and returning latest entries' do
+    let(:ai_analytics_runs) { create_list(:ai_analytics_run, 10) }
   end
 end

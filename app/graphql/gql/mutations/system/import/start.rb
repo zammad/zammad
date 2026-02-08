@@ -6,9 +6,7 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Was the start successful?'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve
       Service::System::Import::Run.new.execute

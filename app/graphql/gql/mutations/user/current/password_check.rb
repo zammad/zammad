@@ -11,11 +11,9 @@ module Gql::Mutations
     field :success, Boolean, description: 'This indicates if given password matches current user password'
     field :token, String, description: 'One-time token which should be included in a subsequent request (where applicable)'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.password')
-    end
+    requires_permission 'user_preferences.password'
 
-    def ready?(...)
+    def throttle_if_needed!(...)
       throttle!(limit: 10, period: 1.minute, by_identifier: context.current_user.login)
     end
 

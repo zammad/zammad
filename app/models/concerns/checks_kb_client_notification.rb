@@ -18,7 +18,7 @@ module ChecksKbClientNotification
   end
 
   def self.all_classes
-    Models.all.keys.select { |c| c.included_modules.include?(ChecksKbClientNotification) }
+    Models.all.keys.select { |c| c.include?(ChecksKbClientNotification) }
   end
 
   private

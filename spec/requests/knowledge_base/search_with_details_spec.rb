@@ -218,4 +218,39 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
       include_examples 'test sorting'
     end
   end
+
+  context 'when scoping' do
+    let(:search_phrase) { 'scoping test' }
+
+    before do |example|
+      published_answer_in_other_category
+      published_answer_in_subcategory
+
+      [published_answer, published_answer_in_other_category, published_answer_in_subcategory].each do |elem|
+        elem.translations.first.update!(title: "#{search_phrase} #{elem.id}")
+      end
+
+      next if !example.metadata[:searchindex]
+
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
+    end
+
+    shared_examples 'test scoping' do
+      it 'finds answers only in the defined scope' do
+        post endpoint, params: { query: search_phrase, scope_id: category.id, knowledge_base_id: knowledge_base.id }
+
+        returned_ids = json_response['details'].pluck('id')
+
+        expect(returned_ids).to contain_exactly(published_answer.translations.first.id, published_answer_in_subcategory.translations.first.id)
+      end
+    end
+
+    context 'with elasticsearch' do
+      include_examples 'test scoping'
+    end
+
+    context 'with no elasticsearch', searchindex: false do
+      include_examples 'test scoping'
+    end
+  end
 end

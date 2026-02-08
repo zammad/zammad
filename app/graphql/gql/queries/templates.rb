@@ -9,9 +9,7 @@ module Gql::Queries
 
     type [Gql::Types::TemplateType, { null: false }], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['admin.template', 'ticket.agent'])
-    end
+    requires_permission 'admin.template', 'ticket.agent'
 
     def resolve(only_active:)
       templates = only_active ? Template.active : Template.all

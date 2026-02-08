@@ -3,7 +3,7 @@
 module Gql::Subscriptions
   class Ticket::ArticleUpdates < BaseSubscription
 
-    argument :ticket_id, GraphQL::Types::ID, description: 'Ticket identifier'
+    argument :ticket_id, GraphQL::Types::ID, loads: Gql::Types::TicketType, description: 'Ticket identifier'
 
     description 'Changes to the list of ticket articles'
 
@@ -31,13 +31,9 @@ module Gql::Subscriptions
       end
     end
 
-    def authorized?(ticket_id:)
-      Gql::ZammadSchema.authorized_object_from_id ticket_id, type: ::Ticket, user: context.current_user
-    end
-
     # This needs to be passed a hash with the correct field name containing the article payload as root object,
     #   as we cannot change the (graphql-ruby) function signature of update(ticket_id:).
-    def update(ticket_id:)
+    def update(ticket:)
       event = object[:event]
       article = object[:article]
 

@@ -373,7 +373,7 @@ returns
     end
     return true if !attribute
 
-    key_short = attribute[ attribute.length - 3, attribute.length ]
+    key_short = attribute[ -3, attribute.length ]
     return true if key_short != '_id'
 
     class_object = class_name.to_classname.constantize
@@ -445,7 +445,7 @@ returns
       next if key == 'created_by_id'
 
       # check if id exists
-      key_short = key[ key.length - 3, key.length ]
+      key_short = key[ -3, key.length ]
       if key_short == '_id'
         key_short = key[ 0, key.length - 3 ]
         header = "x-zammad-#{header_name}-#{key_short}"

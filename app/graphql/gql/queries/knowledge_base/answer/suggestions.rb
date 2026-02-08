@@ -8,9 +8,7 @@ module Gql::Queries
 
     type [Gql::Types::KnowledgeBase::Answer::TranslationType], null: true
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(query:)
       SearchKnowledgeBaseBackend.new(

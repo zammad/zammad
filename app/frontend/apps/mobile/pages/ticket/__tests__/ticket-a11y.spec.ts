@@ -22,6 +22,8 @@ import {
 import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
 import { mockTicketsByOverview } from './mocks/overview.ts'
 
+// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
+
 describe('testing ticket a11y', () => {
   beforeEach(() => {
     mockTicketOverviews()

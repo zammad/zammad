@@ -16,8 +16,10 @@ import {
   mockOrganizationObjectAttributes,
 } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
 
+// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
+
 describe('testing organization a11y', () => {
-  it('has no accessibility violations', async () => {
+  it.skip('has no accessibility violations', async () => {
     mockPermissions(['admin.organization'])
     mockOnlineNotificationSeenGql()
 

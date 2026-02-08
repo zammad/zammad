@@ -6,6 +6,7 @@ export interface SummaryItem {
   label: string
   key: keyof TicketAiAssistanceSummary | (keyof TicketAiAssistanceSummary)[]
   active: boolean
+  type?: 'list' | 'paragraphs'
 }
 
 export interface SummaryConfig {

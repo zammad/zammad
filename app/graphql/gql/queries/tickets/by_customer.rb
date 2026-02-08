@@ -2,7 +2,6 @@
 
 module Gql::Queries
   class Tickets::ByCustomer < BaseQuery
-    include Gql::Concerns::RequiresTicketAgentPermission
     include Gql::Queries::Tickets::Concerns::TakesTicketStateTypeCategory
     include Gql::Queries::Tickets::Concerns::ReturnsTicketTypeConnectionType
 
@@ -10,6 +9,8 @@ module Gql::Queries
 
     argument :customer_id, GraphQL::Types::ID, description: 'Filter by customer', loads: Gql::Types::UserType
     argument :customer_organizations, Boolean, required: false, description: "Filter by customer's organizations only"
+
+    requires_permission 'ticket.agent'
 
     def resolve(customer:, customer_organizations: nil, state_type_category: nil)
       scope = ::TicketPolicy::ReadScope.new(context.current_user).resolve.reorder(id: :desc)

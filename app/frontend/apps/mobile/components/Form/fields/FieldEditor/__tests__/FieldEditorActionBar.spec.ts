@@ -285,7 +285,7 @@ describe('basic toolbar testing', () => {
       })
 
       expect(
-        wrapper.queryByRole('button', { name: 'Writing Assistant Tools' }),
+        wrapper.queryByRole('button', { name: 'AI writing assistant tools' }),
       ).not.toBeInTheDocument()
     })
 
@@ -339,7 +339,7 @@ describe('basic toolbar testing', () => {
         },
       })
 
-      const button = await wrapper.findByRole('button', { name: 'Writing assistant tools' })
+      const button = await wrapper.findByRole('button', { name: 'AI writing assistant tools' })
       await wrapper.events.click(button)
 
       const sectionMenu = await wrapper.findByRole('alert')

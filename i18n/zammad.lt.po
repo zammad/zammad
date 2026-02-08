@@ -484,7 +484,7 @@ msgstr "%s prisijungimai"
 msgid "%s days ago"
 msgstr "prieš %s dienų(-ą)"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:60
 msgid "%s deselected."
 msgstr "%s nebepasirinktas."
 
@@ -608,7 +608,7 @@ msgstr ""
 msgid "%s required!"
 msgstr "%s būtinas!"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:46
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
 "%s pasirinktas. Pasirinkite naują poziciją su rodyklėmis ir tada paspauskite "
@@ -970,7 +970,7 @@ msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr "Sukurta bandomoji triktis. J1 galite rasto „%s“ apžvalgoje %l."
 
-#: app/models/ticket.rb:297
+#: app/models/ticket.rb:299
 msgid "A ticket cannot be merged into itself."
 msgstr "Triktis negali būti prijungta prie savęs."
 
@@ -1582,8 +1582,8 @@ msgstr "Pridėti visas parinktis"
 msgid "Add attachment option to upload."
 msgstr "Leisti pridėti prisegtuką."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:250
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:247
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:251
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:248
 msgid "Add bullet list"
 msgstr "Pridėti sąrašą"
 
@@ -1610,13 +1610,13 @@ msgstr "Pridėti tuščią kontrolinį sąrašą"
 msgid "Add from a template"
 msgstr "Pritaikyti šabloną"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:108
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:108
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:109
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:109
 msgid "Add heading"
 msgstr "Pridėti antraštę"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:280
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:277
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:281
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:278
 msgid "Add image"
 msgstr "Pridėti paveiksliuką"
 
@@ -1624,9 +1624,9 @@ msgstr "Pridėti paveiksliuką"
 msgid "Add internal note"
 msgstr "Pridėti vidinę pastabą"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:299
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:300
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:296
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:174
 msgid "Add link"
 msgstr "Pridėti nuorodą"
@@ -1641,8 +1641,8 @@ msgid "Add note"
 msgstr "Pridėti pastabą"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:151
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:237
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:234
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:238
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:235
 msgid "Add ordered list"
 msgstr "Pridėti rikiuojamą sąrašą"
 
@@ -1880,7 +1880,7 @@ msgstr "Agentai"
 msgid "Agents with \"%s\" permission"
 msgstr "Agentai turintys „%s“ teises"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:113
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:103
 msgid "Agree & join"
 msgstr ""
 
@@ -2084,7 +2084,7 @@ msgstr "Atviro kodo stebėjimo įrankis."
 msgid "An unexpected error has occurred."
 msgstr "Įvyko netikėta klaida."
 
-#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:26
+#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:24
 msgid "An unexpected error occurred during system setup."
 msgstr "Sistemos konfigūravimo metu įvyko netikėta klaida."
 
@@ -2882,8 +2882,8 @@ msgstr "Galimi naujos trikties tipai"
 msgid "Avatar"
 msgstr "Avataras"
 
-#: app/graphql/gql/mutations/user/current/avatar/delete.rb:18
-#: app/graphql/gql/mutations/user/current/avatar/select.rb:18
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb:16
+#: app/graphql/gql/mutations/user/current/avatar/select.rb:16
 msgid "Avatar could not be found."
 msgstr "Nepavyko rasti avataro."
 
@@ -2919,6 +2919,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "BCC adresas visiems išeinantiems laiškams"
 
 #: app/assets/javascripts/app/controllers/_manage/beta_ui.coffee:2
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:46
 #, fuzzy
 #| msgid "New BETA UI"
 msgid "BETA UI"
@@ -2928,7 +2929,11 @@ msgstr "Nauja BETA sąsaja"
 msgid "BETA UI Availability"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:56
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:73
+msgid "BETA UI feedback program"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:46
 #, fuzzy
 #| msgid "CTI integration"
 msgid "BETA UI illustration"
@@ -3306,6 +3311,10 @@ msgstr "Kamera"
 msgid "Can be in any CSS color format."
 msgstr "Gali būti bet kokio CSS spalvų formato."
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:37
+msgid "Can you tell us what are you missing in the BETA UI?"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:87
 msgid "Can't create user!"
 msgstr "Nepavyko sukurti naudotojo!"
@@ -3510,8 +3519,8 @@ msgstr "Keisti slaptažodį"
 msgid "Change personal account password."
 msgstr "Keisti savo paskyros slaptažodį."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:185
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:182
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:183
 msgid "Change text color"
 msgstr "Keisti teksto spalvą"
 
@@ -3925,7 +3934,7 @@ msgstr "Spauskite čia"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "Spauskite čia, kad pridėtumėte dviejų veiksnių autentifikavimo metodą."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:49
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:48
 msgid "Click to edit…"
 msgstr "Spustelėkite norėdami redaguoti…"
 
@@ -4071,7 +4080,7 @@ msgid "Commas and stars are not allowed in name."
 msgstr "Varduose negalima naudoti nei kablelių, nei žvaigdžučių."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:32
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:22
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:57
 msgid "Comment"
 msgstr "Komentaras"
@@ -4549,7 +4558,7 @@ msgid "Could not find the channel."
 msgstr "Nepavyko rasti kanalo."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:37
-#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:23
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:21
 msgid "Could not generate recovery codes"
 msgstr "Nepavyko sugeneruoti atsarginių prisijungimo kodų"
 
@@ -4604,7 +4613,7 @@ msgid "Could not set two-factor authentication method as default"
 msgstr "Nepavyko nustatyti numatytojo dviejų veiksnių autentifikacijos metodo"
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:108
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:111
 msgid "Couldn't save changes"
 msgstr "Nepavyko išsaugoti pakeitimų"
 
@@ -4990,7 +4999,8 @@ msgstr ""
 msgid "Currently processing this ticket…"
 msgstr "ŠIuo metu ši triktis apdorojama…"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:130
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:146
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:131
 msgid ""
 "Currently, no overviews are assigned to your roles. Please contact your "
 "administrator."
@@ -6306,6 +6316,18 @@ msgstr ""
 msgid "Delete"
 msgstr "Ištrinti"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:89
+#, fuzzy
+#| msgid "Delete column"
+msgid "Delete %s columns"
+msgstr "Ištrinti stulpelį"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
+#, fuzzy
+#| msgid "Delete row"
+msgid "Delete %s rows"
+msgstr "Ištrinti eilutę"
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:47
 msgid "Delete Avatar?"
 msgstr "Ištrinti avatarą?"
@@ -6348,7 +6370,7 @@ msgstr "Ištrinti įrašą"
 msgid "Delete avatar"
 msgstr "Ištrinti avatarą"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:82
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:90
 msgid "Delete column"
 msgstr "Ištrinti stulpelį"
 
@@ -6406,11 +6428,11 @@ msgstr "Ištrinti organizaciją?"
 msgid "Delete records"
 msgstr "Ištrinti įrašus"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:54
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
 msgid "Delete row"
 msgstr "Ištrinti eilutę"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:139
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:150
 msgid "Delete table"
 msgstr "Ištrinti lentelę"
 
@@ -6668,7 +6690,7 @@ msgstr "Išjungti"
 msgid "Disable Notifications"
 msgstr "Išjungti pranešimus"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:36
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:64
 msgid "Disable the banner for the BETA switch"
 msgstr "Išjungti BETA jungiklio skydelį"
 
@@ -6750,14 +6772,22 @@ msgstr "Rodoma vertė"
 msgid "Display Zammad in the New BETA User Interface"
 msgstr "Rodyti Zammad naujojoje BETA naudotojo sąsajoje"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:21
-msgid "Display Zammad with the New BETA User Interface"
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:52
+#, fuzzy
+#| msgid "Display Zammad with the New BETA User Interface"
+msgid "Display Zammad with the new BETA user interface"
 msgstr "Rodyti Zammad naujojoje BETA naudotojo sąsajoje"
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
 #: db/seeds/settings.rb:1883
 msgid "Display name"
 msgstr "Rodomasis pavadinimas"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:88
+#, fuzzy
+#| msgid "Send Feedback"
+msgid "Do not ask automatically for feedback on the BETA UI"
+msgstr "Siųsti atsiliepimą"
 
 #: app/assets/javascripts/app/lib/mixins/destination_group_email_address.coffee:26
 msgid "Do not change email address (%s)"
@@ -6928,11 +6958,7 @@ msgstr "Nepavyko atnaujinti juodraščio."
 msgid "Drafts"
 msgstr "Juodraščiai"
 
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:52
-msgid "Drag and drop to reorder ticket overview list items."
-msgstr "Norėdami pakeisti apžvalgų eiliškumą, pervilkite."
-
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:63
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 msgid "Drag ended for %s."
 msgstr "Baigėsi %s vilkimas."
 
@@ -7338,7 +7364,7 @@ msgstr ""
 msgid "Empty"
 msgstr "Tuščia"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:423
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
 #, fuzzy
 #| msgid "Empty Overview"
 msgid "Empty overview"
@@ -7473,7 +7499,7 @@ msgstr "Įjungti arba išjungti trikties santrauką."
 msgid "Enable or disable the writing assistant text tools."
 msgstr "Įjungti arba išjungti rašymo asistento įrankius."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:65
 msgid "Enable the banner for the BETA switch"
 msgstr "Įjungti BETA jungiklio skydelį"
 
@@ -7704,7 +7730,7 @@ msgstr "Įveskite el. pašto adresą."
 msgid "Enter credentials"
 msgstr "Įveskite prisijungimus"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:300
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:301
 msgid "Enter link URL"
 msgstr "Įveskite nuorodos adresą"
 
@@ -7981,7 +8007,7 @@ msgstr "Eskaluota (dėl atsakinėjimo laiko)"
 msgid "Escalation times"
 msgstr "Eskalacijos terminai"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:123
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:130
 msgid "Escape pressed. No item selected."
 msgstr "Paspaustas Esc. Nepasirinktas joks elementas."
 
@@ -8195,7 +8221,7 @@ msgstr "Išplėstinė paieška"
 msgid "External data source field"
 msgstr "Išorinio duomenų šaltinio laukelis"
 
-#: lib/search_index_backend.rb:758
+#: lib/search_index_backend.rb:754
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Ištraukti zammad-attachment informaciją iš masyvų"
 
@@ -8331,6 +8357,7 @@ msgid "February"
 msgstr "Vasaris"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:34
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:62
 msgid "Feedback"
 msgstr "Atsiliepimai"
 
@@ -8490,7 +8517,7 @@ msgstr "Fiksuotos el. pašto paskyros"
 msgid "Flat Design"
 msgstr "Plokščias dizainas"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:90
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:97
 msgid "Focus on %s"
 msgstr "Sutelkti dėmesį į %s"
 
@@ -8620,7 +8647,7 @@ msgstr "Forma"
 msgid "Form Allowed Parameters"
 msgstr ""
 
-#: app/graphql/gql/queries/form_updater.rb:30
+#: app/graphql/gql/queries/form_updater.rb:34
 msgid "FormSchema could not be found."
 msgstr "Nepavyko rasti formos schemos."
 
@@ -8637,8 +8664,8 @@ msgid "Format as _underlined_"
 msgstr "Formatuoti kaip _pabrauktą_"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:93
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:153
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:150
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:154
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:151
 msgid "Format as bold"
 msgstr "Formatuoti kaip paryškintą"
 
@@ -8655,8 +8682,8 @@ msgid "Format as h3 heading"
 msgstr "Formatuoti kaip h3 antraštę"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:100
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:161
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:158
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:162
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:159
 msgid "Format as italic"
 msgstr "Formatuoti kaip kursyvą"
 
@@ -8664,20 +8691,20 @@ msgstr "Formatuoti kaip kursyvą"
 msgid "Format as ordered list"
 msgstr "Formatuoti kaip sąrašą eilės tvarka"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:193
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:190
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:191
 msgid "Format as quoted text"
 msgstr "Formatuoti kaip citatą"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:114
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:177
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:174
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:178
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:175
 msgid "Format as strikethrough"
 msgstr "Formatuoti kaip perbrauktą"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:107
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:169
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:166
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:170
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:167
 msgid "Format as underlined"
 msgstr "Formatuoti kaip pabrauktą"
 
@@ -8925,6 +8952,12 @@ msgstr "GitLab užklausa nepavyko! Išsamesnė informacijos žurnalo faile."
 msgid "GitLab: Link issue"
 msgstr "Git Lab: Susieti triktį"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:100
+#, fuzzy
+#| msgid "Negative Feedback"
+msgid "Give feedback"
+msgstr "Neigiamas atsiliepimas"
+
 #: app/controllers/selectors_controller.rb:43
 msgid "Given object does not support selector"
 msgstr "Šis objektas nepalaiko parinkimo pagal sąlygas"
@@ -9015,7 +9048,7 @@ msgstr "Google el. paštas"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:188
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:46
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:87
 msgid "Got it"
 msgstr "Supratau"
 
@@ -9206,14 +9239,6 @@ msgstr "Yra atnaujinimas"
 msgid "Have a nice day."
 msgstr "Geros dienos."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:31
-msgid ""
-"Have the BETA switch between the old and the new UI always available in the "
-"Primary Navigation"
-msgstr ""
-"BETA jungiklis tarp senosios ir naujosios vartotojo sąsajos visada "
-"prieinamas pagrindinėje navigacijoje"
-
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:21
 msgid ""
 "Have the BETA switch between the old and the new UI always available in the "
@@ -9245,20 +9270,20 @@ msgid "Header Menu"
 msgstr "Viršutinis meniu"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:129
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:115
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:115
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:116
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:116
 msgid "Heading 1"
 msgstr "Antraštė 1"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:136
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:127
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:126
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:128
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:127
 msgid "Heading 2"
 msgstr "Antraštė 2"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:143
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:139
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:137
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:140
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:138
 msgid "Heading 3"
 msgstr "Antraštė 3"
 
@@ -9289,7 +9314,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:184
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:40
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:45
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:86
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:22
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
 msgid "Help"
@@ -9303,7 +9328,7 @@ msgstr "Padėkite man! Aš esu pavyzdinė triktis 🎓"
 msgid "Help to improve Zammad!"
 msgstr "Padėkite pagerinti Zammad!"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:109
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:99
 msgid "Help us shape the future of Zammad!"
 msgstr ""
 
@@ -9386,7 +9411,7 @@ msgstr ""
 "atsiųsti savo atsiliepimus apie ją.¶Jūs galite grįžti bet kuriuo metu, "
 "naudodami žemiau esantį jungiklį."
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:67
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:57
 msgid ""
 "Hey, we have something to show you! Our team has been working on the new "
 "Zammad UI for a while, and we’re very eager for you to try it and send some "
@@ -9398,7 +9423,7 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr "Sveiki! Kuris iš mūsų produktų?"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:51
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:69
 #, fuzzy
 #| msgid "Hide Beta UI switch"
 msgid "Hide BETA UI switch"
@@ -9987,8 +10012,8 @@ msgstr "Padidinti minučių vertę"
 msgid "Increment seconds value"
 msgstr "Padidinti sekundžių vertę"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:263
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:260
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:264
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:261
 msgid "Indent text"
 msgstr "Atitraukti tekstą"
 
@@ -10036,51 +10061,51 @@ msgstr ""
 "Įvesties laukelis turi būti teksto, slaptažodžio, el. pašto, adreso, "
 "telefono arba fakso tipo."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:220
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:217
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
 msgstr "Įterpti kodo bloką"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:73
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:78
 msgid "Insert column after"
 msgstr "Įterpti stulpelį po"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:64
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:69
 msgid "Insert column before"
 msgstr "Įterpti stulpelį prieš"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:228
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:229
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr "Įterpti skirtuką"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:209
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:206
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
 msgid "Insert inline code"
 msgstr "Įterpti įterptinį kodą"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:36
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:41
 msgid "Insert row above"
 msgstr "Įterpti eilutę aukščiau"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:45
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:50
 msgid "Insert row below"
 msgstr "Įterpti eilutę žemiau"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:307
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:328
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:329
 msgid "Insert table"
 msgstr "Įterpti lentelę"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:89
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:90
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:90
 #, fuzzy
 #| msgid "Inserts knowledge base answer"
 msgid "Insert text from knowledge base answer"
 msgstr "Įterpia žinių bazės atsakymą"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:98
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Insert text from text module"
 msgstr "Įterpti tekstą iš teksto modulio"
 
@@ -10448,7 +10473,7 @@ msgstr "Sisteminio naudotojo ištrinti neįmanoma."
 msgid "It is not possible to delete your current account."
 msgstr "Dabartinės paskyros ištrinti neįmanoma."
 
-#: app/models/ticket.rb:295
+#: app/models/ticket.rb:297
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "Negalima prijungti prie trikties, kuri pati jau prijungta."
 
@@ -10485,6 +10510,12 @@ msgstr "Vardenis Pavardenis"
 msgid "Join %s"
 msgstr "Prisijungti prie %s"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:107
+#, fuzzy
+#| msgid "Feedback Form"
+msgid "Join feedback program"
+msgstr "Įvertinimo forma"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
@@ -10509,6 +10540,10 @@ msgstr "Birželis"
 msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "Paspauskite ant paryškinimo ir iškart paredaguokite tekstą. Sėkmės!"
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:94
+msgid "Just switch back"
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts:11
 msgid "Kayako"
@@ -10752,6 +10787,10 @@ msgstr "Išdėstymo pavyzdys"
 msgid "Learn More"
 msgstr "Sužinokite daugiau"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:40
+msgid "Leave BETA UI feedback program?"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:207
 #, fuzzy
 #| msgid "URL (Completions)"
@@ -10760,6 +10799,10 @@ msgstr "Adresas (užbaigimai)"
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:197
 msgid "Leave empty to use the base model"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:39
+msgid "Leave program"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:199
@@ -11027,7 +11070,7 @@ msgstr ""
 msgid "Locale"
 msgstr "Lokalė"
 
-#: app/graphql/gql/mutations/user/current/locale.rb:17
+#: app/graphql/gql/mutations/user/current/locale.rb:15
 msgid "Locale could not be found."
 msgstr "Nepavyko rasti lokalės."
 
@@ -11621,7 +11664,7 @@ msgstr "Didžiausias apžvalgoje rodomas trikčių kiekis"
 msgid "May"
 msgstr "Geg"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:114
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:104
 msgid "Maybe later"
 msgstr ""
 
@@ -11662,8 +11705,8 @@ msgstr "Nariai"
 msgid "Mention for"
 msgstr "Paminėjimas"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:80
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:81
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:81
 msgid "Mention user"
 msgstr "Paminėti naudotoją"
 
@@ -11674,7 +11717,13 @@ msgstr "Paminėti naudotoją"
 msgid "Merge"
 msgstr "Prijungti"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:101
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:111
+#, fuzzy
+#| msgid "Merge cells"
+msgid "Merge %s cells"
+msgstr "Sujungti langelius"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:112
 msgid "Merge cells"
 msgstr "Sujungti langelius"
 
@@ -12226,9 +12275,8 @@ msgstr "Naujas atributas"
 #: app/assets/javascripts/app/controllers/_profile/newbetaui.coffee:3
 #: app/assets/javascripts/app/controllers/clues/desktop_beta_switch_clues.coffee:5
 #: app/assets/javascripts/app/views/profile/newbetaui.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:36
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:11
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:20
 msgid "New BETA UI"
 msgstr "Nauja BETA sąsaja"
 
@@ -12719,7 +12767,8 @@ msgstr "Narių nerasta"
 msgid "No organizations found"
 msgstr "Organizacijų nerasta"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:127
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:128
 #, fuzzy
 #| msgid "No Overviews"
 msgid "No overviews"
@@ -12813,7 +12862,7 @@ msgstr "Dar nėra žymų."
 msgid "No template created yet."
 msgstr "Dar nėra šablonų."
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:425
 msgid "No tickets in this state."
 msgstr "Trikčių šioje būsenoje nėra."
 
@@ -12825,7 +12874,7 @@ msgstr "Žetono nėra!"
 msgid "No translation for this locale available"
 msgstr "Vertimo į šią kalbą nėra"
 
-#: app/models/ticket.rb:420
+#: app/models/ticket.rb:422
 msgid "No triggers active"
 msgstr "Aktyvių paleistukų nėra"
 
@@ -13310,12 +13359,12 @@ msgid "Only visible to editors"
 msgstr "Matoma tik redaktoriams"
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:19
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:77
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:103
 msgid "Only when out of office replacement"
 msgstr "Tik kai esama pavaduojančiu"
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:12
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:74
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:100
 msgid "Only when shared organization member"
 msgstr "Tik kai bendrintos organizacijos narys"
 
@@ -13494,7 +13543,7 @@ msgstr "Apžvalgų eiliškumas"
 msgid "Order of overviews"
 msgstr "Apžvalgų eiliškumas"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:127
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:120
 msgid "Order of ticket overviews"
 msgstr "Trikčių apžvalgų eiliškumas"
 
@@ -13710,8 +13759,8 @@ msgstr "Išeinantys:"
 msgid "Outdated Browser"
 msgstr "Pasenusi naršyklė"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:271
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:268
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:272
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:269
 msgid "Outdent text"
 msgstr "Pritraukti tekstą"
 
@@ -13734,6 +13783,12 @@ msgstr "Apžvalgos masinio redagavimo sąsaja"
 msgid "Overview navigation list"
 msgstr "Apžvalgų navigacijos sąrašas"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:70
+#, fuzzy
+#| msgid "Overview navigation list"
+msgid "Overview order list"
+msgstr "Apžvalgų navigacijos sąrašas"
+
 #: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:380
 msgid "Overview: %s"
 msgstr "Apžvalga: %s"
@@ -13744,7 +13799,7 @@ msgstr "Apžvalga: %s"
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:30
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:31
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:78
 #: db/seeds/permissions.rb:35
@@ -14730,6 +14785,10 @@ msgstr "Realiu laiku"
 msgid "Reason for absence"
 msgstr "Nebuvimo priežastis"
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:78
+msgid "Reason to switch back"
+msgstr ""
+
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:39
 #: app/assets/javascripts/app/views/google/list.jst.eco:112
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:113
@@ -14993,8 +15052,8 @@ msgid "Remove checklist"
 msgstr "Pašalinti kontrolinį sąrašą"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:121
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:201
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:198
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:202
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:199
 msgid "Remove formatting"
 msgstr "Pašalinti formatavimą"
 
@@ -15221,7 +15280,7 @@ msgid "Reset Password failed!"
 msgstr "Slaptažodžio atstatymas nepavyko!"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:136
 msgid "Reset overview order"
 msgstr "Atstatyti apžvalgų eiliškumą"
 
@@ -15336,7 +15395,7 @@ msgstr ""
 "<br>\n"
 "<div>Jūsų #{config.product_name} komanda</div>\n"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:96
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:89
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "Nepavyko nunulinti trikčių apžvalgos eiliškumo."
 
@@ -16238,7 +16297,7 @@ msgstr "Pasirinktas objektas jau įrašytas į ištrynimo eilę."
 msgid "Selected tickets do not match any macros."
 msgstr "Pasirinktos triktys neatitinka nei vienos makrokomandos."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:120
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:127
 msgid "Selection cancelled for %s."
 msgstr "%s pasirinkimas atšauktas."
 
@@ -16296,10 +16355,15 @@ msgid "Send email: %s"
 msgstr "Siųsti laišką: %s"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:121
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:44
 #, fuzzy
 #| msgid "Send Feedback"
 msgid "Send feedback"
+msgstr "Siųsti atsiliepimą"
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:93
+#, fuzzy
+#| msgid "Send Feedback"
+msgid "Send feedback & switch back"
 msgstr "Siųsti atsiliepimą"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:121
@@ -16656,7 +16720,7 @@ msgstr "Bendrintas juodraštis atnaujintas."
 msgid "Shared drafts"
 msgstr "Bendrinti juodraščiai"
 
-#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:20
+#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:17
 msgid "Shared drafts are not activated for the selected group"
 msgstr "Bendrinti juodraščiai neįjungti pasirinktai grupei"
 
@@ -16767,6 +16831,17 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
 msgid "Show previous tab"
 msgstr "Rodyti ankstesnį skirtuką"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:61
+#, fuzzy
+#| msgid ""
+#| "Have the BETA switch between the old and the new UI always available in "
+#| "the primary navigation"
+msgid ""
+"Show the BETA switch between the old and the new UI in the primary navigation"
+msgstr ""
+"BETA jungiklis tarp senosios ir naujosios vartotojo sąsajos visada "
+"prieinamas pagrindinėje navigacijoje"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:43
 msgid "Show the chat when ready."
@@ -17051,7 +17126,7 @@ msgstr "Deja ne visi laukeliai užpildyti teisingai."
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "Deja šiuo metu joks CTI valdiklis nėra įjungtas."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:139
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:146
 msgid ""
 "Sortable list focused. Use up and down arrows to navigate items. Press Space "
 "to select and item and again on another item to swap them."
@@ -17060,7 +17135,7 @@ msgstr ""
 "pasirinkti įrašą. Spauskite tarpą norėdami pasirinkti įrašą ir po to ant "
 "kito, kad sukeistumėte juos vietomis."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:46
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:50
 msgid "Sorted %s in user taskbar list to position %s."
 msgstr "Skirtukas „%s“ perkeltas į poziciją %s."
 
@@ -17108,7 +17183,7 @@ msgstr ""
 msgid "Split"
 msgstr "Atskirti"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:92
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:100
 msgid "Split cells"
 msgstr "Perskirti langelius"
 
@@ -17504,7 +17579,7 @@ msgstr "Sekmadienis"
 msgid "Support of multilingual Knowledge Base."
 msgstr "Daugiakalbės Žinių bazės palaikymas."
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:71
+#: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:78
 msgid "Swapped %s with %s. %s moved to position %s."
 msgstr "%s sukeistas vietomis su %s. %s perkelta į poziciją %s."
 
@@ -17603,6 +17678,12 @@ msgstr "Skirtuko elgsena po trikties veiksmo"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:133
 msgid "Tab has changed, do you really want to close it?"
 msgstr "Skirtukas pasikeitė, ar tikrai norite jį uždaryti?"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuTrigger.vue:33
+#, fuzzy
+#| msgid "add option"
+msgid "Table options"
+msgstr "pridėti parinktį"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:257
 msgid "Tabs"
@@ -17878,7 +17959,7 @@ msgstr "Nepavyko sukurti Žinių bazės."
 msgid "The MIME type of the image is invalid."
 msgstr "Paveikslėlio MIME tipas yra netinkamas."
 
-#: app/graphql/gql/queries/system/import/state.rb:39
+#: app/graphql/gql/queries/system/import/state.rb:37
 msgid "The OTRS import failed."
 msgstr "OTRS importavimas nepavyko."
 
@@ -18173,6 +18254,17 @@ msgstr ""
 "Pokalbio langas pasirodys kai bus užmegztas ryšys su serveriu ir jeigu tuo "
 "metu yra prisijungęs pokalbio operatorius."
 
+#: app/graphql/gql/mutations/ticket/checklist/add.rb:13
+#: app/graphql/gql/mutations/ticket/checklist/base.rb:7
+#: app/graphql/gql/queries/checklist/templates.rb:11
+#: app/graphql/gql/queries/ticket/checklist.rb:11
+#: app/graphql/gql/subscriptions/checklist/template_updates.rb:12
+#: app/graphql/gql/subscriptions/ticket/checklist_updates.rb:13
+#, fuzzy
+#| msgid "This feature is not enabled."
+msgid "The checklist feature is not active"
+msgstr "Ši funkcija nėra įjungta."
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:33
 msgid ""
 "The chosen unit will be used for display only and will not affect stored "
@@ -18225,7 +18317,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:400
-#: app/graphql/gql/mutations/user/current/change_password.rb:30
+#: app/graphql/gql/mutations/user/current/change_password.rb:28
 msgid "The current password you provided is incorrect."
 msgstr "Jūsų pateiktas dabartinis slaptažodis neteisingas."
 
@@ -18242,8 +18334,8 @@ msgstr ""
 "Duomenys turi būti CSV formatu ir išsaugoti UTF-8 koduote. Galite importuoti "
 "CSV failą arba įklijuoti duomenis tiesiai į teksto laukelį."
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:76
-msgid "The data we need to collect includes:"
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:66
+msgid "The data we need to collect consists of:"
 msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:294
@@ -18442,11 +18534,11 @@ msgstr ""
 "Trikties identifikatorius. Pvz Ticket#, Triktis#, Skambutis#, MyTicket#. "
 "Numatytasis yra Ticket#."
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:34
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:30
 msgid "The idoit object could not be found."
 msgstr "Nepavyko rasti i-doit objekto."
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:28
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:24
 msgid "The idoit object is already present on the ticket."
 msgstr "i-doit objektas jau egzistuoja šioje triktyje."
 
@@ -18487,11 +18579,11 @@ msgid "The issue could not be saved."
 msgstr "Nepavyko išsaugoti trikties."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:26
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:24
 msgid "The issue reference already exists."
 msgstr "Ši triktis jau buvo paminėta."
 
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:42
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:40
 msgid "The issue reference could not be found."
 msgstr "Nepavyko rasti trikties pagal nuorodą."
 
@@ -18567,13 +18659,9 @@ msgstr "Nepavyko atnaujinti objekto."
 msgid "The online notification could not be marked as seen."
 msgstr "Nepavyko pažymėti pranešimo kaip matyto."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:105
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:98
 msgid "The order of your ticket overviews was reset."
 msgstr "Jūsų trikčių apžvalgų eiliškumas buvo nunulintas."
-
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:85
-msgid "The order of your ticket overviews was updated."
-msgstr "Jūsų trikčių apžvalgų eilės tvarka buvo atnaujinta."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:248
 msgid "The page is not available anymore"
@@ -18685,7 +18773,7 @@ msgstr "Pateiktas prieigos taškas netinkamas."
 msgid "The provided match operator is missing or invalid."
 msgstr "Pateiktas patikros operatorius netinkamas."
 
-#: app/graphql/gql/mutations/user/current/password_check.rb:28
+#: app/graphql/gql/mutations/user/current/password_check.rb:26
 msgid "The provided password is incorrect."
 msgstr "Pateiktas slaptažodis neteisingas."
 
@@ -18818,7 +18906,7 @@ msgstr "Būtinas „group_id“ parametras."
 msgid "The required parameter 'id' is missing."
 msgstr "Būtinas „id“ parametras."
 
-#: lib/search_index_backend.rb:681
+#: lib/search_index_backend.rb:677
 msgid "The required parameter 'key' is missing."
 msgstr "Būtinas „key“ parametras."
 
@@ -18874,7 +18962,7 @@ msgstr "Būtinas „ticket_number“ parametras."
 msgid "The required parameter 'user_id' is missing."
 msgstr "Būtinas „user_id“ parametras."
 
-#: lib/search_index_backend.rb:682
+#: lib/search_index_backend.rb:678
 msgid "The required parameter 'value' is missing."
 msgstr "Būtinas „value“ parametras."
 
@@ -19121,7 +19209,7 @@ msgstr ""
 "Dviejų veiksnių autentifikacijos metodas „%s“ pašalintas šiam naudotojui."
 
 #: app/controllers/sessions_controller.rb:249
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:34
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
 msgid "The two-factor authentication method is not enabled."
@@ -19158,7 +19246,7 @@ msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "Nepavyko ištraukti naudotojo „preferred_username“ iš „id_token“."
 
 #: app/controllers/sessions_controller.rb:245
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:29
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "Naudotojo vardas arba slaptažodis neteisingas."
 
@@ -19453,7 +19541,7 @@ msgstr "Šis įrenginys"
 msgid "This entry already exists!"
 msgstr "Šis įrašas jau egzistuoja!"
 
-#: app/services/service/check_feature_enabled.rb:8
+#: app/services/service/check_feature_enabled.rb:6
 msgid "This feature is not enabled."
 msgstr "Ši funkcija nėra įjungta."
 
@@ -19806,7 +19894,7 @@ msgid ""
 "Each of the users can then provide consent or not for the participation in "
 "the BETA program.\n"
 "\n"
-"Answers will be anonymized and the data collected may include:\n"
+"Answers will be anonymized and the data collected consists of:\n"
 "- Zammad instance name\n"
 "- star rating of the new UI\n"
 "- text comments on the new UI\n"
@@ -19844,14 +19932,6 @@ msgid ""
 msgstr ""
 "Ši paslauga rodo įeinančių skambučių ir skambinančiųjų sąrašo kontaktus "
 "gyvai."
-
-#: app/services/service/concerns/handles_setting.rb:22
-msgid "This setting is not disabled."
-msgstr "Šis nustatymas nėra išjungtas."
-
-#: app/services/service/concerns/handles_setting.rb:18
-msgid "This setting is not enabled."
-msgstr "Šis nustatymas nėra įjungtas."
 
 #: app/assets/javascripts/app/models/group.coffee:13
 msgid "This signature is inactive, it won't be included in the reply."
@@ -20761,15 +20841,15 @@ msgstr "Perjungti temą"
 msgid "Toggle group"
 msgstr "Perjungti grupę"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:129
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:140
 msgid "Toggle header cell"
 msgstr "Perjungti antraštės langelį"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:120
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:131
 msgid "Toggle header column"
 msgstr "Perjungti antraštės stulpelį"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:111
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:122
 msgid "Toggle header row"
 msgstr "Perjungti antraštės eilutę"
 
@@ -20868,7 +20948,7 @@ msgstr "Stebima kaip kontrolinio sąrašo punktas"
 msgid "Transfer conversation to another chat:"
 msgstr "Perkelti diskusiją į kitą pokalbį:"
 
-#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:55
+#: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:59
 msgid "Transferred %s from user taskbar list %s at position %s."
 msgstr "„%s“ skirtukas perkeltas iš %s į %s."
 
@@ -21605,7 +21685,7 @@ msgstr ""
 msgid "Updating Database"
 msgstr "Duomenų bazė atnaujinama"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:73
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:74
 msgid "Updating the order of your ticket overviews failed."
 msgstr "Nepavyko atnaujinti trikčių apžvalgų eiliškumo."
 
@@ -22175,7 +22255,7 @@ msgstr "Laukiantys klientai"
 msgid "Waiting in %s"
 msgstr "Laukiama %s"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:44
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:34
 msgid "Want to join the BETA UI feedback program?"
 msgstr ""
 
@@ -22510,6 +22590,12 @@ msgstr "Workflow"
 msgid "Workflows"
 msgstr "Workflow"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:104
+#, fuzzy
+#| msgid "Send Feedback"
+msgid "Would you like to give us feedback on the BETA UI? "
+msgstr "Siųsti atsiliepimą"
+
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:16
 #: db/seeds/permissions.rb:245 db/seeds/settings.rb:6103
 msgid "Writing Assistant"
@@ -22562,8 +22648,8 @@ msgstr ""
 "Nepavyko sugeneruoti santraukos. Bandykite vėliau arba susisiekite su savo "
 "administratoriumi."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:67
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:67
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:68
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:68
 #, fuzzy
 #| msgid "Writing Assistant Tools"
 msgid "Writing assistant tools"
@@ -22613,6 +22699,10 @@ msgstr "Jūs neturite prieigos prie šio %s."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Esate <strong>%s</strong> eilėje."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:78
+msgid "You are part of the BETA UI feedback program."
+msgstr ""
+
 #: app/models/transaction/notification.rb:111
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
@@ -22636,9 +22726,8 @@ msgstr "Gaunate šį pranešimą, nes esate paminėtas šioje triktyje."
 msgid "You calendar subscription settings were updated."
 msgstr "Jūsų kalendoriaus prenumeratos nustatymai buvo atnaujinti."
 
-#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:69
-msgid ""
-"You can always send your feedback using the button next to the BETA switch."
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
+msgid "You can always re-join later."
 msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco:7
@@ -22822,6 +22911,16 @@ msgstr "Galite paprašyti slaptažodžio"
 msgid "You can request your password here."
 msgstr "Galite paprašyti slaptažodžio čia."
 
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:87
+msgid ""
+"You can return to the new BETA UI using the switch at the bottom of your "
+"taskbar or in your profile settings."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:69
+msgid "You can send feedback from the BETA button or profile settings."
+msgstr ""
+
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:3
 msgid ""
 "You can switch between the following backends for new attachments even on a "
@@ -22838,7 +22937,7 @@ msgstr ""
 "Galite persijungti tarp senosios ir naujos BETA sąsajos bet kuriuo metu "
 "Profilis > Nauja BETA sąsaja sekcijoje."
 
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:41
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:82
 msgid ""
 "You can switch between the old and the New BETA UI at any moment in the "
 "Profile Settings > New BETA UI section."
@@ -23019,6 +23118,10 @@ msgid ""
 "your experience so far?"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:15
+msgid "You were using the new BETA UI for 5 hours."
+msgstr ""
+
 #: app/assets/javascripts/app/views/login.jst.eco:96
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:158
 msgid ""
@@ -23027,10 +23130,6 @@ msgid ""
 msgstr ""
 "Jūs jau užregistruotas su savo el. paštu jei esate kreipęsis į mūsų pagalbos "
 "komandą."
-
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:25
-msgid "You've been using the new UI for 2 hours."
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee:13
 msgid "YouTube or Vimeo address"
@@ -23110,6 +23209,7 @@ msgid ""
 msgstr "Jūsų paskyra nėra patvirtinta. Paspauskite nuorodą patikrinimo laiške."
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:60
+#: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:40
 msgid "Your answer will be submitted to Zammad GmbH in an anonymized way."
 msgstr ""
 
@@ -23354,13 +23454,13 @@ msgstr "visi prenumeratoriai"
 msgid "and"
 msgstr "ir"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:83
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:73
 msgid ""
 "anonymized rating and comment on the new UI, repeated in a few timely "
 "iterations"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:90
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:80
 msgid "anonymized tracked usage time of the new UI"
 msgstr ""
 
@@ -23884,6 +23984,16 @@ msgstr "i-doit konfigūracija"
 msgid "i-doit integration"
 msgstr "„i-doit“ integracija"
 
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:12
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_remove.rb:12
+#: app/graphql/gql/queries/autocomplete_search/idoit_object_types.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_list.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_search.rb:15
+#, fuzzy
+#| msgid "i-doit integration"
+msgid "i-doit integration is not enabled"
+msgstr "„i-doit“ integracija"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:172
 msgid "i-doit: Link objects"
 msgstr "i-doit: susieti objektus"
@@ -24265,7 +24375,7 @@ msgstr "turi būti be protokolo („http://“ ar „https://“)"
 msgid "my own note"
 msgstr "mano paties pastaba"
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:95
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:85
 msgid "name of the Zammad instance with tracked usage time of the new UI."
 msgstr ""
 
@@ -24894,6 +25004,30 @@ msgstr "...viso teksto laukelio"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Laukimo laikas šiandien"
+
+#~ msgid "This setting is not disabled."
+#~ msgstr "Šis nustatymas nėra išjungtas."
+
+#~ msgid "This setting is not enabled."
+#~ msgstr "Šis nustatymas nėra įjungtas."
+
+#~ msgid "Drag and drop to reorder ticket overview list items."
+#~ msgstr "Norėdami pakeisti apžvalgų eiliškumą, pervilkite."
+
+#, fuzzy
+#~| msgid "New BETA UI"
+#~ msgid "NEW BETA UI"
+#~ msgstr "Nauja BETA sąsaja"
+
+#~ msgid "The order of your ticket overviews was updated."
+#~ msgstr "Jūsų trikčių apžvalgų eilės tvarka buvo atnaujinta."
+
+#~ msgid ""
+#~ "Have the BETA switch between the old and the new UI always available in "
+#~ "the Primary Navigation"
+#~ msgstr ""
+#~ "BETA jungiklis tarp senosios ir naujosios vartotojo sąsajos visada "
+#~ "prieinamas pagrindinėje navigacijoje"
 
 #, fuzzy
 #~| msgid "Cancel & Go Back"

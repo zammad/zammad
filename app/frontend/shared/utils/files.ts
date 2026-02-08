@@ -204,11 +204,17 @@ export const allowedImageTypesString = () => {
   return allowedImageTypes().join(',')
 }
 
+export const sanitizedContentType = (type?: Maybe<string>) =>
+  type?.replace(/^(.+?\/.+?)(\b|\s).+?$/, '$1')
+
 export const canPreviewFile = (type?: Maybe<string>): FilePreview | false => {
   if (!type) return false
 
-  if (allowedImageTypes().includes(type)) return 'image'
-  if (type === 'text/calendar') return 'calendar'
+  const contentType = sanitizedContentType(type)
+  if (!contentType) return false
+
+  if (allowedImageTypes().includes(contentType)) return 'image'
+  if (contentType === 'text/calendar') return 'calendar'
 
   return false
 }

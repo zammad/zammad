@@ -15,4 +15,5 @@ export interface ActionMenuProps {
   visible?: boolean
   isActive?: (type: string, attributes?: Record<string, unknown>) => boolean
   typeName?: string
+  targetId?: string
 }

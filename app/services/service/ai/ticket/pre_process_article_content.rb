@@ -101,12 +101,13 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::BaseWithCurrentUs
   end
 
   def strip_html_and_maybe_remove_quotes(text, article)
+    text_for_quote_removal = non_plain_article?(article) ? text.html2text(link_style: :markdown) : text
     if article.type == Ticket::Article::Type.lookup(name: 'email') && (!skip_quotes_strip_first_article || article.id != first_article_id)
       Text::QuoteRemover
-        .new(text: text.html2text(link_style: :markdown), remove_signatures: true)
+        .new(text: text_for_quote_removal, remove_signatures: true)
         .remove
     else
-      text.html2text
+      text_for_quote_removal
     end
   end
 

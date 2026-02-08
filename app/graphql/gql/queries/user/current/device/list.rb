@@ -7,9 +7,7 @@ module Gql::Queries
 
     type [Gql::Types::UserDeviceType], null: true
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.device')
-    end
+    requires_permission 'user_preferences.device'
 
     def resolve(...)
       UserDevice.where(user_id: context.current_user.id).reorder(updated_at: :desc, name: :asc)

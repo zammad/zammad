@@ -612,7 +612,7 @@ msgstr ""
 msgid "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
 
-#: app/models/ticket.rb:297
+#: app/models/ticket.rb:299
 msgid "A ticket cannot be merged into itself."
 msgstr ""
 
@@ -668,6 +668,18 @@ msgstr ""
 #: lib/excel_sheet/ai/analytics/errors.rb:26
 #: lib/excel_sheet/ai/analytics/with_usage.rb:26
 msgid "AI Service Name"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:110
+msgid "AI Summary"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:82
+msgid "AI Writing Assistant Tools"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/text_tools_modal.coffee:24
+msgid "AI Writing Assistant: %s"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:21
@@ -742,8 +754,21 @@ msgstr ""
 msgid "AI service result is missing expected keys"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-summary.ts:11
+msgid "AI summary"
+msgstr ""
+
 #: lib/excel_sheet/ai/analytics/with_usage.rb:4
 msgid "AI usage and feedback log"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:35
+msgid "AI writing assistant"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:68
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:68
+msgid "AI writing assistant tools"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
@@ -800,7 +825,7 @@ msgstr ""
 msgid "API token"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/form.coffee:48
+#: app/assets/javascripts/app/controllers/_channel/form.coffee:50
 #: app/assets/javascripts/app/views/channel/form.jst.eco:127
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
@@ -1153,7 +1178,7 @@ msgstr ""
 msgid "Add Tag"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:108
+#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:109
 msgid "Add Telegram Bot"
 msgstr ""
 
@@ -1197,8 +1222,8 @@ msgstr ""
 msgid "Add attachment option to upload."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:250
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:247
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:251
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:248
 msgid "Add bullet list"
 msgstr ""
 
@@ -1225,13 +1250,13 @@ msgstr ""
 msgid "Add from a template"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:108
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:108
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:109
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:109
 msgid "Add heading"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:280
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:277
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:281
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:278
 msgid "Add image"
 msgstr ""
 
@@ -1239,9 +1264,9 @@ msgstr ""
 msgid "Add internal note"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:299
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:300
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:296
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:174
 msgid "Add link"
 msgstr ""
@@ -1256,8 +1281,8 @@ msgid "Add note"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:151
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:237
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:234
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:238
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:235
 msgid "Add ordered list"
 msgstr ""
 
@@ -1595,7 +1620,7 @@ msgstr ""
 msgid "An error occurred during the operation."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/chat.coffee:251
+#: app/assets/javascripts/app/controllers/_channel/chat.coffee:253
 msgid "An error occurred while fetching the website preview."
 msgstr ""
 
@@ -1616,7 +1641,7 @@ msgstr ""
 msgid "An unexpected error has occurred."
 msgstr ""
 
-#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:26
+#: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:24
 msgid "An unexpected error occurred during system setup."
 msgstr ""
 
@@ -1697,7 +1722,7 @@ msgstr ""
 msgid "App Version"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:186
+#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:187
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:476
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:503
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:373
@@ -1858,12 +1883,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:6
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:145
-#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:98
+#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:99
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:148
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:169
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:91
-#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:66
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:67
+#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:67
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:68
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:179
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
@@ -2273,7 +2298,7 @@ msgstr ""
 msgid "Automatic account linking notification"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:180
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:181
 msgid "Automatic reminders"
 msgstr ""
 
@@ -2334,8 +2359,8 @@ msgstr ""
 msgid "Avatar"
 msgstr ""
 
-#: app/graphql/gql/mutations/user/current/avatar/delete.rb:18
-#: app/graphql/gql/mutations/user/current/avatar/select.rb:18
+#: app/graphql/gql/mutations/user/current/avatar/delete.rb:16
+#: app/graphql/gql/mutations/user/current/avatar/select.rb:16
 msgid "Avatar could not be found."
 msgstr ""
 
@@ -2385,7 +2410,7 @@ msgstr ""
 msgid "BETA UI illustration"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:356
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:359
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:399
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:419
@@ -2457,7 +2482,7 @@ msgid "Basic Settings"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:2
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:119
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:120
 msgid "Be sure to check AI-generated content for accuracy."
 msgstr ""
 
@@ -2465,7 +2490,7 @@ msgstr ""
 msgid "Bearer Token"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:795
+#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:805
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts:105
 msgid "Before you mention a user, please select a group."
 msgstr ""
@@ -2764,7 +2789,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:339
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:342
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:119
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:8
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:7
@@ -2916,8 +2941,8 @@ msgstr ""
 msgid "Change personal account password."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:185
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:182
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:183
 msgid "Change text color"
 msgstr ""
 
@@ -3041,7 +3066,7 @@ msgstr ""
 msgid "Chat not answered, automatically set to offline."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/chat.coffee:397
+#: app/assets/javascripts/app/controllers/_channel/chat.coffee:399
 msgid "Chats"
 msgstr ""
 
@@ -3286,7 +3311,7 @@ msgstr ""
 msgid "Click here to set up a two-factor authentication method."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:49
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:48
 msgid "Click to edit…"
 msgstr ""
 
@@ -3599,7 +3624,7 @@ msgstr ""
 msgid "Connect Exchange App"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:140
+#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:141
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:10
 msgid "Connect Facebook App"
 msgstr ""
@@ -3740,7 +3765,7 @@ msgstr ""
 msgid "Contributing Translations"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:72
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:75
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:4
 msgid "Conversation Summary"
 msgstr ""
@@ -3853,7 +3878,7 @@ msgid "Could not find the channel."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:37
-#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:23
+#: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:21
 msgid "Could not generate recovery codes"
 msgstr ""
 
@@ -4304,12 +4329,12 @@ msgstr ""
 msgid "Customer Chat"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:65
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:68
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:3
 msgid "Customer Intent"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:91
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:94
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:7
 msgid "Customer Sentiment"
 msgstr ""
@@ -4326,7 +4351,7 @@ msgstr ""
 msgid "Customer selection based on sender and receiver list"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:101
 msgid "Customer sentiment"
 msgstr ""
 
@@ -4694,7 +4719,7 @@ msgstr ""
 msgid "Defines endpoint of Elasticsearch."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:36
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:43
 msgid "Defines global configuration when the summary will be generated in the ticket zoom."
 msgstr ""
 
@@ -5282,6 +5307,14 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:89
+msgid "Delete %s columns"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
+msgid "Delete %s rows"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:47
 msgid "Delete Avatar?"
 msgstr ""
@@ -5322,7 +5355,7 @@ msgstr ""
 msgid "Delete avatar"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:82
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:90
 msgid "Delete column"
 msgstr ""
 
@@ -5378,11 +5411,11 @@ msgstr ""
 msgid "Delete records"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:54
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:59
 msgid "Delete row"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:139
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:150
 msgid "Delete table"
 msgstr ""
 
@@ -5449,7 +5482,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:8
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:231
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:7
-#: app/assets/javascripts/app/views/generic/admin/index.jst.eco:7
+#: app/assets/javascripts/app/views/generic/admin/index.jst.eco:12
 #: app/assets/javascripts/app/views/generic/object_attribute_options_context.jst.eco:23
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:9
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:93
@@ -5920,7 +5953,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:59
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:60
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:36
 #: app/assets/javascripts/app/controllers/tag.coffee:118
 #: app/assets/javascripts/app/controllers/translation.coffee:92
@@ -6529,7 +6562,7 @@ msgstr ""
 msgid "Enter credentials"
 msgstr ""
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:300
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:301
 msgid "Enter link URL"
 msgstr ""
 
@@ -6854,7 +6887,7 @@ msgstr ""
 msgid "Expand this element"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:27
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:34
 msgid "Experimental"
 msgstr ""
 
@@ -6922,7 +6955,7 @@ msgstr ""
 msgid "Facebook APP ID"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:190
+#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:191
 msgid "Facebook Account"
 msgstr ""
 
@@ -7105,7 +7138,7 @@ msgstr ""
 msgid "Fingerprint"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:259
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:260
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:73
@@ -7303,7 +7336,7 @@ msgstr ""
 msgid "Form Allowed Parameters"
 msgstr ""
 
-#: app/graphql/gql/queries/form_updater.rb:30
+#: app/graphql/gql/queries/form_updater.rb:34
 msgid "FormSchema could not be found."
 msgstr ""
 
@@ -7320,8 +7353,8 @@ msgid "Format as _underlined_"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:93
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:153
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:150
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:154
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:151
 msgid "Format as bold"
 msgstr ""
 
@@ -7338,8 +7371,8 @@ msgid "Format as h3 heading"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:100
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:161
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:158
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:162
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:159
 msgid "Format as italic"
 msgstr ""
 
@@ -7347,20 +7380,20 @@ msgstr ""
 msgid "Format as ordered list"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:193
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:190
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:191
 msgid "Format as quoted text"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:114
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:177
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:174
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:178
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:175
 msgid "Format as strikethrough"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:107
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:169
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:166
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:170
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:167
 msgid "Format as underlined"
 msgstr ""
 
@@ -7911,20 +7944,20 @@ msgid "Header Menu"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:129
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:115
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:115
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:116
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:116
 msgid "Heading 1"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:136
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:127
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:126
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:128
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:127
 msgid "Heading 2"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:143
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:139
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:137
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:140
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:138
 msgid "Heading 3"
 msgstr ""
 
@@ -8542,8 +8575,8 @@ msgstr ""
 msgid "Increment seconds value"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:263
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:260
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:264
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:261
 msgid "Indent text"
 msgstr ""
 
@@ -8584,49 +8617,49 @@ msgstr ""
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:220
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:217
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:73
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:78
 msgid "Insert column after"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:64
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:69
 msgid "Insert column before"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:228
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:229
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:209
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:206
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
 msgid "Insert inline code"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:36
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:41
 msgid "Insert row above"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:45
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:50
 msgid "Insert row below"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:307
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:328
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:329
 msgid "Insert table"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:89
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:90
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:90
 msgid "Insert text from knowledge base answer"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:98
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Insert text from text module"
 msgstr ""
 
@@ -8849,7 +8882,7 @@ msgstr ""
 msgid "Invalid values in step %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:39
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:40
 msgid "Invalid video URL"
 msgstr ""
 
@@ -8931,7 +8964,7 @@ msgstr ""
 msgid "It is not possible to delete your current account."
 msgstr ""
 
-#: app/models/ticket.rb:295
+#: app/models/ticket.rb:297
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 
@@ -9256,6 +9289,13 @@ msgstr ""
 msgid "Leave program"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/_feature_base.coffee:53
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:66
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:40
+msgid "Legal Information"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:199
 msgid "Library"
 msgstr ""
@@ -9273,7 +9313,7 @@ msgstr ""
 msgid "Limit Groups"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_manage/beta_ui.coffee:47
+#: app/assets/javascripts/app/controllers/_manage/beta_ui.coffee:52
 msgid "Limit availability of the BETA UI to roles"
 msgstr ""
 
@@ -9488,7 +9528,7 @@ msgid "Loading failed."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/task_manager/singleton.coffee:55
-#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:654
+#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:664
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
 #: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:61
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:464
@@ -9511,7 +9551,7 @@ msgstr ""
 msgid "Locale"
 msgstr ""
 
-#: app/graphql/gql/mutations/user/current/locale.rb:17
+#: app/graphql/gql/mutations/user/current/locale.rb:15
 msgid "Locale could not be found."
 msgstr ""
 
@@ -10106,8 +10146,8 @@ msgstr ""
 msgid "Mention for"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:80
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:81
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:81
 msgid "Mention user"
 msgstr ""
 
@@ -10118,7 +10158,11 @@ msgstr ""
 msgid "Merge"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:101
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:111
+msgid "Merge %s cells"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:112
 msgid "Merge cells"
 msgstr ""
 
@@ -10460,10 +10504,6 @@ msgstr ""
 msgid "My tickets in process"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:20
-msgid "NEW BETA UI"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee:3
 msgid "Nagios"
 msgstr ""
@@ -10622,7 +10662,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:12
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:12
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:46
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:47
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee:14
 #: app/assets/javascripts/app/controllers/translation.coffee:167
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:159
@@ -10634,7 +10674,7 @@ msgstr ""
 msgid "New & open tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:66
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:69
 msgid "New AI Agent"
 msgstr ""
 
@@ -10662,6 +10702,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/clues/desktop_beta_switch_clues.coffee:5
 #: app/assets/javascripts/app/views/profile/newbetaui.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:8
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:20
 msgid "New BETA UI"
 msgstr ""
 
@@ -10787,7 +10828,7 @@ msgstr ""
 msgid "New Workflow"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:28
 msgid "New Writing Assistant Tool"
 msgstr ""
 
@@ -10846,8 +10887,8 @@ msgstr ""
 msgid "New user?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:100
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:112
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:103
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
 #: app/assets/javascripts/app/controllers/webhook.coffee:165
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:120
@@ -11113,7 +11154,7 @@ msgstr ""
 msgid "No results for this query."
 msgstr ""
 
-#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:705
+#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:715
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:305
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:66
@@ -11184,7 +11225,7 @@ msgstr ""
 msgid "No translation for this locale available"
 msgstr ""
 
-#: app/models/ticket.rb:420
+#: app/models/ticket.rb:422
 msgid "No triggers active"
 msgstr ""
 
@@ -11552,12 +11593,12 @@ msgstr ""
 msgid "On %s, %s wrote:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:46
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:49
 #: db/seeds/object_manager_attributes.rb:2413
 msgid "On ticket detail opening"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:50
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:53
 #: db/seeds/object_manager_attributes.rb:2417
 msgid "On ticket summary sidebar activation"
 msgstr ""
@@ -11635,12 +11676,12 @@ msgid "Only visible to editors"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:19
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:102
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:103
 msgid "Only when out of office replacement"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user_overview_sorting_overview.coffee:12
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:99
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:100
 msgid "Only when shared organization member"
 msgstr ""
 
@@ -11652,7 +11693,7 @@ msgstr ""
 msgid "Open %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:79
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:82
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:5
 msgid "Open Questions"
 msgstr ""
@@ -11691,7 +11732,7 @@ msgstr ""
 msgid "Open note box"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:89
 msgid "Open questions"
 msgstr ""
 
@@ -12016,8 +12057,8 @@ msgstr ""
 msgid "Outdated Browser"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:271
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:268
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:272
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:269
 msgid "Outdent text"
 msgstr ""
 
@@ -12471,7 +12512,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:427
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:430
 #: app/assets/javascripts/app/controllers/webhook.coffee:134
 msgid "Please enter a valid JSON string."
 msgstr ""
@@ -12581,7 +12622,7 @@ msgstr ""
 msgid "Please wait until you received the notification email of the approval."
 msgstr ""
 
-#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:601
+#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:611
 msgid "Please wait…"
 msgstr ""
 
@@ -12814,23 +12855,23 @@ msgstr ""
 msgid "Protocol"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:74
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:77
 msgid "Provide a summary of the conversation between customer and support agent."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:67
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:70
 msgid "Provide a summary of the problem the customer needs to get resolved."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:81
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:84
 msgid "Provide a summary of the questions raised in the conversation."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:87
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:90
 msgid "Provide a summary of the upcoming events based on the conversation."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:93
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:96
 msgid "Provide an assessment of the customer sentiment based on the conversation."
 msgstr ""
 
@@ -13215,8 +13256,8 @@ msgid "Remove checklist"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:121
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:201
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:198
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:202
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:199
 msgid "Remove formatting"
 msgstr ""
 
@@ -14701,7 +14742,7 @@ msgstr ""
 msgid "Shared drafts"
 msgstr ""
 
-#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:20
+#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:17
 msgid "Shared drafts are not activated for the selected group"
 msgstr ""
 
@@ -15131,7 +15172,7 @@ msgstr ""
 msgid "Split"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:92
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:100
 msgid "Split cells"
 msgstr ""
 
@@ -15194,13 +15235,13 @@ msgstr ""
 msgid "Start typing to search for text modules…"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:752
+#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:762
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:69
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:56
 msgid "Start typing to search for users…"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:648
+#: app/assets/javascripts/app/lib/base/jquery.textmodule.js:658
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:67
 msgid "Start typing to search in Knowledge Base…"
 msgstr ""
@@ -15381,7 +15422,7 @@ msgstr ""
 msgid "Subject & References - Additional search for same article subject and same message ID in references header if no follow-up was recognized using default settings."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:365
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:368
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -15465,22 +15506,17 @@ msgstr ""
 msgid "Summarize section to about half its current size"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:110
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-summary.ts:11
-msgid "Summary"
-msgstr ""
-
-#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:35
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:42
 #: db/seeds/object_manager_attributes.rb:2403
 msgid "Summary Generation"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:15
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:22
 msgid "Summary Services"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:49
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:138
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:53
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:139
 msgid "Summary is being generated…"
 msgstr ""
 
@@ -15591,6 +15627,10 @@ msgstr ""
 msgid "Tab has changed, do you really want to close it?"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuTrigger.vue:33
+msgid "Table options"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:257
 msgid "Tabs"
 msgstr ""
@@ -15637,7 +15677,7 @@ msgstr ""
 msgid "Target ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:163
+#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:13
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/telegramPersonalMessage.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:45
@@ -15645,7 +15685,7 @@ msgstr ""
 msgid "Telegram"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:163
+#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:164
 msgid "Telegram Account"
 msgstr ""
 
@@ -15835,7 +15875,7 @@ msgstr ""
 msgid "The MIME type of the image is invalid."
 msgstr ""
 
-#: app/graphql/gql/queries/system/import/state.rb:39
+#: app/graphql/gql/queries/system/import/state.rb:37
 msgid "The OTRS import failed."
 msgstr ""
 
@@ -15899,7 +15939,7 @@ msgstr ""
 msgid "The Simple Storage Service is not available."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:158
+#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
 msgstr ""
 
@@ -15923,7 +15963,7 @@ msgstr ""
 msgid "The WhatsApp channel webhook configuration could not be verified."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:155
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:156
 msgid "The WhatsApp connection could not be saved."
 msgstr ""
 
@@ -16079,11 +16119,11 @@ msgid "The certificates for %s were not found."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:309
-#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:246
+#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:247
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:345
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:367
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:323
-#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:211
+#: app/assets/javascripts/app/controllers/_channel/telegram.coffee:212
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:36
 #: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
@@ -16097,6 +16137,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:151
 msgid "The chat will show up once the connection to the server got established and if there is an operator online to chat with."
+msgstr ""
+
+#: app/graphql/gql/mutations/ticket/checklist/add.rb:13
+#: app/graphql/gql/mutations/ticket/checklist/base.rb:7
+#: app/graphql/gql/queries/checklist/templates.rb:11
+#: app/graphql/gql/queries/ticket/checklist.rb:11
+#: app/graphql/gql/subscriptions/checklist/template_updates.rb:12
+#: app/graphql/gql/subscriptions/ticket/checklist_updates.rb:13
+msgid "The checklist feature is not active"
 msgstr ""
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:33
@@ -16136,7 +16185,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:400
-#: app/graphql/gql/mutations/user/current/change_password.rb:30
+#: app/graphql/gql/mutations/user/current/change_password.rb:28
 msgid "The current password you provided is incorrect."
 msgstr ""
 
@@ -16210,7 +16259,7 @@ msgstr ""
 msgid "The entered user for reauthentication differs from the user that was used for setting up your Microsoft365 channel initially."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:182
+#: app/assets/javascripts/app/controllers/_channel/facebook.coffee:183
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:472
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:499
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:369
@@ -16303,11 +16352,11 @@ msgstr ""
 msgid "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#."
 msgstr ""
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:34
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:30
 msgid "The idoit object could not be found."
 msgstr ""
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:28
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:24
 msgid "The idoit object is already present on the ticket."
 msgstr ""
 
@@ -16340,11 +16389,11 @@ msgid "The issue could not be saved."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:26
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:24
 msgid "The issue reference already exists."
 msgstr ""
 
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:42
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:40
 msgid "The issue reference could not be found."
 msgstr ""
 
@@ -16388,7 +16437,7 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:508
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:511
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:820
@@ -16519,7 +16568,7 @@ msgstr ""
 msgid "The provided match operator is missing or invalid."
 msgstr ""
 
-#: app/graphql/gql/mutations/user/current/password_check.rb:28
+#: app/graphql/gql/mutations/user/current/password_check.rb:26
 msgid "The provided password is incorrect."
 msgstr ""
 
@@ -16715,7 +16764,7 @@ msgstr ""
 msgid "The required value 'group_id' is missing."
 msgstr ""
 
-#: lib/ai/provider.rb:59
+#: lib/ai/provider.rb:65
 msgid "The response could not be processed."
 msgstr ""
 
@@ -16905,7 +16954,7 @@ msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr ""
 
 #: app/controllers/sessions_controller.rb:249
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:34
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
 msgid "The two-factor authentication method is not enabled."
@@ -16937,7 +16986,7 @@ msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
 #: app/controllers/sessions_controller.rb:245
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:29
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr ""
 
@@ -17179,8 +17228,12 @@ msgstr ""
 msgid "This entry already exists!"
 msgstr ""
 
-#: app/services/service/check_feature_enabled.rb:8
+#: app/services/service/check_feature_enabled.rb:6
 msgid "This feature is not enabled."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/_feature_base.coffee
+msgid "This feature leverages artificial intelligence (AI) to generate or support outputs, recommendations, or automated processes. AI systems are probabilistic and may produce results that are incomplete, biased, or contextually inappropriate.\n\n|Important Considerations for Admins|\n\n- User Awareness: Ensure end users understand that AI outputs require human review, especially for critical decisions (e.g., legal, financial, health, or safety-related).\n\n- Configuration Responsibility: As an admin, you are responsible for configuring this feature in a way that aligns with your organization's policies and compliance requirements."
 msgstr ""
 
 #: config/initializers/activemodel_error.rb:31
@@ -17484,14 +17537,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee:6
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee:6
 msgid "This service shows you contacts of incoming calls and a caller list in realtime."
-msgstr ""
-
-#: app/services/service/concerns/handles_setting.rb:22
-msgid "This setting is not disabled."
-msgstr ""
-
-#: app/services/service/concerns/handles_setting.rb:18
-msgid "This setting is not enabled."
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee:13
@@ -18209,15 +18254,15 @@ msgstr ""
 msgid "Toggle group"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:129
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:140
 msgid "Toggle header cell"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:120
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:131
 msgid "Toggle header column"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/EditorTableMenu.vue:111
+#: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:122
 msgid "Toggle header row"
 msgstr ""
 
@@ -18719,12 +18764,12 @@ msgstr ""
 msgid "Up to %s% of this language is already translated. Please help to make Zammad even better and complete the translation."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:85
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:88
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:6
 msgid "Upcoming Events"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:95
 msgid "Upcoming events"
 msgstr ""
 
@@ -19574,14 +19619,14 @@ msgstr ""
 msgid "What values of %s should be synced to users."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:37
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:13
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:186
 #: db/seeds/permissions.rb:179
 msgid "WhatsApp"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:110
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:111
 msgid "WhatsApp Account"
 msgstr ""
 
@@ -19726,7 +19771,6 @@ msgid "Writing Assistant Tool"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:17
-#: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:82
 msgid "Writing Assistant Tools"
 msgstr ""
 
@@ -19734,22 +19778,9 @@ msgstr ""
 msgid "Writing Assistant Tools simplify the process of refining an article text before saving or sending. When enabled, these tools are directly accessible within the article editor. You can even create custom tools to meet specific needs, e.g. using branch or company specific wording."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/text_tools_modal.coffee:24
-msgid "Writing Assistant: %s"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:35
-msgid "Writing assistant"
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:8
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts:38
 msgid "Writing assistant could not generate text. Please try again or contact your administrator."
-msgstr ""
-
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:67
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:67
-msgid "Writing assistant tools"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
@@ -19925,7 +19956,7 @@ msgstr ""
 msgid "You can open the Keyboard Shortcuts dialog here and view the new and improved layout, or revert to the old one if you prefer it."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:42
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:49
 msgid "You can overwrite this setting for specific groups in the group manager. %l"
 msgstr ""
 
@@ -20875,6 +20906,14 @@ msgstr ""
 msgid "i-doit integration"
 msgstr ""
 
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:12
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_remove.rb:12
+#: app/graphql/gql/queries/autocomplete_search/idoit_object_types.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_list.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_object_search.rb:15
+msgid "i-doit integration is not enabled"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:172
 msgid "i-doit: Link objects"
 msgstr ""
@@ -21292,8 +21331,16 @@ msgstr ""
 msgid "no issues"
 msgstr ""
 
+#: lib/ai/service/prompts/system/ticket_summarize.txt.erb:18
+msgid "no open questions"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:5
 msgid "no unit"
+msgstr ""
+
+#: lib/ai/service/prompts/system/ticket_summarize.txt.erb:21
+msgid "no upcoming events"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee:25

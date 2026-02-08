@@ -10,11 +10,9 @@ module Gql::Mutations
 
     field :success, Boolean, null: true, description: 'This indicates if sending the token was successful.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
-    def ready?(login:)
+    def throttle_if_needed!(login:)
       throttle!(limit: 3, period: 1.minute, by_identifier: login)
     end
 

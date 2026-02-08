@@ -5,17 +5,11 @@ module Gql::Mutations
 
     description 'Delete a user (session) device.'
 
-    argument :device_id, GraphQL::Types::ID, required: true, loads: Gql::Types::UserDeviceType, description: 'The identifier for the device to be deleted.'
+    argument :device_id, GraphQL::Types::ID, required: true, loads: Gql::Types::UserDeviceType, loads_pundit_method: :destroy?, description: 'The identifier for the device to be deleted.'
 
     field :success, Boolean, description: 'This indicates if deleting the user (session) device was successful.'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.device')
-    end
-
-    def authorized?(device:)
-      context.current_user.id == device.user_id && super
-    end
+    requires_permission 'user_preferences.device'
 
     def resolve(device:)
       Service::User::Device::Delete.new(user: context.current_user, device:).execute

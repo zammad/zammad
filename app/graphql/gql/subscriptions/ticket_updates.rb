@@ -8,21 +8,17 @@ module Gql::Subscriptions
 
     unique_argument_id_key 'ticketId'
 
-    argument :ticket_id, GraphQL::Types::ID, description: 'Ticket identifier'
+    argument :ticket_id, GraphQL::Types::ID, loads: Gql::Types::TicketType, description: 'Ticket identifier'
 
     field :ticket, Gql::Types::TicketType, description: 'Updated ticket'
 
-    def authorized?(ticket_id:, initial:)
-      Gql::ZammadSchema.authorized_object_from_id ticket_id, type: ::Ticket, user: context.current_user
-    end
-
-    def subscribe(ticket_id:, initial:)
+    def subscribe(ticket:, initial:)
       return {} if !initial
 
-      { ticket: Gql::ZammadSchema.object_from_id(ticket_id, type: ::Ticket) }
+      { ticket: }
     end
 
-    def update(ticket_id:, initial:)
+    def update(ticket:, initial:)
       { ticket: object }
     end
   end

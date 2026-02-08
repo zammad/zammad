@@ -83,6 +83,9 @@ export const initializeFormFields = () => {
       container: 'p-2',
       inlineContainer: '',
     },
+    tableMenu: {
+      triggerButton: 'w-7 h-7 flex items-center justify-center bg-blue/80 text-white',
+    },
   })
 
   initializeEditorComponents({

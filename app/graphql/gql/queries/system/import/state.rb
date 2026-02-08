@@ -6,9 +6,7 @@ module Gql::Queries
 
     type Gql::Types::ImportJobType, null: true
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve
       begin

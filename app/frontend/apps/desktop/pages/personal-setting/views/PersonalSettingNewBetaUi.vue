@@ -17,7 +17,7 @@ import { useAppUsage } from '#desktop/composables/BetaUi/useAppUsage.ts'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 
-const { breadcrumbItems } = useBreadcrumb(__('NEW BETA UI'))
+const { breadcrumbItems } = useBreadcrumb(__('New BETA UI'))
 
 const {
   toggleBetaUiSwitch,

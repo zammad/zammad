@@ -3,6 +3,11 @@
     <h1><%- @T(@head) %><% if @subHead || @subHead is undefined: %> <small><%- @T(@subHead || 'Management') %></small><% end %></h1>
   </div>
   <div class="page-header-meta">
+    <% if @leftButtons: %>
+      <% for button in @leftButtons: %>
+        <a data-type="<%= button['data-type'] %>" class="btn <%= button.class %>" href="<%= button.href %>"><%- @T(button.name) %></a>
+      <% end %>
+    <% end %>
     <% if @showDescription: %>
       <a class="btn js-description"><%- @T('Description') %></a>
     <% end %>

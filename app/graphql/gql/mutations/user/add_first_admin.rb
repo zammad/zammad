@@ -10,9 +10,7 @@ module Gql::Mutations
 
     field :session, Gql::Types::SessionType, description: 'The current session, if the user was successfully created.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(input:)
       user = Service::User::AddFirstAdmin.new.execute(

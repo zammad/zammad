@@ -9,9 +9,7 @@ module Gql::Queries
 
     type [Gql::Types::AutocompleteSearch::TicketEntryType], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(input:)
       # TODO: check if change permission is correct for all usages or if we maybe need a argument from outside for this

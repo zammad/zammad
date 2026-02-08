@@ -18,6 +18,7 @@ it.
 - [How to handle localization & translations](standards/how-to-handle-localization.md)
 - [How to rebuild the chat](standards/how-to-rebuild-the-chat.md)
 - [How to use forms](standards/how-to-use-forms.md)
+- [How to authorize GraphQL operations](standards/how-to-authorize-graphql.md)
 
 ## Cookbook / Recipes
 

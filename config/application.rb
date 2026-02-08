@@ -59,7 +59,7 @@ module Zammad
     # define cache store
     if ENV['MEMCACHE_SERVERS'].present? && !Zammad::SafeMode.enabled?
       require 'dalli' # Only load this gem when it is really used.
-      config.cache_store = [:mem_cache_store, ENV['MEMCACHE_SERVERS'], { expires_in: 7.days }]
+      config.cache_store = [:mem_cache_store, ENV['MEMCACHE_SERVERS'], { protocol: :meta, expires_in: 7.days }]
     else
       config.cache_store = [:zammad_file_store, Rails.root.join('tmp', "cache_file_store_#{Rails.env}"), { expires_in: 7.days }]
     end
