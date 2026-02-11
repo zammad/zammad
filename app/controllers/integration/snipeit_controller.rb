@@ -38,7 +38,38 @@ class Integration::SnipeitController < ApplicationController
       return
     end
 
-    # Handle search parameter
+    # Handle search parameter - check if it looks like an email
+    if params[:search].present? && params[:search].include?('@')
+      begin
+        # First, search for user by email
+        users_response = ::Snipeit.query('users', { search: params[:search] })
+        
+        if users_response && users_response['rows'].present?
+          # Find exact email match
+          user = users_response['rows'].find { |u| u['email']&.downcase == params[:search].downcase }
+          
+          if user
+            logger.info "Found Snipe-IT user: #{user['username']} (ID: #{user['id']}) for email #{params[:search]}"
+            
+            # Now search for hardware assigned to this user
+            hardware_response = ::Snipeit.query('hardware', { search: user['username'] })
+            
+            render json: {
+              result: hardware_response || { total: 0, rows: [] }
+            }
+            return
+          else
+            logger.info "No exact email match found in Snipe-IT for #{params[:search]}"
+          end
+        end
+      rescue => e
+        logger.error "Failed to search user by email: #{e.message}"
+      end
+      
+      # If no user found, fall through to regular search
+    end
+
+    # Regular search (not an email or no user found by email)
     if params[:search].present?
       filter[:search] = params[:search]
     end

@@ -24093,40 +24093,6 @@ msgstr "i-doit-Integration"
 msgid "i-doit: Link objects"
 msgstr "i-doit: Objekte verknüpfen"
 
-msgid "Snipe-IT"
-msgstr "Snipe-IT"
-
-msgid "Add Assets"
-msgstr "Assets hinzufügen"
-
-msgid "Search for asset name, serial, or tag"
-msgstr "Suche nach Asset-Name, Seriennummer oder Tag"
-
-msgid "Asset Tag:"
-msgstr "Asset-Tag:"
-
-msgid "No assets found."
-msgstr "Keine Assets gefunden."
-
-msgid "Start typing to search for assets..."
-msgstr "Tippen Sie, um nach Assets zu suchen..."
-
-msgid "Open in Snipe-IT"
-msgstr "In Snipe-IT öffnen"
-
-msgid "The asset could not be updated."
-msgstr "Das Asset konnte nicht aktualisiert werden."
-
-msgid "Snipe-IT integration"
-msgstr "Snipe-IT-Integration"
-
-msgid "Snipe-IT config"
-msgstr "Snipe-IT-Konfiguration"
-
-#: app/assets/javascripts/app/controllers/_integration/snipeit.coffee
-msgid "A free open-source IT asset/license management system."
-msgstr "Ein freies und Open Source IT-Asset- und Lizenz-Managementsystem."
-
 #: app/assets/javascripts/app/views/generic/ical_feed.jst.eco:19
 msgid "iCalendar links from Google will get fetched once a day"
 msgstr "iCalendar Links von Google, werden einmal am Tag abgerufen"

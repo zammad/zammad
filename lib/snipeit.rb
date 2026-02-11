@@ -113,7 +113,7 @@ returns for hardware:
       },
     )
 
-    raise "Can't fetch data from #{url}: #{result.error}" if !result.success?
+    raise sprintf(__("Can't fetch data from %s: %s"), url, result.error) if !result.success?
 
     data = result.data
 
@@ -134,7 +134,7 @@ returns for hardware:
 
   def self._url_cleanup(url)
     url = url.strip.gsub(%r{/+$}, '')
-    raise "Invalid endpoint '#{url}', need to start with http:// or https://" if !url.match?(%r{^https?://}i)
+    raise sprintf(__("Invalid endpoint '%s', need to start with http:// or https://"), url) if !url.match?(%r{^https?://}i)
 
     url = _url_cleanup_baseurl(url)
     url = "#{url}/api/v1"
@@ -143,7 +143,7 @@ returns for hardware:
 
   def self._url_cleanup_baseurl(url)
     url = url.strip.gsub(%r{/+$}, '')
-    raise "Invalid endpoint '#{url}', need to start with http:// or https://" if !url.match?(%r{^https?://}i)
+    raise sprintf(__("Invalid endpoint '%s', need to start with http:// or https://"), url) if !url.match?(%r{^https?://}i)
 
     url.gsub!(%r{/api/v1.*$}, '')
     url.gsub(%r{([^:])//+}, '\\1/')

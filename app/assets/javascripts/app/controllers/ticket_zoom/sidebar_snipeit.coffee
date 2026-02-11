@@ -27,8 +27,20 @@ class SidebarSnipeit extends App.Controller
 
   changeAssets: =>
     customerEmail = null
-    if @ticket && @ticket.customer_id && App.User.exists(@ticket.customer_id)
-      customer = App.User.find(@ticket.customer_id)
+    customerId = null
+    
+    # Try to get customer from saved ticket
+    if @ticket && @ticket.customer_id
+      customerId = @ticket.customer_id
+    
+    # For new tickets, check the form for selected customer
+    if !customerId
+      formCustomerId = @formParam($('.content.active .newTicket'))?.customer_id
+      customerId = formCustomerId if formCustomerId
+    
+    # Get customer email
+    if customerId && App.User.exists(customerId)
+      customer = App.User.find(customerId)
       customerEmail = customer.email if customer.email
     
     new App.SnipeitAssetSelector(
