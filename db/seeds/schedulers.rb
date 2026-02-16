@@ -256,7 +256,7 @@ Scheduler.create_if_not_exists(
   created_by_id: 1,
 )
 Scheduler.create_if_not_exists(
-  name:          __('Update exchange oauth 2 token.'),
+  name:          __('Update exchange OAuth2 token.'),
   method:        'ExternalCredential::Exchange.refresh_token',
   period:        10.minutes,
   prio:          1,

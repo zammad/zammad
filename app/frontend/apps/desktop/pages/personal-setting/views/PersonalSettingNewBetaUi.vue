@@ -101,7 +101,7 @@ const leaveFeedbackProgram = () => {
           </CommonButton>
           <template v-else>
             <CommonLabel tag="p">
-              {{ $t('Would you like to give us feedback on the BETA UI? ') }}
+              {{ $t('Would you like to give us feedback on the BETA UI?') }}
             </CommonLabel>
             <CommonButton @click="showFeedbackConsent">{{
               $t('Join feedback program')

@@ -215,7 +215,7 @@ $(function() {
       <li><%- @T('The chat is turned off.') %>
       <li><%- @T('There are too many people in the chat queue.') %>
     </ol>
-    <%- @T('When you turn on debugging by setting the option §debug§ to §true§ the reason gets printed to the javascript console.') %>
+    <%- @T('When you turn on debugging by setting the option §debug§ to §true§ the reason gets printed to the JavaScript console.') %>
   </p>
 
   <hr>

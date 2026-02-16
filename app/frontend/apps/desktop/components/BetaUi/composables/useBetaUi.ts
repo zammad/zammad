@@ -79,7 +79,7 @@ export const useBetaUi = () => {
 
     waitForConfirmation(
       __(
-        'You can switch between the old and the New BETA UI at any moment in the Profile Settings > New BETA UI section.',
+        'You can switch between the old and the New BETA UI at any moment in the Profile settings > New BETA UI section.',
       ),
       {
         headerIcon: 'question-circle',

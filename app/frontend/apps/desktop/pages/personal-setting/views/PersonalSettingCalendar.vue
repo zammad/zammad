@@ -249,7 +249,7 @@ const submitForm = async (data: FormValues) => {
     notify({
       id: 'calendar-subscription-update-success',
       type: NotificationTypes.Success,
-      message: __('You calendar subscription settings were updated.'),
+      message: __('Your calendar subscription settings were updated.'),
     })
   })
 }

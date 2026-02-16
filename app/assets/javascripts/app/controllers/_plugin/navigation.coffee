@@ -182,7 +182,7 @@ class Navigation extends App.Controller
 
         new App.ControllerConfirm(
           head: __('Help')
-          message: __('You can switch between the old and the New BETA UI at any moment in the Profile > New BETA UI section.')
+          message: __('You can switch between the old and the New BETA UI at any moment in the Profile settings > New BETA UI section.')
           buttonClass: 'btn--success'
           buttonCancel: false
           buttonSubmit: __('Got it')

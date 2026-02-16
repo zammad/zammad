@@ -143,7 +143,7 @@ export function useKeyboardKeysForDragAndDrop<T extends object | string>({
     }
     announce(
       __(
-        'Sortable list focused. Use up and down arrows to navigate items. Press Space to select and item and again on another item to swap them.',
+        'Sortable list focused. Use up and down arrows to navigate items. Press Space to select an item and again on another item to swap them.',
       ),
     )
   }
