@@ -301,7 +301,7 @@ returns
     # Returns a relation with objects referenced by the ids in their original order.
     #
     def where_ordered_ids(ids)
-      order_by = "array_position(ARRAY[#{ids.join(',')}], id)"
+      order_by = "array_position(ARRAY[#{ids.join(',')}]::bigint[], id::bigint)"
 
       where(id: ids).reorder(Arel.sql(order_by))
     end
