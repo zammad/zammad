@@ -27,7 +27,7 @@ const isResizing = ref(false)
 const imageLoaded = ref(false)
 const failedDueToCors = ref(false)
 const isDraggable = computed(() => props.node.attrs.isDraggable)
-const uploadCacheExists = computed(() => props.node.attrs.src.startsWith('/api/v1/attachments/'))
+const uploadCacheExists = computed(() => props.node.attrs.src.startsWith('/api/v1/'))
 const uploadInsideOtherEditor = computed(
   () => props.node.attrs.src.startsWith('blob:') && !props.node.attrs.content,
 )
@@ -42,7 +42,7 @@ const getNodeStyle = () =>
   }, {})
 
 const handleUpload = () => {
-  if (props.node.attrs.src.startsWith('/api/v1/attachments/')) return
+  if (props.node.attrs.src.startsWith('/api/v1/')) return
   if (props.node.attrs.src.startsWith('blob:') && !props.node.attrs.content) return
 
   if (props.node.attrs.src.startsWith('file:')) {
