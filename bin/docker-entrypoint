@@ -49,7 +49,7 @@ function check_postgresql_ready {
   # Strip possible surrounding brackets from IPv6 addresses.
   CLEAN_POSTGRESQL_HOST=${POSTGRESQL_HOST#[}; CLEAN_POSTGRESQL_HOST=${CLEAN_POSTGRESQL_HOST%]}
 
-  until (pg_isready -q -h $CLEAN_POSTGRESQL_HOST -p $POSTGRESQL_PORT); do
+  until (pg_isready -q -h "$CLEAN_POSTGRESQL_HOST" -p "$POSTGRESQL_PORT"); do
     echo "  waiting for postgresql server to be ready..."
     sleep 1
   done
