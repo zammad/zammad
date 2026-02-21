@@ -1,5 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+# Skip ActionCable configuration during asset precompilation (no Redis needed)
+return if Zammad::Application.assets_precompile?
+
 require_relative '../../lib/zammad/service/redis'
 
 Rails.application.config.action_cable.cable = {

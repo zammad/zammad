@@ -22,6 +22,13 @@ module Zammad
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
+    # Check if the current process is running assets:precompile only
+    def self.assets_precompile?
+      defined?(Rake) &&
+        Rake.respond_to?(:application) &&
+        Rake.application.top_level_tasks.any? { |t| t.include?('assets:precompile') }
+    end
+
     Rails.autoloaders.each do |autoloader|
       autoloader.ignore            "#{config.root}/app/frontend"
       autoloader.do_not_eager_load "#{config.root}/lib/core_ext"
