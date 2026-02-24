@@ -7,6 +7,7 @@ module HandlesOidcAuthorization
     skip_before_action :verify_csrf_token, only: %i[oidc_destroy oidc_bc_logout] # rubocop:disable Rails/LexicallyScopedActionFilter
 
     def oidc_bc_logout
+      raise Exceptions::UnprocessableEntity, __("The required parameter 'oidc_database strategy' is not available.") if !OmniAuth::ProviderAvailability.available?('openid_connect')
       raise Exceptions::UnprocessableEntity, __("The required parameter 'logout_token' is missing.") if params[:logout_token].blank?
 
       begin
@@ -24,9 +25,12 @@ module HandlesOidcAuthorization
     private
 
     def oidc_session?
+      return false if !OmniAuth::ProviderAvailability.available?('openid_connect')
+
       session[:oidc_id_token].present? && oidc_end_session_endpoint.present?
     end
 
+    # Guard: only reachable after oidc_session? has verified provider availability.
     def oidc_destroy
       logout_url = Addressable::URI.parse(oidc_end_session_endpoint)
       logout_url.query_values = {

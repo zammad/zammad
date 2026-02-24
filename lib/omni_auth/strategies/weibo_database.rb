@@ -1,15 +1,21 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class OmniAuth::Strategies::WeiboDatabase < OmniAuth::Strategies::Weibo
-  option :name, 'weibo'
+begin
+  require 'omniauth-weibo-oauth2'
 
-  def initialize(app, *args, &)
+  class OmniAuth::Strategies::WeiboDatabase < OmniAuth::Strategies::Weibo
+    option :name, 'weibo'
 
-    # database lookup
-    config  = Setting.get('auth_weibo_credentials') || {}
-    args[0] = config['client_id']
-    args[1] = config['client_secret']
-    super
+    def initialize(app, *args, &)
+
+      # database lookup
+      config  = Setting.get('auth_weibo_credentials') || {}
+      args[0] = config['client_id']
+      args[1] = config['client_secret']
+      super
+    end
+
   end
-
+rescue LoadError => e
+  Rails.logger.debug { "OmniAuth: skipping weibo strategy (#{e.message})" }
 end

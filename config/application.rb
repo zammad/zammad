@@ -25,6 +25,7 @@ module Zammad
     Rails.autoloaders.each do |autoloader|
       autoloader.ignore            "#{config.root}/app/frontend"
       autoloader.do_not_eager_load "#{config.root}/lib/core_ext"
+      autoloader.ignore            "#{config.root}/lib/omni_auth/strategies"
       autoloader.collapse          "#{config.root}/lib/omniauth"
       autoloader.collapse          "#{config.root}/lib/generators"
       autoloader.inflector.inflect(

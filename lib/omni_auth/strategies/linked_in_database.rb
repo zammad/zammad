@@ -1,22 +1,28 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class OmniAuth::Strategies::LinkedInDatabase < OmniAuth::Strategies::LinkedIn
-  option :name, 'linkedin'
+begin
+  require 'omniauth-linkedin-oauth2'
 
-  def initialize(app, *args, &)
+  class OmniAuth::Strategies::LinkedInDatabase < OmniAuth::Strategies::LinkedIn
+    option :name, 'linkedin'
 
-    # database lookup
-    config  = Setting.get('auth_linkedin_credentials') || {}
-    args[0] = config['app_id']
-    args[1] = config['app_secret']
-    super
-  end
+    def initialize(app, *args, &)
 
-  # Workaround from current omniauth-linkedin gem issue:
-  # https://github.com/decioferreira/omniauth-linkedin-oauth2/issues/68
-  def token_params
-    super.tap do |params|
-      params.client_secret = options.client_secret
+      # database lookup
+      config  = Setting.get('auth_linkedin_credentials') || {}
+      args[0] = config['app_id']
+      args[1] = config['app_secret']
+      super
+    end
+
+    # Workaround from current omniauth-linkedin gem issue:
+    # https://github.com/decioferreira/omniauth-linkedin-oauth2/issues/68
+    def token_params
+      super.tap do |params|
+        params.client_secret = options.client_secret
+      end
     end
   end
+rescue LoadError => e
+  Rails.logger.debug { "OmniAuth: skipping linkedin strategy (#{e.message})" }
 end

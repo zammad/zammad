@@ -48,6 +48,7 @@ export interface ConfigList {
   maintenance_login: boolean
   maintenance_login_message: string
   maintenance_mode: boolean
+  omniauth_available_providers?: string[]
   organization: string
   password_max_login_failed?:
     | 4

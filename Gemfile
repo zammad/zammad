@@ -100,17 +100,47 @@ gem 'webauthn', require: false
 # authentication - third party
 gem 'omniauth-rails_csrf_protection'
 
-# authentication - third party providers
-gem 'omniauth-facebook'
-gem 'omniauth-github'
-gem 'omniauth-gitlab'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-linkedin-oauth2'
-gem 'omniauth-microsoft-office365'
-gem 'omniauth_openid_connect'
-gem 'omniauth-saml'
-gem 'omniauth-twitter'
-gem 'omniauth-weibo-oauth2'
+# authentication - third party providers (each is optional; exclude with:
+#   bundle config set --local without 'omniauth_facebook omniauth_twitter ...')
+group :omniauth_facebook do
+  gem 'omniauth-facebook'
+end
+
+group :omniauth_github do
+  gem 'omniauth-github'
+end
+
+group :omniauth_gitlab do
+  gem 'omniauth-gitlab'
+end
+
+group :omniauth_google_oauth2 do
+  gem 'omniauth-google-oauth2'
+end
+
+group :omniauth_linkedin do
+  gem 'omniauth-linkedin-oauth2'
+end
+
+group :omniauth_microsoft_office365 do
+  gem 'omniauth-microsoft-office365'
+end
+
+group :omniauth_openid_connect do
+  gem 'omniauth_openid_connect'
+end
+
+group :omniauth_saml do
+  gem 'omniauth-saml'
+end
+
+group :omniauth_twitter do
+  gem 'omniauth-twitter'
+end
+
+group :omniauth_weibo do
+  gem 'omniauth-weibo-oauth2'
+end
 
 # Rate limiting
 gem 'rack-attack'

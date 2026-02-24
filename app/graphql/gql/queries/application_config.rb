@@ -45,7 +45,7 @@ module Gql::Queries
     end
 
     def custom_settings
-      [
+      result = [
         'auth_saml_credentials.display_name',
         'auth_openid_connect_credentials.display_name',
       ].filter_map do |config_name|
@@ -57,6 +57,10 @@ module Gql::Queries
 
         { key: config_name, value: value }
       end
+
+      # Intentionally included for unauthenticated users: the login page needs
+      # this to show only providers whose gem is installed.
+      result << { key: 'omniauth_available_providers', value: OmniAuth::ProviderAvailability.available_providers }
     end
   end
 end

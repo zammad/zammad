@@ -24,6 +24,7 @@ module Gql::Mutations
       { success: true }
     end
 
+    # Guard: only reachable after saml_session? has verified provider availability.
     def saml_destroy
       { success: true, external_logout_url: saml_logout_url }
     rescue => e
@@ -31,6 +32,8 @@ module Gql::Mutations
     end
 
     def saml_session?
+      return false if !OmniAuth::ProviderAvailability.available?('saml')
+
       (session['saml_uid'] || session['saml_session_index']) && OmniAuth::Strategies::SamlDatabase.setup.fetch('idp_slo_service_url', nil)
     end
 

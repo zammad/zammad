@@ -1,15 +1,21 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class OmniAuth::Strategies::GoogleOauth2Database < OmniAuth::Strategies::GoogleOauth2
-  option :name, 'google_oauth2'
+begin
+  require 'omniauth-google-oauth2'
 
-  def initialize(app, *args, &)
+  class OmniAuth::Strategies::GoogleOauth2Database < OmniAuth::Strategies::GoogleOauth2
+    option :name, 'google_oauth2'
 
-    # database lookup
-    config  = Setting.get('auth_google_oauth2_credentials') || {}
-    args[0] = config['client_id']
-    args[1] = config['client_secret']
-    super
+    def initialize(app, *args, &)
+
+      # database lookup
+      config  = Setting.get('auth_google_oauth2_credentials') || {}
+      args[0] = config['client_id']
+      args[1] = config['client_secret']
+      super
+    end
+
   end
-
+rescue LoadError => e
+  Rails.logger.debug { "OmniAuth: skipping google_oauth2 strategy (#{e.message})" }
 end

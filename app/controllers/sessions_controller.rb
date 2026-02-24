@@ -316,8 +316,8 @@ class SessionsController < ApplicationController
     #   This is needed because the setting is not frontend related,
     #   but we still to display one of the options
     # https://github.com/zammad/zammad/issues/4263
-    config['auth_saml_display_name'] = Setting.get('auth_saml_credentials')[:display_name]
-    config['auth_openid_connect_display_name'] = Setting.get('auth_openid_connect_credentials')[:display_name]
+    config['auth_saml_display_name'] = Setting.get('auth_saml_credentials')&.[](:display_name)
+    config['auth_openid_connect_display_name'] = Setting.get('auth_openid_connect_credentials')&.[](:display_name)
 
     # Announce searchable models to the front end.
     config['models_searchable'] = Models.searchable.map(&:to_s)
@@ -332,16 +332,20 @@ class SessionsController < ApplicationController
       config['session_id'] = session.id.public_id
     end
 
-    config['core_workflow_config'] = CoreWorkflow.config
-    config['icons_url']            = icons_url
+    config['core_workflow_config']       = CoreWorkflow.config
+    config['icons_url']                  = icons_url
+    config['omniauth_available_providers'] = OmniAuth::ProviderAvailability.available_providers
 
     config
   end
 
   def saml_session?
+    return false if !OmniAuth::ProviderAvailability.available?('saml')
+
     (session['saml_uid'] || session['saml_session_index']) && OmniAuth::Strategies::SamlDatabase.setup.fetch('idp_slo_service_url', nil)
   end
 
+  # Guard: only reachable after saml_session? has verified provider availability.
   def saml_destroy
     options = OmniAuth::Strategies::SamlDatabase.setup
     settings = OneLogin::RubySaml::Settings.new(options)

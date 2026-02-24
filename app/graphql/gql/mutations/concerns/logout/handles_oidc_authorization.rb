@@ -5,9 +5,12 @@ module Gql::Mutations::Concerns::Logout::HandlesOidcAuthorization
 
   included do
     def oidc_session?
+      return false if !OmniAuth::ProviderAvailability.available?('openid_connect')
+
       session[:oidc_id_token].present? && oidc_end_session_endpoint.present?
     end
 
+    # Guard: only reachable after oidc_session? has verified provider availability.
     def oidc_destroy
       { success: true, external_logout_url: oidc_logout_url }
     rescue => e

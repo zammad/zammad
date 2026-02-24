@@ -5,8 +5,14 @@ class SettingsController < ApplicationController
 
   # GET /settings
   def index
+    unavailable = OmniAuth::ProviderAvailability.unavailable_settings
+
     list        = Setting.all.filter { |elem| authorized?(elem, :show?) }
-    masked_list = list.map { |object| mask_sensitive_values(object.as_json, object) }
+    masked_list = list.map do |object|
+      s = mask_sensitive_values(object.as_json, object)
+      s['preferences'] = (s['preferences'] || {}).merge('disabled' => true) if unavailable.include?(object.name)
+      s
+    end
 
     render json: masked_list, status: :ok
   end

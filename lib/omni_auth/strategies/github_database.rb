@@ -1,15 +1,21 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class OmniAuth::Strategies::GithubDatabase < OmniAuth::Strategies::GitHub
-  option :name, 'github'
+begin
+  require 'omniauth-github'
 
-  def initialize(app, *args, &)
+  class OmniAuth::Strategies::GithubDatabase < OmniAuth::Strategies::GitHub
+    option :name, 'github'
 
-    # database lookup
-    config  = Setting.get('auth_github_credentials') || {}
-    args[0] = config['app_id']
-    args[1] = config['app_secret']
-    super
+    def initialize(app, *args, &)
+
+      # database lookup
+      config  = Setting.get('auth_github_credentials') || {}
+      args[0] = config['app_id']
+      args[1] = config['app_secret']
+      super
+    end
+
   end
-
+rescue LoadError => e
+  Rails.logger.debug { "OmniAuth: skipping github strategy (#{e.message})" }
 end
