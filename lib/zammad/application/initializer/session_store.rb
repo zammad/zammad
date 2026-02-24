@@ -18,7 +18,7 @@ module Zammad
           # instead of accessing the `:secure` key (default Rack/Rails behavior).
           # See: lib/core_ext/action_dispatch/middleware/cookies.rb
           # See: lib/core_ext/rack/session/abstract/id.rb
-          # See: lib/core_ext/rack/session/utils.rb
+          # See: lib/core_ext/rack/utils.rb
           Rails.application.config.session_store STORE_TYPE,
                                                  key: SESSION_KEY
 
