@@ -1,6 +1,10 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require 'aws-sdk-s3'
+begin
+  require 'aws-sdk-s3'
+rescue LoadError
+  # Gem not installed, S3 storage provider will not be available
+end
 
 module Store::Provider::S3
 
