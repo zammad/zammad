@@ -5,46 +5,46 @@
 // the compiled file.
 //
 
-//= require ./app/lib/core/jquery-3.6.0.js
-//= require ./app/lib/core/jquery-ui-1.11.4.js
-//= require ./app/lib/core/underscore-1.8.3.js
+//= require app/lib/core/jquery-3.6.0
+//= require app/lib/core/jquery-ui-1.11.4
+//= require app/lib/core/underscore-1.8.3
 
-//= require ./app/lib/animations/velocity.min.js
-//= require ./app/lib/animations/velocity.ui.js
+//= require app/lib/animations/velocity.min
+//= require app/lib/animations/velocity.ui
 
 //not_used= require_tree ./app/lib/spine
-//= require ./app/lib/spine/spine.coffee
-//= require ./app/lib/spine/ajax.coffee
-//= require ./app/lib/spine/local.coffee
-//= require ./app/lib/spine/route.coffee
+//= require app/lib/spine/spine
+//= require app/lib/spine/ajax
+//= require app/lib/spine/local
+//= require app/lib/spine/route
 
-//= require ./app/lib/flot/jquery.flot.js
-//= require ./app/lib/flot/jquery.flot.selection.js
+//= require app/lib/flot/jquery.flot
+//= require app/lib/flot/jquery.flot.selection
 
 //not_used= require_tree ./app/lib/bootstrap
-//= require ./app/lib/bootstrap/dropdown.js
-//= require ./app/lib/bootstrap/tooltip.js
-//= require ./app/lib/bootstrap/popover.js
-//= require ./app/lib/bootstrap/popover-enhance.js
+//= require app/lib/bootstrap/dropdown
+//= require app/lib/bootstrap/tooltip
+//= require app/lib/bootstrap/popover
+//= require app/lib/bootstrap/popover-enhance
 
 // modified by Felix Jan-2014
-//= require ./app/lib/bootstrap/modal.js
+//= require app/lib/bootstrap/modal
 
-//= require ./app/lib/bootstrap/tab.js
-//= require ./app/lib/bootstrap/transition.js
-//= require ./app/lib/bootstrap/button.js
-//= require ./app/lib/bootstrap/collapse.js
-//= require ./app/lib/bootstrap/bootstrap-timepicker.js
-//= require ./app/lib/bootstrap/bootstrap-datepicker.js
+//= require app/lib/bootstrap/tab
+//= require app/lib/bootstrap/transition
+//= require app/lib/bootstrap/button
+//= require app/lib/bootstrap/collapse
+//= require app/lib/bootstrap/bootstrap-timepicker
+//= require app/lib/bootstrap/bootstrap-datepicker
 
-//= require ./app/lib/rangy/rangy-core.js
-//= require ./app/lib/rangy/rangy-classapplier.js
-//= require ./app/lib/rangy/rangy-textrange.js
-//= require ./app/lib/rangy/rangy-highlighter.js
+//= require app/lib/rangy/rangy-core
+//= require app/lib/rangy/rangy-classapplier
+//= require app/lib/rangy/rangy-textrange
+//= require app/lib/rangy/rangy-highlighter
 
 //= require_tree ./app/lib/base
 
-//= require ./app/index.coffee
+//= require app/index
 
 // IE8 workaround for missing console.log
 if (!window.console) {

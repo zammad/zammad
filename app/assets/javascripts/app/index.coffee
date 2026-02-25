@@ -3,7 +3,7 @@
 #= require_self
 #= require_tree ./lib/app_init
 #= require_tree ./lib/mixins
-#= require ./config.coffee
+#= require app/config
 #= require_tree ./models
 #= require_tree ./controllers/_application_controller
 #= require_tree ./controllers

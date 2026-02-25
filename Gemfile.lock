@@ -204,6 +204,12 @@ GEM
     daemons (1.4.1)
     dalli (5.0.2)
       logger
+    dartsass-sprockets (3.2.1)
+      railties (>= 4.0.0)
+      sassc-embedded (~> 1.80.1)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     date (3.5.1)
     debug_inspector (1.2.0)
     deprecation_toolkit (2.3.0)
@@ -704,17 +710,10 @@ GEM
     rubyzip (2.4.1)
     safety_net_attestation (0.5.0)
       jwt (>= 2.0, < 4.0)
-    sass (3.7.4)
-      sass-listen (~> 4.0.0)
-    sass-listen (4.0.0)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (5.1.0)
-      railties (>= 5.2.0)
-      sass (~> 3.1)
-      sprockets (>= 2.8, < 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
-      tilt (>= 1.1, < 3)
+    sass-embedded (1.97.3-x86_64-linux-gnu)
+      google-protobuf (~> 4.31)
+    sassc-embedded (1.80.8)
+      sass-embedded (~> 1.80)
     securerandom (0.4.1)
     selenium-webdriver (4.41.0)
       base64 (~> 0.2)
@@ -737,8 +736,7 @@ GEM
     snaky_hash (2.0.3)
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
-    sprockets (3.7.5)
-      base64
+    sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.5.2)
@@ -880,6 +878,7 @@ DEPENDENCIES
   csv
   daemons
   dalli
+  dartsass-sprockets
   delayed_job!
   delayed_job_active_record!
   deprecation_toolkit
@@ -961,12 +960,11 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-rspec_rails
   ruby-keycloak-admin
-  sass-rails (~> 5)
   selenium-webdriver
   shoulda-matchers
   simpleidn
   slack-ruby-client
-  sprockets (~> 3.7.2)
+  sprockets (~> 4.2)
   sprockets-rails
   tcr
   telegram-bot-ruby

@@ -79,11 +79,11 @@ group :assets do
   # We cannot use sassc-rails, as it can lead to crashes on modern platforms like CentOS 9.
   # See https://jcmaciel.com/apple-silicon-ruby-on-rails-crash-segfault-sassc/
   #     https://github.com/sass/sassc-ruby/issues/197
-  # Pin to v5 which does not use sassc internally.
-  gem 'sass-rails', '~> 5', require: false
+  # dartsass-sprockets uses the Dart Sass binary (no sassc) and supports Sprockets 4.
+  gem 'dartsass-sprockets', require: false
 
   # asset handling - pipeline
-  gem 'sprockets', '~> 3.7.2', require: false
+  gem 'sprockets', '~> 4.2', require: false
   gem 'terser', require: false
 
   gem 'autoprefixer-rails', require: false
