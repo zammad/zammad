@@ -119,8 +119,8 @@ module Import
           params,
           {
             open_timeout:  10,
-            read_timeout:  120,
-            total_timeout: 360,
+            read_timeout:  600,
+            total_timeout: 1200,
             user:          Setting.get('import_otrs_user'),
             password:      Setting.get('import_otrs_password'),
           },
