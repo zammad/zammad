@@ -25,6 +25,8 @@ legal:
   license: AGPL-3.0-only
   mainCopyrightOwner: Zammad Foundation
   repoOwner: Zammad GmbH
+usedBy:
+  - Landeshauptstadt München
 localisation:
   localisationReady: true
   availableLanguages:
