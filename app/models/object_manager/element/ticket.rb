@@ -30,6 +30,8 @@ class ObjectManager::Element::Ticket < ObjectManager::Element::Backend
     case permission
     when 'ticket.agent'
       !agent?
+    when 'ticket.customer'
+      agent?
     else
       false
     end
