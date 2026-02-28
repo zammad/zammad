@@ -241,6 +241,20 @@ RSpec.describe 'CoreWorkflow > Defaults', type: :model do
         expect(result[:restrict_values]['state_id']).not_to include('')
       end
     end
+
+    context 'with agent and customer user' do
+      let(:action_user) { create(:agent_and_customer, groups: [ticket.group]) }
+
+      it 'does show all agent states for create_middle' do
+        expect(result[:restrict_values]['state_id']).to include(
+          Ticket::State.find_by(name: 'new').id.to_s,
+          Ticket::State.find_by(name: 'open').id.to_s,
+          Ticket::State.find_by(name: 'pending reminder').id.to_s,
+          Ticket::State.find_by(name: 'pending close').id.to_s,
+          Ticket::State.find_by(name: 'closed').id.to_s,
+        )
+      end
+    end
   end
 
   describe '.perform - Default - Priority' do
