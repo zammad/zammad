@@ -245,14 +245,9 @@ RSpec.describe 'CoreWorkflow > Defaults', type: :model do
     context 'with agent and customer user' do
       let(:action_user) { create(:agent_and_customer, groups: [ticket.group]) }
 
-      it 'does show all agent states for create_middle' do
-        expect(result[:restrict_values]['state_id']).to include(
-          Ticket::State.find_by(name: 'new').id.to_s,
-          Ticket::State.find_by(name: 'open').id.to_s,
-          Ticket::State.find_by(name: 'pending reminder').id.to_s,
-          Ticket::State.find_by(name: 'pending close').id.to_s,
-          Ticket::State.find_by(name: 'closed').id.to_s,
-        )
+      it 'does show the same states as for a pure agent user' do
+        agent_result = CoreWorkflow.perform(payload: payload, user: create(:agent, groups: [ticket.group]))
+        expect(result[:restrict_values]['state_id']).to eq(agent_result[:restrict_values]['state_id'])
       end
     end
   end
