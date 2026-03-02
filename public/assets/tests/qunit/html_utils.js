@@ -853,6 +853,18 @@ QUnit.test('remove signature', assert => {
   var should  = 'test 123<br><div data-signature-placeholder=\"true\"></div>test 256'
   var result  = App.Utils.signatureRemoveByHtml(message, true)
   assert.equal(result, should)
+
+  // signature inside a blockquote (full-quote reply scenario, issue #2319)
+  message = '<blockquote type="cite"><div>previous text</div><div data-signature="true" data-signature-id="1">Old Sig</div></blockquote>'
+  should  = '<blockquote type="cite"><div>previous text</div></blockquote>'
+  result  = App.Utils.signatureRemoveByHtml(message)
+  assert.equal(result, should)
+
+  // top-level signature plus quoted signature inside blockquote (replying to own email with full quote)
+  message = '<div>reply text</div><blockquote type="cite"><div>quoted</div><div data-signature="true" data-signature-id="1">Old Sig</div></blockquote><br><div data-signature="true" data-signature-id="2">My Sig</div>'
+  should  = '<div>reply text</div><blockquote type="cite"><div>quoted</div></blockquote>'
+  result  = App.Utils.signatureRemoveByHtml(message)
+  assert.equal(result, should)
 })
 
 // identify signature
