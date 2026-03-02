@@ -553,23 +553,6 @@ class App.Utils
       if origHref != fixedHref then $(@).attr('href', fixedHref)
     )
 
-  # signatureNeeded = App.Utils.signatureCheck(message, signature)
-  @signatureCheck: (message, signature) ->
-    messageText   = $('<div>' + message + '</div>').text().trim()
-    messageText   = messageText.replace(/(\n|\r|\t)/g, '')
-    signatureText = $('<div>' + signature + '</div>').text().trim()
-    signatureText = signatureText.replace(/(\n|\r|\t)/g, '')
-
-    quote = (str) ->
-      (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
-
-    #console.log('SC', messageText, signatureText, quote(signatureText))
-    regex = new RegExp(quote(signatureText), 'mi')
-    if messageText.match(regex)
-      false
-    else
-      true
-
   # messageWithMarker = App.Utils.signatureIdentifyByPlaintext(message, false)
   @signatureIdentifyByPlaintext: (message, test = false, internal = false) ->
     textToSearch = @html2text(message)

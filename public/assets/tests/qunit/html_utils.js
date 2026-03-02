@@ -803,41 +803,6 @@ QUnit.test("quote", assert => {
 
 });
 
-// check signature
-QUnit.test("check signature", assert => {
-
-  var message   = "<div>test 123 </div>"
-  var signature = '<div>--<br>Some Signature<br>some department</div>'
-  var result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, true)
-
-  message   = "<div>test 123 <div>--<br>Some Signature<br>some department\n</div></div>"
-  signature = '<div>--<br>Some Signature<br>some department</div>'
-  result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, false)
-
-  message   = "<div>test 123 <div>--<br>Some Signature\n<br>some department\n</div></div>"
-  signature = '<div>--<br>Some Signature<br>some department</div>'
-  result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, false)
-
-  message   = "<div>test 123 <div>--<p>Some Signature</p>\n<p><div>some department</div>\n</p>\n</div></div>"
-  signature = '<div>--<br>Some Signature<br>some department</div>'
-  result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, false)
-
-  message   = ""
-  signature = '<div>--<br>Some Signature<br>some department</div>'
-  result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, true)
-
-  message   = ""
-  signature = "--\nSome Signature\nsome department"
-  result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, true)
-
-});
-
 QUnit.test('remove signature', assert => {
   var message = '<div>test 123 </div>'
   var should  = '<div>test 123 </div>'
