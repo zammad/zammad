@@ -354,8 +354,6 @@ class EmailReply extends App.Controller
       signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), ticket: ticketCurrent, config: App.Config.all() })
 
       body = ui.$('[data-name=body]')
-      if !App.Utils.htmlLastLineEmpty(body)
-        body.append('<br><br>')
       signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
       App.Utils.htmlStrip(signature)
 
@@ -366,6 +364,8 @@ class EmailReply extends App.Controller
         body.prepend(signature)
         body.prepend('<br><br>')
       else
+        if !App.Utils.htmlLastLineEmpty(body)
+          body.append('<br><br>')
         body.append(signature)
       ui.$('[data-name=body]').replaceWith(body)
     else

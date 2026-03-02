@@ -128,6 +128,11 @@ QUnit.test("htmlLastLineEmpty", assert => {
   source = $('<div><br><b>lala</b><br></div>')
   assert.equal(App.Utils.htmlLastLineEmpty(source), true)
 
+  // full-quote body: the body element contains the quote ending with <div><br></div>, not a plain <br>
+  // this means extra spacing must not be appended at the bottom when placing the signature at the top
+  source = $('<div><div><br><br></div><div><blockquote type="cite">content<br></blockquote></div><div><br></div></div>')
+  assert.equal(App.Utils.htmlLastLineEmpty(source), false)
+
 });
 
 // html2text
