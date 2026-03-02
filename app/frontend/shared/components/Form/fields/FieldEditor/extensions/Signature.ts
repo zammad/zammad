@@ -83,9 +83,14 @@ export default Node.create({
         ({ editor, chain }) => {
           const ranges: Range[] = []
           let prev: [ProseNode | null, number] = [null, 0]
-          editor.state.doc.descendants((node, pos) => {
+          editor.state.doc.descendants((node, pos, parent) => {
             if (node.type.name !== 'signature') {
               prev = [node, pos]
+              return
+            }
+
+            // Only remove top-level signatures (not inside blockquotes/quoted content)
+            if (parent?.type.name !== 'doc') {
               return
             }
 

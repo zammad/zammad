@@ -136,4 +136,49 @@ describe('correctly adds signature', { retries: 2 }, () => {
       `<p dir="auto">text</p><p dir="auto" data-marker=`,
     )
   })
+
+  it('adds new top-level signature when quoted content already contains a signature', () => {
+    // Simulate replying to an email that already contains a signature in its quoted content.
+    // The signature inside the blockquote must NOT prevent the new signature from being added.
+    const originalBody = html`<p dir="auto" data-marker="signature-before"></p>
+      <blockquote type="cite">
+        <p dir="auto">Previous email content</p>
+        <div data-signature="true" data-signature-id="1">Old Signature In Quote</div>
+      </blockquote>`
+
+    mountEditor({
+      value: originalBody,
+    })
+
+    cy.findByRole('textbox')
+      .then(resolveContext)
+      .then((context) => {
+        context.addSignature({
+          renderedBody: SIGNATURE,
+          internalId: 1,
+        })
+      })
+
+    // New signature should be added at the top level (before blockquote)
+    cy.findByRole('textbox').shouldContainNormalizedHtml(`${BREAK_HTML}<div data-signature=`)
+
+    // Quoted content (including old signature inside) should be unchanged
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
+      '<p dir="auto">Previous email content</p>',
+    )
+
+    cy.findByRole('textbox')
+      .then(resolveContext)
+      .then((context) => {
+        context.removeSignature()
+      })
+
+    // After removeSignature, only the top-level signature is removed; blockquote content remains
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
+      '<p dir="auto" data-marker="signature-before">',
+    )
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
+      '<p dir="auto">Previous email content</p>',
+    )
+  })
 })

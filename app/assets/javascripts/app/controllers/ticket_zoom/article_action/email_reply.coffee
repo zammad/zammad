@@ -346,32 +346,28 @@ class EmailReply extends App.Controller
     # add/replace signature
     if signature && signature.active && signature.body
 
-      # if signature has changed, remove it but skip signatures in quoted messages
-      # https://github.com/zammad/zammad/issues/5634
-      signature_selector = ui.$('[data-signature=true]').not('blockquote [data-signature=true]')
-      signature_id = signature_selector.data('signature-id')
-      if signature_id && signature_id.toString() isnt signature.id.toString()
-        signature_selector.remove()
+      # always remove existing top-level signature (skip signatures in quoted messages)
+      # https://github.com/zammad/zammad/issues/5634, https://github.com/zammad/zammad/issues/2319
+      ui.$('[data-signature=true]').not('blockquote [data-signature=true]').remove()
 
       # apply new signature
       signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), ticket: ticketCurrent, config: App.Config.all() })
 
       body = ui.$('[data-name=body]')
-      if App.Utils.signatureCheck(body.html() || '', signatureFinished)
-        if !App.Utils.htmlLastLineEmpty(body)
-          body.append('<br><br>')
-        signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
-        App.Utils.htmlStrip(signature)
+      if !App.Utils.htmlLastLineEmpty(body)
+        body.append('<br><br>')
+      signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
+      App.Utils.htmlStrip(signature)
 
-        placeholder = body.find('[data-signature-placeholder]')
-        if placeholder.length > 0
-          placeholder[0].replaceWith(signature[0])
-        else if signaturePosition is 'top'
-          body.prepend(signature)
-          body.prepend('<br><br>')
-        else
-          body.append(signature)
-        ui.$('[data-name=body]').replaceWith(body)
+      placeholder = body.find('[data-signature-placeholder]')
+      if placeholder.length > 0
+        placeholder[0].replaceWith(signature[0])
+      else if signaturePosition is 'top'
+        body.prepend(signature)
+        body.prepend('<br><br>')
+      else
+        body.append(signature)
+      ui.$('[data-name=body]').replaceWith(body)
     else
       body = ui.$('[data-name=body]')
 

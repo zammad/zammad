@@ -23,17 +23,16 @@ class TicketCreateFormHandlerSignature
 
       currentBody = ui.el.closest('.content').find('[data-name=body]')
       if !_.isEmpty(currentBody)
-        if App.Utils.signatureCheck(currentBody.html() || '', signatureFinished)
+        # always remove existing signature and re-add it
+        # https://github.com/zammad/zammad/issues/2319
+        ui.el.closest('.content').find('[data-signature="true"]').remove()
 
-          # if signature has changed, in case remove old signature
-          ui.el.closest('.content').find('[data-signature="true"]').remove()
-
-          if !App.Utils.htmlLastLineEmpty(currentBody)
-            currentBody.append('<br><br>')
-          signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
-          App.Utils.htmlStrip(signature)
-          currentBody.append(signature)
-          ui.el.closest('.content').find('[data-name=body]').replaceWith(currentBody)
+        if !App.Utils.htmlLastLineEmpty(currentBody)
+          currentBody.append('<br><br>')
+        signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
+        App.Utils.htmlStrip(signature)
+        currentBody.append(signature)
+        ui.el.closest('.content').find('[data-name=body]').replaceWith(currentBody)
 
     # remove old signature
     else
