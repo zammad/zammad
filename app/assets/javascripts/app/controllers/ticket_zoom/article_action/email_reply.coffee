@@ -341,7 +341,17 @@ class EmailReply extends App.Controller
     # https://github.com/zammad/zammad/issues/4453
     if type isnt 'email'
       ui.$('[data-name=body] [data-signature="true"]').remove()
+      ui.$('[data-name=body]').removeAttr('data-reply-sig-position')
       return
+
+    # Track the intended signature position so updateSignatureByGroup knows where to
+    # re-insert a signature when there is a quoted block in the body.  Only update when
+    # signaturePosition is explicitly provided (i.e. triggered by an email reply action).
+    if signaturePosition?
+      if signaturePosition is 'top'
+        ui.$('[data-name=body]').attr('data-reply-sig-position', 'top')
+      else
+        ui.$('[data-name=body]').removeAttr('data-reply-sig-position')
 
     # add/replace signature
     if signature && signature.active && signature.body
@@ -354,6 +364,7 @@ class EmailReply extends App.Controller
         isAtTop = existingTopLevelSignature.prevAll().filter(-> @nodeName isnt 'BR').length is 0
         hasFollowingQuote = existingTopLevelSignature.nextAll().find('blockquote[type=cite]').length > 0
         if isAtTop && hasFollowingQuote
+          ui.$('[data-name=body]').attr('data-reply-sig-position', 'top')
           App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
           return
 
@@ -425,9 +436,13 @@ class EmailReply extends App.Controller
         # replace in-place to preserve the signature's position in the body
         existingSignature.replaceWith(newSig[0])
       else
-        # if there is a full quote in the body, place the signature before the quote structure
+        # Check if the signature should go before or after a quoted block.
+        # 'top' means full-quote reply (sig belongs above the quote structure);
+        # anything else means inline/no-quote reply (sig belongs at the end).
+        sigPosition = body.attr('data-reply-sig-position')
         topLevelBlockquote = body.find('blockquote[type=cite]').first()
-        if topLevelBlockquote.length > 0
+        if topLevelBlockquote.length > 0 && sigPosition is 'top'
+          # if there is a full quote in the body, place the signature before the quote structure
           parents = topLevelBlockquote.parentsUntil(body)
           quoteContainer = if parents.length > 0 then parents.last() else topLevelBlockquote
           prevElement = quoteContainer.prev()

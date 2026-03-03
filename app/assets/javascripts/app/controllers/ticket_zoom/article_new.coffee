@@ -565,7 +565,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @updateSecurityTypeToolbar()
 
-  setArticleTypePost: (type, signaturePosition = 'bottom') =>
+  setArticleTypePost: (type, signaturePosition = undefined) =>
     for localConfig in @actions()
       if localConfig && localConfig.setArticleTypePost
         localConfig.setArticleTypePost(@type, @ticket, @, signaturePosition)
