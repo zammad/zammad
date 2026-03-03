@@ -18,15 +18,15 @@ import { FormHandlerExecution } from '#shared/components/Form/types.ts'
  * Ticket create form expects 'email-out' as articleType for outgoing emails
  */
 export const useTicketSignature = (senderTypeName: 'email' | 'email-out' = 'email-out') => {
-  const getValue = (values: FormValues, changedField: ChangedField, name: string) => {
-    return changedField.name === name ? changedField.newValue : values[name]
+  const getValue = (values: FormValues, changedField: ChangedField | undefined, name: string) => {
+    return changedField?.name === name ? changedField.newValue : values[name]
   }
 
   let signatureWatcher: WatchHandle | null = null
 
   const cleanUpSignatureHandler = () => {
     if (!signatureWatcher) return
-    if (signatureWatcher) signatureWatcher.stop()
+    signatureWatcher.stop()
 
     signatureWatcher = null
   }
@@ -35,7 +35,12 @@ export const useTicketSignature = (senderTypeName: 'email' | 'email-out' = 'emai
     const handleSignature: FormHandlerFunction = (execution, reactivity, data) => {
       const { formNode, values, changedField } = data
 
-      if (changedField?.name !== 'group_id' && changedField?.name !== 'articleSenderType') return
+      if (
+        execution === FormHandlerExecution.FieldChange &&
+        changedField?.name !== 'group_id' &&
+        changedField?.name !== 'articleSenderType'
+      )
+        return
 
       const editorContext = formNode?.find(editorName, 'name')?.context as
         | FieldEditorContext
