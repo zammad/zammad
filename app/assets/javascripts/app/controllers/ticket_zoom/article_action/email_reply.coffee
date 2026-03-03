@@ -414,10 +414,17 @@ class EmailReply extends App.Controller
         # replace in-place to preserve the signature's position in the body
         existingSignature.replaceWith(newSig[0])
       else
-        # if there is a full quote in the body, place the signature before it
+        # if there is a full quote in the body, place the signature before the quote structure
+        # (matching setArticleTypePost behavior: [br][br][signature][spacer][blockquote])
         topLevelBlockquote = body.find('> blockquote[type=cite], > div > blockquote[type=cite]').first()
         if topLevelBlockquote.length > 0
-          body.prepend(newSig)
+          parents = topLevelBlockquote.parentsUntil(body)
+          quoteContainer = if parents.length > 0 then parents.last() else topLevelBlockquote
+          prevElement = quoteContainer.prev()
+          if prevElement.length > 0
+            prevElement.before(newSig)
+          else
+            quoteContainer.before(newSig)
         else
           if !App.Utils.htmlLastLineEmpty(body)
             body.append('<br><br>')
