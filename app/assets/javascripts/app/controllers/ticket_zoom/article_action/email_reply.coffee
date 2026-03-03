@@ -390,6 +390,42 @@ class EmailReply extends App.Controller
     # convert remote images into data urls
     App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
 
+  @updateSignatureByGroup: (type, ticket, ui, newGroupId) ->
+    return if type isnt 'email'
+
+    ticketCurrent = App.Ticket.fullLocal(ticket.id)
+    group = App.Group.find(newGroupId)
+    signature = undefined
+    if group && group.signature_id
+      signature = App.Signature.find(group.signature_id)
+
+    body = ui.$('[data-name=body]')
+
+    if signature && signature.active && signature.body
+
+      # apply new signature
+      signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), ticket: ticketCurrent, config: App.Config.all() })
+
+      newSig = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
+      App.Utils.htmlStrip(newSig)
+
+      existingSignature = body.find('[data-signature=true]').not('blockquote [data-signature=true]').first()
+      if existingSignature.length > 0
+        # replace in-place to preserve the signature's position in the body
+        existingSignature.replaceWith(newSig[0])
+      else
+        if !App.Utils.htmlLastLineEmpty(body)
+          body.append('<br><br>')
+        body.append(newSig)
+    else
+      # no signature for the new group → remove any existing signature
+      body.find('[data-signature=true]').not('blockquote [data-signature=true]').remove()
+
+    ui.$('[data-name=body]').replaceWith(body)
+
+    # convert remote images into data urls
+    App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
+
   @validation: (type, params, ui) ->
     return true if type isnt 'email'
 
