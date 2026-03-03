@@ -346,7 +346,15 @@ class EmailReply extends App.Controller
     # add/replace signature
     if signature && signature.active && signature.body
 
-      # always remove existing top-level signature (skip signatures in quoted messages)
+      # If the correct signature is already present at the top level (e.g. restoring from
+      # autosave), leave it in place to preserve its position (e.g. before a full quote).
+      # Only remove and re-insert when the signature is absent or has a different ID.
+      existingTopLevelSignature = ui.$('[data-signature=true]').not('blockquote [data-signature=true]').first()
+      if existingTopLevelSignature.length > 0 && existingTopLevelSignature.attr('data-signature-id') is "#{signature.id}"
+        App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
+        return
+
+      # remove existing top-level signature (skip signatures in quoted messages)
       # https://github.com/zammad/zammad/issues/5634, https://github.com/zammad/zammad/issues/2319
       ui.$('[data-signature=true]').not('blockquote [data-signature=true]').remove()
 
@@ -425,6 +433,9 @@ class EmailReply extends App.Controller
             prevElement.before(newSig)
           else
             quoteContainer.before(newSig)
+          # add blank lines before the signature so the user has space to type
+          # (matching setArticleTypePost behavior: [br][br][signature][spacer][blockquote])
+          newSig.before('<br><br>')
         else
           if !App.Utils.htmlLastLineEmpty(body)
             body.append('<br><br>')
