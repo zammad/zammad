@@ -346,13 +346,16 @@ class EmailReply extends App.Controller
     # add/replace signature
     if signature && signature.active && signature.body
 
-      # If the correct signature is already present at the top level (e.g. restoring from
-      # autosave), leave it in place to preserve its position (e.g. before a full quote).
-      # Only remove and re-insert when the signature is absent or has a different ID.
+      # If the correct signature is already at the top of the body (preceded only by BR
+      # elements) with a quoted block following it, preserve it in place (e.g. restoring
+      # from autosave after a full-quote reply).
       existingTopLevelSignature = ui.$('[data-signature=true]').not('blockquote [data-signature=true]').first()
       if existingTopLevelSignature.length > 0 && existingTopLevelSignature.attr('data-signature-id') is "#{signature.id}"
-        App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
-        return
+        isAtTop = existingTopLevelSignature.prevAll().filter(-> @nodeName isnt 'BR').length is 0
+        hasFollowingQuote = existingTopLevelSignature.nextAll().find('blockquote[type=cite]').length > 0
+        if isAtTop && hasFollowingQuote
+          App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
+          return
 
       # remove existing top-level signature (skip signatures in quoted messages)
       # https://github.com/zammad/zammad/issues/5634, https://github.com/zammad/zammad/issues/2319
@@ -423,8 +426,7 @@ class EmailReply extends App.Controller
         existingSignature.replaceWith(newSig[0])
       else
         # if there is a full quote in the body, place the signature before the quote structure
-        # (matching setArticleTypePost behavior: [br][br][signature][spacer][blockquote])
-        topLevelBlockquote = body.find('> blockquote[type=cite], > div > blockquote[type=cite]').first()
+        topLevelBlockquote = body.find('blockquote[type=cite]').first()
         if topLevelBlockquote.length > 0
           parents = topLevelBlockquote.parentsUntil(body)
           quoteContainer = if parents.length > 0 then parents.last() else topLevelBlockquote
@@ -433,9 +435,10 @@ class EmailReply extends App.Controller
             prevElement.before(newSig)
           else
             quoteContainer.before(newSig)
-          # add blank lines before the signature so the user has space to type
-          # (matching setArticleTypePost behavior: [br][br][signature][spacer][blockquote])
-          newSig.before('<br><br>')
+          # add blank lines before the signature if none are already present, so the
+          # user has space to type above it
+          unless newSig[0].previousSibling?.nodeName is 'BR'
+            newSig.before('<br><br>')
         else
           if !App.Utils.htmlLastLineEmpty(body)
             body.append('<br><br>')
