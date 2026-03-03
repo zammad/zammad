@@ -58,7 +58,9 @@ export default Node.create({
             isEmptyParagraphOrHardBreak(trailingNode) || hasSingleHardBreakParagraph(trailingNode)
 
           // trailing br tags are getting removed in htmlCleanup -> removeTrailingLineBreaks
-          const leadingBreak = !leadingHasSpacing
+          // 'before position' handles the scenario where you want to insert the signature at the top of the block instead of at the bottom
+          // e.g reply with full quotes,
+          const leadingBreak = signature.position === 'before' || !leadingHasSpacing
 
           // for full quote we need to add a trailing break
           const trailingBreak = signature.position === 'before' && !trailingHasSpacing
