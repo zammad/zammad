@@ -233,11 +233,18 @@ export const getPreviousNodeFromPosition = (
   let previousNode = null
   const insertPosition = editor.state.doc.resolve(position)
 
-  // We need a fallback to cursor position when inserting at position 0 and we are on root level
-  // depth checks if we are on root level
-  if (position > 0 && insertPosition.depth > 0) {
-    const prevNodePos = insertPosition.before(insertPosition.depth)
-    previousNode = editor.state.doc.nodeAt(prevNodePos)
+  if (position > 0) {
+    if (insertPosition.depth > 0) {
+      // When inside a block node, resolve the node that precedes our insertion point
+      const prevNodePos = insertPosition.before(insertPosition.depth)
+      previousNode = editor.state.doc.nodeAt(prevNodePos)
+    } else {
+      // At doc root level use nodeBefore so we get the actual preceding top-level node
+      // (e.g. TipTap's trailing empty paragraph) rather than the cursor's enclosing node.
+      // This prevents inserting a redundant blank line when an empty paragraph already
+      // precedes the insertion point (e.g. after a remove+re-add cycle).
+      previousNode = insertPosition.nodeBefore
+    }
   }
 
   if (!previousNode && fallbackToCursorPosition) {

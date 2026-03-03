@@ -98,6 +98,36 @@ describe('correctly adds signature', { retries: 2 }, () => {
       })
   })
 
+  it('does not add extra blank line on remove+re-add cycle', () => {
+    mountEditor()
+
+    cy.findByRole('textbox').type(ORIGINAL_TEXT)
+
+    cy.findByRole('textbox')
+      .then(resolveContext)
+      .then((context) => {
+        // First add
+        context.addSignature({ renderedBody: SIGNATURE, internalId: 4 })
+
+        cy.findByRole('textbox')
+          .shouldHaveNormalizedHtml(
+            `<p dir="auto">${ORIGINAL_TEXT}</p>${BREAK_HTML}${WRAPPED_SIGNATURE('4', PARSED_SIGNATURE)}${BREAK_HTML}`,
+          )
+          .then(() => {
+            // Remove (simulates switching to a group without a signature)
+            context.removeSignature()
+
+            // Re-add (simulates switching back to a group with a signature)
+            context.addSignature({ renderedBody: SIGNATURE, internalId: 4 })
+
+            // Must be identical to the first-add result — no extra blank line
+            cy.findByRole('textbox').shouldHaveNormalizedHtml(
+              `<p dir="auto">${ORIGINAL_TEXT}</p>${BREAK_HTML}${WRAPPED_SIGNATURE('4', PARSED_SIGNATURE)}${BREAK_HTML}`,
+            )
+          })
+      })
+  })
+
   it('add signature before marker', () => {
     const originalBody = html`<p dir="auto" data-marker="signature-before"></p>
       <blockquote type="cite">
