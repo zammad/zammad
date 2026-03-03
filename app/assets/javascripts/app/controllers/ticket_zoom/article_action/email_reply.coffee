@@ -382,13 +382,26 @@ class EmailReply extends App.Controller
       placeholder = body.find('[data-signature-placeholder]')
       if placeholder.length > 0
         placeholder[0].replaceWith(signature[0])
-      else if signaturePosition is 'top'
-        body.prepend(signature)
-        body.prepend('<br><br>')
       else
-        if !App.Utils.htmlLastLineEmpty(body)
-          body.append('<br><br>')
-        body.append(signature)
+        # Detect full-quote layout when signaturePosition is undefined (e.g. autosave restore):
+        # orphaned bare BR elements appear at the very start of the body when a full-quote
+        # signature (originally prepended with <br><br>) was later removed.
+        effectiveSigPosition = signaturePosition
+        if not signaturePosition? && body.find('blockquote[type=cite]').length > 0
+          firstChild = body.get(0)?.firstChild
+          while firstChild?.nodeType is 3   # skip whitespace text nodes
+            firstChild = firstChild?.nextSibling
+          if firstChild?.nodeName is 'BR'
+            effectiveSigPosition = 'top'
+            body.attr('data-reply-sig-position', 'top')
+
+        if effectiveSigPosition is 'top'
+          body.prepend(signature)
+          body.prepend('<br><br>')
+        else
+          if !App.Utils.htmlLastLineEmpty(body)
+            body.append('<br><br>')
+          body.append(signature)
       ui.$('[data-name=body]').replaceWith(body)
     else
       body = ui.$('[data-name=body]')

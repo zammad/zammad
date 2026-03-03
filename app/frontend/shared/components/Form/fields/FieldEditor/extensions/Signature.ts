@@ -5,8 +5,6 @@ import { DOMParser, type Node as ProseNode } from '@tiptap/pm/model'
 
 import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
 
-import { getPreviousNodeFromPosition } from '../utils.ts'
-
 import type { Range } from '@tiptap/core'
 
 export default Node.create({
@@ -29,7 +27,6 @@ export default Node.create({
 
           if (!slice) return false
 
-          const leadingNode = getPreviousNodeFromPosition(editor, signature.from)
           const trailingNode = editor.state.doc.resolve(signature.from).nodeAfter
 
           const isEmptyParagraphOrHardBreak = (node?: ProseNode | null) =>
@@ -49,18 +46,12 @@ export default Node.create({
               !node.marks.length
             )
 
-          // Especially important when we use reply with selected content
-          // Also with full quotes we have the situation
-          const leadingHasSpacing =
-            isEmptyParagraphOrHardBreak(leadingNode) || hasSingleHardBreakParagraph(leadingNode)
-
           const trailingHasSpacing =
             isEmptyParagraphOrHardBreak(trailingNode) || hasSingleHardBreakParagraph(trailingNode)
 
-          // trailing br tags are getting removed in htmlCleanup -> removeTrailingLineBreaks
-          // 'before position' handles the scenario where you want to insert the signature at the top of the block instead of at the bottom
-          // e.g reply with full quotes,
-          const leadingBreak = signature.position === 'before' || !leadingHasSpacing
+          // Always insert a blank paragraph before the signature so the user has visual
+          // separation and room to type above it, regardless of existing trailing content.
+          const leadingBreak = true
 
           // for full quote we need to add a trailing break
           const trailingBreak = signature.position === 'before' && !trailingHasSpacing
