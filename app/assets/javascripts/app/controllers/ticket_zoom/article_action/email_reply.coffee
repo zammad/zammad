@@ -406,6 +406,20 @@ class EmailReply extends App.Controller
     else
       body = ui.$('[data-name=body]')
 
+      # When restoring from autosave (signaturePosition not provided), the
+      # data-reply-sig-position attribute is lost on reload.  Detect the original
+      # full-quote layout: bare BR elements at the very start of the body are the
+      # fingerprint left behind when a prepended signature (<br><br> + sig div) was
+      # later removed by switching to a no-signature group.  Restoring the attribute
+      # now ensures a subsequent group switch to a sig group places the new signature
+      # before the quote block rather than after it.
+      if not signaturePosition? && body.find('blockquote[type=cite]').length > 0
+        firstChild = body.get(0)?.firstChild
+        while firstChild?.nodeType is 3   # skip whitespace text nodes
+          firstChild = firstChild?.nextSibling
+        if firstChild?.nodeName is 'BR'
+          ui.$('[data-name=body]').attr('data-reply-sig-position', 'top')
+
       signatures = body.find('[data-signature-placeholder]')
 
       if signatures.length > 0
