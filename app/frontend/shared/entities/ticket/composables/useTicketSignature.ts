@@ -72,7 +72,11 @@ export const useTicketSignature = (senderTypeName: 'email' | 'email-out' = 'emai
             internalId: signature.internalId,
           })
         },
-        { flush: 'post' },
+        // immediate: true ensures the callback fires even when editorContext.signature is
+        // already populated at watcher-creation time (e.g. the API responded before
+        // FormHandlerExecution.Initial ran, or the value is read from cache after a
+        // page reload where the autosave body has been restored but the sig ref hasn't changed).
+        { flush: 'post', immediate: true },
       )
     }
 

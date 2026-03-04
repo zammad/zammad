@@ -57,7 +57,7 @@ describe('correctly adds signature', { retries: 2 }, () => {
           })
           cy.findByRole('textbox')
             .shouldHaveNormalizedHtml(
-              `${BREAK_HTML}${BREAK_HTML}${WRAPPED_SIGNATURE('1', PARSED_SIGNATURE)}${BREAK_HTML}`,
+              `${BREAK_HTML}${WRAPPED_SIGNATURE('1', PARSED_SIGNATURE)}${BREAK_HTML}`,
             )
             .then(() => {
               context.removeSignature()

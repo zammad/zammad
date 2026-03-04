@@ -67,6 +67,40 @@ describe('useTicketSignature', () => {
       })
     })
 
+    it('applies signature immediately if already set when watcher is created (autosave restore)', async () => {
+      const editorContext = createMockEditorContext()
+      // Simulate the case where editorContext.signature is already populated before
+      // the handler runs – e.g. the API responded before FormHandlerExecution.Initial
+      // fired, or the value is read from cache after a page reload.
+      editorContext.signature = { internalId: 1, renderedBody: '<p>Pre-set Signature</p>' }
+      const formNode = createMockFormNode(editorContext)
+
+      const { signatureHandling } = useTicketSignature('email-out')
+      const handler = signatureHandling('body')
+
+      handler.callback(
+        FormHandlerExecution.Initial,
+        createMockReactivity(),
+        {
+          formNode,
+          values: { group_id: 1, articleSenderType: 'email-out' },
+          changedField: undefined,
+          getNodeByName: vi.fn(),
+          findNodeByName: vi.fn(),
+        },
+      )
+
+      // No further change to editorContext.signature – the watcher must fire via
+      // immediate: true so that addSignature is called with the already-set value.
+      await nextTick()
+      await nextTick()
+
+      expect(editorContext.addSignature).toHaveBeenCalledWith({
+        renderedBody: '<p>Pre-set Signature</p>',
+        internalId: 1,
+      })
+    })
+
     it('does not set up watcher on initial execution when no group is selected', async () => {
       const editorContext = createMockEditorContext()
       const formNode = createMockFormNode(editorContext)

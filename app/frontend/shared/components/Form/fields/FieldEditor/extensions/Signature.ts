@@ -49,9 +49,18 @@ export default Node.create({
           const trailingHasSpacing =
             isEmptyParagraphOrHardBreak(trailingNode) || hasSingleHardBreakParagraph(trailingNode)
 
-          // Always insert a blank paragraph before the signature so the user has visual
-          // separation and room to type above it, regardless of existing trailing content.
-          const leadingBreak = true
+          // Insert a blank paragraph before the signature for visual separation, but only
+          // when there is no empty paragraph already sitting at the insertion point.
+          // Skipping it when one exists prevents blank lines from accumulating on each
+          // remove → re-add cycle (e.g. switching groups back and forth).
+          const $from = editor.state.doc.resolve(signature.from)
+          const nodeBefore = $from.nodeBefore
+          const leadingBreak = !(
+            nodeBefore &&
+            nodeBefore.type.name === 'paragraph' &&
+            !nodeBefore.content.size &&
+            !nodeBefore.marks.length
+          )
 
           // for full quote we need to add a trailing break
           const trailingBreak = signature.position === 'before' && !trailingHasSpacing
