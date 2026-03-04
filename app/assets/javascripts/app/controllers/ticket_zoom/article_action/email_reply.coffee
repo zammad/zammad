@@ -359,8 +359,11 @@ class EmailReply extends App.Controller
       # If the correct signature is already at the top of the body (preceded only by BR
       # elements) with a quoted block following it, preserve it in place (e.g. restoring
       # from autosave after a full-quote reply).
+      # Only apply this shortcut when signaturePosition is not explicitly provided (i.e.
+      # the autosave/render path); explicit reply actions must always go through the full
+      # removal-and-insertion flow so the position can change (e.g. top → bottom).
       existingTopLevelSignature = ui.$('[data-signature=true]').not('blockquote [data-signature=true]').first()
-      if existingTopLevelSignature.length > 0 && existingTopLevelSignature.attr('data-signature-id') is "#{signature.id}"
+      if !signaturePosition? && existingTopLevelSignature.length > 0 && existingTopLevelSignature.attr('data-signature-id') is "#{signature.id}"
         isAtTop = existingTopLevelSignature.prevAll().filter(-> @nodeName isnt 'BR').length is 0
         hasFollowingQuote = existingTopLevelSignature.nextAll().find('blockquote[type=cite]').length > 0
         if isAtTop && hasFollowingQuote
