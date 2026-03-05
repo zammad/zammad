@@ -51,7 +51,7 @@ const tryToUpsertSignature = (
       },
     )
 
-    if (wasFocused) editor.value.commands.focus(currentPosition)
+    if (wasFocused) editor.value.commands.focus(signature.position ?? currentPosition)
 
     requestAnimationFrame(() => {
       testFlags.set('editor.signatureAdd')

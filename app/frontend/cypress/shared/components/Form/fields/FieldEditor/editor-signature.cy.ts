@@ -167,6 +167,44 @@ describe('correctly adds signature', { retries: 2 }, () => {
     )
   })
 
+  it('positions cursor at start when addSignature is called with explicit position on an upsert', () => {
+    // Simulates the onOpened scenario: reply form is already open with a signature and a
+    // full-quote blockquote, then the user clicks reply on another article (inline quote).
+    // onOpened fires again and calls addSignature({ body }, 1) — the signature already
+    // exists so tryToUpsertSignature runs.  The cursor must end up at position 1 (start),
+    // NOT at the end where it was before the call.
+    const originalBody = html`<p dir="auto" data-marker="signature-before"></p>
+      <blockquote type="cite">
+        <p dir="auto">Full-quote article content</p>
+      </blockquote>`
+
+    mountEditor({ value: originalBody })
+
+    cy.findByRole('textbox')
+      .then(resolveContext)
+      .then((context) => {
+        // First add (no position — normal onSelected path)
+        context.addSignature({ renderedBody: SIGNATURE, internalId: 5 })
+      })
+
+    // Signature is now before the blockquote; move cursor to end and focus
+    cy.findByRole('textbox').click().type('{moveToEnd}')
+
+    cy.findByRole('textbox')
+      .then(resolveContext)
+      .then((context) => {
+        // Second add with explicit position=1 — the onOpened path after a second reply click
+        context.addSignature({ renderedBody: SIGNATURE, internalId: 5, position: 1 })
+      })
+
+    // Typing should insert text at the beginning (position 1), not at the end
+    cy.findByRole('textbox').type('typed')
+
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
+      '<p dir="auto">typed</p><div data-signature',
+    )
+  })
+
   it('adds new top-level signature when quoted content already contains a signature', () => {
     // Simulate replying to an email that already contains a signature in its quoted content.
     // The signature inside the blockquote must NOT prevent the new signature from being added.
