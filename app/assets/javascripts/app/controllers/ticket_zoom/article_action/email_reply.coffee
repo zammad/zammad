@@ -356,20 +356,21 @@ class EmailReply extends App.Controller
     # add/replace signature
     if signature && signature.active && signature.body
 
-      # If the correct signature is already at the top of the body (preceded only by BR
-      # elements) with a quoted block following it, preserve it in place (e.g. restoring
-      # from autosave after a full-quote reply).
+      # If the correct signature is already in the body, preserve it in place to avoid
+      # overwriting user-modified signature content (e.g. restoring from autosave).
       # Only apply this shortcut when signaturePosition is not explicitly provided (i.e.
       # the autosave/render path); explicit reply actions must always go through the full
       # removal-and-insertion flow so the position can change (e.g. top → bottom).
       existingTopLevelSignature = ui.$('[data-signature=true]').not('blockquote [data-signature=true]').first()
       if !signaturePosition? && existingTopLevelSignature.length > 0 && existingTopLevelSignature.attr('data-signature-id') is "#{signature.id}"
+        # For top-of-body + quoted-block layout, restore the position attribute so a
+        # subsequent group change still places the new signature above the quote.
         isAtTop = existingTopLevelSignature.prevAll().filter(-> @nodeName isnt 'BR').length is 0
         hasFollowingQuote = existingTopLevelSignature.nextAll().find('blockquote[type=cite]').length > 0
         if isAtTop && hasFollowingQuote
           ui.$('[data-name=body]').attr('data-reply-sig-position', 'top')
-          App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
-          return
+        App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
+        return
 
       # remove existing top-level signature (skip signatures in quoted messages)
       # https://github.com/zammad/zammad/issues/5634, https://github.com/zammad/zammad/issues/2319
