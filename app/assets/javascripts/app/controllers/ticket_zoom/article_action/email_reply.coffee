@@ -464,6 +464,12 @@ class EmailReply extends App.Controller
 
       existingSignature = body.find('[data-signature=true]').not('blockquote [data-signature=true]').first()
       if existingSignature.length > 0
+        # If the existing signature already has the same ID as the new group's signature,
+        # preserve it in place to avoid overwriting user-modified content (e.g. after
+        # autosave restore when the group has not actually changed).
+        if existingSignature.attr('data-signature-id') is "#{signature.id}"
+          App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
+          return
         # replace in-place to preserve the signature's position in the body
         existingSignature.replaceWith(newSig[0])
       else
