@@ -9,16 +9,23 @@ module Zammad
         ENV['REDIS_SENTINELS'].present? ? sentinel_config : standalone_config
       end
 
+      def self.preferred_driver
+        require 'hiredis-client'
+        :hiredis
+      rescue LoadError
+        :ruby
+      end
+
       def self.standalone_config
         {
-          driver: :hiredis,
+          driver: preferred_driver,
           url:    ENV['REDIS_URL'].presence || 'redis://localhost:6379',
         }
       end
 
       def self.sentinel_config
         {
-          driver:            :hiredis,
+          driver:            preferred_driver,
           name:              ENV['REDIS_SENTINEL_NAME'].presence || 'mymaster',
           # This can only be :master, as Zammad needs to read and write.
           role:              :master,

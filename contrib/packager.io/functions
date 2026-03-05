@@ -200,7 +200,7 @@ function enforce_redis () {
   if [ -n "${REDIS_URL}" ]; then
     echo "# REDIS_URL variable set to ${REDIS_URL}."
     echo "# Performing connection check."
-    if zammad run ruby -r redis -e 'Redis.new(driver: :hiredis, url: ENV["REDIS_URL"]).ping'; then
+    if zammad run ruby -r redis -r hiredis-client -e 'Redis.new(driver: :hiredis, url: ENV["REDIS_URL"]).ping'; then
       echo "# Connection check successful."
       return 0
     else

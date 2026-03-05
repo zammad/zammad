@@ -11,6 +11,17 @@ RSpec.describe Zammad::Service::Redis, :aggregate_failures do
 
   let(:env) { {} }
 
+  describe '.preferred_driver' do
+    it 'returns :hiredis when hiredis-client is available' do
+      expect(described_class.preferred_driver).to eq(:hiredis)
+    end
+
+    it 'returns :ruby when hiredis-client is not available' do
+      allow(described_class).to receive(:require).with('hiredis-client').and_raise(LoadError)
+      expect(described_class.preferred_driver).to eq(:ruby)
+    end
+  end
+
   describe '.config' do
     context 'without any ENV vars set' do
       it 'returns the default standalone config' do
