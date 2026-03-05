@@ -10,10 +10,12 @@ module Zammad
       end
 
       def self.preferred_driver
-        require 'hiredis-client'
-        :hiredis
-      rescue LoadError
-        :ruby
+        @preferred_driver ||= begin
+          require 'hiredis-client'
+          :hiredis
+        rescue LoadError
+          :ruby
+        end
       end
 
       def self.standalone_config

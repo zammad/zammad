@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Zammad::Service::Redis, :aggregate_failures do
   before do
+    described_class.instance_variable_set(:@preferred_driver, nil)
     allow(ENV).to receive(:[]) do |key|
       env[key]
     end
