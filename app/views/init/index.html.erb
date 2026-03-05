@@ -32,4 +32,10 @@
 <div class="splash">
   <svg class="icon icon-logo"><use xlink:href="<%= icons_url %>#icon-logo" /></svg>
   <div class="splash-title">Loading…</div>
+  <noscript>
+    <style>.splash { flex-direction: column; }</style>
+    <div style="margin-top: 16px;">
+      <%= Translation.translate(local_assigns[:locale], 'Turn on JavaScript to use Zammad.') %>
+    </div>
+  </noscript>
 </div>

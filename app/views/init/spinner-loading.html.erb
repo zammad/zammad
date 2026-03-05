@@ -54,6 +54,14 @@ html {
 .loading-failed.active {
   opacity: 1;
 }
+.noscript-message {
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  font-size: 16px;
+  line-height: 21px;
+  margin-top: 16px;
+}
 </style>
 <div id="loading-app">
   <div class="loading-main">
@@ -256,5 +264,14 @@ html {
     <div class="loading-failed" aria-hidden="true">
       <%= Translation.translate(local_assigns[:locale], 'Loading failed, please try again later.') %>
     </div>
+    <noscript>
+      <style>
+        .loading-animation { animation: none !important; }
+        .loading-animation * { animation: none !important; }
+      </style>
+      <div class="noscript-message">
+        <%= Translation.translate(local_assigns[:locale], 'Turn on JavaScript to use Zammad.') %>
+      </div>
+    </noscript>
   </div>
 </div>

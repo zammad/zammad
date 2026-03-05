@@ -21315,6 +21315,11 @@ msgstr "Dienstag"
 msgid "Turn chat into ticket"
 msgstr "Chat zu Ticket umwandeln"
 
+#: app/views/init/index.html.erb
+#: app/views/init/spinner-loading.html.erb
+msgid "Turn on JavaScript to use Zammad."
+msgstr "Aktivieren Sie JavaScript, um Zammad zu verwenden."
+
 #: app/assets/javascripts/app/controllers/webhook.coffee:280
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
