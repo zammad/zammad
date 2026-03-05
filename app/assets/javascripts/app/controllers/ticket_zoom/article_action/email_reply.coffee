@@ -372,6 +372,13 @@ class EmailReply extends App.Controller
         App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
         return
 
+      # When the reply is an inline quote (bottom) and the correct signature is already
+      # present in the body, preserve it in-place.  This keeps the signature before any
+      # full-quote blockquote that was set up by a preceding full-quote reply action.
+      if signaturePosition is 'bottom' && existingTopLevelSignature.length > 0 && existingTopLevelSignature.attr('data-signature-id') is "#{signature.id}"
+        App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
+        return
+
       # remove existing top-level signature (skip signatures in quoted messages)
       # https://github.com/zammad/zammad/issues/5634, https://github.com/zammad/zammad/issues/2319
       ui.$('[data-signature=true]').not('blockquote [data-signature=true]').remove()
