@@ -87,22 +87,5 @@ RSpec.shared_examples 'FormUpdater::PreparesTicketSignature' do
 
       it_behaves_like 'skipping the signature prop for the field'
     end
-
-    context 'when applying taskbar state (autosave restore)' do
-      let(:additional_data) { { 'applyTaskbarState' => true } }
-      let(:meta)            { { additional_data: } }
-
-      context 'without a group present' do
-        let(:data) { {} }
-
-        it_behaves_like 'resetting the signature prop for the field'
-      end
-
-      context 'with a group present' do
-        let(:data) { { 'group_id' => group.id } }
-
-        it_behaves_like 'setting the signature prop for the field'
-      end
-    end
   end
 end

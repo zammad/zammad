@@ -12,15 +12,8 @@ module FormUpdater::Concerns::PreparesTicketSignature
   private
 
   def maybe_prepare_ticket_signature
-    # Prepare signature on initial load, when group/article type has changed, or when
-    # restoring autosave (applyTaskbarState). The last case is necessary because the
-    # autosave body is written to the editor BEFORE the signature watcher fires on the
-    # frontend; without a fresh signature in the response the watcher never fires and
-    # the editor keeps whatever signature (if any) was embedded in the saved HTML.
-    return if !meta[:initial] &&
-              !meta.dig(:additional_data, 'applyTaskbarState') &&
-              meta.dig(:changed_field, :name) != 'group_id' &&
-              meta.dig(:changed_field, :name) != 'articleSenderType'
+    # Only prepare signature on initial load, or when group or article type has changed.
+    return if !meta[:initial] && meta.dig(:changed_field, :name) != 'group_id' && meta.dig(:changed_field, :name) != 'articleSenderType'
 
     result_initialize_field('body')
 

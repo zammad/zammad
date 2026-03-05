@@ -23,7 +23,11 @@ class TicketCreateFormHandlerSignature
 
       currentBody = ui.el.closest('.content').find('[data-name=body]')
       if !_.isEmpty(currentBody)
-        # always remove existing signature and re-add it
+        # Skip re-applying the signature if the body already contains this group's
+        # signature – preserves user-modified signature content (e.g. after autosave restore).
+        return if currentBody.find("[data-signature-id=\"#{signature.id}\"]").length
+
+        # remove existing signature and re-add it
         # https://github.com/zammad/zammad/issues/2319
         ui.el.closest('.content').find('[data-signature="true"]').remove()
 
