@@ -344,9 +344,7 @@ class EmailReply extends App.Controller
       ui.$('[data-name=body]').removeAttr('data-reply-sig-position')
       return
 
-    # Track the intended signature position so updateSignatureByGroup knows where to
-    # re-insert a signature when there is a quoted block in the body.  Only update when
-    # signaturePosition is explicitly provided (i.e. triggered by an email reply action).
+    # track reply layout for group-change re-insertion
     if signaturePosition?
       if signaturePosition is 'top'
         ui.$('[data-name=body]').attr('data-reply-sig-position', 'top')
@@ -356,28 +354,16 @@ class EmailReply extends App.Controller
     # add/replace signature
     if signature && signature.active && signature.body
 
-      # If the correct signature is already in the body, preserve it in place to avoid
-      # overwriting user-modified signature content (e.g. restoring from autosave).
-      # Only apply this shortcut when signaturePosition is not explicitly provided (i.e.
-      # the autosave/render path); explicit reply actions must always go through the full
-      # removal-and-insertion flow so the position can change (e.g. top → bottom).
       existingTopLevelSignature = ui.$('[data-signature=true]').not('blockquote [data-signature=true]').first()
-      if !signaturePosition? && existingTopLevelSignature.length > 0 && existingTopLevelSignature.attr('data-signature-id') is "#{signature.id}"
-        # For top-of-body + quoted-block layout, restore the position attribute so a
-        # subsequent group change still places the new signature above the quote.
-        isAtTop = existingTopLevelSignature.prevAll().filter(-> @nodeName isnt 'BR').length is 0
-        hasFollowingQuote = existingTopLevelSignature.nextAll().find('blockquote[type=cite]').length > 0
-        if isAtTop && hasFollowingQuote
-          ui.$('[data-name=body]').attr('data-reply-sig-position', 'top')
-        App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
-        return
-
-      # When the reply is an inline quote (bottom) and the correct signature is already
-      # present in the body, preserve it in-place.  This keeps the signature before any
-      # full-quote blockquote that was set up by a preceding full-quote reply action.
-      if signaturePosition is 'bottom' && existingTopLevelSignature.length > 0 && existingTopLevelSignature.attr('data-signature-id') is "#{signature.id}"
-        App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
-        return
+      if existingTopLevelSignature.length > 0 && existingTopLevelSignature.attr('data-signature-id') is "#{signature.id}"
+        # restore position attribute for top+quote layout when loading from autosave
+        if not signaturePosition?
+          isAtTop = existingTopLevelSignature.prevAll().filter(-> @nodeName isnt 'BR').length is 0
+          hasFollowingQuote = existingTopLevelSignature.nextAll().find('blockquote[type=cite]').length > 0
+          ui.$('[data-name=body]').attr('data-reply-sig-position', 'top') if isAtTop && hasFollowingQuote
+        unless signaturePosition is 'top'
+          App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
+          return
 
       # remove existing top-level signature (skip signatures in quoted messages)
       # https://github.com/zammad/zammad/issues/5634, https://github.com/zammad/zammad/issues/2319
@@ -394,17 +380,11 @@ class EmailReply extends App.Controller
       if placeholder.length > 0
         placeholder[0].replaceWith(signature[0])
       else
-        # Detect full-quote layout when signaturePosition is undefined (e.g. autosave restore):
-        # orphaned bare BR elements appear at the very start of the body when a full-quote
-        # signature (originally prepended with <br><br>) was later removed.
+        # detect full-quote layout on autosave restore (orphaned leading BR = fingerprint)
         effectiveSigPosition = signaturePosition
-        if not signaturePosition? && body.find('blockquote[type=cite]').length > 0
-          firstChild = body.get(0)?.firstChild
-          while firstChild?.nodeType is 3   # skip whitespace text nodes
-            firstChild = firstChild?.nextSibling
-          if firstChild?.nodeName is 'BR'
-            effectiveSigPosition = 'top'
-            body.attr('data-reply-sig-position', 'top')
+        if not signaturePosition? && EmailReply.hasFullQuoteLayout(body)
+          effectiveSigPosition = 'top'
+          body.attr('data-reply-sig-position', 'top')
 
         if effectiveSigPosition is 'top'
           body.prepend(signature)
@@ -417,19 +397,9 @@ class EmailReply extends App.Controller
     else
       body = ui.$('[data-name=body]')
 
-      # When restoring from autosave (signaturePosition not provided), the
-      # data-reply-sig-position attribute is lost on reload.  Detect the original
-      # full-quote layout: bare BR elements at the very start of the body are the
-      # fingerprint left behind when a prepended signature (<br><br> + sig div) was
-      # later removed by switching to a no-signature group.  Restoring the attribute
-      # now ensures a subsequent group switch to a sig group places the new signature
-      # before the quote block rather than after it.
-      if not signaturePosition? && body.find('blockquote[type=cite]').length > 0
-        firstChild = body.get(0)?.firstChild
-        while firstChild?.nodeType is 3   # skip whitespace text nodes
-          firstChild = firstChild?.nextSibling
-        if firstChild?.nodeName is 'BR'
-          ui.$('[data-name=body]').attr('data-reply-sig-position', 'top')
+      # restore position attribute for full-quote layout on autosave restore
+      if not signaturePosition? && EmailReply.hasFullQuoteLayout(body)
+        ui.$('[data-name=body]').attr('data-reply-sig-position', 'top')
 
       signatures = body.find('[data-signature-placeholder]')
 
@@ -449,6 +419,13 @@ class EmailReply extends App.Controller
 
     # convert remote images into data urls
     App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
+
+  # returns true when the body starts with a bare BR before a blockquote (full-quote fingerprint)
+  @hasFullQuoteLayout: (body) ->
+    return false unless body.find('blockquote[type=cite]').length > 0
+    firstChild = body.get(0)?.firstChild
+    firstChild = firstChild.nextSibling while firstChild?.nodeType is 3
+    firstChild?.nodeName is 'BR'
 
   @updateSignatureByGroup: (type, ticket, ui, newGroupId) ->
     return if type isnt 'email'
@@ -471,18 +448,14 @@ class EmailReply extends App.Controller
 
       existingSignature = body.find('[data-signature=true]').not('blockquote [data-signature=true]').first()
       if existingSignature.length > 0
-        # If the existing signature already has the same ID as the new group's signature,
-        # preserve it in place to avoid overwriting user-modified content (e.g. after
-        # autosave restore when the group has not actually changed).
+        # preserve signature in place if it already matches the new group (e.g. no actual change)
         if existingSignature.attr('data-signature-id') is "#{signature.id}"
           App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
           return
         # replace in-place to preserve the signature's position in the body
         existingSignature.replaceWith(newSig[0])
       else
-        # Check if the signature should go before or after a quoted block.
-        # 'top' means full-quote reply (sig belongs above the quote structure);
-        # anything else means inline/no-quote reply (sig belongs at the end).
+        # place signature before the quote block for full-quote replies, append otherwise
         sigPosition = body.attr('data-reply-sig-position')
         topLevelBlockquote = body.find('blockquote[type=cite]').first()
         if topLevelBlockquote.length > 0 && sigPosition is 'top'
@@ -494,8 +467,7 @@ class EmailReply extends App.Controller
             prevElement.before(newSig)
           else
             quoteContainer.before(newSig)
-          # add blank lines before the signature if none are already present, so the
-          # user has space to type above it
+          # add blank lines above signature if not already present
           unless newSig[0].previousSibling?.nodeName is 'BR'
             newSig.before('<br><br>')
         else
@@ -503,7 +475,7 @@ class EmailReply extends App.Controller
             body.append('<br><br>')
           body.append(newSig)
     else
-      # no signature for the new group → remove any existing signature
+      # no signature for the new group – remove the existing one
       body.find('[data-signature=true]').not('blockquote [data-signature=true]').remove()
 
     ui.$('[data-name=body]').replaceWith(body)
