@@ -149,7 +149,8 @@ class EmailReply extends App.Controller
     if selected
       quote_header = @replyQuoteHeader(article)
 
-      selected = "<div><br><br/></div><div><blockquote type=\'cite\'>#{quote_header}#{selected}<br></blockquote></div><div><br></div>"
+      marker = if signaturePosition is 'top' then ' data-marker=\'signature-before\'' else ''
+      selected = "<div><br><br/></div><div><blockquote type=\'cite\'#{marker}>#{quote_header}#{selected}<br></blockquote></div><div><br></div>"
 
       # add selected text to body
       body = selected + body
@@ -258,7 +259,7 @@ class EmailReply extends App.Controller
 
     quote_header = App.FullQuoteHeader.fullQuoteHeaderForward(article)
 
-    body = "<br/><div>---#{App.i18n.translateInline('Begin forwarded message')}:---<br/><br/></div><div><blockquote type=\"cite\">#{quote_header}#{body}</blockquote></div><div><br></div>"
+    body = "<br/><div>---#{App.i18n.translateInline('Begin forwarded message')}:---<br/><br/></div><div><blockquote type=\"cite\" data-marker=\"signature-before\">#{quote_header}#{body}</blockquote></div><div><br></div>"
 
     articleNew = {}
     articleNew.body = body
@@ -341,26 +342,13 @@ class EmailReply extends App.Controller
     # https://github.com/zammad/zammad/issues/4453
     if type isnt 'email'
       ui.$('[data-name=body] [data-signature="true"]').remove()
-      ui.$('[data-name=body]').removeAttr('data-reply-sig-position')
       return
-
-    # track reply layout for group-change re-insertion
-    if signaturePosition?
-      if signaturePosition is 'top'
-        ui.$('[data-name=body]').attr('data-reply-sig-position', 'top')
-      else
-        ui.$('[data-name=body]').removeAttr('data-reply-sig-position')
 
     # add/replace signature
     if signature && signature.active && signature.body
 
       existingTopLevelSignature = ui.$('[data-signature=true]').not('blockquote [data-signature=true]').first()
       if existingTopLevelSignature.length > 0 && existingTopLevelSignature.attr('data-signature-id') is "#{signature.id}"
-        # restore position attribute for top+quote layout when loading from autosave
-        if not signaturePosition?
-          isAtTop = existingTopLevelSignature.prevAll().filter(-> @nodeName isnt 'BR').length is 0
-          hasFollowingQuote = existingTopLevelSignature.nextAll().find('blockquote[type=cite]').length > 0
-          ui.$('[data-name=body]').attr('data-reply-sig-position', 'top') if isAtTop && hasFollowingQuote
         unless signaturePosition is 'top'
           App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
           return
@@ -380,11 +368,10 @@ class EmailReply extends App.Controller
       if placeholder.length > 0
         placeholder[0].replaceWith(signature[0])
       else
-        # detect full-quote layout on autosave restore (orphaned leading BR = fingerprint)
+        # detect full-quote layout on autosave restore: check data-marker first, then leading BR fingerprint
         effectiveSigPosition = signaturePosition
-        if not signaturePosition? && EmailReply.hasFullQuoteLayout(body)
+        if not signaturePosition? && (body.find('blockquote[type=cite][data-marker=signature-before]').length > 0 || EmailReply.hasFullQuoteLayout(body))
           effectiveSigPosition = 'top'
-          body.attr('data-reply-sig-position', 'top')
 
         if effectiveSigPosition is 'top'
           body.prepend(signature)
@@ -396,10 +383,6 @@ class EmailReply extends App.Controller
       ui.$('[data-name=body]').replaceWith(body)
     else
       body = ui.$('[data-name=body]')
-
-      # restore position attribute for full-quote layout on autosave restore
-      if not signaturePosition? && EmailReply.hasFullQuoteLayout(body)
-        ui.$('[data-name=body]').attr('data-reply-sig-position', 'top')
 
       signatures = body.find('[data-signature-placeholder]')
 
@@ -455,13 +438,12 @@ class EmailReply extends App.Controller
         # replace in-place to preserve the signature's position in the body
         existingSignature.replaceWith(newSig[0])
       else
-        # place signature before the quote block for full-quote replies, append otherwise
-        sigPosition = body.attr('data-reply-sig-position')
-        topLevelBlockquote = body.find('blockquote[type=cite]').first()
-        if topLevelBlockquote.length > 0 && sigPosition is 'top'
-          # if there is a full quote in the body, place the signature before the quote structure
-          parents = topLevelBlockquote.parentsUntil(body)
-          quoteContainer = if parents.length > 0 then parents.last() else topLevelBlockquote
+        # place signature before the full-quote block if marked, append otherwise
+        markedBlockquote = body.find('blockquote[type=cite][data-marker=signature-before]').first()
+        if markedBlockquote.length > 0
+          # place before the full-quote's container
+          parents = markedBlockquote.parentsUntil(body)
+          quoteContainer = if parents.length > 0 then parents.last() else markedBlockquote
           prevElement = quoteContainer.prev()
           if prevElement.length > 0
             prevElement.before(newSig)
