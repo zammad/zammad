@@ -1,0 +1,36 @@
+name: Build and Push Custom Image
+
+on:
+  push:
+    branches: [newbyte-stable]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Get Zammad version from git tags
+        run: echo ZAMMAD_VERSION="$(git describe --tags | sed -e 's/-[a-z0-9]\{8,\}.*//g')" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          build-args: COMMIT_SHA=${{ github.sha }}
+          push: true
+          tags: |
+            newbytesolucoesdigitais/ndesk:latest
+            newbytesolucoesdigitais/ndesk:${{ env.ZAMMAD_VERSION }}
