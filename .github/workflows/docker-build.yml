@@ -3,18 +3,27 @@ name: Build and Push Custom Image
 on:
   push:
     branches: [newbyte-stable]
+    tags: ['nb.*']
 
 jobs:
   build:
     runs-on: ubuntu-24.04
+    outputs:
+      image_tag: ${{ steps.tag.outputs.tag }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Get Zammad version from git tags
-        run: echo ZAMMAD_VERSION="$(git describe --tags | sed -e 's/-[a-z0-9]\{8,\}.*//g')" >> $GITHUB_ENV
+      - name: Determine image tag
+        id: tag
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -32,5 +41,28 @@ jobs:
           build-args: COMMIT_SHA=${{ github.sha }}
           push: true
           tags: |
+            technewbyte/ndesk:${{ steps.tag.outputs.tag }}
             technewbyte/ndesk:latest
-            technewbyte/ndesk:${{ env.ZAMMAD_VERSION }}
+
+  deploy:
+    runs-on: ubuntu-24.04
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Deploy to prod-ndesk
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 5.161.125.64
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /opt/zammad
+            docker compose -f docker-compose.yml \
+              -f scenarios/add-cloudflare-tunnel.yml \
+              -f scenarios/apply-resource-limits.yml \
+              pull
+            docker compose -f docker-compose.yml \
+              -f scenarios/add-cloudflare-tunnel.yml \
+              -f scenarios/apply-resource-limits.yml \
+              up -d
+            echo "Deployed tag: ${{ needs.build.outputs.image_tag }}"
