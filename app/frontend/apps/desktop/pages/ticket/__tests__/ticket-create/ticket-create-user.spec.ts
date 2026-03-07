@@ -71,7 +71,7 @@ describe('ticket create view - user create action', () => {
 
     const emailField = await within(flyout).findByLabelText('Email')
 
-    await view.events.type(emailField, 'foo@customer.com')
+    await view.events.debounced(() => view.events.type(emailField, 'foo@customer.com'))
 
     const customerSwitch = within(flyout).queryByRole('switch', {
       name: 'CustomerPeople who create Tickets ask for help.',
@@ -133,7 +133,7 @@ describe('ticket create view - user create action', () => {
 
     const emailField = await within(flyout).findByLabelText('Email')
 
-    await view.events.type(emailField, 'foo@customer.com')
+    await view.events.debounced(() => view.events.type(emailField, 'foo@customer.com'))
 
     const customerSwitch = within(flyout).getByRole('switch', {
       name: 'CustomerPeople who create Tickets ask for help.',
