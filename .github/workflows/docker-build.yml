@@ -32,5 +32,5 @@ jobs:
           build-args: COMMIT_SHA=${{ github.sha }}
           push: true
           tags: |
-            newbytesolucoesdigitais/ndesk:latest
-            newbytesolucoesdigitais/ndesk:${{ env.ZAMMAD_VERSION }}
+            technewbyte/ndesk:latest
+            technewbyte/ndesk:${{ env.ZAMMAD_VERSION }}
