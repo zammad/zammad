@@ -1,0 +1,129 @@
+name: Test
+
+on:
+  pull_request:
+    branches: [newbyte-stable]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: TypeScript
+        run: pnpm lint:ts
+
+      - name: ESLint
+        run: pnpm lint:js
+
+      - name: Stylelint
+        run: pnpm lint:css
+
+  test-frontend:
+    name: Frontend Tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Vitest
+        run: pnpm test
+        env:
+          TZ: utc
+
+  test-backend:
+    name: Backend Tests
+    runs-on: ubuntu-24.04
+    container:
+      image: ruby:3.4.8-slim
+    services:
+      postgresql:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: zammad
+          POSTGRES_PASSWORD: zammad
+          POSTGRES_DB: zammad_test
+        options: >-
+          --health-cmd "pg_isready -U zammad"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:8-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      RAILS_ENV: test
+      REDIS_URL: redis://redis:6379
+      Z_LOCALES: "en-us:de-de"
+      TZ: Europe/London
+    steps:
+      - name: Install system dependencies
+        run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends \
+            build-essential git curl libpq-dev libimlib2-dev \
+            gettext shared-mime-info
+
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Cache gems
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: gems-${{ hashFiles('Gemfile.lock') }}
+
+      - name: Install dependencies
+        run: |
+          bundle config set --local deployment 'true'
+          bundle config set --local path 'vendor/bundle'
+          bundle install -j "$(nproc)"
+          pnpm install --frozen-lockfile
+
+      - name: Configure environment
+        run: bundle exec ruby .gitlab/configure_environment.rb
+
+      - name: Initialize database
+        run: bundle exec rake zammad:db:init
+
+      - name: Security scan
+        run: bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
+
+      - name: Precompile assets
+        run: bundle exec rake assets:precompile
+
+      - name: RSpec
+        run: bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration -t ~required_envs
+
+      - name: Reset database
+        run: bundle exec rake zammad:db:reset
+
+      - name: Minitest
+        run: bundle exec rake test:units
