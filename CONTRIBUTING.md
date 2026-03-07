@@ -47,7 +47,7 @@ All upstream workflows (`ci.yaml`, `docker-ci.yaml`, `docker-release.yaml`, `pac
 |---|---|
 | `DOCKERHUB_USERNAME` | Docker Hub login for pushing images |
 | `DOCKERHUB_TOKEN` | Docker Hub access token |
-| `SSH_PRIVATE_KEY` | Dedicated deploy key for prod-ndesk (NOT the shared autobase key) |
+| `SSH_PRIVATE_KEY` | Dedicated deploy key for prod-ndesk |
 
 ### Version stamping
 
