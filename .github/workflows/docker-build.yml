@@ -25,6 +25,11 @@ jobs:
             echo "tag=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           fi
 
+      - name: Stamp version with nb tag
+        run: |
+          base_version=$(cat VERSION | tr -d '[:space:]')
+          echo "${base_version}-${{ steps.tag.outputs.tag }}" > VERSION
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
