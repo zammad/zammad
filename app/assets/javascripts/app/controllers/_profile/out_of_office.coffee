@@ -20,6 +20,14 @@ class ProfileOutOfOffice extends App.ControllerSubContent
         out_of_office_replacement_id: user.out_of_office_replacement_id
         out_of_office_replacement_id_completion: user.preferences.out_of_office_replacement_id_completion
         out_of_office_text: user.preferences.out_of_office_text
+      # On initial load, clear replacement if OOO is not currently active (handles expired dates too)
+      if !user.isOutOfOffice()
+        @localData.out_of_office_replacement_id = null
+        @localData.out_of_office_replacement_id_completion = null
+    else if @localData.out_of_office isnt true
+      # After a save that disabled OOO, clear the replacement
+      @localData.out_of_office_replacement_id = null
+      @localData.out_of_office_replacement_id_completion = null
     form = $(App.view('profile/out_of_office')(
       user: user
       localData: @localData

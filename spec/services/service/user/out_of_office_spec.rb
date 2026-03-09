@@ -35,6 +35,23 @@ RSpec.describe Service::User::OutOfOffice do
       .to have_attributes(out_of_office: false)
   end
 
+  it 'preserves the replacement agent when disabling Out of Office' do
+    described_class
+      .new(agent,
+           enabled:     true,
+           start_at:    Date.parse('2011-02-03'),
+           end_at:      Date.parse('2011-03-03'),
+           replacement: replacement,
+           text:        'Out of office message')
+      .execute
+
+    described_class
+      .new(agent, enabled: false)
+      .execute
+
+    expect(agent.reload.out_of_office_replacement_id).to eq(replacement.id)
+  end
+
   it 'raises an error if given data is invalid' do
     service = described_class
       .new(agent,

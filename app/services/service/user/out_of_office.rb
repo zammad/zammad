@@ -18,7 +18,7 @@ class Service::User::OutOfOffice < Service::Base
     user.out_of_office                    = enabled
     user.out_of_office_start_at           = start_at
     user.out_of_office_end_at             = end_at
-    user.out_of_office_replacement        = replacement
+    user.out_of_office_replacement        = replacement if enabled
     user.preferences[:out_of_office_text] = text
 
     user.save!

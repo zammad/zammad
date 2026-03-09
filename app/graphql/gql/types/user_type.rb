@@ -67,6 +67,16 @@ module Gql::Types
     # field :country, String
     # field :address, String
 
+    def out_of_office
+      @object.out_of_office?
+    end
+
+    def out_of_office_replacement
+      return nil if !@object.out_of_office?
+
+      @object.out_of_office_replacement
+    end
+
     def secondary_organizations
       @object.organizations
     end
