@@ -52,6 +52,17 @@ class ObjectManager::Element::Ticket < ObjectManager::Element::Backend
   end
 
   def customer_record_access?
-    customer? && record.customer == user
+    return false if !customer?
+    return true if record.customer == user
+
+    shared_organization_record_access?
+  end
+
+  def shared_organization_record_access?
+    return false if record.organization_id.blank?
+    return false if user.organization_id.blank?
+    return false if !user.organization_id?(record.organization_id)
+
+    record.organization.shared?
   end
 end

@@ -206,5 +206,76 @@ RSpec.describe ObjectManager::Object do
         end
       end
     end
+
+    describe 'with ticket record and shared organization' do
+      let(:organization) { create(:organization, shared: true) }
+      let(:user)         { create(:customer, organization: organization) }
+      let(:other_customer) { create(:customer, organization: organization) }
+      let(:ticket)       { create(:ticket, customer: other_customer) }
+      let(:attributes) do
+        described_class
+          .new('Ticket')
+          .attributes(user, ticket, skip_permission:, act_as_customer:)
+      end
+      let(:screens) do
+        {
+          edit: {
+            'ticket.customer': {
+              shown: true
+            },
+          }
+        }
+      end
+
+      let(:data_option) do
+        {
+          permission: ['ticket.agent', 'ticket.customer'],
+        }
+      end
+
+      before do
+        create(:object_manager_attribute_text, name: attribute_name, screens: screens, data_option: data_option)
+        ObjectManager::Attribute.migration_execute
+      end
+
+      context 'when customer views own ticket' do
+        let(:ticket) { create(:ticket, customer: user) }
+
+        it 'includes customer-permissioned attributes' do
+          expect(attribute).to be_present
+        end
+
+        it 'applies ticket.customer screen options' do
+          expect(attribute[:screen]['edit']['shown']).to be true
+        end
+      end
+
+      context 'when customer views shared organization ticket' do
+        it 'includes customer-permissioned attributes' do
+          expect(attribute).to be_present
+        end
+
+        it 'applies ticket.customer screen options' do
+          expect(attribute[:screen]['edit']['shown']).to be true
+        end
+      end
+
+      context 'when organization is not shared' do
+        let(:organization) { create(:organization, shared: false) }
+
+        it 'does not include customer-permissioned attributes' do
+          expect(attribute).to be_nil
+        end
+      end
+
+      context 'when customer is not in the same organization' do
+        let(:other_organization) { create(:organization, shared: true) }
+        let(:other_customer) { create(:customer, organization: other_organization) }
+
+        it 'does not include customer-permissioned attributes' do
+          expect(attribute).to be_nil
+        end
+      end
+    end
   end
 end
