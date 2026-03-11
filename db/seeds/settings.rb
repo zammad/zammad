@@ -5569,7 +5569,7 @@ Setting.create_if_not_exists(
   name:        'kb_active',
   area:        'Kb::Core',
   description: __('Defines if Knowledge Base navbar button is enabled.'),
-  state:       true,
+  state:       false,
   preferences: {
     prio:           1,
     trigger:        ['menu:render'],
