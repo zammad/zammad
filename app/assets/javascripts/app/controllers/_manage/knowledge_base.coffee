@@ -26,6 +26,13 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
     @render()
     @fetchAndRender()
 
+    @controllerBind('config_update_local', @kbActiveConfigChanged)
+
+  kbActiveConfigChanged: (data) =>
+    return if data.name isnt 'kb_active'
+    return if !@knowledge_base_id
+    @headerSwitchInput.prop('checked', data.value)
+
   fetchAndRender: =>
     @startLoading()
 
