@@ -4,7 +4,7 @@
 
 <% if @context_data[:instruction_context].present? -%>
 <% @context_data[:instruction_context][:object_attributes].each do |attribute_name, attribute_value| -%>
-The available options from "<%= attribute_value[:label] %>" are definied inside the XML format:
+The available options from "<%= attribute_value[:label] %>" are defined inside the XML format:
 <<%= attribute_name %>>
 <% attribute_value[:items].each do |option| -%>
   <option>

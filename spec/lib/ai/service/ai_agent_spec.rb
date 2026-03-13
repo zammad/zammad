@@ -72,7 +72,7 @@ RSpec.describe AI::Service::AIAgent, :aggregate_failures do
 
       # Check for the complete XML structure for priority_id (with extra newlines from ERB)
       expect(args[:prompt_system]).to include(<<~XML.strip)
-        The available options from "Priority" are definied inside the XML format:
+        The available options from "Priority" are defined inside the XML format:
         <priority_id>
           <option>
             <value>1</value>
