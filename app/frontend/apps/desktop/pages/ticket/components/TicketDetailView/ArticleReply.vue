@@ -44,7 +44,7 @@ const currentTicketArticleType = computed(() => {
 })
 
 const allowedArticleTypes = computed(() => {
-  return ['note', 'phone', currentTicketArticleType.value]
+  return ['phone', currentTicketArticleType.value]
 })
 
 const availableArticleTypes = computed(() => {

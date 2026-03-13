@@ -38,7 +38,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @internalSelector = false
     @setPossibleArticleTypes()
-    @type = @normalizeArticleType(@defaults['type'] || 'note')
+    @type = @normalizeArticleType(@defaults['type'] || 'phone')
 
     if @ticket.currentView() is 'agent'
       @internalSelector = true
@@ -101,7 +101,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @controllerBind('ui::ticket::taskReset', (data) =>
       @releaseGlobalClickEvents()
       return if data.ticket_id.toString() isnt @ticket_id.toString()
-      @type        = 'note'
+      @type        = 'phone'
       @defaults    = {}
       @attachments = []
       @render()
