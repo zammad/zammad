@@ -675,7 +675,8 @@
           'index':             'KnowledgeBase::Answer::Translation',
           'url_type':          'agent',
           'highlight_enabled': false,
-          'include_locale': true,
+          'include_locale':    true,
+          'include_subtitle':  true,
         }),
         processData: true,
         success: function(data, status, xhr) {
