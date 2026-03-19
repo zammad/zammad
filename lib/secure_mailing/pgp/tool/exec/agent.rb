@@ -11,8 +11,12 @@ module SecureMailing::PGP::Tool::Exec::Agent
       # Wait for the gpg-agent to shut down and remove its socket file.
       time_slept = 0
       while File.exist?(socket)
-        raise __("The 'gpg-agent' process could not be stopped.") if (time_slept += 0.1) > 10
-
+        if (time_slept += 0.1) > 10
+          # Log a warning and force to kill remaining agents
+          Rails.logger.warn("PGP: Agent socket still exists. Killing leftover agents.")
+          system("pkill -9 -u #{Process.uid} gpg-agent")
+          break
+        end
         sleep 0.1
       end
     end
