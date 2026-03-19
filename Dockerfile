@@ -22,7 +22,7 @@ ENV RAILS_ENV="production" \
 # Use `postgresql-client` meta-package to have the latest `pg_dump` that works even with the latest PostgreSQL versions.
 #   https://github.com/zammad/zammad/issues/6009
 RUN apt-get update -qq && \
-    apt-get install -y postgresql-common && \
+    apt-get install -y tini postgresql-common && \
     /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y && \
     apt-get install --no-install-recommends -y curl libimlib2 libpq5 nginx gnupg postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
@@ -118,7 +118,7 @@ RUN ln -s "/opt/zammad/bin/docker-entrypoint" /docker-entrypoint.sh
 
 # Run and own only the runtime files as a non-root user for security
 USER 1000:1000
-ENTRYPOINT ["/opt/zammad/bin/docker-entrypoint"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/opt/zammad/bin/docker-entrypoint"]
 
 # Set labels to help portainer.io admins to access rails console.
 LABEL io.portainer.commands.rails-console="bundle exec rails c"
