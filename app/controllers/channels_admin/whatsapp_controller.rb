@@ -12,7 +12,7 @@ class ChannelsAdmin::WhatsappController < ChannelsAdmin::BaseController
       .new(params: params.permit!)
       .execute
 
-    render json: mask_channel(channel)
+    render json: mask_sensitive_values(channel.as_json, channel)
   rescue => e
     raise Exceptions::UnprocessableEntity, e.message
   end
@@ -25,7 +25,7 @@ class ChannelsAdmin::WhatsappController < ChannelsAdmin::BaseController
       .new(params: unmasked_params, channel_id: params[:id])
       .execute
 
-    render json: mask_channel(channel)
+    render json: mask_sensitive_values(channel.as_json, channel)
   rescue => e
     raise Exceptions::UnprocessableEntity, e.message
   end
@@ -49,9 +49,9 @@ class ChannelsAdmin::WhatsappController < ChannelsAdmin::BaseController
     unmask_sensitive_params(params.permit!.to_h, channel.options)
   end
 
-  def mask_channel(channel)
-    SensitiveParamsHelper
-      .new(Channel::SENSITIVE_FIELDS)
-      .mask(channel.as_json)
+  def sensitive_attributes(_input, object)
+    return Channel::SENSITIVE_FIELDS if object.is_a?(Channel)
+
+    SENSITIVE_FIELDS
   end
 end
