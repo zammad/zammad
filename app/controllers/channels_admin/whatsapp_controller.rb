@@ -26,8 +26,15 @@ class ChannelsAdmin::WhatsappController < ChannelsAdmin::BaseController
   end
 
   def preload
+    access_token = params[:access_token]
+
+    if access_token == SensitiveParamsHelper::SENSITIVE_MASK && params[:channel_id].present?
+      channel = Channel.in_area(area).find(params[:channel_id])
+      access_token = channel.options['access_token']
+    end
+
     data = Service::Channel::Whatsapp::Preload
-      .new(business_id: params[:business_id], access_token: params[:access_token])
+      .new(business_id: params[:business_id], access_token: access_token)
       .execute
 
     render json: { data: }

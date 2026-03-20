@@ -52,6 +52,38 @@ RSpec.describe Service::Channel::Whatsapp::Update, current_user_id: 1 do
       end
     end
 
+    context 'with masked sensitive params' do
+      let(:params) do
+        {
+          group_id:        1,
+          business_id:     Faker::Number.unique.number(digits: 15),
+          access_token:    SensitiveParamsHelper::SENSITIVE_MASK,
+          app_secret:      SensitiveParamsHelper::SENSITIVE_MASK,
+          phone_number_id:,
+          welcome:         Faker::Lorem.unique.sentence,
+        }
+      end
+
+      let(:phone_number_info) do
+        {
+          name:         Faker::Name.unique.name,
+          phone_number: Faker::PhoneNumber.unique.cell_phone_with_country_code,
+        }
+      end
+
+      before do
+        allow_any_instance_of(Whatsapp::Account::PhoneNumbers).to receive(:get).and_return(phone_number_info)
+      end
+
+      it 'keeps original sensitive values' do
+        expect { service.execute }
+          .to change { channel.reload.options['business_id'] }.to(params[:business_id])
+          .and not_change { channel.options['access_token'] }
+          .and not_change { channel.options['app_secret'] }
+          .and change { channel.options['welcome'] }.to(params[:welcome])
+      end
+    end
+
     context 'when phone number metadata cannot be retrieved' do
       before do
         allow_any_instance_of(Whatsapp::Account::PhoneNumbers).to receive(:get).and_return(nil)
