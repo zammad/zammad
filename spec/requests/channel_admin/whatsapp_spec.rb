@@ -72,15 +72,16 @@ RSpec.describe 'WhatsApp channel admin API endpoints', aggregate_failures: true,
 
     context 'with masked access_token and channel_id' do
       let(:channel) { create(:whatsapp_channel) }
-
-      it 'restores the real access_token from the channel' do
-        params = { business_id: channel.options['business_id'], access_token: SensitiveParamsHelper::SENSITIVE_MASK, channel_id: channel.id }
-        output = {
+      let(:params)  { { business_id: channel.options['business_id'], access_token: SensitiveParamsHelper::SENSITIVE_MASK, channel_id: channel.id } }
+      let(:output) do
+        {
           'phone_numbers' => [
             { 'name' => 'phone', 'value' => 123 }
           ]
         }
+      end
 
+      it 'restores the real access_token from the channel' do
         allow_any_instance_of(Service::Channel::Whatsapp::Preload)
           .to receive(:execute)
           .and_return(output)
