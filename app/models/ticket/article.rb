@@ -327,6 +327,7 @@ returns
   def attributes_with_association_ids
     attributes = super
     add_attachments_to_attributes(attributes)
+    normalize_email_recipient_attributes(attributes)
     if attributes['body'] && attributes['content_type'] =~ %r{text/html}i
       attributes['body'] = Rails.cache.fetch("#{self.class}/#{cache_key_with_version}/body/dynamic_image_size") do
         HtmlSanitizer.dynamic_image_size(attributes['body'])
@@ -344,6 +345,18 @@ returns
 
   def add_time_unit_to_attributes(attributes)
     attributes['time_unit'] = ticket_time_accounting&.time_unit.presence || nil
+    attributes
+  end
+
+  def normalize_email_recipient_attributes(attributes)
+    return attributes if attributes.blank?
+
+    %w[to cc].each do |key|
+      next if attributes[key].blank?
+
+      attributes[key] = Channel::EmailRecipientNormalizer.normalize(attributes[key])
+    end
+
     attributes
   end
 
