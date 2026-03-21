@@ -40,7 +40,7 @@ class Channel::EmailRecipientNormalizer
 
       seen[identifier] = true
 
-      return raw_address unless is_email
+      return raw_address if !is_email
 
       email = raw_address.downcase
 
