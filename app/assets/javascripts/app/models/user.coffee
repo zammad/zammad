@@ -444,52 +444,48 @@ class App.User extends App.Model
   @current: App.Session.get
 
   displayName: ->
-    if !_.isEmpty(@firstname)
-      name = @firstname
-    if !_.isEmpty(@lastname)
-      if _.isEmpty(name)
-        name = ''
+    format = App.Config.get('ui_user_name_format') or 'first_last'
+    parts =
+      if format == 'last_first'
+        [@lastname, @firstname]
       else
-        name = name + ' '
-      name = name + @lastname
-    return name if !_.isEmpty(name)
-    if @email
-      return @email
-    if @phone
-      return @phone
-    if @mobile
-      return @mobile
-    if @login
-      return @login
-    return '-'
+        [@firstname, @lastname]
+    parts = _.map(parts, (part) -> part?.toString().trim())
+    name = _.compact(parts).join(' ')
+    return name   if name
+    return @email if @email
+    return @phone if @phone
+    return @mobile if @mobile
+    return @login if @login
+    '-'
 
   displayNameLong: ->
-    if !_.isEmpty(@firstname)
-      name = @firstname
-    if !_.isEmpty(@lastname)
-      if _.isEmpty(name)
-        name = ''
+    format = App.Config.get('ui_user_name_format') or 'first_last'
+    parts =
+      if format == 'last_first'
+        [@lastname, @firstname]
       else
-        name = name + ' '
-      name = name + @lastname
-    if !_.isEmpty(name)
-      if !_.isEmpty(@organization)
-        if typeof @organization is 'object'
-          name = "#{name} (#{@organization.name})"
-        else
-          name = "#{name} (#{@organization})"
-      else if !_.isEmpty(@department)
-        name = "#{name} (#{@department})"
-    return name if !_.isEmpty(name)
-    if @email
-      return @email
-    if @phone
-      return @phone
-    if @mobile
-      return @mobile
-    if @login
-      return @login
-    return '-'
+        [@firstname, @lastname]
+    parts = _.map(parts, (part) -> part?.toString().trim())
+    name = _.compact(parts).join(' ')
+    if name
+      if @organization
+        org =
+          if typeof @organization is 'object'
+            @organization.name
+          else
+            @organization
+        org = org?.toString().trim()
+        name = "#{name} (#{org})" if org
+      else if @department
+        department = @department?.toString().trim()
+        name = "#{name} (#{department})" if department
+      return name
+    return @email  if @email
+    return @phone  if @phone
+    return @mobile if @mobile
+    return @login  if @login
+    '-'
 
   recipientName: (ticket, withEmail = false) ->
     format        = App.Config.get('ticket_define_email_from')
