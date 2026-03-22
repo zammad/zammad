@@ -147,7 +147,11 @@ class SessionsController < ApplicationController
     end
 
     # redirect to app
-    redirect_to redirect_url
+    if session[:doorkeeper_return_to]&.start_with?('/oauth/authorize')
+      redirect_to session.delete(:doorkeeper_return_to)
+    else
+      redirect_to redirect_url
+    end
   rescue Authorization::Provider::AccountError => e
     forbidden(e)
   end
