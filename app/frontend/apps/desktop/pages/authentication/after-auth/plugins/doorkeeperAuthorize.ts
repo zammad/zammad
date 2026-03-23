@@ -2,12 +2,12 @@
 
 import { EnumAfterAuthType } from '#shared/graphql/types.ts'
 
-import DoorKeeperAuthorize from '../../components/AfterAuth/DoorKeeperAuthorize.vue'
+import DoorkeeperAuthorize from '../../components/AfterAuth/DoorkeeperAuthorize.vue'
 
 import type { AfterAuthPlugin } from '../types.ts'
 
 export default {
-  name: EnumAfterAuthType.DoorKeeperAuthorize,
+  name: EnumAfterAuthType.DoorkeeperAuthorize,
   title: __('Redirecting to authorization…'),
-  component: DoorKeeperAuthorize,
+  component: DoorkeeperAuthorize,
 } satisfies AfterAuthPlugin

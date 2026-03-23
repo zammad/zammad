@@ -4921,6 +4921,12 @@
           "interfaces": null,
           "enumValues": [
             {
+              "name": "DoorkeeperAuthorize",
+              "description": "DoorkeeperAuthorize",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "TwoFactorConfiguration",
               "description": "TwoFactorConfiguration",
               "isDeprecated": false,
