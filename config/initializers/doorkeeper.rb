@@ -13,7 +13,7 @@ Doorkeeper.configure do
       user
     else
       session[:doorkeeper_return_to] = request.fullpath
-      redirect_to(root_path)
+      redirect_to "/login?redirect=#{CGI.escape(request.fullpath)}"
     end
   end
 
