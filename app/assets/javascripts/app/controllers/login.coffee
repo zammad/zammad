@@ -167,6 +167,11 @@ class Login extends App.ControllerFullPage
 
   success: (data, status, xhr) =>
 
+    # resume pending OAuth authorization if present
+    if data.doorkeeper_return_to
+      window.location.href = data.doorkeeper_return_to
+      return
+
     # redirect to #
     @log 'notice', 'REDIRECT to -#/-'
     @navigate '#/'
