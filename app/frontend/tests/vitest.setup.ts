@@ -1,12 +1,11 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+import { setup as setupA11y, toBeAccessible } from '@sa11y/vitest'
 import * as domMatchers from '@testing-library/jest-dom/matchers'
 import { toBeDisabled } from '@testing-library/jest-dom/matchers'
 import { configure } from '@testing-library/vue'
 import { expect, vi } from 'vitest'
-import * as matchers from 'vitest-axe/matchers'
-import 'vitest-axe/extend-expect'
 
 import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
 
@@ -262,8 +261,12 @@ afterEach((context) => {
   }
 })
 
-// Import the matchers for accessibility testing with aXe.
-expect.extend(matchers)
+setupA11y()
+// There is a problem that sa11y uses still vitest v3
+// https://github.com/salesforce/sa11y/blob/master/packages/vitest/package.json
+// In vitest v.4 we still need to manually provide the assertion api
+expect.extend({ toBeAccessible })
+
 expect.extend(assertions)
 expect.extend(domMatchers)
 
@@ -293,10 +296,20 @@ declare module 'vitest' {
     skipConsole: boolean
   }
 
-  interface Assertion<T = any>
-    extends matchers.AxeMatchers, TestingLibraryMatchers<typeof expect.stringContaining, T> {}
-  interface AsymmetricMatchersContaining
-    extends matchers.AxeMatchers, TestingLibraryMatchers<any, any> {}
+  interface Assertion<T = any> extends TestingLibraryMatchers<typeof expect.stringContaining, T> {
+    /**
+     * @param options - Allow passing custom rulesets
+     * @sa11y/preset-rule base, extend, full
+     */
+    toBeAccessible(options?: Parameters<typeof toBeAccessible>[1]): Promise<void>
+  }
+  interface AsymmetricMatchersContaining extends TestingLibraryMatchers<any, any> {
+    /**
+     * @param options - Allow passing custom rulesets
+     * @sa11y/preset-rule base, extend, full
+     */
+    toBeAccessible(options?: Parameters<typeof toBeAccessible>[1]): Promise<void>
+  }
 }
 
 declare global {

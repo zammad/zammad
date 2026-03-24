@@ -1,7 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { axe } from 'vitest-axe'
-
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -16,10 +14,8 @@ import {
   mockOrganizationObjectAttributes,
 } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
 
-// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
-
 describe('testing organization a11y', () => {
-  it.skip('has no accessibility violations', async () => {
+  it('has no accessibility violations', async () => {
     mockPermissions(['admin.organization'])
     mockOnlineNotificationSeenGql()
 
@@ -34,7 +30,6 @@ describe('testing organization a11y', () => {
 
     await waitUntil(() => mockApi.calls.resolve)
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    expect(view.container).toBeAccessible()
   })
 })

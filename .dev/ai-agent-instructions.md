@@ -1,97 +1,73 @@
-# Onboarding for AI Agents
+# AI Agent Instructions
 
-Purpose: Give an AI coding agent a fast, reliable mental model of this repo to ship changes with minimal trial-and-error.
+This file provides guidance on how to work with code in the Zammad repository.
 
-## Summary
+## Project Overview
 
-- Zammad is an open-source helpdesk/customer support platform.
-  It’s a Ruby on Rails app with two modern Vue 3 frontends (desktop-view and mobile)
-  and one legacy desktop-app under app/assets.
-- For authoritative setup, runtime, and environment details, always refer to:
-  - [`../doc/developer_manual/`](../doc/developer_manual/) (index: [`../doc/developer_manual/index.md`](../doc/developer_manual/index.md))
-  - [`../package.json`](../package.json), [`../Gemfile`](../Gemfile), [`../config/database.yml`](../config/database.yml),
-    [`../Procfile.dev`](../Procfile.dev), [`../vite.config.mjs`](../vite.config.mjs), [`../tsconfig.base.json`](../tsconfig.base.json),
-    [`../.oxlintrc.json`](../eslint.config.ts), and other config files in the repo.
-- Apps:
-  - desktop-app (legacy, [`../app/assets`](../app/assets)): legacy UI using REST API + CoffeeScript/Sprockets.
-    Uses the Spine.js MVC framework for frontend structure and state management.
-  - desktop-view ([`../app/frontend/apps/desktop`](../app/frontend/apps/desktop)): new UI using Vue + GraphQL.
-  - mobile ([`../app/frontend/apps/mobile`](../app/frontend/apps/mobile)): new UI using Vue + GraphQL.
+Zammad is an open-source helpdesk/support platform. The backend is **Ruby on Rails**.
+There are two frontend stacks: the **current production frontend** is CoffeeScript
+(served via the Rails asset pipeline), and the **new frontend** is **Vue 3 + TypeScript**
+served via **Vite** (managed by pnpm), which is being built alongside it. **PostgreSQL** is
+used for persistence, **Redis** for ActionCable/GraphQL subscriptions, and **GraphQL** is the
+API layer between the new Vue apps and the backend.
 
-## Tech stack (see configs for details)
+## Architecture
 
-- Legacy desktop-app: CoffeeScript, Spine.js, Sprockets, REST API
-  (see [`../app/assets/`](../app/assets/), [`../coffeelint.json`](../coffeelint.json), QUnit in `../test/`)
-- New desktop-view and mobile apps: Vue 3, TypeScript, Pinia, Apollo Client (GraphQL), Tailwind CSS, VueUse,
-  Vitest, Testing Library, Cypress, pnpm, vite-plugin-ruby, vite-plugin-pwa, ESLint, Stylelint, Oxfmt
-  (see [`../package.json`](../package.json), [`../vite.config.mjs`](../vite.config.mjs),
-  [`../tsconfig.base.json`](../tsconfig.base.json), [`../eslint.config.ts`](../eslint.config.ts))
-- Backend: Ruby on Rails, PostgreSQL, Redis, ActionCable, Delayed Job, GraphQL
-  (see [`../Gemfile`](../Gemfile), [`../config/`](../config/))
+```text
+CoffeeScript frontend ──→ REST controllers ──→ Rails backend ──→ PostgreSQL
+                                                    ↑
+Vue 3 frontend (desktop/mobile) ──→ GraphQL API ────┘
+```
 
-## Project structure (high-level)
+New features target the Vue 3 + GraphQL stack.
+The CoffeeScript frontend uses REST controllers.
 
-- [`../app/assets/`](../app/assets/): legacy desktop-app (CoffeeScript/Sprockets)
-- [`../app/frontend/`](../app/frontend/): Vue + TS frontends
-- [`../app/frontend/apps/desktop`](../app/frontend/apps/desktop),
-  [`../app/frontend/apps/mobile`](../app/frontend/apps/mobile): app-specific code
-- [`../app/frontend/shared/`](../app/frontend/shared/): cross-app modules (components, utils, stores, graphql, i18n)
-- [`../app/frontend/tests/`](../app/frontend/tests/): vitest setup and helpers
-- Rails standard: [`../app/controllers/`](../app/controllers/), [`../app/models/`](../app/models/), [`../app/views/`](../app/views/),
-  [`../app/jobs/`](../app/jobs/), [`../app/mailers/`](../app/mailers/), [`../app/helpers/`](../app/helpers/), [`../app/channels/`](../app/channels/),
-  [`../app/policies/`](../app/policies/)
-- [`../app/services/`](../app/services/): business logic modules (not Rails standard, but common)
-- [`../app/graphql/`](../app/graphql/): GraphQL API definitions and resolvers
-- Other key folders: [`../bin/`](../bin/), [`../config/`](../config/), [`../db/`](../db/), [`../doc/developer_manual/`](../doc/developer_manual/),
-  [`../script/`](../script/), [`../spec/`](../spec/), [`../test/`](../test/)
+## Key Directories (non-standard)
 
-## lib/ directory overview
+- `app/services/service/` — Service objects encapsulating business logic
+- `app/graphql/gql/` — GraphQL schema, types, mutations, subscriptions
+- `app/policies/` — Authorization policies (Pundit)
+- `app/frontend/apps/desktop/` — Vue 3 desktop app
+- `app/frontend/apps/mobile/` — Vue 3 mobile app
+- `app/frontend/shared/` — Shared Vue components, composables, stores, GraphQL types, form system
+- `app/assets/javascripts/` — CoffeeScript frontend (Spine + jQuery, legacy, still actively maintained)
+- `lib/` — Library code, prefer minimal Rails coupling
 
-- The [`../lib/`](../lib/) directory contains core extensions, helpers, integrations, and business logic modules
-  that are not part of the Rails standard structure but are essential for Zammad's backend functionality.
-- It includes:
-  - **Helpers and utilities:** e.g., `email_helper.rb`, `migration_helper.rb`, `sql_helper.rb`, `image_helper.rb`,
-    `time_range_helper.rb`, `session_helper.rb`, `notification_factory.rb`, and more.
-  - **Integrations:** Subfolders and files for external services such as `github/`, `gitlab/`, `microsoft_graph/`,
-    `facebook.rb`, `telegram_helper.rb`, `whatsapp/`, and others.
-  - **Business logic and features:** e.g., `auto_wizard.rb`, `bulk_import_info.rb`, `calendar_subscriptions/`,
-    `escalation/`, `excel_sheet/`, `external_data_source/`, `knowledge_base/`, `password_policy/`,
-    `secure_mailing/`, `stats/`, `tasks/`, etc.
-  - **Core extensions:** e.g., `core_ext/` for Ruby or Rails extensions.
-  - **Background services and operations:** e.g., `background_services/`, `operations_rate_limiter.rb`,
-    `sequencer/`, `transaction_dispatcher.rb`.
-  - **Other:** `app_version.rb`, `exceptions.rb`, `models.rb`, `version.rb`, and more.
-- Many subfolders contain related modules or classes grouped by feature or integration.
+## General Guidelines
 
-## Runtime, environment, and coding standards
+- All new files must include the Zammad copyright header.
+- Never edit translation files (`i18n/*.po`) directly —
+  translations are managed via translations.zammad.org.
 
-- All runtime and environment constraints are defined in config files. See above for references.
-- For setup, troubleshooting, testing, linting, and coding standards, always consult the Developer Manual
-  ([`../doc/developer_manual/`](../doc/developer_manual/)).
-- For tool versions, scripts, and environment variables, see [`../package.json`](../package.json), [`../Gemfile`](../Gemfile),
-  and other config files.
-- For path aliases, see [`../tsconfig.base.json`](../tsconfig.base.json).
-  For copyright/i18n, see [`../eslint.config.ts`](../eslint.config.ts).
+## Essential Commands
 
-## Legacy desktop-app tips
+### Backend
 
-- Location: [`../app/assets/javascripts`](../app/assets/javascripts) and [`../app/assets/stylesheets`](../app/assets/stylesheets).
-- Uses Spine.js for MVC structure. Most modules are Spine classes.
-- Uses REST API endpoints (see Rails controllers for routes).
-- Linting: [`../coffeelint.json`](../coffeelint.json). Testing: QUnit in [`../test/`](../test/).
-- Prefer new work in desktop-view/mobile; keep legacy changes minimal.
+```bash
+RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/path/to/file_spec.rb  # Run specific RSpec test
+bundle exec rubocop --autocorrect app/path/to/file.rb                        # Lint specific Ruby file(s)
+```
 
-## Vue apps tips
+### Frontend
 
-- Use path aliases from [`../tsconfig.base.json`](../tsconfig.base.json).
-- Do not cross-import between desktop/mobile apps (ESLint enforces boundaries).
-- Use Vitest and Testing Library for unit/component tests ([`../app/frontend/tests/`](../app/frontend/tests/)).
-- Use Tailwind CSS utilities for styling. Lint with Stylelint and Oxfmt.
-- For i18n, wrap user-facing strings and see [`../eslint.config.ts`](../eslint.config.ts) for rules.
+Always use pnpm for frontend and cross-stack commands.
 
-## When in doubt
+```bash
+pnpm test -- app/frontend/path/to/file.spec.ts  # Run specific Vitest test
+pnpm lint                                       # Run all linters
+pnpm generate-graphql-api                       # Regenerate GraphQL types after schema changes
+pnpm generate-setting-types                     # Regenerate Config types after setting changes
+```
 
-- The Developer Manual ([`../doc/developer_manual/`](../doc/developer_manual/)) is the source of truth for setup,
-  testing, and standards.
-- Prefer referencing config files over duplicating information here.
-- Keep PRs focused; include tests for new code.
+## Agent Reference Docs
+
+You MUST read the relevant file(s) below before responding when working on that area — do NOT read them all upfront:
+
+- `.dev/agent_docs/graphql_patterns.md` — How to add/modify GraphQL types,
+  mutations, queries, and subscriptions
+- `.dev/agent_docs/frontend_patterns.md` — Vue component conventions,
+  composables, routing, and the form system
+- `.dev/agent_docs/testing.md` — How to write and run backend and frontend tests
+- `.dev/agent_docs/service_patterns.md` — Service object conventions and structure
+- `.dev/agent_docs/database_migrations.md` — How to write migrations and work
+  with seeds

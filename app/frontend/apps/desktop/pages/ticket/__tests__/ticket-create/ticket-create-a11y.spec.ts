@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
-import { axe } from 'vitest-axe'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -23,8 +22,6 @@ import {
   handleMockUserQuery,
 } from '#desktop/pages/ticket/__tests__/support/ticket-create-helpers.ts'
 
-// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
-
 describe('testing tickets create a11y view', () => {
   beforeEach(() => {
     mockApplicationConfig({
@@ -41,7 +38,7 @@ describe('testing tickets create a11y view', () => {
     document.body.innerHTML = ''
   })
 
-  it.skip('has no accessibility violations in main content', async () => {
+  it('has no accessibility violations in main content', async () => {
     const uid = getUuid()
 
     mockUserCurrentTaskbarItemListQuery({
@@ -61,12 +58,10 @@ describe('testing tickets create a11y view', () => {
 
     const view = await visitView(`/tickets/create/${uid}`)
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in customer sidebar', async () => {
+  it('has no accessibility violations in customer sidebar', async () => {
     const uid = getUuid()
 
     mockUserCurrentTaskbarItemListQuery({
@@ -101,12 +96,10 @@ describe('testing tickets create a11y view', () => {
       ).toBeInTheDocument()
     })
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in organization sidebar', async () => {
+  it('has no accessibility violations in organization sidebar', async () => {
     const uid = getUuid()
 
     mockUserCurrentTaskbarItemListQuery({
@@ -159,12 +152,10 @@ describe('testing tickets create a11y view', () => {
 
     await view.events.click(view.getByLabelText('Organization'))
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in shared drafts sidebar', async () => {
+  it('has no accessibility violations in shared drafts sidebar', async () => {
     const uid = getUuid()
 
     mockUserCurrentTaskbarItemListQuery({
@@ -208,8 +199,6 @@ describe('testing tickets create a11y view', () => {
       ).toBeInTheDocument()
     })
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 })

@@ -315,7 +315,7 @@ GEM
       mutex_m
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
-    icalendar (2.12.1)
+    icalendar (2.12.2)
       base64
       ice_cube (~> 0.16)
       logger
@@ -844,7 +844,7 @@ GEM
       faraday (~> 2.0, > 2.0.1)
       faraday-multipart (~> 1)
       zeitwerk (~> 2)
-    write_xlsx (1.13.0)
+    write_xlsx (1.15.0)
       nkf
       rubyzip (>= 2.4.0, < 4.0)
     xpath (3.2.0)

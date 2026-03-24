@@ -51,6 +51,13 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
     aria-expanded="false"
     @click="toggle(true)"
   >
-    <CommonUserAvatar v-if="user" :entity="user" class="flex!" :size="avatarSize" personal />
+    <CommonUserAvatar
+      v-if="user"
+      aria-hidden="true"
+      :entity="user"
+      class="flex!"
+      :size="avatarSize"
+      personal
+    />
   </button>
 </template>

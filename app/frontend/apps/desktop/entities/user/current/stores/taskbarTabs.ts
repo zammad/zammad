@@ -281,6 +281,9 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
 
         let existingTaskbarItemList = cache.readQuery<UserCurrentTaskbarItemListQuery>({
           query: UserCurrentTaskbarItemListDocument,
+          variables: {
+            app: EnumTaskbarApp.Desktop,
+          },
         })
 
         existingTaskbarItemList = {
@@ -293,6 +296,9 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
 
         cache.writeQuery({
           query: UserCurrentTaskbarItemListDocument,
+          variables: {
+            app: EnumTaskbarApp.Desktop,
+          },
           data: existingTaskbarItemList,
         })
       },

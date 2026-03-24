@@ -1,7 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { axe } from 'vitest-axe'
-
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
@@ -22,19 +20,16 @@ import {
 import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
 import { mockTicketsByOverview } from './mocks/overview.ts'
 
-// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
-
-describe.skip('testing ticket a11y', () => {
+describe('testing ticket a11y', () => {
   beforeEach(() => {
     mockTicketOverviews()
   })
 
   test('ticket overview has no accessibility violations', async () => {
     mockTicketsByOverview([])
-    await visitView('/tickets/view')
+    const view = await visitView('/tickets/view')
 
-    const results = await axe(document.body)
-    expect(results).toHaveNoViolations()
+    expect(view.container).toBeAccessible()
   })
 
   test('ticket detail view has no accessibility violations', async () => {
@@ -48,8 +43,7 @@ describe.skip('testing ticket a11y', () => {
 
     await waitUntilTicketLoaded()
 
-    const results = await axe(document.body)
-    expect(results).toHaveNoViolations()
+    expect(view.container).toBeAccessible()
   })
 
   test('ticket organization information has no accessibility violations', async () => {
@@ -65,8 +59,9 @@ describe.skip('testing ticket a11y', () => {
 
     await waitUntil(() => mockApi.calls.resolve && mockAttributes.calls.resolve)
 
-    const results = await axe(document.body)
-    expect(results).toHaveNoViolations()
+    const view = await visitView('/tickets/1/information/organization')
+
+    expect(view.container).toBeAccessible()
   })
 
   test('ticket user information has no accessibility violations', async () => {
@@ -80,7 +75,8 @@ describe.skip('testing ticket a11y', () => {
 
     await waitUntilApisResolved(mockUser, mockAttributes)
 
-    const results = await axe(document.body)
-    expect(results).toHaveNoViolations()
+    const view = await visitView('/tickets/1/information/customer')
+
+    expect(view.container).toBeAccessible()
   })
 })

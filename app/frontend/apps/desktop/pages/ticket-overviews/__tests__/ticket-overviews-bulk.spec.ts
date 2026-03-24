@@ -248,7 +248,7 @@ describe('Ticket Overviews > Async bulk update notifications', () => {
     // We expect two of the same labels: one in the notification message and one instead of the bulk actions button.
     expect(await view.findAllByText('Bulk action in progress…')).toHaveLength(2)
 
-    await view.events.click(view.getByRole('button', { name: 'Close notification' }))
+    await view.events.click(view.getByRole('button', { name: 'Hide notification' }))
 
     // After dismissing, the notification should be gone, but the label replacing the button should still be there.
     expect(view.getAllByText('Bulk action in progress…')).toHaveLength(1)

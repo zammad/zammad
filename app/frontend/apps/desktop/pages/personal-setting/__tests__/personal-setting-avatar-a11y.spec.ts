@@ -1,22 +1,39 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { axe } from 'vitest-axe'
+import { defineComponent } from 'vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
-// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
-
-describe('testing avatar a11y view', () => {
-  it.skip('has no accessibility violations', async () => {
-    await visitView('/personal-setting/avatar')
-
-    const results = await axe(document.body)
-    expect(results).toHaveNoViolations()
+// Is not properly supported we mock out that dependency as it is not relevant for the test
+vi.mock('vue-advanced-cropper', () => {
+  const Cropper = defineComponent({
+    emits: ['change'],
+    mounted() {
+      this.$emit('change', {
+        canvas: {
+          toDataURL() {
+            return 'cropped image url'
+          },
+        },
+      })
+    },
+    template: '<div></div>',
   })
 
-  // TODO: some accessibility needs to be fixed.
-  it.skip('has no accessibility violations with upload new avatar by file flyout', async () => {
+  return {
+    Cropper,
+  }
+})
+
+describe('testing avatar a11y view', () => {
+  it('has no accessibility violations', async () => {
+    await visitView('/personal-setting/avatar')
+
+    await expect(document.body).toBeAccessible()
+  })
+
+  it('has no accessibility violations with upload new avatar by file flyout', async () => {
     const view = await visitView('/personal-setting/avatar')
 
     const file = new File([], 'test.jpg', { type: 'image/jpeg' })
@@ -25,10 +42,9 @@ describe('testing avatar a11y view', () => {
     await waitForNextTick()
 
     await view.findByRole('complementary', {
-      name: 'Crop Image',
+      name: 'Crop image',
     })
 
-    const results = await axe(document.body)
-    expect(results).toHaveNoViolations()
+    await expect(document.body).toBeAccessible()
   })
 })

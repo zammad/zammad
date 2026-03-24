@@ -14,7 +14,11 @@ class PasswordPolicy
     end
 
     def self.applicable?
-      Setting.get('password_need_special_character').to_i == 1
+      # Need to explicitly cast to boolean
+      # because this setting was formerly stored as int
+      # See fix for:
+      # https://github.com/zammad/zammad/issues/5053
+      ActiveModel::Type::Boolean.new.cast(Setting.get('password_need_special_character'))
     end
   end
 end

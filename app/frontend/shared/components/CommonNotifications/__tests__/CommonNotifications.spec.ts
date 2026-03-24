@@ -290,10 +290,9 @@ describe('CommonNotifications.vue', () => {
       })
       await nextTick()
 
-      const closeButton = wrapper.getByRole('button', { name: 'Close notification' })
+      const hideButton = wrapper.getByRole('button', { name: 'Hide notification' })
 
-      expect(closeButton).toBeInTheDocument()
-      expect(wrapper.getByIconName('x-lg')).toBeInTheDocument()
+      expect(hideButton).toHaveTextContent('Hide')
     })
 
     it('removes notification when close button is clicked', async () => {

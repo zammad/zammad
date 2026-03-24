@@ -8,12 +8,12 @@ RSpec.describe PasswordPolicy::Digit do
 
   describe '.applicable?' do
     it "returns false when Setting 'password_need_digit' is disabled" do
-      Setting.set('password_need_digit', 0)
+      Setting.set('password_need_digit', false)
       expect(described_class).not_to be_applicable
     end
 
     it "returns true when Setting 'password_need_digit' is enabled" do
-      Setting.set('password_need_digit', 1)
+      Setting.set('password_need_digit', true)
       expect(described_class).to be_applicable
     end
   end
