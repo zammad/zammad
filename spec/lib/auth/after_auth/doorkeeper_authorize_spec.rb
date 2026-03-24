@@ -22,6 +22,21 @@ RSpec.describe Auth::AfterAuth::DoorkeeperAuthorize do
         described_class.run(user:, session:, options:)
         expect(session).not_to have_key(:doorkeeper_return_to)
       end
+
+      context 'when user has mandatory 2FA setup pending' do
+        before do
+          allow(user).to receive(:two_factor_setup_required?).and_return(true)
+        end
+
+        it 'returns nil to yield to TwoFactorConfiguration' do
+          expect(described_class.run(user:, session:, options:)).to be_nil
+        end
+
+        it 'preserves the doorkeeper return URL in the session' do
+          described_class.run(user:, session:, options:)
+          expect(session[:doorkeeper_return_to]).to eq(doorkeeper_return_to)
+        end
+      end
     end
 
     context 'when session has no doorkeeper return URL' do

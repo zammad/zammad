@@ -68,7 +68,7 @@ const { clearAndFocus: clearAndFocusPasswordField } = useClearFormInput(form, 'p
 const finishLogin = () => {
   const { redirect: redirectUrl } = route.query
   if (typeof redirectUrl === 'string') {
-    if (redirectUrl.startsWith('/oauth/')) {
+    if (redirectUrl.startsWith('/oauth/authorize')) {
       window.location.href = redirectUrl
     } else {
       router.replace(redirectUrl)

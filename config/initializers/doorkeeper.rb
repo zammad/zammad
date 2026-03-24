@@ -12,7 +12,7 @@ Doorkeeper.configure do
     if (user = User.find_by(id: session[:user_id]))
       user
     else
-      session[:doorkeeper_return_to] = request.fullpath
+      session[:doorkeeper_return_to] = request.fullpath if request.fullpath.start_with?('/oauth/authorize')
       redirect_to "/desktop/login?redirect=#{CGI.escape(request.fullpath)}"
     end
   end

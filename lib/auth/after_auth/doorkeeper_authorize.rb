@@ -2,6 +2,8 @@
 
 class Auth::AfterAuth::DoorkeeperAuthorize < Auth::AfterAuth::Backend
   def check
+    return false if user&.two_factor_setup_required?
+
     return_to = session[:doorkeeper_return_to]
     return false unless return_to&.start_with?('/oauth/authorize')
 

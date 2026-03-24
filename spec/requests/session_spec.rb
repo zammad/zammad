@@ -278,20 +278,51 @@ RSpec.describe 'Sessions endpoints', type: :request do
     end
   end
 
-  describe 'POST /api/v1/signin - Doorkeeper OAuth resume' do
+  describe 'POST /api/v1/signin - Doorkeeper OAuth resume via AfterAuth' do
     let(:user)        { create(:agent, password: password) }
     let(:password)    { SecureRandom.urlsafe_base64(20) }
     let(:fingerprint) { SecureRandom.urlsafe_base64(40) }
-    let(:oauth_path)  { '/oauth/authorize?client_id=abc&redirect_uri=http%3A%2F%2Flocalhost&response_type=code' }
+    let!(:oauth_app)  { Doorkeeper::Application.create!(name: 'Test', redirect_uri: 'https://localhost', scopes: '') }
+    let(:oauth_path)  { "/oauth/authorize?client_id=#{oauth_app.uid}&redirect_uri=https%3A%2F%2Flocalhost&response_type=code" }
 
     context 'when session has a pending doorkeeper OAuth URL' do
       before do
-        # Simulate Doorkeeper storing the return URL in the session before login.
-        post '/api/v1/signin', params: { fingerprint: fingerprint, username: user.login, password: password }, as: :json, env: { 'rack.session' => { doorkeeper_return_to: oauth_path } }
+        # Hit OAuth authorize endpoint to set doorkeeper_return_to in the session.
+        get oauth_path
+        # Now sign in - the session still has doorkeeper_return_to set.
+        post '/api/v1/signin', params: { fingerprint: fingerprint, username: user.login, password: password }, as: :json
       end
 
-      it 'includes doorkeeper_return_to in the response' do
-        expect(json_response['doorkeeper_return_to']).to eq(oauth_path)
+      it 'returns DoorkeeperAuthorize after_auth with the OAuth URL' do
+        expect(json_response['after_auth']).to eq({
+                                                    'type' => 'DoorkeeperAuthorize',
+                                                    'data' => { 'url' => oauth_path },
+                                                  })
+      end
+    end
+
+    context 'when session has a pending doorkeeper OAuth URL and 2FA setup is required' do
+      before do
+        Setting.set('two_factor_authentication_enforce_role_ids', [Role.find_by(name: 'Agent').id])
+        Setting.set('two_factor_authentication_method_authenticator_app', true)
+
+        # Hit OAuth authorize endpoint to set doorkeeper_return_to in the session.
+        get oauth_path
+        # Now sign in - the session still has doorkeeper_return_to set.
+        post '/api/v1/signin', params: { fingerprint: fingerprint, username: user.login, password: password }, as: :json
+      end
+
+      it 'returns TwoFactorConfiguration after_auth instead of DoorkeeperAuthorize' do
+        expect(json_response['after_auth']).to include('type' => 'TwoFactorConfiguration')
+      end
+
+      it 'preserves doorkeeper_return_to in the session for later' do
+        # After 2FA setup, the next session show should trigger DoorkeeperAuthorize
+        get '/api/v1/session', as: :json
+        expect(json_response['after_auth']).to eq({
+                                                    'type' => 'DoorkeeperAuthorize',
+                                                    'data' => { 'url' => oauth_path },
+                                                  })
       end
     end
 
@@ -300,18 +331,8 @@ RSpec.describe 'Sessions endpoints', type: :request do
         post '/api/v1/signin', params: { fingerprint: fingerprint, username: user.login, password: password }, as: :json
       end
 
-      it 'does not include doorkeeper_return_to in the response' do
-        expect(json_response['doorkeeper_return_to']).to be_nil
-      end
-    end
-
-    context 'when session has a non-OAuth doorkeeper return URL' do
-      before do
-        post '/api/v1/signin', params: { fingerprint: fingerprint, username: user.login, password: password }, as: :json, env: { 'rack.session' => { doorkeeper_return_to: '/some/other/path' } }
-      end
-
-      it 'does not include doorkeeper_return_to in the response' do
-        expect(json_response['doorkeeper_return_to']).to be_nil
+      it 'does not return DoorkeeperAuthorize after_auth' do
+        expect(json_response['after_auth']).to be_nil
       end
     end
   end
@@ -320,7 +341,8 @@ RSpec.describe 'Sessions endpoints', type: :request do
     let(:user)       { create(:agent) }
     let(:login)      { user.login }
     let(:env)        { { 'REMOTE_USER' => login } }
-    let(:oauth_path) { '/oauth/authorize?client_id=abc&redirect_uri=http%3A%2F%2Flocalhost&response_type=code' }
+    let!(:oauth_app) { Doorkeeper::Application.create!(name: 'Test', redirect_uri: 'https://localhost', scopes: '') }
+    let(:oauth_path) { "/oauth/authorize?client_id=#{oauth_app.uid}&redirect_uri=https%3A%2F%2Flocalhost&response_type=code" }
 
     before do
       Setting.set('auth_sso', true)
@@ -328,7 +350,10 @@ RSpec.describe 'Sessions endpoints', type: :request do
 
     context 'when session has a pending doorkeeper OAuth URL' do
       it 'redirects to the OAuth authorize URL' do
-        get '/auth/sso', as: :json, env: env.merge('rack.session' => { doorkeeper_return_to: oauth_path })
+        # Hit OAuth authorize endpoint to set doorkeeper_return_to in the session.
+        get oauth_path
+        # Now SSO login - the session still has doorkeeper_return_to set.
+        get '/auth/sso', as: :json, env: env
         expect(response).to redirect_to(oauth_path)
       end
     end
@@ -336,13 +361,6 @@ RSpec.describe 'Sessions endpoints', type: :request do
     context 'when session has no pending doorkeeper OAuth URL' do
       it 'redirects to the default app route' do
         get '/auth/sso', as: :json, env: env
-        expect(response).to redirect_to('/#')
-      end
-    end
-
-    context 'when session has a non-OAuth doorkeeper return URL' do
-      it 'redirects to the default app route' do
-        get '/auth/sso', as: :json, env: env.merge('rack.session' => { doorkeeper_return_to: '/some/other/path' })
         expect(response).to redirect_to('/#')
       end
     end

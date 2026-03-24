@@ -24,16 +24,11 @@ class SessionsController < ApplicationController
     user = authenticate_with_password
     initiate_session_for(user)
 
-    doorkeeper_return_to = if session[:doorkeeper_return_to]&.start_with?('/oauth/authorize')
-                             session.delete(:doorkeeper_return_to)
-                           end
-
     output = SessionHelper
       .json_hash(user)
       .merge(
-        config:               config_frontend,
-        after_auth:           Auth::AfterAuth.run(user, session, options: { initial: true }),
-        doorkeeper_return_to: doorkeeper_return_to
+        config:     config_frontend,
+        after_auth: Auth::AfterAuth.run(user, session, options: { initial: true }),
       )
 
     # return new session data
