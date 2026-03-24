@@ -69,7 +69,11 @@ class SessionsController < ApplicationController
 
     initiate_session_for(user, 'SSO')
 
-    redirect_to '/#'
+    if session[:doorkeeper_return_to]&.start_with?('/oauth/authorize')
+      redirect_to session.delete(:doorkeeper_return_to)
+    else
+      redirect_to '/#'
+    end
   end
 
   # "Delete" a login, aka "log the user out"
