@@ -278,6 +278,76 @@ RSpec.describe 'Sessions endpoints', type: :request do
     end
   end
 
+  describe 'POST /api/v1/signin - Doorkeeper OAuth resume' do
+    let(:user)        { create(:agent, password: password) }
+    let(:password)    { SecureRandom.urlsafe_base64(20) }
+    let(:fingerprint) { SecureRandom.urlsafe_base64(40) }
+    let(:oauth_path)  { '/oauth/authorize?client_id=abc&redirect_uri=http%3A%2F%2Flocalhost&response_type=code' }
+
+    context 'when session has a pending doorkeeper OAuth URL' do
+      before do
+        # Simulate Doorkeeper storing the return URL in the session before login.
+        post '/api/v1/signin', params: { fingerprint: fingerprint, username: user.login, password: password }, as: :json, env: { 'rack.session' => { doorkeeper_return_to: oauth_path } }
+      end
+
+      it 'includes doorkeeper_return_to in the response' do
+        expect(json_response['doorkeeper_return_to']).to eq(oauth_path)
+      end
+    end
+
+    context 'when session has no pending doorkeeper OAuth URL' do
+      before do
+        post '/api/v1/signin', params: { fingerprint: fingerprint, username: user.login, password: password }, as: :json
+      end
+
+      it 'does not include doorkeeper_return_to in the response' do
+        expect(json_response['doorkeeper_return_to']).to be_nil
+      end
+    end
+
+    context 'when session has a non-OAuth doorkeeper return URL' do
+      before do
+        post '/api/v1/signin', params: { fingerprint: fingerprint, username: user.login, password: password }, as: :json, env: { 'rack.session' => { doorkeeper_return_to: '/some/other/path' } }
+      end
+
+      it 'does not include doorkeeper_return_to in the response' do
+        expect(json_response['doorkeeper_return_to']).to be_nil
+      end
+    end
+  end
+
+  describe 'GET /auth/sso - Doorkeeper OAuth resume' do
+    let(:user)       { create(:agent) }
+    let(:login)      { user.login }
+    let(:env)        { { 'REMOTE_USER' => login } }
+    let(:oauth_path) { '/oauth/authorize?client_id=abc&redirect_uri=http%3A%2F%2Flocalhost&response_type=code' }
+
+    before do
+      Setting.set('auth_sso', true)
+    end
+
+    context 'when session has a pending doorkeeper OAuth URL' do
+      it 'redirects to the OAuth authorize URL' do
+        get '/auth/sso', as: :json, env: env.merge('rack.session' => { doorkeeper_return_to: oauth_path })
+        expect(response).to redirect_to(oauth_path)
+      end
+    end
+
+    context 'when session has no pending doorkeeper OAuth URL' do
+      it 'redirects to the default app route' do
+        get '/auth/sso', as: :json, env: env
+        expect(response).to redirect_to('/#')
+      end
+    end
+
+    context 'when session has a non-OAuth doorkeeper return URL' do
+      it 'redirects to the default app route' do
+        get '/auth/sso', as: :json, env: env.merge('rack.session' => { doorkeeper_return_to: '/some/other/path' })
+        expect(response).to redirect_to('/#')
+      end
+    end
+  end
+
   describe 'POST /auth/two_factor_itwo_factor_method_enablednitiate_authentication/:method' do
     let(:user)                       { create(:user, password: 'dummy') }
     let(:params)                     { {} }
