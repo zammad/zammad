@@ -152,18 +152,11 @@ returns
 =end
 
   def fullname(email_fallback: true, recipient_line: false)
-    format = Setting.get('ui_user_name_format')
+    # Email sending: always first name last name (regardless of setting)
+    format = recipient_line ? 'first_last' : Setting.get('ui_user_name_format')
 
-    if recipient_line
-      # Email sending: always first name last name (regardless of setting)
-      name = "#{firstname} #{lastname}".strip
-    elsif format == 'last_first'
-      # UI display: Lastname Firstname
-      name = "#{lastname} #{firstname}".strip
-    else
-      # UI display: Firstname Lastname
-      name = "#{firstname} #{lastname}".strip
-    end
+    parts = format == 'last_first' ? [lastname, firstname] : [firstname, lastname]
+    name = parts.compact.join(' ').strip
 
     if name.blank? && email.present? && email_fallback
       return email
