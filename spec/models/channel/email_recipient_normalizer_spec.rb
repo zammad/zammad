@@ -77,8 +77,8 @@ RSpec.describe Channel::EmailRecipientNormalizer do
       expect(described_class.normalize(input)).to eq(input)
     end
 
-    it 'returns original input if address normalization raises unexpectedly' do
-      allow(User).to receive(:find_by).and_raise(StandardError, 'boom')
+    it 'returns original input if user preloading raises unexpectedly' do
+      allow(User).to receive(:where).and_raise(StandardError, 'boom')
 
       input = 'max@example.com'
 

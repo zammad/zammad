@@ -9,17 +9,18 @@ class Channel::EmailRecipientNormalizer
       addresses = parse_addresses(input)
       return input if addresses.blank?
 
-      emails = addresses.map { |a| a.address.to_s.strip.downcase }
-                        .select { |e| e.include?('@') }
-                        .uniq
+      emails = addresses.filter_map do |address|
+        raw = address.address.to_s.strip
+        raw.downcase if raw.include?('@')
+      end.uniq
 
-      users = User.where(email: emails).index_by { |u| u.email.downcase }
+      users = User.where(email: emails).index_by { |user| user.email.downcase }
 
       seen   = {}
       result = []
 
-      addresses.each do |addr|
-        normalized = normalize_address(addr, seen, users)
+      addresses.each do |address|
+        normalized = normalize_address(address, seen, users)
         result << normalized if normalized.present?
       end
 
@@ -36,25 +37,21 @@ class Channel::EmailRecipientNormalizer
       []
     end
 
-    def normalize_address(addr, seen, users)
-      raw = addr.address.to_s.strip
+    def normalize_address(address, seen, users)
+      raw = address.address.to_s.strip
       return if raw.blank?
-
-      if raw.exclude?('@')
-        return raw
-      end
+      return raw if raw.exclude?('@')
 
       email = raw.downcase
-
       return if seen[email]
 
-      user = User.find_by(email: email) || users[email]
+      user = users[email]
 
       result =
         if user.present?
           user.fullname(recipient_line: true)
         else
-          display_name = addr.display_name.to_s.strip
+          display_name = address.display_name.to_s.strip
           if display_name.present?
             Channel::EmailBuild.recipient_line(display_name, email)
           else
