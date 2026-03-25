@@ -261,15 +261,15 @@ Setting.create_or_update(
   options:     {
     form: [
       {
-        display: '',
-        null:    false,
-        name:    'ui_user_name_format',
-        tag:     'select',
-        options: {
+        display:   '',
+        null:      false,
+        name:      'ui_user_name_format',
+        tag:       'select',
+        options:   {
           first_last: __('John Smith'),
           last_first: __('Smith John'),
         },
-		translate: true,
+        translate: true,
       },
     ],
   },
@@ -278,8 +278,8 @@ Setting.create_or_update(
     prio:       11,
     permission: ['admin.branding'],
   },
-  state:        'first_last',
-  frontend:     true
+  state:       'first_last',
+  frontend:    true
 )
 options = {}
 (10..99).each do |item|
@@ -2121,7 +2121,7 @@ Setting.create_if_not_exists(
         null:      true,
         default:   true,
         name:      'pkce',
-        tag:       'boolean',
+        tag:       'select',
         options:   {
           true  => 'yes',
           false => 'no',
@@ -2196,16 +2196,16 @@ Setting.create_if_not_exists(
         display:   '',
         null:      true,
         name:      'password_min_2_lower_2_upper_characters',
-        tag:       'boolean',
+        tag:       'select',
         options:   {
-          true  => 'yes',
-          false => 'no',
+          1 => 'yes',
+          0 => 'no',
         },
         translate: true,
       },
     ],
   },
-  state:       true,
+  state:       1,
   preferences: {
     permission: ['admin.security'],
   },
@@ -2219,19 +2219,19 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
-        display:   '',
+        display:   __('Needed'),
         null:      true,
         name:      'password_need_digit',
-        tag:       'boolean',
+        tag:       'select',
         options:   {
-          true  => 'yes',
-          false => 'no',
+          1 => 'yes',
+          0 => 'no',
         },
         translate: true,
       },
     ],
   },
-  state:       true,
+  state:       1,
   preferences: {
     permission: ['admin.security'],
   },
@@ -2245,19 +2245,19 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
-        display:   '',
+        display:   __('Needed'),
         null:      true,
         name:      'password_need_special_character',
-        tag:       'boolean',
+        tag:       'select',
         options:   {
-          true  => 'yes',
-          false => 'no',
+          1 => 'yes',
+          0 => 'no',
         },
         translate: true,
       },
     ],
   },
-  state:       false,
+  state:       0,
   preferences: {
     permission: ['admin.security'],
   },
@@ -5597,7 +5597,7 @@ Setting.create_if_not_exists(
   name:        'kb_active',
   area:        'Kb::Core',
   description: __('Defines if Knowledge Base navbar button is enabled.'),
-  state:       false,
+  state:       true,
   preferences: {
     prio:           1,
     trigger:        ['menu:render'],
@@ -6092,9 +6092,6 @@ Setting.create_if_not_exists(
   preferences: {
     authentication: true,
     permission:     ['admin.ai_provider'],
-    validations:    [
-      'Setting::Validation::AIProvider',
-    ],
   },
   frontend:    true,
 )
