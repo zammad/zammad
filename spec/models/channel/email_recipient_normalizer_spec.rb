@@ -1,10 +1,12 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
 # frozen_string_literal: true
 
 require 'rails_helper'
 
 RSpec.describe Channel::EmailRecipientNormalizer do
   describe '.normalize' do
-    let!(:known_user) do
+    before do
       create(
         :user,
         firstname: 'Max',
@@ -13,8 +15,11 @@ RSpec.describe Channel::EmailRecipientNormalizer do
       )
     end
 
-    it 'returns blank input unchanged' do
+    it 'returns nil unchanged' do
       expect(described_class.normalize(nil)).to be_nil
+    end
+
+    it 'returns empty string unchanged' do
       expect(described_class.normalize('')).to eq('')
     end
 

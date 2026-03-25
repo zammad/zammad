@@ -40,7 +40,7 @@ class Channel::EmailRecipientNormalizer
       raw = addr.address.to_s.strip
       return if raw.blank?
 
-      unless raw.include?('@')
+      if raw.exclude?('@')
         return raw
       end
 
