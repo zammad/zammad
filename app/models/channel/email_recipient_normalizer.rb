@@ -9,11 +9,17 @@ class Channel::EmailRecipientNormalizer
       addresses = parse_addresses(input)
       return input if addresses.blank?
 
+      emails = addresses.map { |a| a.address.to_s.strip.downcase }
+                        .select { |e| e.include?('@') }
+                        .uniq
+
+      users = User.where(email: emails).index_by { |u| u.email.downcase }
+
       seen   = {}
       result = []
 
       addresses.each do |addr|
-        normalized = normalize_address(addr, seen)
+        normalized = normalize_address(addr, seen, users)
         result << normalized if normalized.present?
       end
 
@@ -30,43 +36,34 @@ class Channel::EmailRecipientNormalizer
       []
     end
 
-    def normalize_address(addr, seen)
-      raw_address = addr.address.to_s.strip
-      return if raw_address.blank?
+    def normalize_address(addr, seen, users)
+      raw = addr.address.to_s.strip
+      return if raw.blank?
 
-      is_email   = valid_email?(raw_address)
-      identifier = is_email ? raw_address.downcase : raw_address
-      return if seen[identifier]
+      unless raw.include?('@')
+        return raw
+      end
 
-      seen[identifier] = true
+      email = raw.downcase
 
-      return raw_address if !is_email
+      return if seen[email]
 
-      email = raw_address.downcase
+      user = User.find_by(email: email) || users[email]
 
-      user = User.find_by(email: email)
-      return user.fullname(recipient_line: true) if user.present?
+      result =
+        if user.present?
+          user.fullname(recipient_line: true)
+        else
+          display_name = addr.display_name.to_s.strip
+          if display_name.present?
+            Channel::EmailBuild.recipient_line(display_name, email)
+          else
+            email
+          end
+        end
 
-      display_name = addr.display_name.to_s.strip
-      return Channel::EmailBuild.recipient_line(display_name, email) if display_name.present?
-
-      email
-    rescue
-      fallback_address = addr.address.to_s.strip
-      return if fallback_address.blank?
-
-      is_email   = valid_email?(fallback_address)
-      identifier = is_email ? fallback_address.downcase : fallback_address
-      return if seen[identifier]
-
-      seen[identifier] = true
-      fallback_address
-    end
-
-    def valid_email?(value)
-      EmailAddressValidation.new(value).valid?
-    rescue
-      false
+      seen[email] = true
+      result
     end
   end
 end

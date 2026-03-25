@@ -307,6 +307,7 @@ returns
   def attributes_with_association_names(empty_keys: false)
     attributes = super
     add_attachments_to_attributes(attributes)
+    normalize_email_recipient_attributes(attributes)
     add_time_unit_to_attributes(attributes)
     Ticket::Article.insert_urls(attributes)
   end
