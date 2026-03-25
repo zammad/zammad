@@ -27,6 +27,7 @@ legal:
   repoOwner: Zammad GmbH
 usedBy:
   - Landeshauptstadt München
+  - Dataport AöR
 localisation:
   localisationReady: true
   availableLanguages:

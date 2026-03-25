@@ -159,6 +159,9 @@ export default defineConfig(({ mode, command }) => {
       root: './app/frontend',
       setupFiles: ['./tests/vitest.setup.ts'],
       environment: 'jsdom',
+      env: {
+        SA11Y_RULESET: 'full',
+      },
       clearMocks: true,
       css: false,
       testTimeout: isEnvBooleanSet(process.env.CI) ? 30_000 : 5_000,

@@ -218,7 +218,7 @@ const bulkEditTickets = async (formData: FormSubmitData<TicketBulkEditFormData>)
     formSetErrors(
       new UserError([
         {
-          message: i18n.t(
+          message: __(
             'Another bulk update is currently in progress. Please wait until it is finished before starting a new one.',
           ),
         },

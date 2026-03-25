@@ -1,7 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { axe } from 'vitest-axe'
-
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
@@ -39,8 +37,6 @@ const testNotifications: any[] = [
   },
 ]
 
-// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
-
 describe('testing online notification a11y', () => {
   beforeEach(async () => {
     mockUserCurrent({
@@ -60,7 +56,7 @@ describe('testing online notification a11y', () => {
     })
   })
 
-  it.skip('has no accessibility violations', async () => {
+  it('has no accessibility violations', async () => {
     const mockApi = mockGraphQLApi(OnlineNotificationsDocument).willResolve(
       mockOnlineNotificationQuery(testNotifications),
     )
@@ -69,7 +65,6 @@ describe('testing online notification a11y', () => {
 
     await waitUntil(() => mockApi.calls.resolve)
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 })

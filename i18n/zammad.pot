@@ -1462,7 +1462,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:151
-#: app/models/user.rb:769
+#: app/models/user.rb:773
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -1856,7 +1856,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:723
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:42
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:288
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:66
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:65
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:43
 msgid "Archive emails"
 msgstr ""
@@ -2058,7 +2058,7 @@ msgstr ""
 msgid "Assignment Timeout"
 msgstr ""
 
-#: app/assets/javascripts/app/models/_application_model.coffee:166
+#: app/assets/javascripts/app/models/_application_model.coffee:168
 #: app/assets/javascripts/app/models/group.coffee:8
 msgid "Assignment timeout"
 msgstr ""
@@ -2068,7 +2068,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:671
+#: app/models/user.rb:675
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2081,7 +2081,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:128
-#: app/models/user.rb:748
+#: app/models/user.rb:752
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2321,7 +2321,7 @@ msgstr ""
 msgid "Automatic account linking notification"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:181
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:184
 msgid "Automatic reminders"
 msgstr ""
 
@@ -3327,7 +3327,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:405
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:640
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:369
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:372
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:306
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:359
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
@@ -3433,10 +3433,6 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:163
 msgid "Close dialog"
-msgstr ""
-
-#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:57
-msgid "Close notification"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:347
@@ -6274,7 +6270,7 @@ msgstr ""
 msgid "Email Outbound"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:70
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:69
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:116
 msgid "Email account"
 msgstr ""
@@ -6283,7 +6279,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:681
+#: app/models/user.rb:685
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -6300,7 +6296,7 @@ msgstr ""
 msgid "Email could not be verified. Please contact your administrator."
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:64
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:63
 msgid "Email inbound"
 msgstr ""
 
@@ -6309,13 +6305,13 @@ msgstr ""
 msgid "Email notification"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:68
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:67
 msgid "Email outbound"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:891
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:405
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:153
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:152
 msgid "Email sending and receiving could not be verified. Please check your settings."
 msgstr ""
 
@@ -7217,7 +7213,7 @@ msgstr ""
 msgid "Fingerprint"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:260
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:263
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:73
@@ -8135,12 +8131,20 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr ""
 
+#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:65
+msgid "Hide"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:69
 msgid "Hide BETA UI switch"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:24
 msgid "Hide authenticator app secret"
+msgstr ""
+
+#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:65
+msgid "Hide notification"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
@@ -8902,7 +8906,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:620
+#: app/models/user.rb:624
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -9637,6 +9641,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:65
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:52
 #: app/frontend/shared/form/i18n/locales.ts:57
+#: app/views/init/index.html.erb:34
 #: app/views/init/spinner-loading.html.erb:261
 msgid "Loading…"
 msgstr ""
@@ -10527,7 +10532,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:700
+#: app/models/user.rb:704
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -10632,7 +10637,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
 #: app/assets/javascripts/app/controllers/chat.coffee:559
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
-#: app/assets/javascripts/app/models/_application_model.coffee:158
+#: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:6
 #: app/assets/javascripts/app/models/application.coffee:7
@@ -10753,10 +10758,6 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb:407
 msgid "Need user_id or organization_id as param"
-msgstr ""
-
-#: db/seeds/settings.rb:2221
-msgid "Needed"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:95
@@ -11567,7 +11568,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:156
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:33
@@ -14301,11 +14301,11 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:688
+#: app/models/user.rb:692
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:694
+#: app/models/user.rb:698
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -15000,7 +15000,7 @@ msgstr ""
 msgid "Show next tab"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:24
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:11
 msgid "Show notifications"
 msgstr ""
 
@@ -16128,7 +16128,7 @@ msgstr ""
 msgid "The WhatsApp channel webhook configuration could not be verified."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:156
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:159
 msgid "The WhatsApp connection could not be saved."
 msgstr ""
 
@@ -16965,7 +16965,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:614
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:200
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:223
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:222
 msgid "The server settings could not be automatically detected. Please configure them manually."
 msgstr ""
 
@@ -18886,7 +18886,7 @@ msgstr ""
 msgid "Unsaved changes"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:34
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:170
 msgid "Unseen notifications count"
 msgstr ""
 
@@ -21294,7 +21294,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:885
+#: app/models/user.rb:889
 msgid "is too long"
 msgstr ""
 

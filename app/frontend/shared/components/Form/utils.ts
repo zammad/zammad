@@ -33,11 +33,10 @@ export const clearMessage = (node: FormKitNode, key: string) => {
 }
 
 export const setErrors = (node: FormKitNode, errors: MutationSendError) => {
-  // TODO: we need to check if translations are working as expected for this errors here.
-  // TODO: we need to check/style the general error output when we want to show it related to the form.
   if (errors instanceof UserError) {
     node.setErrors(errors.generalErrors as string[], errors.getFieldErrorList())
-  } else {
-    node.setErrors(errors?.message || __('An unexpected error has occurred.'))
+    return
   }
+
+  node.setErrors(errors?.message || __('An unexpected error has occurred.'))
 }

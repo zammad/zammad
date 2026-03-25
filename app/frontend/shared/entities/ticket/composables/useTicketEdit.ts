@@ -29,7 +29,7 @@ const TICKET_FORM_RELEVANT_KEYS = [
   'group',
   'owner',
   'state',
-  'pending_time',
+  'pendingTime',
   'priority',
   'customer',
   'organization',

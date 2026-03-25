@@ -64,25 +64,6 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
     }
   end
 
-  def article_clone_attachments(new_article_id)
-    last_article = notification_factory_template_objects[:article]
-
-    return if !last_article
-    return if ActiveModel::Type::Boolean.new.cast(execution_data['include_attachments']) != true || last_article.attachments.blank?
-
-    last_article.clone_attachments('Ticket::Article', new_article_id, only_attached_attachments: true)
-  end
-
-  def article_clone_attachments_inline(new_article_id)
-    last_article = notification_factory_template_objects[:article]
-
-    return if !last_article
-    return if !last_article.should_clone_inline_attachments?
-
-    last_article.clone_attachments('Ticket::Article', new_article_id, only_inline_attachments: true)
-    last_article.should_clone_inline_attachments = false # cancel the temporary flag after cloning
-  end
-
   def from_email_address
     @from_email_address ||= begin
       group = record.group

@@ -14,8 +14,18 @@ fill your database with demo records
         'multiselect': 1,
       },
       ticket: {
+        'input': 1,
         'textarea': 1,
+        'integer': 1,
+        'boolean': 1,
+        'date': 1,
+        'datetime': 1,
         'multiselect': 1,
+        'select': 1,
+        'tree_select': 1,
+        'multi_tree_select': 1,
+        'tree_select': 1,
+        'external_data_source': 1,
       },
     },
     agents: 50,
@@ -100,20 +110,33 @@ or if you only want to create 100 tickets
                                                       active:     true,
                                                       screens:    {
                                                         create_middle: {
-                                                          '-all-' => {
+                                                          'ticket.agent'    => {
+                                                            shown:      true,
+                                                            required:   false,
+                                                            item_class: 'column',
+                                                          },
+                                                          'ticket.customer' => {
                                                             shown:      true,
                                                             required:   false,
                                                             item_class: 'column',
                                                           },
                                                         },
                                                         create:        {
-                                                          '-all-' => {
+                                                          'ticket.agent'    => {
+                                                            shown:    true,
+                                                            required: false,
+                                                          },
+                                                          'ticket.customer' => {
                                                             shown:    true,
                                                             required: false,
                                                           },
                                                         },
                                                         edit:          {
-                                                          '-all-' => {
+                                                          'ticket.agent'    => {
+                                                            shown:    true,
+                                                            required: false,
+                                                          },
+                                                          'ticket.customer' => {
                                                             shown:    true,
                                                             required: false,
                                                           },
@@ -765,6 +788,25 @@ or if you only want to create 100 tickets
         data_type: 'multi_tree_select',
       )
     )
+  end
+
+  def self.create_object_attribute_type_external_data_source(params)
+    {
+      attribute_params: params.merge(
+        data_type:   'autocompletion_ajax_external_data_source',
+        data_option: {
+          search_url:              "https://dummyjson.com/products/search?q=\#{search.term}",
+          verify_ssl:              true,
+          search_result_list_key:  'products',
+          search_result_value_key: 'id',
+          search_result_label_key: 'title',
+          default:                 nil,
+          null:                    true,
+          nulloption:              true
+        }
+      ),
+      value:            { 'label' => 'Red Lipstick', 'value' => 4 },
+    }
   end
 end
 # rubocop:enable Rails/Output

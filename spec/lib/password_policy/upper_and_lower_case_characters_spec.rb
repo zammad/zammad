@@ -8,12 +8,12 @@ RSpec.describe PasswordPolicy::UpperAndLowerCaseCharacters do
 
   describe '.applicable?' do
     it "returns false when Setting 'password_min_2_lower_2_upper_characters' is disabled" do
-      Setting.set('password_min_2_lower_2_upper_characters', 0)
+      Setting.set('password_min_2_lower_2_upper_characters', false)
       expect(described_class).not_to be_applicable
     end
 
     it "returns true when Setting 'password_min_2_lower_2_upper_characters' is enabled" do
-      Setting.set('password_min_2_lower_2_upper_characters', 1)
+      Setting.set('password_min_2_lower_2_upper_characters', true)
       expect(described_class).to be_applicable
     end
   end

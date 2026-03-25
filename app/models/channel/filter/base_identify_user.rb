@@ -9,8 +9,11 @@ class Channel::Filter::BaseIdentifyUser
     end
 
     if (user = User.find_by('email = :email OR login = :email', attrs))
-      user.update!(attrs.slice(:firstname)) if user.no_name? && attrs[:firstname].present?
-    elsif (user = User.create!(attrs))
+      if user.no_name? && attrs[:firstname].present?
+        user.name_from_channel_import = true
+        user.update!(attrs.slice(:firstname))
+      end
+    elsif (user = User.create!(attrs.merge(name_from_channel_import: true)))
       user.update!(updated_by_id: user.id, created_by_id: user.id)
     end
 

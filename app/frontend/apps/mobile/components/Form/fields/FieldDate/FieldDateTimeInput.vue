@@ -288,5 +288,10 @@ useEventListener('click', (e) => {
   .dp__overlay_container + .dp__button.dp__overlay_action {
     width: calc(var(--dp-menu-min-width) - 0.625rem * 2);
   }
+
+  .dp__calendar_header_item {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 </style>

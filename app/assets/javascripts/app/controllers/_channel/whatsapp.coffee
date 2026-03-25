@@ -131,6 +131,9 @@ class WhatsappAccountCloudAPIModal extends App.ControllerModal
 
     params = if @params then _.extend(@params, @formParams()) else @formParams()
 
+    if @channel
+      params.channel_id = @channel.id
+
     @ajax(
       id: 'whatsapp_initial'
       type: 'POST'

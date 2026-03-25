@@ -13555,8 +13555,6 @@ output {
   table {
     table-layout: auto;
     width: 100%;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
     word-break: keep-all;
 
     col {
@@ -13611,6 +13609,8 @@ output {
     border-radius: 6px;
     border: 0;
     background-color: var(--background-modifier-border);
+    white-space: pre-wrap;
+    word-break: break-all;
 
     code {
       padding: 0;
@@ -13619,9 +13619,11 @@ output {
   }
 
   code {
-    padding: 3px;
+    padding: 1px 3px;
     border-radius: 6px;
     background-color: var(--background-modifier-border);
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
   }
 
   hr {

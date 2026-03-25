@@ -8,12 +8,12 @@ RSpec.describe PasswordPolicy::SpecialCharacter do
 
   describe '.applicable?' do
     it "returns false when Setting 'password_need_special_character' is disabled" do
-      Setting.set('password_need_special_character', 0)
+      Setting.set('password_need_special_character', false)
       expect(described_class).not_to be_applicable
     end
 
     it "returns true when Setting 'password_need_digit' is enabled" do
-      Setting.set('password_need_special_character', 1)
+      Setting.set('password_need_special_character', true)
       expect(described_class).to be_applicable
     end
   end

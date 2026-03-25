@@ -152,4 +152,30 @@ RSpec.shared_examples 'ChecksCoreWorkflow' do
       end.to raise_error(Exceptions::ApplicationModel, "Missing required value for field '#{field_name}'!")
     end
   end
+
+  describe 'Objects of the format "External data source field" cannot be set as mandatory #6038', db_strategy: :reset do
+    let(:ticket) { create(:ticket, group: agent_group, state: Ticket::State.find_by(name: 'open')) }
+    let(:field_name)    { SecureRandom.uuid }
+    let(:ticket_update) { { screen: 'edit', title: 'test' } }
+
+    before do
+      ticket
+
+      create(:object_manager_attribute_autocompletion_ajax_external_data_source, object_name: 'Ticket', name: field_name, display: field_name, screens: {
+               'edit' => {
+                 'ticket.agent' => {
+                   shown:    true,
+                   required: true,
+                 }
+               }
+             })
+      ObjectManager::Attribute.migration_execute
+    end
+
+    it 'does raise error for empty external data source field' do
+      expect do
+        ticket.update(ticket_update)
+      end.to raise_error(Exceptions::ApplicationModel, "Missing required value for field '#{field_name}'!")
+    end
+  end
 end

@@ -22,10 +22,12 @@ const textInputClasses = (classes: Classes = {}) =>
     inner: `flex h-10 w-full items-center bg-blue-200 text-black focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-blue-800 hover:outline hover:outline-1 hover:-outline-offset-1 hover:outline-blue-600 hover:focus-within:outline-blue-800 dark:bg-gray-700 dark:text-white dark:hover:outline-blue-900 dark:hover:focus-within:outline-blue-800 ${innerInvalidAndErrorClasses()}`,
   })
 
+// For select family of fields, we are styling the input element, since it has its own outline handling due to the
+//   hover and focus interactions. We need to make sure that the invalid and error states always win when present.
 const selectInputClasses = (classes: Classes = {}) =>
   extendClasses(classes, {
-    inner:
-      'formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:-outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:-outline-offset-1 formkit-errors:outline-red-500 w-full',
+    input:
+      'formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:-outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:-outline-offset-1 formkit-errors:outline-red-500',
   })
 
 export const getCoreDesktopClasses: FormThemeExtension = (classes: FormThemeClasses) => {
@@ -84,6 +86,7 @@ export const getCoreDesktopClasses: FormThemeExtension = (classes: FormThemeClas
     autocomplete: selectInputClasses(classes.autocomplete),
     agent: selectInputClasses(classes.agent),
     customer: selectInputClasses(classes.customer),
+    externalDataSource: selectInputClasses(classes.externalDataSource),
     rating: extendClasses(classes.rating, {
       label: 'mb-3',
       inner: 'mb-1',

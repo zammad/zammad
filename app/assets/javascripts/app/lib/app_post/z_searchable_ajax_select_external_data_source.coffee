@@ -38,6 +38,7 @@ class App.ExternalDataSourceAjaxSelect extends App.SearchableAjaxSelect
     @attribute.valueRaw = JSON.stringify(@attribute.value)
 
     @renderElement()
+    @toggleClear()
 
   renderOptions: (options) ->
     # We need to transform the value that we don't lose the needed type information.
@@ -130,6 +131,7 @@ class App.ExternalDataSourceAjaxSelect extends App.SearchableAjaxSelect
       return
 
     @setShadowValue(value: key, label: value)
+    @toggleClear()
 
   onKeyUp: =>
     return if @input.val().trim() isnt '' || @attribute.multiple

@@ -14,7 +14,11 @@ class PasswordPolicy
     end
 
     def self.applicable?
-      Setting.get('password_min_2_lower_2_upper_characters').to_i == 1
+      # Need to explicitly cast to boolean
+      # because this setting was formerly stored as int
+      # See fix for:
+      # https://github.com/zammad/zammad/issues/5053
+      ActiveModel::Type::Boolean.new.cast(Setting.get('password_min_2_lower_2_upper_characters'))
     end
   end
 end

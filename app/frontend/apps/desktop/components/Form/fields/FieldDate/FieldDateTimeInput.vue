@@ -80,10 +80,13 @@ const { dateFnsLocale } = useDateFnsLocale()
 // - 'P' - Meridian indicator ('am' or 'pm')
 const inputFormat = computed(() =>
   localeFormat.value
+    .replace(/dd/, '2DigitDay') // 'dd' must be replaced before 'd'
     .replace(/MM/, '2DigitMinute') // 'MM' is used for both minute and month
+    .replace(/d/, 'dd') // treat 'd' as 'dd' to avoid conflicts with month placeholder
     .replace(/mm/, 'MM')
-    .replace(/m/, 'M')
+    .replace(/m/, 'MM') // treat 'm' as 'MM' to avoid conflicts with month placeholder
     .replace(/SS/, 'ss')
+    .replace(/2DigitDay/, 'dd')
     .replace(/2DigitMinute/, 'mm')
     .replace(/l/, 'hh')
     .replace(/P/, 'aaa'),
@@ -686,6 +689,11 @@ const closed = () => {
   .dp__calendar_header {
     font-weight: 400;
     text-transform: uppercase;
+
+    .dp__calendar_header_item {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 }
 </style>

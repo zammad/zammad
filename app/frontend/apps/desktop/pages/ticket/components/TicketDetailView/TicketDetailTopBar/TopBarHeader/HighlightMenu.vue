@@ -20,10 +20,10 @@ whenever(isActive, () => {
     if (evenTarget?.closest('article') && !evenTarget.closest('button')) return
 
     // Entire wrapper for the split button should not trigger deactivation
-    if (evenTarget?.closest('[id="highlight-menu-wrapper"]')) return
+    if (evenTarget?.closest('[data-id="highlight-menu-wrapper"]')) return
 
     // Popovers which are on the body level
-    if (evenTarget?.closest('[id="highlight-menu-popover"]')) return
+    if (evenTarget?.closest('[data-id="highlight-menu-popover"]')) return
 
     reset()
     stopClickListener()
@@ -83,7 +83,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div id="highlight-menu-wrapper" class="flex">
+  <div :data-id="`highlight-menu-wrapper`" class="flex">
     <SplitButton
       class="h-full!"
       :class="{ [activeColorClass]: isActive }"
@@ -109,7 +109,7 @@ onUnmounted(() => {
 
       <template #popover-content="slotProps">
         <CommonPopoverMenu
-          id="highlight-menu-popover"
+          data-id="highlight-menu-popover"
           class="overflow-clip"
           :items="items"
           :popover="slotProps.popover"

@@ -2121,7 +2121,7 @@ Setting.create_if_not_exists(
         null:      true,
         default:   true,
         name:      'pkce',
-        tag:       'select',
+        tag:       'boolean',
         options:   {
           true  => 'yes',
           false => 'no',
@@ -2196,16 +2196,16 @@ Setting.create_if_not_exists(
         display:   '',
         null:      true,
         name:      'password_min_2_lower_2_upper_characters',
-        tag:       'select',
+        tag:       'boolean',
         options:   {
-          1 => 'yes',
-          0 => 'no',
+          true  => 'yes',
+          false => 'no',
         },
         translate: true,
       },
     ],
   },
-  state:       1,
+  state:       true,
   preferences: {
     permission: ['admin.security'],
   },
@@ -2219,19 +2219,19 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
-        display:   __('Needed'),
+        display:   '',
         null:      true,
         name:      'password_need_digit',
-        tag:       'select',
+        tag:       'boolean',
         options:   {
-          1 => 'yes',
-          0 => 'no',
+          true  => 'yes',
+          false => 'no',
         },
         translate: true,
       },
     ],
   },
-  state:       1,
+  state:       true,
   preferences: {
     permission: ['admin.security'],
   },
@@ -2245,19 +2245,19 @@ Setting.create_if_not_exists(
   options:     {
     form: [
       {
-        display:   __('Needed'),
+        display:   '',
         null:      true,
         name:      'password_need_special_character',
-        tag:       'select',
+        tag:       'boolean',
         options:   {
-          1 => 'yes',
-          0 => 'no',
+          true  => 'yes',
+          false => 'no',
         },
         translate: true,
       },
     ],
   },
-  state:       0,
+  state:       false,
   preferences: {
     permission: ['admin.security'],
   },

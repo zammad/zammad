@@ -167,6 +167,7 @@ onMounted(() => {
 .inner-article-body {
   word-break: normal;
   overflow-wrap: anywhere;
+  overflow-x: auto;
 
   /*
    * TODO: Consider extending this rule to other elements.
@@ -179,17 +180,6 @@ onMounted(() => {
 
   &:deep(img, svg) {
     display: inline;
-  }
-
-  /* Wrap long lines in code blocks. */
-
-  &:deep(pre) {
-    display: block;
-    overflow-x: auto;
-  }
-
-  &:deep(code) {
-    white-space: pre-wrap;
   }
 
   /*

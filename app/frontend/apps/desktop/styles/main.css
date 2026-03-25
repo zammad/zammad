@@ -244,7 +244,7 @@
     }
 
     pre {
-      @apply my-2 rounded-md bg-black/10 p-2.5 dark:bg-black/20;
+      @apply my-2 rounded-md bg-black/10 p-2.5 break-all whitespace-pre-wrap dark:bg-black/20;
 
       code {
         @apply bg-transparent p-0;
@@ -252,7 +252,7 @@
     }
 
     code {
-      @apply rounded-md bg-black/10 p-0.75 font-mono dark:bg-black/20;
+      @apply rounded-md bg-black/10 px-0.75 py-px font-mono wrap-break-word whitespace-pre-wrap dark:bg-black/20;
     }
 
     table.zammad-table,
@@ -261,7 +261,7 @@
 
       td,
       th {
-        @apply relative box-border min-w-[1em] border border-neutral-700 px-[5px] py-[3px] align-top dark:border-neutral-500;
+        @apply relative box-border min-w-[1em] border border-neutral-700 px-1.25 py-0.75 align-top dark:border-neutral-500;
       }
 
       th {

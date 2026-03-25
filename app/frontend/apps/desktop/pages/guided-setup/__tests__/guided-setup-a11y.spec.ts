@@ -1,7 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { axe } from 'vitest-axe'
-
 import '#tests/graphql/builders/mocks.ts'
 
 import { visitView } from '#tests/support/components/visitView.ts'
@@ -26,8 +24,6 @@ import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.moc
 
 import { mockSystemSetupInfo } from './mocks/mock-systemSetupInfo.ts'
 
-// FIXME: All vitest-axe tests are currently skipped due to being incompatible with latest version of jsdom package.
-
 describe('testing admin password request a11y', () => {
   beforeEach(() => {
     mockApplicationConfig({
@@ -35,7 +31,7 @@ describe('testing admin password request a11y', () => {
     })
   })
 
-  it.skip('has no accessibility violations in the info screen', async () => {
+  it('has no accessibility violations in the info screen', async () => {
     mockSystemSetupInfoQuery({
       systemSetupInfo: {
         status: EnumSystemSetupInfoStatus.New,
@@ -45,11 +41,10 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in the import selection screen', async () => {
+  it('has no accessibility violations in the import selection screen', async () => {
     mockSystemSetupInfoQuery({
       systemSetupInfo: {
         status: EnumSystemSetupInfoStatus.InProgress,
@@ -59,11 +54,10 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/import')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in the import source screen', async () => {
+  it('has no accessibility violations in the import source screen', async () => {
     mockSystemSetupInfo({
       status: EnumSystemSetupInfoStatus.InProgress,
       type: EnumSystemSetupInfoType.Import,
@@ -73,8 +67,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/import/freshdesk')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   beforeEach(() => {
@@ -85,7 +78,7 @@ describe('testing admin password request a11y', () => {
     })
   })
 
-  it.skip('has no accessibility violations in the import source start screen', async () => {
+  it('has no accessibility violations in the import source start screen', async () => {
     mockSystemSetupInfo({
       status: EnumSystemSetupInfoStatus.InProgress,
       type: EnumSystemSetupInfoType.Import,
@@ -112,11 +105,10 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/import/freshdesk/start')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in the import source status screen', async () => {
+  it('has no accessibility violations in the import source status screen', async () => {
     mockSystemImportStateQuery({
       systemImportState: {
         result: null,
@@ -127,11 +119,10 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/import/freshdesk/status')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in the admin screen', async () => {
+  it('has no accessibility violations in the admin screen', async () => {
     mockSystemSetupInfoQuery({
       systemSetupInfo: {
         status: EnumSystemSetupInfoStatus.New,
@@ -141,11 +132,10 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/admin')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in the system information screen', async () => {
+  it('has no accessibility violations in the system information screen', async () => {
     mockApplicationConfig({
       system_init_done: true,
     })
@@ -154,11 +144,10 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/system-information')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in the email notification screen', async () => {
+  it('has no accessibility violations in the email notification screen', async () => {
     mockApplicationConfig({
       system_init_done: true,
     })
@@ -177,7 +166,7 @@ describe('testing admin password request a11y', () => {
               },
               {
                 value: 'sendmail',
-                label: 'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
+                label: 'Local MTA (Sendmail/Postfix/Exim/…) - use server setup',
               },
             ],
           },
@@ -203,11 +192,10 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/email-notification')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in the channels screen', async () => {
+  it('has no accessibility violations in the channels screen', async () => {
     mockApplicationConfig({
       system_init_done: true,
     })
@@ -216,11 +204,10 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/channels')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in the email channel screen', async () => {
+  it('has no accessibility violations in the email channel screen', async () => {
     mockApplicationConfig({
       system_init_done: true,
     })
@@ -242,7 +229,7 @@ describe('testing admin password request a11y', () => {
                     },
                     {
                       value: 'sendmail',
-                      label: 'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
+                      label: 'Local MTA (Sendmail/Postfix/Exim/…) - use server setup',
                     },
                   ],
                 },
@@ -276,11 +263,10 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/channels/email')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in the pre-configured email address screen', async () => {
+  it('has no accessibility violations in the pre-configured email address screen', async () => {
     mockApplicationConfig({
       system_init_done: true,
       system_online_service: true,
@@ -307,11 +293,10 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/channels/email-pre-configured')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in the invite screen', async () => {
+  it('has no accessibility violations in the invite screen', async () => {
     mockApplicationConfig({
       system_init_done: true,
     })
@@ -359,11 +344,10 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/invite')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
-  it.skip('has no accessibility violations in the finish screen', async () => {
+  it('has no accessibility violations in the finish screen', async () => {
     mockApplicationConfig({
       system_init_done: true,
     })
@@ -372,7 +356,6 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/finish')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 })

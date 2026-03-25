@@ -89,7 +89,7 @@ describe('Ticket detail: sidebar - online notifications', () => {
 
       await view.events.click(notificationsButton)
 
-      const list = await view.findByRole('region', { name: 'Notifications' })
+      const list = await view.findByRole('region', { name: 'Show notifications' })
 
       expect(within(list).getByText('No unread notifications.')).toBeInTheDocument()
 
