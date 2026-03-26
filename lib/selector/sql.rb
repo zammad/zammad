@@ -197,6 +197,17 @@ class Selector::Sql < Selector::Base
       query_wrap = 'users.id IN (SELECT DISTINCT tickets.customer_id FROM tickets WHERE ###QUERY###)'
     end
 
+    if attribute_table == 'ticket' && attribute_name == 'has_taskbar_entries'
+      query << if (block_condition[:operator] == 'is' && block_condition[:value].to_s == 'true') || (block_condition[:operator] == 'is not' && block_condition[:value].to_s != 'true')
+                 "tickets.id IN (SELECT DISTINCT CAST(SUBSTRING(taskbars.key FROM 8) AS integer) FROM taskbars WHERE taskbars.key LIKE 'Ticket-%')"
+               else
+                 "tickets.id NOT IN (SELECT DISTINCT CAST(SUBSTRING(taskbars.key FROM 8) AS integer) FROM taskbars WHERE taskbars.key LIKE 'Ticket-%')"
+               end
+
+      query.map! { "(#{it})" }
+      return [query, bind_params, tables]
+    end
+
     #
     # checks
     #

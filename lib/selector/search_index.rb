@@ -148,6 +148,32 @@ class Selector::SearchIndex < Selector::Base
 
     data           = block_condition.clone
     key            = data[:name]
+
+    if key == 'ticket.has_taskbar_entries'
+      ticket_ids = Taskbar.where("key LIKE 'Ticket-%'")
+                          .pluck(:key)
+                          .map { |k| k.sub('Ticket-', '').to_i }
+                          .uniq
+
+      if data[:operator] == 'is'
+        return {
+          bool: {
+            must: [
+              { terms: { id: ticket_ids.presence || [-1] } }
+            ]
+          }
+        }
+      else
+        return {
+          bool: {
+            must_not: [
+              { terms: { id: ticket_ids.presence || [-1] } }
+            ]
+          }
+        }
+      end
+    end
+
     table, key_tmp = key.split('.')
     if key_tmp.blank?
       key_tmp = table
