@@ -14,7 +14,8 @@ module Ticket::PerformChanges
                                      :notification_webhook,
                                      :article_note,
                                      :ai_agent,
-                                     :checklist_add_from_template
+                                     :checklist_add_from_template,
+                                     :close_taskbars
   end
 
   def pre_execute(perform_changes_data)
