@@ -210,6 +210,14 @@ class App.UiElement.object_selector extends App.UiElement.ApplicationSelectorExp
         translate: true
         operator: [__('is'), __('is not')]
 
+    if attribute.object_name is 'Ticket' and attribute.hasTaskbarEntries
+      elements['ticket.has_taskbar_entries'] =
+        name: 'has_taskbar_entries'
+        display: __('Has open taskbar tabs')
+        tag: 'boolean'
+        null: false
+        operator: [__('is'), __('is not')]
+
     if attribute.object_name is 'User'
       elements['user.role_ids'] =
         name: 'role_ids'
