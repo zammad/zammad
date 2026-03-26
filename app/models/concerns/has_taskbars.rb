@@ -31,4 +31,11 @@ destroy all taskbars for the class object id
     Taskbar.where(key: "#{self.class}-#{id}").destroy_all
   end
 
+  # Closes all taskbar tabs for this object (ticket).
+  # Called by the new scheduler/trigger/macro action "Taskbar → Close Tab".
+  # Automatically triggers the WebSocket broadcast (after_destroy in Taskbar), so that tabs
+  # disappear immediately for ALL users (agents + customers) – just like with manual closure.  # Schließt alle Taskbar-Tabs für dieses Objekt (Ticket).
+  def close_taskbars!
+    destroy_taskbars
+  end
 end
