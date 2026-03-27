@@ -852,6 +852,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
     user = User.new(clean_user_params)
     user.associations_from_param(params)
+    user.disable_name_guessing = true
 
     user.save!
 

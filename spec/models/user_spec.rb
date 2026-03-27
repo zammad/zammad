@@ -431,6 +431,41 @@ RSpec.describe User, type: :model do
 
           it_behaves_like 'preserving name', 'John', 'TESTUSER'
         end
+
+        context 'when name guessing is disabled' do
+          context 'when only firstname is present' do
+            let(:user) do
+              build(:user, firstname: 'perkūnas ąžuolas', lastname: '', email: Faker::Internet.unique.email).tap do |record|
+                record.disable_name_guessing = true
+                record.save!
+              end
+            end
+
+            it_behaves_like 'preserving name', 'perkūnas ąžuolas', ''
+          end
+
+          context 'when only lastname is present' do
+            let(:user) do
+              build(:user, firstname: '', lastname: 'Zammad Foundation', email: Faker::Internet.unique.email).tap do |record|
+                record.disable_name_guessing = true
+                record.save!
+              end
+            end
+
+            it_behaves_like 'preserving name', '', 'Zammad Foundation'
+          end
+
+          context 'when firstname is nil and only lastname is present' do
+            let(:user) do
+              build(:user, firstname: nil, lastname: 'Zammad Foundation', email: Faker::Internet.unique.email).tap do |record|
+                record.disable_name_guessing = true
+                record.save!
+              end
+            end
+
+            it_behaves_like 'preserving name', nil, 'Zammad Foundation'
+          end
+        end
       end
 
       context 'with postmaster context' do

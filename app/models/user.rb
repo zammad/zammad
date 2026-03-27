@@ -696,7 +696,7 @@ try to find correct name
     preferences.fetch(:locale) { Locale.default }
   end
 
-  attr_accessor :skip_ensure_uniq_email, :name_from_channel_import
+  attr_accessor :skip_ensure_uniq_email, :name_from_channel_import, :disable_name_guessing
 
   def shared_organizations?
     all_organizations.exists? shared: true
@@ -774,7 +774,7 @@ try to find correct name
     self.firstname = sanitize_name(firstname)
     self.lastname  = sanitize_name(lastname)
 
-    return if firstname.present? && lastname.present?
+    return if disable_name_guessing && (firstname.present? || lastname.present?)
 
     if (firstname.blank? && lastname.present?) || (firstname.present? && lastname.blank?)
       used_name = firstname.presence || lastname

@@ -90,6 +90,7 @@ class Service::User::Signup < Service::Base
     user.role_ids = Role.signup_role_ids
     user.source = 'signup'
     user.skip_ensure_uniq_email = true
+    user.disable_name_guessing = true
     user.validate!
 
     UserInfo.ensure_current_user_id do
