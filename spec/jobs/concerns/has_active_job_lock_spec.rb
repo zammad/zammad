@@ -2,7 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe HasActiveJobLock, type: :job do
+# ActiveJobLock is a job concern, but it heavily relies on Delayed::Job
+# If type is set to job, RSpec uses special ActiveJob test adapter
+# Thus different type has to be set
+RSpec.describe HasActiveJobLock, type: :model do
 
   before do
     stub_const job_class_namespace, job_class
@@ -25,16 +28,20 @@ RSpec.describe HasActiveJobLock, type: :job do
   shared_examples 'handle locking of jobs' do |behaviour: :dismiss|
     context 'performing job is present' do
 
-      before { create(:active_job_lock, lock_key: job_class.name, created_at: 1.minute.ago, updated_at: 1.second.ago) }
+      before do
+        job_class.perform_later
+        # simulate a lock with a job-in-progress
+        ActiveJobLock.last.update!(created_at: 1.minute.ago, updated_at: 1.second.ago)
+      end
 
       case behaviour
       when :dismiss_running
         it 'does not allow enqueueing of perform_later jobs' do
-          expect { job_class.perform_later }.not_to have_enqueued_job(job_class)
+          expect { job_class.perform_later }.not_to change(Delayed::Job, :count)
         end
       else
         it 'allows enqueueing of perform_later jobs' do
-          expect { job_class.perform_later }.to have_enqueued_job(job_class).exactly(:once)
+          expect { job_class.perform_later }.to change(Delayed::Job, :count).by(1)
         end
       end
 
@@ -47,12 +54,12 @@ RSpec.describe HasActiveJobLock, type: :job do
         when :dismiss_running
           it 'does not allow enqueueing of perform_later jobs' do
             expect { job_class.set(wait: 1.minute).perform_later }
-              .not_to have_enqueued_job(job_class)
+              .not_to change(Delayed::Job, :count)
           end
         else
           it 'allows enqueueing of perform_later jobs' do
             expect { job_class.set(wait: 1.minute).perform_later }
-              .to have_enqueued_job(job_class).exactly(:once)
+              .to change(Delayed::Job, :count).by(1)
           end
         end
       end
@@ -63,17 +70,14 @@ RSpec.describe HasActiveJobLock, type: :job do
       before { job_class.perform_later }
 
       it 'does not enqueue perform_later jobs' do
-        expect { job_class.perform_later }.not_to have_enqueued_job(job_class)
+        expect { job_class.perform_later }.not_to change(Delayed::Job, :count)
       end
 
       it 'allows execution of perform_now jobs' do
         expect { job_class.perform_now }.to change(job_class, :perform_counter).by(1)
       end
 
-      # Date upsert relies on DelayedJob internals
-      # If type is set to job, RSpec uses special ActiveJob test adapter
-      # Thus different type has to be set to test date upsert
-      context 'with a date', type: :model do
+      context 'with a date' do
         let(:related_delayed_job) { Delayed::Job.where("handler LIKE '%job_class: UniqueActiveJob%'").last }
 
         it 'does not enqueue a new job' do
@@ -126,7 +130,7 @@ RSpec.describe HasActiveJobLock, type: :job do
       end
 
       it 'enqueues perform_later jobs' do
-        expect { job_class.perform_later }.to have_enqueued_job(job_class)
+        expect { job_class.perform_later }.to change(Delayed::Job, :count).by(1)
       end
 
       it 'allows execution of perform_now jobs' do
@@ -166,7 +170,7 @@ RSpec.describe HasActiveJobLock, type: :job do
         expect do
           2.times { job_class.perform_later('User', 23) }
           job_class.perform_later('User', 42)
-        end.to have_enqueued_job(job_class).exactly(:twice)
+        end.to change(Delayed::Job, :count).by(2)
       end
     end
 
@@ -186,7 +190,7 @@ RSpec.describe HasActiveJobLock, type: :job do
           block.call
         end
 
-        expect { job_class.perform_later }.to have_enqueued_job(job_class).exactly(:once)
+        expect { job_class.perform_later }.to change(Delayed::Job, :count).by(1)
         expect(exception_raised).to be true
       end
     end
@@ -207,7 +211,7 @@ RSpec.describe HasActiveJobLock, type: :job do
           block.call
         end
 
-        expect { job_class.perform_later }.to have_enqueued_job(job_class).exactly(:once)
+        expect { job_class.perform_later }.to change(Delayed::Job, :count).by(1)
         expect(exception_raised).to be true
       end
     end
@@ -257,7 +261,7 @@ RSpec.describe HasActiveJobLock, type: :job do
     end
 
     it 'does not allow enqueueing of perform_later jobs' do
-      expect { job_class.perform_later }.not_to have_enqueued_job(job_class)
+      expect { job_class.perform_later }.not_to change(Delayed::Job, :count)
     end
 
     it 'does not allow execution of perform_now jobs' do
@@ -286,6 +290,32 @@ RSpec.describe HasActiveJobLock, type: :job do
 
       expect { perform_enqueued_jobs(only: job_class) }
         .not_to raise_error
+    end
+  end
+
+  context 'when lock is present, but job is missing' do
+    before do
+      create(:active_job_lock, lock_key: job_class.name)
+    end
+
+    context 'when EXISTING_ACTIVE_JOB_LOCK_BEHAVIOUR is set to :dismiss_running' do
+      before do
+        stub_const "#{job_class.name}::EXISTING_ACTIVE_JOB_LOCK_BEHAVIOUR", :dismiss_running
+      end
+
+      it 'allows enqueueing of a job' do
+        expect { job_class.perform_later }.to change(Delayed::Job, :count).by(1)
+      end
+    end
+
+    context 'when EXISTING_ACTIVE_JOB_LOCK_BEHAVIOUR is set to :dismiss' do
+      before do
+        stub_const "#{job_class.name}::EXISTING_ACTIVE_JOB_LOCK_BEHAVIOUR", :dismiss
+      end
+
+      it 'allows enqueueing of a job' do
+        expect { job_class.perform_later }.to change(Delayed::Job, :count).by(1)
+      end
     end
   end
 end
