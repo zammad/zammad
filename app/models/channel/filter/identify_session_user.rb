@@ -2,6 +2,7 @@
 
 class Channel::Filter::IdentifySessionUser < Channel::Filter::BaseIdentifyUser
   def self.run(_channel, mail, _transaction_params)
+    return true if ['true', true].include?(mail[:'x-zammad-ignore'])
     user = fetch_session_user(mail) || create_session_user(mail)
 
     mail[ :'x-zammad-session-user-id' ] = user.id

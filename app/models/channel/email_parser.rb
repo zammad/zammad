@@ -168,27 +168,18 @@ returns
     original_interface_handle = ApplicationHandleInfo.current
     transaction_params = { interface_handle: "#{original_interface_handle}.postmaster", disable: [] }
 
-    filters = {}
-    Setting.where(area: 'Postmaster::PreFilter').reorder(:name).each do |setting|
-      filters[setting.name] = Setting.get(setting.name).constantize
-    end
-    filters.each do |key, backend|
-      Rails.logger.debug { "run postmaster pre filter #{key}: #{backend}" }
-      begin
-        backend.run(channel, mail, transaction_params)
-      rescue => e
-        Rails.logger.error "can't run postmaster pre filter #{key}: #{backend}"
-        Rails.logger.error e.inspect
-        raise e
-      end
-    end
+    filters = postmaster_prefilters
 
-    # check ignore header
+    run_prefilters(prefilters_before_ignore(filters), channel, mail, transaction_params)
+
+    # check ignore header as early as possible after decision filters
     if ['true', true].include?(mail[:'x-zammad-ignore'])
       Rails.logger.info "ignored email with msgid '#{mail[:message_id]}' from '#{mail[:from]}' because of x-zammad-ignore header"
 
       return [{}, nil, nil, mail]
     end
+
+    run_prefilters(prefilters_after_ignore(filters), channel, mail, transaction_params)
 
     ticket       = nil
     article      = nil
@@ -538,6 +529,44 @@ returns
   end
 
   private
+
+  def postmaster_prefilters
+    Setting.where(area: 'Postmaster::PreFilter').reorder(:name).to_h do |setting|
+      [setting.name, Setting.get(setting.name).constantize]
+    end
+  end
+
+  def prefilters_before_ignore(filters)
+    filters.select do |_key, backend|
+      !prefilters_after_ignore_backend?(backend)
+    end
+  end
+
+  def prefilters_after_ignore(filters)
+    filters.select do |_key, backend|
+      prefilters_after_ignore_backend?(backend)
+    end
+  end
+
+  def prefilters_after_ignore_backend?(backend)
+    [
+      Channel::Filter::IdentifySessionUser,
+      Channel::Filter::IdentifySender,
+    ].include?(backend)
+  end
+
+  def run_prefilters(filters, channel, mail, transaction_params)
+    filters.each do |key, backend|
+      Rails.logger.debug { "run postmaster pre filter #{key}: #{backend}" }
+      begin
+        backend.run(channel, mail, transaction_params)
+      rescue => e
+        Rails.logger.error "can't run postmaster pre filter #{key}: #{backend}"
+        Rails.logger.error e.inspect
+        raise e
+      end
+    end
+  end
 
   # generate Message ID on the fly if it was missing
   # yes, Mail gem generates one in some cases
