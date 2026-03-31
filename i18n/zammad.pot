@@ -1462,7 +1462,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:151
-#: app/models/user.rb:773
+#: app/models/user.rb:766
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -2068,7 +2068,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:675
+#: app/models/user.rb:668
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2081,7 +2081,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:128
-#: app/models/user.rb:752
+#: app/models/user.rb:745
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -6279,7 +6279,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:685
+#: app/models/user.rb:678
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -8906,7 +8906,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:624
+#: app/models/user.rb:617
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -10532,7 +10532,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:704
+#: app/models/user.rb:697
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -14301,11 +14301,11 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:692
+#: app/models/user.rb:685
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:698
+#: app/models/user.rb:691
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -21294,7 +21294,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:889
+#: app/models/user.rb:882
 msgid "is too long"
 msgstr ""
 
