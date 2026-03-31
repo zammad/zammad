@@ -74,14 +74,13 @@ export const useTicketEdit = (
   watch(
     ticketFormRelatedData,
     () => {
-      if (!ticket.value) {
-        return
-      }
+      if (!ticket.value) return
 
       const { internalId: ownerInternalId } = ticket.value.owner
 
       initialTicketValue.value = {
         id: ticket.value.id,
+        shared_draft_id: undefined,
         owner_id: ownerInternalId === 1 ? null : ownerInternalId,
         isDefaultFollowUpStateSet: undefined, // the default value for reset situations.
       }
@@ -95,6 +94,7 @@ export const useTicketEdit = (
         },
         {
           resetDirty: false,
+          resetFlags: false,
         },
       )
     },

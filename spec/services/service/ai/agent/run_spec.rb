@@ -74,6 +74,25 @@ RSpec.describe Service::AI::Agent::Run do
           .and change { ticket.reload.state.name }.to('open')
       end
 
+      it 'dispatches triggers after applying changes' do
+        create(:trigger,
+               condition: { 'ticket.priority_id' => { 'operator' => 'is', 'value' => Ticket::Priority.lookup(name: '3 high').id.to_s } },
+               perform:   { 'ticket.tags' => { 'operator' => 'add', 'value' => 'ai-trigger-fired' } })
+
+        service.execute
+
+        expect(ticket.reload.tag_list).to include('ai-trigger-fired')
+      end
+
+      it 'does not create notifications after applying changes', performs_jobs: true do
+        agent = create(:agent, :preferencable, notification_group_ids: [ticket.group_id], groups: [ticket.group])
+
+        service.execute
+        perform_enqueued_jobs
+
+        expect(OnlineNotification.where(o_id: ticket.id, user_id: agent.id)).to be_empty
+      end
+
       context 'when AI result content does not match result structure' do
         let(:ai_result_content) { 'unexpected string content' }
 

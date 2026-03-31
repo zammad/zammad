@@ -7953,6 +7953,14 @@ a.list-group-item.active > .badge,
   }
 }
 
+.text-tools-feedback-output {
+  display: inline-block;
+  min-width: 4.5em;
+
+  @include ltr(margin-right, 6px);
+  @include rtl(margin-left, 6px);
+}
+
 .bubble-wrapper {
   @extend .zIndex-6;
 
@@ -11782,7 +11790,15 @@ output {
   padding: 10px 5px 6px;
   margin: 0;
 
-  label {
+  .day-time-separator {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 6px;
+    cursor: default;
+  }
+
+  label,
+  .day-time-separator {
     text-align: center;
   }
 

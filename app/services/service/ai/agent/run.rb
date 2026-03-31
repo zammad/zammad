@@ -38,6 +38,7 @@ class Service::AI::Agent::Run < Service::Base
         ticket.perform_changes(ai_agent_perform_template, 'ai_agent', {
                                  article_id: article&.id
                                })
+        TransactionDispatcher.commit(disable_notification: true)
       end
     rescue => e
       Rails.logger.error "AI Agent '#{ai_agent.name}' with ID #{ai_agent.id} perform_changes failed for ticket #{ticket.id}."

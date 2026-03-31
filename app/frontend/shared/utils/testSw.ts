@@ -1,7 +1,10 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 export class ServiceWorkerHelper {
-  private enabled = localStorage.getItem('_dev_sw') === 'true'
+  private enabled =
+    typeof localStorage !== 'undefined' &&
+    typeof localStorage.getItem === 'function' &&
+    localStorage.getItem('_dev_sw') === 'true'
 
   public ontriggerupdate: (() => void) | null = null
 

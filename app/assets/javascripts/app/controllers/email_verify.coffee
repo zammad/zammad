@@ -35,7 +35,7 @@ class Success extends App.ControllerAppContent
       detail: __('Woo hoo! Your email address has been verified!')
     )
     delay = =>
-      @navigate '#'
+      App.Auth.loginCheck(=> @navigate '#')
     @delay(delay, 2000)
 
 class Fail extends App.ControllerAppContent

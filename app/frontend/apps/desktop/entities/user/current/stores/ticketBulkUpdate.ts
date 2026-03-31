@@ -53,7 +53,7 @@ export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
       persistent: true,
       currentProgress: persistedState.value?.processedCount ?? undefined,
       maxProgress: persistedState.value?.total ?? undefined,
-      callback: () => {
+      closeCallback: () => {
         runningNotificationDismissed.value = true
       },
     })

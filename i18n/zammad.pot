@@ -49,37 +49,37 @@ msgstr ""
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_create/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket.updated_at}_\n* Group: #{ticket.group.name}\n* Owner: #{ticket.owner.fullname}\n* State: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Created by #{current_user.longname} at #{ticket.updated_at}_\n* Group: #{ticket.group.name}\n* Owner: #{ticket.owner.fullname}\n* State: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_escalation/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Escalated at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" has been escalated since \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Escalated at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" has been escalated since \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_info/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Last updated at #{ticket.updated_at}_\n* Group: #{ticket.group.name}\n* Owner: #{ticket.owner.fullname}\n* State: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Last updated at #{ticket.updated_at}_\n* Group: #{ticket.group.name}\n* Owner: #{ticket.owner.fullname}\n* State: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_reminder_reached/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Reminder reached!_\nA ticket needs attention: reminder reached for (#{ticket.title}) with customer \"*#{ticket.customer.longname}*\".\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Reminder reached!_\nA ticket needs attention: reminder reached for (#{ticket.title}) with customer \"*#{ticket.customer.longname}*\".\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_update/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Updated by #{current_user.longname} at #{ticket.updated_at}_\n<% if @objects[:changes].present? %>\n  <% @objects[:changes].each do |key, value| %>\n  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n  <% end %>\n<% end %>\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Updated by #{current_user.longname} at #{ticket.updated_at}_\n<% if @objects[:changes].present? %>\n  <% @objects[:changes].each do |key, value| %>\n  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n  <% end %>\n<% end %>\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_escalation_warning/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Will escalate at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will escalate at \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Will escalate at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will escalate at \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
@@ -596,7 +596,7 @@ msgstr ""
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:75
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:80
 msgid "A newer version of the app is available. Please reload at your earliest."
 msgstr ""
 
@@ -1030,7 +1030,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:326
 #: app/assets/javascripts/app/models/ai_agent.coffee:10
-#: app/assets/javascripts/app/models/ai_text_tool.coffee:28
+#: app/assets/javascripts/app/models/ai_text_tool.coffee:30
 #: app/assets/javascripts/app/models/chat.coffee:257
 #: app/assets/javascripts/app/models/checklist_template.coffee:9
 #: app/assets/javascripts/app/models/core_workflow.coffee:14
@@ -1462,7 +1462,7 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:151
-#: app/models/user.rb:766
+#: app/models/user.rb:767
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -2005,7 +2005,7 @@ msgstr ""
 msgid "Article could not be deleted."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:124
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:136
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:25
 msgid "Article meta information"
 msgstr ""
@@ -2068,7 +2068,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:668
+#: app/models/user.rb:669
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2081,7 +2081,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:128
-#: app/models/user.rb:745
+#: app/models/user.rb:746
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2333,11 +2333,11 @@ msgstr ""
 msgid "Automatically loads the chat.css file. If you want to use your own css, just set it to false."
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1296
+#: app/frontend/shared/components/Form/Form.vue:1303
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1305
+#: app/frontend/shared/components/Form/Form.vue:1312
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -5947,6 +5947,10 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:45
+msgid "Download feedback report"
+msgstr ""
+
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:105
 msgid "Download original email"
 msgstr ""
@@ -6279,7 +6283,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:678
+#: app/models/user.rb:679
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -6573,6 +6577,15 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:74
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:186
 msgid "Encryption:"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:15
+#: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:22
+msgid "End date"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco:24
+msgid "End time"
 msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee:8
@@ -7140,6 +7153,7 @@ msgstr ""
 msgid "February"
 msgstr ""
 
+#: app/assets/javascripts/app/models/ai_text_tool.coffee:27
 #: app/assets/javascripts/app/views/channel/form.jst.eco:34
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:62
 msgid "Feedback"
@@ -7523,9 +7537,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:10
 #: app/assets/javascripts/app/models/ticket_article.coffee:7
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:13
-#: app/assets/javascripts/app/views/generic/business_hours.jst.eco:21
-#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
-#: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
@@ -8131,10 +8142,6 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr ""
 
-#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:65
-msgid "Hide"
-msgstr ""
-
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:69
 msgid "Hide BETA UI switch"
 msgstr ""
@@ -8143,7 +8150,7 @@ msgstr ""
 msgid "Hide authenticator app secret"
 msgstr ""
 
-#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:65
+#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:85
 msgid "Hide notification"
 msgstr ""
 
@@ -8906,7 +8913,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:617
+#: app/models/user.rb:618
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -9295,6 +9302,10 @@ msgstr ""
 msgid "Last External Article"
 msgstr ""
 
+#: app/assets/javascripts/app/models/ai_text_tool.coffee:28
+msgid "Last Feedback Reset"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Internal Article"
 msgstr ""
@@ -9397,7 +9408,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/_feature_base.coffee:53
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:66
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:34
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:40
 msgid "Legal Information"
 msgstr ""
@@ -10532,7 +10543,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:697
+#: app/models/user.rb:698
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -10944,7 +10955,7 @@ msgstr ""
 msgid "New Workflow"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:28
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:37
 msgid "New Writing Assistant Tool"
 msgstr ""
 
@@ -11454,7 +11465,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:77
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:58
 #: app/assets/javascripts/app/models/ai_agent.coffee:9
-#: app/assets/javascripts/app/models/ai_text_tool.coffee:27
+#: app/assets/javascripts/app/models/ai_text_tool.coffee:29
 #: app/assets/javascripts/app/models/chat.coffee:252
 #: app/assets/javascripts/app/models/email_address.coffee:35
 #: app/assets/javascripts/app/models/group.coffee:14
@@ -13097,7 +13108,7 @@ msgstr ""
 msgid "Rate limit exceeded - please wait a moment"
 msgstr ""
 
-#: app/models/ai/analytics/usage.rb:16
+#: app/models/ai/analytics/usage.rb:18
 msgid "Rating can only be set once"
 msgstr ""
 
@@ -13302,6 +13313,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:53
 msgid "Reload application"
+msgstr ""
+
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:96
+#: app/frontend/shared/stores/authentication.ts:165
+msgid "Reload now"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco:43
@@ -13605,6 +13621,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:58
 msgid "Reset Password failed!"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:52
+msgid "Reset feedback"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
@@ -14204,7 +14224,7 @@ msgstr ""
 msgid "Search for workflows"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:18
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:27
 msgid "Search for writing assistant tools"
 msgstr ""
 
@@ -14301,11 +14321,11 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:685
+#: app/models/user.rb:686
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:691
+#: app/models/user.rb:692
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -14390,7 +14410,7 @@ msgid "Security token verification failed"
 msgstr ""
 
 #: app/frontend/shared/stores/authentication.ts:160
-msgid "Security token verification failed. This may be just temporary, click here to reload and try again. Reloading in %s second(s)…"
+msgid "Security token verification failed. This may be just temporary, please reload and try again. Reloading in %s second(s)…"
 msgstr ""
 
 #: lib/external_data_source/errors.rb:28
@@ -14400,7 +14420,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:451
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:161
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:268
 msgid "See less"
 msgstr ""
@@ -14411,7 +14431,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:161
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:268
 msgid "See more"
@@ -15357,6 +15377,11 @@ msgstr ""
 msgid "Start and end date"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
+#: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
+msgid "Start date"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:67
 msgid "Start editing"
 msgstr ""
@@ -15385,6 +15410,10 @@ msgstr ""
 #: public/assets/chat/views/customer_timeout.eco:8
 #: public/assets/chat/views/waiting_list_timeout.eco:4
 msgid "Start new conversation"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco:21
+msgid "Start time"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:231
@@ -16321,7 +16350,7 @@ msgstr ""
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:100
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:117
 msgid "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr ""
 
@@ -16391,6 +16420,7 @@ msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:148
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:83
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr ""
@@ -18204,12 +18234,6 @@ msgstr ""
 msgid "Tickets with the same attributes were found."
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/business_hours.jst.eco:23
-#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:15
-#: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:22
-msgid "Till"
-msgstr ""
-
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:39
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:6
 msgid "Time"
@@ -18414,6 +18438,10 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:85
 msgid "Toggle AM/PM mode"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:167
+msgid "Toggle article meta information"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:443
@@ -19928,7 +19956,7 @@ msgstr ""
 msgid "Would you like to give us feedback on the BETA UI?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:16
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
 #: db/seeds/permissions.rb:245
 #: db/seeds/settings.rb:6145
 msgid "Writing Assistant"
@@ -19938,11 +19966,11 @@ msgstr ""
 msgid "Writing Assistant Fixed Instructions"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:16
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
 msgid "Writing Assistant Tool"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:17
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:26
 msgid "Writing Assistant Tools"
 msgstr ""
 
@@ -21294,7 +21322,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:882
+#: app/models/user.rb:883
 msgid "is too long"
 msgstr ""
 

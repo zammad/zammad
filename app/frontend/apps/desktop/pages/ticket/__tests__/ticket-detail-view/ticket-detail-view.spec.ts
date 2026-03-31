@@ -78,7 +78,9 @@ describe('Ticket detail view', () => {
 
       const feed = view.getByRole('feed')
 
-      const articles = within(feed).getAllByRole('article')
+      const articles = within(feed)
+        .getAllByRole('article')
+        .filter((article) => article.hasAttribute('aria-setsize'))
 
       expect(articles).toHaveLength(26) // 20 articles from end && 5 articles from the beginning 1 more button
 

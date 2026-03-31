@@ -124,6 +124,13 @@ RSpec.describe AI::Service::AIAgent, :aggregate_failures do
     expect(result.content).to include('state_id' => 1, 'priority_id' => 2)
   end
 
+  it 'stores the ticket as related_object on the analytics run' do
+    expect { ai_service.execute }
+      .to change(AI::Analytics::Run, :count).by(1)
+
+    expect(AI::Analytics::Run.last.related_object).to eq(ticket)
+  end
+
   context 'when instruction_context options have no description' do
     let(:context_data) do
       {

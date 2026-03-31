@@ -206,6 +206,28 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
     end
   end
 
+  describe '#authorized?' do
+    it 'is authorized for agents' do
+      expect(resolved_result.authorized?).to be true
+    end
+
+    context 'with customer user' do
+      let(:user) { create(:customer) }
+
+      it 'is authorized for customers' do
+        expect(resolved_result.authorized?).to be true
+      end
+    end
+
+    context 'with admin-only user' do
+      let(:user) { create(:user, roles: [Role.find_by(name: 'Admin')]) }
+
+      it 'is not authorized' do
+        expect(resolved_result.authorized?).to be false
+      end
+    end
+  end
+
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Ticket'
   include_examples 'FormUpdater::HasSecurityOptions', type: 'create'
   include_examples 'FormUpdater::AppliesTicketTemplate'

@@ -26,4 +26,12 @@ class AITextToolsController < ApplicationController
   def destroy
     model_destroy_render(AI::TextTool, params)
   end
+
+  def reset_analytics
+    AI::TextTool
+      .find(params[:id])
+      .reset_analytics_timestamp!
+
+    render json: { success: true }
+  end
 end

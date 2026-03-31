@@ -157,12 +157,13 @@ export const useAuthenticationStore = defineStore(
           notify({
             id: 'invalid-csrf-token',
             message: i18n.t(
-              'Security token verification failed. This may be just temporary, click here to reload and try again. Reloading in %s second(s)…',
+              'Security token verification failed. This may be just temporary, please reload and try again. Reloading in %s second(s)…',
               Math.ceil(timeRemaining / 1000),
             ),
             type: NotificationTypes.Warn,
             persistent: true,
-            callback,
+            actionLabel: __('Reload now'),
+            actionCallback: callback,
           })
           if (totalDisplayTime < reloadTimeout) return
 

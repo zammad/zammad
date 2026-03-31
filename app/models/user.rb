@@ -111,7 +111,8 @@ class User < ApplicationModel
                                   :image,
                                   :image_source,
                                   :source,
-                                  :login_failed
+                                  :login_failed,
+                                  :out_of_office_replacement_id
 
   csv_object_ids_ignored 1
 

@@ -36,7 +36,15 @@ class FormUpdater::Updater
     true
   end
 
+  def self.required_permissions
+    []
+  end
+
   def authorized?
+    if self.class.required_permissions.present? && !current_user.permissions?(self.class.required_permissions)
+      return false
+    end
+
     # The authorized function needs to be implemented for any updaters which have a `id`.
     if id
       @object = Gql::ZammadSchema.authorized_object_from_id id, type: object_type, user: current_user

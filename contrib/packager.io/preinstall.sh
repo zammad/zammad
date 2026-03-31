@@ -59,7 +59,7 @@ if [ -n "$(which zammad 2> /dev/null)" ]; then
       exit 0
    fi
 
-   if [ "$(zammad run rails r 'puts Package.count.positive?')" == "true" ] && [ -n "$(which pnpm 2> /dev/null)" ] && [ -n "$(which node 2> /dev/null)" ]; then
+   if [ "$(zammad run rails r 'puts Package.count.positive?')" == "true" ] && [ -n "$(zammad run which pnpm 2> /dev/null)" ] && [ -n "$(zammad run which node 2> /dev/null)" ]; then
       echo "# Detected custom packages..."
       echo "# Remove custom packages files temporarily..."
       zammad run rake zammad:package:uninstall_all_files

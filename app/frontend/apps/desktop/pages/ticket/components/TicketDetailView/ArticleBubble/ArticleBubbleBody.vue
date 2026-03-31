@@ -101,7 +101,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
+  <article
     class="Content relative overflow-hidden p-3 transition-[padding]"
     :class="[
       bodyClasses,
@@ -137,7 +137,8 @@ onMounted(() => {
     >
       <!--    Never drop this inner-article-body class used for Highlight feature-->
       <!--    eslint-disable vue/no-v-html-->
-      <div class="inner-article-body" :aria-details="descriptionId" v-html="body" />
+      <section class="inner-article-body" :aria-details="descriptionId" v-html="body" />
+
       <div v-if="descriptionId" :id="descriptionId" class="sr-only">
         {{ description }}
       </div>
@@ -160,7 +161,7 @@ onMounted(() => {
     >
       {{ shownMore ? $t('See less') : $t('See more') }}
     </CommonLink>
-  </div>
+  </article>
 </template>
 
 <style scoped>

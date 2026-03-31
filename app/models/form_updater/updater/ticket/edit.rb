@@ -11,6 +11,10 @@ class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
 
   core_workflow_screen 'edit'
 
+  def self.required_permissions
+    %w[ticket.agent ticket.customer]
+  end
+
   apply_shared_draft_group_keys %i[article ticket]
   apply_state_group_keys %w[ticket article]
   store_state_collect_group_key 'ticket'

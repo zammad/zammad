@@ -5,6 +5,10 @@ class FormUpdater::Updater::Ticket::BulkEdit < FormUpdater::Updater
 
   core_workflow_screen 'overview_bulk'
 
+  def self.required_permissions
+    %w[ticket.agent]
+  end
+
   def object_type
     ::Ticket
   end

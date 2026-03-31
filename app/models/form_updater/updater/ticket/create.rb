@@ -13,6 +13,10 @@ class FormUpdater::Updater::Ticket::Create < FormUpdater::Updater
 
   core_workflow_screen 'create_middle'
 
+  def self.required_permissions
+    %w[ticket.agent ticket.customer]
+  end
+
   def object_type
     ::Ticket
   end
