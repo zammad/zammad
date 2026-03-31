@@ -173,12 +173,8 @@ returns
       filters[setting.name] = Setting.get(setting.name).constantize
     end
 
-    filters_before_ignore = filters.reject do |_key, backend|
-      prefilters_after_ignore_backend?(backend)
-    end
-
-    filters_after_ignore = filters.select do |_key, backend|
-      prefilters_after_ignore_backend?(backend)
+    filters_before_ignore, filters_after_ignore = filters.partition do |_key, backend|
+      !prefilters_after_ignore_backend?(backend)
     end
 
     run_prefilters(filters_before_ignore, channel, mail, transaction_params)
