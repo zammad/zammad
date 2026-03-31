@@ -168,18 +168,29 @@ returns
     original_interface_handle = ApplicationHandleInfo.current
     transaction_params = { interface_handle: "#{original_interface_handle}.postmaster", disable: [] }
 
-    filters = postmaster_prefilters
+    filters = {}
+    Setting.where(area: 'Postmaster::PreFilter').reorder(:name).each do |setting|
+      filters[setting.name] = Setting.get(setting.name).constantize
+    end
 
-    run_prefilters(prefilters_before_ignore(filters), channel, mail, transaction_params)
+    filters_before_ignore = filters.reject do |_key, backend|
+      prefilters_after_ignore_backend?(backend)
+    end
 
-    # check ignore header as early as possible after decision filters
+    filters_after_ignore = filters.select do |_key, backend|
+      prefilters_after_ignore_backend?(backend)
+    end
+
+    run_prefilters(filters_before_ignore, channel, mail, transaction_params)
+
+    # check ignore header
     if ['true', true].include?(mail[:'x-zammad-ignore'])
       Rails.logger.info "ignored email with msgid '#{mail[:message_id]}' from '#{mail[:from]}' because of x-zammad-ignore header"
 
       return [{}, nil, nil, mail]
     end
 
-    run_prefilters(prefilters_after_ignore(filters), channel, mail, transaction_params)
+    run_prefilters(filters_after_ignore, channel, mail, transaction_params)
 
     ticket       = nil
     article      = nil
@@ -529,24 +540,6 @@ returns
   end
 
   private
-
-  def postmaster_prefilters
-    Setting.where(area: 'Postmaster::PreFilter').reorder(:name).to_h do |setting|
-      [setting.name, Setting.get(setting.name).constantize]
-    end
-  end
-
-  def prefilters_before_ignore(filters)
-    filters.select do |_key, backend|
-      !prefilters_after_ignore_backend?(backend)
-    end
-  end
-
-  def prefilters_after_ignore(filters)
-    filters.select do |_key, backend|
-      prefilters_after_ignore_backend?(backend)
-    end
-  end
 
   def prefilters_after_ignore_backend?(backend)
     [
