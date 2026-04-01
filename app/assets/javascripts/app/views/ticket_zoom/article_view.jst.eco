@@ -177,6 +177,18 @@
           </div>
         </div>
       </div>
+    <% if @article.time_unit > 0: %>
+      <div class="horizontal article-meta-row">
+        <div class="article-meta-key"><%- @T('Accounted Time') %></div>
+        <div class="article-meta-value">
+          <%- @Icon('clock', 'article-meta-icon') %>
+          <%= @timeUnit(@article.time_unit) %>
+          <% if @displayUnit: %>
+            <%- @T(@displayUnit) %>
+          <% end %>
+      </div>
+      </div>
+    <% end %>
     </div>
   </div>
 </div>

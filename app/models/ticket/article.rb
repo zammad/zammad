@@ -327,6 +327,7 @@ returns
   def attributes_with_association_ids
     attributes = super
     add_attachments_to_attributes(attributes)
+    add_time_unit_to_attributes(attributes)
     if attributes['body'] && attributes['content_type'] =~ %r{text/html}i
       attributes['body'] = Rails.cache.fetch("#{self.class}/#{cache_key_with_version}/body/dynamic_image_size") do
         HtmlSanitizer.dynamic_image_size(attributes['body'])

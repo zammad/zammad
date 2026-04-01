@@ -1,4 +1,6 @@
 class App.ArticleViewItem extends App.ControllerObserver
+  @include App.TimeAccountingUnitMixin
+
   model: 'TicketArticle'
   observe:
     from: true
@@ -133,6 +135,7 @@ class App.ArticleViewItem extends App.ControllerObserver
         article:     article
         attachments: attachments
         links:       links
+        displayUnit: @timeAccountingDisplayUnit()
       )
       return
     if article.sender.name is 'System' && article.type.name isnt 'note'
@@ -142,6 +145,7 @@ class App.ArticleViewItem extends App.ControllerObserver
         article:     article
         attachments: attachments
         links:       links
+        displayUnit: @timeAccountingDisplayUnit()
       )
       return
 
@@ -166,6 +170,7 @@ class App.ArticleViewItem extends App.ControllerObserver
       article:     article
       attachments: App.view('generic/attachments')(attachments: attachments, has_body: !!article.html)
       links:       links
+      displayUnit: @timeAccountingDisplayUnit()
     )
 
     new App.WidgetAvatar(
