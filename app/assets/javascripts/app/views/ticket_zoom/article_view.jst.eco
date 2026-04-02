@@ -177,7 +177,7 @@
           </div>
         </div>
       </div>
-    <% if @article.time_unit > 0: %>
+    <% if @article.time_unit != 0: %>
       <div class="horizontal article-meta-row">
         <div class="article-meta-key"><%- @T('Accounted Time') %></div>
         <div class="article-meta-value">
