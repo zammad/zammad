@@ -33,9 +33,9 @@ body:
       label: Acceptance Criteria
       description: "Define the conditions that must be met for this item to be considered complete."
       placeholder: |
-        - [ ] Acceptance criteria 1
-        - [ ] Acceptance criteria 2
-        - [ ] Acceptance criteria 3
+        - Acceptance criteria 1
+        - Acceptance criteria 2
+        - Acceptance criteria 3
     validations:
       required: true
 
