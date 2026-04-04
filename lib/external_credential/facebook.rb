@@ -32,9 +32,7 @@ class ExternalCredential::Facebook
     state = SecureRandom.uuid
     {
       request_token: state,
-      # authorize_url: oauth.url_for_oauth_code(permissions: 'publish_pages, manage_pages, user_posts', state: state),
-      # authorize_url: oauth.url_for_oauth_code(permissions: 'publish_pages, manage_pages', state: state),
-      authorize_url: oauth.url_for_oauth_code(permissions: 'pages_manage_posts, pages_manage_engagement, pages_manage_metadata, pages_read_engagement, pages_read_user_content', state: state),
+      authorize_url: oauth.url_for_oauth_code(permissions: 'pages_manage_metadata, pages_messaging, pages_show_list, pages_read_engagement', state: state),
     }
   end
 
@@ -52,13 +50,35 @@ class ExternalCredential::Facebook
     access_token = oauth.get_access_token(params[:code])
     client = Koala::Facebook::API.new(access_token)
     user = client.get_object('me')
-    # p client.get_connections('me', 'accounts').inspect
     pages = client.get_connections('me', 'accounts').map do |page|
       {
         id:           page['id'],
         name:         page['name'],
         access_token: page['access_token']
       }
+    end
+
+    # Fallback for Facebook Login for Business with granular permissions:
+    # /me/accounts may return empty even when pages are authorized, because
+    # "Facebook Login for Business" grants page access via granular_scopes
+    # rather than the traditional /me/accounts endpoint.
+    # In this case, extract page IDs from the token's granular_scopes and
+    # query each page individually.
+    if pages.empty?
+      app_token = external_credential.credentials['application_id'] + '|' + external_credential.credentials['application_secret']
+      app_client = Koala::Facebook::API.new(app_token)
+      token_info = app_client.debug_token(access_token)
+      granular = token_info.dig('data', 'granular_scopes') || []
+      page_ids = granular.select { |s| s['scope'] == 'pages_show_list' }
+                         .flat_map { |s| s['target_ids'] || [] }
+                         .uniq
+      pages = page_ids.filter_map do |pid|
+        page_data = client.get_object(pid, fields: 'id,name,access_token')
+        { id: page_data['id'], name: page_data['name'], access_token: page_data['access_token'] }
+      rescue => e
+        Rails.logger.warn "Facebook: failed to fetch page #{pid} via granular_scopes fallback: #{e.message}"
+        nil
+      end
     end
 
     # check if account already exists
