@@ -34,6 +34,7 @@ class App.ArticleViewItem extends App.ControllerObserver
   constructor: ->
     super
     @seeMoreOpen = false
+    @time_accountings = @ui?.parent?.time_accountings
 
     # set expand of text area only once
     @controllerBind('ui::ticket::shown', (data) =>
@@ -54,6 +55,14 @@ class App.ArticleViewItem extends App.ControllerObserver
       if @highlighter
         @highlighter.loadHighlights(@object_id)
     @delay(d, 200)
+
+  # Calculate time_unit for this article
+  getArticleTimeUnit: (article) =>
+    return null if !@time_accountings || !article?.id
+    timeAccounting = _.find(@time_accountings, (item) =>
+      item.ticket_article_id is article.id
+    )
+    return timeAccounting?.time_unit || null
 
   render: (article) =>
 
@@ -135,7 +144,6 @@ class App.ArticleViewItem extends App.ControllerObserver
         article:     article
         attachments: attachments
         links:       links
-        displayUnit: @timeAccountingDisplayUnit()
       )
       return
     if article.sender.name is 'System' && article.type.name isnt 'note'
@@ -145,7 +153,6 @@ class App.ArticleViewItem extends App.ControllerObserver
         article:     article
         attachments: attachments
         links:       links
-        displayUnit: @timeAccountingDisplayUnit()
       )
       return
 
@@ -171,6 +178,7 @@ class App.ArticleViewItem extends App.ControllerObserver
       attachments: App.view('generic/attachments')(attachments: attachments, has_body: !!article.html)
       links:       links
       displayUnit: @timeAccountingDisplayUnit()
+      time_unit:   @getArticleTimeUnit(article)
     )
 
     new App.WidgetAvatar(

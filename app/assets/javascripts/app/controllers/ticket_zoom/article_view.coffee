@@ -1,6 +1,7 @@
 class App.TicketZoomArticleView extends App.Controller
-  constructor: ->
+  constructor: (params) ->
     super
+    @time_accountings = params.time_accountings
     @articleController = {}
     @run()
 
@@ -20,6 +21,7 @@ class App.TicketZoomArticleView extends App.Controller
           el:         el
           ui:         @ui
           highlighter: @highlighter
+          time_accountings: @time_accountings
           form_id:    @form_id
         )
         if !@ticketArticleInsertByIndex(index, el)

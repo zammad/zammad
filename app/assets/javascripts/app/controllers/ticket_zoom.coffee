@@ -621,6 +621,7 @@ class App.TicketZoom extends App.Controller
         ui:                 @
         highlighter:        @highlighter
         ticket_article_ids: @ticket_article_ids
+        time_accountings:   @time_accountings
         form_id:            @form_id
       )
 
