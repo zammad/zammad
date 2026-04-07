@@ -1,12 +1,12 @@
 class App.TicketZoomArticleView extends App.Controller
-  constructor: (params) ->
+  constructor: ->
     super
-    @time_accountings = params.time_accountings
     @articleController = {}
     @run()
 
   execute: (params) =>
     @ticket_article_ids = params.ticket_article_ids
+    @time_accountings   = params.time_accountings
     @run()
 
   run: =>
