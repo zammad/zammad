@@ -132,10 +132,6 @@ class App.SidebarTicketSummary extends App.Controller
     @badgeRenderLocal()
     @feedbackWidget?.recordUsage({}, null, =>
       @hasUsage = false
-      @notify(
-        type: 'error'
-        msg:  __('Your AI result usage could not be recorded.')
-      )
       false
     )
     @hasUsage = true
@@ -177,6 +173,8 @@ class App.SidebarTicketSummary extends App.Controller
 
   renderSummarization: (data) =>
     @summaryData = data if data
+    @isPreparingData = (_.isNull(@summaryData?.result) or @summaryData?.error)
+
     @badgeRenderLocal()
 
     return if !@elSidebar
