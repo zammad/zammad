@@ -241,7 +241,7 @@ GEM
       eco-source
       execjs
     eco-source (1.1.0.rc.1)
-    elastic-transport (8.4.1)
+    elastic-transport (8.5.1)
       faraday (< 3)
       multi_json
     elasticsearch (9.3.1)
