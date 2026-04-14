@@ -275,7 +275,7 @@ GEM
       logger
     faraday-follow_redirects (0.5.0)
       faraday (>= 1, < 3)
-    faraday-mashify (1.0.0)
+    faraday-mashify (1.0.2)
       faraday (~> 2.0)
       hashie
     faraday-multipart (1.2.0)
