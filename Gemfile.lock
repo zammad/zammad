@@ -306,7 +306,7 @@ GEM
     hiredis-client (0.28.0)
       redis-client (= 0.28.0)
     htmlentities (4.4.2)
-    http_parser.rb (0.8.0)
+    http_parser.rb (0.8.1)
     httparty (0.24.2)
       csv
       mini_mime (>= 1.0.0)
