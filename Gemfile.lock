@@ -768,7 +768,7 @@ GEM
       power_assert
     thor (1.5.0)
     tilt (2.6.1)
-    timeout (0.6.0)
+    timeout (0.6.1)
     tpm-key_attestation (0.14.1)
       bindata (~> 2.4)
       openssl (> 2.0)
