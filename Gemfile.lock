@@ -378,7 +378,7 @@ GEM
       net-imap
       net-pop
       net-smtp
-    marcel (1.0.4)
+    marcel (1.1.0)
     matrix (0.4.3)
     messagebird-rest (5.0.0)
       jwt (< 4)
