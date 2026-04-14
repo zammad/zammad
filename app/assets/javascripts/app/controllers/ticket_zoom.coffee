@@ -660,6 +660,7 @@ class App.TicketZoom extends App.Controller
     else
       @articleView.execute(
         ticket_article_ids: @ticket_article_ids
+        time_accountings:   @time_accountings
       )
 
     if @sidebarWidget
