@@ -344,7 +344,7 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
-    jwt (2.10.2)
+    jwt (3.1.2)
       base64
     koala (3.7.0)
       addressable
