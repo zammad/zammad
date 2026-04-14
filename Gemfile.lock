@@ -752,7 +752,7 @@ GEM
       attr_required (>= 0.0.5)
       faraday (~> 2.0)
       faraday-follow_redirects
-    syslog (0.3.0)
+    syslog (0.4.0)
       logger
     systemu (2.6.5)
     tcr (0.4.1)
