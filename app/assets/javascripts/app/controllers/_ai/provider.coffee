@@ -85,14 +85,14 @@ class AiProviderSettings extends App.Controller
   release: =>
     App.Setting.unsubscribe(@subscribeId)
 
-  render: =>
-    return if _.isEqual(@aiProviderConfigAtRender, App.Setting.get('ai_provider_config'))
-    @aiProviderConfigAtRender = App.Setting.get('ai_provider_config')
+  render: (_, localOrServer) =>
+    return if localOrServer isnt 'refresh'
 
     @html App.view('ai/provider')(
       description: @description,
     )
-    @form = new ProviderForm()
+
+    new ProviderForm()
 
 class AiProviderFeedbackAndLogs extends App.Controller
   @requiredPermission: 'admin.ai_provider'
@@ -159,11 +159,7 @@ class AiProviderFeedbackAndLogs extends App.Controller
     @httpLog = null
     super
 
-
 class ProviderForm extends App.Controller
-  events:
-    '.js-provider-submit': 'update'
-
   constructor: (content) ->
     super
 
@@ -171,7 +167,6 @@ class ProviderForm extends App.Controller
     @sortedProviders = @getSortedProviderOptions()
 
     @render(content)
-
 
   getSortedProviderOptions: ->
     Object
@@ -191,7 +186,7 @@ class ProviderForm extends App.Controller
         type:         'password'
         single:       true
         null:         not _.contains(provider.required, 'token')
-        autocomplete: 'off'
+        autocomplete: 'new-password'
         value:        params.token
       }
       model: {
@@ -315,6 +310,7 @@ class ProviderForm extends App.Controller
     )
 
     $('.js-provider-submit').off('click.provider').on('click.provider', @update)
+
     $('select[name=provider]').off('change.provider').on('change.provider', (e) =>
       @render($(e.target).val())
     )
@@ -335,6 +331,8 @@ class ProviderForm extends App.Controller
     @validateAndSave(params)
 
   validateAndSave: (params) ->
+    App.ControllerForm.disable(@providerSettingsForm.form)
+
     has_provider = not _.isEmpty(params.provider)
 
     if not has_provider
@@ -350,25 +348,32 @@ class ProviderForm extends App.Controller
     if has_provider && !params.hasOwnProperty('token') && savedProviderConfig.provider == params.provider && savedProviderConfig.token
       params.token = savedProviderConfig.token
 
-    App.Setting.set('ai_provider_config', params, done: =>
-      # If the provider configuration is being updated, or the provider is already disabled,
-      #   do not touch the provider switch.
-      if has_provider or not App.Config.get('ai_provider')
-        App.Event.trigger 'notify', {
-          type:    'success'
-          msg:     __('Update successful.')
-          timeout: 2000
-        }
+    App.Setting.set(
+      'ai_provider_config',
+      params,
+      done: =>
+        App.ControllerForm.enable(@providerSettingsForm.form)
 
-        return
+        # If the provider configuration is being updated, or the provider is already disabled,
+        #   do not touch the provider switch.
+        if has_provider or not App.Config.get('ai_provider')
+          App.Event.trigger 'notify', {
+            type:    'success'
+            msg:     __('Update successful.')
+            timeout: 2000
+          }
 
-      # Turn off the provider switch when the provider configuration is emptied.
-      App.Setting.set('ai_provider', false, done: =>
-        @notify(
-          type: 'success'
-          msg: __('AI provider disabled successfully.')
+          return
+
+        # Turn off the provider switch when the provider configuration is emptied.
+        App.Setting.set('ai_provider', false, done: =>
+          @notify(
+            type: 'success'
+            msg: __('AI provider disabled successfully.')
+          )
         )
-      )
+      fail: =>
+        App.ControllerForm.enable(@providerSettingsForm.form)
     )
 
 App.Config.set('Provider', { prio: 1000, name: __('Provider'), parent: '#ai', target: '#ai/provider', controller: ChannelAiProvider, permission: ['admin.ai_provider'] }, 'NavBarAdmin')

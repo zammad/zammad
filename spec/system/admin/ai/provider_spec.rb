@@ -70,7 +70,7 @@ RSpec.describe 'AI > Provider', authenticated_as: :admin, type: :system do
         .and(have_field('OCR Model'))
       check_switch_field_value('ocr_active', false)
 
-      find('select[name=provider]').select('Azure AI')
+      find('select[name=provider]').select('Azure AI (legacy deployment-based endpoints)')
       expect(page)
         .to have_field('URL')
         .and(have_field('Token'))

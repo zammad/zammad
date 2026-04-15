@@ -18,15 +18,16 @@ class AI::Provider::Ollama < AI::Provider
 
   def chat(prompt_system:, prompt_user:, prompt_image:)
     params = {
-      model:   model_for(prompt_image:),
-      system:  prompt_system,
-      prompt:  prompt_user,
-      stream:  false,
-      think:   false,
-      options: {
-        temperature: options[:temperature],
-      },
+      model:  model_for(prompt_image:),
+      system: prompt_system,
+      prompt: prompt_user,
+      stream: false,
+      think:  false,
     }
+
+    if model_supports_temperature?
+      params[:options] = { temperature: options[:temperature] }
+    end
 
     if prompt_image.is_a?(::Store)
       params[:images] = [Base64.strict_encode64(prompt_image.content_ocr)]

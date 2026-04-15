@@ -835,7 +835,7 @@ msgstr ""
 msgid "API server error: %s"
 msgstr ""
 
-#: lib/ai/provider/azure.rb:128
+#: lib/ai/provider/azure.rb:168
 msgid "API server not accessible"
 msgstr ""
 
@@ -2449,7 +2449,7 @@ msgid "Average: %s%"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
-msgid "Azure AI"
+msgid "Azure AI (legacy deployment-based endpoints)"
 msgstr ""
 
 #: db/seeds/settings.rb:3493
@@ -9560,11 +9560,11 @@ msgstr ""
 msgid "Leave BETA UI feedback program?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:263
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:258
 msgid "Leave empty to use URL (Completions)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:253
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:248
 msgid "Leave empty to use the base model"
 msgstr ""
 
@@ -10663,7 +10663,7 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:199
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:194
 msgid "Model"
 msgstr ""
 
@@ -11819,7 +11819,7 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:246
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:241
 msgid "OCR Model"
 msgstr ""
 
@@ -13416,7 +13416,7 @@ msgstr ""
 msgid "Recipient"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:237
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:232
 msgid "Recognize image text (OCR)"
 msgstr ""
 
@@ -17200,7 +17200,7 @@ msgstr ""
 msgid "The required value 'group_id' is missing."
 msgstr ""
 
-#: lib/ai/provider.rb:65
+#: lib/ai/provider.rb:69
 msgid "The response could not be processed."
 msgstr ""
 
@@ -18721,7 +18721,7 @@ msgstr ""
 msgid "Toggle the overlay"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:189
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:184
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -19071,7 +19071,7 @@ msgstr ""
 msgid "UID Field"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:209
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:204
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -19088,15 +19088,15 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:219
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:214
 msgid "URL (Completions)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:228
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:223
 msgid "URL (Embeddings)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:257
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:252
 msgid "URL (OCR)"
 msgstr ""
 
@@ -19282,7 +19282,7 @@ msgstr ""
 msgid "Update shared draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:359
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:362
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
