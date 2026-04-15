@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, toRef, watch } from 'vue'
+import { toRef, watch } from 'vue'
 
 import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
 import ObjectAttributeContent from '#shared/components/ObjectAttributes/ObjectAttribute.vue'
@@ -39,13 +39,17 @@ const { goToItem, goToItemLinkColumn, loadMore, resort, storageKeyId } = useList
 
 const config = toRef(useApplicationStore(), 'config')
 
-const selectAllActive = ref(false)
-
 /**
  * User can only perform one bulk update task at a time
  */
-const { bulkEditActive, checkedTicketIds, isBulkTaskRunning, bulkCount, bulkHasMoreItems } =
-  useTicketBulkEdit()
+const {
+  bulkEditActive,
+  checkedTicketIds,
+  selectAllActive,
+  isBulkTaskRunning,
+  bulkCount,
+  bulkHasMoreItems,
+} = useTicketBulkEdit()
 
 watch(selectAllActive, (newValue) => {
   if (!newValue) {
@@ -74,16 +78,12 @@ const userPopoverSlots: {
 </script>
 
 <template>
-  <div>
-    <div v-if="loading && !loadingNewPage">
-      <slot name="loading">
-        <CommonTableSkeleton data-test-id="table-skeleton" :rows="skeletonLoadingCount" />
-      </slot>
-    </div>
-
-    <template v-else-if="!loading && !items.length">
-      <slot name="empty-list" />
-    </template>
+  <CommonTableSkeleton
+    :loading="loading"
+    :loading-new-page="loadingNewPage"
+    :rows="skeletonLoadingCount"
+  >
+    <slot v-if="!loading && !items.length" name="empty-list" />
 
     <div v-else-if="items.length">
       <CommonAdvancedTable
@@ -234,5 +234,5 @@ const userPopoverSlots: {
         </template>
       </CommonAdvancedTable>
     </div>
-  </div>
+  </CommonTableSkeleton>
 </template>

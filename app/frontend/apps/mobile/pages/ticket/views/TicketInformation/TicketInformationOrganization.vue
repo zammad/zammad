@@ -32,7 +32,8 @@ const {
   organization,
   organizationMembers,
   organizationQuery,
-  loading: organizationLoading,
+  loading,
+  loadingWithoutCachedResult,
   objectAttributes,
   fetchMoreMembers,
 } = useOrganizationDetail(organizationId, 3, 100, errorCallback)
@@ -43,7 +44,7 @@ organizationQuery.onError((apolloError) => {
 })
 
 watchEffect(() => {
-  updateRefetchingStatus(organizationLoading.value && organization.value != null)
+  updateRefetchingStatus(loading.value && organization.value != null)
 })
 
 const { openEditOrganizationDialog } = useOrganizationEdit()
@@ -53,7 +54,7 @@ const ticketsData = computed(() => getTicketData(organization.value))
 </script>
 
 <template>
-  <CommonLoader :loading="!organization && organizationLoading" :error="error">
+  <CommonLoader :loading="loadingWithoutCachedResult" :error="error">
     <div v-if="organization" class="mb-3 flex items-center gap-3">
       <CommonOrganizationAvatar size="normal" :entity="organization" />
       <h2 class="text-lg font-medium">
@@ -81,7 +82,7 @@ const ticketsData = computed(() => getTicketData(organization.value))
 
     <OrganizationMembersList
       :members="organizationMembers"
-      :disable-show-more="organizationLoading"
+      :disable-show-more="loading"
       @load-more="fetchMoreMembers()"
     />
 

@@ -34,8 +34,14 @@ const errorCallback = createQueryErrorHandler({
 
 const customerId = computed(() => ticket.value?.customer.id)
 
-const { user, loading, objectAttributes, secondaryOrganizations, fetchMoreSecondaryOrganizations } =
-  useUserDetail(customerId, 3, 100, errorCallback)
+const {
+  user,
+  loading,
+  loadingWithoutCachedResult,
+  objectAttributes,
+  secondaryOrganizations,
+  fetchMoreSecondaryOrganizations,
+} = useUserDetail(customerId, 3, 100, errorCallback)
 
 watchEffect(() => {
   updateRefetchingStatus(loading.value && user.value != null)
@@ -48,7 +54,7 @@ const ticketsData = computed(() => getTicketData(user.value))
 </script>
 
 <template>
-  <CommonLoader :loading="loading && !user">
+  <CommonLoader :loading="loadingWithoutCachedResult">
     <div v-if="user" class="mb-3 flex items-center gap-3">
       <CommonUserAvatar aria-hidden="true" size="normal" :entity="user" />
       <div>

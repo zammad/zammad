@@ -26,41 +26,39 @@ const { goToItem, goToItemLinkColumn, loadMore, resort, storageKeyId } = useList
 </script>
 
 <template>
-  <div v-if="loading && !loadingNewPage">
-    <slot name="loading">
-      <CommonTableSkeleton data-test-id="table-skeleton" :rows="skeletonLoadingCount" />
-    </slot>
-  </div>
+  <CommonTableSkeleton
+    :loading="loading"
+    :loading-new-page="loadingNewPage"
+    :rows="skeletonLoadingCount"
+  >
+    <slot v-if="!loading && !items.length" name="empty-list" />
 
-  <template v-else-if="!loading && !items.length">
-    <slot name="empty-list" />
-  </template>
-
-  <div v-else-if="items.length">
-    <CommonAdvancedTable
-      :caption="caption"
-      :object="EnumObjectManagerObjects.Organization"
-      :headers="headers"
-      :order-by="orderBy"
-      :order-direction="orderDirection"
-      :group-by="groupBy"
-      :reached-scroll-top="reachedScrollTop"
-      :scroll-container="scrollContainer"
-      :attribute-extensions="{
-        name: {
-          columnPreferences: {
-            link: goToItemLinkColumn,
+    <div v-else-if="items.length">
+      <CommonAdvancedTable
+        :caption="caption"
+        :object="EnumObjectManagerObjects.Organization"
+        :headers="headers"
+        :order-by="orderBy"
+        :order-direction="orderDirection"
+        :group-by="groupBy"
+        :reached-scroll-top="reachedScrollTop"
+        :scroll-container="scrollContainer"
+        :attribute-extensions="{
+          name: {
+            columnPreferences: {
+              link: goToItemLinkColumn,
+            },
           },
-        },
-      }"
-      :items="items"
-      :total-items-count="totalCount"
-      :storage-key-id="storageKeyId"
-      :max-items="maxItems"
-      :is-sorting="resorting"
-      @load-more="loadMore"
-      @click-row="goToItem"
-      @sort="resort"
-    />
-  </div>
+        }"
+        :items="items"
+        :total-items-count="totalCount"
+        :storage-key-id="storageKeyId"
+        :max-items="maxItems"
+        :is-sorting="resorting"
+        @load-more="loadMore"
+        @click-row="goToItem"
+        @sort="resort"
+      />
+    </div>
+  </CommonTableSkeleton>
 </template>

@@ -54,7 +54,7 @@ const loadPrevious = async () => {
   })
 }
 
-const isLoading = computed(() => context.articlesQuery.loading().value)
+const isLoading = computed(() => context.articlesQuery.loadingWithoutCachedResult().value)
 
 const getArticleElement = async (key: string): Promise<Element | null> => {
   const row = rows.value.find(

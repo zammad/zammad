@@ -42,7 +42,7 @@ const { cache: apolloCache } = getApolloClient()
 const { ticket, ticketId, isTicketEditable } = useTicketInformation()
 const { ticketNumberWithTicketHook } = useTicketNumber(ticket)
 
-const { checklist, isLoadingChecklist } = useTicketChecklist(ticketId, ticket)
+const { checklist, isLoadingChecklist } = useTicketChecklist(ticketId)
 
 const checklistTitle = computed(
   () => checklist.value?.name || i18n.t('%s Checklist', ticketNumberWithTicketHook.value),

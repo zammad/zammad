@@ -7,6 +7,7 @@ export interface TicketBulkEditReturn {
   bulkEditActive: ComputedRef<boolean>
   checkedTicketIds: Ref<Set<ID>>
   groupIds: ComputedRef<Array<ID>>
+  selectAllActive: Ref<boolean>
   bulkCount: Ref<number>
   bulkHasMoreItems: Ref<boolean>
   bulkContext: Ref<TicketBulkOverviewContext | TicketBulkSearchContext | undefined>

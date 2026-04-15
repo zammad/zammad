@@ -64,6 +64,7 @@ export const useOrganizationDetail = (
   }))
 
   const loading = organizationQuery.loading()
+  const loadingWithoutCachedResult = organizationQuery.loadingWithoutCachedResult()
 
   const organization = computed(() => organizationResult.value?.organization as Organization)
 
@@ -103,6 +104,7 @@ export const useOrganizationDetail = (
 
   return {
     loading,
+    loadingWithoutCachedResult,
     organizationQuery,
     organization,
     objectAttributes: viewScreenAttributes,

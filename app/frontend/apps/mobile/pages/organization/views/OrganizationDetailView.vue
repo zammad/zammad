@@ -37,8 +37,8 @@ const {
   organization,
   organizationMembers,
   loading,
+  loadingWithoutCachedResult,
   objectAttributes,
-  organizationQuery,
   fetchMoreMembers,
 } = useOrganizationDetail(organizationId, 3, 100, errorCallback)
 
@@ -51,7 +51,7 @@ useHeader({
   backUrl: '/',
   actionTitle: __('Edit'),
   actionHidden: computed(() => organization.value == null || !organization.value.policy.update),
-  refetch: computed(() => organization.value != null && organizationQuery.loading().value),
+  refetch: computed(() => organization.value != null && loading.value),
   onAction() {
     if (!organization.value || !organization.value.policy.update) return
     openEditOrganizationDialog(organization.value)
@@ -89,5 +89,9 @@ const ticketData = computed(() => getTicketData(organization.value))
       :tickets-link-query="ticketData.query"
     />
   </div>
-  <CommonLoader v-else-if="loading" class="w-full p-4" :loading="loading" />
+  <CommonLoader
+    v-else-if="loadingWithoutCachedResult"
+    class="w-full p-4"
+    :loading="loadingWithoutCachedResult"
+  />
 </template>

@@ -2,12 +2,11 @@
 
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { computed, watchEffect } from 'vue'
+import { computed } from 'vue'
 
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSchemaNode } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
@@ -53,7 +52,7 @@ const objectSearchQuery = new QueryHandler(
 
 const result = objectSearchQuery.result()
 
-const isLoading = objectSearchQuery.loading()
+const isLoading = objectSearchQuery.loadingWithoutCachedResult()
 
 objectSearchQuery.onError(() => {
   formSetErrors(
@@ -64,12 +63,6 @@ objectSearchQuery.onError(() => {
       },
     ]),
   )
-})
-
-const { debouncedLoading, loading } = useDebouncedLoading()
-
-watchEffect(() => {
-  loading.value = isLoading.value
 })
 
 const objectItems = computed(
@@ -186,7 +179,7 @@ const submitObjects = async (data: FormDataRecords) => {
       @submit="submitObjects($event as FormDataRecords)"
     />
 
-    <CommonLoader :loading="debouncedLoading">
+    <CommonLoader :loading="isLoading">
       <IdoitObjectList
         class="w-full"
         :items="objectItems"

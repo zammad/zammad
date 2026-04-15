@@ -36,6 +36,8 @@ export const useTicketBulkEdit = () => {
 
   const checkedTicketIds = ref<Set<ID>>(new Set())
 
+  const selectAllActive = ref(false)
+
   const bulkCount = ref(0)
 
   const bulkHasMoreItems = ref(false)
@@ -86,10 +88,12 @@ export const useTicketBulkEdit = () => {
       groupIds,
       onSuccess: () => {
         checkedTicketIds.value.clear()
+        selectAllActive.value = false
         onSuccessCallback?.()
       },
       onFailure: (invalidTicketIds: ID[]) => {
         checkedTicketIds.value = new Set(invalidTicketIds)
+        selectAllActive.value = false
         onFailureCallback?.(invalidTicketIds)
       },
     })
@@ -100,6 +104,7 @@ export const useTicketBulkEdit = () => {
     isBulkTaskRunning,
     checkedTicketIds,
     groupIds,
+    selectAllActive,
     bulkCount,
     bulkHasMoreItems,
     bulkContext,

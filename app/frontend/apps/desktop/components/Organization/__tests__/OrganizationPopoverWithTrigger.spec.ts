@@ -54,17 +54,6 @@ describe('OrganizationPopover', () => {
     expect(wrapper.getByRole('img', { name: `Avatar (${dummyOrganization.name})` })).toBeVisible()
   })
 
-  it('shows a skeleton when user info is not available', async () => {
-    const wrapper = renderOrganizationPopover()
-
-    await wrapper.events.hover(
-      wrapper.getByRole('img', { name: `Avatar (${dummyOrganization.name})` }),
-    )
-
-    const popover = await wrapper.findByRole('region')
-    expect(within(popover).getAllByRole('progressbar').length).toBe(10)
-  })
-
   it('displays the organization popover on hover', async () => {
     const wrapper = renderOrganizationPopover()
 

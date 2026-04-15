@@ -399,7 +399,8 @@ describe('User Detail View', () => {
 
         const calls = await waitForTicketsByCustomerQueryCalls()
 
-        expect(calls).toHaveLength(2)
+        // Both tabs mount immediately (v-show), so all 4 queries fire on load.
+        expect(calls).toHaveLength(4)
 
         const main = view.getByRole('main')
         const relatedTicketsSection = within(main).getByRole('region', { name: 'Related tickets' })
@@ -426,8 +427,6 @@ describe('User Detail View', () => {
 
         expect(userTab).not.toHaveAttribute('aria-selected', 'true')
         expect(organizationTab).toHaveAttribute('aria-selected', 'true')
-
-        expect(calls).toHaveLength(4)
       })
 
       it('refetch related tickets when user subscription triggers', async () => {
@@ -435,7 +434,7 @@ describe('User Detail View', () => {
 
         const calls = await waitForTicketsByCustomerQueryCalls()
 
-        expect(calls).toHaveLength(2)
+        const callCountBeforeRefetch = calls.length
 
         await getTicketByCustomerUpdatesSubscriptionHandler().trigger({
           ticketByCustomerUpdates: {
@@ -443,7 +442,8 @@ describe('User Detail View', () => {
           },
         })
 
-        expect(calls).toHaveLength(4)
+        // All 4 ticket lists (open + closed for both user and organization tab) refetch.
+        expect(calls).toHaveLength(callCountBeforeRefetch + 4)
       })
 
       it('hides organization section when user has no organization', async () => {

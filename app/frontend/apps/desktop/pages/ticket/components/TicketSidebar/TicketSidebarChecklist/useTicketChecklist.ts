@@ -2,7 +2,6 @@
 
 import { computed, type ComputedRef } from 'vue'
 
-import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type {
   Checklist,
   TicketChecklistQuery,
@@ -19,7 +18,6 @@ export const useTicketChecklist = (
    * TicketId is always available since we use it from the route not `ticket` directly
    */
   ticketId: ComputedRef<string>,
-  ticket: ComputedRef<TicketById | undefined>,
 ) => {
   const checklistQuery = new QueryHandler(
     useTicketChecklistQuery(() => ({
@@ -58,27 +56,15 @@ export const useTicketChecklist = (
   }))
 
   const checklistResult = checklistQuery.result()
-  const checklistLoading = checklistQuery.loading()
+  const checklistLoading = checklistQuery.loadingWithoutCachedResult()
 
   const checklist = computed(() => checklistResult?.value?.ticketChecklist as Checklist)
-
-  const isLoadingChecklist = computed(() => {
-    // Return true when the ticket is not loaded yet, because some output is related to the ticket data (e.g. readonly).
-
-    if (!ticket.value) return true
-
-    // Return already true when a checklist result already exists from the cache, also
-    // when maybe a loading is in progress(because of cache + network).
-    if (checklist.value !== undefined) return false
-
-    return checklistLoading.value
-  })
 
   const incompleteItemCount = computed(() => checklist.value?.incomplete)
 
   return {
     checklist,
     incompleteItemCount,
-    isLoadingChecklist,
+    isLoadingChecklist: checklistLoading,
   }
 }

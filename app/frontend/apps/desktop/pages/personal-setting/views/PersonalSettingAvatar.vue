@@ -54,7 +54,7 @@ const { isTouchDevice } = useTouchDevice()
 
 const avatarListQuery = new QueryHandler(useUserCurrentAvatarListQuery())
 const avatarListQueryResult = avatarListQuery.result()
-const avatarListQueryLoading = avatarListQuery.loading()
+const avatarListQueryLoading = avatarListQuery.loadingWithoutCachedResult()
 
 avatarListQuery.subscribeToMore<
   UserCurrentAvatarUpdatesSubscriptionVariables,
@@ -292,7 +292,7 @@ const activeAvatarButtonClass = (active: boolean) => {
   <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
     <CommonLoader :loading="avatarListQueryLoading">
       <div class="mb-4">
-        <CommonLabel class="!mt-0.5 mb-1 !block">{{ $t('Your avatar') }} </CommonLabel>
+        <CommonLabel class="mt-0.5! mb-1 block!">{{ $t('Your avatar') }} </CommonLabel>
 
         <div class="rounded-lg bg-blue-200 dark:bg-gray-700">
           <div class="flex flex-row flex-wrap gap-2.5 p-2.5">

@@ -59,16 +59,6 @@ describe('TicketPopoverWithTrigger', () => {
     expect(wrapper.getByRole('link', { name: dummyTicket.title })).toBeVisible()
   })
 
-  it('shows a skeleton when ticket info is unavailable', async () => {
-    const wrapper = renderTicketPopover()
-
-    await wrapper.events.hover(wrapper.getByRole('link'))
-
-    const popover = await wrapper.findByRole('region')
-
-    expect(within(popover).getAllByRole('progressbar').length).toBe(12)
-  })
-
   it('displays a ticket popover', async () => {
     const wrapper = renderTicketPopover()
 

@@ -97,6 +97,8 @@ const configurationQuery = new QueryHandler(
   },
 )
 
+const isLoading = configurationQuery.loadingWithoutCachedResult()
+
 const configuration = computed<ObjectLike>(
   () => configurationQuery.result().value?.userCurrentTwoFactorGetMethodConfiguration,
 )
@@ -365,11 +367,7 @@ defineExpose({
 <template>
   <div class="flex flex-col gap-3">
     <template v-if="state === 'overview'">
-      <CommonLoader
-        v-if="configurationQuery.loading().value"
-        class="my-3"
-        :loading="Boolean(configurationQuery.loading().value)"
-      />
+      <CommonLoader v-if="isLoading" class="my-3" :loading="isLoading" />
       <template v-else>
         <CommonLabel>{{
           $t(

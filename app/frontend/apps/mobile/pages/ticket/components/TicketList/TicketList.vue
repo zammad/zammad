@@ -49,7 +49,7 @@ const ticketsQuery = new QueryHandler(
 )
 
 const ticketsResult = ticketsQuery.result()
-const loading = ticketsQuery.loading()
+const loading = ticketsQuery.loadingWithoutCachedResult()
 
 watchEffect(() => {
   emit('refetch', loading.value && !!ticketsResult.value)
@@ -106,7 +106,7 @@ useInfiniteScroll(
 </script>
 
 <template>
-  <CommonLoader :loading="!tickets.length && loading">
+  <CommonLoader :loading="loading">
     <section
       v-if="tickets.length"
       ref="mainElement"

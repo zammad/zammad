@@ -132,9 +132,7 @@ const loadPreviousArticles = async () => {
   })
 }
 
-const isLoadingTicket = computed(() => {
-  return ticketQuery.loading().value && !ticket.value
-})
+const isLoadingTicket = ticketQuery.loadingWithoutCachedResult()
 
 const isRefetchingTicket = computed(() => ticketQuery.loading().value && !!ticket.value)
 

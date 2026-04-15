@@ -1,6 +1,8 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
+import { flushPromises } from '@vue/test-utils'
+import { computed } from 'vue'
 
 import ticketObjectAttributes from '#tests/graphql/factories/fixtures/ticket-object-attributes.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -12,6 +14,7 @@ import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumOrderDirection } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
 import { waitForTicketsCachedByOverviewQueryCalls } from '#desktop/entities/ticket/graphql/queries/ticketsCachedByOverview.mocks.ts'
 import TicketList from '#desktop/pages/ticket-overviews/components/TicketList.vue'
@@ -66,7 +69,14 @@ describe('TicketList', () => {
 
   describe('loading states', () => {
     it('displays the skeleton for the table on initial load', async () => {
+      vi.useFakeTimers()
       mockDefaultTicketsCachedByOverview({ totalCount: 207 })
+
+      // mock to show a endless loading to make sure indicator is shown
+      // Otherwise the timing won't work.
+      vi.spyOn(QueryHandler.prototype, 'loadingWithoutCachedResult').mockReturnValue(
+        computed(() => true),
+      )
 
       const wrapper = renderComponent(TicketList, {
         props: {
@@ -80,7 +90,16 @@ describe('TicketList', () => {
         form: true,
       })
 
-      expect(await wrapper.findByTestId('table-skeleton')).toBeInTheDocument()
+      // Something needs to be resolved beforehand in the microtask queue,
+      await flushPromises()
+
+      // Advance timers to trigger the debounced loading state
+      await vi.advanceTimersByTimeAsync(0)
+
+      expect(wrapper.getAllByLabelText('Content loader').length).toBeGreaterThan(0)
+
+      vi.useRealTimers()
+      vi.resetAllMocks()
     })
   })
 

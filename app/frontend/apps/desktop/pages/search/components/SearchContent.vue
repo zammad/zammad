@@ -198,7 +198,6 @@ const detailSearchHeaders = computed(() =>
 
 const searchResult = detailSearchQuery.result()
 const currentSearchResult = ref<DetailSearchQuery>()
-const loading = detailSearchQuery.loading()
 
 // Remember the current search result to avoid always showing the loading state on search term changes.
 // Because the apollo cache is returning undefined when nothing is in currently in the cache.
@@ -238,11 +237,7 @@ const currentSearchCounts = computed(() =>
   ),
 )
 
-const isLoading = computed(() => {
-  if (currentSearchResult.value !== undefined) return false
-
-  return loading.value
-})
+const isLoading = detailSearchQuery.loadingWithoutCachedResult()
 
 const searchResultTotalCount = computed(() => currentSearchResult.value?.search.totalCount ?? 0)
 const searchResultItems = computed(() => currentSearchResult.value?.search.items || [])
@@ -323,12 +318,10 @@ const fetchNextPage = async () => {
   }
 }
 
-const selectAllActive = ref(false)
-
 const {
   checkedTicketIds,
+  selectAllActive,
   bulkCount,
-  bulkHasMoreItems,
   bulkContext,
   openBulkEditFlyout,
   setOnSuccessCallback,
@@ -341,45 +334,12 @@ const { isActive: isDragAndDropActive, cursorPosition } = useDragAndDropBulk({
   bulkCount,
 })
 
-const ticketSelectionBindings = computed(() => {
-  // Only the Ticket entity supports bulk actions for now
-  // Avoid warnings bind it only to the ticket search results component
-  if (selectedEntity.value !== EnumSearchableModels.Ticket) return {}
-
-  return {
-    checkedTicketIds: checkedTicketIds.value,
-    'onUpdate:checkedTicketIds': (value: typeof checkedTicketIds.value) => {
-      checkedTicketIds.value = value
-    },
-    selectAllActive: selectAllActive.value,
-    'onUpdate:selectAllActive': (value: boolean) => {
-      selectAllActive.value = value
-    },
-  }
-})
-
-watch(selectAllActive, (newValue) => {
-  if (!newValue) {
-    bulkCount.value = 0
-    bulkHasMoreItems.value = false
-
-    return
-  }
-
-  if (searchResultTotalCount.value > MAX_ITEMS) {
-    bulkCount.value = MAX_ITEMS
-    bulkHasMoreItems.value = true
-  } else {
-    bulkCount.value = searchResultTotalCount.value
-    bulkHasMoreItems.value = false
-  }
-})
-
 watch(
   sanitizedSearchTerm,
   (newValue, oldValue) => {
     if (newValue !== oldValue) {
       checkedTicketIds.value.clear()
+      selectAllActive.value = false
       bulkContext.value = { searchQuery: newValue }
     }
 
@@ -402,6 +362,7 @@ watch(selectedEntity, (_, oldValue) => {
   currentSearchResult.value = undefined
 
   checkedTicketIds.value.clear()
+  selectAllActive.value = false
 
   resetPagination({
     onlyIn: oldValue,
@@ -470,7 +431,6 @@ setOnSuccessCallback(() => {
         <component
           :is="searchPlugin.detailSearchComponent"
           :key="selectedEntity"
-          v-bind="ticketSelectionBindings"
           :table-id="`search-${selectedEntity}-table`"
           :caption="`Search result for: ${searchPlugin.label}`"
           :items="searchResultItems"
