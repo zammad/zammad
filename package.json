@@ -20,7 +20,7 @@
     "lint:css": "pnpm lint:css:cmd **/*.{scss,css,vue}",
     "lint:css:cmd": "stylelint",
     "lint:css:fix": "pnpm lint:css --fix",
-    "lint:md": "pnpm lint:md:cmd '*.md' '**/*.md' '#node_modules' '#**/node_modules' '#tmp'",
+    "lint:md": "pnpm lint:md:cmd '*.md' '**/*.md' '#.agents' '#node_modules' '#**/node_modules' '#tmp'",
     "lint:md:fix": "pnpm lint:md --fix",
     "lint:md:cmd": "pnpm exec markdownlint-cli2",
     "test": "VTL_SKIP_AUTO_CLEANUP=true TZ=utc vitest",
