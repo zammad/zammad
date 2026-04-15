@@ -182,6 +182,7 @@ RSpec.describe Setting::Validation::AIProviderConfig do
 
         raise AI::Provider::ResponseError, 'API server not accessible'
       end
+      allow(AI::Provider::OpenAI).to receive(:check_temperature_support!).and_return(true)
     end
 
     context 'with missing token' do
@@ -209,6 +210,57 @@ RSpec.describe Setting::Validation::AIProviderConfig do
         expect { Setting.set(setting_name, config) }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
+    end
+  end
+
+  describe 'temperature support check' do
+    let(:config) { { provider: 'open_ai', token: 'valid' } }
+
+    before do
+      allow(AI::Provider::OpenAI).to receive(:ping!)
+    end
+
+    context 'when temperature is supported' do
+      before do
+        allow(AI::Provider::OpenAI).to receive(:check_temperature_support!).and_return(true)
+      end
+
+      it 'persists model_temperature_support as true' do
+        Setting.set(setting_name, config)
+
+        expect(Setting.get(setting_name)).to include('model_temperature_support' => true)
+      end
+    end
+
+    context 'when temperature is not supported' do
+      before do
+        allow(AI::Provider::OpenAI).to receive(:check_temperature_support!).and_return(false)
+      end
+
+      it 'persists model_temperature_support as false' do
+        Setting.set(setting_name, config)
+
+        expect(Setting.get(setting_name)).to include('model_temperature_support' => false)
+      end
+    end
+
+    context 'when temperature check raises an error' do
+      before do
+        allow(AI::Provider::OpenAI).to receive(:check_temperature_support!).and_raise(AI::Provider::CheckTemperatureSupportError, 'check failed')
+      end
+
+      it 'does cause validation failure' do
+        expect { Setting.set(setting_name, config) }
+          .to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    it 'calls check_temperature_support! after successful ping' do
+      allow(AI::Provider::OpenAI).to receive(:check_temperature_support!).and_return(true)
+
+      Setting.set(setting_name, config)
+
+      expect(AI::Provider::OpenAI).to have_received(:check_temperature_support!)
     end
   end
 end

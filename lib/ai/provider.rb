@@ -43,6 +43,10 @@ class AI::Provider
     def ping!(_config)
       raise 'not implemented'
     end
+
+    def check_temperature_support!(_config)
+      true
+    end
   end
 
   def ask(prompt_system:, prompt_user:, prompt_image: nil)
@@ -79,6 +83,10 @@ class AI::Provider
 
   private
 
+  def model_supports_temperature?
+    config[:model_temperature_support] != false
+  end
+
   def transform_json_response(result)
     return result if result.blank?
 
@@ -104,4 +112,5 @@ class AI::Provider
   class RequestError < StandardError; end
   class ResponseError < StandardError; end
   class OutputFormatError < ResponseError; end
+  class CheckTemperatureSupportError < ResponseError; end
 end
