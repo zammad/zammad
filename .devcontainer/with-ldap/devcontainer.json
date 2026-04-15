@@ -1,0 +1,26 @@
+// For format details, see https://containers.dev/implementors/json_reference/.
+// For config options, see the README at: https://github.com/devcontainers/templates/tree/main/src/ruby
+{
+  "name": "Zammad (with LDAP)",
+  "dockerComposeFile": "compose.yaml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "features": {
+    "../features/zammad-deps": {},
+    "../features/add-bin-path": {
+      "addBinPath": "/workspaces/${localWorkspaceFolderBasename}/bin"
+    }
+  },
+  "mounts": [
+    {
+      // Avoid conflicts with host-installed node_modules with a different platform/architecture.
+      "source": "node-modules",
+      "target": "/workspaces/${localWorkspaceFolderBasename}/node_modules",
+      "type": "volume"
+    }
+  ],
+  "containerEnv": {},
+  "forwardPorts": [3000, 3001, 3036, 6042],
+  "postCreateCommand": "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/with-ldap/scripts/post_create.sh",
+  "postStartCommand": "git config --global --add safe.directory /workspaces/${localWorkspaceFolderBasename}"
+}
