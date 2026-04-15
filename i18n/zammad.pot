@@ -20241,11 +20241,6 @@ msgstr ""
 msgid "Your #{config.product_name} password has been changed\n\n<p>Hi #{user.firstname},</p>\n<br>\n<p>The password for your #{config.product_name} account <b>#{user.login}</b> has been changed recently.</p>\n<br>\n<p>If you did not initiate this change, please contact your system administrator.</p>\n<br>\n<p>Your #{config.product_name} Team</p>\n"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/text_tools_modal.coffee:131
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:137
-msgid "Your AI result usage could not be recorded."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:64
 msgid "Your API key."
 msgstr ""
