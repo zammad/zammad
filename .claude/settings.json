@@ -27,6 +27,15 @@
             "timeout": 120
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/regenerate-after-edit.sh",
+            "timeout": 120
+          }
+        ]
       }
     ]
   }
