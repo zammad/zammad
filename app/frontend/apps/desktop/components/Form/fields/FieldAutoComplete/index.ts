@@ -3,6 +3,7 @@
 import type { AutocompleteSelectValue } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
 import createInput from '#shared/form/core/createInput.ts'
 import addLink from '#shared/form/features/addLink.ts'
+import defaultEmptyValueArray from '#shared/form/features/defaultEmptyValueArray.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 
 import FieldAutoCompleteInput from './FieldAutoCompleteInput.vue'
@@ -50,7 +51,7 @@ export const autoCompleteProps = [
 ]
 
 const fieldDefinition = createInput(FieldAutoCompleteInput, [...autoCompleteProps, 'gqlQuery'], {
-  features: [addLink, formUpdaterTrigger()],
+  features: [defaultEmptyValueArray, addLink, formUpdaterTrigger()],
 })
 
 export default {

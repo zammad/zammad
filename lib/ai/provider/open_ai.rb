@@ -3,6 +3,7 @@
 class AI::Provider::OpenAI < AI::Provider
   include AI::Provider::Concerns::HandlesOpenAIMessages
   include AI::Provider::Concerns::HasConfigurableModel
+  include AI::Provider::Concerns::HasModelsWithoutTemperatureFallback
 
   OPENAI_API_BASE_URL = 'https://api.openai.com/v1'.freeze
 
@@ -98,14 +99,45 @@ class AI::Provider::OpenAI < AI::Provider
     nil
   end
 
-  private
+  def self.check_temperature_support!(config)
+    response = UserAgent.post(
+      "#{OPENAI_API_BASE_URL}/chat/completions",
+      {
+        model:       config[:model] || DEFAULT_OPTIONS[:model],
+        messages:    [{ role: 'user', content: 'Hello' }],
+        temperature: DEFAULT_OPTIONS[:temperature],
+        stream:      false,
+        store:       false,
+      },
+      {
+        open_timeout:  4,
+        read_timeout:  60,
+        verify_ssl:    true,
+        bearer_token:  config[:token],
+        total_timeout: 60,
+        json:          true,
+        log:           {
+          facility:          'AI::Provider',
+          log_only_on_error: true,
+        },
+      },
+    )
 
-  def model_supports_temperature?
-    current_model = options[:model]
+    return true if response.success?
 
-    # Check if any model in the list starts with the current model name
-    options[:models_without_temperature].none? { |model_pattern| current_model.start_with?(model_pattern) }
+    data = JSON.parse(response.body)
+    message = data.dig('error', 'message')
+    type = data.dig('error', 'type')
+    param = data.dig('error', 'param')
+    code = data.dig('error', 'code')
+    return false if type == 'invalid_request_error' && param == 'temperature' && code == 'unsupported_value'
+
+    raise message
+  rescue => e
+    raise CheckTemperatureSupportError, e.message
   end
+
+  private
 
   def specific_metadata
     {

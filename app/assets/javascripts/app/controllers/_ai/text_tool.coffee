@@ -4,6 +4,15 @@ class TextTool extends App.ControllerAIFeatureBase
   constructor: ->
     super
 
+    callbackAnalyticsStatsAttribute = (value, object, attribute, attributes) ->
+      if _.isEmpty(object.analytics_stats) or object.analytics_stats['total'] is 0
+        return '-'
+
+      App.view('ai/text_tool_feedback')(
+        positive_feedback: object.analytics_stats['positive'] && object.analytics_stats['positive']['percent'] || 0
+        negative_feedback: object.analytics_stats['negative'] && object.analytics_stats['negative']['percent'] || 0
+      )
+
     @genericController = new TextToolIndex(
       el: @el
       id: @id
@@ -27,11 +36,63 @@ class TextTool extends App.ControllerAIFeatureBase
         buttons: [
           { name: __('New Writing Assistant Tool'), 'data-type': 'new', class: 'btn--success' }
         ]
+        tableExtend: {
+          callbackAttributes:
+            analytics_stats: [ callbackAnalyticsStatsAttribute ]
+          customActions: [
+            {
+              name: 'download-feedback-report'
+              display: __('Download feedback report')
+              icon: 'download'
+              class: 'js-downloadFeedbackReport'
+              callback: @downloadFeedbackReport
+            }
+            {
+              name: 'reset-feedback-timestamp'
+              display: __('Reset feedback')
+              icon: 'reload'
+              class: 'js-resetFeedbackTimestamp'
+              callback: @resetFeedbackTimestamp
+            }
+          ]
+        }
       container: @el.closest('.content')
       renderCallback: @renderCallback
     )
 
     @controllerBind('config_update', @configHasChanged)
+
+  downloadFeedbackReport: (id) =>
+    text_tool = App.AITextTool.find(id)
+
+    @ajax(
+      id:          'download_feedback_report'
+      type:        'GET'
+      url:         "#{@apiPath}/ai/analytics/download/with_usages?filters[triggered_by_type]=AI::TextTool&filters[triggered_by_id]=#{id}&filters[created_after]=#{text_tool.analytics_stats_reset_at}"
+      processData: true
+      dataType:    'binary'
+      contentType: 'application/octet-stream'
+      xhrFields:
+        responseType: 'blob'
+      success: (data, status, xhr) ->
+        App.Utils.downloadFileFromBlob(data, xhr, { fallbackFilename: 'ai_analytics_with_usages.xlsx' })
+      error: (xhr, status, error) =>
+        @log 'error', error || status
+        @notify(
+          type: 'error'
+          msg: __('The download could not be started. Please try again later.')
+        )
+    )
+
+  resetFeedbackTimestamp: (id) =>
+    @ajax(
+      id:          'reset_feedback_timestamp'
+      type:        'PUT'
+      url:         "#{@apiPath}/ai_text_tools/#{id}/reset_analytics"
+      processData: true
+      success: (data) =>
+        @genericController.render()
+    )
 
   configHasChanged: (config) =>
     return if config.name isnt 'ai_assistance_text_tools'

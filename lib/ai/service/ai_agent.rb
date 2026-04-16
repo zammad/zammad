@@ -3,8 +3,9 @@
 class AI::Service::AIAgent < AI::Service
   def self.lookup_attributes(context_data, _locale)
     {
-      identifier:   'ai_agent',
-      triggered_by: context_data[:ai_agent],
+      identifier:     'ai_agent',
+      triggered_by:   context_data[:ai_agent],
+      related_object: context_data[:ticket],
     }
   end
 

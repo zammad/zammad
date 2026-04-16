@@ -1,6 +1,6 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Заявка№#{ticket.number}>: Буде ескальовано о #{ticket.escalation_at}_
-Заявка (#{ticket.title}) від"#{ticket.customer.longname}" буде ескальована о "#{ticket.escalation_at}"!
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Буде протерміновано о #{ticket.escalation_at}_
+Заявка (#{ticket.title}) від"#{ticket.customer.longname}" буде протерміновано о "#{ticket.escalation_at}"!
 
 <% if @objects[:article] %>
 #{article.body_as_text}

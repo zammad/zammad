@@ -6,8 +6,8 @@ class FormUpdater::Updater::User::Invite < FormUpdater::Updater
 
   core_workflow_screen 'invite_agent'
 
-  def authorized?
-    current_user.permissions?('admin.wizard')
+  def self.required_permissions
+    %w[admin.wizard]
   end
 
   def object_type

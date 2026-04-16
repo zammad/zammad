@@ -1,14 +1,17 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 Zammad::Application.routes.draw do
-  api_path = Rails.configuration.api_path
+  scope Rails.configuration.api_path do
+    resources :ai_text_tools, except: :edit do
+      member do
+        put 'reset_analytics'
+      end
 
-  match api_path + '/ai_text_tools',                     to: 'ai_text_tools#index',     via: :get
-  match api_path + '/ai_text_tools/search',              to: 'ai_text_tools#search',    via: %i[get post]
-  match api_path + '/ai_text_tools/types',               to: 'ai_text_tools#types',     via: :get
-  match api_path + '/ai_text_tools/:id',                 to: 'ai_text_tools#show',      via: :get
-  match api_path + '/ai_text_tools',                     to: 'ai_text_tools#create',    via: :post
-  match api_path + '/ai_text_tools/:id',                 to: 'ai_text_tools#update',    via: :put
-  match api_path + '/ai_text_tools/:id',                 to: 'ai_text_tools#destroy',   via: :delete
-
+      collection do
+        get  'types'
+        get  'search'
+        post 'search'
+      end
+    end
+  end
 end

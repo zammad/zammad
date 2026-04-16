@@ -199,17 +199,26 @@ class TicketsController < ApplicationController
       #   },
       # }
       if params[:links].present?
-        link = params[:links].permit!.to_h
-        raise Exceptions::UnprocessableEntity, __('Invalid link structure') if !link.is_a? Hash
+        authorize!(ticket, :agent_create_access?)
 
-        link.each do |target_object, link_types_with_object_ids|
+        links = params[:links].permit!.to_h
+        raise Exceptions::UnprocessableEntity, __('Invalid link structure') if !links.is_a? Hash
+
+        links.each do |target_object, link_types_with_object_ids|
           raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object)') if !link_types_with_object_ids.is_a? Hash
 
           link_types_with_object_ids.each do |link_type, object_ids|
             raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object → LinkType)') if !object_ids.is_a? Array
 
             object_ids.each do |local_object_id|
-              link = Link.add(
+              case target_object
+              when 'Ticket'
+                authorize! Ticket.find(local_object_id), :agent_read_access?
+              when 'KnowledgeBase::Answer::Translation'
+                authorize! KnowledgeBase::Answer::Translation.find(local_object_id), :show?
+              end
+
+              Link.add(
                 link_type:                link_type,
                 link_object_target:       target_object,
                 link_object_target_value: local_object_id,

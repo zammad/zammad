@@ -10,7 +10,10 @@ interface Props {
 
 defineProps<Props>()
 
+const checkedRows = defineModel<TableItem[]>('checkedRows')
+
 const headers: TableSimpleHeader[] = [
+  { key: 'checkbox', label: '' },
   { key: 'idoitObjectId', label: 'ID', truncate: true },
   {
     key: 'title',
@@ -26,6 +29,7 @@ const headers: TableSimpleHeader[] = [
   <!-- TODO: Set needed props to disable infinite scrolling etc. -->
   <CommonSimpleTable
     v-if="items.length"
+    v-model:checked-rows="checkedRows"
     :caption="$t('Idoit objects')"
     :items="items"
     :headers="headers"

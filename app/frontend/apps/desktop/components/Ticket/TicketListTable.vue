@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, toRef, watch } from 'vue'
+import { toRef, watch } from 'vue'
 
 import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
 import ObjectAttributeContent from '#shared/components/ObjectAttributes/ObjectAttribute.vue'
@@ -39,13 +39,17 @@ const { goToItem, goToItemLinkColumn, loadMore, resort, storageKeyId } = useList
 
 const config = toRef(useApplicationStore(), 'config')
 
-const selectAllActive = ref(false)
-
 /**
  * User can only perform one bulk update task at a time
  */
-const { bulkEditActive, checkedTicketIds, isBulkTaskRunning, bulkCount, bulkHasMoreItems } =
-  useTicketBulkEdit()
+const {
+  bulkEditActive,
+  checkedTicketIds,
+  selectAllActive,
+  isBulkTaskRunning,
+  bulkCount,
+  bulkHasMoreItems,
+} = useTicketBulkEdit()
 
 watch(selectAllActive, (newValue) => {
   if (!newValue) {
@@ -74,16 +78,12 @@ const userPopoverSlots: {
 </script>
 
 <template>
-  <div>
-    <div v-if="loading && !loadingNewPage">
-      <slot name="loading">
-        <CommonTableSkeleton data-test-id="table-skeleton" :rows="skeletonLoadingCount" />
-      </slot>
-    </div>
-
-    <template v-else-if="!loading && !items.length">
-      <slot name="empty-list" />
-    </template>
+  <CommonTableSkeleton
+    :loading="loading"
+    :loading-new-page="loadingNewPage"
+    :rows="skeletonLoadingCount"
+  >
+    <slot v-if="!loading && !items.length" name="empty-list" />
 
     <div v-else-if="items.length">
       <CommonAdvancedTable
@@ -157,11 +157,12 @@ const userPopoverSlots: {
       >
         <template #column-cell-priorityIcon="{ item, isRowSelected }">
           <CommonTicketPriorityIndicatorIcon
+            :data-priority-ui-color="(item as TicketByList).priority?.uiColor ?? undefined"
             :ui-color="(item as TicketByList).priority?.uiColor"
             with-text-color
-            class="shrink-0 outline-offset-0! group-hover:text-black group-hover:dark:text-white"
+            class="shrink-0 outline-offset-0! group-hover:text-black group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
             :class="{
-              'ltr:text-black rtl:text-black dark:text-white': isRowSelected,
+              'text-black! dark:text-white!': isRowSelected,
             }"
           />
         </template>
@@ -177,7 +178,7 @@ const userPopoverSlots: {
             no-trigger-link
           >
             <CommonLabel
-              class="block! shrink-0 truncate outline-offset-0! group-hover:text-black! group-hover:dark:text-white!"
+              class="block! shrink-0 truncate outline-offset-0! group-hover:text-black group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
               :class="{
                 'text-black! dark:text-white!': isRowSelected,
               }"
@@ -198,7 +199,7 @@ const userPopoverSlots: {
             no-link
           >
             <CommonLabel
-              class="block! shrink-0 truncate outline-offset-0! group-hover:text-black! group-hover:dark:text-white!"
+              class="block! shrink-0 truncate outline-offset-0! group-hover:text-black group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
               :class="{
                 'text-black! dark:text-white!': isRowSelected,
               }"
@@ -222,7 +223,8 @@ const userPopoverSlots: {
           />
           <CommonTicketStateIndicatorIcon
             v-else
-            class="shrink-0 outline-offset-0! group-hover:text-black group-hover:dark:text-white"
+            :data-state-color-code="(item as TicketByList).stateColorCode"
+            class="shrink-0 outline-offset-0! group-hover:text-black group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
             :class="{
               'text-black! dark:text-white!': isRowSelected,
             }"
@@ -234,5 +236,5 @@ const userPopoverSlots: {
         </template>
       </CommonAdvancedTable>
     </div>
-  </div>
+  </CommonTableSkeleton>
 </template>

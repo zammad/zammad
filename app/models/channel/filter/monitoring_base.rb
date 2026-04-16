@@ -137,7 +137,7 @@ class Channel::Filter::MonitoringBase
   end
 
   def self.sender_condition_matching?(from, sender)
-    Channel::Filter::Match::Contains.match(value: from, match_rule: sender) || Channel::Filter::Match::EmailRegex.match(value: from, match_rule: sender, check_mode: true)
+    FilterProcessor::Match::Contains.match(value: from, match_rule: sender) || FilterProcessor::Match::EmailRegex.match(value: from, match_rule: sender, check_mode: true)
   end
   private_class_method :sender_condition_matching?
 end

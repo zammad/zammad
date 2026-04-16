@@ -7,8 +7,11 @@ import { computed } from 'vue'
 import CommonEmptyMessage from '#desktop/components/CommonEmptyMessage/CommonEmptyMessage.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
+import DragAndDropBulkWrapper from '#desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue'
+import { useDragAndDropBulk } from '#desktop/components/Ticket/DragAndDropBulk/useDragAndDropBulk.ts'
 import TicketBulkEditButton from '#desktop/components/Ticket/TicketBulkEditButton.vue'
 import { useTicketBulkEdit } from '#desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts'
+import { usePage } from '#desktop/composables/usePage.ts'
 import TicketList from '#desktop/pages/ticket-overviews/components/TicketList.vue'
 import TicketOverviewsSidebar from '#desktop/pages/ticket-overviews/components/TicketOverviewsSidebar.vue'
 import { useTicketOverviews } from '#desktop/pages/ticket-overviews/composables/useTicketOverviews.ts'
@@ -84,7 +87,21 @@ const breadcrumbItems = computed(() => [
   },
 ])
 
-const { checkedTicketIds, openBulkEditFlyout } = useTicketBulkEdit()
+const { checkedTicketIds, openBulkEditFlyout, bulkSelector } = useTicketBulkEdit()
+
+const {
+  isActive: isDragAndDropActive,
+  cursorPosition,
+  dragPreviewData,
+  dropSuccessTargetId,
+  reactivateListeners,
+  deactivateListeners,
+} = useDragAndDropBulk({
+  checkedTicketIds,
+  bulkSelector,
+})
+
+usePage({ onReactivate: reactivateListeners, onDeactivated: deactivateListeners })
 </script>
 
 <template>
@@ -135,5 +152,12 @@ const { checkedTicketIds, openBulkEditFlyout } = useTicketBulkEdit()
         icon="exclamation-triangle"
       />
     </LayoutContent>
+
+    <DragAndDropBulkWrapper
+      v-if="isDragAndDropActive"
+      :cursor-position="cursorPosition"
+      :preview-data="dragPreviewData"
+      :drop-success-target-id="dropSuccessTargetId"
+    />
   </div>
 </template>

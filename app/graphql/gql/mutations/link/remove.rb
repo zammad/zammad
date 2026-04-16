@@ -2,7 +2,7 @@
 
 module Gql::Mutations
   class Link::Remove < BaseMutation
-    include Gql::Concerns::HandlesPossibleObjects
+    include Gql::Concerns::HandlesLinkObjects
 
     description 'Remove link between objects'
 
@@ -10,12 +10,12 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'Was the mutation successful?'
 
-    possible_objects ::Ticket, ::KnowledgeBase::Answer::Translation
+    requires_permission 'ticket.agent'
 
     def resolve(input:)
-      source = fetch_object(input.source_id)
-      target = fetch_object(input.target_id, permission: :update?)
-      type = input.type
+      source = fetch_link_object(input.source_id)
+      target = fetch_authorized_link_object(input.target_id)
+      type   = input.type
 
       ::Link.remove(
         link_type:                type,

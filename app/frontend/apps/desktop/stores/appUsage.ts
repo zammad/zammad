@@ -20,13 +20,12 @@ export const useAppUsageStore = defineStore('appUsage', () => {
     milestoneHistory,
     triggerMilestone,
     totalAppUsageTime,
-    resetTotalAppUsageTime,
     neverAskAgainForTimedFeedback,
     setNeverAskAgainForTimedFeedback,
   } = useAppUsage()
 
   const updateTotalUsage = (millisecondsCount: number) => {
-    if (typeof totalAppUsageTime.value !== 'number') resetTotalAppUsageTime()
+    if (typeof totalAppUsageTime.value !== 'number') totalAppUsageTime.value = 0
 
     totalAppUsageTime.value += millisecondsCount
   }

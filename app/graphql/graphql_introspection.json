@@ -822,6 +822,11 @@
             },
             {
               "kind": "OBJECT",
+              "name": "KnowledgeBaseAnswerTranslation",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
               "name": "OnlineNotificationStandalone",
               "ofType": null
             },
@@ -4693,6 +4698,27 @@
           "interfaces": [],
           "enumValues": null,
           "possibleTypes": null
+        },
+        {
+          "kind": "UNION",
+          "name": "DataUnion",
+          "description": "Union of data payloads for standalone online notifications",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": [
+            {
+              "kind": "OBJECT",
+              "name": "OnlineNotificationStandaloneBulkJobData",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
+              "name": "OnlineNotificationStandaloneKbAnswerGenerationFailedData",
+              "ofType": null
+            }
+          ]
         },
         {
           "kind": "OBJECT",
@@ -11017,6 +11043,33 @@
               "deprecationReason": null
             },
             {
+              "name": "ticketAIAssistanceEnqueueKnowledgeBaseAnswer",
+              "description": "Trigger generation of a knowledge base answer draft for a ticket",
+              "args": [
+                {
+                  "name": "ticketId",
+                  "description": "The ticket to generate a knowledge base answer for",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketAIAssistanceEnqueueKnowledgeBaseAnswerPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "ticketAIAssistanceSummarize",
               "description": "Return current summary or trigger generation in the background",
               "args": [
@@ -14440,8 +14493,8 @@
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "OBJECT",
-                  "name": "OnlineNotificationStandaloneData",
+                  "kind": "UNION",
+                  "name": "DataUnion",
                   "ofType": null
                 }
               },
@@ -14504,17 +14557,21 @@
         },
         {
           "kind": "OBJECT",
-          "name": "OnlineNotificationStandaloneData",
-          "description": "Data payload of the standalone online notifications",
+          "name": "OnlineNotificationStandaloneBulkJobData",
+          "description": "Data payload for bulk job standalone notifications",
           "fields": [
             {
               "name": "failedCount",
               "description": null,
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -14524,9 +14581,56 @@
               "description": null,
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "OnlineNotificationStandaloneKbAnswerGenerationFailedData",
+          "description": "Data payload for knowledge base answer generation failure notifications",
+          "fields": [
+            {
+              "name": "errorMessage",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketTitle",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -17144,23 +17248,15 @@
               "description": "Returns a list of macros",
               "args": [
                 {
-                  "name": "groupIds",
-                  "description": "Filter macros by group assignment, must have no group or all groups assigned.",
+                  "name": "selector",
+                  "description": "The selector for ticket macros. Macros will be filtered by group assignment, must have no group or all groups assigned.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "LIST",
-                      "name": null,
-                      "ofType": {
-                        "kind": "NON_NULL",
-                        "name": null,
-                        "ofType": {
-                          "kind": "SCALAR",
-                          "name": "ID",
-                          "ofType": null
-                        }
-                      }
+                      "kind": "INPUT_OBJECT",
+                      "name": "TicketMacrosSelectorInput",
+                      "ofType": null
                     }
                   },
                   "defaultValue": null
@@ -22356,6 +22452,49 @@
         },
         {
           "kind": "OBJECT",
+          "name": "TicketAIAssistanceEnqueueKnowledgeBaseAnswerPayload",
+          "description": "Autogenerated return type of TicketAIAssistanceEnqueueKnowledgeBaseAnswer.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "success",
+              "description": "Whether the generation job was enqueued successfully.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
           "name": "TicketAIAssistanceSummarizePayload",
           "description": "Autogenerated return type of TicketAIAssistanceSummarize.",
           "fields": [
@@ -24122,7 +24261,7 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "ticketIds",
+              "name": "entityIds",
               "description": "The tickets to be updated",
               "type": {
                 "kind": "LIST",
@@ -26162,6 +26301,55 @@
           ],
           "inputFields": null,
           "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "TicketMacrosSelectorInput",
+          "description": "Represents the selector for ticket macros query.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "entityIds",
+              "description": "The groups to be considered",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "overviewId",
+              "description": "Ticket overview for selecting tickets and their groups",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "searchQuery",
+              "description": "Search query to filter tickets and their groups",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },

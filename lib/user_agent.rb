@@ -303,6 +303,7 @@ class UserAgent
   # @option options [Integer] :open_timeout
   # @option options [Integer] :read_timeout
   # @option options [Boolean] :do_not_follow_redirects
+  # @option options [Hash, Boolean] :validate_safety to validate hostname safety via HostnameSafetyCheck.validate! with options as sub-keys
   # @option log [String] :facility is sub-key as in options[:log][:facility] providing name to use when logging in HttpLog
   # @param count [Integer] of redirects. Counts towards zero and then aborts
   #
@@ -319,6 +320,11 @@ class UserAgent
 
     # prepare request
     request = Net::HTTP.const_get(method.capitalize).new(uri)
+
+    if options[:validate_safety]
+      validate_safety_options = options[:validate_safety].is_a?(Hash) ? options[:validate_safety] : nil
+      HostnameSafetyCheck.validate!(uri.hostname, **validate_safety_options)
+    end
 
     # set headers
     request = set_headers(request, options)

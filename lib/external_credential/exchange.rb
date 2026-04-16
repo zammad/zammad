@@ -27,17 +27,21 @@ class ExternalCredential::Exchange
     raise Exceptions::UnprocessableEntity, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
     raise Exceptions::UnprocessableEntity, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
 
-    authorize_url = generate_authorize_url(credentials)
+    state         = SecureRandom.urlsafe_base64
+    authorize_url = generate_authorize_url(credentials, state: state)
 
     {
       authorize_url: authorize_url,
+      request_token: state,
     }
   end
 
-  def self.link_account(_request_token, params)
+  def self.link_account(request_token, params)
 
     # return to admin interface if admin Consent is in process and user clicks on "Back to app"
     return "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#system/integration/exchange/error/AADSTS65004" if params[:error_description].present? && params[:error_description].include?('AADSTS65004')
+
+    raise Exceptions::UnprocessableEntity, __('Invalid OAuth state parameter.') if params[:state] != request_token
 
     external_credential = ExternalCredential.find_by(name: 'exchange')
     raise Exceptions::UnprocessableEntity, __('No Exchange app configured!') if !external_credential
@@ -63,7 +67,7 @@ class ExternalCredential::Exchange
     "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#system/integration/exchange/success/1"
   end
 
-  def self.generate_authorize_url(credentials, scope = 'https://outlook.office365.com/EWS.AccessAsUser.All offline_access openid profile email')
+  def self.generate_authorize_url(credentials, scope: 'https://outlook.office365.com/EWS.AccessAsUser.All offline_access openid profile email', state: nil)
     params = {
       'client_id'     => credentials[:client_id],
       'redirect_uri'  => ExternalCredential.callback_url('exchange'),
@@ -71,7 +75,8 @@ class ExternalCredential::Exchange
       'response_type' => 'code',
       'access_type'   => 'offline',
       'prompt'        => credentials[:prompt] || 'login',
-    }
+      'state'         => state,
+    }.compact
 
     tenant = credentials[:client_tenant].presence || 'common'
 

@@ -27,7 +27,7 @@ const errorImage = computed(() => {
 </script>
 
 <template>
-  <img width="540" class="max-h-96" :alt="$t('Error')" :src="errorImage" />
+  <img class="max-h-96 w-135" :alt="$t('Error')" :src="errorImage" />
   <h1 class="text-center text-xl leading-snug text-black dark:text-white">
     {{ $t(options?.title) }}
   </h1>

@@ -5,13 +5,13 @@ require 'rails_helper'
 require 'models/concerns/checks_human_changes_examples'
 
 RSpec.describe Transaction::Notification, type: :model do
-  describe 'pending ticket reminder repeats after midnight at selected time zone' do
+  describe 'pending ticket reminder repeats after midnight at selected time zone', time_zone: 'UTC' do
     let(:group)  { create(:group) }
     let(:user)   { create(:agent) }
     let(:ticket) { create(:ticket, owner: user, state_name: 'open', pending_time: Time.current) }
 
     before do
-      travel_to Time.use_zone('UTC') { Time.current.noon }
+      travel_to DateTime.parse('2024-11-15T12:00:00Z')
 
       user.groups << group
       ticket
@@ -22,13 +22,13 @@ RSpec.describe Transaction::Notification, type: :model do
     end
 
     it 'notification not sent at UTC midnight' do
-      travel_to Time.use_zone('UTC') { Time.current.end_of_day + 1.minute }
+      travel_to DateTime.parse('2024-11-16T00:01:00Z')
 
       expect { run(ticket, user, 'reminder_reached') }.not_to change(OnlineNotification, :count)
     end
 
     it 'notification sent at selected time zone midnight' do
-      travel_to Time.use_zone('America/Santiago') { Time.current.end_of_day + 1.minute }
+      travel_to DateTime.parse('2024-11-16T03:01:00Z')
 
       expect { run(ticket, user, 'reminder_reached') }.to change(OnlineNotification, :count).by(1)
     end

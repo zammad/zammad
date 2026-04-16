@@ -18,7 +18,7 @@ attachments:
     To: user@example.com
     Message-ID: "<0.0.164306.jxtmxj281d2xtvlji447768.0@example.com>"
     Subject: how've things been?
-    Mime-Version: '1.0'
+    MIME-Version: '1.0'
     Content-Type: multipart/mixed; boundary="----------=_5B7B42AA.3193F6D3"
     X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on xx.xx.io
     X-Spam-Flag: 'YES'

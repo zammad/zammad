@@ -172,7 +172,7 @@ describe('search view', () => {
         },
       },
       selector: {
-        ticketIds: [ticket.id],
+        entityIds: [ticket.id],
       },
     })
 

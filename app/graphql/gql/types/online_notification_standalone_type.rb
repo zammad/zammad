@@ -7,6 +7,15 @@ module Gql::Types
 
     description 'Standalone notification for a user, not related to a specific database object'
 
-    field :data, Gql::Types::OnlineNotificationStandalone::DataType, null: false
+    field :data, Gql::Types::OnlineNotificationStandalone::DataUnionType, null: false
+
+    def data
+      case object.kind
+      when 'bulk_job'
+        ::OnlineNotificationStandalone::BulkJobData.new(**object.data.symbolize_keys)
+      when 'kb_answer_generation_failed'
+        ::OnlineNotificationStandalone::KbAnswerGenerationFailedData.new(**object.data.symbolize_keys)
+      end
+    end
   end
 end

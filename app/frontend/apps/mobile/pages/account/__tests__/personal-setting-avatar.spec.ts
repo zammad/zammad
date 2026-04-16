@@ -96,7 +96,9 @@ const removeAvatar = async (view: ExtendedRenderResult) => {
   await view.events.click(view.getByText('Delete'))
   await view.findByText('Delete avatar')
   await view.events.click(view.getByText('Delete avatar'))
-  await checkShownAvatar(view, '')
+
+  const avatar = await view.findByTestId('common-avatar')
+  expect(avatar.style.backgroundImage).toBe('')
 }
 
 describe('editing avatar', () => {

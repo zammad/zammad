@@ -8,11 +8,11 @@
       <% end %>
       <div class="event-row">
         <div>
-          <h4><%- @T('From') %></h4>
+          <h4><%- @T('Start date') %></h4>
           <p><%- @datetime(event.start_date) %></p>
         </div>
         <div>
-          <h4><%- @T('Till') %></h4>
+          <h4><%- @T('End date') %></h4>
           <p><%- @datetime(event.end_date) %></p>
         </div>
       </div>

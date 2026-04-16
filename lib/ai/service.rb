@@ -9,6 +9,12 @@ class AI::Service
 
   Result = Struct.new(:content, :stored_result, :fresh, :ai_analytics_run)
 
+  class InvalidResultKeysError < StandardError
+    def initialize
+      super(__('AI service result is missing expected keys'))
+    end
+  end
+
   def self.list
     @list ||= descendants.sort_by(&:name)
   end

@@ -26,6 +26,8 @@ class TriggerWebhookJob < ApplicationJob
     return if request.success?
 
     raise TriggerWebhookJob::RequestError
+  rescue HostnameSafetyCheck::SafetyError => e
+    Rails.logger.error "Can't execute Webhook with ID #{webhook_id} for Trigger '#{trigger.name}' with ID #{trigger.id}: #{e.message}"
   end
 
   private
@@ -87,6 +89,7 @@ class TriggerWebhookJob < ApplicationJob
         log:                     {
           facility: 'webhook',
         },
+        validate_safety:         { allow_private: true, allow_loopback: true },
       },
     )
   end

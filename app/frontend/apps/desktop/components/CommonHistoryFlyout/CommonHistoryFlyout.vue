@@ -38,7 +38,6 @@ const props = defineProps<Props>()
 
 const historyQuery = new QueryHandler(props.query())
 const historyQueryResult = historyQuery.result()
-const historyQueryLoading = historyQuery.loading()
 
 const historyData = computed(() =>
   historyQueryResult.value
@@ -46,18 +45,12 @@ const historyData = computed(() =>
     : null,
 )
 
-const isLoadingHistory = computed(() => {
-  // Return already true when a history result already exists from the cache, also
-  // when maybe a loading is in progress(because of cache + network).
-  if (historyData.value !== undefined) return false
-
-  return historyQueryLoading.value
-})
+const isLoadingHistory = historyQuery.loadingWithoutCachedResult()
 
 const historyContainerElement = useTemplateRef('history-container')
 
 watch(
-  [historyContainerElement, historyQueryLoading],
+  [historyContainerElement, isLoadingHistory],
   (newValue) => {
     if (!newValue) return
 

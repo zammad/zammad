@@ -3,79 +3,80 @@
 # More info at https://github.com/italia/publiccode.yml
 
 ---
-publiccodeYmlVersion: '0.2'
-name: Zammad
+publiccodeYmlVersion: "0.4"
+name: "Zammad"
 categories:
-  - help-desk
-releaseDate: '2026-03-04'
-softwareVersion: 7.0.x
-softwareType: standalone/web
-logo: 'logo.svg'
+  - "help-desk"
+releaseDate: "2026-04-08"
+softwareVersion: "7.0.x"
+softwareType: "standalone/web"
+logo: "logo.svg"
 platforms:
-  - web
-developmentStatus: stable
-url: 'https://github.com/zammad/zammad'
-landingURL: 'https://zammad.com/'
+  - "web"
+developmentStatus: "stable"
+url: "https://github.com/zammad/zammad"
+landingURL: "https://zammad.com/"
 maintenance:
-  type: internal
+  type: "internal"
   contacts:
-    - name: Martin Gruner
-      email: enjoy@zammad.com
+    - name: "Martin Gruner"
+      email: "enjoy@zammad.com"
 legal:
-  license: AGPL-3.0-only
-  mainCopyrightOwner: Zammad Foundation
-  repoOwner: Zammad GmbH
+  license: "AGPL-3.0-only"
+  mainCopyrightOwner: "Zammad Foundation"
+  repoOwner: "Zammad GmbH"
 usedBy:
-  - Landeshauptstadt München
-  - Dataport AöR
+  - "Landeshauptstadt München"
+  - "Dataport AöR"
+  - "IT-Verbund Schleswig-Holstein"
 localisation:
   localisationReady: true
   availableLanguages:
-    - ar
-    - bg
-    - ca
-    - cs
-    - da
-    - de
-    - el
-    - en
-    - es
-    - et
-    - fa
-    - fi
-    - fr
-    - he
-    - hi
-    - hr
-    - hu
-    - id
-    - is
-    - it
-    - ja
-    - ko
-    - lt
-    - lv
-    - ms
-    - nb
-    - nl
-    - pl
-    - pt
-    - ro
-    - ru
-    - rw
-    - sk
-    - sl
-    - sr
-    - sv
-    - th
-    - tr
-    - uk
-    - vi
-    - zh
+    - "ar"
+    - "bg"
+    - "ca"
+    - "cs"
+    - "da"
+    - "de"
+    - "el"
+    - "en"
+    - "es"
+    - "et"
+    - "fa"
+    - "fi"
+    - "fr"
+    - "he"
+    - "hi"
+    - "hr"
+    - "hu"
+    - "id"
+    - "is"
+    - "it"
+    - "ja"
+    - "ko"
+    - "lt"
+    - "lv"
+    - "ms"
+    - "nb"
+    - "nl"
+    - "pl"
+    - "pt"
+    - "ro"
+    - "ru"
+    - "rw"
+    - "sk"
+    - "sl"
+    - "sr"
+    - "sv"
+    - "th"
+    - "tr"
+    - "uk"
+    - "vi"
+    - "zh"
 description:
   de:
-    genericName: Helpdesk-Software
-    shortDescription: Zammad ist ein webbasiertes Open-Source-Helpdesk-/Kundensupport-System.
+    genericName: "Helpdesk-Software"
+    shortDescription: "Zammad ist ein webbasiertes Open-Source-Helpdesk-/Kundensupport-System."
     longDescription: >
       # Willkommen bei Zammad
 
@@ -104,8 +105,8 @@ description:
       Der einfachste und oft kostengünstigste Weg, Zammad zu betreiben, ist [unser Cloud-Service](https://zammad.com/en/pricing).
       Probieren Sie es mit einer [kostenlosen Testinstanz](https://zammad.com/en/getting-started) aus!"
   en:
-    genericName: Helpdesk software
-    shortDescription: Zammad is a web based open source helpdesk/customer support system.
+    genericName: "Helpdesk software"
+    shortDescription: "Zammad is a web based open source helpdesk/customer support system."
     longDescription: >
       # Welcome to Zammad
 
@@ -134,4 +135,4 @@ description:
 
       The easiest and often most cost-effective way to operate Zammad is [our cloud service](https://zammad.com/en/pricing).
       Give it a try with a [free trial instance](https://zammad.com/en/getting-started)!"
-    documentation: 'https://docs.zammad.org/en/latest/'
+    documentation: "https://docs.zammad.org/en/latest/"

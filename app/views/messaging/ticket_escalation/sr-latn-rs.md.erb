@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Eskaliran u #{ticket.escalation_at}_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Eskaliran u #{ticket.escalation_at}_
 Tiket (#{ticket.title}) od „#{ticket.customer.longname}” je eskaliran od „#{ticket.escalation_at}”!
 
 <% if @objects[:article] %>

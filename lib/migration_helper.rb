@@ -40,10 +40,10 @@ Returns:
 
     # pre checks to ensure rename is ok before any mutation
     filtered.each do |model_name|
-      name_valid = ObjectManager::Attribute::RESERVED_NAMES.include?(name) ||
-                   Array.wrap(ObjectManager::Attribute::RESERVED_NAMES_PER_MODEL[model_name]).include?(name)
 
-      raise "Failed to rename '#{name}' because it is neither a global reserved word nor a reserved word for object #{model_name}!" if !name_valid
+      # This is a counter check to ensure that you do not rename something which is not reserved.
+      rename_unnecessary = ObjectManager::Attribute.for_object(model_name).new(name: name).check_name(raise_error: false)
+      raise "Failed to rename '#{name}' because it is neither a global reserved word nor a reserved word for object #{model_name}!" if rename_unnecessary
     end
 
     filtered.each { |model_name| rename_custom_object_attribute(model_name, name) } # rubocop:disable Style/CombinableLoops

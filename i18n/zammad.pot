@@ -49,37 +49,37 @@ msgstr ""
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_create/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket.updated_at}_\n* Group: #{ticket.group.name}\n* Owner: #{ticket.owner.fullname}\n* State: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Created by #{current_user.longname} at #{ticket.updated_at}_\n* Group: #{ticket.group.name}\n* Owner: #{ticket.owner.fullname}\n* State: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_escalation/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Escalated at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" has been escalated since \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Escalated at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" has been escalated since \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_info/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Last updated at #{ticket.updated_at}_\n* Group: #{ticket.group.name}\n* Owner: #{ticket.owner.fullname}\n* State: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Last updated at #{ticket.updated_at}_\n* Group: #{ticket.group.name}\n* Owner: #{ticket.owner.fullname}\n* State: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_reminder_reached/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Reminder reached!_\nA ticket needs attention: reminder reached for (#{ticket.title}) with customer \"*#{ticket.customer.longname}*\".\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Reminder reached!_\nA ticket needs attention: reminder reached for (#{ticket.title}) with customer \"*#{ticket.customer.longname}*\".\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_update/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Updated by #{current_user.longname} at #{ticket.updated_at}_\n<% if @objects[:changes].present? %>\n  <% @objects[:changes].each do |key, value| %>\n  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n  <% end %>\n<% end %>\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Updated by #{current_user.longname} at #{ticket.updated_at}_\n<% if @objects[:changes].present? %>\n  <% @objects[:changes].each do |key, value| %>\n  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n  <% end %>\n<% end %>\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_escalation_warning/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Will escalate at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will escalate at \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Will escalate at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will escalate at \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
@@ -285,7 +285,7 @@ msgstr ""
 msgid "%s months ago"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:172
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:146
 msgid "%s more"
 msgstr ""
 
@@ -368,7 +368,7 @@ msgstr ""
 msgid "%s switched to |%s|!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:83
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:73
 msgid "%s ticket(s) selected"
 msgstr ""
 
@@ -457,6 +457,10 @@ msgstr ""
 msgid "%{name} is a reserved word"
 msgstr ""
 
+#: app/models/setting/validation/sso_trusted_ips.rb:9
+msgid "'%s' is not a valid IP address or CIDR range."
+msgstr ""
+
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
 msgstr ""
@@ -475,6 +479,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid "**Service Level Agreements**, abbreviated **SLAs**, help you to meet specific response times for your customers' requests. This way you can define goals such as answering every inquiry within eight hours. If you are at risk of missing this target, Zammad will alert you.\n\nYou can define targets for three different metrics: **response time** (time between the creation of a ticket and the first reaction of an agent), **update time** (time between a customer's request and an agent's reaction), and **solution time** (time between creating and closing a ticket).\n\nAny escalated tickets (i.e. tickets that have missed the defined target) are displayed in a separate view in your overviews. You can also configure **email notifications**."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkCursorPreview.vue:72
+msgid "+ %s more"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
@@ -596,7 +604,7 @@ msgstr ""
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:75
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:80
 msgid "A newer version of the app is available. Please reload at your earliest."
 msgstr ""
 
@@ -653,11 +661,19 @@ msgstr ""
 msgid "AI Agents"
 msgstr ""
 
+#: db/seeds/settings.rb:6169
+msgid "AI Knowledge Base Answer from Ticket"
+msgstr ""
+
+#: db/seeds/permissions.rb:257
+msgid "AI Knowledge Base Answers"
+msgstr ""
+
 #: db/seeds/permissions.rb:233
 msgid "AI Provider"
 msgstr ""
 
-#: db/seeds/settings.rb:6068
+#: db/seeds/settings.rb:6092
 msgid "AI Provider Config"
 msgstr ""
 
@@ -689,7 +705,7 @@ msgstr ""
 msgid "AI agent"
 msgstr ""
 
-#: app/services/service/ai/agent/run.rb:32
+#: app/services/service/ai/agent/run.rb:24
 msgid "AI agent result content does not match expected result structure."
 msgstr ""
 
@@ -713,7 +729,7 @@ msgstr ""
 msgid "AI error log"
 msgstr ""
 
-#: db/seeds/settings.rb:6051
+#: db/seeds/settings.rb:6075
 msgid "AI provider"
 msgstr ""
 
@@ -742,11 +758,14 @@ msgstr ""
 msgid "AI provider is missing"
 msgstr ""
 
+#: app/controllers/ticket/knowledge_base_answers_controller.rb:8
 #: app/controllers/ticket/summarize_controller.rb:8
+#: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:13
 #: app/graphql/gql/mutations/ticket/ai_assistance/summarize.rb:15
 #: app/services/service/ai/agent/run.rb:17
 #: app/services/service/ai/vectordb/base.rb:12
 #: app/services/service/ai_assistance/text_tools.rb:19
+#: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:15
 #: app/services/service/ticket/ai_assistance/summarize.rb:17
 msgid "AI provider is not configured."
 msgstr ""
@@ -759,7 +778,7 @@ msgstr ""
 msgid "AI provider token is not set"
 msgstr ""
 
-#: lib/ai/service/ticket_summarize.rb:54
+#: lib/ai/service.rb:14
 msgid "AI service result is missing expected keys"
 msgstr ""
 
@@ -782,7 +801,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2
-#: db/seeds/permissions.rb:263
+#: db/seeds/permissions.rb:269
 msgid "API"
 msgstr ""
 
@@ -812,11 +831,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:10
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:7
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:91
 msgid "API server error: %s"
 msgstr ""
 
-#: lib/ai/provider/azure.rb:128
+#: lib/ai/provider/azure.rb:168
 msgid "API server not accessible"
 msgstr ""
 
@@ -844,47 +863,47 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
-#: db/seeds/permissions.rb:351
+#: db/seeds/permissions.rb:357
 msgid "Access the agent chat features."
 msgstr ""
 
-#: db/seeds/permissions.rb:366
+#: db/seeds/permissions.rb:372
 msgid "Access the agent phone features."
 msgstr ""
 
-#: db/seeds/permissions.rb:381
+#: db/seeds/permissions.rb:387
 msgid "Access the knowledge base editor features."
 msgstr ""
 
-#: db/seeds/permissions.rb:387
+#: db/seeds/permissions.rb:393
 msgid "Access the knowledge base reader features."
 msgstr ""
 
-#: db/seeds/permissions.rb:409
+#: db/seeds/permissions.rb:415
 msgid "Access the tickets as agent based on group access."
 msgstr ""
 
-#: db/seeds/permissions.rb:418
+#: db/seeds/permissions.rb:424
 msgid "Access tickets as customer."
 msgstr ""
 
-#: db/seeds/permissions.rb:342
+#: db/seeds/permissions.rb:348
 msgid "Access to the chat interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:372
+#: db/seeds/permissions.rb:378
 msgid "Access to the knowledge base interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:357
+#: db/seeds/permissions.rb:363
 msgid "Access to the phone interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:394
+#: db/seeds/permissions.rb:400
 msgid "Access to the report interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:400
+#: db/seeds/permissions.rb:406
 msgid "Access to the ticket interface."
 msgstr ""
 
@@ -934,7 +953,7 @@ msgid "Accounted Time"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:77
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:124
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:147
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 msgid "Accounted time"
 msgstr ""
@@ -1030,7 +1049,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:326
 #: app/assets/javascripts/app/models/ai_agent.coffee:10
-#: app/assets/javascripts/app/models/ai_text_tool.coffee:28
+#: app/assets/javascripts/app/models/ai_text_tool.coffee:30
 #: app/assets/javascripts/app/models/chat.coffee:257
 #: app/assets/javascripts/app/models/checklist_template.coffee:9
 #: app/assets/javascripts/app/models/core_workflow.coffee:14
@@ -1129,7 +1148,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:15
 #: app/assets/javascripts/app/views/tag/index.jst.eco:24
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:19
-#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:263
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:267
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
 msgstr ""
@@ -1347,7 +1366,7 @@ msgstr ""
 msgid "Additional notes for ticket create types."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:114
 msgid "Additional ticket edit actions"
 msgstr ""
 
@@ -1453,7 +1472,7 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
-#: db/seeds/permissions.rb:350
+#: db/seeds/permissions.rb:356
 msgid "Agent chat"
 msgstr ""
 
@@ -1462,15 +1481,15 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:151
-#: app/models/user.rb:758
+#: app/models/user.rb:763
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:365
+#: db/seeds/permissions.rb:371
 msgid "Agent phone"
 msgstr ""
 
-#: db/seeds/permissions.rb:408
+#: db/seeds/permissions.rb:414
 #: db/seeds/settings.rb:1129
 msgid "Agent tickets"
 msgstr ""
@@ -1495,7 +1514,7 @@ msgstr ""
 msgid "All %s result(s) selected"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:81
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:71
 msgid "All %s ticket(s) selected"
 msgstr ""
 
@@ -1514,6 +1533,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:138
 msgid "All affected users and their customer tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, users and tickets will be deleted and a history entry preserved. There is no rollback of this deletion possible."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:135
+msgid "All articles"
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:51
@@ -1549,11 +1572,15 @@ msgstr ""
 msgid "All two-factor authentication methods were removed for this user."
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_text_extractor.rb:65
+msgid "All values will be considered for extracted text from tickets."
+msgstr ""
+
 #: app/models/ai/agent/type/ticket_categorizer.rb:65
 msgid "Allow AI Agent to select multiple categories from all possible values."
 msgstr ""
 
-#: db/seeds/settings.rb:6036
+#: db/seeds/settings.rb:6060
 msgid "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
 
@@ -1589,7 +1616,7 @@ msgstr ""
 msgid "Allow users to create new tags."
 msgstr ""
 
-#: db/seeds/settings.rb:6027
+#: db/seeds/settings.rb:6051
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr ""
 
@@ -1682,7 +1709,7 @@ msgstr ""
 msgid "Analyzing structure…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:222
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:206
 msgid "Another bulk update is currently in progress. Please wait until it is finished before starting a new one."
 msgstr ""
 
@@ -1771,7 +1798,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:53
-#: db/seeds/permissions.rb:431
+#: db/seeds/permissions.rb:437
 msgid "Appearance"
 msgstr ""
 
@@ -1789,7 +1816,7 @@ msgid "Applications"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:8
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:408
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:337
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:134
 msgid "Apply"
 msgstr ""
@@ -1856,7 +1883,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:723
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:42
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:288
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:66
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:65
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:43
 msgid "Archive emails"
 msgstr ""
@@ -2005,7 +2032,7 @@ msgstr ""
 msgid "Article could not be deleted."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:124
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:136
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:25
 msgid "Article meta information"
 msgstr ""
@@ -2018,6 +2045,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee:15
 #: app/graphql/gql/types/overview_type.rb:100
 msgid "Article#"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:128
+msgid "Article(s) to analyze"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:2240
@@ -2035,6 +2066,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:600
 msgid "Assign signup roles"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:229
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:68
+msgid "Assign tickets"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1838
@@ -2058,7 +2094,7 @@ msgstr ""
 msgid "Assignment Timeout"
 msgstr ""
 
-#: app/assets/javascripts/app/models/_application_model.coffee:166
+#: app/assets/javascripts/app/models/_application_model.coffee:168
 #: app/assets/javascripts/app/models/group.coffee:8
 msgid "Assignment timeout"
 msgstr ""
@@ -2068,7 +2104,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:660
+#: app/models/user.rb:665
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2081,7 +2117,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:128
-#: app/models/user.rb:737
+#: app/models/user.rb:742
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2166,7 +2202,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:96
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:110
 msgid "Attributes"
 msgstr ""
 
@@ -2234,7 +2270,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:5874
+#: db/seeds/settings.rb:5898
 msgid "Authenticator App"
 msgstr ""
 
@@ -2283,7 +2319,7 @@ msgstr ""
 msgid "Auto Assignment Selector"
 msgstr ""
 
-#: db/seeds/settings.rb:6013
+#: db/seeds/settings.rb:6037
 msgid "Auto Shutdown"
 msgstr ""
 
@@ -2321,7 +2357,7 @@ msgstr ""
 msgid "Automatic account linking notification"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:181
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:184
 msgid "Automatic reminders"
 msgstr ""
 
@@ -2333,11 +2369,11 @@ msgstr ""
 msgid "Automatically loads the chat.css file. If you want to use your own css, just set it to false."
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1296
+#: app/frontend/shared/components/Form/Form.vue:1326
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1305
+#: app/frontend/shared/components/Form/Form.vue:1335
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2351,6 +2387,10 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:30
 msgid "Available Priorities"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:66
+msgid "Available Values"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
@@ -2378,7 +2418,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:120
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:114
-#: db/seeds/permissions.rb:445
+#: db/seeds/permissions.rb:451
 msgid "Avatar"
 msgstr ""
 
@@ -2409,7 +2449,7 @@ msgid "Average: %s%"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
-msgid "Azure AI"
+msgid "Azure AI (legacy deployment-based endpoints)"
 msgstr ""
 
 #: db/seeds/settings.rb:3493
@@ -2433,7 +2473,7 @@ msgstr ""
 msgid "BETA UI illustration"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:359
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:376
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:399
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:419
@@ -2505,7 +2545,8 @@ msgid "Basic Settings"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:2
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:125
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:56
 msgid "Be sure to check AI-generated content for accuracy."
 msgstr ""
 
@@ -2570,7 +2611,7 @@ msgid "Blue"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:30
-#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:78
+#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:88
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:17
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:31
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco:14
@@ -2607,8 +2648,8 @@ msgstr ""
 msgid "Browser"
 msgstr ""
 
-#: app/assets/javascripts/app/models/online_notification_standalone.coffee:11
-#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/online-notification-standalone.ts:23
+#: app/assets/javascripts/app/models/online_notification_standalone.coffee:12
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/online-notification-standalone.ts:28
 msgid "Bulk action completed for |%s| ticket(s): %s successful, %s failed"
 msgstr ""
 
@@ -2620,13 +2661,14 @@ msgstr ""
 msgid "Bulk action failed"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:307
-#: app/frontend/apps/desktop/entities/user/current/stores/ticketBulkUpdate.ts:71
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:263
+#: app/frontend/apps/desktop/entities/ticket/composables/useTicketBulkUpdate.ts:42
+#: app/frontend/apps/desktop/entities/user/current/stores/ticketBulkUpdate.ts:78
 msgid "Bulk action failed for %s ticket(s). Check attribute values and try again."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditButton.vue:33
-#: app/frontend/apps/desktop/entities/user/current/stores/ticketBulkUpdate.ts:52
+#: app/frontend/apps/desktop/entities/user/current/stores/ticketBulkUpdate.ts:59
 msgid "Bulk action in progress…"
 msgstr ""
 
@@ -2634,8 +2676,9 @@ msgstr ""
 msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:298
-#: app/frontend/apps/desktop/entities/user/current/stores/ticketBulkUpdate.ts:68
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:254
+#: app/frontend/apps/desktop/entities/ticket/composables/useTicketBulkUpdate.ts:32
+#: app/frontend/apps/desktop/entities/user/current/stores/ticketBulkUpdate.ts:75
 msgid "Bulk action successful for %s ticket(s)."
 msgstr ""
 
@@ -2838,7 +2881,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:342
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:359
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:119
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:8
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:7
@@ -2858,7 +2901,8 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue:20
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:10
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:398
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:62
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:327
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue:53
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:116
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:118
@@ -2967,7 +3011,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:89
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:127
 msgid "Change customer"
@@ -2986,7 +3030,7 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
-#: db/seeds/permissions.rb:463
+#: db/seeds/permissions.rb:469
 msgid "Change personal account password."
 msgstr ""
 
@@ -3178,8 +3222,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:335
-#: db/seeds/settings.rb:5986
+#: db/seeds/permissions.rb:341
+#: db/seeds/settings.rb:6010
 msgid "Checklists"
 msgstr ""
 
@@ -3227,6 +3271,10 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:43
 msgid "Choose which attribute values will be considered when categorizing tickets. If you want to limit it to specific options, please select at least two below. Make sure the options have clear names and optional descriptions, as that would comprise the context provided to the AI agent."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:57
+msgid "Choose which attribute values will be considered when extracting text from tickets. If you want to limit it to specific options, please select at least two below. Make sure the options have clear names and optional descriptions, as that would comprise the context provided to the AI agent."
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_group_dispatcher.rb:16
@@ -3327,7 +3375,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:405
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:640
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:369
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:372
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:306
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:359
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
@@ -3432,6 +3480,7 @@ msgid "Close current tab"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:163
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:39
 msgid "Close dialog"
 msgstr ""
 
@@ -3509,6 +3558,10 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr ""
 
+#: db/seeds/settings.rb:5817
+msgid "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO header acceptance."
+msgstr ""
+
 #: app/models/tag/item.rb:4
 msgid "Commas and stars are not allowed in name."
 msgstr ""
@@ -3538,7 +3591,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:5866
+#: db/seeds/settings.rb:5890
 msgid "Complete the sign-in with your security key."
 msgstr ""
 
@@ -3618,6 +3671,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:4
 msgid "Confirm Password"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:32
+msgid "Confirm bulk action"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue:46
@@ -3833,7 +3890,7 @@ msgstr ""
 msgid "Conversation is transferred into another chat. Please stay tuned."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:84
 msgid "Conversation summary"
 msgstr ""
 
@@ -3912,7 +3969,7 @@ msgid "Core Workflow Ajax Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:3
-#: db/seeds/permissions.rb:287
+#: db/seeds/permissions.rb:293
 msgid "Core Workflows"
 msgstr ""
 
@@ -3969,7 +4026,7 @@ msgstr ""
 msgid "Could not remove two-factor authentication method"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:134
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:114
 msgid "Could not remove two-factor authentication method."
 msgstr ""
@@ -3984,7 +4041,7 @@ msgid "Could not set two-factor authentication method as default"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:111
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:120
 msgid "Couldn't save changes"
 msgstr ""
 
@@ -4071,7 +4128,7 @@ msgstr ""
 msgid "Create a shared draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:205
+#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:210
 msgid "Create a translation"
 msgstr ""
 
@@ -4144,7 +4201,7 @@ msgid "Create ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:428
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
 msgid "Create your first ticket"
 msgstr ""
 
@@ -4213,7 +4270,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:19
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:116
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:114
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:116
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:54
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:37
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
@@ -4310,14 +4367,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:145
 #: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:25
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:218
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:219
 #: app/frontend/apps/mobile/components/Ticket/TicketItem.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:41
 msgid "Currently processing this ticket…"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:146
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:132
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:148
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:144
 msgid "Currently, no overviews are assigned to your roles. Please contact your administrator."
 msgstr ""
 
@@ -4371,7 +4428,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:89
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:93
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:35
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
@@ -4402,7 +4459,7 @@ msgstr ""
 msgid "Customer and agent ratio (role based user counts)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:78
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:79
 msgid "Customer intent"
 msgstr ""
 
@@ -4410,11 +4467,11 @@ msgstr ""
 msgid "Customer selection based on sender and receiver list"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:101
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:102
 msgid "Customer sentiment"
 msgstr ""
 
-#: db/seeds/permissions.rb:417
+#: db/seeds/permissions.rb:423
 #: db/seeds/settings.rb:1138
 msgid "Customer tickets"
 msgstr ""
@@ -4459,7 +4516,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: db/seeds/permissions.rb:299
+#: db/seeds/permissions.rb:305
 msgid "Data Privacy"
 msgstr ""
 
@@ -4675,8 +4732,20 @@ msgstr ""
 msgid "Define the default agent notifications for new users."
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_text_extractor.rb:76
+msgid "Define the extraction rules for the AI agent, e.g. how to identify target text. For examples, please refer to our documentation."
+msgstr ""
+
 #: db/seeds/settings.rb:1001
 msgid "Define the maximum number of ticket shown in overviews."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:104
+msgid "Define the prioritization rules for the AI agent, e.g. how to choose between multiple occurrences of the target text. For examples, please refer to our documentation."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:124
+msgid "Define which ticket article(s) should be analyzed."
 msgstr ""
 
 #: db/seeds/settings.rb:3675
@@ -4859,7 +4928,7 @@ msgstr ""
 msgid "Defines if application is used as online service."
 msgstr ""
 
-#: db/seeds/settings.rb:5817
+#: db/seeds/settings.rb:5841
 msgid "Defines if calendar weeks are shown in the picker of date/datetime fields to easily select the correct date."
 msgstr ""
 
@@ -4867,7 +4936,7 @@ msgstr ""
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:5909
+#: db/seeds/settings.rb:5933
 msgid "Defines if recovery codes can be used by users in the event they lose access to other two-factor authentication methods."
 msgstr ""
 
@@ -4875,7 +4944,7 @@ msgstr ""
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:6054
+#: db/seeds/settings.rb:6078
 msgid "Defines if the AI provider is configured."
 msgstr ""
 
@@ -4899,11 +4968,11 @@ msgstr ""
 msgid "Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery)."
 msgstr ""
 
-#: db/seeds/settings.rb:6148
+#: db/seeds/settings.rb:6186
 msgid "Defines if the bubble menu feature of the richtext editor is enabled. Note that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
-#: db/seeds/settings.rb:5961
+#: db/seeds/settings.rb:5985
 msgid "Defines if the change of the primary organization of a user will update the 100 most recent tickets for this user as well."
 msgstr ""
 
@@ -4931,11 +5000,11 @@ msgstr ""
 msgid "Defines if the time accounting types are enabled."
 msgstr ""
 
-#: db/seeds/settings.rb:5877
+#: db/seeds/settings.rb:5901
 msgid "Defines if the two-factor authentication method authenticator app is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:5845
+#: db/seeds/settings.rb:5869
 msgid "Defines if the two-factor authentication method security keys is enabled or not."
 msgstr ""
 
@@ -5163,7 +5232,7 @@ msgstr ""
 msgid "Defines the duration of customer activity (in seconds) on a call until the user profile dialog is shown."
 msgstr ""
 
-#: db/seeds/settings.rb:6134
+#: db/seeds/settings.rb:6158
 msgid "Defines the fixed instructions that guide the AI Writing Assistant on e.g. how to format its output."
 msgstr ""
 
@@ -5316,7 +5385,7 @@ msgstr ""
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr ""
 
-#: db/seeds/settings.rb:6045
+#: db/seeds/settings.rb:6069
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 
@@ -5419,7 +5488,7 @@ msgstr ""
 msgid "Delete column"
 msgstr ""
 
-#: db/seeds/permissions.rb:300
+#: db/seeds/permissions.rb:306
 msgid "Delete existing data of your system."
 msgstr ""
 
@@ -5565,7 +5634,7 @@ msgid "Deselect all entries"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:45
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:132
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:133
 msgid "Deselect this entry"
 msgstr ""
 
@@ -5578,15 +5647,15 @@ msgstr ""
 msgid "Desktop"
 msgstr ""
 
-#: db/seeds/settings.rb:6024
+#: db/seeds/settings.rb:6048
 msgid "Desktop BETA UI Switch"
 msgstr ""
 
-#: db/seeds/settings.rb:6033
+#: db/seeds/settings.rb:6057
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr ""
 
-#: db/seeds/settings.rb:6042
+#: db/seeds/settings.rb:6066
 msgid "Desktop BETA UI Switch Roles"
 msgstr ""
 
@@ -5651,7 +5720,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:31
-#: db/seeds/permissions.rb:476
+#: db/seeds/permissions.rb:482
 msgid "Devices"
 msgstr ""
 
@@ -5821,7 +5890,7 @@ msgstr ""
 msgid "Do not sign email"
 msgstr ""
 
-#: db/seeds/settings.rb:5971
+#: db/seeds/settings.rb:5995
 msgid "Do not update any tickets."
 msgstr ""
 
@@ -5943,6 +6012,10 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:45
+msgid "Download feedback report"
+msgstr ""
+
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:105
 msgid "Download original email"
 msgstr ""
@@ -5965,7 +6038,7 @@ msgstr ""
 msgid "Draft available"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:77
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:76
 msgid "Draft could not be saved."
 msgstr ""
 
@@ -5973,12 +6046,16 @@ msgstr ""
 msgid "Draft could not be updated."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:47
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:44
 msgid "Drafts"
 msgstr ""
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 msgid "Drag ended for %s."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue:117
+msgid "Drag here to cancel"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:2
@@ -6062,7 +6139,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:80
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:86
 msgid "Edit Customer"
 msgstr ""
 
@@ -6098,7 +6175,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/entities/organization/composables/useOrganizationEdit.ts:59
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:39
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:77
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:78
 msgid "Edit organization"
 msgstr ""
 
@@ -6266,7 +6343,7 @@ msgstr ""
 msgid "Email Outbound"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:70
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:69
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:116
 msgid "Email account"
 msgstr ""
@@ -6275,7 +6352,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:670
+#: app/models/user.rb:675
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -6292,7 +6369,7 @@ msgstr ""
 msgid "Email could not be verified. Please contact your administrator."
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:64
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:63
 msgid "Email inbound"
 msgstr ""
 
@@ -6301,13 +6378,13 @@ msgstr ""
 msgid "Email notification"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:68
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:67
 msgid "Email outbound"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:891
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:405
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:153
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:152
 msgid "Email sending and receiving could not be verified. Please check your settings."
 msgstr ""
 
@@ -6342,7 +6419,7 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:435
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:431
 msgid "Empty overview"
 msgstr ""
 
@@ -6375,7 +6452,7 @@ msgstr ""
 msgid "Enable REST API using tokens (not username/email address and password). Each user needs to create its own access tokens in user profile."
 msgstr ""
 
-#: db/seeds/settings.rb:5906
+#: db/seeds/settings.rb:5930
 msgid "Enable Recovery Codes"
 msgstr ""
 
@@ -6395,7 +6472,7 @@ msgstr ""
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 
-#: db/seeds/settings.rb:5989
+#: db/seeds/settings.rb:6013
 msgid "Enable checklists."
 msgstr ""
 
@@ -6411,7 +6488,11 @@ msgstr ""
 msgid "Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available)."
 msgstr ""
 
-#: db/seeds/settings.rb:6016
+#: db/seeds/settings.rb:6172
+msgid "Enable or disable AI generation of knowledge base answers from ticket content."
+msgstr ""
+
+#: db/seeds/settings.rb:6040
 msgid "Enable or disable self-shutdown of Zammad processes after significant configuration changes. This should only be used if the controlling process manager like systemd or docker supports an automatic restart policy."
 msgstr ""
 
@@ -6423,11 +6504,11 @@ msgstr ""
 msgid "Enable or disable the maintenance mode of Zammad. If enabled, all non-administrators get logged out and only administrators can start a new session."
 msgstr ""
 
-#: db/seeds/settings.rb:6087
+#: db/seeds/settings.rb:6111
 msgid "Enable or disable the ticket summary."
 msgstr ""
 
-#: db/seeds/settings.rb:6120
+#: db/seeds/settings.rb:6144
 msgid "Enable or disable the writing assistant text tools."
 msgstr ""
 
@@ -6465,7 +6546,7 @@ msgid "Enables a warning to users during ticket creation if there is an existing
 msgstr ""
 
 #: db/seeds/settings.rb:5787
-msgid "Enables button for user authentication via %s. The button will redirect to /auth/sso on user interaction."
+msgid "Enables button for user authentication via %s. The button will redirect to /auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR ranges from which authentication headers (%s, %s, %s) are accepted. Leave empty to accept from any IP (not recommended for production)."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:62
@@ -6571,6 +6652,15 @@ msgstr ""
 msgid "Encryption:"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:15
+#: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:22
+msgid "End date"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco:24
+msgid "End time"
+msgstr ""
+
 #: app/assets/javascripts/app/models/webhook.coffee:8
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:16
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:3
@@ -6589,11 +6679,11 @@ msgstr ""
 msgid "Endpoint Settings"
 msgstr ""
 
-#: db/seeds/settings.rb:5933
+#: db/seeds/settings.rb:5957
 msgid "Enforce the setup of the two-factor authentication"
 msgstr ""
 
-#: db/seeds/settings.rb:5940
+#: db/seeds/settings.rb:5964
 msgid "Enforced for user roles"
 msgstr ""
 
@@ -6667,6 +6757,10 @@ msgstr ""
 msgid "Enter the code from your two-factor authenticator app."
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_text_extractor.rb:33
+msgid "Enter the extraction rules for the AI agent."
+msgstr ""
+
 #: app/models/ai/agent/type/custom_ai_agent.rb:37
 msgid "Enter the instruction for the AI agent."
 msgstr ""
@@ -6677,6 +6771,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:57
 msgid "Enter the link provided by the plugin at the end of the installation to link the two systems."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:111
+msgid "Enter the priority rules for the AI agent."
 msgstr ""
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:28
@@ -6768,7 +6866,7 @@ msgstr ""
 msgid "Error during execution of auto wizard."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:62
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
 
@@ -7010,12 +7108,16 @@ msgstr ""
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_text_extractor.rb:30
+msgid "Extraction rules"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:66
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:3
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:3
 #: app/controllers/first_steps_controller.rb:27
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:35
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:38
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:43
 #: db/seeds/permissions.rb:167
 #: db/seeds/settings.rb:1411
@@ -7069,6 +7171,11 @@ msgstr ""
 #: app/controllers/channels_google_controller.rb:40
 #: app/controllers/channels_microsoft365_controller.rb:40
 msgid "Failed to find backup on channel!"
+msgstr ""
+
+#: app/assets/javascripts/app/models/online_notification_standalone.coffee:15
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/online-notification-standalone.ts:37
+msgid "Failed to generate knowledge base draft for \"%s\": %s"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue:33
@@ -7136,6 +7243,7 @@ msgstr ""
 msgid "February"
 msgstr ""
 
+#: app/assets/javascripts/app/models/ai_text_tool.coffee:27
 #: app/assets/javascripts/app/views/channel/form.jst.eco:34
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:62
 msgid "Feedback"
@@ -7188,7 +7296,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:18
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
 msgid "Filter"
 msgstr ""
 
@@ -7209,7 +7317,7 @@ msgstr ""
 msgid "Fingerprint"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:260
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:263
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:73
@@ -7260,6 +7368,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:4
 msgid "First Steps"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:133
+msgid "First article (oldest)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:9
@@ -7519,9 +7631,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:10
 #: app/assets/javascripts/app/models/ticket_article.coffee:7
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:13
-#: app/assets/javascripts/app/views/generic/business_hours.jst.eco:21
-#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
-#: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
@@ -7572,6 +7681,11 @@ msgstr ""
 msgid "Generate Access Token for |%s|"
 msgstr ""
 
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:23
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:63
+msgid "Generate Related AI Answer"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/api.coffee:167
 msgid "Generate Token"
 msgstr ""
@@ -7588,6 +7702,14 @@ msgstr ""
 
 #: db/seeds/schedulers.rb:142
 msgid "Generate user-based stats."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:39
+msgid "Generating knowledge base answer from related ticket…"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:137
+msgid "Generating knowledge base answer using \"%s\" ticket…"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:118
@@ -7628,7 +7750,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:5898
+#: db/seeds/settings.rb:5922
 msgid "Get the security code from the authenticator app on your device."
 msgstr ""
 
@@ -7637,7 +7759,7 @@ msgid "Getting an Access Token"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco:2
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:405
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:403
 msgid "Getting key information from the browser…"
 msgstr ""
 
@@ -7645,7 +7767,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:56
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:59
 #: db/seeds/settings.rb:1607
 msgid "GitHub"
 msgstr ""
@@ -7678,7 +7800,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:63
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:66
 #: db/seeds/settings.rb:1672
 msgid "GitLab"
 msgstr ""
@@ -7739,6 +7861,7 @@ msgstr ""
 msgid "Go Back"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:246
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:62
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:85
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue:41
@@ -7748,6 +7871,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue:41
 msgid "Go home"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkEntityCard.vue:121
+msgid "Go inside group"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:233
@@ -7764,7 +7891,7 @@ msgid "Goodbye message"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:77
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:80
 #: db/seeds/settings.rb:1477
 msgid "Google"
 msgstr ""
@@ -7799,7 +7926,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:188
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:87
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:85
 msgid "Got it"
 msgstr ""
 
@@ -8057,7 +8184,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:184
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:40
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:86
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:84
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:22
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
 msgid "Help"
@@ -8127,10 +8254,6 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr ""
 
-#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:65
-msgid "Hide"
-msgstr ""
-
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:69
 msgid "Hide BETA UI switch"
 msgstr ""
@@ -8139,7 +8262,7 @@ msgstr ""
 msgid "Hide authenticator app secret"
 msgstr ""
 
-#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:65
+#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:85
 msgid "Hide notification"
 msgstr ""
 
@@ -8191,9 +8314,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:28
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:114
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:62
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:77
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:70
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/history.ts:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:71
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/history.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:121
 msgid "History"
@@ -8340,7 +8463,7 @@ msgstr ""
 msgid "Idle timeout in seconds until agent is set offline automatically."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:29
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:33
 msgid "Idoit objects"
 msgstr ""
 
@@ -8556,6 +8679,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:7
 msgid "In order to be able to influence the desired behavior in this regard, you can influence the order of the LDAP sources via drag & drop."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:131
+msgid "In the trigger context, the last article will always be the one that activated the trigger."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:73
@@ -8817,7 +8944,7 @@ msgid "Integer field"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/integrations.coffee:3
-#: db/seeds/permissions.rb:257
+#: db/seeds/permissions.rb:263
 msgid "Integrations"
 msgstr ""
 
@@ -8827,7 +8954,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:154
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:160
 msgid "Internal"
 msgstr ""
@@ -8890,6 +9017,13 @@ msgstr ""
 msgid "Invalid GitLab issue link format"
 msgstr ""
 
+#: lib/external_credential/exchange.rb:43
+#: lib/external_credential/facebook.rb:42
+#: lib/external_credential/google.rb:39
+#: lib/external_credential/microsoft_base.rb:67
+msgid "Invalid OAuth state parameter."
+msgstr ""
+
 #: app/services/service/system/run_auto_wizard.rb:11
 msgid "Invalid auto wizard file."
 msgstr ""
@@ -8902,7 +9036,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:609
+#: app/models/user.rb:614
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -8910,15 +9044,19 @@ msgstr ""
 msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:191
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:39
+msgid "Invalid knowledge base locale."
+msgstr ""
+
+#: app/controllers/tickets_controller.rb:193
 msgid "Invalid link structure"
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:197
+#: app/controllers/tickets_controller.rb:199
 msgid "Invalid link structure (Object → LinkType)"
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:196
 msgid "Invalid link structure (Object)"
 msgstr ""
 
@@ -9138,6 +9276,10 @@ msgstr ""
 msgid "Just switch back"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:43
+msgid "KB Answer Generation"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts:11
 msgid "Kayako"
 msgstr ""
@@ -9182,16 +9324,35 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:128
 #: app/models/knowledge_base.rb:218
 #: db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr ""
 
-#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:71
+#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:26
 msgid "Knowledge Base Answer"
 msgstr ""
 
-#: db/seeds/permissions.rb:380
+#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:27
+msgid "Knowledge Base Answer \"|%s|\" has been created"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:4
+#: app/assets/javascripts/app/views/ai/kb_answer_from_ticket.jst.eco:7
+msgid "Knowledge Base Answer Generation"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:5
+msgid "Knowledge Base Answer Generation allows agents to generate a knowledge base answer in draft state from a solved ticket."
+msgstr ""
+
+#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:28
+msgid "Knowledge Base Answer could not be created"
+msgstr ""
+
+#: db/seeds/permissions.rb:386
 msgid "Knowledge Base Editor"
 msgstr ""
 
@@ -9199,7 +9360,7 @@ msgstr ""
 msgid "Knowledge Base Feed"
 msgstr ""
 
-#: db/seeds/permissions.rb:386
+#: db/seeds/permissions.rb:392
 msgid "Knowledge Base Reader"
 msgstr ""
 
@@ -9213,6 +9374,17 @@ msgstr ""
 
 #: db/seeds/settings.rb:5550
 msgid "Knowledge Base multilingual support"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:45
+#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
+msgid "Knowledge base draft could not be generated."
+msgstr ""
+
+#: app/controllers/ticket/knowledge_base_answers_controller.rb:14
+#: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:18
+#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:44
+msgid "Knowledge base is unavailable or not properly configured."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
@@ -9253,7 +9425,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:12
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
-#: db/seeds/permissions.rb:438
+#: db/seeds/permissions.rb:444
 msgid "Language"
 msgstr ""
 
@@ -9290,8 +9462,16 @@ msgstr ""
 msgid "Last External Article"
 msgstr ""
 
+#: app/assets/javascripts/app/models/ai_text_tool.coffee:28
+msgid "Last Feedback Reset"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Internal Article"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:134
+msgid "Last article (newest)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:129
@@ -9378,11 +9558,11 @@ msgstr ""
 msgid "Leave BETA UI feedback program?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:263
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:258
 msgid "Leave empty to use URL (Completions)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:253
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:248
 msgid "Leave empty to use the base model"
 msgstr ""
 
@@ -9392,7 +9572,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/_feature_base.coffee:53
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:66
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
+#: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:30
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:34
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:40
 msgid "Legal Information"
 msgstr ""
@@ -9446,6 +9627,10 @@ msgstr ""
 msgid "Limit tickets per day"
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_text_extractor.rb:64
+msgid "Limit values and provide optional descriptions"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/home/components/TicketOverviewEditItem.vue:88
 msgid "Limited visibility"
 msgstr ""
@@ -9486,7 +9671,7 @@ msgstr ""
 msgid "Link GitLab issues to your tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:19
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:21
 msgid "Link Related Answer"
 msgstr ""
 
@@ -9514,7 +9699,7 @@ msgstr ""
 msgid "Link issue"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:177
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:168
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:144
 msgid "Link objects"
 msgstr ""
@@ -9546,7 +9731,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:3
 #: app/assets/javascripts/app/views/popover/user.jst.eco:5
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
-#: db/seeds/permissions.rb:490
+#: db/seeds/permissions.rb:496
 msgid "Linked Accounts"
 msgstr ""
 
@@ -9561,7 +9746,7 @@ msgid "Linked accounts"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:49
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:52
 #: db/seeds/settings.rb:1542
 msgid "LinkedIn"
 msgstr ""
@@ -9575,7 +9760,7 @@ msgid "LinkedIn Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:138
 msgid "Links"
 msgstr ""
 
@@ -9624,18 +9809,19 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:87
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:76
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:34
-#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:51
+#: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:61
 msgid "Loading failed."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/task_manager/singleton.coffee:55
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:664
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
-#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:61
+#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:67
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:464
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:65
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:52
 #: app/frontend/shared/form/i18n/locales.ts:57
+#: app/views/init/index.html.erb:34
 #: app/views/init/spinner-loading.html.erb:261
 msgid "Loading…"
 msgstr ""
@@ -9741,8 +9927,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:11
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:78
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:205
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:48
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:191
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:45
 #: db/seeds/permissions.rb:47
 msgid "Macros"
 msgstr ""
@@ -9761,7 +9947,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:3
 #: app/assets/javascripts/app/views/maintenance.jst.eco:3
-#: db/seeds/permissions.rb:305
+#: db/seeds/permissions.rb:311
 msgid "Maintenance"
 msgstr ""
 
@@ -9786,11 +9972,15 @@ msgstr ""
 msgid "Manage AI agents of your system."
 msgstr ""
 
+#: db/seeds/permissions.rb:258
+msgid "Manage AI generation of knowledge base answers from tickets."
+msgstr ""
+
 #: db/seeds/permissions.rb:234
 msgid "Manage AI provider of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:264
+#: db/seeds/permissions.rb:270
 msgid "Manage API of your system."
 msgstr ""
 
@@ -9847,11 +10037,11 @@ msgstr ""
 msgid "Manage WhatsApp channel of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:529
+#: db/seeds/permissions.rb:535
 msgid "Manage access to New BETA UI switch."
 msgstr ""
 
-#: db/seeds/permissions.rb:324
+#: db/seeds/permissions.rb:330
 msgid "Manage active user sessions of your system."
 msgstr ""
 
@@ -9883,7 +10073,7 @@ msgstr ""
 msgid "Manage core system settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:288
+#: db/seeds/permissions.rb:294
 msgid "Manage core workflows of your system."
 msgstr ""
 
@@ -9899,71 +10089,71 @@ msgstr ""
 msgid "Manage groups of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:258
+#: db/seeds/permissions.rb:264
 msgid "Manage integrations of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:306
+#: db/seeds/permissions.rb:312
 msgid "Manage maintenance mode of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:312
+#: db/seeds/permissions.rb:318
 msgid "Manage monitoring of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:270
+#: db/seeds/permissions.rb:276
 msgid "Manage object attributes of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:318
+#: db/seeds/permissions.rb:324
 msgid "Manage packages of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:484
+#: db/seeds/permissions.rb:490
 msgid "Manage personal API tokens."
 msgstr ""
 
-#: db/seeds/permissions.rb:432
+#: db/seeds/permissions.rb:438
 msgid "Manage personal appearance settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:446
+#: db/seeds/permissions.rb:452
 msgid "Manage personal avatar settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:518
+#: db/seeds/permissions.rb:524
 msgid "Manage personal calendar."
 msgstr ""
 
-#: db/seeds/permissions.rb:477
+#: db/seeds/permissions.rb:483
 msgid "Manage personal devices and sessions."
 msgstr ""
 
-#: db/seeds/permissions.rb:439
+#: db/seeds/permissions.rb:445
 msgid "Manage personal language settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:491
+#: db/seeds/permissions.rb:497
 msgid "Manage personal linked accounts."
 msgstr ""
 
-#: db/seeds/permissions.rb:498
+#: db/seeds/permissions.rb:504
 msgid "Manage personal notifications settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:453
+#: db/seeds/permissions.rb:459
 msgid "Manage personal out of office settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:508
+#: db/seeds/permissions.rb:514
 msgid "Manage personal overviews."
 msgstr ""
 
-#: db/seeds/permissions.rb:425
+#: db/seeds/permissions.rb:431
 msgid "Manage personal settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:470
+#: db/seeds/permissions.rb:476
 msgid "Manage personal two-factor authentication methods."
 msgstr ""
 
@@ -9987,7 +10177,7 @@ msgstr ""
 msgid "Manage security settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:330
+#: db/seeds/permissions.rb:336
 msgid "Manage system report of your system."
 msgstr ""
 
@@ -9999,7 +10189,7 @@ msgstr ""
 msgid "Manage ticket auto assignment settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:336
+#: db/seeds/permissions.rb:342
 msgid "Manage ticket checklists of your system."
 msgstr ""
 
@@ -10015,7 +10205,7 @@ msgstr ""
 msgid "Manage ticket overviews of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:282
+#: db/seeds/permissions.rb:288
 msgid "Manage ticket priorities of your system."
 msgstr ""
 
@@ -10023,7 +10213,7 @@ msgstr ""
 msgid "Manage ticket settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:276
+#: db/seeds/permissions.rb:282
 msgid "Manage ticket states of your system."
 msgstr ""
 
@@ -10043,7 +10233,7 @@ msgstr ""
 msgid "Manage time accounting settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:294
+#: db/seeds/permissions.rb:300
 msgid "Manage translations of your system."
 msgstr ""
 
@@ -10108,7 +10298,7 @@ msgstr ""
 msgid "Mark all as read"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:44
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:54
 #: app/frontend/apps/mobile/pages/online-notification/components/ActivityMessage.vue:34
 msgid "Mark as read"
 msgstr ""
@@ -10146,7 +10336,7 @@ msgstr ""
 msgid "Max %s result(s) selected"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:80
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:70
 msgid "Max %s ticket(s) selected"
 msgstr ""
 
@@ -10248,8 +10438,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
-#: app/frontend/apps/desktop/components/Organization/OrganizationPopoverWithTrigger/OrganizationPopover.vue:79
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:115
+#: app/frontend/apps/desktop/components/Organization/OrganizationPopoverWithTrigger/OrganizationPopover.vue:74
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:120
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:71
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:36
 msgid "Members"
@@ -10268,7 +10458,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:64
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:78
 msgid "Merge"
 msgstr ""
 
@@ -10354,7 +10544,7 @@ msgid "Method (AJAX endpoint)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:70
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:73
 #: db/seeds/settings.rb:1744
 msgid "Microsoft"
 msgstr ""
@@ -10471,7 +10661,7 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:199
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:194
 msgid "Model"
 msgstr ""
 
@@ -10501,7 +10691,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/monitoring.coffee:3
 #: app/assets/javascripts/app/views/monitoring.jst.eco:3
-#: db/seeds/permissions.rb:311
+#: db/seeds/permissions.rb:317
 msgid "Monitoring"
 msgstr ""
 
@@ -10526,7 +10716,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:689
+#: app/models/user.rb:694
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -10631,7 +10821,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
 #: app/assets/javascripts/app/controllers/chat.coffee:559
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
-#: app/assets/javascripts/app/models/_application_model.coffee:158
+#: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:6
 #: app/assets/javascripts/app/models/application.coffee:7
@@ -10686,12 +10876,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/user.jst.eco:5
 #: app/controllers/time_accountings_controller.rb:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:30
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:109
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:111
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:28
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:93
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:82
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:180
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:17
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:20
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:163
 #: db/seeds/object_manager_attributes.rb:1745
 #: public/assets/form/form.js:24
@@ -10703,7 +10893,7 @@ msgid "Name Identifier Format"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:131
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:398
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:396
 msgid "Name for this security key"
 msgstr ""
 
@@ -10750,7 +10940,7 @@ msgstr ""
 msgid "Need session_id."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:407
+#: app/controllers/tickets_controller.rb:416
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
@@ -10758,7 +10948,7 @@ msgstr ""
 msgid "Negative feedback"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:56
+#: app/controllers/sessions_controller.rb:58
 msgid "Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' header could be found."
 msgstr ""
 
@@ -10816,7 +11006,7 @@ msgstr ""
 msgid "New BETA UI"
 msgstr ""
 
-#: db/seeds/permissions.rb:528
+#: db/seeds/permissions.rb:534
 msgid "New BETA UI Switch"
 msgstr ""
 
@@ -10938,7 +11128,7 @@ msgstr ""
 msgid "New Workflow"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:28
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:37
 msgid "New Writing Assistant Tool"
 msgstr ""
 
@@ -11049,7 +11239,7 @@ msgid "No AI agent available, please create a new one or activate an existing on
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:74
 msgid "No AI provider is currently set up. Please contact your administrator."
 msgstr ""
 
@@ -11175,6 +11365,12 @@ msgstr ""
 msgid "No drafts"
 msgstr ""
 
+#: app/controllers/ticket/knowledge_base_answers_controller.rb:25
+#: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:26
+#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:94
+msgid "No editable knowledge base categories available."
+msgstr ""
+
 #: app/controllers/users_controller.rb:275
 msgid "No email!"
 msgstr ""
@@ -11215,12 +11411,21 @@ msgstr ""
 msgid "No items available"
 msgstr ""
 
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:38
+#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:57
+msgid "No knowledge base locale configured."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:193
 msgid "No linked issues"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:153
 msgid "No links added yet."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:65
+msgid "No macros available for selected tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco:4
@@ -11235,8 +11440,8 @@ msgstr ""
 msgid "No organizations found"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:129
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:145
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:141
 msgid "No overviews"
 msgstr ""
 
@@ -11260,7 +11465,7 @@ msgstr ""
 msgid "No related article found to process the status message on."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:179
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:152
 msgid "No results for this query."
 msgstr ""
 
@@ -11270,7 +11475,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:66
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:480
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:378
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:53
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:319
@@ -11306,12 +11511,13 @@ msgstr ""
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:243
-#: app/controllers/tickets_controller.rb:450
+#: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:574
 msgid "No source data submitted!"
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:28
+#: app/models/ai/agent/type/ticket_text_extractor.rb:41
 msgid "No suitable object attributes found, please add one of the supported types first: %s"
 msgstr ""
 
@@ -11323,7 +11529,7 @@ msgstr ""
 msgid "No template created yet."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:436
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:432
 msgid "No tickets in this state."
 msgstr ""
 
@@ -11349,6 +11555,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:1300
 msgid "No user creation on logon"
+msgstr ""
+
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:62
+msgid "No valid knowledge base category provided."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco:1
@@ -11426,7 +11636,7 @@ msgstr ""
 msgid "Not authorized (token expired)!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
+#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:208
 msgid "Not available in selected language"
 msgstr ""
 
@@ -11448,7 +11658,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:77
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:58
 #: app/assets/javascripts/app/models/ai_agent.coffee:9
-#: app/assets/javascripts/app/models/ai_text_tool.coffee:27
+#: app/assets/javascripts/app/models/ai_text_tool.coffee:29
 #: app/assets/javascripts/app/models/chat.coffee:252
 #: app/assets/javascripts/app/models/email_address.coffee:35
 #: app/assets/javascripts/app/models/group.coffee:14
@@ -11467,7 +11677,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:38
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:54
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:47
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:114
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:104
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/note.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:14
 #: db/seeds/object_manager_attributes.rb:1569
@@ -11566,7 +11776,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:33
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:497
+#: db/seeds/permissions.rb:503
 msgid "Notifications"
 msgstr ""
 
@@ -11607,7 +11817,7 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:246
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:241
 msgid "OCR Model"
 msgstr ""
 
@@ -11671,7 +11881,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:334
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:54
-#: db/seeds/permissions.rb:269
+#: db/seeds/permissions.rb:275
 msgid "Objects"
 msgstr ""
 
@@ -11841,7 +12051,7 @@ msgstr ""
 msgid "Open note box"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:90
 msgid "Open questions"
 msgstr ""
 
@@ -11895,7 +12105,7 @@ msgid "OpenAI"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:107
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
 #: db/seeds/settings.rb:2037
 msgid "OpenID Connect"
 msgstr ""
@@ -11965,7 +12175,7 @@ msgstr ""
 msgid "Order of overviews"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:120
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:122
 msgid "Order of ticket overviews"
 msgstr ""
 
@@ -11990,11 +12200,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:93
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:13
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:100
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:97
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:33
 #: app/frontend/apps/desktop/pages/organization/routes.ts:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:73
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:78
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -12039,7 +12249,7 @@ msgstr ""
 msgid "Organization support"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:165
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:170
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:79
 msgid "Organization tickets"
 msgstr ""
@@ -12099,7 +12309,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:3
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
-#: db/seeds/permissions.rb:452
+#: db/seeds/permissions.rb:458
 msgid "Out of Office"
 msgstr ""
 
@@ -12194,7 +12404,7 @@ msgstr ""
 msgid "Overview order list"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:391
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:387
 msgid "Overview: %s"
 msgstr ""
 
@@ -12206,7 +12416,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:31
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:78
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:80
 #: db/seeds/permissions.rb:35
 msgid "Overviews"
 msgstr ""
@@ -12226,7 +12436,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:511
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:87
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:84
 #: app/graphql/gql/types/overview_type.rb:96
 #: app/views/mailer/ticket_create/fr.html.erb:9
 #: app/views/mailer/ticket_create/zh-cn.html.erb:9
@@ -12275,7 +12485,7 @@ msgid "Package"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
-#: db/seeds/permissions.rb:317
+#: db/seeds/permissions.rb:323
 msgid "Packages"
 msgstr ""
 
@@ -12333,7 +12543,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:32
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
 #: db/seeds/object_manager_attributes.rb:1481
-#: db/seeds/permissions.rb:462
+#: db/seeds/permissions.rb:468
 msgid "Password"
 msgstr ""
 
@@ -12507,7 +12717,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
 #: db/seeds/object_manager_attributes.rb:1018
-#: db/seeds/permissions.rb:356
+#: db/seeds/permissions.rb:362
 msgid "Phone"
 msgstr ""
 
@@ -12595,7 +12805,7 @@ msgid "Please add categories and/or answers"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:12
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:421
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:417
 msgid "Please click on the button below to create your first one."
 msgstr ""
 
@@ -12623,7 +12833,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:430
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:447
 #: app/assets/javascripts/app/controllers/webhook.coffee:134
 msgid "Please enter a valid JSON string."
 msgstr ""
@@ -12906,6 +13116,10 @@ msgstr ""
 msgid "Priority icon"
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_text_extractor.rb:108
+msgid "Priority rules"
+msgstr ""
+
 #: db/seeds/settings.rb:1979
 msgid "Private key (PEM)"
 msgstr ""
@@ -12954,7 +13168,7 @@ msgid "Profile language updated successfully."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:424
+#: db/seeds/permissions.rb:430
 msgid "Profile settings"
 msgstr ""
 
@@ -13021,7 +13235,7 @@ msgid "Proxy address"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:149
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:165
 msgid "Public"
 msgstr ""
@@ -13091,7 +13305,7 @@ msgstr ""
 msgid "Rate limit exceeded - please wait a moment"
 msgstr ""
 
-#: app/models/ai/analytics/usage.rb:16
+#: app/models/ai/analytics/usage.rb:18
 msgid "Rating can only be set once"
 msgstr ""
 
@@ -13157,7 +13371,7 @@ msgstr ""
 msgid "Recent Logs"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:56
 msgid "Recent customer tickets"
 msgstr ""
 
@@ -13191,7 +13405,7 @@ msgstr ""
 msgid "Recently viewed"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:65
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:64
 msgid "Recently viewed tickets"
 msgstr ""
 
@@ -13200,7 +13414,7 @@ msgstr ""
 msgid "Recipient"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:237
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:232
 msgid "Recognize image text (OCR)"
 msgstr ""
 
@@ -13281,7 +13495,15 @@ msgstr ""
 msgid "Related Object Type"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:153
+#: app/controllers/ticket/knowledge_base_answers_controller.rb:50
+msgid "Related knowledge base answer creation has already been started for current ticket."
+msgstr ""
+
+#: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:31
+msgid "Related knowledge base answer creation has already been started for given ticket."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:158
 msgid "Related tickets"
 msgstr ""
 
@@ -13296,6 +13518,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:53
 msgid "Reload application"
+msgstr ""
+
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:96
+#: app/frontend/shared/stores/authentication.ts:165
+msgid "Reload now"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco:43
@@ -13336,9 +13563,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:25
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:15
 #: app/assets/javascripts/app/views/profile/password.jst.eco:81
-#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:254
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:258
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:59
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:147
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:149
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
@@ -13405,7 +13632,7 @@ msgstr ""
 msgid "Remove method"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:88
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:98
 msgid "Remove notification"
 msgstr ""
 
@@ -13571,7 +13798,7 @@ msgstr ""
 msgid "Requirements"
 msgstr ""
 
-#: db/seeds/settings.rb:5936
+#: db/seeds/settings.rb:5960
 msgid "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
 
@@ -13601,8 +13828,12 @@ msgstr ""
 msgid "Reset Password failed!"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:52
+msgid "Reset feedback"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:136
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:138
 msgid "Reset overview order"
 msgstr ""
 
@@ -13639,7 +13870,7 @@ msgstr ""
 msgid "Reset your #{config.product_name} password\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>You or someone else tried to sign up with this email address. However, this email is already being used.</div>\n<br>\n<div>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</div>\n<br>\n<div><a href=\"#{url}\">#{url}</a></div>\n<br>\n<div>This link takes you to a page where you can change your password.</div>\n<br>\n<div>If you don't want to reset your password, please ignore this message. Your password will not be reset.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:89
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:91
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
@@ -13691,7 +13922,7 @@ msgstr ""
 msgid "Result:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:411
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:384
 msgid "Results"
 msgstr ""
 
@@ -13703,7 +13934,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:64
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:180
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:91
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:96
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:183
 msgid "Retry"
 msgstr ""
@@ -13726,7 +13957,7 @@ msgstr ""
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6145
+#: db/seeds/settings.rb:6183
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -13788,6 +14019,11 @@ msgstr ""
 msgid "Run every %s at %s in %s time"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:67
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:43
+msgid "Run macro"
+msgstr ""
+
 #: app/assets/javascripts/app/models/job.coffee:21
 msgid "Running"
 msgstr ""
@@ -13825,7 +14061,7 @@ msgid "S/MIME integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:91
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
 #: db/seeds/settings.rb:1879
 msgid "SAML"
 msgstr ""
@@ -13919,9 +14155,13 @@ msgid "SSL/STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:98
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
 #: db/seeds/settings.rb:5805
 msgid "SSO"
+msgstr ""
+
+#: app/controllers/sessions_controller.rb:262
+msgid "SSO request from untrusted IP address."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:419
@@ -13990,7 +14230,7 @@ msgstr ""
 msgid "Save as"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:59
 msgid "Save as draft"
 msgstr ""
 
@@ -14081,6 +14321,14 @@ msgstr ""
 msgid "Scroll down to see new messages"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollList.vue:136
+msgid "Scroll left"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollList.vue:143
+msgid "Scroll right"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:275
 msgid "Scroll to bottom"
 msgstr ""
@@ -14091,7 +14339,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:409
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:382
 #: app/frontend/apps/desktop/pages/search/routes.ts:10
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
@@ -14110,9 +14358,13 @@ msgstr ""
 msgid "Search URL is missing."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:145
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets/OrganizationTicketList.vue:100
-#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:106
+#: lib/external_data_source/errors.rb:46
+msgid "Search URL is unsafe."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:150
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets/OrganizationTicketList.vue:94
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:100
 msgid "Search all"
 msgstr ""
 
@@ -14198,7 +14450,7 @@ msgstr ""
 msgid "Search for workflows"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:18
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:27
 msgid "Search for writing assistant tools"
 msgstr ""
 
@@ -14216,7 +14468,7 @@ msgstr ""
 msgid "Search or enter phone number…"
 msgstr ""
 
-#: lib/external_data_source/errors.rb:108
+#: lib/external_data_source/errors.rb:114
 msgid "Search result label is not a string, a number or a boolean. Please provide search result label key."
 msgstr ""
 
@@ -14224,11 +14476,11 @@ msgstr ""
 msgid "Search result label key"
 msgstr ""
 
-#: lib/external_data_source/errors.rb:111
+#: lib/external_data_source/errors.rb:117
 msgid "Search result label key \"%s\" is not a string, number or boolean."
 msgstr ""
 
-#: lib/external_data_source/errors.rb:101
+#: lib/external_data_source/errors.rb:107
 msgid "Search result label key \"%s\" was not found."
 msgstr ""
 
@@ -14236,7 +14488,7 @@ msgstr ""
 msgid "Search result list"
 msgstr ""
 
-#: lib/external_data_source/errors.rb:76
+#: lib/external_data_source/errors.rb:82
 msgid "Search result list is not an array. Please provide search result list key."
 msgstr ""
 
@@ -14244,11 +14496,11 @@ msgstr ""
 msgid "Search result list key"
 msgstr ""
 
-#: lib/external_data_source/errors.rb:79
+#: lib/external_data_source/errors.rb:85
 msgid "Search result list key \"%s\" is not an array."
 msgstr ""
 
-#: lib/external_data_source/errors.rb:69
+#: lib/external_data_source/errors.rb:75
 msgid "Search result list key \"%s\" was not found."
 msgstr ""
 
@@ -14256,7 +14508,7 @@ msgstr ""
 msgid "Search result response"
 msgstr ""
 
-#: lib/external_data_source/errors.rb:92
+#: lib/external_data_source/errors.rb:98
 msgid "Search result value is not a string, a number or a boolean. Please provide search result value key."
 msgstr ""
 
@@ -14264,11 +14516,11 @@ msgstr ""
 msgid "Search result value key"
 msgstr ""
 
-#: lib/external_data_source/errors.rb:95
+#: lib/external_data_source/errors.rb:101
 msgid "Search result value key \"%s\" is not a string, number or boolean."
 msgstr ""
 
-#: lib/external_data_source/errors.rb:85
+#: lib/external_data_source/errors.rb:91
 msgid "Search result value key \"%s\" was not found."
 msgstr ""
 
@@ -14276,30 +14528,30 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee:18
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_external_data_source.coffee:13
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:845
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:59
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:68
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:124
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:63
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:23
 msgid "Search…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
+#: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:75
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:109
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:121
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:88
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:126
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:94
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1187
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:677
+#: app/models/user.rb:682
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:683
+#: app/models/user.rb:688
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -14336,7 +14588,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:5842
+#: db/seeds/settings.rb:5866
 msgid "Security Keys"
 msgstr ""
 
@@ -14369,13 +14621,13 @@ msgstr ""
 msgid "Security key verification failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:376
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:374
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:9
 msgid "Security keys"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco:1
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:376
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:374
 msgid "Security keys are hardware or software credentials that can be used as your two-factor authentication method."
 msgstr ""
 
@@ -14384,7 +14636,7 @@ msgid "Security token verification failed"
 msgstr ""
 
 #: app/frontend/shared/stores/authentication.ts:160
-msgid "Security token verification failed. This may be just temporary, click here to reload and try again. Reloading in %s second(s)…"
+msgid "Security token verification failed. This may be just temporary, please reload and try again. Reloading in %s second(s)…"
 msgstr ""
 
 #: lib/external_data_source/errors.rb:28
@@ -14394,7 +14646,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:451
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:161
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:268
 msgid "See less"
 msgstr ""
@@ -14405,7 +14657,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:161
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:268
 msgid "See more"
@@ -14465,16 +14717,21 @@ msgstr ""
 msgid "Select max %s results"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableRow.vue:68
+#: app/frontend/apps/desktop/components/CommonTable/TableRow.vue:72
 msgid "Select table row"
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:34
+#: app/models/ai/agent/type/ticket_text_extractor.rb:47
 msgid "Select the attribute whose value will be automatically set by the AI agent."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:216
 msgid "Select the customer of the ticket or create one."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:130
+msgid "Select the ticket article(s) that should be analyzed by the AI agent."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:146
@@ -14486,7 +14743,7 @@ msgid "Select this avatar"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:45
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:132
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:133
 msgid "Select this entry"
 msgstr ""
 
@@ -14634,7 +14891,7 @@ msgstr ""
 msgid "Sending Email Address"
 msgstr ""
 
-#: app/models/ticket/article.rb:324
+#: app/models/ticket/article.rb:325
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
@@ -14704,7 +14961,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/session.coffee:3
 #: app/assets/javascripts/app/views/session.jst.eco:2
-#: db/seeds/permissions.rb:323
+#: db/seeds/permissions.rb:329
 msgid "Sessions"
 msgstr ""
 
@@ -14878,12 +15135,12 @@ msgid "Shared draft"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:180
+#: app/services/service/ticket/create.rb:189
 #: app/services/service/ticket/update.rb:71
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:85
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:115
 msgid "Shared draft has been created successfully."
 msgstr ""
@@ -14957,7 +15214,7 @@ msgstr ""
 msgid "Show authenticator app secret"
 msgstr ""
 
-#: db/seeds/settings.rb:5814
+#: db/seeds/settings.rb:5838
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr ""
 
@@ -14994,7 +15251,7 @@ msgstr ""
 msgid "Show next tab"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:14
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:11
 msgid "Show notifications"
 msgstr ""
 
@@ -15183,15 +15440,15 @@ msgstr ""
 msgid "Simple Storage Service (S3)"
 msgstr ""
 
-#: app/models/store/provider/s3/config.rb:33
+#: app/models/store/provider/s3/config.rb:35
 msgid "Simple Storage Service configuration not found or invalid."
 msgstr ""
 
-#: app/models/store/provider/s3.rb:94
+#: app/models/store/provider/s3.rb:96
 msgid "Simple Storage Service malfunction. Please contact your Zammad administrator."
 msgstr ""
 
-#: app/models/store/provider/s3.rb:70
+#: app/models/store/provider/s3.rb:72
 msgid "Simple Storage Service not reachable."
 msgstr ""
 
@@ -15347,6 +15604,11 @@ msgstr ""
 msgid "Start and end date"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
+#: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
+msgid "Start date"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:67
 msgid "Start editing"
 msgstr ""
@@ -15375,6 +15637,10 @@ msgstr ""
 #: public/assets/chat/views/customer_timeout.eco:8
 #: public/assets/chat/views/waiting_list_timeout.eco:4
 msgid "Start new conversation"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco:21
+msgid "Start time"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:231
@@ -15475,7 +15741,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:24
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:21
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:210
 msgid "Status"
 msgstr ""
@@ -15542,7 +15808,7 @@ msgstr ""
 msgid "Store"
 msgstr ""
 
-#: db/seeds/settings.rb:6071
+#: db/seeds/settings.rb:6095
 msgid "Stores the AI provider configuration."
 msgstr ""
 
@@ -15554,7 +15820,7 @@ msgstr ""
 msgid "Stores the GitLab configuration."
 msgstr ""
 
-#: db/seeds/settings.rb:6101
+#: db/seeds/settings.rb:6125
 msgid "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
 
@@ -15581,7 +15847,7 @@ msgstr ""
 msgid "Subject & References - Additional search for same article subject and same message ID in references header if no follow-up was recognized using default settings."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:368
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:385
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -15648,7 +15914,7 @@ msgstr ""
 msgid "Subscribed tickets"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:133
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:156
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:169
 msgid "Subscribers"
 msgstr ""
@@ -15675,7 +15941,7 @@ msgid "Summary Services"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:53
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:139
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:144
 msgid "Summary is being generated…"
 msgstr ""
 
@@ -15743,7 +16009,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
 #: app/assets/javascripts/app/views/system_report.jst.eco:2
-#: db/seeds/permissions.rb:329
+#: db/seeds/permissions.rb:335
 msgid "System Report"
 msgstr ""
 
@@ -15805,7 +16071,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:119
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:164
@@ -15826,6 +16092,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco:16
 msgid "Target"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:45
+msgid "Target Attribute for Extracted Text"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/translation.coffee:83
@@ -16118,7 +16388,7 @@ msgstr ""
 msgid "The WhatsApp channel webhook configuration could not be verified."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:156
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:159
 msgid "The WhatsApp connection could not be saved."
 msgstr ""
 
@@ -16311,7 +16581,7 @@ msgstr ""
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 
-#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:100
+#: app/frontend/shared/composables/useAppMaintenanceCheck.ts:117
 msgid "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr ""
 
@@ -16381,6 +16651,7 @@ msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:148
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:83
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr ""
@@ -16596,7 +16867,7 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:511
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:528
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:820
@@ -16613,7 +16884,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:265
-#: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:93
+#: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:102
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:134
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
@@ -16626,7 +16897,7 @@ msgstr ""
 msgid "The online notification could not be marked as seen."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:98
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:100
 msgid "The order of your ticket overviews was reset."
 msgstr ""
 
@@ -16687,7 +16958,7 @@ msgstr ""
 msgid "The product version could not be fetched."
 msgstr ""
 
-#: app/models/webhook.rb:69
+#: app/models/webhook.rb:77
 msgid "The provided HTTP method is invalid."
 msgstr ""
 
@@ -16711,6 +16982,18 @@ msgstr ""
 msgid "The provided email account is already in use."
 msgstr ""
 
+#: app/models/webhook.rb:57
+msgid "The provided endpoint is invalid, it could not be resolved to a safe IP address."
+msgstr ""
+
+#: app/models/webhook.rb:55
+msgid "The provided endpoint is invalid, it points to a link-local IP address."
+msgstr ""
+
+#: app/models/webhook.rb:53
+msgid "The provided endpoint is invalid, it points to a loopback IP address."
+msgstr ""
+
 #: app/models/webhook.rb:47
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
@@ -16719,7 +17002,7 @@ msgstr ""
 msgid "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 
-#: app/models/webhook.rb:49
+#: app/models/webhook.rb:51
 msgid "The provided endpoint is invalid."
 msgstr ""
 
@@ -16731,7 +17014,7 @@ msgstr ""
 msgid "The provided password is incorrect."
 msgstr ""
 
-#: app/models/webhook.rb:58
+#: app/models/webhook.rb:66
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
@@ -16841,9 +17124,9 @@ msgstr ""
 msgid "The required parameter 'client_secret' is missing."
 msgstr ""
 
-#: lib/external_credential/exchange.rb:43
-#: lib/external_credential/google.rb:39
-#: lib/external_credential/microsoft_base.rb:67
+#: lib/external_credential/exchange.rb:47
+#: lib/external_credential/google.rb:43
+#: lib/external_credential/microsoft_base.rb:71
 msgid "The required parameter 'code' is missing."
 msgstr ""
 
@@ -16911,7 +17194,7 @@ msgstr ""
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:125
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:127
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
@@ -16923,7 +17206,7 @@ msgstr ""
 msgid "The required value 'group_id' is missing."
 msgstr ""
 
-#: lib/ai/provider.rb:65
+#: lib/ai/provider.rb:69
 msgid "The response could not be processed."
 msgstr ""
 
@@ -16935,6 +17218,14 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:34
+msgid "The rules instruct the AI agent on how to extract text from incoming tickets. Make sure to include a couple of example formats, and any additional instructions necessary."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:112
+msgid "The rules instruct the AI agent on how to prioritize multiple matches of the extracted text. Make sure to include a couple of example formats, and any additional instructions necessary."
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
@@ -16955,7 +17246,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:614
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:200
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:223
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:222
 msgid "The server settings could not be automatically detected. Please configure them manually."
 msgstr ""
 
@@ -17003,7 +17294,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:361
+#: app/controllers/tickets_controller.rb:370
 msgid "The source ticket could not be found."
 msgstr ""
 
@@ -17020,7 +17311,7 @@ msgid "The structure is a JSON object that defines the result format to be retur
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:86
 msgid "The summary could not be generated. Please try again later or contact your administrator."
 msgstr ""
 
@@ -17044,7 +17335,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:352
+#: app/controllers/tickets_controller.rb:361
 msgid "The target ticket number could not be found."
 msgstr ""
 
@@ -17113,7 +17404,7 @@ msgstr ""
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:249
+#: app/controllers/sessions_controller.rb:251
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -17140,12 +17431,12 @@ msgstr ""
 msgid "The user token could not be generated."
 msgstr ""
 
-#: lib/external_credential/exchange.rb:51
-#: lib/external_credential/microsoft_base.rb:75
+#: lib/external_credential/exchange.rb:55
+#: lib/external_credential/microsoft_base.rb:79
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:245
+#: app/controllers/sessions_controller.rb:247
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr ""
@@ -17168,7 +17459,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:11
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:418
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:414
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr ""
 
@@ -17549,7 +17840,7 @@ msgstr ""
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
-#: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:23
+#: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:24
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
 
@@ -17733,6 +18024,10 @@ msgstr ""
 msgid "This type of AI agent can dispatch incoming tickets into an appropriate group based on their content and topic."
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_text_extractor.rb:15
+msgid "This type of AI agent can extract text from incoming tickets based on custom rules and store it into an object attribute."
+msgstr ""
+
 #: app/models/ai/agent/type/ticket_title_rewriter.rb:10
 msgid "This type of AI agent can improve title of incoming tickets based on their content and topic."
 msgstr ""
@@ -17874,7 +18169,7 @@ msgstr ""
 msgid "Ticket Number ignore system_id"
 msgstr ""
 
-#: db/seeds/settings.rb:5958
+#: db/seeds/settings.rb:5982
 msgid "Ticket Organization Reassignment"
 msgstr ""
 
@@ -17887,7 +18182,7 @@ msgid "Ticket Owner"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:16
-#: db/seeds/permissions.rb:281
+#: db/seeds/permissions.rb:287
 msgid "Ticket Priorities"
 msgstr ""
 
@@ -17916,7 +18211,7 @@ msgid "Ticket State"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:3
-#: db/seeds/permissions.rb:275
+#: db/seeds/permissions.rb:281
 msgid "Ticket States"
 msgstr ""
 
@@ -17939,16 +18234,20 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
 #: db/seeds/permissions.rb:239
-#: db/seeds/settings.rb:6084
+#: db/seeds/settings.rb:6108
 msgid "Ticket Summary"
 msgstr ""
 
-#: db/seeds/settings.rb:6098
+#: db/seeds/settings.rb:6122
 msgid "Ticket Summary Config"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:3
 msgid "Ticket Summary provides the functionality to summarize the current ticket state. It will provide a new sidebar which contains information to reduce reading time in the ticket with a summarized version of the problem, open questions and upcoming events."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:11
+msgid "Ticket Text Extractor"
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_title_rewriter.rb:6
@@ -18169,12 +18468,12 @@ msgstr ""
 msgid "Tickets assigned to me: %s of %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:379
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:308
 msgid "Tickets bulk edit"
 msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb:236
-#: app/controllers/tickets_controller.rb:443
+#: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 
@@ -18192,12 +18491,6 @@ msgstr ""
 
 #: db/seeds/settings.rb:2753
 msgid "Tickets with the same attributes were found."
-msgstr ""
-
-#: app/assets/javascripts/app/views/generic/business_hours.jst.eco:23
-#: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:15
-#: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:22
-msgid "Till"
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:39
@@ -18366,7 +18659,7 @@ msgid "To make translations easier you can enable and disable the inline transla
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco:3
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:387
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:385
 msgid "To register a new security key with your account, press the button below."
 msgstr ""
 
@@ -18406,6 +18699,10 @@ msgstr ""
 msgid "Toggle AM/PM mode"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:167
+msgid "Toggle article meta information"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:443
 msgid "Toggle dark mode"
 msgstr ""
@@ -18430,7 +18727,7 @@ msgstr ""
 msgid "Toggle the overlay"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:189
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:184
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -18442,7 +18739,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:12
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
-#: db/seeds/permissions.rb:483
+#: db/seeds/permissions.rb:489
 msgid "Token Access"
 msgstr ""
 
@@ -18540,7 +18837,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
-#: db/seeds/permissions.rb:293
+#: db/seeds/permissions.rb:299
 msgid "Translations"
 msgstr ""
 
@@ -18583,6 +18880,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee:7
 msgid "Triggers activated by actions are executed whenever a ticket is created or updated, while triggers activated by time events are executed when certain times are reached (e.g. pending time, escalation)."
+msgstr ""
+
+#: db/seeds/settings.rb:5814
+msgid "Trusted SSO Proxy IPs"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco:2
@@ -18651,7 +18952,7 @@ msgid "Turning off SSL verification is a security risk and should be used only t
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:71
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:42
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:45
 #: db/seeds/settings.rb:1347
 msgid "Twitter"
 msgstr ""
@@ -18682,7 +18983,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:11
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
-#: db/seeds/permissions.rb:469
+#: db/seeds/permissions.rb:475
 msgid "Two-factor Authentication"
 msgstr ""
 
@@ -18708,14 +19009,14 @@ msgstr ""
 msgid "Two-factor authentication is required, but you don't have sufficient permissions to set it up. Please contact your administrator."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:208
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:210
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:111
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:117
 msgid "Two-factor authentication method could not be initiated."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:191
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:168
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:170
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:132
 msgid "Two-factor authentication method was removed."
 msgstr ""
@@ -18726,11 +19027,11 @@ msgid "Two-factor authentication method was set as default."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee:59
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:302
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:304
 msgid "Two-factor authentication method was set up successfully."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:272
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:274
 msgid "Two-factor method could not be configured."
 msgstr ""
 
@@ -18754,7 +19055,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:117
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:211
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
@@ -18776,7 +19077,7 @@ msgstr ""
 msgid "UID Field"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:209
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:204
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -18793,16 +19094,24 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:219
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:214
 msgid "URL (Completions)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:228
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:223
 msgid "URL (Embeddings)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:257
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:252
 msgid "URL (OCR)"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:151
+msgid "Unassign owner"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:188
+msgid "Unassign owner & move to group"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb:206
@@ -18876,7 +19185,7 @@ msgstr ""
 msgid "Unsaved changes"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:169
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:170
 msgid "Unseen notifications count"
 msgstr ""
 
@@ -18926,7 +19235,7 @@ msgstr ""
 msgid "Upcoming Events"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:96
 msgid "Upcoming events"
 msgstr ""
 
@@ -18940,7 +19249,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:118
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:81
 msgid "Update"
 msgstr ""
@@ -18987,14 +19296,14 @@ msgstr ""
 msgid "Update shared draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:359
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:362
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:171
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:134
 #: app/assets/javascripts/app/controllers/_settings/area_logo.coffee:72
-#: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:82
+#: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:91
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
@@ -19002,7 +19311,7 @@ msgstr ""
 msgid "Update successful."
 msgstr ""
 
-#: db/seeds/settings.rb:5970
+#: db/seeds/settings.rb:5994
 msgid "Update the most recent tickets."
 msgstr ""
 
@@ -19098,7 +19407,7 @@ msgstr ""
 msgid "Updating Database"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:74
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:76
 msgid "Updating the order of your ticket overviews failed."
 msgstr ""
 
@@ -19313,7 +19622,7 @@ msgstr ""
 msgid "User documentation"
 msgstr ""
 
-#: lib/external_credential/google.rb:47
+#: lib/external_credential/google.rb:51
 msgid "User email could not be extracted from 'id_token'."
 msgstr ""
 
@@ -19599,7 +19908,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:143
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:152
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
@@ -19729,7 +20038,7 @@ msgid "Week(s)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:84
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
 #: db/seeds/settings.rb:1815
 msgid "Weibo"
 msgstr ""
@@ -19751,7 +20060,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:2
 #: app/assets/javascripts/app/views/welcome.jst.eco:2
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:43
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:412
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:408
 msgid "Welcome!"
 msgstr ""
 
@@ -19914,21 +20223,21 @@ msgstr ""
 msgid "Would you like to give us feedback on the BETA UI?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:16
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
 #: db/seeds/permissions.rb:245
-#: db/seeds/settings.rb:6117
+#: db/seeds/settings.rb:6141
 msgid "Writing Assistant"
 msgstr ""
 
-#: db/seeds/settings.rb:6131
+#: db/seeds/settings.rb:6155
 msgid "Writing Assistant Fixed Instructions"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:16
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
 msgid "Writing Assistant Tool"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:17
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:26
 msgid "Writing Assistant Tools"
 msgstr ""
 
@@ -20091,6 +20400,10 @@ msgstr ""
 msgid "You can no longer see the group."
 msgstr ""
 
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:20
+msgid "You can no longer see the knowledge base answer."
+msgstr ""
+
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:18
 msgid "You can no longer see the organization."
 msgstr ""
@@ -20099,7 +20412,7 @@ msgstr ""
 msgid "You can no longer see the role."
 msgstr ""
 
-#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/online-notification-standalone.ts:17
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/online-notification-standalone.ts:21
 msgid "You can no longer see the standalone online notification."
 msgstr ""
 
@@ -20142,7 +20455,7 @@ msgid "You can switch between the following backends for new attachments even on
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:185
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:82
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:80
 msgid "You can switch between the old and the New BETA UI at any moment in the Profile settings > New BETA UI section."
 msgstr ""
 
@@ -20235,7 +20548,7 @@ msgid "You have no unread messages"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:10
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:415
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:411
 msgid "You have not created a ticket yet."
 msgstr ""
 
@@ -20306,11 +20619,6 @@ msgstr ""
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/password_change/en.html.erb
 msgid "Your #{config.product_name} password has been changed\n\n<p>Hi #{user.firstname},</p>\n<br>\n<p>The password for your #{config.product_name} account <b>#{user.login}</b> has been changed recently.</p>\n<br>\n<p>If you did not initiate this change, please contact your system administrator.</p>\n<br>\n<p>Your #{config.product_name} Team</p>\n"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/text_tools_modal.coffee:131
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:137
-msgid "Your AI result usage could not be recorded."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:64
@@ -20415,6 +20723,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:46
 msgid "Your user role is not allowed to create new tickets. Please contact your administrator."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:49
+msgid "You’re about to apply a macro to %s tickets. Do you want to continue?"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:53
+msgid "You’re about to assign %s tickets. Do you want to continue?"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:31
@@ -20805,7 +21121,7 @@ msgstr ""
 msgid "descending"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:132
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
 msgstr ""
 
@@ -21072,7 +21388,7 @@ msgstr ""
 msgid "i-doit integration is not enabled"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:172
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:163
 msgid "i-doit: Link objects"
 msgstr ""
 
@@ -21280,7 +21596,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:874
+#: app/models/user.rb:879
 msgid "is too long"
 msgstr ""
 
@@ -21710,7 +22026,7 @@ msgstr ""
 msgid "run macro"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:95
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:107
 msgid "second level navigation sidebar"
 msgstr ""
 

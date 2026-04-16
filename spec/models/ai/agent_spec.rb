@@ -92,7 +92,7 @@ RSpec.describe AI::Agent, aggregate_failures: true, current_user_id: 1, type: :m
       it 'merges type action definition with database action definition' do
         result = ai_agent.execution_action_definition
 
-        expect(result).to eq(type_action_definition)
+        expect(result).to include(type_action_definition)
       end
 
       it 'allows database values to override type defaults' do

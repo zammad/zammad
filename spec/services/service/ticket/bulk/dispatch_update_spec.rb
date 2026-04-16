@@ -6,7 +6,7 @@ RSpec.describe Service::Ticket::Bulk::DispatchUpdate do
   let(:group)      { create(:group) }
   let(:user)       { create(:agent, groups: [group]) }
   let(:perform)    { { input: {} } }
-  let(:selector)   { { ticket_ids: } }
+  let(:selector)   { { entity_ids: ticket_ids } }
   let(:instance)   { described_class.new(user:, selector:, perform:) }
   let(:tickets)    { create_list(:ticket, 30, group:) }
   let(:ticket_ids) { tickets.map(&:id) }

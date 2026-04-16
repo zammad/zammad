@@ -65,6 +65,7 @@ export const useUserDetail = (
   }))
 
   const loading = userQuery.loading()
+  const loadingWithoutCachedResult = userQuery.loadingWithoutCachedResult()
 
   const user = computed(() => userResult.value?.user as User)
 
@@ -104,6 +105,7 @@ export const useUserDetail = (
 
   return {
     loading,
+    loadingWithoutCachedResult,
     user,
     userQuery,
     objectAttributes: viewScreenAttributes,

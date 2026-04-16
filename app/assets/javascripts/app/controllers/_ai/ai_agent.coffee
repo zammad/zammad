@@ -171,8 +171,41 @@ AIAgentModalMixin =
 
       @placeholderObjectAttributes[fieldName] = placeholder_attribute
 
+  filterByAttributeConditions: (items = []) ->
+    _.filter(items, (item) =>
+      # If no condition is specified, include the item.
+      return true if not item.condition
+
+      # Parse the condition (format: "key.property").
+      conditionParts = item.condition.split('.')
+      return true if conditionParts.length isnt 2
+
+      [placeholderKey, propertyName] = conditionParts
+
+      # Support negation in condition by prefixing the key with "!".
+      if /^!/.test(placeholderKey)
+        placeholderKey = placeholderKey.replace(/^!/, '')
+        negateCondition = true
+
+      # Check if the placeholder attribute exists and has the specified property.
+      placeholderAttr = @placeholderObjectAttributes?[placeholderKey]
+      if not placeholderAttr
+        return false if not negateCondition
+        return true if negateCondition
+
+      # Check if the property exists and is "truthy"/"not empty".
+      #   Remember to negate the result if the condition was prefixed with "!".
+      result = placeholderAttr[propertyName] is true or not _.isEmpty(placeholderAttr[propertyName])
+      return result if not negateCondition
+      return not result if negateCondition
+    )
+
   steps: ->
-    _.map(@agentType?.form_schema, (item) -> item.step) or []
+    _.map(
+      # Filter steps based on attribute conditions.
+      @filterByAttributeConditions(@agentType?.form_schema),
+      (item) -> item.step
+    )
 
   firstStep: ->
     @steps()[0]
@@ -246,23 +279,7 @@ AIAgentModalMixin =
       @setStepFields(attrs)
 
       # Filter attrs based on conditions
-      attrs = _.filter(attrs, (attr) =>
-        # If no condition is specified, include the attribute.
-        return true if not attr.condition
-
-        # Parse the condition (format: "key.property").
-        conditionParts = attr.condition.split('.')
-        return true if conditionParts.length isnt 2
-
-        [placeholderKey, propertyName] = conditionParts
-
-        # Check if the placeholder attribute exists and has the specified property.
-        placeholderAttr = @placeholderObjectAttributes?[placeholderKey]
-        return false if not placeholderAttr
-
-        # Check if the property exists and is truthy
-        return placeholderAttr[propertyName] is true
-      )
+      attrs = @filterByAttributeConditions(attrs)
 
     { configure_attributes: attrs }
 

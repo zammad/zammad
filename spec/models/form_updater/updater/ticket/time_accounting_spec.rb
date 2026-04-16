@@ -29,6 +29,20 @@ RSpec.describe(FormUpdater::Updater::Ticket::TimeAccounting) do
     }
   end
 
+  describe '#authorized?' do
+    it 'is authorized for agents' do
+      expect(resolved_result.authorized?).to be true
+    end
+
+    context 'with admin-only user' do
+      let(:user) { create(:user, roles: [Role.find_by(name: 'Admin')]) }
+
+      it 'is not authorized' do
+        expect(resolved_result.authorized?).to be false
+      end
+    end
+  end
+
   context 'when resolving' do
     it 'provides accounting types with value + label' do
       expect(resolved_result.resolve[:fields]).to include(

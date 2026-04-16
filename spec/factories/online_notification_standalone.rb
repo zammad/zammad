@@ -8,5 +8,10 @@ FactoryBot.define do
       data { { total: 123, failed_count: 8 } }
       kind { 'bulk_job' }
     end
+
+    trait :kb_answer_generation_failed do
+      data { { error_message: 'AI service unavailable', ticket_title: 'Example ticket' } }
+      kind { 'kb_answer_generation_failed' }
+    end
   end
 end

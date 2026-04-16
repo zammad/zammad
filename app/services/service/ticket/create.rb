@@ -52,7 +52,16 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
   def add_links(ticket, link_data)
     return if link_data.blank?
 
+    Pundit.authorize current_user, ticket, :agent_create_access?
+
     link_data.each do |link|
+      case link[:link_object]
+      when ::Ticket
+        Pundit.authorize current_user, link[:link_object], :agent_read_access?
+      when ::KnowledgeBase::Answer::Translation
+        Pundit.authorize current_user, link[:link_object], :show?
+      end
+
       Link.add(
         link_type:                link[:link_type],
         link_object_target:       link[:link_object].class.name,

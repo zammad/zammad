@@ -13,25 +13,21 @@ DEFAULT_VALUES = {
 }.freeze
 
 RSpec.describe ObjectManager::Attribute::SetDefaults, time_zone: 'Europe/London', type: :model do
-  describe 'setting default', db_strategy: :reset_all do
-    before :all do # rubocop:disable RSpec/BeforeAfterAll
-      DEFAULT_VALUES.each do |key, value|
-        create("object_manager_attribute_#{key}", name: "rspec_#{key}", default: value)
-        create("object_manager_attribute_#{key}", name: "rspec_#{key}_no_default", default: nil)
-      end
+  describe 'setting default', db_strategy: :reset do
+    subject(:example) { create(:ticket) }
 
-      create(:object_manager_attribute_autocompletion_ajax_external_data_source, name: 'rspec_external_data_source')
-
-      create(:object_manager_attribute_text, name: 'rspec_empty', default: '')
-
-      ObjectManager::Attribute.migration_execute
-    end
-
-    after :all do # rubocop:disable RSpec/BeforeAfterAll
-      ObjectManager::Attribute.where('name LIKE ?', 'rspec_%').destroy_all
+    def create_field(type, default: true, suffix: '')
+      value = default ? DEFAULT_VALUES[type] : nil
+      create("object_manager_attribute_#{type}", name: "rspec_#{type}#{suffix}", default: value)
     end
 
     context 'with text type' do # on text
+      before do
+        create_field(:text)
+        create(:object_manager_attribute_text, name: 'rspec_empty', default: '')
+        ObjectManager::Attribute.migration_execute
+      end
+
       it 'default value is set' do
         ticket = create(:ticket)
         expect(ticket.rspec_text).to eq 'rspec'
@@ -70,30 +66,24 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, time_zone: 'Europe/London'
       end
     end
 
-    context 'when using other types' do
-      subject(:example) { create(:ticket) }
-
-      it 'boolean is set' do
-        expect(example.rspec_boolean).to be true
+    context 'when type is boolean' do
+      before do
+        create_field(:boolean)
+        ObjectManager::Attribute.migration_execute
       end
 
-      it 'date is set' do
+      it { is_expected.to have_attributes(rspec_boolean: true) }
+    end
+
+    context 'when type is date' do
+      before do
         freeze_time
-        expect(example.rspec_date).to eq 1.day.from_now.to_date
+
+        create_field(:date)
+        ObjectManager::Attribute.migration_execute
       end
 
-      it 'datetime is set' do
-        travel_to Time.current.change(usec: 0, sec: 0)
-        expect(example.rspec_datetime).to eq 12.hours.from_now
-      end
-
-      it 'integer is set' do
-        expect(example.rspec_integer).to eq 123
-      end
-
-      it 'select value is set' do
-        expect(example.rspec_select).to eq 'key_1'
-      end
+      it { is_expected.to have_attributes(rspec_date: 1.day.from_now.to_date) }
 
       context 'when system uses different time zone' do
         before do
@@ -102,25 +92,61 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, time_zone: 'Europe/London'
           travel_to Time.current.change(hour: 23, usec: 0, sec: 0)
         end
 
-        it 'date is set' do
-          expect(example.rspec_date).to eq 2.days.from_now.to_date
+        it { is_expected.to have_attributes(rspec_date: 2.days.from_now.to_date) }
+      end
+
+    end
+
+    context 'when type is datetime' do
+      before do
+        travel_to Time.current.change(usec: 0, sec: 0)
+        create_field(:datetime)
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it { is_expected.to have_attributes(rspec_datetime: 12.hours.from_now) }
+
+      context 'when system uses different time zone' do
+        before do
+          Setting.set('timezone_default', 'Europe/Vilnius')
+
+          travel_to Time.current.change(hour: 23, usec: 0, sec: 0)
         end
 
-        it 'datetime is set' do
-          expect(example.rspec_datetime).to eq 12.hours.from_now
-        end
+        it { is_expected.to have_attributes(rspec_datetime: 12.hours.from_now) }
       end
+
+    end
+
+    context 'when type is integer' do
+      before do
+        create_field(:integer)
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it { is_expected.to have_attributes(rspec_integer: 123) }
+    end
+
+    context 'when type is select' do
+      before do
+        create_field(:select)
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it { is_expected.to have_attributes(rspec_select: 'key_1') }
     end
 
     context 'when overriding default to empty value' do
-      subject(:example) do
-        params = DEFAULT_VALUES.keys.to_h { |elem| ["rspec_#{elem}", nil] }
-        create(:ticket, params)
-      end
-
       DEFAULT_VALUES.each_key do |elem|
-        it "#{elem} is empty" do
-          expect(example.send(:"rspec_#{elem}")).to be_nil
+        context "when using #{elem} type" do
+          subject(:example) { create(:ticket, "rspec_#{elem}" => nil) }
+
+          before do
+            create_field(elem)
+            ObjectManager::Attribute.migration_execute
+          end
+
+          it { is_expected.to have_attributes("rspec_#{elem}": nil) }
         end
       end
     end
@@ -129,14 +155,26 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, time_zone: 'Europe/London'
       subject(:example) { create(:ticket) }
 
       DEFAULT_VALUES.each_key do |elem|
-        it "#{elem} is empty" do
-          expect(example.send(:"rspec_#{elem}_no_default")).to be_nil
+        context "when using #{elem} type" do
+          before do
+            create_field(elem, default: false, suffix: '_no_default')
+            ObjectManager::Attribute.migration_execute
+          end
+
+          it "#{elem} is empty" do
+            expect(example.send(:"rspec_#{elem}_no_default")).to be_nil
+          end
         end
       end
     end
 
     # https://github.com/zammad/zammad/issues/5666
     context 'with external data source type' do
+      before do
+        create(:object_manager_attribute_autocompletion_ajax_external_data_source, name: 'rspec_external_data_source')
+        ObjectManager::Attribute.migration_execute
+      end
+
       it 'saves correctly as an empty hash' do
         ticket = create(:ticket)
 

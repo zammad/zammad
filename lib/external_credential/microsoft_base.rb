@@ -51,16 +51,20 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     raise Exceptions::UnprocessableEntity, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
     raise Exceptions::UnprocessableEntity, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
 
-    authorize_url = generate_authorize_url(credentials)
+    state         = SecureRandom.urlsafe_base64
+    authorize_url = generate_authorize_url(credentials, state: state)
 
     {
       authorize_url: authorize_url,
+      request_token: state,
     }
   end
 
-  def self.link_account(_request_token, params)
+  def self.link_account(request_token, params)
     # return to admin interface if admin Consent is in process and user clicks on "Back to app"
     return "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/#{provider_name}/error/AADSTS65004" if params[:error_description].present? && params[:error_description].include?('AADSTS65004')
+
+    raise Exceptions::UnprocessableEntity, __('Invalid OAuth state parameter.') if params[:state] != request_token
 
     external_credential = ExternalCredential.find_by(name: provider_name)
     raise Exceptions::UnprocessableEntity, error_missing_app_configuration if !external_credential
@@ -172,8 +176,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     channel
   end
 
-  def self.generate_authorize_url(credentials, scope = authorize_scope)
-    # TODO: should we add recoomended "state" parameter here for security reasons?
+  def self.generate_authorize_url(credentials, scope: authorize_scope, state: nil)
     params = {
       'client_id'     => credentials[:client_id],
       'redirect_uri'  => ExternalCredential.callback_url(provider_name),
@@ -181,7 +184,8 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
       'response_type' => 'code',
       'access_type'   => 'offline',
       'prompt'        => credentials[:prompt] || 'login',
-    }
+      'state'         => state,
+    }.compact
 
     tenant = credentials[:client_tenant].presence || 'common'
 

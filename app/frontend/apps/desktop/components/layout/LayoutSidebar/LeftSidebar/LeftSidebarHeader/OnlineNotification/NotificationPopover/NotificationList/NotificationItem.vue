@@ -7,6 +7,7 @@ import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvat
 import { useActivityMessage } from '#shared/composables/activity-message/useActivityMessage.ts'
 import type { OnlineNotification } from '#shared/graphql/types.ts'
 
+import { initializeBetaUi } from '#desktop/components/BetaUi/composables/useBetaUi.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 interface Props {
@@ -23,7 +24,16 @@ const emit = defineEmits<{
 
 const { link, builder, highlightedMessage } = useActivityMessage(toRef(props, 'notification'))
 
-const handleLinkClick = (notification: OnlineNotification) => {
+const { clearSwitchAndRedirect } = initializeBetaUi()
+
+const handleLinkClick = (event: Event, notification: OnlineNotification) => {
+  if (link && link.startsWith('#') && link.length > 1) {
+    event.preventDefault()
+    emit('visited', notification)
+    clearSwitchAndRedirect(`/${link}`)
+    return
+  }
+
   if (link) {
     emit('visited', notification)
     return
@@ -49,7 +59,7 @@ const handleLinkClick = (notification: OnlineNotification) => {
           'cursor-pointer': !notification.seen,
         }"
         :link="link ? `/${link}` : undefined"
-        @click="handleLinkClick(notification)"
+        @click="handleLinkClick($event, notification)"
       >
         <CommonUserAvatar
           v-if="notification.createdBy"

@@ -166,6 +166,10 @@ export default defineConfig(({ mode, command }) => {
       css: false,
       testTimeout: isEnvBooleanSet(process.env.CI) ? 30_000 : 5_000,
       unstubGlobals: true,
+      // Node v25+ enables experimental webstorage by default (stability: release candidate).
+      // Without --localstorage-file, Node provides localStorage as an empty object (no methods).
+      // This conflicts with jsdom's full localStorage implementation needed for tests.
+      ...(parseInt(process.versions.node, 10) >= 25 ? { execArgv: ['--no-experimental-webstorage'] } : {}),
       onConsoleLog(log) {
         if (
           log.includes('Not implemented: navigation') ||

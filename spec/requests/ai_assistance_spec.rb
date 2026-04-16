@@ -65,7 +65,7 @@ RSpec.describe 'AI Assistance API endpoint', authenticated_as: :user, type: :req
       end
 
       it 'raises error' do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:forbidden)
       end
     end
 
@@ -76,6 +76,66 @@ RSpec.describe 'AI Assistance API endpoint', authenticated_as: :user, type: :req
 
       it 'raises error' do
         expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'with template render context' do
+      let(:text_tool) { create(:ai_text_tool) }
+
+      before do
+        allow_any_instance_of(AI::Service::TextTool)
+          .to receive(:execute)
+          .and_return(output)
+      end
+
+      context 'when ticket_id is given' do
+        let(:ticket) { create(:ticket) }
+
+        context 'when user has access to the ticket' do
+          before do
+            user.user_groups.create!(group: ticket.group, access: :full)
+            post "/api/v1/ai_assistance/text_tools/#{text_tool.id}", params: params.merge(ticket_id: ticket.id), as: :json
+          end
+
+          it 'returns http success' do
+            expect(response).to have_http_status(:ok)
+          end
+        end
+
+        context 'when user does not have access to the ticket' do
+          before do
+            post "/api/v1/ai_assistance/text_tools/#{text_tool.id}", params: params.merge(ticket_id: ticket.id), as: :json
+          end
+
+          it 'returns http forbidden' do
+            expect(response).to have_http_status(:forbidden)
+          end
+        end
+      end
+
+      context 'when group_id is given without ticket_id' do
+        let(:group) { create(:group) }
+
+        context 'when user has access to the group' do
+          before do
+            user.user_groups.create!(group: group, access: :full)
+            post "/api/v1/ai_assistance/text_tools/#{text_tool.id}", params: params.merge(group_id: group.id), as: :json
+          end
+
+          it 'returns http success' do
+            expect(response).to have_http_status(:ok)
+          end
+        end
+
+        context 'when user does not have access to the group' do
+          before do
+            post "/api/v1/ai_assistance/text_tools/#{text_tool.id}", params: params.merge(group_id: group.id), as: :json
+          end
+
+          it 'returns http forbidden' do
+            expect(response).to have_http_status(:forbidden)
+          end
+        end
       end
     end
   end

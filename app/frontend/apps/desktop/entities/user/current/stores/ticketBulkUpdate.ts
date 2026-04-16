@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, shallowRef } from 'vue'
 
 import {
   NotificationTypes,
@@ -11,7 +11,14 @@ import { EnumBulkUpdateStatusStatus, type TicketBulkUpdateStatus } from '#shared
 import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import type { DragAndDropBulkEntityType } from '#desktop/components/Ticket/DragAndDropBulk/types.ts'
 import { useUserCurrentTicketBulkUpdateStatusUpdatesSubscription } from '#desktop/entities/ticket/graphql/subscriptions/ticketBulkUpdateStatusUpdates.api.ts'
+
+/**
+ * Aligns with the default value for the async bulk jobs
+ * ENV.fetch('ZAMMAD_UI_BULK_BACKGROUND_UPDATE_THRESHOLD', 20)
+ */
+const BULK_CONFIRMATION_THRESHOLD = 20
 
 // Manages the state of the currently running (or recently completed) ticket bulk update operation.
 export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
@@ -53,7 +60,7 @@ export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
       persistent: true,
       currentProgress: persistedState.value?.processedCount ?? undefined,
       maxProgress: persistedState.value?.total ?? undefined,
-      callback: () => {
+      closeCallback: () => {
         runningNotificationDismissed.value = true
       },
     })
@@ -147,10 +154,45 @@ export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
     setStatus(update.bulkUpdateStatus)
   })
 
+  // Inline confirmation state for bulk actions exceeding the threshold.
+  // Rendered within the drag-and-drop overlay
+  const confirmationPending = ref(false)
+  const currentActiveEntityType = ref<DragAndDropBulkEntityType | null>(null)
+  const confirmationResolver = shallowRef<((confirmed: boolean) => void) | null>(null)
+
+  const requestBulkConfirmation = (
+    ticketCount: number,
+    type: DragAndDropBulkEntityType,
+  ): Promise<boolean> => {
+    if (ticketCount <= BULK_CONFIRMATION_THRESHOLD) return Promise.resolve(true)
+
+    confirmationPending.value = true
+    currentActiveEntityType.value = type
+
+    return new Promise<boolean>((resolve) => {
+      confirmationResolver.value = resolve
+    })
+  }
+
+  const resolveBulkConfirmation = (confirmed: boolean) => {
+    confirmationResolver.value?.(confirmed)
+    confirmationResolver.value = null
+    currentActiveEntityType.value = null
+    confirmationPending.value = false
+  }
+
+  const confirmBulkAction = () => resolveBulkConfirmation(true)
+  const cancelBulkAction = () => resolveBulkConfirmation(false)
+
   return {
     setTicketBulkUpdateStatus: setStatus,
     status,
     isRunning,
+    confirmationPending,
+    requestBulkConfirmation,
+    confirmBulkAction,
+    cancelBulkAction,
+    currentActiveEntityType,
   }
 })
 

@@ -41,12 +41,14 @@ examples how to use
     @template = NotificationFactory::Template.new(template, escape || url_encode, trusted)
     @escape = escape
     @url_encode = url_encode
+    @trusted = trusted
     @ignore_missing_objects = ignore_missing_objects
   end
 
   def render(debug_errors: true)
     @debug_errors = debug_errors
-    ERB.new(@template.to_s).result(binding)
+    template_str = @template.to_s
+    ERB.new(template_str).result(template_binding)
   rescue Exception => e # rubocop:disable Lint/RescueException
     raise StandardError, e.message if e.is_a? SyntaxError
 
@@ -244,6 +246,28 @@ examples how to use
   end
 
   private
+
+  def template_binding
+    TemplateContext.new(self, @objects).safe_binding
+  end
+
+  # Restricted ERB execution context that only exposes safe template helpers.
+  class TemplateContext
+    def initialize(renderer, objects)
+      @renderer = renderer
+      @objects  = objects
+    end
+
+    def d(...) = @renderer.d(...)
+    def t(...) = @renderer.t(...)
+    def c(...) = @renderer.c(...)
+    def h(...) = @renderer.h(...)
+    def dt(...) = @renderer.dt(...)
+
+    def safe_binding
+      binding
+    end
+  end
 
   def debug(message)
     @debug_errors ? message : '-'

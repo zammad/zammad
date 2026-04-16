@@ -2,7 +2,7 @@
 
 module Gql::Queries
   class Link::List < BaseQuery
-    include Gql::Concerns::HandlesPossibleObjects
+    include Gql::Concerns::HandlesLinkObjects
 
     description 'List linked objects'
 
@@ -11,10 +11,8 @@ module Gql::Queries
 
     type [Gql::Types::LinkType], null: true
 
-    possible_objects ::Ticket, ::KnowledgeBase::Answer::Translation
-
     def resolve(object_id:, target_type:)
-      object = fetch_object(object_id)
+      object = fetch_visible_link_object(object_id)
 
       Service::Link::List
         .new(current_user: context.current_user)

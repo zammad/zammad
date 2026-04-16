@@ -3,10 +3,15 @@ on:
   push:
     branches:
       - stable*
+      # Test builds for public branches based on develop. Don't forget to clean up test branches in go.packager.io after merging.
+      - develop-*
   schedule:
     # Build for develop only once per workday to save space in packagehall.
     - cron:  '20 6 * * 1-5'
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -34,7 +39,7 @@ jobs:
           VERSION=$(cat VERSION)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
       - name: Package
-        uses: pkgr/action/package@main
+        uses: pkgr/action/package@v1
         id: package
         with:
           target: ${{ matrix.target }}
@@ -45,7 +50,7 @@ jobs:
             DATABASE_URL=postgresql://zammad:/zammad
             ZAMMAD_SAFE_MODE=1
       - name: Publish
-        uses: pkgr/action/publish@main
+        uses: pkgr/action/publish@v1
         with:
           target: ${{ matrix.target }}
           token: ${{ secrets.PACKAGER_PUBLISH_TOKEN }}

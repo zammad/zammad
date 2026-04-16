@@ -7,7 +7,7 @@
     <ol class="list list--sidebar">
       <% for attachment in @attachments: %>
         <li class="list-item">
-          <a class="list-item-name" target=_blank href="<%= attachment.url %>">
+          <a class="list-item-name" target=_blank href="<%= attachment.url %>" title="<%= attachment.filename %>">
             <%= attachment.filename %>
           </a>
           <a class="list-item-delete js-delete" data-object-id="<%= attachment.id %>" href="#">

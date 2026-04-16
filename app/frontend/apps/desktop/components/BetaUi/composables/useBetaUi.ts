@@ -18,8 +18,7 @@ export const initializeBetaUi = () => {
 
   const config = toRef(useApplicationStore(), 'config')
 
-  const { resetTotalAppUsageTime, setNeverAskAgainForTimedFeedback, resetMilestoneHistory } =
-    useAppUsage()
+  const { setNeverAskAgainForTimedFeedback, resetMilestoneHistory } = useAppUsage()
 
   const betaUiSwitchAvailable = computed(
     () => config.value?.ui_desktop_beta_switch && user.value?.hasBetaUiSwitchAvailable,
@@ -32,7 +31,6 @@ export const initializeBetaUi = () => {
 
     window.location.href = redirectTo
 
-    resetTotalAppUsageTime()
     setNeverAskAgainForTimedFeedback(false)
     resetMilestoneHistory()
   }

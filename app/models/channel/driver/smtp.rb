@@ -58,27 +58,27 @@ class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
     end
 
     if !options.key?(:domain)
-      # set fqdn, if local fqdn - use domain of sender
-      fqdn = Setting.get('fqdn')
-      if fqdn =~ %r{(localhost|\.local^|\.loc^)}i && (attr['from'] || attr[:from])
-        domain = Mail::Address.new(attr['from'] || attr[:from]).domain
-        if domain
-          fqdn = domain
-        end
-      end
-
-      # https://github.com/zammad/zammad/pull/5635
-      # remove port from the network address. RFC 5321 / 4.1.1.1. EHLO/HELO requires hostname withoutport.
-      fqdn = fqdn.split(':').first
-
-      options[:domain] = fqdn
+      options[:domain] = prepare_options_get_fqdn(attr)
     end
 
-    if !options.key?(:enable_starttls_auto)
+    if !options.key?(:enable_starttls_auto) && !options[:ssl]
       options[:enable_starttls_auto] = true
     end
 
     options
+  end
+
+  def prepare_options_get_fqdn(attr)
+    # set fqdn, if local fqdn - use domain of sender
+    fqdn = Setting.get('fqdn')
+
+    if fqdn =~ %r{(localhost|\.local^|\.loc^)}i && (attr['from'] || attr[:from]) && (domain = Mail::Address.new(attr['from'] || attr[:from]).domain)
+      fqdn = domain
+    end
+
+    # https://github.com/zammad/zammad/pull/5635
+    # remove port from the network address. RFC 5321 / 4.1.1.1. EHLO/HELO requires hostname withoutport.
+    fqdn.split(':').first
   end
 
   def build_smtp_params(options)

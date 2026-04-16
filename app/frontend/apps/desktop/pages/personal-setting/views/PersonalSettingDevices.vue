@@ -36,7 +36,7 @@ const { fingerprint } = useFingerprint()
 
 const deviceListQuery = new QueryHandler(useUserCurrentDeviceListQuery())
 const deviceListQueryResult = deviceListQuery.result()
-const deviceListQueryLoading = deviceListQuery.loading()
+const deviceListQueryLoading = deviceListQuery.loadingWithoutCachedResult()
 
 deviceListQuery.subscribeToMore<
   UserCurrentDevicesUpdatesSubscriptionVariables,

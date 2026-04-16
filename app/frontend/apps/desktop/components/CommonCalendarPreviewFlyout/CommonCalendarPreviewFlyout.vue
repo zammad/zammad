@@ -30,7 +30,7 @@ const calendarEventsQuery = new QueryHandler(
   }),
 )
 const calendarEventsQueryResult = calendarEventsQuery.result()
-const calendarEventsQueryLoading = calendarEventsQuery.loading()
+const calendarEventsQueryLoading = calendarEventsQuery.loadingWithoutCachedResult()
 
 const tableHeaders: TableSimpleHeader[] = [
   {

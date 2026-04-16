@@ -1,8 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
-
 import { getOperationName } from '@apollo/client/utilities'
 import { useApolloClient } from '@vue/apollo-composable'
-import { watch, nextTick } from 'vue'
+import { watch, nextTick, computed } from 'vue'
 
 import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { BaseHandler } from '#shared/server/apollo/handler/BaseHandler.ts'
@@ -26,7 +25,7 @@ import type {
   Unmasked,
 } from '@apollo/client/core'
 import type { UseQueryOptions, UseQueryReturn } from '@vue/apollo-composable'
-import type { Ref, WatchStopHandle } from 'vue'
+import type { ComputedRef, Ref, WatchStopHandle } from 'vue'
 
 export default class QueryHandler<
   TResult = OperationQueryResult,
@@ -52,6 +51,24 @@ export default class QueryHandler<
       ) {
         this.refetch().catch(() => {})
       }
+    })
+  }
+
+  /**
+   * Like `loading()`, but returns false when the Apollo cache already holds
+   * data for this exact query + variables. Use this instead of `loading()`
+   * in places where showing a spinner on the initial render would cause a
+   * visible flicker (e.g. page-level skeleton states with `cache-and-network`).
+   *
+   * For explicit refetch / fetchMore operations, use `loading()` as usual.
+   */
+  public loadingWithoutCachedResult(): ComputedRef<boolean> {
+    return computed(() => {
+      if (!this.operationResult.loading.value) return false
+
+      // vue-apollo may briefly yield undefined result even when the cache is
+      // complete — keep showing the loader until the result ref is populated.
+      return this.operationResult.result.value === undefined
     })
   }
 

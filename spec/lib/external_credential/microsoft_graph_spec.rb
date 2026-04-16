@@ -12,7 +12,7 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
   let(:id_token) { 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIyMTk4NTFhYS0wMDAwLTRhNDctMTExMS0zMmQwNzAyZTAxMjM0IiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5taWNyb3NvZnRvbmxpbmUuY29tLzM2YTlhYjU1LWZpZmEtMjAyMC04YTc4LTkwcnM0NTRkYmNmZDJkL3YyLjAiLCJpYXQiOjEzMDE1NTE4MzUsIm5iZiI6MTMwMTU1MTgzNSwiZXhwIjoxNjAxNTU5NzQ0LCJuYW1lIjoiRXhhbXBsZSBVc2VyIiwib2lkIjoiMTExYWIyMTQtMTJzNy00M2NnLThiMTItM2ozM2UydDBjYXUyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidGVzdEBleGFtcGxlLmNvbSIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsInJoIjoiMC40MjM0LWZmZnNmZGdkaGRLZUpEU1hiejlMYXBSbUNHZGdmZ2RmZ0kwZHkwSEF1QlhaSEFNYy4iLCJzdWIiOiJYY0VlcmVyQkVnX0EzNWJlc2ZkczNMTElXNjU1NFQtUy0ycGRnZ2R1Z3c1NDNXT2xJIiwidGlkIjoiMzZhOWFiNTUtZmlmYS0yMDIwLThhNzgtOTByczQ1NGRiY2ZkMmQiLCJ1dGkiOiJEU0dGZ3Nhc2RkZmdqdGpyMzV3cWVlIiwidmVyIjoiMi4wIn0=.l0nglq4rIlkR29DFK3PQFQTjE-VeHdgLmcnXwGvT8Z-QBaQjeTAcoMrVpr0WdL6SRYiyn2YuqPnxey6N0IQdlmvTMBv0X_dng_y4CiQ8ABdZrQK0VSRWZViboJgW5iBvJYFcMmVoilHChueCzTBnS1Wp2KhirS2ymUkPHS6AB98K0tzOEYciR2eJsJ2JOdo-82oOW4w6tbbqMvzT3DzsxqPQRGe2hUbNqo6gcwJLqq4t0bNf5XiYThw1sv4IivERmqW_pfybXEseKyZGd4NnJ6WwwOgTz5tkoLwls_YeDZVcp_Fpw9XR7J0UlyPqLtoUEjVihdyrJjAbdtHFKdOjrw' }
   let(:access_token)  { '000.0000lvC3gAbjs8CYoKitfqM5LBS5N13374MCg6pNpZ28mxO2HuZvg0000_rsW00aACmFEto1BJeGDuu0000vmV6Esqv78iec-FbEe842ZevQtOOemQyQXjhMs62K1E6g3ehDLPRp6j4vtpSKSb6I-3MuDPfdzdqI23hM0' }
   let(:refresh_token) { '1//00000VO1ES0hFCgYIARAAGAkSNwF-L9IraWQNMj5ZTqhB00006DssAYcpEyFks5OuvZ1337wrqX0D7tE5o71FIPzcWEMM5000004' }
-  let(:request_token) { nil } # not used but required by ExternalCredential API
+  let(:request_token) { 'test_oauth_state' }
 
   let(:scope_payload) { 'offline_access openid user.readbasic.all mail.readwrite mail.readwrite.shared mail.send mail.send.shared' }
   let(:scope_stub) { scope_payload }
@@ -43,6 +43,7 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
       {
         code:       authorization_code,
         scope:      scope_payload,
+        state:      request_token,
         authuser:   '4',
         hd:         'example.com',
         prompt:     'consent',
@@ -135,6 +136,14 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
       end
     end
 
+    context 'when OAuth state is invalid' do
+      it 'raises an error' do
+        expect do
+          described_class.link_account('wrong_state', authorization_payload)
+        end.to raise_error(Exceptions::UnprocessableEntity, 'Invalid OAuth state parameter.')
+      end
+    end
+
     context 'when API errors' do
       before do
         stub_request(:post, token_url).to_return(status: response_status, body: response_payload&.to_json, headers: {})
@@ -178,6 +187,7 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
       {
         code:       authorization_code,
         scope:      scope_payload,
+        state:      request_token,
         authuser:   '4',
         hd:         'example.com',
         prompt:     'consent',
@@ -295,11 +305,16 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
   end
 
   describe '.request_account_to_link' do
-    it 'generates authorize_url from credentials' do
+    let(:state) { 'test_oauth_state' }
+
+    before { allow(SecureRandom).to receive(:urlsafe_base64).and_return(state) }
+
+    it 'generates authorize_url and state from credentials', :aggregate_failures do
       microsoft_graph = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       request = described_class.request_account_to_link(microsoft_graph.credentials)
 
-      expect(request[:authorize_url]).to eq(authorize_url)
+      expect(request[:authorize_url]).to eq("#{authorize_url}&state=#{state}")
+      expect(request[:request_token]).to eq(state)
     end
 
     context 'when errors' do
@@ -313,7 +328,7 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
       end
 
       context 'when missing credentials' do
-        let(:credentials) { nil }
+        let(:credentials)       { nil }
         let(:app_required)      { true }
         let(:exception_message) { 'No Microsoft Graph app configured!' }
 
@@ -347,14 +362,16 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
   end
 
   describe '.generate_authorize_url' do
+    let(:state) { 'test_oauth_state' }
+
     it 'generates valid URL' do
-      url = described_class.generate_authorize_url(client_id: client_id)
-      expect(url).to eq(authorize_url)
+      url = described_class.generate_authorize_url({ client_id: client_id }, state: state)
+      expect(url).to eq("#{authorize_url}&state=#{state}")
     end
 
     it 'generates valid URL with tenant' do
-      url = described_class.generate_authorize_url(client_id: client_id, client_tenant: 'tenant')
-      expect(url).to eq(authorize_url_with_tenant)
+      url = described_class.generate_authorize_url({ client_id: client_id, client_tenant: 'tenant' }, state: state)
+      expect(url).to eq("#{authorize_url_with_tenant}&state=#{state}")
     end
   end
 

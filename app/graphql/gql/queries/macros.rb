@@ -4,19 +4,20 @@ module Gql::Queries
   class Macros < BaseQuery
     description 'Returns a list of macros'
 
-    argument :group_ids, [GraphQL::Types::ID], loads: Gql::Types::GroupType do
-      description 'Filter macros by group assignment, must have no group or all groups assigned.'
-    end
+    argument :selector, Gql::Types::Input::Ticket::Macros::SelectorInputType, description: 'The selector for ticket macros. Macros will be filtered by group assignment, must have no group or all groups assigned.'
 
     type [Gql::Types::MacroType], null: false
 
     requires_permission 'ticket.agent'
 
-    def resolve(groups:)
-      macros_with_any_group = Macro.available_in_groups(groups)
-      return macros_with_any_group if groups.length <= 1
+    def resolve(selector:)
+      group_ids = Service::Ticket::Bulk::Selector
+        .new(user: context.current_user, selector:, attribute: :group_id)
+        .execute
 
-      group_ids = groups.map(&:id)
+      macros_with_any_group = Macro.available_in_groups(group_ids).sort_by(&:name)
+      return macros_with_any_group if group_ids.length <= 1
+
       macros_with_any_group.filter do |macro|
         macro.group_ids.empty? || (group_ids - macro.group_ids).empty?
       end

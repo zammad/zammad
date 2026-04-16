@@ -893,25 +893,36 @@ const increaseProgressBarNotificationValue = () => {
 
 const { notify } = useNotifications()
 
+let progressBarNotificationIntervalId: number | null = null
+
 const notifyWithProgress = (progress: number) => {
   notify({
     id: 'playground-notification-progress',
     type: NotificationTypes.Info,
-    message: `${(progress * 100).toFixed(0)}% Progress Notification`,
+    message: `${(progress * 100).toFixed(0)}% progress bar notification`,
     persistent: true,
     currentProgress: progress,
+    closeCallback: () => {
+      clearInterval(progressBarNotificationIntervalId!)
+      progressBarNotificationIntervalId = null
+    },
   })
 }
+
 const rampUpProgressBarNotificationValue = () => {
   // reset if already done
-  if (progressBarNotificationValue.value == 1) {
-    progressBarNotificationValue.value = 0
-  }
+  if (progressBarNotificationValue.value > 0) progressBarNotificationValue.value = 0
 
   // show 0 progress toast
   notifyWithProgress(0)
+
   // wait before increasing
-  setTimeout(() => setInterval(increaseProgressBarNotificationValue, 500), 2000)
+  setTimeout(() => {
+    progressBarNotificationIntervalId = setInterval(
+      increaseProgressBarNotificationValue,
+      500,
+    ) as unknown as number
+  }, 2000)
 }
 
 const progressBarValue = ref(0)
@@ -923,29 +934,6 @@ const increaseProgressBar = () => {
 onMounted(() => {
   setInterval(increaseProgressBar, 2000)
 })
-
-const notifyAllTypes = () => {
-  notify({
-    id: 'playground-notification-info',
-    type: NotificationTypes.Info,
-    message: 'ℹ️ Info Notification',
-  })
-  notify({
-    id: 'playground-notification-success',
-    type: NotificationTypes.Success,
-    message: 'Success! ✅',
-  })
-  notify({
-    id: 'playground-notification-warn',
-    type: NotificationTypes.Warn,
-    message: 'Warn Notification: ⚠️',
-  })
-  notify({
-    id: 'playground-notification-error',
-    type: NotificationTypes.Error,
-    message: 'Error Notification: ❌!',
-  })
-}
 
 watch(progressBarValue, (newValue) => {
   if (newValue < 100) return
@@ -961,9 +949,7 @@ watch(progressBarNotificationValue, (newValue) => {
     notify({
       id: 'playground-notification-progress',
       type: NotificationTypes.Success,
-      message: `${progressBarNotificationValue.value * 100}% Progress Notification`,
-      persistent: false,
-      currentProgress: progressBarNotificationValue.value,
+      message: 'Progress bar notification completed successfully.',
     })
 })
 
@@ -1413,80 +1399,57 @@ const { openFeedbackDialog } = useFeedbackDialog()
     <div>
       <h3>Notifications / Alerts</h3>
       <div class="mb-4 space-x-2">
-        <CommonButton variant="danger" @click="notifyAllTypes()">
-          Open "all" Notification</CommonButton
+        <CommonButton
+          variant="submit"
+          @click="
+            notify({
+              id: 'playground-notification-success',
+              type: NotificationTypes.Success,
+              message: 'The notification was triggered successfully.',
+            })
+          "
         >
+          Show success notification
+        </CommonButton>
 
         <CommonButton
           variant="primary"
           @click="
             notify({
-              id: 'playground-notification-success',
-              type: NotificationTypes.Success,
-              message: 'Success! ✅',
+              id: 'playground-notification-persistent',
+              type: NotificationTypes.Info,
+              message: 'The persistent notification was triggered successfully.',
+              persistent: true,
             })
           "
-          >Open "success" Notification</CommonButton
         >
+          Show persistent notification
+        </CommonButton>
 
         <CommonButton
           variant="secondary"
           @click="
             notify({
-              id: 'playground-notification-warn',
+              id: 'playground-notification-persistent-action',
               type: NotificationTypes.Warn,
-              message: 'Warn Notification: ⚠️',
-            })
-          "
-        >
-          Open "warn" Notification</CommonButton
-        >
-        <CommonButton
-          variant="danger"
-          @click="
-            notify({
-              id: 'playground-notification-error',
-              type: NotificationTypes.Error,
-              message: 'Error Notification: ❌!',
-            })
-          "
-        >
-          Open "error" Notification</CommonButton
-        >
-
-        <CommonButton
-          variant="neutral"
-          @click="
-            notify({
-              id: 'playground-notification-info',
-              type: NotificationTypes.Info,
-              message: 'ℹ️ Info Notification',
-            })
-          "
-        >
-          Open "info" Notification</CommonButton
-        >
-
-        <CommonButton
-          variant="tertiary"
-          @click="
-            notify({
-              id: 'playground-notification-pinned',
-              type: NotificationTypes.Success,
-              message: '📌 Persistent (Pinned) Notification',
+              message: 'The persistent notification was triggered successfully.',
               persistent: true,
+              actionLabel: 'Action',
+              actionCallback: () => {
+                notify({
+                  id: 'playground-notification-persistent-action-callback',
+                  type: NotificationTypes.Success,
+                  message: 'The action callback was triggered successfully.',
+                })
+              },
             })
           "
         >
-          'Open "Persistent (Pinned)" Notification'
+          Show persistent notification (with action)
         </CommonButton>
 
         <CommonButton variant="subtle" @click="rampUpProgressBarNotificationValue">
-          'Open "Progress 0..100%" Notification'
-        </CommonButton>
-
-        <CommonButton variant="subtle" @click="notifyWithProgress(0.5)">
-          'Open "Progress 50% stucked" Notification'
+          Show persistent notification (with progress bar)
         </CommonButton>
       </div>
 

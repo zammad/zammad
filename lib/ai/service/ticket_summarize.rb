@@ -49,10 +49,4 @@ class AI::Service::TicketSummarize < AI::Service
       temperature: 0.1,
     }
   end
-
-  class InvalidResultKeysError < StandardError
-    def initialize
-      super(__('AI service result is missing expected keys'))
-    end
-  end
 end

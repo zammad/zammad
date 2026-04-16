@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Ticket Summarize API endpoints', authenticated_as: :user, performs_jobs: true, type: :request do
-  let(:user)                         { create(:agent) }
-  let(:ticket)                       { article.ticket }
-  let(:article)                      { create(:ticket_article) }
-  let(:ai_assistance_ticket_summary) { true }
-  let(:params)                       { {} }
+  let(:user)                                           { create(:agent) }
+  let(:ticket)                                         { article.ticket }
+  let(:article)                                        { create(:ticket_article) }
+  let(:ai_assistance_ticket_summary)                   { true }
+  let(:params)                                         { {} }
 
   before do
     allow(AI::Provider::ZammadAI).to receive(:ping!).and_return(true)

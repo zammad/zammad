@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::Updater::User::Notifications < FormUpdater::Updater
-  def authorized?
-    current_user.permissions?('user_preferences.notifications')
+  def self.required_permissions
+    %w[user_preferences.notifications]
   end
 
   def object_type

@@ -15,7 +15,7 @@ module ApplicationController::HandlesErrors
     rescue_from Exceptions::NotAuthorized, with: :unauthorized
     rescue_from Exceptions::Forbidden, with: :forbidden
     rescue_from Pundit::NotAuthorizedError, with: :pundit_not_authorized_error
-    rescue_from Store::Provider::S3::Error, with: :unprocessable_entity
+    rescue_from 'Store::Provider::S3::Error', with: :unprocessable_entity
     rescue_from Exceptions::MissingAttribute, Exceptions::InvalidAttribute, ActionController::ParameterMissing, with: :unprocessable_entity
   end
 

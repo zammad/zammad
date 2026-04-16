@@ -117,7 +117,7 @@ export const useUserCurrentTicketOverviews = () => {
   initializeOverviewsSubscriptions(overviewHandler)
 
   const overviewsRaw = overviewHandler.result()
-  const overviewsLoading = overviewHandler.loading()
+  const overviewsLoading = overviewHandler.loadingWithoutCachedResult()
 
   const overviews = computed(() => overviewsRaw.value?.userCurrentTicketOverviews || [])
   const overviewsById = computed(() => keyBy(overviews.value, 'id'))

@@ -38,8 +38,9 @@ class ExternalCredential::Facebook
     }
   end
 
-  def self.link_account(_request_token, params)
-    #    fail if request_token.params[:oauth_token] != params[:state]
+  def self.link_account(request_token, params)
+    raise Exceptions::UnprocessableEntity, __('Invalid OAuth state parameter.') if params[:state] != request_token
+
     external_credential = ExternalCredential.find_by(name: 'facebook')
     raise Exceptions::UnprocessableEntity, __('No Facebook app configured!') if !external_credential
 

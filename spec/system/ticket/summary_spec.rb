@@ -3,16 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system do
-  let(:agent)                        { create(:agent, groups: [ticket.group]) }
-  let(:ticket)                       { create(:ticket) }
-  let(:article)                      { create(:ticket_article, ticket:) }
-  let(:ai_provider)                  { 'zammad_ai' }
-  let(:ai_assistance_ticket_summary) { true }
-  let(:initial_summary)              { "initial #{Faker::Lorem.unique.sentence}" }
-  let(:updated_summary)              { "updated #{Faker::Lorem.unique.sentence}" }
-  let(:initial_cache_key)            { "ticket_summary_#{ticket.id}" }
-  let(:updated_cache_key)            { "ticket_summary_#{ticket.id}_2" }
-  let(:ticket_summary_generation)    { 'on_ticket_detail_opening' }
+  let(:agent)                                          { create(:agent, groups: [ticket.group]) }
+  let(:ticket)                                         { create(:ticket) }
+  let(:article)                                        { create(:ticket_article, ticket:) }
+  let(:ai_provider)                                    { 'zammad_ai' }
+  let(:ai_assistance_ticket_summary)                   { true }
+  let(:initial_summary)                                { "initial #{Faker::Lorem.unique.sentence}" }
+  let(:updated_summary)                                { "updated #{Faker::Lorem.unique.sentence}" }
+  let(:initial_cache_key)                              { "ticket_summary_#{ticket.id}" }
+  let(:updated_cache_key)                              { "ticket_summary_#{ticket.id}_2" }
+  let(:ticket_summary_generation)                      { 'on_ticket_detail_opening' }
 
   let(:initial_content) do
     {

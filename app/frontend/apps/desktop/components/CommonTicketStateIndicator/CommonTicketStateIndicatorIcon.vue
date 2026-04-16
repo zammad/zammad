@@ -8,7 +8,7 @@ import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 
 export interface Props {
   colorCode: EnumTicketStateColorCode
-  label: string
+  label?: string
   iconSize?: Sizes
 }
 
@@ -59,5 +59,6 @@ const isEscalating = computed(
     :class="iconColor"
     :name="iconName"
     :size="iconSize"
+    :label="label"
   />
 </template>

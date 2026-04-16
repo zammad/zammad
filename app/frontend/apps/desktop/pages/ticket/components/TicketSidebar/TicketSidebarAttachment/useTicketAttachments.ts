@@ -21,7 +21,7 @@ export const useTicketAttachments = (fetchPolicy?: WatchQueryFetchPolicy) => {
     ),
   )
   const result = ticketAttachmentsQuery.result()
-  const loading = ticketAttachmentsQuery.loading()
+  const loading = ticketAttachmentsQuery.loadingWithoutCachedResult()
 
   const ticketAttachments = computed(() => {
     if (!result.value?.ticketAttachments) return []

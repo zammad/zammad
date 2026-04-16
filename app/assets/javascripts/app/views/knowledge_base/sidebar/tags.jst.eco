@@ -6,7 +6,7 @@
 <ol class="list list--sidebar">
   <% for elem in @tags: %>
     <li class="list-item" data-id="<%= elem %>">
-      <a class="list-item-name js-tag"><%= elem %></a>
+      <a class="list-item-name js-tag" title="<%= elem %>"><%= elem %></a>
       <div class="list-item-delete js-delete" data-type="remove">
         <%- @Icon('diagonal-cross') %>
       </div>

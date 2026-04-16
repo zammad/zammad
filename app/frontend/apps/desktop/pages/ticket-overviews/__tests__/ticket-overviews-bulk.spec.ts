@@ -141,7 +141,7 @@ describe('Ticket Overviews > Bulk edit tickets', () => {
         },
       },
       selector: {
-        ticketIds: [ticket.id],
+        entityIds: [ticket.id],
       },
     })
 

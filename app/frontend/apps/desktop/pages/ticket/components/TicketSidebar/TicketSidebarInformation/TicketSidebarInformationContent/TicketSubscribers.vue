@@ -68,6 +68,9 @@ const handleToggleInput = async () => {
           :entity="subscriber.user"
           :access="subscriber.access"
           :user="subscriber.user"
+          :popover-config="{
+            placement: 'arrowStart',
+          }"
         />
       </div>
     </div>

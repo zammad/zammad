@@ -12,7 +12,7 @@ describe('CommonAvatar.vue', () => {
 
     expect(avatar).toHaveTextContent('??')
     expect(avatar).toHaveClass('size-medium')
-    expect(avatar).toHaveStyle({ 'background-image': '' })
+    expect(avatar.style.backgroundImage).toBe('')
   })
 
   it('renders initials and chooses color based on it', async () => {

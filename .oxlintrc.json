@@ -1,6 +1,13 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "import", "unicorn", "promise", "vitest", "oxc"],
+  "plugins": [
+    "typescript",
+    "import",
+    "unicorn",
+    "promise",
+    "vitest",
+    "oxc"
+  ],
   "categories": {
     "correctness": "error",
     "perf": "error"
@@ -11,25 +18,28 @@
     "jest/valid-expect": "off",
     "jest/no-export": "off",
     "promise/no-callback-in-promise": "off",
-    "import/no-unassigned-import ": "off",
+    "import/no-unassigned-import": "off",
     "typescript/no-explicit-any": "error",
     "no-irregular-whitespace": "error",
     "no-use-before-define": "error",
     "no-empty-object-type": "error",
+    "vitest/require-mock-type-parameters": "off",
     "vitest/warn-todo": "warn",
     "import/no-cycle": "error"
   },
-  "overrides": [{
-    "files": [
-       "app/frontend/tests/**",
-       "app/frontend/**/__tests__/**",
-       "app/frontend/**/*.spec.*",
-       "app/frontend/cypress/**"
-    ],
-    "rules": {
-      "typescript/no-explicit-any": "off"
+  "overrides": [
+    {
+      "files": [
+        "app/frontend/tests/**",
+        "app/frontend/**/__tests__/**",
+        "app/frontend/**/*.spec.*",
+        "app/frontend/cypress/**"
+      ],
+      "rules": {
+        "typescript/no-explicit-any": "off"
+      }
     }
-  }],
+  ],
   "settings": {},
   "env": {
     "browser": true,

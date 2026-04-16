@@ -77,10 +77,17 @@ class Setting::Validation::AIProviderConfig < Setting::Validation::Base
   end
 
   def accessible
-    AI::Provider
-      .by_name(provider)
-      .ping!(value)
+    provider_class = AI::Provider.by_name(provider)
+
+    provider_class.ping!(value)
+    check_temperature_support!(provider_class)
+  rescue AIProviderConfigError
+    raise
   rescue => e
     raise AIProviderConfigError, __("AI provider is not accessible: #{e.message}")
+  end
+
+  def check_temperature_support!(provider_class)
+    value['model_temperature_support'] = provider_class.check_temperature_support!(value)
   end
 end

@@ -146,7 +146,9 @@ describe('useNewBetaUi', () => {
 
       toggleBetaUiSwitch('/', true)
 
-      await waitFor(() => expect(localStorage.getItem('app-usage-total-time')).toBe('0'))
+      await waitFor(() =>
+        expect(localStorage.getItem('app-usage-total-time')).toBe(`${1 * 60 * 60 * 1000}`),
+      )
 
       expect(localStorage.getItem('app-usage-milestones-trigger-history')).toBe(
         JSON.stringify({

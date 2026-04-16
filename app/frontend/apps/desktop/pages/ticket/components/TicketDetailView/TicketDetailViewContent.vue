@@ -370,12 +370,12 @@ const discardChanges = async () => {
 
     currentArticleType.value = undefined
 
-    nextTick(() => {
-      formReset({
-        values: {
-          article: ticketArticleDefaultValues,
-        },
-      })
+    await nextTick()
+
+    formReset({
+      values: {
+        article: ticketArticleDefaultValues,
+      },
     })
   }
 }
@@ -588,9 +588,9 @@ const discardReplyForm = async () => {
   // Reset only the article group.
   currentArticleType.value = undefined
 
-  nextTick(() => {
-    articleFormGroupNode.value?.reset(ticketArticleDefaultValues)
-  })
+  await nextTick()
+
+  articleFormGroupNode.value?.reset(ticketArticleDefaultValues)
 
   return triggerFormUpdater()
 }

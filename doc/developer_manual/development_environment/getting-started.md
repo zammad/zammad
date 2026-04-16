@@ -30,7 +30,8 @@ For more information, see [devcontainer setup guide](devcontainer-setup.md)
 ### 3. First-Time Initialization
 
 - **Devcontainer setup:** Not required; the container comes preconfigured.
-- **Manual setup:** Refer to the [manual setup guide](manual-setup.md) setup.
+- **Manual setup:**
+  Refer to the [development-workflow](development-workflow.md#quickly-reset-an-existing-development-database) setup.
 
 ### 4. Launching Zammad
 

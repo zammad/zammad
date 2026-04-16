@@ -10,6 +10,12 @@ const notificationTypeClassMap = getNotificationClasses()
 
 const { notifications, removeNotification } = useNotifications()
 
+const handleAction = (notification: Notification) => {
+  if (!notification.persistent) return
+
+  notification.actionCallback?.()
+}
+
 /**
  * @param clickFromCloseButton
  * When persistent is active we only close the notification on close button click
@@ -18,11 +24,10 @@ const { notifications, removeNotification } = useNotifications()
 const handleClose = (notification: Notification, clickFromCloseButton = false) => {
   if (notification.persistent && !clickFromCloseButton) return
 
-  const { callback } = notification
+  const { closeCallback } = notification
 
   removeNotification(notification.id)
-
-  if (callback) callback()
+  closeCallback?.()
 }
 </script>
 
@@ -58,6 +63,7 @@ const handleClose = (notification: Notification, clickFromCloseButton = false) =
             },
           ]"
           :notification="notification"
+          @action="handleAction"
           @close="handleClose"
         />
       </li>

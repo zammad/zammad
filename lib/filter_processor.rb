@@ -8,12 +8,12 @@ class FilterProcessor
     'ends with one of',
   ].freeze
 
-  attr_reader :filter, :mail, :match_data
+  attr_reader :filter, :mail, :context
 
   def initialize(filter, mail)
     @filter = filter
     @mail = mail
-    @match_data = {}
+    @context = { match_data: {} }
   end
 
   def process
@@ -60,29 +60,21 @@ class FilterProcessor
   def rule_matches?(operator, match_rule, value)
     case operator
     when 'contains not'
-      value.blank? || !Channel::Filter::Match::Contains.match(value: value, match_rule: match_rule)
+      !FilterProcessor::Match::Contains.match(value: value, match_rule: match_rule)
     when 'contains'
-      value.present? && Channel::Filter::Match::Contains.match(value: value, match_rule: match_rule)
+      FilterProcessor::Match::Contains.match(value: value, match_rule: match_rule)
     when 'is any of'
-      Channel::Filter::Match::IsAnyOf.match(value: value, match_rule: match_rule)
+      FilterProcessor::Match::IsAnyOf.match(value: value, match_rule: match_rule)
     when 'is none of'
-      !Channel::Filter::Match::IsAnyOf.match(value: value, match_rule: match_rule)
+      !FilterProcessor::Match::IsAnyOf.match(value: value, match_rule: match_rule)
     when 'starts with one of'
-      Channel::Filter::Match::StartsWith.match(value: value, match_rule: match_rule)
+      FilterProcessor::Match::StartsWith.match(value: value, match_rule: match_rule)
     when 'ends with one of'
-      Channel::Filter::Match::EndsWith.match(value: value, match_rule: match_rule)
+      FilterProcessor::Match::EndsWith.match(value: value, match_rule: match_rule)
     when 'matches regex'
-      return false if value.blank?
-
-      match_data = Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
-      if match_data.respond_to?(:names)
-        match_data.names.each do |key|
-          @match_data[key] = match_data[key]
-        end
-      end
-      match_data
+      FilterProcessor::Match::EmailRegex.match(value: value, match_rule: match_rule, context:)
     when 'does not match regex'
-      value.blank? || !Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
+      !FilterProcessor::Match::EmailRegex.match(value: value, match_rule: match_rule)
     else
       Rails.logger.info { "  Invalid operator in match #{meta.inspect}" }
       false
@@ -135,14 +127,20 @@ class FilterProcessor
 
   def perform_filter_changes_regular(key:, meta:)
     value = meta['value']
-    if value.respond_to?(:gsub)
-      value.gsub!(%r{#\{(.+?)\}}) do
-        @match_data[$1] || ''
+
+    # Replace regex placeholders with the actual match data from the filter matching process
+    # Uses namespaced placeholders like #{regexp.1} for numbered captures and #{regexp.name} for named captures
+    # https://github.com/zammad/zammad/issues/5815
+    if value.is_a?(String)
+      value = value.gsub(%r{#\{regexp\.(.+?)\}}) do
+        @context[:match_data][$1] || '-'
       end
     end
 
     @mail[ key.downcase.to_sym ] = value
     @mail[:"#{key.downcase}-source"] = @filter
+
+    true
   end
 
   def perform_filter_changes_date(key:, meta:)

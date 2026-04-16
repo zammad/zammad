@@ -23,7 +23,7 @@ defineProps<{
 
 const { ticket, ticketQuery, refetchingStatus } = useTicketInformation()
 
-const loadingTicket = ticketQuery.loading()
+const loadingTicket = ticketQuery.loadingWithoutCachedResult()
 
 const { hasPermission } = useSessionStore()
 

@@ -38,7 +38,7 @@ class HtmlSanitizer
           next if !node[attribute_name]
 
           href = cleanup_target(node[attribute_name])
-          next if !href.match?(%r{(javascript|livescript|vbscript):}i)
+          next if !href.match?(%r{(javascript|livescript|vbscript|data):}i)
 
           node.delete(attribute_name)
         end

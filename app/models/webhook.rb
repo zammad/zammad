@@ -45,8 +45,16 @@ class Webhook < ApplicationModel
 
     errors.add(:endpoint, __('The provided endpoint is invalid, no http or https protocol was specified.')) if !uri.is_a?(URI::HTTP)
     errors.add(:endpoint, __('The provided endpoint is invalid, no hostname was specified.')) if uri.host.blank?
+
+    HostnameSafetyCheck.validate!(uri.hostname, allow_private: true, allow_loopback: true)
   rescue URI::InvalidURIError
     errors.add :endpoint, __('The provided endpoint is invalid.')
+  rescue HostnameSafetyCheck::LoopbackIpError
+    errors.add :endpoint, __('The provided endpoint is invalid, it points to a loopback IP address.')
+  rescue HostnameSafetyCheck::LinkLocalIpError
+    errors.add :endpoint, __('The provided endpoint is invalid, it points to a link-local IP address.')
+  rescue HostnameSafetyCheck::SafetyError
+    errors.add :endpoint, __('The provided endpoint is invalid, it could not be resolved to a safe IP address.')
   end
 
   def validate_custom_payload

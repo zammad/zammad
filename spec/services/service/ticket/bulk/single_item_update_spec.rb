@@ -22,6 +22,24 @@ RSpec.describe Service::Ticket::Bulk::SingleItemUpdate do
       expect(ticket.reload.updated_by_id).to eq(user.id)
     end
 
+    context 'when perform input is nil' do
+      let(:perform) { { input: nil } }
+
+      it 'does not update the ticket' do
+        expect { instance.execute }
+          .not_to change { ticket.reload.title }
+      end
+    end
+
+    context 'when perform input is empty' do
+      let(:perform) { { input: {} } }
+
+      it 'does not update the ticket' do
+        expect { instance.execute }
+          .not_to change { ticket.reload.title }
+      end
+    end
+
     context 'when user does not have agent write access to the ticket' do
       let(:ticket) { create(:ticket) }
 

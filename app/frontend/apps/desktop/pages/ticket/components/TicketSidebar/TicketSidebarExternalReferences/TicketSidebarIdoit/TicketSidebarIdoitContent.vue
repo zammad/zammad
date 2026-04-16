@@ -67,7 +67,7 @@ const objectListQuery = new QueryHandler(
 
 const result = objectListQuery.result()
 
-const isLoading = objectListQuery.loading()
+const isLoading = objectListQuery.loadingWithoutCachedResult()
 
 const queryError = objectListQuery.operationError()
 

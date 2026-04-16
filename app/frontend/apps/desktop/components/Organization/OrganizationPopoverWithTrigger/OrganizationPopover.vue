@@ -6,7 +6,6 @@ import { useRouter } from 'vue-router'
 
 import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar/types.ts'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
-import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
 import { useOrganizationObjectAttributesStore } from '#shared/entities/organization/stores/objectAttributes.ts'
 import type { Organization } from '#shared/graphql/types.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
@@ -38,11 +37,7 @@ const organization = computed(
   () => organizationResult.value?.organization as Partial<Organization> | null,
 )
 
-const loading = organizationInfoForPopoverQuery.loading()
-
-const { debouncedLoading } = useDebouncedLoading({
-  isLoading: loading,
-})
+const loading = organizationInfoForPopoverQuery.loadingWithoutCachedResult()
 
 const organizationMembers = computed(() => normalizeEdges(organization.value?.allMembers) || [])
 
@@ -59,28 +54,29 @@ const goToOrganizationProfile = () => {
 
 <template>
   <section ref="popover-section" data-type="popover" class="space-y-2 p-3">
-    <OrganizationPopoverSkeleton v-if="debouncedLoading && !organization" />
-    <template v-else-if="organization">
-      <OrganizationInfo :organization="organization" no-link />
+    <OrganizationPopoverSkeleton :loading="loading">
+      <template v-if="organization">
+        <OrganizationInfo :organization="organization" no-link />
 
-      <ObjectAttributes
-        :class="{
-          'border-b border-neutral-100 pb-2.5 dark:border-gray-900':
-            organizationMembers?.totalCount,
-        }"
-        :object="organization"
-        :attributes="viewScreenAttributes"
-        :skip-attributes="['name', 'vip', 'active']"
-      />
+        <ObjectAttributes
+          :class="{
+            'border-b border-neutral-100 pb-2.5 dark:border-gray-900':
+              organizationMembers?.totalCount,
+          }"
+          :object="organization"
+          :attributes="viewScreenAttributes"
+          :skip-attributes="['name', 'vip', 'active']"
+        />
 
-      <CommonSimpleEntityList
-        id="organization-members-popover"
-        :type="EntityType.User"
-        :label="__('Members')"
-        :entity="organizationMembers"
-        no-collapse
-        @load-more="goToOrganizationProfile"
-      />
-    </template>
+        <CommonSimpleEntityList
+          id="organization-members-popover"
+          :type="EntityType.User"
+          :label="__('Members')"
+          :entity="organizationMembers"
+          no-collapse
+          @load-more="goToOrganizationProfile"
+        />
+      </template>
+    </OrganizationPopoverSkeleton>
   </section>
 </template>

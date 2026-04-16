@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require_relative 'shared_examples/ping'
+require_relative 'shared_examples/check_temperature_support'
 
 RSpec.describe AI::Provider::OpenAI, integration: true, required_envs: %w[OPEN_AI_TOKEN], use_vcr: true do
   subject(:ai_provider) { described_class.new(options: { json_response: true }) }
@@ -18,6 +19,7 @@ RSpec.describe AI::Provider::OpenAI, integration: true, required_envs: %w[OPEN_A
   end
 
   include_examples 'provider/ping!'
+  include_examples 'provider/check_temperature_support'
 
   context 'when specifying a model' do
     context 'without a model' do
@@ -41,6 +43,16 @@ RSpec.describe AI::Provider::OpenAI, integration: true, required_envs: %w[OPEN_A
         end
 
         it 'does exchange data with open ai endpoint' do
+          expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
+        end
+      end
+
+      context 'with model_temperature_support flag set to false' do
+        before do
+          Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model_temperature_support: false))
+        end
+
+        it 'does exchange data with open ai endpoint without temperature' do
           expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
         end
       end

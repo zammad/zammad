@@ -1,6 +1,7 @@
 /* stylelint-disable import-notation */
 @import 'tailwindcss';
 @import './tokens.css';
+@import '../../../shared/styles/utilities.css';
 
 @plugin '@formkit/themes/tailwindcss';
 @plugin '../../../build/zammadTailwindPlugin.js';

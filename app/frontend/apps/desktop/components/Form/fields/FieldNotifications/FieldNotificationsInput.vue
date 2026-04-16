@@ -157,7 +157,7 @@ const updateValue = (
               item.key as NotificationMatrixRowKey,
               header.path as NotificationMatrixPathKey,
               header.key as NotificationMatrixColumnKey,
-              $event,
+              $event as boolean | undefined,
             )
           "
           @blur="context.handlers.blur"

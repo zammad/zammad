@@ -10,9 +10,15 @@ RSpec.describe Webhook, type: :model do
   describe 'check endpoint' do
     subject(:webhook) { build(:webhook, endpoint: endpoint) }
 
-    before { webhook.valid? }
-
     let(:endpoint_errors) { webhook.errors.messages[:endpoint] }
+    let(:resolved_ip)     { '8.8.8.8' }
+
+    before do
+      allow(IPSocket).to receive(:getaddress).and_call_original
+      allow(IPSocket).to receive(:getaddress).with('example.com').and_return(resolved_ip)
+
+      webhook.valid?
+    end
 
     context 'with missing http type' do
       let(:endpoint) { 'example.com' }
@@ -61,6 +67,22 @@ RSpec.describe Webhook, type: :model do
 
       it 'has no errors' do
         expect(endpoint_errors).to be_empty
+      end
+
+      context 'when it points to a loopback IP' do
+        let(:resolved_ip) { '127.0.0.1' }
+
+        it 'has no errors' do
+          expect(endpoint_errors).to be_empty
+        end
+      end
+
+      context 'when it points to a link-local IP' do
+        let(:resolved_ip) { '169.254.123.45' }
+
+        it 'has an error' do
+          expect(endpoint_errors).to include 'The provided endpoint is invalid, it points to a link-local IP address.'
+        end
       end
     end
 

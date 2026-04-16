@@ -21,17 +21,22 @@ class App.AITextTool extends App.Model
             },
           ]
       }
-    ], note: __('To select placeholders from a list, just enter "::".'), help: __('Provide specific and unambiguous instructions for the LLM to process a given text which will be part of the system prompt.')},
-    { name: 'fixed_instructions', display: __('Instructions about output format will be added'), tag: 'textarea', null: true, disabled: true, collapsible: true, collapsed: true },
-    { name: 'group_ids',          display: __('Groups'),               tag: 'column_select', relation: 'Group', null: true, unsortable: true, display_full_name: true },
-    { name: 'note',               display: __('Note'),                 tag: 'richtext',      limit:   250,      null: true },
-    { name: 'active',             display: __('Active'),               tag: 'active',        default: true },
+    ], note: __('To select placeholders from a list, just enter "::".'), help: __('Provide specific and unambiguous instructions for the LLM to process a given text which will be part of the system prompt.') },
+    { name: 'fixed_instructions',       display: __('Instructions about output format will be added'), tag: 'textarea', null: true, disabled: true, collapsible: true, collapsed: true },
+    { name: 'group_ids',                display: __('Groups'),              tag: 'column_select', relation: 'Group', null: true, unsortable: true, display_full_name: true },
+    { name: 'analytics_stats',          display: __('Feedback'),                                  readonly: 1 },
+    { name: 'analytics_stats_reset_at', display: __('Last Feedback Reset'), tag: 'datetime',      readonly: 1 },
+    { name: 'note',                     display: __('Note'),                tag: 'richtext',      limit:   250,      null: true },
+    { name: 'active',                   display: __('Active'),              tag: 'active',        default: true },
   ]
   @configure_delete = true
   @configure_clone = true
+
   @configure_overview = [
     'name',
     'group_ids',
+    'analytics_stats',
+    'analytics_stats_reset_at',
     'note',
   ]
 

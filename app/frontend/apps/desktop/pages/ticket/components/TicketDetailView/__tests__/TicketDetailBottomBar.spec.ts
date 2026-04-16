@@ -179,7 +179,9 @@ describe('TicketDetailBottomBar', () => {
       const calls = await waitForMacrosQueryCalls()
 
       expect(calls?.at(-1)?.variables).toEqual({
-        groupIds: [convertToGraphQLId('Group', 2)],
+        selector: {
+          entityIds: [convertToGraphQLId('Group', 2)],
+        },
       })
 
       await waitForNextTick()
@@ -253,6 +255,7 @@ describe('TicketDetailBottomBar', () => {
           {
             __typename: 'Macro',
             id: convertToGraphQLId('Macro', 1),
+            internalId: 1,
             active: true,
             name: 'Macro 1',
             uxFlowNextUp: 'next_task',

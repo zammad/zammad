@@ -1195,7 +1195,7 @@ describe('Form.vue - Form Updater - special situtations', () => {
         example: '',
         group_id: undefined,
         multiselect: [],
-        multitreeselect: undefined,
+        multitreeselect: [],
         number: '',
         shared: false,
         start_date: undefined,
@@ -1295,6 +1295,41 @@ describe('Form.vue - Form Updater - special situtations', () => {
     )
 
     checkFieldDirty(wrapper, 'Example', false)
+  })
+
+  it('dirty flag set when a hidden field is shown with a value in the same form updater response', async () => {
+    const { wrapper, mockFormUpdaterApi } = await renderForm([
+      {
+        formUpdater: {
+          fields: {
+            example: {
+              show: false,
+            },
+          },
+          flags: {},
+        },
+      },
+      {
+        formUpdater: {
+          fields: {
+            example: {
+              show: true,
+              value: 'CoreWorkflowValue',
+            },
+          },
+          flags: {},
+        },
+      },
+    ])
+
+    expect(wrapper.queryByLabelText('Example')).not.toBeInTheDocument()
+
+    await selectValue(wrapper, 'Type', 'Incident')
+
+    await waitUntil(() => mockFormUpdaterApi.calls.resolve === 2)
+
+    checkInputValue(wrapper, 'Example', 'CoreWorkflowValue')
+    checkFieldDirty(wrapper, 'Example', true)
   })
 
   it('no endless loop (additional request) for non existing options for new field values', async () => {

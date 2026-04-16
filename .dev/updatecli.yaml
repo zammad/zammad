@@ -1,0 +1,39 @@
+---
+name: "Update Zammad version and dependency charts (patch and minor only)"
+
+sources:
+  heroku-buildpack-nodejs:
+    name: heroku-buildpack-nodejs
+    kind: gittag
+    spec:
+      url: "https://github.com/heroku/heroku-buildpack-nodejs.git"
+      versionfilter:
+        kind: "semver"
+  heroku-buildpack-ruby:
+    name: heroku-buildpack-ruby
+    kind: gitbranch
+    spec:
+      url: "https://github.com/pkgr/heroku-buildpack-ruby.git"
+      versionfilter:
+        kind: "regex"
+        pattern: 'v\d{3}-\d+'
+
+conditions: {}
+
+targets:
+  buildpacks-nodejs:
+    name: buildpacks-nodejs
+    kind: file
+    sourceid: heroku-buildpack-nodejs
+    spec:
+      file: .buildpacks
+      matchpattern: 'https://github.com/heroku/heroku-buildpack-nodejs.git#.*'
+      replacepattern: 'https://github.com/heroku/heroku-buildpack-nodejs.git#{{ source `heroku-buildpack-nodejs` }}'
+  buildpacks-ruby:
+    name: buildpacks-ruby
+    kind: file
+    sourceid: heroku-buildpack-ruby
+    spec:
+      file: .buildpacks
+      matchpattern: 'https://github.com/pkgr/heroku-buildpack-ruby.git#.*'
+      replacepattern: 'https://github.com/pkgr/heroku-buildpack-ruby.git#{{ source `heroku-buildpack-ruby` }}'

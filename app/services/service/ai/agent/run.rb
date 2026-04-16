@@ -16,15 +16,7 @@ class Service::AI::Agent::Run < Service::Base
   def execute
     Service::CheckFeatureEnabled.new(name: 'ai_provider', custom_error_message: __('AI provider is not configured.')).execute
 
-    begin
-      ai_agent_result = ai_agent_service_result
-    rescue AI::Provider::OutputFormatError => e
-      raise PermanentError, e.message
-    rescue AI::Provider::ResponseError => e
-      raise TemporaryError, e.message
-    rescue => e # rubocop:disable Lint/DuplicateBranch
-      raise PermanentError, e.message
-    end
+    ai_agent_result = fetch_ai_agent_result
 
     ai_agent_perform_template = Service::AI::Agent::Run::Perform::Agent.new(ai_agent:, ai_result: ai_agent_result)
 
@@ -33,20 +25,34 @@ class Service::AI::Agent::Run < Service::Base
       raise TemporaryError, __('AI agent result content does not match expected result structure.')
     end
 
-    begin
-      ApplicationHandleInfo.use('ai_agent_execution') do
-        ticket.perform_changes(ai_agent_perform_template, 'ai_agent', {
-                                 article_id: article&.id
-                               })
-      end
-    rescue => e
-      Rails.logger.error "AI Agent '#{ai_agent.name}' with ID #{ai_agent.id} perform_changes failed for ticket #{ticket.id}."
-
-      raise PermanentError, e.message
-    end
+    apply_perform_changes(ai_agent_perform_template)
   end
 
   private
+
+  def fetch_ai_agent_result
+    ai_agent_service_result
+  rescue AI::Provider::OutputFormatError => e
+    raise PermanentError, e.message
+  rescue AI::Provider::ResponseError => e
+    raise TemporaryError, e.message
+  rescue => e # rubocop:disable Lint/DuplicateBranch
+    raise PermanentError, e.message
+  end
+
+  def apply_perform_changes(ai_agent_perform_template)
+    ApplicationHandleInfo.use('ai_agent_execution') do
+      ticket.perform_changes(ai_agent_perform_template, 'ai_agent', {
+                               article_id:                  article&.id,
+                               skip_blank_attribute_values: action_definition['skip_blank_values'],
+                             })
+      TransactionDispatcher.commit(disable_notification: true)
+    end
+  rescue => e
+    Rails.logger.error "AI Agent '#{ai_agent.name}' with ID #{ai_agent.id} perform_changes failed for ticket #{ticket.id}."
+
+    raise PermanentError, e.message
+  end
 
   def ai_agent_service_result
     context = Service::AI::Agent::Run::Context.new(

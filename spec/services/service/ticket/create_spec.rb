@@ -119,21 +119,100 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
     end
 
     context 'when adding links' do
-      let!(:other_ticket) { create(:ticket, customer: customer) }
-      let(:links) do
-        [
-          { link_object: other_ticket, link_type: 'child' },
-          { link_object: other_ticket, link_type: 'normal' },
-        ]
+      context 'when linking to a ticket' do
+        let(:other_ticket)           { create(:ticket, customer: customer) }
+        let(:ticket_data_with_links) { ticket_data.merge(links:) }
+        let(:links) do
+          [
+            { link_object: other_ticket, link_type: 'child' },
+            { link_object: other_ticket, link_type: 'normal' },
+          ]
+        end
+
+        context 'when user has agent access to the other ticket' do
+          before do
+            user.groups << other_ticket.group
+          end
+
+          it 'adds links correctly' do
+            ticket = service.execute(ticket_data: ticket_data_with_links)
+            expect(Link.list(link_object: 'Ticket', link_object_value: ticket.id)).to contain_exactly(
+              { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'parent' },
+              { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'normal' },
+            )
+          end
+        end
+
+        context 'when user has no agent access to the other ticket' do
+          it 'raises an error' do
+            expect { service.execute(ticket_data: ticket_data_with_links) }
+              .to raise_error(Pundit::NotAuthorizedError)
+          end
+        end
+
+        context 'when user is customer' do
+          let(:user) { customer }
+
+          it 'raises an error' do
+            expect { service.execute(ticket_data: ticket_data_with_links) }
+              .to raise_error(Pundit::NotAuthorizedError)
+          end
+        end
       end
 
-      it 'adds links correctly' do
-        ticket_data[:links] = links
-        ticket = service.execute(ticket_data:)
-        expect(Link.list(link_object: 'Ticket', link_object_value: ticket.id)).to contain_exactly(
-          { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'parent' },
-          { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'normal' },
-        )
+      context 'when linking to a KB answer' do
+        include_context 'basic Knowledge Base'
+
+        let(:translation)            { internal_answer.translations.first }
+        let(:ticket_data_with_links) { ticket_data.merge(links:) }
+        let(:links) do
+          [
+            { link_object: translation, link_type: 'normal' },
+          ]
+        end
+
+        context 'when the user has no access to the KB answer' do
+          let(:role) { create(:role, permission_names: %w[ticket.agent]) }
+          let(:user) { create(:user, groups: [group], roles: [role]) }
+
+          it 'raises an error' do
+            expect { service.execute(ticket_data: ticket_data_with_links) }
+              .to raise_error(Pundit::NotAuthorizedError)
+          end
+        end
+
+        context 'when the user reader access to the KB answer' do
+          it 'creates the ticket with the link' do
+            ticket = service.execute(ticket_data: ticket_data_with_links)
+
+            expect(Link.list(link_object: 'Ticket', link_object_value: ticket.id))
+              .to contain_exactly(
+                {
+                  'link_object'       => 'KnowledgeBase::Answer::Translation',
+                  'link_object_value' => translation.id,
+                  'link_type'         => 'normal'
+                },
+              )
+          end
+        end
+
+        context 'when the user editor access to the KB answer' do
+          let(:kb_editor_role) { create(:role, permission_names: %w[knowledge_base.editor ticket.agent]) }
+          let(:user)           { create(:agent, groups: [group], roles: [kb_editor_role]) }
+
+          it 'creates the ticket with the link' do
+            ticket = service.execute(ticket_data: ticket_data_with_links)
+
+            expect(Link.list(link_object: 'Ticket', link_object_value: ticket.id))
+              .to contain_exactly(
+                {
+                  'link_object'       => 'KnowledgeBase::Answer::Translation',
+                  'link_object_value' => translation.id,
+                  'link_type'         => 'normal'
+                },
+              )
+          end
+        end
       end
     end
 

@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { whenever } from '@vueuse/shared'
 import { computed, type EffectScope, effectScope, ref, watch, toRef } from 'vue'
 
 import { useReactivate } from '#shared/composables/useReactivate.ts'
@@ -162,7 +163,7 @@ watch(
   },
 )
 
-watch(isSummarySideBarActive, () => {
+whenever(isSummarySideBarActive, () => {
   if (!runWhenSidebarIsActive.value) return
   getAIAssistanceSummary()
 })

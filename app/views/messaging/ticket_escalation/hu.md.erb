@@ -1,6 +1,6 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: eszkalálva ekkor: #{ticket.escalation_at}_
-„#{ticket.customer.longname}” jegye (#{ticket.title}) eszkalálva lett ekkortól: „#{ticket.escalation_at}”!
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: eszkalálódott: #{ticket.escalation_at}_
+„#{ticket.customer.longname}” jegye (#{ticket.title}) eszkalálva van ekkortól: „#{ticket.escalation_at}”!
 
 <% if @objects[:article] %>
 #{article.body_as_text}

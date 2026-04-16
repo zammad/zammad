@@ -2,7 +2,7 @@
 
 module Gql::Subscriptions
   class LinkUpdates < BaseSubscription
-    include Gql::Concerns::HandlesPossibleObjects
+    include Gql::Concerns::HandlesLinkObjects
 
     description 'Updates to link records'
 
@@ -11,10 +11,8 @@ module Gql::Subscriptions
 
     field :links, [Gql::Types::LinkType], null: true, description: 'Link records'
 
-    possible_objects ::Ticket, ::KnowledgeBase::Answer::Translation
-
     def authorized?(object_id:, target_type:)
-      fetch_object(object_id)
+      fetch_visible_link_object(object_id)
     end
 
     def update(object_id:, target_type:)

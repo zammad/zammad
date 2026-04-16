@@ -20,7 +20,7 @@
     "neverBuiltDependencies": []
   },
   "devDependencies": {
-    "eslint": "^10.1.0",
+    "eslint": "^10.2.0",
     "eslint-plugin-eslint-plugin": "^7.3.2",
     "eslint-plugin-n": "^17.24.0",
     "mocha": "^11.7.5",

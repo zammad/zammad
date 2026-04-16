@@ -137,11 +137,11 @@ RSpec.describe Channel::EmailBuild, type: :model do
         let(:expected_body) { '<div>&gt; Welcome!</div><div>&gt;</div><div>&gt; Thank you for installing Zammad. äöüß</div><div>&gt;</div>' }
 
         it 'builds a mail with a text part' do
-          expect(mail.text_part.body.to_s).to eq expected_text
+          expect(mail.text_part.body.encoded).to eq expected_text
         end
 
         it 'builds a mail with a html part' do
-          expect(mail.html_part.body.to_s).to eq expected_html
+          expect(mail.html_part.body.encoded).to eq expected_html
         end
 
         it 'builds a mail that is parsed correctly' do
@@ -156,7 +156,7 @@ RSpec.describe Channel::EmailBuild, type: :model do
         let(:content_type) { 'text/plain' }
 
         it 'builds a mail with a text part' do
-          expect(mail.body.to_s).to eq expected_text
+          expect(mail.body.encoded).to eq expected_text
         end
 
         it 'does not build a html part' do

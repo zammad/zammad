@@ -61,7 +61,7 @@ RSpec.describe Gql::Queries::Link::List, type: :graphql do
         let(:authenticated) { create(:agent, groups: [to_group]) }
 
         it 'raises an error' do
-          expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+          expect(gql.result.error_type).to eq(Pundit::NotAuthorizedError)
         end
       end
 

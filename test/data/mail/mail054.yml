@@ -34,7 +34,7 @@ attachments:
     References: "<D98C7360C87D6642B509616EFFD4ED2D421C0403@voexm32w.internal.example.com>
       <5C1F374E-737B-46BA-97F4-4829F1DF5E95@example.com>"
     Subject: 'AW: One Net Business'
-    Mime-Version: '1.0'
+    MIME-Version: '1.0'
     Content-Type: multipart/alternative
     Delivered-To: climax-hussein@example.com
     X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRWlGSWpSXmKPExsWi75nTrTtrwZM

@@ -23,7 +23,7 @@ RSpec.describe Gql::Mutations::Ticket::Update::Bulk, :aggregate_failures, type: 
   let(:ticket1)       { create(:ticket, title: 'Ticket 1', group: agent.groups.first, customer: customer) }
   let(:ticket2)       { create(:ticket, title: 'Ticket 2', group: agent.groups.first, customer: customer) }
   let(:input_payload) { { title: 'Ticket Bulk Update Mutation Test' } }
-  let(:selector)      { { ticketIds: [gql.id(ticket1), gql.id(ticket2)] } }
+  let(:selector)      { { entityIds: [gql.id(ticket1), gql.id(ticket2)] } }
   let(:perform)       { { input: input_payload } }
   let(:variables)     { { selector:, perform: } }
 
@@ -102,7 +102,7 @@ RSpec.describe Gql::Mutations::Ticket::Update::Bulk, :aggregate_failures, type: 
         let(:variables) do
           {
             selector: {
-              ticketIds: [gql.id(ticket1), gql.id(ticket2)],
+              entityIds: [gql.id(ticket1), gql.id(ticket2)],
             },
             perform:  {
               input:   input_payload,
@@ -115,6 +115,26 @@ RSpec.describe Gql::Mutations::Ticket::Update::Bulk, :aggregate_failures, type: 
           gql.execute(query, variables:)
 
           expect(ticket1.reload).to have_attributes(title: new_title)
+        end
+
+        context 'when only macroId is provided (no input)' do
+          let(:variables) do
+            {
+              selector: {
+                entityIds: [gql.id(ticket1), gql.id(ticket2)],
+              },
+              perform:  {
+                macroId: gql.id(macro)
+              }
+            }
+          end
+
+          it 'applies the macro without crashing' do
+            gql.execute(query, variables:)
+
+            expect(ticket1.reload).to have_attributes(title: new_title)
+            expect(ticket2.reload).to have_attributes(title: new_title)
+          end
         end
       end
 
@@ -227,7 +247,7 @@ RSpec.describe Gql::Mutations::Ticket::Update::Bulk, :aggregate_failures, type: 
     let(:ticket_ids)   { nil }
     let(:overview_id)  { nil }
     let(:search_query) { nil }
-    let(:selector)     { { ticketIds: ticket_ids, overviewId: overview_id, searchQuery: search_query } }
+    let(:selector)     { { entityIds: ticket_ids, overviewId: overview_id, searchQuery: search_query } }
 
     before do
       allow_any_instance_of(described_class).to receive(:resolve)
@@ -238,7 +258,7 @@ RSpec.describe Gql::Mutations::Ticket::Update::Bulk, :aggregate_failures, type: 
         gql.execute(query, variables:)
 
         expect(gql.result.error)
-          .to include(message: 'Exactly one of ticket_ids, overview_id, or search_query must be provided.')
+          .to include(message: 'Exactly one of entity_ids, overview_id, or search_query must be provided.')
       end
     end
 
@@ -250,18 +270,18 @@ RSpec.describe Gql::Mutations::Ticket::Update::Bulk, :aggregate_failures, type: 
         gql.execute(query, variables:)
 
         expect(gql.result.error)
-          .to include(message: 'Exactly one of ticket_ids, overview_id, or search_query must be provided.')
+          .to include(message: 'Exactly one of entity_ids, overview_id, or search_query must be provided.')
       end
     end
 
-    context 'when only ticket_ids provided' do
-      let(:ticket) { create(:ticket) }
+    context 'when only entity_ids provided' do
+      let(:ticket)     { create(:ticket) }
       let(:ticket_ids) { [gql.id(ticket)] }
 
       it 'passes ticket internal IDs to resolve' do
         expect_any_instance_of(described_class)
           .to receive(:resolve)
-          .with(selector: hash_including(ticket_ids: [ticket.id]), perform: anything)
+          .with(selector: hash_including(entity_ids: [ticket.id]), perform: anything)
 
         gql.execute(query, variables:)
       end

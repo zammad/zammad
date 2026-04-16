@@ -6,9 +6,10 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const MacrosDocument = gql`
-    query macros($groupIds: [ID!]!) {
-  macros(groupIds: $groupIds) {
+    query macros($selector: TicketMacrosSelectorInput!) {
+  macros(selector: $selector) {
     id
+    internalId
     active
     name
     uxFlowNextUp

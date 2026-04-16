@@ -10,7 +10,7 @@ RSpec.describe Service::Ticket::Bulk::Selector do
 
   describe '#execute' do
     context 'when passing ticket IDs' do
-      let(:selector) { { ticket_ids: tickets.pluck(:id) } }
+      let(:selector) { { entity_ids: tickets.pluck(:id) } }
 
       it 'returns the selected tickets' do
         expect(instance.execute).to eq(tickets.pluck(:id))

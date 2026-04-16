@@ -4,6 +4,7 @@
 module Channel::Filter::Database
   def self.run(_channel, mail, _transaction_params)
     PostmasterFilter.where(active: true, channel: 'email').reorder(:name, :created_at).each do |filter|
+      # The leading space is intentional to make the logs more readable.
       Rails.logger.debug { " process filter #{filter.name} ..." }
       FilterProcessor.new(filter, mail).process
     end

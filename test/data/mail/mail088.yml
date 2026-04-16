@@ -22,7 +22,7 @@ attachments:
     Message-ID: "<4C4ECFBF-BA12-46D9-A407-8E873F20DEF3@example.de>"
     Subject: image as only content
     Keywords: Zammad
-    Mime-Version: '1.0'
+    MIME-Version: '1.0'
     Content-Type: image/jpg; name=super-seven.jpg
     X-Original-To: me@example.de
     Delivered-To: martin@samba.example.de

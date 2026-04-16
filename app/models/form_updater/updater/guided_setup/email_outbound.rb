@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::Updater::GuidedSetup::EmailOutbound < FormUpdater::Updater
-  def authorized?
-    current_user.permissions?('admin.wizard')
+  def self.required_permissions
+    %w[admin.wizard]
   end
 
   def resolve

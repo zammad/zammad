@@ -22,8 +22,10 @@ const emit = defineEmits<{
 
 const rowId = 'selectable-table-row'
 
+const isClickable = computed(() => (props.onClickRow || props.hasCheckbox) && !props.item.disabled)
+
 const rowEventHandler = computed(() =>
-  (props.onClickRow || props.hasCheckbox) && !props.item.disabled
+  isClickable.value
     ? {
         attrs: {
           'aria-describedby': rowId,
@@ -54,8 +56,10 @@ const hasScreenReaderHelpText = computed(() => !!document?.getElementById(rowId)
       'odd:bg-blue-200 odd:dark:bg-gray-700': !noAutoStriping,
       'bg-blue-200 dark:bg-gray-700': isStriped === true,
       'bg-blue-800!': !hasCheckbox && isRowSelected,
+      'cursor-pointer': isClickable,
     }"
     style="clip-path: xywh(0 0 100% 100% round 0.375rem)"
+    :data-item-id="item.id"
     data-test-id="table-row"
     v-bind="rowEventHandler.attrs"
     v-on="rowEventHandler.events"

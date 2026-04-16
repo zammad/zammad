@@ -22,6 +22,8 @@ import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { useDetailSearchLazyQuery } from '#desktop/components/Search/graphql/queries/detailSearch.api.ts'
 import { useSearchCountsLazyQuery } from '#desktop/components/Search/graphql/queries/searchCounts.api.ts'
 import { searchPluginByName, useSearchPlugins } from '#desktop/components/Search/plugins/index.ts'
+import DragAndDropBulkWrapper from '#desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue'
+import { useDragAndDropBulk } from '#desktop/components/Ticket/DragAndDropBulk/useDragAndDropBulk.ts'
 import TicketBulkEditButton from '#desktop/components/Ticket/TicketBulkEditButton.vue'
 import { useTicketBulkEdit } from '#desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
@@ -196,7 +198,6 @@ const detailSearchHeaders = computed(() =>
 
 const searchResult = detailSearchQuery.result()
 const currentSearchResult = ref<DetailSearchQuery>()
-const loading = detailSearchQuery.loading()
 
 // Remember the current search result to avoid always showing the loading state on search term changes.
 // Because the apollo cache is returning undefined when nothing is in currently in the cache.
@@ -236,11 +237,7 @@ const currentSearchCounts = computed(() =>
   ),
 )
 
-const isLoading = computed(() => {
-  if (currentSearchResult.value !== undefined) return false
-
-  return loading.value
-})
+const isLoading = detailSearchQuery.loadingWithoutCachedResult()
 
 const searchResultTotalCount = computed(() => currentSearchResult.value?.search.totalCount ?? 0)
 const searchResultItems = computed(() => currentSearchResult.value?.search.items || [])
@@ -321,56 +318,35 @@ const fetchNextPage = async () => {
   }
 }
 
-const selectAllActive = ref(false)
-
 const {
   checkedTicketIds,
-  bulkCount,
-  bulkHasMoreItems,
+  selectAllActive,
   bulkContext,
+  bulkSelector,
   openBulkEditFlyout,
   setOnSuccessCallback,
 } = useTicketBulkEdit()
 
-const ticketSelectionBindings = computed(() => {
-  // Only the Ticket entity supports bulk actions for now
-  // Avoid warnings bind it only to the ticket search results component
-  if (selectedEntity.value !== EnumSearchableModels.Ticket) return {}
-
-  return {
-    checkedTicketIds: checkedTicketIds.value,
-    'onUpdate:checkedTicketIds': (value: typeof checkedTicketIds.value) => {
-      checkedTicketIds.value = value
-    },
-    selectAllActive: selectAllActive.value,
-    'onUpdate:selectAllActive': (value: boolean) => {
-      selectAllActive.value = value
-    },
-  }
+const {
+  isActive: isDragAndDropActive,
+  cursorPosition,
+  dragPreviewData,
+  dropSuccessTargetId,
+  reactivateListeners,
+  deactivateListeners,
+} = useDragAndDropBulk({
+  checkedTicketIds,
+  bulkSelector,
 })
 
-watch(selectAllActive, (newValue) => {
-  if (!newValue) {
-    bulkCount.value = 0
-    bulkHasMoreItems.value = false
-
-    return
-  }
-
-  if (searchResultTotalCount.value > MAX_ITEMS) {
-    bulkCount.value = MAX_ITEMS
-    bulkHasMoreItems.value = true
-  } else {
-    bulkCount.value = searchResultTotalCount.value
-    bulkHasMoreItems.value = false
-  }
-})
+usePage({ onReactivate: reactivateListeners, onDeactivated: deactivateListeners })
 
 watch(
   sanitizedSearchTerm,
   (newValue, oldValue) => {
     if (newValue !== oldValue) {
       checkedTicketIds.value.clear()
+      selectAllActive.value = false
       bulkContext.value = { searchQuery: newValue }
     }
 
@@ -393,6 +369,7 @@ watch(selectedEntity, (_, oldValue) => {
   currentSearchResult.value = undefined
 
   checkedTicketIds.value.clear()
+  selectAllActive.value = false
 
   resetPagination({
     onlyIn: oldValue,
@@ -461,7 +438,6 @@ setOnSuccessCallback(() => {
         <component
           :is="searchPlugin.detailSearchComponent"
           :key="selectedEntity"
-          v-bind="ticketSelectionBindings"
           :table-id="`search-${selectedEntity}-table`"
           :caption="`Search result for: ${searchPlugin.label}`"
           :items="searchResultItems"
@@ -489,6 +465,13 @@ setOnSuccessCallback(() => {
           </template>
         </component>
       </div>
+
+      <DragAndDropBulkWrapper
+        v-if="isDragAndDropActive"
+        :cursor-position="cursorPosition"
+        :preview-data="dragPreviewData"
+        :drop-success-target-id="dropSuccessTargetId"
+      />
     </div>
   </LayoutContent>
 </template>

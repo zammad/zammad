@@ -11,7 +11,7 @@ RSpec.describe ExternalCredential::Google do
   let(:id_token) { 'eyJhbGciOiJSUzI1NiIsImtpZCI6Inh4eHh4eDkwYmNkNzZhZWIyMDAyNmY2Yjc3MGNhYzIyMTc4MyIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMTMzNy1jdGYuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxMzM3LWN0Zi5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjAwMDg5MjkxMzM3NDkxMDAwMDAyIiwiaGQiOiJleGFtcGxlLmNvbSIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoibjAwd19fNVdwQ1RGNUcwMDBjbU56QSIsImlhdCI6MTU4NzczMjg5MywiZXhwIjoxNTg3NzM2NDkzfQ==' }
   let(:access_token)  { '000.0000lvC3gAbjs8CYoKitfqM5LBS5N13374MCg6pNpZ28mxO2HuZvg0000_rsW00aACmFEto1BJeGDuu0000vmV6Esqv78iec-FbEe842ZevQtOOemQyQXjhMs62K1E6g3ehDLPRp6j4vtpSKSb6I-3MuDPfdzdqI23hM0' }
   let(:refresh_token) { '1//00000VO1ES0hFCgYIARAAGAkSNwF-L9IraWQNMj5ZTqhB00006DssAYcpEyFks5OuvZ1337wrqX0D7tE5o71FIPzcWEMM5000004' }
-  let(:request_token) { nil } # not used but required by ExternalCredential API
+  let(:request_token) { 'test_oauth_state' }
 
   let(:scope_payload) { 'email profile openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://mail.google.com/' }
   let(:scope_stub) { 'https://mail.google.com/ https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid' }
@@ -76,6 +76,7 @@ RSpec.describe ExternalCredential::Google do
       {
         code:       authorization_code,
         scope:      scope_payload,
+        state:      request_token,
         authuser:   '4',
         hd:         'example.com',
         prompt:     'consent',
@@ -154,6 +155,14 @@ RSpec.describe ExternalCredential::Google do
       end
     end
 
+    context 'when OAuth state is invalid' do
+      it 'raises an error' do
+        expect do
+          described_class.link_account('wrong_state', authorization_payload)
+        end.to raise_error(Exceptions::UnprocessableEntity, 'Invalid OAuth state parameter.')
+      end
+    end
+
     context 'API errors' do
 
       before do
@@ -198,6 +207,7 @@ RSpec.describe ExternalCredential::Google do
       {
         code:       authorization_code,
         scope:      scope_payload,
+        state:      request_token,
         authuser:   '4',
         hd:         'example.com',
         prompt:     'consent',
@@ -319,11 +329,16 @@ RSpec.describe ExternalCredential::Google do
   end
 
   describe '.request_account_to_link' do
-    it 'generates authorize_url from credentials' do
+    let(:state) { 'test_oauth_state' }
+
+    before { allow(SecureRandom).to receive(:urlsafe_base64).and_return(state) }
+
+    it 'generates authorize_url and state from credentials', :aggregate_failures do
       google  = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       request = described_class.request_account_to_link(google.credentials)
 
-      expect(request[:authorize_url]).to eq(authorize_url)
+      expect(request[:authorize_url]).to eq("#{authorize_url}&state=#{state}")
+      expect(request[:request_token]).to eq(state)
     end
 
     context 'errors' do
@@ -337,7 +352,7 @@ RSpec.describe ExternalCredential::Google do
       end
 
       context 'missing credentials' do
-        let(:credentials) { nil }
+        let(:credentials)       { nil }
         let(:app_required)      { true }
         let(:exception_message) { 'There is no Google app configured.' }
 
@@ -438,9 +453,11 @@ RSpec.describe ExternalCredential::Google do
   end
 
   describe '.generate_authorize_url' do
+    let(:state) { 'test_oauth_state' }
+
     it 'generates valid URL' do
-      url = described_class.generate_authorize_url(client_id)
-      expect(url).to eq(authorize_url)
+      url = described_class.generate_authorize_url(client_id, state: state)
+      expect(url).to eq("#{authorize_url}&state=#{state}")
     end
   end
 

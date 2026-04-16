@@ -26,14 +26,18 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
     raise Exceptions::UnprocessableEntity, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
     raise Exceptions::UnprocessableEntity, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
 
-    authorize_url = generate_authorize_url(credentials[:client_id])
+    state         = SecureRandom.urlsafe_base64
+    authorize_url = generate_authorize_url(credentials[:client_id], state: state)
 
     {
       authorize_url: authorize_url,
+      request_token: state,
     }
   end
 
-  def self.link_account(_request_token, params)
+  def self.link_account(request_token, params)
+    raise Exceptions::UnprocessableEntity, __('Invalid OAuth state parameter.') if params[:state] != request_token
+
     external_credential = ExternalCredential.find_by(name: 'google')
     raise Exceptions::UnprocessableEntity, __('There is no Google app configured.') if !external_credential
     raise Exceptions::UnprocessableEntity, __("The required parameter 'code' is missing.") if !params[:code]
@@ -164,8 +168,7 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
     channel
   end
 
-  def self.generate_authorize_url(client_id, scope = 'openid email profile https://mail.google.com/')
-
+  def self.generate_authorize_url(client_id, scope: 'openid email profile https://mail.google.com/', state: nil)
     params = {
       'client_id'     => client_id,
       'redirect_uri'  => ExternalCredential.callback_url('google'),
@@ -173,7 +176,8 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
       'response_type' => 'code',
       'access_type'   => 'offline',
       'prompt'        => 'consent',
-    }
+      'state'         => state,
+    }.compact
 
     uri = URI::HTTPS.build(
       host:  'accounts.google.com',

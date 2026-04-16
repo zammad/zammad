@@ -1223,4 +1223,95 @@ RSpec.describe SearchIndexBackend do
       expect(result).to include(include(id: organization.id.to_s, type: 'Organization'))
     end
   end
+
+  describe '.attachment_ignored?', searchindex: false do
+    let(:store) do
+      create(:store,
+             object:   'SomeObject',
+             o_id:     1,
+             data:     'some content',
+             filename:)
+    end
+
+    context 'when attachment is indexable', searchindex: false do
+      let(:filename) { 'test.TXT' }
+
+      it 'return false' do
+        expect(described_class).not_to be_attachment_ignored(store)
+      end
+    end
+
+    context 'when attachment is not indexable' do
+      let(:filename) { 'test.bin' }
+
+      it 'return true' do
+        expect(described_class).to be_attachment_ignored(store)
+      end
+    end
+  end
+
+  describe '.attachment_too_big?', searchindex: false do
+    let(:store) do
+      create(:store,
+             object:   'SomeObject',
+             o_id:     1,
+             data:     'a' * ((1024**2) * 2.4), # with 2.4 mb
+             filename: 'test.TXT')
+    end
+
+    before do
+      Setting.set('es_attachment_max_size_in_mb', max_file_size_in_mb)
+    end
+
+    context 'when file is too big' do
+      let(:max_file_size_in_mb) { 2 }
+
+      it 'return true' do
+        expect(described_class).to be_attachment_too_big(store)
+      end
+    end
+
+    context 'when file is not too big' do
+      let(:max_file_size_in_mb) { 3 }
+
+      it 'return false' do
+        expect(described_class).not_to be_attachment_too_big(store)
+      end
+    end
+  end
+
+  describe '.payload_too_big?', searchindex: false do
+    context 'when payload is too big' do
+      it 'return true' do
+        expect(described_class).to be_payload_too_big(2.gigabytes)
+      end
+    end
+
+    context 'when payload is not too big' do
+      it 'return false' do
+        expect(described_class).not_to be_payload_too_big(2.megabytes)
+      end
+    end
+  end
+
+  describe '.attachment_to_attributes', searchindex: false do
+    let(:data) { 'some content' }
+    let(:store) do
+      create(:store,
+             object:   'SomeObject',
+             o_id:     1,
+             data:,
+             filename: 'test.TXT')
+    end
+
+    it 'return a hash with attachment attributes' do
+      expect(described_class.attachment_to_attributes(store)).to eq(
+        {
+          '_name'    => 'test.TXT',
+          '_size'    => 12,
+          '_content' => Base64.encode64(data).delete("\n"),
+        }
+      )
+    end
+  end
 end

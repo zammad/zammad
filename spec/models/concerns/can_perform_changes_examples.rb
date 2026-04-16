@@ -58,6 +58,7 @@ RSpec.shared_examples 'CanPerformChanges', :aggregate_failures do |object_name:,
 
       it 'does replace custom fields in trigger' do
         object.perform_changes(performable, 'trigger', object, User.first)
+        puts object.reload.custom_attribute_text2
         expect(object.reload.custom_attribute_text2).to eq('testing-example')
       end
     end

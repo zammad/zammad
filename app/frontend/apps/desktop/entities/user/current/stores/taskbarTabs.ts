@@ -65,7 +65,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
   )
 
   const taskbarTabsRaw = taskbarTabsQuery.result()
-  const taskbarTabsLoading = taskbarTabsQuery.loading()
+  const taskbarTabsLoading = taskbarTabsQuery.loadingWithoutCachedResult()
 
   const taskbarTabList = computed<UserTaskbarTab[]>((currentTaskbarTabList) => {
     if (!taskbarTabsRaw.value?.userCurrentTaskbarItemList) return []

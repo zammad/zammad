@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 
+import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
 import type {
   AiAnalyticsMetadata,
   AsyncExecutionError,
@@ -41,6 +42,10 @@ const errorMessage = computed(() => props.error?.message)
 const hasProvidedFeedback = computed(() => !!props.analyticsMeta?.usage?.userHasProvidedFeedback)
 
 const hasRecentlyRated = shallowRef(false)
+
+const { debouncedLoading: showSkeleton } = useDebouncedLoading({
+  isLoading: computed(() => props.isProviderConfigured && !errorMessage.value && !props.summary),
+})
 
 const titleClass = computed(() => {
   let titleClass =
@@ -134,7 +139,7 @@ const titleClass = computed(() => {
           @rated="hasRecentlyRated = true"
         />
       </template>
-      <template v-else>
+      <template v-else-if="showSkeleton">
         <CommonLabel size="small" class="text-stone-200! dark:text-neutral-500!" tag="p">{{
           $t('Summary is being generated…')
         }}</CommonLabel>

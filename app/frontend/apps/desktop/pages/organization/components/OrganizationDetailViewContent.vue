@@ -39,17 +39,22 @@ const props = defineProps<Props>()
 
 const organizationId = computed(() => convertToGraphQLId('Organization', props.internalId))
 
-const { organization, objectAttributes, organizationMembers, fetchMoreMembers } =
-  useOrganizationDetail(
-    organizationId,
-    4,
-    100,
-    // NB: Silence toast notifications for particular errors, these will be handled by the layout taskbar tab component.
-    (errorHandler) =>
-      errorHandler.type !== GraphQLErrorTypes.Forbidden &&
-      errorHandler.type !== GraphQLErrorTypes.RecordNotFound,
-    'cache-first',
-  )
+const {
+  organization,
+  loadingWithoutCachedResult,
+  objectAttributes,
+  organizationMembers,
+  fetchMoreMembers,
+} = useOrganizationDetail(
+  organizationId,
+  4,
+  100,
+  // NB: Silence toast notifications for particular errors, these will be handled by the layout taskbar tab component.
+  (errorHandler) =>
+    errorHandler.type !== GraphQLErrorTypes.Forbidden &&
+    errorHandler.type !== GraphQLErrorTypes.RecordNotFound,
+  'cache-first',
+)
 
 const { organizationDisplayName } = useOrganizationEntity(organization)
 
@@ -101,7 +106,7 @@ organizationTicketsSubscription.onResult(({ data }) => {
     content-alignment="center"
     no-scrollable
   >
-    <CommonLoader class="mt-8" :loading="!organization">
+    <CommonLoader class="mt-8" :loading="loadingWithoutCachedResult">
       <div ref="content-container" class="h-full w-full overflow-y-auto">
         <OrganizationDetailTopBar
           :organization="organization"

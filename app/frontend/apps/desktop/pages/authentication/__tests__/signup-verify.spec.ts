@@ -1,10 +1,15 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { flushPromises } from '@vue/test-utils'
+
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
+
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import { createDeferred } from '#shared/utils/helpers.ts'
 
 import { mockUserSignupVerifyMutation } from '../graphql/mutations/userSignupVerify.mocks.ts'
 
@@ -24,13 +29,26 @@ describe('signup verify view', () => {
   })
 
   it('shows a loading indicator during the verification process', async () => {
+    vi.useFakeTimers()
+
+    const { resolve, promise } = createDeferred()
+
+    // This is caused by the fact that it never works from the timing perspective
+    // We need to mock a pending promise to test the loading state, since
+    // CommonLoader has a build int delay which is running in a micro task
+    vi.spyOn(MutationHandler.prototype, 'send').mockReturnValue(promise)
     const view = await visitView('/signup/verify/123')
 
     expect(view.getByText('Verifying your email…')).toBeInTheDocument()
 
-    const loader = view.getByRole('status')
+    await flushPromises()
+    await vi.advanceTimersByTimeAsync(0)
+
+    const loader = await view.findByRole('status')
 
     expect(getByIconName(loader, 'spinner')).toBeInTheDocument()
+    resolve(null)
+    vi.resetAllMocks()
   })
 
   it('shows an error message when an invalid token is supplied', async () => {

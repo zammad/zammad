@@ -2,6 +2,7 @@
 @import 'tailwindcss';
 @import './tokens.css';
 @import './transitions.css';
+@import '../../../shared/styles/utilities.css';
 
 @plugin '@formkit/themes/tailwindcss';
 @plugin '../../../build/zammadTailwindPlugin.js';
@@ -165,7 +166,7 @@
   }
 
   .tooltip {
-    @apply fixed z-50 w-fit -translate-y-2 rounded-md border border-neutral-100 bg-blue-200 px-2 py-1 text-xs leading-snug text-wrap text-gray-100 opacity-0 transition-all select-none dark:border-gray-900 dark:bg-gray-700 dark:text-neutral-400;
+    @apply fixed z-60 w-fit -translate-y-2 rounded-md border border-neutral-100 bg-blue-200 px-2 py-1 text-xs leading-snug text-wrap text-gray-100 opacity-0 transition-all select-none dark:border-gray-900 dark:bg-gray-700 dark:text-neutral-400;
   }
 
   .tooltip-animate {

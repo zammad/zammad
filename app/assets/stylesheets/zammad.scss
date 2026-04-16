@@ -7384,6 +7384,18 @@ a.list-group-item.active > .badge,
   margin: -5px;
 }
 
+.kb-ai-generate-wrapper {
+  margin-top: 8px;
+}
+
+.kb-ai-generate {
+  background-image: linear-gradient(to right, var(--ai-assist-blue), var(--ai-assist-pink));
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 2px;
+}
+
 .is-internal .internal-border {
   background: repeating-linear-gradient(
     45deg,
@@ -7951,6 +7963,14 @@ a.list-group-item.active > .badge,
     max-height: 40vh;
     overflow-y: auto;
   }
+}
+
+.text-tools-feedback-output {
+  display: inline-block;
+  min-width: 4.5em;
+
+  @include ltr(margin-right, 6px);
+  @include rtl(margin-left, 6px);
 }
 
 .bubble-wrapper {
@@ -8878,6 +8898,17 @@ a.list-group-item.active > .badge,
 .list-item-name {
   flex: 1;
   padding: 4px 1px;
+}
+
+/* Fixes #6058 - Attachment delete icon disappears when filename is too long
+ * by adding ellipsis to long names and preventing it from overflowing its container
+ */
+.knowledge-base-sidebar {
+  .list-item-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }
 
 .list-item-delete {
@@ -11782,7 +11813,15 @@ output {
   padding: 10px 5px 6px;
   margin: 0;
 
-  label {
+  .day-time-separator {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 6px;
+    cursor: default;
+  }
+
+  label,
+  .day-time-separator {
     text-align: center;
   }
 

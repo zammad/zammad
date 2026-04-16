@@ -6,6 +6,7 @@ require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/can_csv_import_examples'
 require 'models/concerns/has_history_examples'
 require 'models/concerns/has_object_manager_attributes_examples'
+require 'models/concerns/can_lookup_search_index_attributes_with_attachments_examples'
 require 'models/ticket/article/has_ticket_contact_attributes_impact_examples'
 
 RSpec.describe Ticket::Article, type: :model do

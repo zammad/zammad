@@ -253,6 +253,12 @@ Permission.create_if_not_exists(
   preferences: { prio: 1336 }
 )
 Permission.create_if_not_exists(
+  name:        'admin.ai_assistance_kb_answer_from_ticket_generation',
+  label:       __('AI Knowledge Base Answers'),
+  description: __('Manage AI generation of knowledge base answers from tickets.'),
+  preferences: { prio: 1337 }
+)
+Permission.create_if_not_exists(
   name:        'admin.integration',
   label:       __('Integrations'),
   description: __('Manage integrations of your system.'),

@@ -8,8 +8,9 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     '.js-input':         'inputField'
 
   events:
-    'change .js-shadow': 'didSubmit'
-    'blur .js-input':    'didBlur'
+    'change .js-shadow':        'didSubmit'
+    'blur .js-input':           'didBlur'
+    'click .js-kb-ai-generate': 'requestAiAnswer'
 
   getAjaxAttributes: (field, attributes) ->
     @apiPath = App.Config.get('api_path')
@@ -43,9 +44,17 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
         elem?
 
   render: ->
+    user = App.User.current()
+
+    aiEnabled =
+      App.Config.get('ai_assistance_kb_answer_from_ticket_generation') &&
+      App.Config.get('ai_provider') &&
+      user?.permission('ticket.agent+knowledge_base.editor')
+
     @html App.view('link/kb_answer')(
-      list: @linksForRendering()
-      editable: @editable
+      list:      @linksForRendering()
+      editable:  @editable
+      aiEnabled: aiEnabled
     )
 
     @renderPopovers()
@@ -110,5 +119,28 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
           type:      'error'
           msg:       xhr.responseJSON?.error || __("Couldn't save changes")
           removeAll: true
+        )
+    )
+
+  requestAiAnswer: (e) ->
+    @preventDefault(e)
+    e.stopPropagation()
+
+    @ajax(
+      id:   "knowledge_base_answer_enqueue_ai_#{@object.id}"
+      type: 'POST'
+      url:  "#{@apiPath}/tickets/#{@object.id}/knowledge_base_answers"
+      failResponseNoTrigger: true
+      success: =>
+        @notify(
+          type: 'success'
+          msg:  App.i18n.translateContent('Generating knowledge base answer using "%s" ticket…', @object.title)
+        )
+      error: (xhr) =>
+        details = xhr.responseJSON || {}
+
+        @notify(
+          type: 'error'
+          msg:  details.error_message
         )
     )

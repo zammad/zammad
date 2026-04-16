@@ -33,7 +33,7 @@ export const useTicketSharedDraftStart = (
   )
 
   const sharedDraftStartListResult = sharedDraftStartListQuery.result()
-  const loading = sharedDraftStartListQuery.loading()
+  const loading = sharedDraftStartListQuery.loadingWithoutCachedResult()
 
   const sharedDraftStartList = computed(
     () => sharedDraftStartListResult.value?.ticketSharedDraftStartList,

@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, toRef } from 'vue'
-import { useRoute } from 'vue-router'
 
 import useFingerprint from '#shared/composables/useFingerprint.ts'
 import { EnumAuthenticationProvider } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
+import { getCurrentRouter } from '#shared/router/router.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ThirdPartyAuthProvider } from '#shared/types/authentication.ts'
 
@@ -15,7 +15,10 @@ export const useThirdPartyAuthentication = () => {
 
   const { fingerprint } = useFingerprint()
 
-  const route = useRoute()
+  // To avoid warning for trying to use useRoute calling it outside of
+  // vue-setup scope, like this we read route as a singleton directly
+  // and it works in navigation guards as well
+  const route = getCurrentRouter().currentRoute.value
 
   const redirectQueryParam = computed(() => {
     const { redirect: redirectUrl } = route?.query ?? {}

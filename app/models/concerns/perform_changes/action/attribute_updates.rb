@@ -32,6 +32,8 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
   end
 
   def change_attribute(key, value, object_attribute)
+    return false if context_data.is_a?(Hash) && context_data[:skip_blank_attribute_values] && value['value'].blank?
+
     exchange_user_id(value)
     template_value(value)
 

@@ -31,7 +31,7 @@ export const useObjectLinks = (object: Ref<ObjectLike | undefined>, targetType: 
   )
 
   const linkListQueryResult = linkListQuery.result()
-  const linkListQueryLoading = linkListQuery.loading()
+  const linkListQueryLoading = linkListQuery.loadingWithoutCachedResult()
 
   linkListQuery.subscribeToMore<LinkUpdatesSubscriptionVariables, LinkUpdatesSubscription>(() => ({
     document: LinkUpdatesDocument,

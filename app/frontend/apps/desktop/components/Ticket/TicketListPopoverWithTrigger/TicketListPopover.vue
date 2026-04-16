@@ -4,7 +4,6 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
 import type { TicketsByCustomerQueryVariables } from '#shared/graphql/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
@@ -33,12 +32,8 @@ const ticketsByFilterQuery = new QueryHandler(
 )
 
 const ticketsByCustomerResult = ticketsByFilterQuery.result()
-const loading = ticketsByFilterQuery.loading()
+const loading = ticketsByFilterQuery.loadingWithoutCachedResult()
 const tickets = computed(() => normalizeEdges(ticketsByCustomerResult.value?.ticketsByCustomer))
-
-const { debouncedLoading } = useDebouncedLoading({
-  isLoading: loading,
-})
 
 const router = useRouter()
 
@@ -51,15 +46,15 @@ const goToUserProfile = () => {
 
 <template>
   <section ref="popover-section" data-type="popover" class="flex flex-col px-3 py-2">
-    <TicketListPopoverSkeleton v-if="debouncedLoading && !tickets.array.length" />
-    <CommonSimpleEntityList
-      v-else
-      id="ticket-list-popover"
-      :type="EntityType.Ticket"
-      :label="title"
-      :entity="tickets"
-      no-collapse
-      @load-more="goToUserProfile"
-    />
+    <TicketListPopoverSkeleton :loading="loading">
+      <CommonSimpleEntityList
+        id="ticket-list-popover"
+        :type="EntityType.Ticket"
+        :label="title"
+        :entity="tickets"
+        no-collapse
+        @load-more="goToUserProfile"
+      />
+    </TicketListPopoverSkeleton>
   </section>
 </template>

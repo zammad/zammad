@@ -80,6 +80,19 @@ RSpec.describe Gql::Queries::OnlineNotifications, authenticated_as: :user, type:
       end
     end
 
+    context 'with knowledge base answer translation' do
+      let(:notification) { create(:online_notification, user: user, o: knowledge_base_answer_translation, type_name: 'create') }
+      let(:knowledge_base_answer_translation) { create(:knowledge_base_answer_translation) }
+
+      it 'returns list' do
+        gql.execute(query)
+
+        returned_ids = gql.result.nodes.pluck('id')
+
+        expect(returned_ids).to contain_exactly(gql.id(notification))
+      end
+    end
+
     context 'with some more notifications' do
       let(:notification)              { nil }
       let(:another_user_notification) { nil }

@@ -13,8 +13,14 @@
           <%- @Icon('diagonal-cross') %>
         </a>
       <% end %>
+    </li>
   <% end %>
 </ol>
 <% if @editable: %>
-  <div class="text-muted js-add u-clickable">+ <%- @T('Link Related Answer') %></div>
+  <div class="text-muted js-add u-clickable vertical">
+    <span>+ <%- @T('Link Related Answer') %></span>
+    <% if @aiEnabled: %>
+      <span class="js-kb-ai-generate kb-ai-generate-wrapper">+ <span class="kb-ai-generate"><%- @T('Generate Related AI Answer') %></span></span>
+    <% end %>
+  </div>
 <% end %>

@@ -4,7 +4,7 @@ class TicketAIAssistanceSummarizeJob < AIJob
   include HasActiveJobLock
 
   def lock_key
-    "#{self.class.name}/#{arguments[0].id}/#{arguments[0].articles.last&.created_at}/#{arguments[1]}"
+    "#{self.class.name}/#{arguments[0].id}/#{arguments[0].articles.without_system_notifications.last&.created_at}/#{arguments[1]}"
   end
 
   def perform(ticket, locale, regeneration_of: nil)

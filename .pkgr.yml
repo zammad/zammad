@@ -118,9 +118,6 @@ env:
   - ZAMMAD_BIND_IP=127.0.0.1
   - ZAMMAD_RAILS_PORT=3000
   - ZAMMAD_WEBSOCKET_PORT=6042
-services:
-  - postgres:15
-  - redis
 before_install: contrib/packager.io/preinstall.sh
 after_install: contrib/packager.io/postinstall.sh
 buildpack: https://github.com/zammad/heroku-buildpack-multi.git#master

@@ -17,3 +17,17 @@ export interface TicketInformation {
   newTicketArticlePresent: Ref<boolean | undefined>
   highlightMenu: Reactive<MenuState>
 }
+
+export type BulkUpdateSyncResult = {
+  async: false
+  total: number
+  failedCount: number
+  invalidTicketIds: ID[]
+}
+
+export type BulkUpdateAsyncResult = {
+  async: true
+  total: number
+}
+
+export type BulkUpdateResult = BulkUpdateSyncResult | BulkUpdateAsyncResult

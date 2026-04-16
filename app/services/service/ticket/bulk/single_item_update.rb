@@ -51,6 +51,8 @@ class Service::Ticket::Bulk::SingleItemUpdate < Service::Base
   private
 
   def ticket_data
+    return {} if perform[:input].blank?
+
     # Deep cloning preserving ActiveRecord object IDs.
     # Service::Ticket::Update and Service::Ticket::Article::Create are mutating the input data in place.
     # A new instance of the input data is needed for each loop run.
