@@ -1,7 +1,8 @@
 {
   "enabledManagers": ["bundler", "npm", "github-actions"],
   "lockFileMaintenance": {
-    "enabled": false
+    "enabled": true,
+    "extends": ["schedule:weekly"]
   },
   "packageRules": [
     {
@@ -12,15 +13,13 @@
       "matchCategories": ["ruby"],
       "assignees": ["fl"],
       "addLabels": ["ruby"],
-      "rangeStrategy": "in-range-only",
-      "extends": [":maintainLockFilesWeekly"]
+      "rangeStrategy": "in-range-only"
     },
     {
       "matchCategories": ["js"],
       "assignees": ["dk"],
       "addLabels": ["javascript"],
-      "rangeStrategy": "bump",
-      "extends": [":maintainLockFilesWeekly"]
+      "rangeStrategy": "bump"
     },
     {
       "matchCategories": ["js"],
