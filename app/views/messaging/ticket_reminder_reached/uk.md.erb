@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|В заявці №#{ticket.number}>: Спрацювало нагадування!_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Спрацювало нагадування!_
 Потрібна увага до заявки: спрацювало нагадування для (#{ticket.title}) від клієнта "*#{ticket.customer.longname}*".
 
 <% if @objects[:article] %>

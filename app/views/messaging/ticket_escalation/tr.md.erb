@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: #{ticket.escalation_at} tarihinde yükseltildi_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: #{ticket.escalation_at} tarihinde yükseltildi_
 "#{ticket.customer.longname}" tarafından açılan destek talebi (#{ticket.title}) "#{ticket.escalation_at}" tarihinden itibaren yükseltildi!
 
 <% if @objects[:article] %>

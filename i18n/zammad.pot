@@ -285,7 +285,7 @@ msgstr ""
 msgid "%s months ago"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:172
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:146
 msgid "%s more"
 msgstr ""
 
@@ -831,7 +831,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:10
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:7
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:91
 msgid "API server error: %s"
 msgstr ""
 
@@ -2545,7 +2545,7 @@ msgid "Basic Settings"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:2
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:125
 #: app/services/service/knowledge_base/create_answer_from_ai_result.rb:56
 msgid "Be sure to check AI-generated content for accuracy."
 msgstr ""
@@ -4029,7 +4029,7 @@ msgstr ""
 msgid "Could not remove two-factor authentication method"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:134
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:114
 msgid "Could not remove two-factor authentication method."
 msgstr ""
@@ -4204,7 +4204,7 @@ msgid "Create ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:428
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:424
 msgid "Create your first ticket"
 msgstr ""
 
@@ -4273,7 +4273,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:19
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:116
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:114
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:116
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:54
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:37
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
@@ -4376,7 +4376,7 @@ msgstr ""
 msgid "Currently processing this ticket…"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:146
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:148
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:141
 msgid "Currently, no overviews are assigned to your roles. Please contact your administrator."
 msgstr ""
@@ -4431,7 +4431,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:89
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:93
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:35
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
@@ -6142,7 +6142,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:80
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:86
 msgid "Edit Customer"
 msgstr ""
 
@@ -6178,7 +6178,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/entities/organization/composables/useOrganizationEdit.ts:59
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:39
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:77
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:78
 msgid "Edit organization"
 msgstr ""
 
@@ -6422,7 +6422,7 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:435
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:431
 msgid "Empty overview"
 msgstr ""
 
@@ -6869,7 +6869,7 @@ msgstr ""
 msgid "Error during execution of auto wizard."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:62
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
 
@@ -7299,7 +7299,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:18
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
 msgid "Filter"
 msgstr ""
 
@@ -7762,7 +7762,7 @@ msgid "Getting an Access Token"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco:2
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:405
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:403
 msgid "Getting key information from the browser…"
 msgstr ""
 
@@ -8316,7 +8316,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:28
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:114
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:62
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:77
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:70
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/history.ts:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:71
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/history.ts:13
@@ -9701,7 +9701,7 @@ msgstr ""
 msgid "Link issue"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:175
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:168
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:144
 msgid "Link objects"
 msgstr ""
@@ -9818,7 +9818,7 @@ msgstr ""
 #: app/assets/javascripts/app/lib/app_post/task_manager/singleton.coffee:55
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:664
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
-#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:61
+#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:67
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:464
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:65
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:52
@@ -10440,8 +10440,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
-#: app/frontend/apps/desktop/components/Organization/OrganizationPopoverWithTrigger/OrganizationPopover.vue:79
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:115
+#: app/frontend/apps/desktop/components/Organization/OrganizationPopoverWithTrigger/OrganizationPopover.vue:74
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:120
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:71
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:36
 msgid "Members"
@@ -10878,7 +10878,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/user.jst.eco:5
 #: app/controllers/time_accountings_controller.rb:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:30
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:109
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:111
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:28
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:93
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:82
@@ -10895,7 +10895,7 @@ msgid "Name Identifier Format"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:131
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:398
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:396
 msgid "Name for this security key"
 msgstr ""
 
@@ -11241,7 +11241,7 @@ msgid "No AI agent available, please create a new one or activate an existing on
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:74
 msgid "No AI provider is currently set up. Please contact your administrator."
 msgstr ""
 
@@ -11442,7 +11442,7 @@ msgstr ""
 msgid "No organizations found"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:143
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:145
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:138
 msgid "No overviews"
 msgstr ""
@@ -11467,7 +11467,7 @@ msgstr ""
 msgid "No related article found to process the status message on."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:179
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:152
 msgid "No results for this query."
 msgstr ""
 
@@ -11531,7 +11531,7 @@ msgstr ""
 msgid "No template created yet."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:436
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:432
 msgid "No tickets in this state."
 msgstr ""
 
@@ -12177,7 +12177,7 @@ msgstr ""
 msgid "Order of overviews"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:120
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:122
 msgid "Order of ticket overviews"
 msgstr ""
 
@@ -12202,11 +12202,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:93
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:13
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:100
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:97
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:33
 #: app/frontend/apps/desktop/pages/organization/routes.ts:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:73
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:78
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -12251,7 +12251,7 @@ msgstr ""
 msgid "Organization support"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:165
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:170
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:79
 msgid "Organization tickets"
 msgstr ""
@@ -12406,7 +12406,7 @@ msgstr ""
 msgid "Overview order list"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:391
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:387
 msgid "Overview: %s"
 msgstr ""
 
@@ -12438,7 +12438,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:511
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
-#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:87
+#: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:84
 #: app/graphql/gql/types/overview_type.rb:96
 #: app/views/mailer/ticket_create/fr.html.erb:9
 #: app/views/mailer/ticket_create/zh-cn.html.erb:9
@@ -12807,7 +12807,7 @@ msgid "Please add categories and/or answers"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:12
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:421
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:417
 msgid "Please click on the button below to create your first one."
 msgstr ""
 
@@ -13373,7 +13373,7 @@ msgstr ""
 msgid "Recent Logs"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:56
 msgid "Recent customer tickets"
 msgstr ""
 
@@ -13407,7 +13407,7 @@ msgstr ""
 msgid "Recently viewed"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:65
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:64
 msgid "Recently viewed tickets"
 msgstr ""
 
@@ -13505,7 +13505,7 @@ msgstr ""
 msgid "Related knowledge base answer creation has already been started for given ticket."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:153
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:158
 msgid "Related tickets"
 msgstr ""
 
@@ -13567,7 +13567,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco:81
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:258
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:59
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:147
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:149
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
@@ -13835,7 +13835,7 @@ msgid "Reset feedback"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:136
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:138
 msgid "Reset overview order"
 msgstr ""
 
@@ -13872,7 +13872,7 @@ msgstr ""
 msgid "Reset your #{config.product_name} password\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>You or someone else tried to sign up with this email address. However, this email is already being used.</div>\n<br>\n<div>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</div>\n<br>\n<div><a href=\"#{url}\">#{url}</a></div>\n<br>\n<div>This link takes you to a page where you can change your password.</div>\n<br>\n<div>If you don't want to reset your password, please ignore this message. Your password will not be reset.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:89
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:91
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
@@ -13924,7 +13924,7 @@ msgstr ""
 msgid "Result:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:420
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:381
 msgid "Results"
 msgstr ""
 
@@ -13936,7 +13936,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:64
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:180
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:91
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:96
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:183
 msgid "Retry"
 msgstr ""
@@ -14333,7 +14333,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:418
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:379
 #: app/frontend/apps/desktop/pages/search/routes.ts:10
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
@@ -14356,9 +14356,9 @@ msgstr ""
 msgid "Search URL is unsafe."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:145
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets/OrganizationTicketList.vue:100
-#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:106
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:150
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets/OrganizationTicketList.vue:94
+#: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:100
 msgid "Search all"
 msgstr ""
 
@@ -14526,16 +14526,16 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:124
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:63
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:23
 msgid "Search…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
+#: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:75
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:109
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:121
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:88
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:126
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:94
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1187
 msgid "Secondary organizations"
@@ -14615,13 +14615,13 @@ msgstr ""
 msgid "Security key verification failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:376
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:374
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:9
 msgid "Security keys"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco:1
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:376
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:374
 msgid "Security keys are hardware or software credentials that can be used as your two-factor authentication method."
 msgstr ""
 
@@ -15935,7 +15935,7 @@ msgid "Summary Services"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:53
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:139
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:144
 msgid "Summary is being generated…"
 msgstr ""
 
@@ -16891,7 +16891,7 @@ msgstr ""
 msgid "The online notification could not be marked as seen."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:98
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:100
 msgid "The order of your ticket overviews was reset."
 msgstr ""
 
@@ -17305,7 +17305,7 @@ msgid "The structure is a JSON object that defines the result format to be retur
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:86
 msgid "The summary could not be generated. Please try again later or contact your administrator."
 msgstr ""
 
@@ -17453,7 +17453,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:11
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:418
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:414
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr ""
 
@@ -18653,7 +18653,7 @@ msgid "To make translations easier you can enable and disable the inline transla
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco:3
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:387
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:385
 msgid "To register a new security key with your account, press the button below."
 msgstr ""
 
@@ -19003,14 +19003,14 @@ msgstr ""
 msgid "Two-factor authentication is required, but you don't have sufficient permissions to set it up. Please contact your administrator."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:208
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:210
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:111
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:117
 msgid "Two-factor authentication method could not be initiated."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:191
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:168
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:170
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:132
 msgid "Two-factor authentication method was removed."
 msgstr ""
@@ -19021,11 +19021,11 @@ msgid "Two-factor authentication method was set as default."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee:59
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:302
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:304
 msgid "Two-factor authentication method was set up successfully."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:272
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:274
 msgid "Two-factor method could not be configured."
 msgstr ""
 
@@ -19049,7 +19049,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:117
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:211
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
@@ -19393,7 +19393,7 @@ msgstr ""
 msgid "Updating Database"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:74
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:76
 msgid "Updating the order of your ticket overviews failed."
 msgstr ""
 
@@ -20046,7 +20046,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:2
 #: app/assets/javascripts/app/views/welcome.jst.eco:2
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:43
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:412
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:408
 msgid "Welcome!"
 msgstr ""
 
@@ -20534,7 +20534,7 @@ msgid "You have no unread messages"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:10
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:415
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketList.vue:411
 msgid "You have not created a ticket yet."
 msgstr ""
 
@@ -21107,7 +21107,7 @@ msgstr ""
 msgid "descending"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:132
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
 msgstr ""
 
@@ -21374,7 +21374,7 @@ msgstr ""
 msgid "i-doit integration is not enabled"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:170
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:163
 msgid "i-doit: Link objects"
 msgstr ""
 

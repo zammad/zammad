@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Erinnerung erreicht!_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Erinnerung erreicht!_
 Dieses Ticket benötigt Ihre Aufmerksamkeit: Warten auf Erinnerung erreicht für (#{ticket.title}) von Kunde "*#{ticket.customer.longname}*".
 
 <% if @objects[:article] %>
