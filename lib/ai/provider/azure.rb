@@ -62,10 +62,26 @@ class AI::Provider::Azure < AI::Provider
   end
 
   def self.ping!(config)
-    ping_chat!(config)
+    url_models = config[:url_completions].gsub(%r{/deployments/.*$}, '/v1/models')
 
-    # TODO: Enable it when needed.
-    # ping_embeddings!(config)
+    response = UserAgent.get(
+      url_models,
+      {},
+      {
+        open_timeout:  4,
+        read_timeout:  60,
+        verify_ssl:    true,
+        bearer_token:  config[:token],
+        total_timeout: 60,
+        json:          true,
+        log:           {
+          facility:          'AI::Provider',
+          log_only_on_error: true,
+        },
+      },
+    )
+
+    validate_response!(response)
 
     nil
   end
@@ -107,72 +123,6 @@ class AI::Provider::Azure < AI::Provider
   rescue => e
     raise CheckTemperatureSupportError, e.message
   end
-
-  def self.ping_chat!(config)
-    response = UserAgent.post(
-      config[:url_completions],
-      {
-        messages:        [
-          {
-            role:    'system',
-            content: 'Ping pong in JSON', # rubocop:disable Zammad/DetectTranslatableString
-          },
-          {
-            role:    'user',
-            content: 'Ping pong in JSON', # rubocop:disable Zammad/DetectTranslatableString
-          },
-        ],
-        response_format: {
-          type: 'json_object'
-        },
-        stream:          false,
-        store:           false,
-      },
-      {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        bearer_token:  config[:token],
-        total_timeout: 60,
-        json:          true,
-        log:           {
-          facility:          'AI::Provider',
-          log_only_on_error: true,
-        },
-      },
-    )
-
-    validate_response!(response)
-
-    nil
-  end
-
-  def self.ping_embeddings!(config)
-    response = UserAgent.post(
-      config[:url_embeddings],
-      {
-        input: 'Ping',
-      },
-      {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        bearer_token:  config[:token],
-        total_timeout: 60,
-        json:          true,
-        log:           {
-          facility:          'AI::Provider',
-          log_only_on_error: true,
-        },
-      },
-    )
-
-    raise AI::Provider::ResponseError, __('API server not accessible') if response.code.to_i != 200
-
-    nil
-  end
-
-  private_class_method %i[ping_chat! ping_embeddings!]
 
   def extract_response_metadata(data)
     @response_metadata = {
