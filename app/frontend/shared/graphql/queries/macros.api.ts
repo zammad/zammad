@@ -9,6 +9,7 @@ export const MacrosDocument = gql`
     query macros($selector: TicketMacrosSelectorInput!) {
   macros(selector: $selector) {
     id
+    internalId
     active
     name
     uxFlowNextUp

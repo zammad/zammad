@@ -255,6 +255,7 @@ describe('TicketDetailBottomBar', () => {
           {
             __typename: 'Macro',
             id: convertToGraphQLId('Macro', 1),
+            internalId: 1,
             active: true,
             name: 'Macro 1',
             uxFlowNextUp: 'next_task',

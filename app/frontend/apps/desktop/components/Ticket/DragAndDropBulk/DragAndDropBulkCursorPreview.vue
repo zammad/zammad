@@ -1,47 +1,33 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { gql } from '@apollo/client/core'
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
-import type { Ticket } from '#shared/graphql/types.ts'
-import { getApolloClient } from '#shared/server/apollo/client.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
+import CommonTicketPriorityIndicatorIcon from '#desktop/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicatorIcon.vue'
 import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicatorIcon.vue'
 
+import { useTicketBulkEdit } from '../TicketBulkEditFlyout/useTicketBulkEdit.ts'
+
+import type { DragPreviewData } from './types'
+
 export interface Props {
-  ticketIds: Set<ID>
   cursorPosition: {
     x: number
     y: number
   }
+  previewData?: DragPreviewData | null
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
-const apolloClient = getApolloClient()
+const config = toRef(useApplicationStore(), 'config')
 
-const lastTicketData = computed<Ticket | null>(() => {
-  const lastId = Array.from(props.ticketIds).at(-1)
-  if (!lastId) return null
+const { currentSelectedTicketCount } = useTicketBulkEdit()
 
-  return (
-    apolloClient.cache.readFragment<Ticket>({
-      id: `Ticket:${lastId}`,
-      fragment: gql`
-        fragment ticketCursor on Ticket {
-          id
-          title
-          stateColorCode
-        }
-      `,
-    }) ?? null
-  )
-})
-
-const totalCount = computed(() => props.ticketIds.size)
-const remainingCount = computed(() => Math.max(0, totalCount.value - 1))
-const stackCount = computed(() => Math.min(totalCount.value, 3))
+const remainingCount = computed(() => Math.max(0, currentSelectedTicketCount.value - 1))
+const stackCount = computed(() => Math.min(currentSelectedTicketCount.value, 3))
 </script>
 
 <template>
@@ -68,15 +54,20 @@ const stackCount = computed(() => Math.min(totalCount.value, 3))
         class="relative flex h-10 max-w-80 items-center gap-2 rounded-md border border-neutral-100 bg-blue-800 p-3 text-white! shadow-lg dark:border-gray-900"
       >
         <CommonIcon name="check-square" size="xs" class="shrink-0" />
+        <CommonTicketPriorityIndicatorIcon
+          v-if="config.ui_ticket_priority_icons"
+          :ui-color="previewData?.priorityUiColor"
+          class="m-0! shrink-0"
+        />
         <CommonTicketStateIndicatorIcon
-          v-if="lastTicketData?.stateColorCode"
+          v-if="previewData?.stateColorCode"
           class="mx-1 shrink-0 text-current!"
-          :color-code="lastTicketData.stateColorCode"
+          :color-code="previewData.stateColorCode"
           icon-size="tiny"
         />
-        <CommonLabel class="block! truncate text-sm text-current!">{{
-          lastTicketData?.title
-        }}</CommonLabel>
+        <CommonLabel class="block! truncate text-sm text-current!">
+          {{ previewData?.columnText }}
+        </CommonLabel>
         <CommonLabel v-if="remainingCount > 0" class="shrink-0 text-sm text-current!">
           {{ $t('+ %s more', remainingCount) }}
         </CommonLabel>

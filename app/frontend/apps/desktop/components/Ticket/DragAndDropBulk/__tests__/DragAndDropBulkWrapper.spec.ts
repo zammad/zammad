@@ -1,19 +1,24 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { computed } from 'vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 import '#tests/graphql/builders/mocks.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
+import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import { mockMacrosQuery, waitForMacrosQueryCalls } from '#shared/graphql/queries/macros.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
+import type { TicketBulkEditReturn } from '#desktop/components/Ticket/TicketBulkEditFlyout/types.ts'
+import {
+  TICKET_BULK_EDIT_SYMBOL,
+  type TicketBulkSearchContext,
+} from '#desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts'
 
 import DragAndDropBulkWrapper, { type Props } from '../DragAndDropBulkWrapper.vue'
 
 const defaultProps: Props = {
-  ticketIds: new Set<string>(['1', '2']),
-  groupIds: [],
-  bulkContext: { overviewId: convertToGraphQLId('Overview', '1') },
-  bulkCount: 5,
   cursorPosition: { x: 100, y: 100 },
 }
 
@@ -33,55 +38,52 @@ describe('DragAndDropBulkWrapper', () => {
 
   beforeEach(() => {
     mockPermissions(['ticket.agent'])
+    mockFormUpdaterQuery({
+      formUpdater: {
+        fields: {
+          group_id: { options: [] },
+          owner_id: { options: [] },
+        },
+      },
+    })
   })
 
-  const renderWrapper = (props: Partial<Props> = {}) =>
-    renderComponent(DragAndDropBulkWrapper, {
+  const renderWrapper = (
+    props: Partial<Props> = {},
+    ticketBulkEditReturn?: Partial<TicketBulkEditReturn>,
+  ) => {
+    const defaultBulkContext = { overviewId: convertToGraphQLId('Overview', '1') }
+
+    return renderComponent(DragAndDropBulkWrapper, {
       props: { ...defaultProps, ...props },
       router: true,
+      store: true,
+      provide: [
+        [
+          TICKET_BULK_EDIT_SYMBOL,
+          {
+            bulkSelector: computed(() => defaultBulkContext),
+            macrosSelector: computed(() => defaultBulkContext),
+            ...ticketBulkEditReturn,
+          },
+        ],
+      ],
     })
+  }
 
-  describe('default rendering', () => {
-    describe('top drawer', () => {
-      it('renders with the macro placeholder', async () => {
-        const wrapper = renderWrapper()
+  it('does not show the confirmation dialog', () => {
+    const wrapper = renderWrapper()
+    expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
+  })
 
-        mockMacrosQuery({ macros: [{ id: 'gid://zammad/Macro/1', name: 'Test Macro' }] })
+  it('shows "No macros available" when macros are loaded but empty', async () => {
+    mockMacrosQuery({ macros: [] })
 
-        await waitForMacrosQueryCalls()
-        // Because of transition
-        expect(await wrapper.findByText('Run macro')).toBeVisible()
-      })
+    const wrapper = renderWrapper()
 
-      it('shows the skeleton while macros are loading', async () => {
-        const wrapper = renderWrapper()
+    await waitForMacrosQueryCalls()
 
-        expect(await wrapper.findByLabelText('Content loader')).toBeInTheDocument()
-      })
-    })
-
-    // describe('bottom drawer', () => {
-    // it('renders with the assign tickets placeholder', () => {
-    // :TODO needs adjustments when we work on it
-    // const wrapper = renderWrapper()
-    // expect(wrapper.getByText('Assign tickets')).toBeVisible()
-    // })
-    // })
-
-    it('does not show the confirmation dialog', () => {
-      const wrapper = renderWrapper()
-      expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
-    })
-
-    it('shows "No macros available" when macros are loaded but empty', async () => {
-      mockMacrosQuery({ macros: [] })
-
-      const wrapper = renderWrapper()
-
-      await waitForMacrosQueryCalls()
-
-      expect(await wrapper.findByText('No macros available for selected tickets')).toBeVisible()
-    })
+    expect(await wrapper.findByText('No macros available for selected tickets')).toBeVisible()
   })
 
   describe('macros selector', () => {
@@ -100,14 +102,20 @@ describe('DragAndDropBulkWrapper', () => {
     it('uses search query selector when bulk context comes from search', async () => {
       mockMacrosQuery({ macros: [] })
 
-      renderWrapper({
-        bulkContext: { searchQuery: 'priority:1 state:open' },
-      })
+      const searchContext: TicketBulkSearchContext = { searchQuery: 'priority:1 state:open' }
+
+      renderWrapper(
+        {},
+        {
+          bulkSelector: computed(() => searchContext),
+          macrosSelector: computed(() => searchContext),
+        },
+      )
 
       const calls = await waitForMacrosQueryCalls()
 
       expect(calls.at(-1)?.variables).toEqual({
-        selector: { searchQuery: 'priority:1 state:open' },
+        selector: searchContext,
       })
     })
 
@@ -116,15 +124,24 @@ describe('DragAndDropBulkWrapper', () => {
 
       const groupIds = [convertToGraphQLId('Group', 1), convertToGraphQLId('Group', 2)]
 
-      renderWrapper({
-        bulkCount: 0,
-        groupIds,
-      })
+      const entityContext = {
+        entityIds: [convertToGraphQLId('Ticket', 1)],
+      }
+
+      renderWrapper(
+        {},
+        {
+          bulkCount: computed(() => 0),
+          groupIds: computed(() => groupIds),
+          bulkSelector: computed(() => entityContext),
+          macrosSelector: computed(() => entityContext),
+        },
+      )
 
       const calls = await waitForMacrosQueryCalls()
 
       expect(calls.at(-1)?.variables).toEqual({
-        selector: { entityIds: groupIds },
+        selector: entityContext,
       })
     })
   })

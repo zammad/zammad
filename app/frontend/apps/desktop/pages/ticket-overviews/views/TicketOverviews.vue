@@ -11,6 +11,7 @@ import DragAndDropBulkWrapper from '#desktop/components/Ticket/DragAndDropBulk/D
 import { useDragAndDropBulk } from '#desktop/components/Ticket/DragAndDropBulk/useDragAndDropBulk.ts'
 import TicketBulkEditButton from '#desktop/components/Ticket/TicketBulkEditButton.vue'
 import { useTicketBulkEdit } from '#desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts'
+import { usePage } from '#desktop/composables/usePage.ts'
 import TicketList from '#desktop/pages/ticket-overviews/components/TicketList.vue'
 import TicketOverviewsSidebar from '#desktop/pages/ticket-overviews/components/TicketOverviewsSidebar.vue'
 import { useTicketOverviews } from '#desktop/pages/ticket-overviews/composables/useTicketOverviews.ts'
@@ -86,14 +87,21 @@ const breadcrumbItems = computed(() => [
   },
 ])
 
-const { checkedTicketIds, groupIds, openBulkEditFlyout, bulkContext, bulkCount } =
-  useTicketBulkEdit()
+const { checkedTicketIds, openBulkEditFlyout, bulkSelector } = useTicketBulkEdit()
 
-const { isActive: isDragAndDropActive, cursorPosition } = useDragAndDropBulk({
+const {
+  isActive: isDragAndDropActive,
+  cursorPosition,
+  dragPreviewData,
+  dropSuccessTargetId,
+  reactivateListeners,
+  deactivateListeners,
+} = useDragAndDropBulk({
   checkedTicketIds,
-  bulkContext,
-  bulkCount,
+  bulkSelector,
 })
+
+usePage({ onReactivate: reactivateListeners, onDeactivated: deactivateListeners })
 </script>
 
 <template>
@@ -147,11 +155,9 @@ const { isActive: isDragAndDropActive, cursorPosition } = useDragAndDropBulk({
 
     <DragAndDropBulkWrapper
       v-if="isDragAndDropActive"
-      :bulk-context="bulkContext!"
-      :bulk-count="currentOverviewCount"
-      :ticket-ids="checkedTicketIds"
-      :group-ids="groupIds"
       :cursor-position="cursorPosition"
+      :preview-data="dragPreviewData"
+      :drop-success-target-id="dropSuccessTargetId"
     />
   </div>
 </template>

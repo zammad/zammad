@@ -321,18 +321,25 @@ const fetchNextPage = async () => {
 const {
   checkedTicketIds,
   selectAllActive,
-  bulkCount,
   bulkContext,
+  bulkSelector,
   openBulkEditFlyout,
   setOnSuccessCallback,
-  groupIds,
 } = useTicketBulkEdit()
 
-const { isActive: isDragAndDropActive, cursorPosition } = useDragAndDropBulk({
+const {
+  isActive: isDragAndDropActive,
+  cursorPosition,
+  dragPreviewData,
+  dropSuccessTargetId,
+  reactivateListeners,
+  deactivateListeners,
+} = useDragAndDropBulk({
   checkedTicketIds,
-  bulkContext,
-  bulkCount,
+  bulkSelector,
 })
+
+usePage({ onReactivate: reactivateListeners, onDeactivated: deactivateListeners })
 
 watch(
   sanitizedSearchTerm,
@@ -461,11 +468,9 @@ setOnSuccessCallback(() => {
 
       <DragAndDropBulkWrapper
         v-if="isDragAndDropActive"
-        :bulk-context="bulkContext!"
-        :bulk-count="bulkCount"
-        :ticket-ids="checkedTicketIds"
-        :group-ids="groupIds"
         :cursor-position="cursorPosition"
+        :preview-data="dragPreviewData"
+        :drop-success-target-id="dropSuccessTargetId"
       />
     </div>
   </LayoutContent>

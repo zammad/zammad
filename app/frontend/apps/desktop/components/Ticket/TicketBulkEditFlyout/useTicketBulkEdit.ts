@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import { uniq } from 'lodash-es'
 import { computed, inject, provide, ref, toRef } from 'vue'
 
+import type { TicketBulkSelectorInput, TicketMacrosSelectorInput } from '#shared/graphql/types.ts'
 import { getApolloClient } from '#shared/server/apollo/client.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -13,7 +14,7 @@ import { useFlyout } from '../../CommonFlyout/useFlyout.ts'
 
 import type { TicketBulkEditReturn } from './types.ts'
 
-const TICKET_BULK_EDIT_SYMBOL = Symbol('ticket-bulk-edit')
+export const TICKET_BULK_EDIT_SYMBOL = Symbol('ticket-bulk-edit')
 
 export interface TicketBulkOverviewContext {
   overviewId: ID
@@ -46,6 +47,18 @@ export const useTicketBulkEdit = () => {
 
   const ticketIds = computed<ID[]>(() => Array.from(checkedTicketIds.value.keys()))
 
+  const bulkSelector = computed(() => {
+    let selector: TicketBulkSelectorInput = {}
+
+    if (bulkCount.value && bulkContext.value) {
+      if ('overviewId' in bulkContext.value) selector = { overviewId: bulkContext.value.overviewId }
+      else if ('searchQuery' in bulkContext.value)
+        selector = { searchQuery: bulkContext.value.searchQuery }
+    } else selector = { entityIds: Array.from(ticketIds.value) }
+
+    return selector
+  })
+
   const groupIds = computed(() => {
     const ids = ticketIds.value.map((ticketId) => {
       const cache = apolloClient.cache.readFragment<{ group: { id: ID } }>({
@@ -66,6 +79,20 @@ export const useTicketBulkEdit = () => {
     return uniq(ids)
   })
 
+  const macrosSelector = computed(() => {
+    let selector: TicketMacrosSelectorInput = {}
+
+    if (bulkCount.value && bulkContext.value) {
+      if ('overviewId' in bulkContext.value) selector = { overviewId: bulkContext.value.overviewId }
+      else if ('searchQuery' in bulkContext.value)
+        selector = { searchQuery: bulkContext.value.searchQuery }
+    } else selector = { entityIds: groupIds.value }
+
+    return selector
+  })
+
+  const currentSelectedTicketCount = computed(() => bulkCount.value || ticketIds.value.length)
+
   const { hasPermission } = useSessionStore()
 
   const bulkEditActive = computed(() => hasPermission('ticket.agent'))
@@ -81,11 +108,11 @@ export const useTicketBulkEdit = () => {
 
   const openBulkEditFlyout = () => {
     open({
-      ticketIds,
       bulkCount,
+      currentSelectedTicketCount,
       bulkHasMoreItems,
-      bulkContext,
-      groupIds,
+      bulkSelector,
+      macrosSelector,
       onSuccess: () => {
         checkedTicketIds.value.clear()
         selectAllActive.value = false
@@ -103,11 +130,14 @@ export const useTicketBulkEdit = () => {
     bulkEditActive,
     isBulkTaskRunning,
     checkedTicketIds,
+    currentSelectedTicketCount,
     groupIds,
     selectAllActive,
     bulkCount,
     bulkHasMoreItems,
     bulkContext,
+    bulkSelector,
+    macrosSelector,
     openBulkEditFlyout,
     setOnSuccessCallback: (callback: () => void) => {
       onSuccessCallback = callback

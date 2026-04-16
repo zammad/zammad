@@ -13,7 +13,7 @@ defineEmits<{
 
 <template>
   <div
-    class="group absolute top-0 flex h-full w-25 items-center justify-center"
+    class="group absolute top-0 z-55 flex h-full w-25 items-center justify-center"
     :class="{
       'ScrollButtonStart inset-s-0': direction === 'start',
       'ScrollButtonEnd inset-e-0': direction === 'end',

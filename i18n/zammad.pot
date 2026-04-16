@@ -368,7 +368,7 @@ msgstr ""
 msgid "%s switched to |%s|!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:84
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:73
 msgid "%s ticket(s) selected"
 msgstr ""
 
@@ -481,7 +481,7 @@ msgstr ""
 msgid "**Service Level Agreements**, abbreviated **SLAs**, help you to meet specific response times for your customers' requests. This way you can define goals such as answering every inquiry within eight hours. If you are at risk of missing this target, Zammad will alert you.\n\nYou can define targets for three different metrics: **response time** (time between the creation of a ticket and the first reaction of an agent), **update time** (time between a customer's request and an agent's reaction), and **solution time** (time between creating and closing a ticket).\n\nAny escalated tickets (i.e. tickets that have missed the defined target) are displayed in a separate view in your overviews. You can also configure **email notifications**."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkCursorPreview.vue:81
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkCursorPreview.vue:72
 msgid "+ %s more"
 msgstr ""
 
@@ -1514,7 +1514,7 @@ msgstr ""
 msgid "All %s result(s) selected"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:82
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:71
 msgid "All %s ticket(s) selected"
 msgstr ""
 
@@ -1709,7 +1709,7 @@ msgstr ""
 msgid "Analyzing structure…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:235
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:206
 msgid "Another bulk update is currently in progress. Please wait until it is finished before starting a new one."
 msgstr ""
 
@@ -1816,7 +1816,7 @@ msgid "Applications"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:8
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:421
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:337
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:134
 msgid "Apply"
 msgstr ""
@@ -2068,8 +2068,8 @@ msgstr ""
 msgid "Assign signup roles"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:36
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:65
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:229
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:68
 msgid "Assign tickets"
 msgstr ""
 
@@ -2661,11 +2661,8 @@ msgstr ""
 msgid "Bulk action failed"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/useDragAndDropBulk.ts:188
-msgid "Bulk action failed for %s ticket(s)."
-msgstr ""
-
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:320
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:263
+#: app/frontend/apps/desktop/entities/ticket/composables/useTicketBulkUpdate.ts:42
 #: app/frontend/apps/desktop/entities/user/current/stores/ticketBulkUpdate.ts:78
 msgid "Bulk action failed for %s ticket(s). Check attribute values and try again."
 msgstr ""
@@ -2679,8 +2676,8 @@ msgstr ""
 msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/useDragAndDropBulk.ts:180
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:311
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:254
+#: app/frontend/apps/desktop/entities/ticket/composables/useTicketBulkUpdate.ts:32
 #: app/frontend/apps/desktop/entities/user/current/stores/ticketBulkUpdate.ts:75
 msgid "Bulk action successful for %s ticket(s)."
 msgstr ""
@@ -2904,8 +2901,8 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue:20
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:10
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:59
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:411
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:62
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:327
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue:53
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:116
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:118
@@ -3483,7 +3480,7 @@ msgid "Close current tab"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:163
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:36
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:39
 msgid "Close dialog"
 msgstr ""
 
@@ -3676,7 +3673,7 @@ msgstr ""
 msgid "Confirm Password"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:29
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:32
 msgid "Confirm bulk action"
 msgstr ""
 
@@ -4370,14 +4367,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:145
 #: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:25
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:218
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:219
 #: app/frontend/apps/mobile/components/Ticket/TicketItem.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:41
 msgid "Currently processing this ticket…"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:148
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:141
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:144
 msgid "Currently, no overviews are assigned to your roles. Please contact your administrator."
 msgstr ""
 
@@ -6057,7 +6054,7 @@ msgstr ""
 msgid "Drag ended for %s."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue:96
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue:117
 msgid "Drag here to cancel"
 msgstr ""
 
@@ -7864,6 +7861,7 @@ msgstr ""
 msgid "Go Back"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:246
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:62
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:85
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue:41
@@ -7875,7 +7873,7 @@ msgstr ""
 msgid "Go home"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkEntityCard.vue:88
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkEntityCard.vue:121
 msgid "Go inside group"
 msgstr ""
 
@@ -8956,7 +8954,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:155
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:160
 msgid "Internal"
 msgstr ""
@@ -9929,7 +9927,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:11
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:78
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:218
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:191
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:45
 #: db/seeds/permissions.rb:47
 msgid "Macros"
@@ -10338,7 +10336,7 @@ msgstr ""
 msgid "Max %s result(s) selected"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:81
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:70
 msgid "Max %s ticket(s) selected"
 msgstr ""
 
@@ -11426,7 +11424,7 @@ msgstr ""
 msgid "No links added yet."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:150
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:65
 msgid "No macros available for selected tickets"
 msgstr ""
 
@@ -11443,7 +11441,7 @@ msgid "No organizations found"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:145
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:138
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:141
 msgid "No overviews"
 msgstr ""
 
@@ -11679,7 +11677,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:38
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:54
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:47
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:115
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:104
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/note.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:14
 #: db/seeds/object_manager_attributes.rb:1569
@@ -13237,7 +13235,7 @@ msgid "Proxy address"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:150
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:165
 msgid "Public"
 msgstr ""
@@ -13924,7 +13922,7 @@ msgstr ""
 msgid "Result:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:381
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:384
 msgid "Results"
 msgstr ""
 
@@ -14021,8 +14019,8 @@ msgstr ""
 msgid "Run every %s at %s in %s time"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:64
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:105
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:67
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:43
 msgid "Run macro"
 msgstr ""
 
@@ -14323,6 +14321,14 @@ msgstr ""
 msgid "Scroll down to see new messages"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollList.vue:136
+msgid "Scroll left"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollList.vue:143
+msgid "Scroll right"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:275
 msgid "Scroll to bottom"
 msgstr ""
@@ -14333,7 +14339,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:379
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:382
 #: app/frontend/apps/desktop/pages/search/routes.ts:10
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
@@ -18462,7 +18468,7 @@ msgstr ""
 msgid "Tickets assigned to me: %s of %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:392
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:308
 msgid "Tickets bulk edit"
 msgstr ""
 
@@ -19098,6 +19104,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:252
 msgid "URL (OCR)"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:151
+msgid "Unassign owner"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:188
+msgid "Unassign owner & move to group"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb:206
@@ -19894,7 +19908,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:152
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
@@ -20711,11 +20725,11 @@ msgstr ""
 msgid "Your user role is not allowed to create new tickets. Please contact your administrator."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:46
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:49
 msgid "You’re about to apply a macro to %s tickets. Do you want to continue?"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:50
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:53
 msgid "You’re about to assign %s tickets. Do you want to continue?"
 msgstr ""
 
@@ -22012,7 +22026,7 @@ msgstr ""
 msgid "run macro"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:104
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:107
 msgid "second level navigation sidebar"
 msgstr ""
 

@@ -5,6 +5,8 @@ import '#tests/graphql/builders/mocks.ts'
 import { createPinia, setActivePinia } from 'pinia'
 import { ref } from 'vue'
 
+import renderComponent from '#tests/support/components/renderComponent.ts'
+
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import {
@@ -18,12 +20,19 @@ import { useDragAndDropBulk } from '../useDragAndDropBulk.ts'
 const triggerDragAndDrop = async ({
   rowItemId,
   target,
+  checkboxDisabled = false,
 }: {
   rowItemId: string
   target: HTMLElement
+  checkboxDisabled?: boolean
 }) => {
   const row = document.createElement('tr')
   row.dataset.itemId = rowItemId
+
+  const checkbox = document.createElement('div')
+  checkbox.setAttribute('role', 'checkbox')
+  checkbox.setAttribute('aria-disabled', String(checkboxDisabled))
+  row.appendChild(checkbox)
 
   const rowInner = document.createElement('td')
   row.appendChild(rowInner)
@@ -63,6 +72,19 @@ const triggerDragAndDrop = async ({
   target.remove()
 }
 
+const mountDragAndDropBulk = (options: Parameters<typeof useDragAndDropBulk>[0]) => {
+  let composable!: ReturnType<typeof useDragAndDropBulk>
+
+  renderComponent({
+    setup() {
+      composable = useDragAndDropBulk(options)
+      return () => null
+    },
+  })
+
+  return composable
+}
+
 describe('useDragAndDropBulk', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
@@ -75,8 +97,8 @@ describe('useDragAndDropBulk', () => {
   })
 
   it('calls ticket bulk update mutation when dropping on a macro target', async () => {
-    const ticketId = convertToGraphQLId('Ticket', 1)
-    const macroId = convertToGraphQLId('Macro', 1)
+    const ticketInternalId = '1'
+    const macroInternalId = '2'
 
     mockTicketUpdateBulkMutation({
       ticketUpdateBulk: {
@@ -88,33 +110,32 @@ describe('useDragAndDropBulk', () => {
       },
     })
 
-    useDragAndDropBulk({
-      checkedTicketIds: ref(new Set([ticketId])),
-      bulkContext: ref(undefined),
-      bulkCount: ref(undefined),
+    mountDragAndDropBulk({
+      checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
+      bulkSelector: ref({ entityIds: [convertToGraphQLId('Ticket', ticketInternalId)] }),
     })
 
     const macroTarget = document.createElement('li')
-    macroTarget.id = macroId
+    macroTarget.dataset.internalId = macroInternalId
     macroTarget.dataset.type = 'macro'
 
-    await triggerDragAndDrop({ rowItemId: ticketId, target: macroTarget })
+    await triggerDragAndDrop({ rowItemId: ticketInternalId, target: macroTarget })
 
     const calls = await waitForTicketUpdateBulkMutationCalls()
 
     expect(calls.at(-1)?.variables).toEqual({
       selector: {
-        entityIds: [ticketId],
+        entityIds: [convertToGraphQLId('Ticket', ticketInternalId)],
       },
       perform: {
-        macroId,
+        macroId: convertToGraphQLId('Macro', macroInternalId),
       },
     })
   })
 
   it('uses overview id selector when bulk count and overview context are present', async () => {
-    const ticketId = convertToGraphQLId('Ticket', 1)
-    const macroId = convertToGraphQLId('Macro', 2)
+    const ticketInternalId = '1'
+    const macroInternalId = '2'
     const overviewId = convertToGraphQLId('Overview', 1)
 
     mockTicketUpdateBulkMutation({
@@ -126,18 +147,16 @@ describe('useDragAndDropBulk', () => {
         inaccessibleTicketIds: [],
       },
     })
-
-    useDragAndDropBulk({
-      checkedTicketIds: ref(new Set([ticketId])),
-      bulkContext: ref({ overviewId }),
-      bulkCount: ref(10),
+    mountDragAndDropBulk({
+      checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
+      bulkSelector: ref({ overviewId }),
     })
 
     const macroTarget = document.createElement('li')
-    macroTarget.id = macroId
+    macroTarget.dataset.internalId = macroInternalId
     macroTarget.dataset.type = 'macro'
 
-    await triggerDragAndDrop({ rowItemId: ticketId, target: macroTarget })
+    await triggerDragAndDrop({ rowItemId: ticketInternalId, target: macroTarget })
 
     const calls = await waitForTicketUpdateBulkMutationCalls()
 
@@ -146,14 +165,36 @@ describe('useDragAndDropBulk', () => {
         overviewId,
       },
       perform: {
-        macroId,
+        macroId: convertToGraphQLId('Macro', macroInternalId),
       },
     })
   })
 
+  it('does not start drag when the row checkbox is disabled (no write permission)', async () => {
+    const ticketInternalId = '1'
+    const macroInternalId = '3'
+
+    const composable = mountDragAndDropBulk({
+      checkedTicketIds: ref(new Set<ID>()),
+      bulkSelector: ref({}),
+    })
+
+    const macroTarget = document.createElement('li')
+    macroTarget.dataset.internalId = macroInternalId
+    macroTarget.dataset.type = 'macro'
+
+    await triggerDragAndDrop({
+      rowItemId: ticketInternalId,
+      target: macroTarget,
+      checkboxDisabled: true,
+    })
+
+    expect(composable.isActive.value).toBe(false)
+  })
+
   it('uses search query selector when bulk count and search context are present', async () => {
-    const ticketId = convertToGraphQLId('Ticket', 1)
-    const macroId = convertToGraphQLId('Macro', 3)
+    const ticketInternalId = '1'
+    const macroInternalId = '3'
 
     mockTicketUpdateBulkMutation({
       ticketUpdateBulk: {
@@ -165,17 +206,16 @@ describe('useDragAndDropBulk', () => {
       },
     })
 
-    useDragAndDropBulk({
-      checkedTicketIds: ref(new Set([ticketId])),
-      bulkContext: ref({ searchQuery: 'state:new' }),
-      bulkCount: ref(10),
+    mountDragAndDropBulk({
+      checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
+      bulkSelector: ref({ searchQuery: 'state:new' }),
     })
 
     const macroTarget = document.createElement('li')
-    macroTarget.id = macroId
+    macroTarget.dataset.internalId = macroInternalId
     macroTarget.dataset.type = 'macro'
 
-    await triggerDragAndDrop({ rowItemId: ticketId, target: macroTarget })
+    await triggerDragAndDrop({ rowItemId: ticketInternalId, target: macroTarget })
 
     const calls = await waitForTicketUpdateBulkMutationCalls()
 
@@ -184,7 +224,7 @@ describe('useDragAndDropBulk', () => {
         searchQuery: 'state:new',
       },
       perform: {
-        macroId,
+        macroId: convertToGraphQLId('Macro', macroInternalId),
       },
     })
   })

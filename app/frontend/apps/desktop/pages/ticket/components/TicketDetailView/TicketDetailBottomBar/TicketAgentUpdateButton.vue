@@ -34,9 +34,9 @@ const emit = defineEmits<{
   'execute-macro': [MacroById]
 }>()
 
-const macroSelector = computed(() => (props.groupId ? { entityIds: [props.groupId] } : {}))
+const macrosSelector = computed(() => (props.groupId ? { entityIds: [props.groupId] } : {}))
 
-const { macrosLoaded, macros } = useMacros(macroSelector)
+const { macrosLoaded, macros } = useMacros(macrosSelector)
 
 const { notify } = useNotifications()
 

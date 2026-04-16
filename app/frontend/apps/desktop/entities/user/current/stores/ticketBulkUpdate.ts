@@ -157,7 +157,6 @@ export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
   // Inline confirmation state for bulk actions exceeding the threshold.
   // Rendered within the drag-and-drop overlay
   const confirmationPending = ref(false)
-  const confirmationTicketCount = ref(0)
   const currentActiveEntityType = ref<DragAndDropBulkEntityType | null>(null)
   const confirmationResolver = shallowRef<((confirmed: boolean) => void) | null>(null)
 
@@ -167,7 +166,6 @@ export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
   ): Promise<boolean> => {
     if (ticketCount <= BULK_CONFIRMATION_THRESHOLD) return Promise.resolve(true)
 
-    confirmationTicketCount.value = ticketCount
     confirmationPending.value = true
     currentActiveEntityType.value = type
 
@@ -181,7 +179,6 @@ export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
     confirmationResolver.value = null
     currentActiveEntityType.value = null
     confirmationPending.value = false
-    confirmationTicketCount.value = 0
   }
 
   const confirmBulkAction = () => resolveBulkConfirmation(true)
@@ -192,7 +189,6 @@ export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
     status,
     isRunning,
     confirmationPending,
-    confirmationTicketCount,
     requestBulkConfirmation,
     confirmBulkAction,
     cancelBulkAction,

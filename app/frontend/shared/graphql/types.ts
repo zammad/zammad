@@ -7996,7 +7996,7 @@ export type MacrosQueryVariables = Exact<{
 }>;
 
 
-export type MacrosQuery = { __typename?: 'Queries', macros: Array<{ __typename?: 'Macro', id: string, active: boolean, name: string, uxFlowNextUp: string }> };
+export type MacrosQuery = { __typename?: 'Queries', macros: Array<{ __typename?: 'Macro', id: string, internalId: number, active: boolean, name: string, uxFlowNextUp: string }> };
 
 export type SessionQueryVariables = Exact<{ [key: string]: never; }>;
 

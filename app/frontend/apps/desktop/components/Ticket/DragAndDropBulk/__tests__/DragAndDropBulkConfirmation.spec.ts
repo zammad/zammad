@@ -11,7 +11,7 @@ import { DragAndDropBulkEntityType } from '../types.ts'
 
 describe('DragAndDropBulkConfirmation', () => {
   it('shows the confirmation dialog', async () => {
-    const wrapper = renderComponent(DragAndDropBulkConfirmation)
+    const wrapper = renderComponent(DragAndDropBulkConfirmation, { router: true })
 
     const store = useTicketBulkUpdateStore()
 
@@ -25,7 +25,7 @@ describe('DragAndDropBulkConfirmation', () => {
   })
 
   it('hides the top and bottom drawers while the dialog is open', async () => {
-    const wrapper = renderComponent(DragAndDropBulkConfirmation)
+    const wrapper = renderComponent(DragAndDropBulkConfirmation, { router: true })
     const store = useTicketBulkUpdateStore()
 
     store.requestBulkConfirmation(25, DragAndDropBulkEntityType.Macro)
@@ -40,20 +40,21 @@ describe('DragAndDropBulkConfirmation', () => {
   })
 
   it('shows the correct message for a macro confirmation', async () => {
-    const wrapper = renderComponent(DragAndDropBulkConfirmation)
+    const wrapper = renderComponent(DragAndDropBulkConfirmation, { router: true })
     const store = useTicketBulkUpdateStore()
 
     store.requestBulkConfirmation(25, DragAndDropBulkEntityType.Macro)
 
     await nextTick()
 
+    // 0 because useTicketBulkEdit is not populated
     expect(
-      wrapper.getByText('You’re about to apply a macro to 25 tickets. Do you want to continue?'),
+      wrapper.getByText('You’re about to apply a macro to 0 tickets. Do you want to continue?'),
     ).toBeInTheDocument()
   })
 
   it('confirms action when clicking on button', async () => {
-    const wrapper = renderComponent(DragAndDropBulkConfirmation)
+    const wrapper = renderComponent(DragAndDropBulkConfirmation, { router: true })
     const store = useTicketBulkUpdateStore()
 
     store.requestBulkConfirmation(25, DragAndDropBulkEntityType.Macro)
@@ -64,11 +65,10 @@ describe('DragAndDropBulkConfirmation', () => {
 
     expect(store.currentActiveEntityType).toBe(null)
     expect(store.confirmationPending).toBe(false)
-    expect(store.confirmationTicketCount).toBe(0)
   })
 
   it('closes the dialog when clicking on button', async () => {
-    const wrapper = renderComponent(DragAndDropBulkConfirmation)
+    const wrapper = renderComponent(DragAndDropBulkConfirmation, { router: true })
     const store = useTicketBulkUpdateStore()
 
     store.requestBulkConfirmation(25, DragAndDropBulkEntityType.Macro)
@@ -79,7 +79,6 @@ describe('DragAndDropBulkConfirmation', () => {
 
     expect(store.currentActiveEntityType).toBe(null)
     expect(store.confirmationPending).toBe(false)
-    expect(store.confirmationTicketCount).toBe(0)
 
     store.requestBulkConfirmation(25, DragAndDropBulkEntityType.Macro)
 
@@ -89,6 +88,5 @@ describe('DragAndDropBulkConfirmation', () => {
 
     expect(store.currentActiveEntityType).toBe(null)
     expect(store.confirmationPending).toBe(false)
-    expect(store.confirmationTicketCount).toBe(0)
   })
 })

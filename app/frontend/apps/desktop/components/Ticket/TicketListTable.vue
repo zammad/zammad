@@ -157,6 +157,7 @@ const userPopoverSlots: {
       >
         <template #column-cell-priorityIcon="{ item, isRowSelected }">
           <CommonTicketPriorityIndicatorIcon
+            :data-priority-ui-color="(item as TicketByList).priority?.uiColor ?? undefined"
             :ui-color="(item as TicketByList).priority?.uiColor"
             with-text-color
             class="shrink-0 outline-offset-0! group-hover:text-black group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
@@ -222,6 +223,7 @@ const userPopoverSlots: {
           />
           <CommonTicketStateIndicatorIcon
             v-else
+            :data-state-color-code="(item as TicketByList).stateColorCode"
             class="shrink-0 outline-offset-0! group-hover:text-black group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
             :class="{
               'text-black! dark:text-white!': isRowSelected,

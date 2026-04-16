@@ -9,12 +9,15 @@ import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useTicketBulkUpdateStore } from '#desktop/entities/user/current/stores/ticketBulkUpdate.ts'
 
+import { useTicketBulkEdit } from '../TicketBulkEditFlyout/useTicketBulkEdit.ts'
+
 import { DragAndDropBulkEntityType } from './types.ts'
 
 const bulkUpdateStore = useTicketBulkUpdateStore()
-const confirmationTicketCount = toRef(bulkUpdateStore, 'confirmationTicketCount')
 const currentActiveEntityType = toRef(bulkUpdateStore, 'currentActiveEntityType')
 const { confirmBulkAction, cancelBulkAction } = bulkUpdateStore
+
+const { currentSelectedTicketCount } = useTicketBulkEdit()
 
 onKeyDown('Escape', cancelBulkAction)
 </script>
@@ -44,11 +47,11 @@ onKeyDown('Escape', cancelBulkAction)
           currentActiveEntityType === DragAndDropBulkEntityType.Macro
             ? $t(
                 'You’re about to apply a macro to %s tickets. Do you want to continue?',
-                confirmationTicketCount,
+                currentSelectedTicketCount,
               )
             : $t(
                 'You’re about to assign %s tickets. Do you want to continue?',
-                confirmationTicketCount,
+                currentSelectedTicketCount,
               )
         }}
       </CommonLabel>
@@ -58,7 +61,7 @@ onKeyDown('Escape', cancelBulkAction)
       <CommonButton size="large" variant="secondary" @click="cancelBulkAction">
         {{ $t('Cancel & go back') }}
       </CommonButton>
-      <CommonButton size="large" variant="primary" @click="confirmBulkAction()">
+      <CommonButton size="large" variant="primary" @click="confirmBulkAction">
         {{
           currentActiveEntityType === DragAndDropBulkEntityType.Macro
             ? $t('Run macro')

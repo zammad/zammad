@@ -1,41 +1,54 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useEventListener, useTimeoutFn } from '@vueuse/core'
+import { useEventListener, useTimeoutFn, type Fn } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { ref, toRef } from 'vue'
+import { onMounted, ref, toRef } from 'vue'
 
-import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
-import {
-  EnumBulkUpdateStatusStatus,
-  type TicketBulkPerformInput,
-  type TicketBulkSelectorInput,
-} from '#shared/graphql/types.ts'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
+import { EnumTicketStateColorCode, type TicketBulkPerformInput } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import emitter from '#shared/utils/emitter.ts'
 
-import { useTicketUpdateBulkMutation } from '#desktop/entities/ticket/graphql/mutations/updateBulk.api.ts'
+import { useTicketBulkUpdate } from '#desktop/entities/ticket/composables/useTicketBulkUpdate.ts'
 import { useTicketBulkUpdateStore } from '#desktop/entities/user/current/stores/ticketBulkUpdate.ts'
 
-import type { BulkData, DragAndDropBulkEntityType, DragAndDropBulkOptions } from './types'
+import { DragAndDropBulkEntityType } from './types.ts'
+
+import type { BulkData, DragAndDropBulkOptions, DragPreviewData } from './types.ts'
 
 const LONG_PRESS_DURATION = 200
 const MOVE_THRESHOLD_PX = 5
+const DROP_SUCCESS_ANIMATION_DURATION = 500
 
-export const useDragAndDropBulk = ({
-  checkedTicketIds,
-  bulkContext,
-  bulkCount,
-}: DragAndDropBulkOptions) => {
+const capturePreviewData = (row: HTMLElement): DragPreviewData => {
+  const stateEl = row.querySelector<HTMLElement>('[data-state-color-code]')
+  const stateColorCode = (stateEl?.dataset.stateColorCode as EnumTicketStateColorCode) ?? null
+
+  const priorityEl = row.querySelector<HTMLElement>('[data-priority-ui-color]')
+  const priorityUiColor = priorityEl ? priorityEl.dataset.priorityUiColor || null : undefined
+
+  // We basically take the first text node of the table cell
+  // checkbox - priority icon - ticket state - TEXT(title,etc...)
+  const firstTextCell = Array.from(row.querySelectorAll<HTMLElement>('td')).find(
+    (td) => !td.querySelector('[role="checkbox"]') && !!td.textContent?.trim(),
+  )
+
+  return { stateColorCode, priorityUiColor, columnText: firstTextCell?.textContent?.trim() ?? '' }
+}
+
+export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDropBulkOptions) => {
   const bulkUpdateStore = useTicketBulkUpdateStore()
   const isBulkTaskRunning = toRef(useTicketBulkUpdateStore(), 'isRunning')
-  const { requestBulkConfirmation, setTicketBulkUpdateStatus } = bulkUpdateStore
+  const { requestBulkConfirmation } = bulkUpdateStore
   const { confirmationPending, isRunning } = storeToRefs(bulkUpdateStore)
 
   const isActive = ref(false)
   const longPressedItemId = ref<ID | null>(null)
   const pendingItemId = ref<ID | null>(null)
+  const pendingRow = ref<HTMLElement | null>(null)
+  const dragPreviewData = ref<DragPreviewData | null>(null)
   const cursorPosition = ref<{ x: number; y: number }>({ x: 0, y: 0 })
+  const dropSuccessTargetId = ref<number | null>(null)
 
   // Track both conditions: long press elapsed AND pointer moved enough.
   const longPressElapsed = ref(false)
@@ -45,12 +58,20 @@ export const useDragAndDropBulk = ({
   const getItemIdFromEvent = (event: PointerEvent): ID | null => {
     const row = (event.target as HTMLElement).closest<HTMLElement>('[data-item-id]')
 
-    return row?.dataset.itemId ?? null
+    // if ticket policy update is not given the the row is disabled
+    // It get's set for each table row, so we don't need to pass all the tickets
+    if (!row) return null
+
+    const checkbox = row.querySelector<HTMLElement>('[role="checkbox"]')
+    if (checkbox?.getAttribute('aria-disabled') === 'true') return null
+
+    return row.dataset.itemId ?? null
   }
 
+  const { isTouchDevice } = useTouchDevice()
+
   const activate = () => {
-    if (isBulkTaskRunning.value) return
-    if (isActive.value) return
+    if (isTouchDevice.value || isBulkTaskRunning.value || isActive.value) return
 
     const itemId = pendingItemId.value
 
@@ -61,6 +82,10 @@ export const useDragAndDropBulk = ({
     }
 
     if (checkedTicketIds.value.size === 0) return
+
+    if (pendingRow.value) {
+      dragPreviewData.value = capturePreviewData(pendingRow.value)
+    }
 
     emitter.emit('close-popover')
     isActive.value = true
@@ -84,188 +109,209 @@ export const useDragAndDropBulk = ({
   const resetState = () => {
     stopLongPress()
     pendingItemId.value = null
+    pendingRow.value = null
     longPressElapsed.value = false
     hasMovedEnough.value = false
     startPosition.value = null
   }
 
-  const cancelDragAndDrop = () => {
-    if (longPressedItemId.value) {
-      checkedTicketIds.value.delete(longPressedItemId.value)
-    }
-
-    longPressedItemId.value = null
-    isActive.value = false
-    resetState()
+  const clearDropSuccessAnimation = () => {
+    dropSuccessTargetId.value = null
   }
 
-  const finishDragAndDrop = () => {
+  const closeDragAndDropOverlay = () => {
     longPressedItemId.value = null
+    dragPreviewData.value = null
     isActive.value = false
     checkedTicketIds.value.clear()
 
     resetState()
   }
 
-  const { notify } = useNotifications()
-  const updateBulkMutation = new MutationHandler(useTicketUpdateBulkMutation())
+  const { start: startDropSuccessTimer, stop: stopDropSuccessTimer } = useTimeoutFn(
+    () => {
+      clearDropSuccessAnimation()
+      closeDragAndDropOverlay()
+    },
+    DROP_SUCCESS_ANIMATION_DURATION,
+    { immediate: false },
+  )
 
-  const buildSelector = (): TicketBulkSelectorInput => {
-    const context = bulkContext.value
-    const count = bulkCount.value
+  const cancelDragAndDrop = () => {
+    stopDropSuccessTimer()
+    clearDropSuccessAnimation()
 
-    if (count && context) {
-      if ('overviewId' in context && context.overviewId) return { overviewId: context.overviewId }
-      if ('searchQuery' in context && context.searchQuery)
-        return { searchQuery: context.searchQuery }
+    if (longPressedItemId.value) {
+      checkedTicketIds.value.delete(longPressedItemId.value)
     }
 
-    return { entityIds: Array.from(checkedTicketIds.value) }
+    longPressedItemId.value = null
+    dragPreviewData.value = null
+    isActive.value = false
+    resetState()
   }
 
-  const extractDataFromNode = (node: HTMLElement) => {
-    const targetNode = node.closest<HTMLElement>('[data-type][id]')
+  const { sendBulkUpdate, notifyBulkSuccess, notifyBulkError } = useTicketBulkUpdate()
 
-    if (!targetNode) return null
+  const extractDataFromNode = (node: HTMLElement): BulkData | null => {
+    const assignNode = node.closest<HTMLElement>('[data-type][data-internal-id]')
 
-    return {
-      type: targetNode.dataset.type as Required<DragAndDropBulkEntityType>,
-      id: targetNode.id as ID,
-    }
+    return assignNode
+      ? {
+          type: assignNode.dataset.type as DragAndDropBulkEntityType,
+          internalId: Number(assignNode.dataset.internalId),
+          groupInternalId: assignNode.dataset.groupInternalId
+            ? Number(assignNode.dataset.groupInternalId)
+            : null,
+        }
+      : null
   }
 
   const buildPerformInput = (data: BulkData): TicketBulkPerformInput => {
-    switch (data.type) {
-      case 'macro':
-        return { macroId: data.id }
-      // case 'owner': // :TODO
-      //   return { input: { ownerId: data.id } }
-      default:
-        throw new Error(`Unknown drop target type: ${data.type}`)
+    if (data.type === DragAndDropBulkEntityType.Macro)
+      return { macroId: convertToGraphQLId('Macro', data.internalId) }
+
+    if (data.type === DragAndDropBulkEntityType.Group)
+      return { input: { groupId: convertToGraphQLId('Group', data.internalId) } }
+
+    if (data.type === DragAndDropBulkEntityType.Owner) {
+      return {
+        input: {
+          ownerId: convertToGraphQLId('User', data.internalId),
+          ...(data.groupInternalId && {
+            groupId: convertToGraphQLId('Group', data.groupInternalId),
+          }),
+        },
+      }
     }
+
+    return {}
   }
 
   const executeBulkUpdate = async (data: BulkData) => {
-    if (isRunning.value) return false
+    if (isRunning.value) return
 
-    const result = await updateBulkMutation.send({
-      selector: buildSelector(),
-      perform: buildPerformInput(data),
-    })
+    const result = await sendBulkUpdate(
+      bulkSelector.value,
+      buildPerformInput(data),
+      checkedTicketIds.value.size,
+    )
 
-    if (result) {
-      const total = result.ticketUpdateBulk?.total ?? checkedTicketIds.value.size
+    if (!result || result.async) return
 
-      if (result?.ticketUpdateBulk?.async) {
-        setTicketBulkUpdateStatus({
-          status: EnumBulkUpdateStatusStatus.Pending,
-          processedCount: 0,
-          total,
-        })
+    const { total, failedCount, invalidTicketIds } = result
 
-        return
-      }
+    if (failedCount) {
+      if (total - failedCount > 0) notifyBulkSuccess(total - failedCount, 5000)
 
-      const failedCount = result.ticketUpdateBulk?.failedCount ?? 0
-      const invalidTicketIds = result.ticketUpdateBulk?.invalidTicketIds ?? []
-      const invalidTicketCount = invalidTicketIds.length
-
-      // In case there are invalid tickets, show alert messages and allow retry.
-      if (failedCount) {
-        // Only if some tickets were processed successfully.
-        if (total - failedCount > 0)
-          notify({
-            id: 'ticket-bulk-update-succeeded',
-            type: NotificationTypes.Success,
-            message: __('Bulk action successful for %s ticket(s).'),
-            messagePlaceholder: [(total - failedCount).toString()],
-            durationMS: 5000,
-          })
-
-        notify({
-          id: 'bulk-update-failed',
-          type: NotificationTypes.Error,
-          message: __('Bulk action failed for %s ticket(s).'),
-          messagePlaceholder: [invalidTicketCount.toString()],
-          durationMS: 5000,
-        })
-      } else {
-        notify({
-          id: 'ticket-bulk-update-succeeded',
-          type: NotificationTypes.Success,
-          message: __('Bulk action successful for %s ticket(s).'),
-          messagePlaceholder: [total.toString()],
-        })
-      }
+      notifyBulkError(invalidTicketIds.length)
+    } else {
+      notifyBulkSuccess(total)
     }
   }
 
-  useEventListener(document, 'pointerdown', (event: PointerEvent) => {
-    if (event.button !== 0) return // Only respond to primary button.
+  let listeners: Fn[]
 
-    const itemId = getItemIdFromEvent(event)
+  // We need this because of the keep alive cache
+  // the events are fired though the component is not active anymore
+  const reactivateListeners = () => {
+    const removePointerDown = useEventListener(document, 'pointerdown', (event: PointerEvent) => {
+      if (event.button !== 0) return // Only respond to primary button.
 
-    if (!itemId) return
+      const itemId = getItemIdFromEvent(event)
 
-    pendingItemId.value = itemId
-    startPosition.value = { x: event.clientX, y: event.clientY }
-    startLongPress()
+      if (!itemId) return
+
+      pendingItemId.value = itemId
+      pendingRow.value = (event.target as HTMLElement).closest<HTMLElement>('[data-item-id]')
+      startPosition.value = { x: event.clientX, y: event.clientY }
+      startLongPress()
+    })
+
+    const removePointerMove = useEventListener(document, 'pointermove', (event: PointerEvent) => {
+      if (isActive.value) {
+        cursorPosition.value = { x: event.clientX, y: event.clientY }
+      }
+
+      if (!pendingItemId.value || !startPosition.value) return
+      if (hasMovedEnough.value) return // Already passed the threshold.
+
+      const dx = event.clientX - startPosition.value.x
+      const dy = event.clientY - startPosition.value.y
+
+      if (dx * dx + dy * dy < MOVE_THRESHOLD_PX * MOVE_THRESHOLD_PX) return
+
+      hasMovedEnough.value = true
+      tryActivate()
+    })
+
+    const removePointerup = useEventListener(document, 'pointerup', async (event) => {
+      // Ignore pointer events while waiting for the user to confirm/cancel.
+      if (confirmationPending.value) return
+      if (dropSuccessTargetId.value) return
+
+      if (!isActive.value) return resetState()
+
+      const data = extractDataFromNode(event.target as HTMLElement)
+
+      if (!data) return cancelDragAndDrop()
+
+      const confirmed = await requestBulkConfirmation(checkedTicketIds.value.size, data.type)
+
+      if (!confirmed) return cancelDragAndDrop()
+
+      executeBulkUpdate(data)
+
+      dropSuccessTargetId.value = data.internalId
+      dragPreviewData.value = null
+
+      startDropSuccessTimer()
+    })
+
+    const removeDragstart = useEventListener(document, 'dragstart', (event: DragEvent) => {
+      if (!pendingItemId.value && !isActive.value) return
+      if (!(event.target instanceof HTMLElement)) return
+
+      if (event.target.closest('table [data-item-id]')) event.preventDefault()
+    })
+
+    // Cancel if pointer leaves the window or the page loses focus.
+    const removePointerCancel = useEventListener(document, 'pointercancel', resetState)
+    const removePointerLeave = useEventListener(document, 'pointerleave', resetState)
+    const removeWindowBlur = useEventListener(window, 'blur', resetState)
+    const removeVisibilityChange = useEventListener(document, 'visibilitychange', () => {
+      if (document.visibilityState === 'hidden') resetState()
+    })
+
+    return [
+      removePointerDown,
+      removePointerMove,
+      removePointerup,
+      removeDragstart,
+      removePointerCancel,
+      removePointerLeave,
+      removeWindowBlur,
+      removeVisibilityChange,
+    ]
+  }
+
+  onMounted(() => {
+    listeners = reactivateListeners()
   })
 
-  useEventListener(document, 'pointermove', (event: PointerEvent) => {
-    if (isActive.value) {
-      cursorPosition.value = { x: event.clientX, y: event.clientY }
-    }
+  const deactivateListeners = () => {
+    if (!listeners) return
 
-    if (!pendingItemId.value || !startPosition.value) return
-    if (hasMovedEnough.value) return // Already passed the threshold.
-
-    const dx = event.clientX - startPosition.value.x
-    const dy = event.clientY - startPosition.value.y
-
-    if (dx * dx + dy * dy < MOVE_THRESHOLD_PX * MOVE_THRESHOLD_PX) return
-
-    hasMovedEnough.value = true
-    tryActivate()
-  })
-
-  useEventListener(document, 'pointerup', async (event) => {
-    // Ignore pointer events while waiting for the user to confirm/cancel.
-    if (confirmationPending.value) return
-
-    if (!isActive.value) return resetState()
-
-    const data = extractDataFromNode(event.target as HTMLElement)
-
-    if (!data) return cancelDragAndDrop()
-
-    const confirmed = await requestBulkConfirmation(checkedTicketIds.value.size, data.type)
-
-    if (!confirmed) return cancelDragAndDrop()
-
-    executeBulkUpdate(data as BulkData)
-
-    finishDragAndDrop()
-  })
-
-  useEventListener(document, 'dragstart', (event: DragEvent) => {
-    if (!pendingItemId.value && !isActive.value) return
-    if (!(event.target instanceof HTMLElement)) return
-
-    if (event.target.closest('table [data-item-id]')) event.preventDefault()
-  })
-
-  // Cancel if pointer leaves the window or the page loses focus.
-  useEventListener(document, 'pointercancel', resetState)
-  useEventListener(document, 'pointerleave', resetState)
-  useEventListener(window, 'blur', resetState)
-  useEventListener(document, 'visibilitychange', () => {
-    if (document.visibilityState === 'hidden') resetState()
-  })
+    listeners.forEach((remove) => remove())
+  }
 
   return {
     isActive,
+    reactivateListeners,
+    deactivateListeners,
     cursorPosition,
+    dragPreviewData,
+    dropSuccessTargetId,
     cancelDragAndDrop,
   }
 }
