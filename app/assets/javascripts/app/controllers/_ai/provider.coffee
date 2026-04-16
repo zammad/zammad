@@ -77,8 +77,11 @@ class AiProviderSettings extends App.Controller
   release: =>
     App.Setting.unsubscribe(@subscribeId)
 
-  render: (_, localOrServer) =>
-    return if localOrServer isnt 'refresh'
+  render: (_changedItems, localOrServer) =>
+    return if localOrServer and localOrServer isnt 'refresh'
+    return if _.isEqual(@aiProviderConfigAtRender, App.Setting.get('ai_provider_config'))
+
+    @aiProviderConfigAtRender = _.clone(App.Setting.get('ai_provider_config'))
 
     @html App.view('ai/provider')(
       description: @description,
