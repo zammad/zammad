@@ -159,8 +159,6 @@ GEM
       racc
     browser (6.2.0)
     builder (3.3.0)
-    byebug (13.0.0)
-      reline (>= 0.6.0)
     byk (1.1.0)
     camertron-eprun (1.1.1)
     capybara (3.40.0)
@@ -521,9 +519,6 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
       reline (>= 0.6.0)
-    pry-byebug (3.12.0)
-      byebug (~> 13.0)
-      pry (>= 0.13, < 0.17)
     pry-doc (1.7.0)
       pry (~> 0.11)
       yard (~> 0.9.21)
@@ -869,7 +864,6 @@ DEPENDENCIES
   bootsnap
   brakeman
   browser
-  byebug
   byk
   capybara
   chunky_png
@@ -929,7 +923,6 @@ DEPENDENCIES
   overcommit
   parallel
   pg (~> 1.5, >= 1.5.4)
-  pry-byebug
   pry-doc
   pry-rails
   pry-remote

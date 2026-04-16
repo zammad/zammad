@@ -185,8 +185,6 @@ gem 'PoParser', require: false
 gem 'aws-sdk-s3', require: false
 
 # Debugging and profiling
-gem 'byebug'
-gem 'pry-byebug'
 gem 'pry-rails'
 gem 'pry-remote'
 gem 'pry-rescue'
