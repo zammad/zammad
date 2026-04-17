@@ -73,4 +73,47 @@ RSpec.describe Validations::VerifyPerformRulesValidator do
       )
     end
   end
+
+  context 'when validating pending state actions' do
+    %i[pending_reminder pending_action].each do |category|
+      context "with #{category} state via ticket.state_id" do
+        let(:pending_state) { Ticket::State.by_category(category).first }
+
+        it 'is invalid without pending_time' do
+          instance.sample = {
+            'ticket.state_id' => { 'value' => pending_state.id.to_s }
+          }
+          instance.valid?
+
+          expect(instance.errors[:base]).to be_present
+        end
+
+        it 'is valid with pending_time' do
+          instance.sample = {
+            'ticket.state_id'     => { 'value' => pending_state.id.to_s },
+            'ticket.pending_time' => { 'value' => 1.day.from_now }
+          }
+
+          expect(instance).to be_valid
+        end
+      end
+    end
+
+    it 'is invalid when a pending state is set via ticket.state name without pending_time' do
+      instance.sample = {
+        'ticket.state' => { 'value' => Ticket::State.by_category(:pending).first.name }
+      }
+      instance.valid?
+
+      expect(instance.errors[:base]).to be_present
+    end
+
+    it 'is valid when state is not a pending state' do
+      instance.sample = {
+        'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'open').id.to_s }
+      }
+
+      expect(instance).to be_valid
+    end
+  end
 end

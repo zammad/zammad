@@ -6123,12 +6123,10 @@ msgid "Edit"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:171
-#: app/helpers/knowledge_base_helper.rb:33
 msgid "Edit Answer"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:173
-#: app/helpers/knowledge_base_helper.rb:35
 msgid "Edit Category"
 msgstr ""
 
@@ -6139,7 +6137,6 @@ msgid "Edit Customer"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:169
-#: app/helpers/knowledge_base_helper.rb:37
 msgid "Edit Knowledge Base"
 msgstr ""
 
@@ -16275,6 +16272,10 @@ msgstr ""
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr ""
 
+#: lib/validations/verify_perform_rules_validator.rb:68
+msgid "The \"Pending till\" attribute is required for the selected state action."
+msgstr ""
+
 #: lib/secure_mailing/pgp/tool/exec/agent.rb:13
 msgid "The 'gpg-agent' process could not be stopped."
 msgstr ""
@@ -17071,7 +17072,7 @@ msgstr ""
 msgid "The requested %s could not be found."
 msgstr ""
 
-#: lib/validations/verify_perform_rules_validator.rb:63
+#: lib/validations/verify_perform_rules_validator.rb:97
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
 msgstr ""
 
