@@ -18,7 +18,7 @@ module Tasks
           puts 'Done.'
           return if status
 
-          warn 'One or more files could not be verified. For further information, please check the logs.'
+          $stderr.puts 'One or more files could not be verified. For further information, please check the logs.'
           exit 1
         end
       end

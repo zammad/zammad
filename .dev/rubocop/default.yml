@@ -576,3 +576,7 @@ Rails/Exit:
 
 RSpec/Output:
   Enabled: false
+
+Style/StderrPuts:
+  Exclude:
+    - "lib/tasks/**/*"

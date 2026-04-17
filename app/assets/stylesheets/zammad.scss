@@ -1,3 +1,6 @@
+@use 'sass:list';
+@use 'sass:string';
+
 $high-priority-color: hsl(360, 71%, 60%);
 $low-priority-color: hsl(200, 68%, 73%);
 $minWidth: 1024px;
@@ -14399,7 +14402,7 @@ output {
     $rainbow: ();
 
     @while $i <= 360 {
-      $rainbow: append($rainbow, unquote('hsl(#{$i},100%,50%)'), comma);
+      $rainbow: list.append($rainbow, string.unquote('hsl(#{$i},100%,50%)'), comma);
       $i: $i + 60;
     }
 
