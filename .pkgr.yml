@@ -9,7 +9,6 @@ targets:
       - elasticsearch
       - nginx
       - postgresql-server
-      - which
       - epel-release
       - imlib2
       - shared-mime-info
@@ -99,7 +98,6 @@ targets:
       - psmisc
       - procps
       - libopenssl1_1
-      - which
     build_dependencies:
       # Add packages required for build that are not in the official SLES repo.
       # Direct URLs must be used since we cannot add repos on packager.io

@@ -41,9 +41,9 @@ function detect_docker() {
 }
 
 function detect_initcmd () {
-  if [ -n "$(which systemctl 2> /dev/null)" ]; then
+  if command -v systemctl > /dev/null 2>&1; then
     INIT_CMD="systemctl"
-  elif [ -n "$(which initctl 2> /dev/null)" ]; then
+  elif command -v initctl > /dev/null 2>&1; then
     INIT_CMD="initctl"
   else
     function sysvinit () {
@@ -62,7 +62,7 @@ function detect_initcmd () {
 }
 
 function detect_webserver () {
-  if [ -n "$(which nginx 2> /dev/null)" ] ; then
+  if command -v nginx > /dev/null 2>&1; then
     WEBSERVER="nginx"
     WEBSERVER_CMD="nginx"
     if [ "${OS}" == "DEBIAN" ]; then
@@ -72,13 +72,13 @@ function detect_webserver () {
     elif [ "${OS}" == "SUSE" ]; then
       WEBSERVER_CONF="/etc/nginx/vhosts.d/zammad.conf"
     fi
-  elif [ -n "$(which apache2 2> /dev/null)" ]; then
+  elif command -v apache2 > /dev/null 2>&1; then
     WEBSERVER="apache2"
     WEBSERVER_CMD="apache2"
     if [ "${OS}" == "DEBIAN" ]; then
       WEBSERVER_CONF="/etc/apache2/sites-available/zammad.conf"
     fi
-  elif [ -n "$(which httpd 2> /dev/null)" ]; then
+  elif command -v httpd > /dev/null 2>&1; then
     WEBSERVER="apache2"
     WEBSERVER_CMD="httpd"
     if [ "${OS}" == "REDHAT" ]; then
@@ -116,15 +116,39 @@ function create_database_password () {
 }
 
 function create_postgresql_db () {
-  if [ -n "$(which postgresql-setup 2> /dev/null)" ]; then
+  if command -v postgresql-setup > /dev/null 2>&1; then
     echo "# Preparing postgresql server"
-    postgresql-setup initdb
+
+    # postgresql-setup --initdb uses 'systemctl cat postgresql.service' to look up
+    # PGDATA, which requires the unit to already be registered with systemd. When
+    # postgresql-server is installed in the same DNF transaction as Zammad, systemd
+    # has not yet loaded the new unit (daemon-reload has not run and may not be
+    # callable from a postinstall context), so postgresql-setup fails with
+    # "FATAL: no db datadir (PGDATA) configured". Work around this by reading
+    # PGDATA directly from the unit file on disk and calling initdb ourselves.
+    local pg_service=/usr/lib/systemd/system/postgresql.service
+    local pgdata
+    pgdata="$(grep 'Environment=PGDATA=' "${pg_service}" 2>/dev/null | sed 's/.*PGDATA=//' | cut -d' ' -f1)"
+    pgdata="${pgdata:-/var/lib/pgsql/data}"
+    mkdir -p "${pgdata}"
+    chown postgres:postgres "${pgdata}"
+    chmod 700 "${pgdata}"
+    runuser -l postgres -c "initdb -D '${pgdata}'"
   fi
 
   echo "# Creating postgresql bootstart"
   ${INIT_CMD} enable postgresql.service
 
   echo "# Restarting postgresql server"
+
+  # Ensure the PostgreSQL socket directory exists. On RHEL/CentOS it lives under
+  # the tmpfs /run and is normally created by systemd-tmpfiles at boot. When
+  # postgresql-server is installed in the same package transaction as Zammad that
+  # tmpfiles entry has not been processed yet, so the directory is missing and
+  # PostgreSQL cannot create its socket file.
+  if [ ! -d /var/run/postgresql ]; then
+    install -d -m 755 -o postgres -g postgres /var/run/postgresql
+  fi
   ${INIT_CMD} restart postgresql
 
   echo "# Creating zammad postgresql user"
@@ -236,7 +260,7 @@ function enforce_redis () {
       REDIS_SERVICE_NAME="redis"
   fi
 
-  if [ -n "$(which redis-server 2> /dev/null)" ]; then
+  if command -v redis-server > /dev/null 2>&1; then
     echo "# Creating Redis bootstart"
     ${INIT_CMD} enable ${REDIS_SERVICE_NAME}
 
