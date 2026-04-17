@@ -1700,6 +1700,7 @@ td.align-right {
 }
 
 .table tr.is-inactive,
+.table tr.is-inactive td span.text-tools-feedback-output,
 .table tr td span.is-inactive {
   color: var(--text-muted);
   text-decoration: line-through;
@@ -7967,10 +7968,7 @@ a.list-group-item.active > .badge,
 
 .text-tools-feedback-output {
   display: inline-block;
-  min-width: 4.5em;
-
-  @include ltr(margin-right, 6px);
-  @include rtl(margin-left, 6px);
+  min-width: 4em;
 }
 
 .bubble-wrapper {
