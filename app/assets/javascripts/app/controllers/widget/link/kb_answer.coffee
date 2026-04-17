@@ -134,7 +134,8 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       success: =>
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent('Generating knowledge base answer using "%s" ticket…', @object.title)
+          msg:  __('A related knowledge base answer is being generated. You will be notified once the draft is ready.')
+          timeout: 8000
         )
       error: (xhr) =>
         details = xhr.responseJSON || {}

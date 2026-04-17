@@ -36,7 +36,10 @@ const requestDraft = async () => {
     notify({
       id: NOTIFICATION_ID,
       type: NotificationTypes.Info,
-      message: __('Generating knowledge base answer from related ticket…'),
+      message: __(
+        'A related knowledge base answer is being generated. You will be notified once the draft is ready.',
+      ),
+      durationMS: 8000,
     })
   } catch (error) {
     notify({

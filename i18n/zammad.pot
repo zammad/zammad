@@ -616,6 +616,11 @@ msgstr ""
 msgid "A queue is required!"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:137
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:40
+msgid "A related knowledge base answer is being generated. You will be notified once the draft is ready."
+msgstr ""
+
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:1
 msgid "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
@@ -7675,7 +7680,7 @@ msgid "Generate Access Token for |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:23
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:66
 msgid "Generate Related AI Answer"
 msgstr ""
 
@@ -7695,14 +7700,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb:142
 msgid "Generate user-based stats."
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:39
-msgid "Generating knowledge base answer from related ticket…"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:137
-msgid "Generating knowledge base answer using \"%s\" ticket…"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:118
@@ -9377,7 +9374,7 @@ msgstr ""
 msgid "Knowledge Base multilingual support"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:45
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:48
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
 msgid "Knowledge base draft could not be generated."
 msgstr ""
