@@ -1,0 +1,8 @@
+reviews:
+  auto_review:
+    enabled: true
+    base_branches:
+      - 'develop'
+    ignore_usernames:
+      - 'renovatebot'
+    drafts: false
