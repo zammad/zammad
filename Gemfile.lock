@@ -551,7 +551,7 @@ GEM
     rack (2.2.23)
     rack-attack (6.8.0)
       rack (>= 1.0, < 4)
-    rack-oauth2 (2.2.1)
+    rack-oauth2 (2.3.0)
       activesupport
       attr_required
       faraday (~> 2.0)
