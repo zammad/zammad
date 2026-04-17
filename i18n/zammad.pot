@@ -819,10 +819,6 @@ msgstr ""
 msgid "API server error: %s"
 msgstr ""
 
-#: lib/ai/provider/azure.rb:168
-msgid "API server not accessible"
-msgstr ""
-
 #: lib/ai/provider/concerns/handles_response.rb:15
 msgid "API server unavailable - please try again later"
 msgstr ""
