@@ -5673,8 +5673,7 @@ li.add .dropdown-nose {
   }
 
   &--unique {
-    /* stylelint-disable-next-line declaration-property-value-no-unknown */
-    background-image: image_url('/assets/images/avatar-bg.png');
+    background-image: url('/assets/images/avatar-bg.png');
     background-size: 300px 226px;
     color: var(--text-inverted);
     line-height: 40px;
@@ -13218,8 +13217,7 @@ output {
     overflow: hidden;
 
     &.is-picking {
-      cursor: /* stylelint-disable-next-line declaration-property-value-no-unknown */
-        image_url('/assets/images/eyedropper.gif') 0 15,
+      cursor: url('/assets/images/eyedropper.gif') 0 15,
         auto;
     }
 
@@ -14410,8 +14408,7 @@ output {
     background: linear-gradient(to right, $rainbow);
     position: relative;
     overflow: hidden;
-    cursor: /* stylelint-disable-next-line declaration-property-value-no-unknown */
-      image_url('/assets/images/colorcircle.gif') 8 8,
+    cursor: url('/assets/images/colorcircle.gif') 8 8,
       auto;
     user-select: none;
   }
