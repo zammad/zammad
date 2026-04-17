@@ -262,7 +262,7 @@ GEM
     erubi (1.13.1)
     eventmachine (1.2.7)
     execjs (2.10.1)
-    factory_bot (6.5.5)
+    factory_bot (6.5.6)
       activesupport (>= 6.1.0)
     factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
