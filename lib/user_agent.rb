@@ -70,8 +70,9 @@ class UserAgent
       http = Net::HTTP.new(uri.host, uri.port)
     end
 
-    http.open_timeout = options[:open_timeout] || 4
-    http.read_timeout = options[:read_timeout] || 10
+    # Defaults raised for slow links (e.g. OAuth to external IdPs); override globally via ENV, per-request via options. See https://github.com/zammad/zammad/issues/5991
+    http.open_timeout = options[:open_timeout] || ENV.fetch('ZAMMAD_HTTP_OPEN_TIMEOUT', 30).to_i
+    http.read_timeout = options[:read_timeout] || ENV.fetch('ZAMMAD_HTTP_READ_TIMEOUT', 60).to_i
 
     if uri.scheme == 'https'
       http.use_ssl = true
