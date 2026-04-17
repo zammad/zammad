@@ -120,7 +120,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:97
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:112
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:288
-#: app/frontend/shared/composables/useSelectOptions.ts:125
+#: app/frontend/shared/composables/useSelectOptions.ts:128
 msgid "%s (unknown)"
 msgstr ""
 
@@ -1859,10 +1859,6 @@ msgstr ""
 msgid "April"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:141
-msgid "Archive"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:12
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:109
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:84
@@ -2064,7 +2060,7 @@ msgstr ""
 msgid "Assign signup roles"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:229
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:216
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:68
 msgid "Assign tickets"
 msgstr ""
@@ -4370,7 +4366,7 @@ msgid "Currently processing this ticket…"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:148
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:144
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:149
 msgid "Currently, no overviews are assigned to your roles. Please contact your administrator."
 msgstr ""
 
@@ -5402,6 +5398,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:101
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
+#: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:153
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:74
@@ -6050,7 +6047,7 @@ msgstr ""
 msgid "Drag ended for %s."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue:117
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue:118
 msgid "Drag here to cancel"
 msgstr ""
 
@@ -6125,11 +6122,13 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:173
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:171
+#: app/helpers/knowledge_base_helper.rb:33
 msgid "Edit Answer"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:175
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:173
+#: app/helpers/knowledge_base_helper.rb:35
 msgid "Edit Category"
 msgstr ""
 
@@ -6139,7 +6138,8 @@ msgstr ""
 msgid "Edit Customer"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:171
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:169
+#: app/helpers/knowledge_base_helper.rb:37
 msgid "Edit Knowledge Base"
 msgstr ""
 
@@ -7857,7 +7857,7 @@ msgstr ""
 msgid "Go Back"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:246
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:233
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:62
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:85
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue:41
@@ -7869,7 +7869,7 @@ msgstr ""
 msgid "Go home"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkEntityCard.vue:121
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkEntityCard.vue:120
 msgid "Go inside group"
 msgstr ""
 
@@ -8841,6 +8841,11 @@ msgstr ""
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+msgid "Insert"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -8949,7 +8954,6 @@ msgid "Integrity verification of the downloaded WhatsApp media failed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
-#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:160
 msgid "Internal"
@@ -9123,6 +9127,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:40
 msgid "Invalid video URL"
+msgstr ""
+
+#: app/helpers/knowledge_base_top_bar_helper.rb:32
+msgid "Invisible"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee:650
@@ -9554,11 +9562,11 @@ msgstr ""
 msgid "Leave BETA UI feedback program?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:258
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:261
 msgid "Leave empty to use URL (Completions)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:248
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:251
 msgid "Leave empty to use the base model"
 msgstr ""
 
@@ -10657,7 +10665,7 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:194
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:197
 msgid "Model"
 msgstr ""
 
@@ -11437,7 +11445,7 @@ msgid "No organizations found"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:145
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:141
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:146
 msgid "No overviews"
 msgstr ""
 
@@ -11582,6 +11590,7 @@ msgstr ""
 msgid "None"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/sidebar/linked_tickets.coffee:52
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 msgid "Normal"
 msgstr ""
@@ -11813,7 +11822,7 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:241
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
 msgid "OCR Model"
 msgstr ""
 
@@ -12033,6 +12042,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/public_link.coffee:10
 msgid "Open in new tab"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:258
+msgid "Open in primary locale"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:65
@@ -12412,7 +12425,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:31
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:80
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:81
 #: db/seeds/permissions.rb:35
 msgid "Overviews"
 msgstr ""
@@ -12682,6 +12695,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:377
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:96
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:6
+#: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:17
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
@@ -13254,20 +13269,20 @@ msgstr ""
 msgid "Public Menu"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:137
-msgid "Publish"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee:2
 msgid "Publish Article"
 msgstr ""
 
-#: app/views/knowledge_base/public/answers/show.html.erb:41
-msgid "Published %s"
+#: app/helpers/knowledge_base_top_bar_helper.rb:34
+msgid "Published"
 msgstr ""
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:15
 msgid "Published at"
+msgstr ""
+
+#: app/views/knowledge_base/public/answers/show.html.erb:41
+msgid "Published: %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:28
@@ -13410,7 +13425,7 @@ msgstr ""
 msgid "Recipient"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:232
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:235
 msgid "Recognize image text (OCR)"
 msgstr ""
 
@@ -13695,6 +13710,11 @@ msgstr ""
 msgid "Reorder"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:3
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
+msgid "Replace"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:26
 msgid "Replacement"
 msgstr ""
@@ -13918,7 +13938,7 @@ msgstr ""
 msgid "Result:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:384
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:388
 msgid "Results"
 msgstr ""
 
@@ -14335,7 +14355,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:382
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:386
 #: app/frontend/apps/desktop/pages/search/routes.ts:10
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
@@ -16646,7 +16666,7 @@ msgstr ""
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:148
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:151
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:83
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
@@ -17958,7 +17978,7 @@ msgstr ""
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:99
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:102
 msgid "This service allows you to download feedback agents provide on AI features and error details about failed AI requests."
 msgstr ""
 
@@ -18723,7 +18743,7 @@ msgstr ""
 msgid "Toggle the overlay"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:184
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:187
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -19073,7 +19093,7 @@ msgstr ""
 msgid "UID Field"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:204
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:207
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -19090,23 +19110,23 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:214
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:217
 msgid "URL (Completions)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:223
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:226
 msgid "URL (Embeddings)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:252
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:255
 msgid "URL (OCR)"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:151
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:142
 msgid "Unassign owner"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:188
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:175
 msgid "Unassign owner & move to group"
 msgstr ""
 
@@ -19250,6 +19270,18 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:139
+msgid "Update & Archive"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:131
+msgid "Update & Internal"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:135
+msgid "Update & Publish"
+msgstr ""
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:38
 msgid "Update Database"
 msgstr ""
@@ -19292,7 +19324,7 @@ msgstr ""
 msgid "Update shared draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:362
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:365
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -19901,6 +19933,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:703
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:8
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -19908,6 +19941,10 @@ msgstr ""
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:152
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
+msgstr ""
+
+#: app/helpers/knowledge_base_top_bar_helper.rb:32
+msgid "Visible"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:110
@@ -20869,6 +20906,7 @@ msgid "apply filter"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
+#: app/helpers/knowledge_base_visibility_note_helper.rb:26
 msgid "archived"
 msgstr ""
 
@@ -21335,6 +21373,14 @@ msgstr ""
 msgid "has reached warning"
 msgstr ""
 
+#: app/helpers/knowledge_base_visibility_note_helper.rb:38
+msgid "hidden, no published answers"
+msgstr ""
+
+#: app/helpers/knowledge_base_visibility_note_helper.rb:36
+msgid "hidden, visible only internally"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
 msgid "hide"
 msgstr ""
@@ -21462,6 +21508,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
+#: app/helpers/knowledge_base_visibility_note_helper.rb:25
 msgid "internal"
 msgstr ""
 
@@ -21829,6 +21876,10 @@ msgstr ""
 msgid "none"
 msgstr ""
 
+#: app/helpers/knowledge_base_visibility_note_helper.rb:27
+msgid "not published"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/cti.coffee:162
 msgid "not reached"
 msgstr ""
@@ -22022,7 +22073,7 @@ msgstr ""
 msgid "run macro"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:107
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:112
 msgid "second level navigation sidebar"
 msgstr ""
 

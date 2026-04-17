@@ -28,16 +28,14 @@ module KnowledgeBaseHelper
   end
 
   def edit_kb_link_label(object)
-    suffix = case object
-             when KnowledgeBase::Answer
-               'answer'
-             when KnowledgeBase::Category
-               'category'
-             when KnowledgeBase
-               'knowledge base'
-             end
-
-    "edit #{suffix}"
+    case object
+    when KnowledgeBase::Answer
+      __('Edit Answer')
+    when KnowledgeBase::Category
+      __('Edit Category')
+    when KnowledgeBase
+      __('Edit Knowledge Base')
+    end
   end
 
   def build_kb_link(object)

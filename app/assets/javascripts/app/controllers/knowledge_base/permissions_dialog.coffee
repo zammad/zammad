@@ -3,7 +3,7 @@ class App.KnowledgeBasePermissionsDialog extends App.ControllerModal
     #'submit form':          'submitPermissions'
     'click td.u-clickable': 'cellBackgroundClicked'
 
-  head: 'Permissions'
+  head: __('Permissions')
   includeForm: true
   buttonSubmit: true
   accessLevels: { editor: __('Editor'), reader: __('Reader'), none: __('None') }

@@ -1,6 +1,6 @@
 class App.UiElement.richtext.additions.RichTextToolPopupImage extends App.UiElement.richtext.additions.RichTextToolPopup
-  labelNew:      'Insert'
-  labelExisting: 'Replace'
+  labelNew:      __('Insert')
+  labelExisting: __('Replace')
 
   apply: (callback) ->
     @el.find('.btn--create').attr('disabled', true)
