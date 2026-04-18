@@ -96,7 +96,7 @@
     "svgo": "^4.0.1",
     "tailwindcss": "^4.2.2",
     "timezone-mock": "^1.4.2",
-    "type-fest": "^5.5.0",
+    "type-fest": "^5.6.0",
     "typescript": "^6.0.3",
     "vite": "^7.3.2",
     "vite-plugin-pwa": "^1.2.0",
