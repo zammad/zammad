@@ -10,6 +10,26 @@ class SqlHelper
     ApplicationModel.sanitize_sql_like(...)
   end
 
+  # Quote a value for inclusion as a literal element inside an ARRAY[...]
+  # SQL expression.
+  #
+  # The resulting fragment is later concatenated into a larger SQL string
+  # and passed to ActiveRecord as `relation.where(query_sql, *bind_params)`.
+  # ActiveRecord scans the query string for `?` bind placeholders across
+  # the entire string — it does not exclude occurrences inside quoted
+  # literals. Any `?` inside a value would therefore be mistaken for an
+  # unfilled bind placeholder and trigger
+  # `ActiveRecord::PreparedStatementInvalid: wrong number of bind
+  # variables`. To avoid this, split the value on `?` and concatenate the
+  # segments with `chr(63)` so the resulting SQL no longer contains a
+  # literal `?` character.
+  def self.quote_array_literal(value)
+    quoted = quote_string(value.to_s)
+    return "'#{quoted}'" unless quoted.include?('?')
+
+    quoted.split('?', -1).map { |segment| "'#{segment}'" }.join(' || chr(63) || ')
+  end
+
   def initialize(object:, table_name: nil)
     @object     = object
     @table_name = table_name
@@ -198,7 +218,7 @@ sql = 'tickets.created_at ASC, tickets.updated_at DESC'
   def array_contains_all(attribute, value, negated: false)
     value = [''] if value.blank?
     value = Array(value)
-    result = "(#{db_column(attribute)} @> ARRAY[#{value.map { |v| "'#{self.class.quote_string(v)}'" }.join(',')}]::varchar[])"
+    result = "(#{db_column(attribute)} @> ARRAY[#{value.map { |v| self.class.quote_array_literal(v) }.join(',')}]::varchar[])"
 
     negated ? "NOT(#{result})" : "(#{result})"
   end
@@ -206,7 +226,7 @@ sql = 'tickets.created_at ASC, tickets.updated_at DESC'
   def array_contains_one(attribute, value, negated: false)
     value = [''] if value.blank?
     value = Array(value)
-    result = "(#{db_column(attribute)} && ARRAY[#{value.map { |v| "'#{self.class.quote_string(v)}'" }.join(',')}]::varchar[])"
+    result = "(#{db_column(attribute)} && ARRAY[#{value.map { |v| self.class.quote_array_literal(v) }.join(',')}]::varchar[])"
 
     negated ? "NOT(#{result})" : "(#{result})"
   end
