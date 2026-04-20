@@ -3,13 +3,15 @@
   "bundler": {
     "lockFileMaintenance": {
       "enabled": true,
-      "extends": ["schedule:weekly"]
+      "extends": ["schedule:weekly"],
+      "branchName": "renovate/lock-file-maintenance-ruby"
     }
   },
   "npm": {
     "lockFileMaintenance": {
       "enabled": true,
-      "extends": ["schedule:weekly"]
+      "extends": ["schedule:weekly"],
+      "branchName": "renovate/lock-file-maintenance-js"
     }
   },
   "packageRules": [
