@@ -1,8 +1,16 @@
 {
   "enabledManagers": ["bundler", "npm", "github-actions"],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "extends": ["schedule:weekly"]
+  "bundler": {
+    "lockFileMaintenance": {
+      "enabled": true,
+      "extends": ["schedule:weekly"]
+    }
+  },
+  "npm": {
+    "lockFileMaintenance": {
+      "enabled": true,
+      "extends": ["schedule:weekly"]
+    }
   },
   "packageRules": [
     {
