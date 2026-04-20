@@ -93,7 +93,7 @@ const {
   isActive: isDragAndDropActive,
   cursorPosition,
   dragPreviewData,
-  dropSuccessTargetId,
+  dropSuccessTargetEntity,
   reactivateListeners,
   deactivateListeners,
 } = useDragAndDropBulk({
@@ -157,7 +157,7 @@ usePage({ onReactivate: reactivateListeners, onDeactivated: deactivateListeners 
       v-if="isDragAndDropActive"
       :cursor-position="cursorPosition"
       :preview-data="dragPreviewData"
-      :drop-success-target-id="dropSuccessTargetId"
+      :drop-success-target-entity="dropSuccessTargetEntity"
     />
   </div>
 </template>

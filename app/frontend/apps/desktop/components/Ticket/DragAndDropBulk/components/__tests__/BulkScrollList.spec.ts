@@ -104,7 +104,7 @@ describe('BulkScrollList', () => {
 
       await nextTick()
 
-      expect(wrapper.getByRole('button', { name: 'Scroll left' })).toBeInTheDocument()
+      expect(wrapper.getByRole('button', { name: 'Scroll to start' })).toBeInTheDocument()
     })
 
     it('shows the end scroll button when content overflows to the right', async () => {
@@ -124,7 +124,7 @@ describe('BulkScrollList', () => {
 
       await nextTick()
 
-      expect(wrapper.getByRole('button', { name: 'Scroll right' })).toBeInTheDocument()
+      expect(wrapper.getByRole('button', { name: 'Scroll to end' })).toBeInTheDocument()
     })
   })
 })

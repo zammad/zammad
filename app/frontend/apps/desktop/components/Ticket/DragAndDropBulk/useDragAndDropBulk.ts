@@ -10,7 +10,10 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import emitter from '#shared/utils/emitter.ts'
 
 import { useTicketBulkUpdate } from '#desktop/entities/ticket/composables/useTicketBulkUpdate.ts'
-import { useTicketBulkUpdateStore } from '#desktop/entities/user/current/stores/ticketBulkUpdate.ts'
+import {
+  BULK_CONFIRMATION_THRESHOLD,
+  useTicketBulkUpdateStore,
+} from '#desktop/entities/user/current/stores/ticketBulkUpdate.ts'
 
 import { DragAndDropBulkEntityType } from './types.ts'
 
@@ -48,7 +51,7 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
   const pendingRow = ref<HTMLElement | null>(null)
   const dragPreviewData = ref<DragPreviewData | null>(null)
   const cursorPosition = ref<{ x: number; y: number }>({ x: 0, y: 0 })
-  const dropSuccessTargetId = ref<number | null>(null)
+  const dropSuccessTargetEntity = ref<BulkData | null>(null)
 
   // Track both conditions: long press elapsed AND pointer moved enough.
   const longPressElapsed = ref(false)
@@ -116,7 +119,7 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
   }
 
   const clearDropSuccessAnimation = () => {
-    dropSuccessTargetId.value = null
+    dropSuccessTargetEntity.value = null
   }
 
   const closeDragAndDropOverlay = () => {
@@ -129,9 +132,9 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
   }
 
   const { start: startDropSuccessTimer, stop: stopDropSuccessTimer } = useTimeoutFn(
-    () => {
+    (closeDragOverlay = true) => {
       clearDropSuccessAnimation()
-      closeDragAndDropOverlay()
+      if (closeDragOverlay) closeDragAndDropOverlay()
     },
     DROP_SUCCESS_ANIMATION_DURATION,
     { immediate: false },
@@ -210,6 +213,11 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
     }
   }
 
+  const setSuccessTargetAndClearPreview = (data: BulkData) => {
+    dropSuccessTargetEntity.value = data
+    dragPreviewData.value = null
+  }
+
   let listeners: Fn[]
 
   // We need this because of the keep alive cache
@@ -248,7 +256,7 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
     const removePointerup = useEventListener(document, 'pointerup', async (event) => {
       // Ignore pointer events while waiting for the user to confirm/cancel.
       if (confirmationPending.value) return
-      if (dropSuccessTargetId.value) return
+      if (dropSuccessTargetEntity.value) return
 
       if (!isActive.value) return resetState()
 
@@ -256,15 +264,29 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
 
       if (!data) return cancelDragAndDrop()
 
-      const confirmed = await requestBulkConfirmation(checkedTicketIds.value.size, data.type)
+      const ticketCount = checkedTicketIds.value.size
+      const skipConfirmation = ticketCount <= BULK_CONFIRMATION_THRESHOLD
+
+      if (!skipConfirmation) {
+        setSuccessTargetAndClearPreview(data)
+
+        // Show success animation first, then clear it before opening the confirmation dialog.
+        await new Promise((resolve) => setTimeout(resolve, DROP_SUCCESS_ANIMATION_DURATION))
+
+        clearDropSuccessAnimation()
+      }
+
+      const confirmed = await requestBulkConfirmation(data.type, {
+        resolveImmediate: skipConfirmation,
+      })
 
       if (!confirmed) return cancelDragAndDrop()
 
       executeBulkUpdate(data)
 
-      dropSuccessTargetId.value = data.internalId
-      dragPreviewData.value = null
+      if (!skipConfirmation) return closeDragAndDropOverlay()
 
+      setSuccessTargetAndClearPreview(data)
       startDropSuccessTimer()
     })
 
@@ -311,7 +333,7 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
     deactivateListeners,
     cursorPosition,
     dragPreviewData,
-    dropSuccessTargetId,
+    dropSuccessTargetEntity,
     cancelDragAndDrop,
   }
 }

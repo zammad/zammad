@@ -19,6 +19,7 @@ const defaultProps = {
   isActive: false,
   ticketIds: new Set(['1', '2']),
   groupIds: [] as string[],
+  dropSuccessTargetEntity: null,
   bulkContext: { overviewId: convertToGraphQLId('Overview', '1') },
   bulkCount: 5,
 }

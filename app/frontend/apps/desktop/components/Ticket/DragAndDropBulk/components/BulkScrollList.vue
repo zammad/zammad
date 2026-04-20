@@ -3,16 +3,19 @@
 <script setup lang="ts">
 import { useEventListener } from '@vueuse/core'
 import { useIntervalFn, whenever, type Pausable } from '@vueuse/shared'
-import { computed, onMounted, ref, useTemplateRef, watch } from 'vue'
+import { computed, onMounted, ref, toRef, useTemplateRef, watch } from 'vue'
 
-import { type BulkScrollListItem, DragAndDropBulkEntityType } from '../types.ts'
+import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+
+import { type BulkData, type BulkScrollListItem, DragAndDropBulkEntityType } from '../types.ts'
 
 import BulkEntityCard from './BulkEntityCard.vue'
 import BulkScrollButton from './BulkScrollButton.vue'
 
 interface Props {
   list?: BulkScrollListItem[]
-  dropSuccessTargetId?: number | null
+  dropSuccessTargetEntity?: BulkData | null
 }
 
 const props = defineProps<Props>()
@@ -21,6 +24,9 @@ const scrollPosition = defineModel<number>('scroll-position', {
   default: 0,
 })
 
+const locale = useLocaleStore()
+const localeData = toRef(locale, 'localeData')
+const isLtrLocale = computed(() => localeData.value?.dir !== EnumTextDirection.Rtl)
 defineEmits<{
   'go-inside-group': [number]
 }>()
@@ -33,14 +39,14 @@ const showScrollButtonEnd = ref(false)
 const calculateScrollButtonStart = () => {
   if (!scrollContainer.value) return
 
-  showScrollButtonStart.value = scrollContainer.value.scrollLeft > 0
+  showScrollButtonStart.value = Math.abs(scrollContainer.value.scrollLeft) > 0
 }
 
 const calculateScrollButtonEnd = () => {
   if (!scrollContainer.value) return
 
   showScrollButtonEnd.value =
-    scrollContainer.value.scrollLeft + scrollContainer.value.clientWidth <
+    Math.abs(scrollContainer.value.scrollLeft) + scrollContainer.value.clientWidth <
     scrollContainer.value.scrollWidth
 }
 
@@ -67,7 +73,7 @@ onMounted(restoreScrollPosition)
 watch(scrollPosition, restoreScrollPosition)
 
 // The scroll step is based on the width of the card plus the gap between the cards.
-const SCROLL_STEP = 116 + 28
+const SCROLL_STEP = 160 + 28
 
 // The counter to keep track of how long the user has been scrolling.
 //   The longer the user scrolls, the faster the scrolling gets.
@@ -79,6 +85,9 @@ const scrollInterval = ref(500)
 
 const scrollByStep = (scrollAmount: number) => {
   if (!scrollContainer.value) return
+  if (!isLtrLocale.value) {
+    scrollAmount = -scrollAmount
+  }
 
   scrollContainer.value.scrollBy({ left: scrollAmount, behavior: 'smooth' })
 
@@ -126,6 +135,17 @@ whenever(
 const hasGroup = computed(() =>
   props.list?.some((item) => item.type === DragAndDropBulkEntityType.Group),
 )
+
+const isDropSuccessTarget = (item: BulkScrollListItem) => {
+  const target = props.dropSuccessTargetEntity
+  if (!target) return false
+
+  return (
+    item.type === target.type &&
+    item.internalId === target.internalId &&
+    (item.groupInternalId ?? null) === (target.groupInternalId ?? null)
+  )
+}
 </script>
 
 <template>
@@ -133,14 +153,12 @@ const hasGroup = computed(() =>
     <BulkScrollButton
       v-if="showScrollButtonStart"
       direction="start"
-      :aria-label="$t('Scroll left')"
       @scroll-start="beginScroll"
       @scroll-stop="stopScroll"
     />
     <BulkScrollButton
       v-if="showScrollButtonEnd"
       direction="end"
-      :aria-label="$t('Scroll right')"
       @scroll-start="beginScroll"
       @scroll-stop="stopScroll"
     />
@@ -154,7 +172,7 @@ const hasGroup = computed(() =>
       <!-- Data attributes are read by useDragAndDropBulk to extract the entity information needed for the mutation. -->
       <li
         v-for="item in list"
-        :key="item.internalId"
+        :key="`${item.type}-${item.internalId}-${item.groupInternalId ?? 'root'}-${item.label}`"
         :data-internal-id="item.internalId"
         :data-group-internal-id="item.groupInternalId"
         :data-type="item.type"
@@ -165,7 +183,7 @@ const hasGroup = computed(() =>
           :entity-type="item.type"
           :entity="item.object"
           :entity-internal-id="item.internalId"
-          :drop-success-active="item.internalId === dropSuccessTargetId"
+          :drop-success-active="isDropSuccessTarget(item)"
           :parent-label="item.parentLabel"
           @go-inside-group="
             item.type === DragAndDropBulkEntityType.Group &&
