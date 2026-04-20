@@ -85,11 +85,13 @@ class DataPrivacyTask < ApplicationModel
   def perform_organization(organization)
     update_inactive(organization)
     organization.members.find_each { |user| update_inactive(user) }
+    organization.destroy_dependent_associations
     organization.destroy(associations: true)
   end
 
   def perform_user
     update_inactive(deletable)
+    deletable.destroy_dependent_associations
     deletable.destroy
   end
 
