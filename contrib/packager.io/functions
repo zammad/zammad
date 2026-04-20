@@ -133,7 +133,7 @@ function create_postgresql_db () {
     mkdir -p "${pgdata}"
     chown postgres:postgres "${pgdata}"
     chmod 700 "${pgdata}"
-    runuser -l postgres -c "initdb -D '${pgdata}'"
+    runuser -u postgres -- initdb -D "${pgdata}"
   fi
 
   echo "# Creating postgresql bootstart"
