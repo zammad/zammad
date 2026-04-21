@@ -83,7 +83,7 @@
     "markdownlint-cli2": "^0.22.0",
     "minimatch": "^10.2.5",
     "mock-apollo-client": "^1.4.0",
-    "oxfmt": "^0.45.0",
+    "oxfmt": "^0.46.0",
     "oxlint": "^1.60.0",
     "regenerator-runtime": "^0.14.1",
     "stylelint": "^17.8.0",
