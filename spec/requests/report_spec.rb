@@ -62,7 +62,7 @@ RSpec.describe 'Report', type: :request do
 
       it 'does report example - admin access' do
         authenticated_as(admin)
-        get "/api/v1/reports/sets?sheet=true;metric=count;year=#{year};month=#{month};week=#{week};day=#{day};timeRange=year;profile_id=1;downloadBackendSelected=count::created", params: {}, as: :json
+        get "/api/v1/reports/sets?sheet=true&metric=count&year=#{year}&month=#{month}&week=#{week}&day=#{day}&timeRange=year&profile_id=1&downloadBackendSelected=count::created", params: {}, as: :json
 
         expect(response).to have_http_status(:ok)
         assert(response['Content-Disposition'])

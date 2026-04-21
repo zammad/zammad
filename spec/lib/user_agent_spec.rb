@@ -326,7 +326,7 @@ RSpec.describe UserAgent, :aggregate_failures do
               {
                 'method'                 => 'post',
                 'submitted'              => 'some value',
-                'body'                   => ['submitted=some+value'],
+                'body'                   => 'submitted=some+value',
                 'content_type_requested' => 'application/x-www-form-urlencoded',
               }
             end
@@ -343,7 +343,7 @@ RSpec.describe UserAgent, :aggregate_failures do
               {
                 'method'                 => 'post',
                 'submitted'              => nil,
-                'body'                   => ['raw body'],
+                'body'                   => 'raw body',
                 'content_type_requested' => nil,
               }
             end

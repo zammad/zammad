@@ -522,3 +522,9 @@ Style/ReturnNilInPredicateMethodDefinition:
     - lib/search_index_backend.rb
     - lib/sequencer/unit/import/kayako/sub_sequence/generic.rb
     - lib/sessions/event/base.rb
+
+RSpecRails/HttpStatusNameConsistency:
+  Enabled: false
+
+Rails/HttpStatusNameConsistency:
+  Enabled: false

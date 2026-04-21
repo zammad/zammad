@@ -48,7 +48,7 @@ class UserAgentTestController < ApplicationController
              remote_ip:              request.remote_ip,
              content_type_requested: request.media_type,
              method:                 type,
-             body:                   request.body,
+             body:                   request.raw_post,
              submitted:              params[:submitted]
            },
            status: status
