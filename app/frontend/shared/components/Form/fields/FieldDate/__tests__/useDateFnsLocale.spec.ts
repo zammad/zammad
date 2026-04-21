@@ -25,7 +25,7 @@ describe('importDateFnsLocale', () => {
   })
 })
 
-describe('useDateFnsLocale', async () => {
+describe('useDateFnsLocale', () => {
   beforeEach(() => {
     initializePiniaStore()
   })

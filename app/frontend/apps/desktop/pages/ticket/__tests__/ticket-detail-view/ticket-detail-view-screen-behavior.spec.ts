@@ -376,7 +376,7 @@ describe('Ticket detail view screen behavior', () => {
     expect(router.currentRoute.value.path).toEqual('/tickets/1')
   })
 
-  it.skip('redirects to overview after ticket update', async () => {
+  it.todo('redirects to overview after ticket update', async () => {
     // :TODO add test as soon as we have overview implemented
   })
 })

@@ -88,7 +88,7 @@ describe('keyboard interactions', () => {
     expect(actions.at(-1)).toHaveFocus()
   })
 
-  it.skip('hides on blur', async () => {
+  it.todo('hides on blur', async () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {
         contentType: 'text/html',
