@@ -2061,7 +2061,7 @@ msgstr ""
 msgid "Assign follow-ups"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:600
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:611
 msgid "Assign signup roles"
 msgstr ""
 
@@ -2189,7 +2189,7 @@ msgstr ""
 msgid "Attribute"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:627
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:638
 msgid "Attribute '%s' is required in the mapping"
 msgstr ""
 
@@ -2521,7 +2521,7 @@ msgstr ""
 msgid "Base"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:501
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:508
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:35
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:91
 msgid "Base DN"
@@ -5949,7 +5949,7 @@ msgstr ""
 msgid "Don't load CSS for form. You need to generate your own CSS for the form."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:601
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:612
 msgid "Don't synchronize"
 msgstr ""
 
@@ -7981,7 +7981,7 @@ msgstr ""
 msgid "Group Filter"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:544
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:555
 msgid "Group information could not be retrieved, please check your bind user permissions."
 msgstr ""
 
@@ -9399,7 +9399,7 @@ msgstr ""
 msgid "LDAP integration"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:848
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:859
 msgid "LDAP integration for user management."
 msgstr ""
 
@@ -14936,7 +14936,7 @@ msgid "Sequencer log level"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:409
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:491
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:497
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:252
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:215
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:78
@@ -19664,7 +19664,7 @@ msgstr ""
 msgid "User has no access"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:539
+#: app/assets/javascripts/app/controllers/_integration/ldap.coffee:550
 msgid "User information could not be retrieved, please check your bind user permissions."
 msgstr ""
 
