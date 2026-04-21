@@ -2,7 +2,7 @@
 # check=error=true
 
 ARG RUBY_VERSION=3.4.9
-ARG NODE_VERSION=22
+ARG NODE_VERSION=24
 
 FROM docker.io/library/ruby:$RUBY_VERSION-slim-trixie AS base
 

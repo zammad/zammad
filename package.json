@@ -35,7 +35,7 @@
     "generate:store": "pnpm --dir ./.dev/hygen exec hygen new store"
   },
   "engines": {
-    "node": ">=20",
+    "node": ">=24",
     "pnpm": ">=10"
   },
   "packageManager": "pnpm@10.33.0",
