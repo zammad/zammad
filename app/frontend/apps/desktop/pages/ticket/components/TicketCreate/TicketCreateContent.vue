@@ -145,7 +145,18 @@ const formSchema = defineFormSchema([
             props: {
               variant: 'warning',
             },
-            children: '$t($getAdditionalCreateNote($values.articleSenderType))',
+            children: [
+              {
+                isLayout: true,
+                element: 'div',
+                attrs: {
+                  // We convert light weight markup
+                  // The input is not sanitized and relies on the administrator to provide safe links
+                  innerHTML: '$markup($t($getAdditionalCreateNote($values.articleSenderType)))',
+                },
+                children: '',
+              },
+            ],
           },
           {
             if: '$values.ticket_duplicate_detection.count > 0',
@@ -277,7 +288,7 @@ const schemaData = reactive({
   getTabLabel: (value: string) => `tab-label-${value}`,
   getTabPanelId: (value: string) => `tab-panel-${value}`,
   existingAdditionalCreateNotes: () => {
-    return Object.keys(additionalCreateNotes).length > 0
+    return Object.keys(additionalCreateNotes.value).length > 0
   },
   getAdditionalCreateNote: (value: string) => {
     return additionalCreateNotes.value[value]

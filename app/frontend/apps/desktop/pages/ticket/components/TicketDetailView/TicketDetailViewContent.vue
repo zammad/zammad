@@ -206,6 +206,7 @@ const {
   ticketSchema,
   articleSchema,
   currentArticleType,
+  currentSchemaArticleType,
   ticketArticleTypes,
   ticketArticleDefaultValues,
   securityIntegration,
@@ -214,6 +215,7 @@ const {
   isTicketEditable,
   articleTypeHandler,
   articleTypeSelectHandler,
+  additionalAddArticleNotes,
 } = useTicketEditForm(ticket, form)
 
 const { signatureHandling } = useTicketSignature('email')
@@ -298,7 +300,17 @@ const ticketEditSchemaData = reactive({
   formArticleReplyLocation,
   securityIntegration,
   newTicketArticlePresent,
-  currentArticleType,
+  currentArticleType: currentSchemaArticleType,
+  existingAdditionalAddArticleNotes: () => {
+    return Object.keys(additionalAddArticleNotes.value).length > 0
+  },
+  getAdditionalAddArticleNote: (articleType?: AppSpecificTicketArticleType) => {
+    if (!articleType) return undefined
+
+    const accessor = `${articleType.value}-${articleType.internal ? 'internal' : 'public'}`
+
+    return additionalAddArticleNotes.value[accessor]
+  },
 })
 
 const ticketEditSchema = [
