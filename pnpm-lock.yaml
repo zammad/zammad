@@ -261,8 +261,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(graphql@16.13.2)
       '@graphql-codegen/near-operation-file-preset':
-        specifier: ^5.0.1
-        version: 5.0.1(graphql@16.13.2)
+        specifier: ^5.1.0
+        version: 5.1.0(graphql@16.13.2)
       '@graphql-codegen/typescript':
         specifier: ^5.0.10
         version: 5.0.10(graphql@16.13.2)
@@ -1396,8 +1396,8 @@ packages:
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
 
-  '@graphql-codegen/near-operation-file-preset@5.0.1':
-    resolution: {integrity: sha512-ptYKV+pz9dfTvN7+i/Wqxuorj2uaikaDkGQYJBmWiJVakGawqrglbVr1PxT6/FPUZmRqpI+Zw1kW8w6Jt+RODg==}
+  '@graphql-codegen/near-operation-file-preset@5.1.0':
+    resolution: {integrity: sha512-tME5X7OrrkYUr9CeW4rHrl6lUxrojNNXwN4yibdnmSP1w93Pj/p4kogKmnacd5Sns05Q82cucswuTQTQmVENKA==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
@@ -8528,7 +8528,7 @@ snapshots:
       graphql: 16.13.2
       tslib: 2.8.1
 
-  '@graphql-codegen/near-operation-file-preset@5.0.1(graphql@16.13.2)':
+  '@graphql-codegen/near-operation-file-preset@5.1.0(graphql@16.13.2)':
     dependencies:
       '@graphql-codegen/add': 6.0.1(graphql@16.13.2)
       '@graphql-codegen/plugin-helpers': 6.3.0(graphql@16.13.2)
@@ -9264,7 +9264,7 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.8
       estree-walker: 2.0.2
-      picomatch: 4.0.3
+      picomatch: 4.0.4
     optionalDependencies:
       rollup: 2.80.0
 
