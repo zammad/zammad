@@ -931,6 +931,83 @@ RSpec.describe Selector::Sql do
         end
       end
     end
+
+    describe 'Invalid object selector conditions if value contains a question mark #6091', db_strategy: :reset do
+      let(:attribute) do
+        create(:object_manager_attribute_multi_tree_select,
+               object_name:             'Ticket',
+               additional_data_options: {
+                 'options' => [
+                   {
+                     'name'     => 'trip?',
+                     'value'    => 'trip?',
+                     'children' => [
+                       {
+                         'name'  => 'done',
+                         'value' => 'trip?::done',
+                       }
+                     ],
+                   },
+                 ],
+               })
+      end
+      let(:name)  { "ticket.#{attribute.name}" }
+      let(:value) { ['trip?::done'] }
+
+      before do
+        attribute
+        ObjectManager::Attribute.migration_execute
+        ticket
+      end
+
+      describe 'contains one' do
+        let(:operator) { 'contains one' }
+
+        context 'when valid check' do
+          let(:additional_ticket_attributes) { { attribute.name => ['trip?::done', 'other'] } }
+
+          it 'is valid' do
+            expect(described_class.new(selector: condition, options: { current_user: User.find(1) }, target_class: Ticket).valid?).to be(true)
+          end
+        end
+
+        context 'when ticket value matches' do
+          let(:additional_ticket_attributes) { { attribute.name => ['trip?::done', 'other'] } }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when ticket value does not match' do
+          let(:additional_ticket_attributes) { { attribute.name => ['other'] } }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
+      describe 'contains all' do
+        let(:operator) { 'contains all' }
+
+        context 'when valid check' do
+          let(:additional_ticket_attributes) { { attribute.name => ['trip?::done', 'other'] } }
+
+          it 'is valid' do
+            expect(described_class.new(selector: condition, options: { current_user: User.find(1) }, target_class: Ticket).valid?).to be(true)
+          end
+        end
+
+        context 'when ticket value matches' do
+          let(:additional_ticket_attributes) { { attribute.name => ['trip?::done'] } }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when ticket value does not match' do
+          let(:additional_ticket_attributes) { { attribute.name => ['other'] } }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+    end
   end
 
   describe '.valid?' do

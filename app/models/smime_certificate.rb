@@ -33,7 +33,7 @@ class SMIMECertificate < ApplicationModel
   end
 
   def self.find_by_email_address(address, filter: nil)
-    cert_selector = SMIMECertificate.where(SqlHelper.new(object: SMIMECertificate).array_contains_one('email_addresses', address.downcase))
+    cert_selector = SMIMECertificate.where(SqlHelper.new(object: SMIMECertificate).array_contains_one('email_addresses', address.downcase), address.downcase)
 
     return cert_selector.all if filter.nil?
 
