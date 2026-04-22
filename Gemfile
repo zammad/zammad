@@ -269,6 +269,10 @@ group :development, :test do
   gem 'pry-doc' # This gem is very large, so don't include it in production.
 end
 
+# Pin Minitest to V5 to avoid issues with Minitest V6.
+# This can be removed once the old minitests are updated to work with V6.
+gem 'minitest', '~> 5.0', require: false
+
 # To permanently extend Zammad with additional gems, you can specify them in Gemfile.local.
 Dir['Gemfile.local*'].each do |file|
   eval_gemfile file
