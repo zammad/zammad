@@ -47,7 +47,7 @@ describe('Ticket detail view links', () => {
 
     const ticketMetaSidebar = within(view.getByLabelText('Content sidebar'))
 
-    expect(ticketMetaSidebar.getByText('Links')).toBeInTheDocument()
+    expect(ticketMetaSidebar.getByText('Related tickets')).toBeInTheDocument()
     expect(ticketMetaSidebar.getByText('No links added yet.')).toBeInTheDocument()
 
     await view.events.click(await view.findByRole('button', { name: 'Add link' }))

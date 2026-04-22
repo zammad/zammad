@@ -122,22 +122,22 @@ const actions = computed<MenuItem[]>(() => [
     </CommonSectionCollapse>
 
     <CommonSectionCollapse
-      v-if="showAIKnowledgeBaseAnswers"
-      id="ticket-ai-knowledge-base-answers"
-      v-model="persistentStates.collapseKnowledgeBase"
-      :title="__('Knowledge Base')"
-    >
-      <TicketAIKnowledgeBaseAnswers />
-    </CommonSectionCollapse>
-
-    <CommonSectionCollapse
       v-if="isTicketAgent"
       v-show="isTicketEditable || ticketLinksInstance?.hasLinks"
       id="ticket-links"
       v-model="persistentStates.collapseLinks"
-      :title="__('Links')"
+      :title="__('Related tickets')"
     >
       <TicketLinks ref="ticket-links" :ticket="ticket" :is-ticket-editable="isTicketEditable" />
+    </CommonSectionCollapse>
+
+    <CommonSectionCollapse
+      v-if="showAIKnowledgeBaseAnswers"
+      id="ticket-ai-knowledge-base-answers"
+      v-model="persistentStates.collapseKnowledgeBase"
+      :title="__('Related knowledge')"
+    >
+      <TicketAIKnowledgeBaseAnswers />
     </CommonSectionCollapse>
 
     <CommonSectionCollapse

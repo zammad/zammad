@@ -54,7 +54,7 @@ const requestDraft = async () => {
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex justify-end">
     <CommonButton
       type="button"
       size="small"
@@ -63,7 +63,7 @@ const requestDraft = async () => {
       :disabled="isGenerating"
       @click="requestDraft"
     >
-      {{ $t('Generate Related AI Answer') }}
+      {{ $t('AI generate') }}
     </CommonButton>
   </div>
 </template>

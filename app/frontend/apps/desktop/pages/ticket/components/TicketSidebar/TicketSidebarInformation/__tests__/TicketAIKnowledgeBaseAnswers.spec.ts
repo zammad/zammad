@@ -46,7 +46,7 @@ describe('TicketAIKnowledgeBaseAnswers', () => {
 
     const wrapper = renderKBAnswers()
 
-    await wrapper.events.click(wrapper.getByRole('button', { name: 'Generate Related AI Answer' }))
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'AI generate' }))
 
     expect(notifications.notify).toHaveBeenCalledWith({
       id: 'ticket-ai-knowledge-base-answers-notification',
@@ -67,7 +67,7 @@ describe('TicketAIKnowledgeBaseAnswers', () => {
 
     const wrapper = renderKBAnswers()
 
-    await wrapper.events.click(wrapper.getByRole('button', { name: 'Generate Related AI Answer' }))
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'AI generate' }))
 
     expect(notifications.notify).toHaveBeenCalledWith({
       id: 'ticket-ai-knowledge-base-answers-notification',

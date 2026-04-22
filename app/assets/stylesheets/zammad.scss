@@ -4849,6 +4849,8 @@ footer {
   padding: 0;
   margin-bottom: 9px;
   display: flex;
+  border-bottom: 1px solid var(--background-modifier-border);
+  padding-bottom: 4px;
 
   .icon-holder {
     &:first-child .icon-task-state {
@@ -7388,15 +7390,20 @@ a.list-group-item.active > .badge,
 }
 
 .kb-ai-generate-wrapper {
-  margin-top: 8px;
-}
+  position: relative;
 
-.kb-ai-generate {
-  background-image: linear-gradient(to right, var(--ai-assist-blue), var(--ai-assist-pink));
-  background-size: 100% 2px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  padding-bottom: 2px;
+  &::after {
+    content: ' ';
+    position: absolute;
+    width: 88%; // Minus the plus
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(to right, var(--ai-assist-blue), var(--ai-assist-pink));
+    background-size: 100% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+  }
 }
 
 .is-internal .internal-border {
@@ -13217,7 +13224,8 @@ output {
     overflow: hidden;
 
     &.is-picking {
-      cursor: url('/assets/images/eyedropper.gif') 0 15,
+      cursor:
+        url('/assets/images/eyedropper.gif') 0 15,
         auto;
     }
 
@@ -14408,7 +14416,8 @@ output {
     background: linear-gradient(to right, $rainbow);
     position: relative;
     overflow: hidden;
-    cursor: url('/assets/images/colorcircle.gif') 8 8,
+    cursor:
+      url('/assets/images/colorcircle.gif') 8 8,
       auto;
     user-select: none;
   }
@@ -14645,6 +14654,10 @@ body.fit {
 
 .margin-bottom-5 {
   margin-bottom: 5px;
+}
+
+.gap-16 {
+  gap: 16px;
 }
 
 /*

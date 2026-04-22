@@ -1,4 +1,4 @@
-<label><%- @T('Related Answers') %></label>
+<label><%- @T('Related knowledge') %></label>
 <ol class="tasks tasks--standalone">
   <% for item in @list: %>
     <li class="task">
@@ -17,10 +17,10 @@
   <% end %>
 </ol>
 <% if @editable: %>
-  <div class="text-muted js-add u-clickable vertical">
-    <span>+ <%- @T('Link Related Answer') %></span>
+  <div class="text-muted js-add u-clickable horizontal center justify-end gap-16">
+    <span>+ <%- @T('Link') %></span>
     <% if @aiEnabled: %>
-      <span class="js-kb-ai-generate kb-ai-generate-wrapper">+ <span class="kb-ai-generate"><%- @T('Generate Related AI Answer') %></span></span>
+      <span class="js-kb-ai-generate kb-ai-generate-wrapper">+ <%- @T('AI generate') %></span>
     <% end %>
   </div>
 <% end %>
