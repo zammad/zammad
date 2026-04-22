@@ -11,11 +11,11 @@ class Service::User::TwoFactor::SetDefaultMethod < Service::User::TwoFactor::Bas
 
   def execute
     if !method_available? && !force
-      raise Exceptions::UnprocessableEntity, __('The given two-factor authentication method is not enabled.')
+      raise Exceptions::UnprocessableContent, __('The given two-factor authentication method is not enabled.')
     end
 
     if !method_configured? && !force
-      raise Exceptions::UnprocessableEntity, __('The given two-factor authentication method is not configured.')
+      raise Exceptions::UnprocessableContent, __('The given two-factor authentication method is not configured.')
     end
 
     update_user_preferences!

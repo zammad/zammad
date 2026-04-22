@@ -338,7 +338,7 @@ returns
       create!(data)
     rescue => e
       logger.error e
-      raise Exceptions::UnprocessableEntity, e.message
+      raise Exceptions::UnprocessableContent, e.message
     end
   end
 
@@ -948,7 +948,7 @@ try to find correct name
       preferences[:notification_sound][:enabled] = false
     end
     class_name = preferences[:notification_sound][:enabled].class.to_s
-    raise Exceptions::UnprocessableEntity, "preferences.notification_sound.enabled needs to be an boolean, but it was a #{class_name}" if class_name != 'TrueClass' && class_name != 'FalseClass'
+    raise Exceptions::UnprocessableContent, "preferences.notification_sound.enabled needs to be an boolean, but it was a #{class_name}" if class_name != 'TrueClass' && class_name != 'FalseClass'
 
     true
   end
@@ -973,7 +973,7 @@ raise 'At least one user need to have admin permissions'
     return true if !will_save_change_to_attribute?('active')
     return true if active != false
     return true if !permissions?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if !User.admin_user_exists?(except_user_id: id)
+    raise Exceptions::UnprocessableContent, __('At least one user needs to have admin permissions.') if !User.admin_user_exists?(except_user_id: id)
 
     true
   end
@@ -981,7 +981,7 @@ raise 'At least one user need to have admin permissions'
   def last_admin_check_by_role(role)
     return true if Setting.get('import_mode')
     return true if !role.with_permission?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if !User.admin_user_exists?(except_user_id: id)
+    raise Exceptions::UnprocessableContent, __('At least one user needs to have admin permissions.') if !User.admin_user_exists?(except_user_id: id)
 
     true
   end
@@ -994,7 +994,7 @@ raise 'At least one user need to have admin permissions'
 
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
     count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct.count + 1
-    raise Exceptions::UnprocessableEntity, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
+    raise Exceptions::UnprocessableContent, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
 
     true
   end
@@ -1025,7 +1025,7 @@ raise 'At least one user need to have admin permissions'
         count += 1
       end
     end
-    raise Exceptions::UnprocessableEntity, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
+    raise Exceptions::UnprocessableContent, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
 
     true
   end

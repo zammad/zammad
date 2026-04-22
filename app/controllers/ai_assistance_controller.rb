@@ -9,7 +9,7 @@ class AIAssistanceController < ApplicationController
     text_tool = AI::TextTool.find_by(id: params[:id])
 
     Rails.logger.error "The text tool with the given ID '#{params[:id]}' could not be found." if text_tool.nil?
-    raise Exceptions::UnprocessableEntity, __('The text tool with the given ID could not be found.') if text_tool.nil?
+    raise Exceptions::UnprocessableContent, __('The text tool with the given ID could not be found.') if text_tool.nil?
 
     authorize!(text_tool, :show?)
 

@@ -313,8 +313,8 @@ RSpec.describe Ticket::Article, type: :model do
         let(:body) { 'a' * 2_000_000 }
 
         context 'for "web" thread', application_handle: 'web' do
-          it 'raises an Unprocessable Entity error' do
-            expect { article }.to raise_error(Exceptions::UnprocessableEntity)
+          it 'raises an Unprocessable Content error' do
+            expect { article }.to raise_error(Exceptions::UnprocessableContent)
           end
         end
 

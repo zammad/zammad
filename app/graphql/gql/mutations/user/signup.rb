@@ -24,7 +24,7 @@ module Gql::Mutations
       { success: true }
     rescue PasswordPolicy::Error => e
       error_response({ message: e.message, message_placeholder: e.metadata.drop(1), field: 'password' })
-    rescue Exceptions::UnprocessableEntity => e
+    rescue Exceptions::UnprocessableContent => e
       error_response({ message: e.message })
     end
   end

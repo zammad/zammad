@@ -238,7 +238,7 @@ RSpec.describe UserDevice, type: :model do
 
       it 'raises an error' do
         expect { described_class.add(user_agent, ip, agent.id, fingerprint, type) }
-          .to raise_error(Exceptions::UnprocessableEntity)
+          .to raise_error(Exceptions::UnprocessableContent)
       end
     end
   end

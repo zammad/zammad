@@ -8,7 +8,7 @@ class SSLCertificate < ApplicationModel
   def certificate_parsed
     @certificate_parsed ||= Certificate::X509::SSL.new(certificate)
   rescue OpenSSL::X509::CertificateError
-    raise Exceptions::UnprocessableEntity, __('This is not a valid X509 certificate. Please check the certificate format.')
+    raise Exceptions::UnprocessableContent, __('This is not a valid X509 certificate. Please check the certificate format.')
   end
 
   def filter_attributes(attributes)
@@ -28,7 +28,7 @@ class SSLCertificate < ApplicationModel
 
   def valid_ssl_certificate
     certificate_parsed.valid_ssl_certificate!
-  rescue Exceptions::UnprocessableEntity => e
+  rescue Exceptions::UnprocessableContent => e
     errors.add(:base, e.message)
   end
 end

@@ -80,7 +80,7 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
         let(:request_params) { macro_params_pending_without_time(category) }
 
         it 'returns validation error' do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
 
         it 'does not persist the macro' do
@@ -142,7 +142,7 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
         let(:request_params) { macro_params_pending_without_time(category) }
 
         it 'returns validation error' do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
 
         it 'does not update the macro' do

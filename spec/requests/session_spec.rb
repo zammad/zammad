@@ -332,7 +332,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
 
     context 'with missing params' do
       it 'returns an error' do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 
@@ -344,7 +344,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
         let(:password) { 'invalid' }
 
         it 'returns an error' do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
 
@@ -360,7 +360,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
           let(:two_factor_method_enabled) { false }
 
           it 'returns an error' do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
           end
         end
       end

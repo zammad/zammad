@@ -57,7 +57,7 @@ class Service::User::Signup < Service::Base
               end
 
     Rails.logger.error message
-    raise Exceptions::UnprocessableEntity, message
+    raise Exceptions::UnprocessableContent, message
   end
 
   class TokenGenerationError < StandardError

@@ -85,7 +85,7 @@ RSpec.describe Service::User::Signup do
 
       it 'raises an error' do
         expect { service.execute }
-          .to raise_error(Exceptions::UnprocessableEntity, message)
+          .to raise_error(Exceptions::UnprocessableContent, message)
       end
 
       it 'adds message to the log' do

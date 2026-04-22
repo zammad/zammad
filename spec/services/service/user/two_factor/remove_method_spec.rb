@@ -33,7 +33,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethod do
     let(:method_name) { 'nonsense' }
 
     it 'raises error' do
-      expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity)
+      expect { service.execute }.to raise_error(Exceptions::UnprocessableContent)
     end
   end
 end

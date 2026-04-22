@@ -49,7 +49,7 @@ RSpec.describe 'User Access token', authenticated_as: :user, type: :request do
 
       it 'checks if name is present' do
         post '/api/v1/user_access_token', params: { name: '', permission: %w[ticket.agent] }, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
 
       it 'returns token value' do
@@ -79,7 +79,7 @@ RSpec.describe 'User Access token', authenticated_as: :user, type: :request do
 
       it 'throws error' do
         post '/api/v1/user_access_token', params: {}, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end

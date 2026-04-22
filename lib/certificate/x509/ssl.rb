@@ -19,7 +19,7 @@ class Certificate::X509::SSL < Certificate::X509
     Rails.logger.error { "Certificate::X509::SSL: #{message}" }
     Rails.logger.error { "Certificate::X509::SSL:\n #{to_text}" }
 
-    raise Exceptions::UnprocessableEntity, message
+    raise Exceptions::UnprocessableContent, message
   end
 
   private

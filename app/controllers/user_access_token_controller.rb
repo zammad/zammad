@@ -60,10 +60,10 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password} -H "Co
 
   def create
     if Setting.get('api_token_access') == false
-      raise Exceptions::UnprocessableEntity, 'API token access disabled!'
+      raise Exceptions::UnprocessableContent, 'API token access disabled!'
     end
     if params[:name].blank?
-      raise Exceptions::UnprocessableEntity, __("The required parameter 'name' is missing.")
+      raise Exceptions::UnprocessableContent, __("The required parameter 'name' is missing.")
     end
 
     token = Service::User::AccessToken::Create
@@ -90,7 +90,7 @@ curl http://localhost/api/v1/user_access_token/{id} -v -u #{login}:#{password} -
 
   def destroy
     token = Token.find_by(action: 'api', user_id: current_user.id, id: params[:id])
-    raise Exceptions::UnprocessableEntity, __('The API token could not be found.') if !token
+    raise Exceptions::UnprocessableContent, __('The API token could not be found.') if !token
 
     token.destroy!
     render json: {}, status: :ok

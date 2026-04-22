@@ -42,6 +42,6 @@ class SelectorsController < ApplicationController
   def ensure_object_klass_has_selector!
     return if object_klass.present?
 
-    raise Exceptions::UnprocessableEntity, __('Given object does not support selector')
+    raise Exceptions::UnprocessableContent, __('Given object does not support selector')
   end
 end

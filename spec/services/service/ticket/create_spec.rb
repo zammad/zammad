@@ -247,7 +247,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         group.update! shared_drafts: false
 
         expect { service.execute(ticket_data:) }
-          .to raise_error(Exceptions::UnprocessableEntity)
+          .to raise_error(Exceptions::UnprocessableContent)
       end
 
       it 'raises error if shared draft group does not match ticket group' do
@@ -256,7 +256,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         group.update! shared_drafts: false
 
         expect { service.execute(ticket_data:) }
-          .to raise_error(Exceptions::UnprocessableEntity)
+          .to raise_error(Exceptions::UnprocessableContent)
       end
     end
 

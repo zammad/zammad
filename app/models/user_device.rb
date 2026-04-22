@@ -247,7 +247,7 @@ check fingerprint string
 
   def self.fingerprint_validation(fingerprint)
     return true if fingerprint.blank?
-    raise Exceptions::UnprocessableEntity, "fingerprint is #{fingerprint.to_s.length} chars but can only be 160 chars!" if fingerprint.to_s.length > 160
+    raise Exceptions::UnprocessableContent, "fingerprint is #{fingerprint.to_s.length} chars but can only be 160 chars!" if fingerprint.to_s.length > 160
 
     true
   end

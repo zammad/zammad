@@ -21,7 +21,7 @@ RSpec.describe Certificate::X509::SMIME do
 
       it 'raises an error' do
         message = 'The certificate is not valid for S/MIME usage. Please check the certificate format.'
-        expect { described_class.parse(certificate) }.to raise_error(Exceptions::UnprocessableEntity, message)
+        expect { described_class.parse(certificate) }.to raise_error(Exceptions::UnprocessableContent, message)
       end
     end
   end
@@ -269,7 +269,7 @@ RSpec.describe Certificate::X509::SMIME do
 
       it 'returns false' do
         message = 'The certificate is not valid for S/MIME usage. Please check the key usage, subject alternative name and public key cryptographic algorithm.'
-        expect { described_class.new(certificate).valid_smime_certificate! }.to raise_error(Exceptions::UnprocessableEntity, message)
+        expect { described_class.new(certificate).valid_smime_certificate! }.to raise_error(Exceptions::UnprocessableContent, message)
       end
     end
   end

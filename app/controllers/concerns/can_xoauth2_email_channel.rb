@@ -64,7 +64,7 @@ module CanXoauth2EmailChannel
     inbound_prepare_channel(channel)
 
     result = EmailHelper::Probe.inbound(channel.options[:inbound])
-    raise Exceptions::UnprocessableEntity, (result[:message_human] || result[:message]) if result[:result] == 'invalid'
+    raise Exceptions::UnprocessableContent, (result[:message_human] || result[:message]) if result[:result] == 'invalid'
 
     render json: result
   end

@@ -12,7 +12,7 @@ class ChannelsWhatsappController < ApplicationController
     Rails.logger.error e.message
     log_request
 
-    raise Exceptions::UnprocessableEntity, e.message
+    raise Exceptions::UnprocessableContent, e.message
   end
 
   def perform_webhook
@@ -27,7 +27,7 @@ class ChannelsWhatsappController < ApplicationController
       Rails.logger.error e.message
       log_request
 
-      raise Exceptions::UnprocessableEntity, e.message
+      raise Exceptions::UnprocessableContent, e.message
     rescue Whatsapp::Webhook::Payload::ProcessableError, Whatsapp::Webhook::NoChannelError => e
       # Fail silently, any HTTP status code other than 200 will cause WhatsApp
       # to retry the request

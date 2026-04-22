@@ -52,9 +52,9 @@ returns
       begin
         data[:string] = File.read(data[:file]) if data[:file].present?
       rescue Errno::ENOENT
-        raise Exceptions::UnprocessableEntity, "No such file '#{data[:file]}'"
+        raise Exceptions::UnprocessableContent, "No such file '#{data[:file]}'"
       rescue => e
-        raise Exceptions::UnprocessableEntity, "Unable to read file '#{data[:file]}': #{e.inspect}"
+        raise Exceptions::UnprocessableContent, "Unable to read file '#{data[:file]}': #{e.inspect}"
       end
 
       require 'csv' # Only load it when it's really needed to save memory.

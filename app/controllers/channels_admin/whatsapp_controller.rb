@@ -14,7 +14,7 @@ class ChannelsAdmin::WhatsappController < ChannelsAdmin::BaseController
 
     render json: mask_sensitive_values(channel.as_json, channel)
   rescue => e
-    raise Exceptions::UnprocessableEntity, e.message
+    raise Exceptions::UnprocessableContent, e.message
   end
 
   def update
@@ -27,7 +27,7 @@ class ChannelsAdmin::WhatsappController < ChannelsAdmin::BaseController
 
     render json: mask_sensitive_values(channel.as_json, channel)
   rescue => e
-    raise Exceptions::UnprocessableEntity, e.message
+    raise Exceptions::UnprocessableContent, e.message
   end
 
   def preload

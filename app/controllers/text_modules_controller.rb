@@ -187,7 +187,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
+    raise Exceptions::UnprocessableContent, __('No source data submitted!') if string.blank?
 
     result = TextModule.csv_import(
       string:       string,

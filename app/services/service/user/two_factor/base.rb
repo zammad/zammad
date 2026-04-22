@@ -11,7 +11,7 @@ class Service::User::TwoFactor::Base < Service::Base
 
     return if method
 
-    raise Exceptions::UnprocessableEntity, __('The given two-factor method does not exist.')
+    raise Exceptions::UnprocessableContent, __('The given two-factor method does not exist.')
   end
 
   protected

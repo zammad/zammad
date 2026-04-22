@@ -43,7 +43,7 @@ class TagsController < ApplicationController
     if success
       render json: success, status: :created
     else
-      render json: success.errors, status: :unprocessable_entity
+      render json: success.errors, status: :unprocessable_content
     end
   end
 
@@ -57,7 +57,7 @@ class TagsController < ApplicationController
     if success
       render json: success
     else
-      render json: success.errors, status: :unprocessable_entity
+      render json: success.errors, status: :unprocessable_content
     end
   end
 

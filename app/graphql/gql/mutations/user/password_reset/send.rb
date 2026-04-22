@@ -24,7 +24,7 @@ module Gql::Mutations
         .execute
 
       { success: true }
-    rescue Exceptions::UnprocessableEntity => e
+    rescue Exceptions::UnprocessableContent => e
       error_response({ message: e.message })
     end
   end

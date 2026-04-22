@@ -66,7 +66,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
           let(:params) { 'secret=true' }
 
           it 'returns an error' do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
           end
         end
       end
@@ -162,7 +162,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
             end
 
             it 'returns an error' do
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
             end
           end
 
@@ -172,7 +172,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
             end
 
             it 'returns an error' do
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
             end
           end
 

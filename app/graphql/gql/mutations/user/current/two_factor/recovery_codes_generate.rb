@@ -18,7 +18,7 @@ module Gql::Mutations
         .execute
 
       if !codes
-        raise Exceptions::UnprocessableEntity, __('Could not generate recovery codes')
+        raise Exceptions::UnprocessableContent, __('Could not generate recovery codes')
       end
 
       token_object.destroy

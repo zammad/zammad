@@ -22,7 +22,7 @@ class Ticket::SharedDraftStartPolicy < ApplicationPolicy
   def access?(_method)
     return true if user.group_access? record.group_id, :create
 
-    not_authorized Exceptions::UnprocessableEntity
+    not_authorized Exceptions::UnprocessableContent
       .new __('This user does not have access to the given group')
   end
 end

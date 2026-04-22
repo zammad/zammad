@@ -18,7 +18,7 @@ RSpec.describe Service::User::TwoFactor::GetMethodConfiguration do
 
     it 'raises an error' do
       expect { service.execute }
-        .to raise_error(Exceptions::UnprocessableEntity)
+        .to raise_error(Exceptions::UnprocessableContent)
     end
   end
 

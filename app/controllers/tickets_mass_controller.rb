@@ -15,7 +15,7 @@ class TicketsMassController < ApplicationController
       render json: {
         error:            __('Macro group restrictions do not cover all tickets'),
         blocking_tickets: applicable.blocking_tickets.map(&:id)
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
 
       return
     end
@@ -46,7 +46,7 @@ class TicketsMassController < ApplicationController
       authorize!(elem, :agent_update_access?)
     end
   rescue Pundit::NotAuthorizedError => e
-    render json: { error: true, ticket_id: e.record.id }, status: :unprocessable_entity
+    render json: { error: true, ticket_id: e.record.id }, status: :unprocessable_content
   end
 
   def clean_update_params
@@ -79,6 +79,6 @@ class TicketsMassController < ApplicationController
       raise ActiveRecord::Rollback
     end
 
-    render json: { error: true, ticket_id: failed_record.id }, status: :unprocessable_entity if failed_record
+    render json: { error: true, ticket_id: failed_record.id }, status: :unprocessable_content if failed_record
   end
 end

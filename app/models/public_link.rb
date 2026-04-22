@@ -28,7 +28,7 @@ class PublicLink < ApplicationModel
     return true if link.blank?
 
     uri = URI.parse(link)
-    raise Exceptions::UnprocessableEntity, "Invalid link '#{link}'." if !uri.is_a?(URI::HTTP)
+    raise Exceptions::UnprocessableContent, "Invalid link '#{link}'." if !uri.is_a?(URI::HTTP)
 
     true
   end

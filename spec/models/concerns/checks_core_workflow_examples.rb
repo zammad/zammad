@@ -24,7 +24,7 @@ RSpec.shared_examples 'ChecksCoreWorkflow' do
     end
 
     it 'checks that workflow blocked creation' do
-      expect { ticket }.to raise_error(Exceptions::UnprocessableEntity, "Invalid value '#{Ticket::State.find_by(name: 'open').id}' for field 'state_id'!")
+      expect { ticket }.to raise_error(Exceptions::UnprocessableContent, "Invalid value '#{Ticket::State.find_by(name: 'open').id}' for field 'state_id'!")
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.shared_examples 'ChecksCoreWorkflow' do
     end
 
     it 'checks that workflow blocked creation' do
-      expect { ticket }.to raise_error(Exceptions::UnprocessableEntity, "Invalid value '#{Ticket::State.find_by(name: 'open').id}' for field 'state_id'!")
+      expect { ticket }.to raise_error(Exceptions::UnprocessableContent, "Invalid value '#{Ticket::State.find_by(name: 'open').id}' for field 'state_id'!")
     end
   end
 
@@ -78,7 +78,7 @@ RSpec.shared_examples 'ChecksCoreWorkflow' do
     subject(:ticket) { create(:ticket, group: agent_group, screen: 'create_middle', state: Ticket::State.find_by(name: 'pending reminder')) }
 
     it 'checks that the pending time is mandatory' do
-      expect { ticket }.to raise_error(Exceptions::UnprocessableEntity, "Missing required value for field 'pending_time'!")
+      expect { ticket }.to raise_error(Exceptions::UnprocessableContent, "Missing required value for field 'pending_time'!")
     end
   end
 

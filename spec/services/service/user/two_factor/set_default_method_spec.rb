@@ -12,7 +12,7 @@ RSpec.describe Service::User::TwoFactor::SetDefaultMethod do
 
     context 'when the given method not enabled' do
       it 'raises error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity)
+        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent)
       end
     end
 
@@ -37,7 +37,7 @@ RSpec.describe Service::User::TwoFactor::SetDefaultMethod do
 
       context 'when user does not have the given method configured' do
         it 'raises error' do
-          expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity)
+          expect { service.execute }.to raise_error(Exceptions::UnprocessableContent)
         end
       end
     end
@@ -47,7 +47,7 @@ RSpec.describe Service::User::TwoFactor::SetDefaultMethod do
     let(:method_name) { 'nonsense' }
 
     it 'raises error' do
-      expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity)
+      expect { service.execute }.to raise_error(Exceptions::UnprocessableContent)
     end
   end
 end

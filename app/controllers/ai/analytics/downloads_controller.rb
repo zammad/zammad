@@ -17,7 +17,7 @@ class AI::Analytics::DownloadsController < ApplicationController
               when 'with_usages'
                 Service::AI::Analytics::GenerateReport::WithUsages
               else
-                raise Exceptions::UnprocessableEntity, 'invalid report type'
+                raise Exceptions::UnprocessableContent, 'invalid report type'
               end
                  .new(scope:, format:)
                  .execute

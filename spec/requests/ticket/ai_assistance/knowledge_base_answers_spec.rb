@@ -31,7 +31,7 @@ RSpec.describe 'Ticket AI Knowledge Base Answers API endpoint', authenticated_as
       it 'raises error', :aggregate_failures do
         make_request
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(json_response['error']).to eq('This feature is not enabled.')
       end
     end
@@ -72,7 +72,7 @@ RSpec.describe 'Ticket AI Knowledge Base Answers API endpoint', authenticated_as
         it 'returns an error and does not enqueue job', :aggregate_failures do
           make_request
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(json_response).to eq({
                                         'error'         => true,
                                         'error_message' => 'Knowledge base is unavailable or not properly configured.',
@@ -89,7 +89,7 @@ RSpec.describe 'Ticket AI Knowledge Base Answers API endpoint', authenticated_as
         it 'returns an error and does not enqueue job', :aggregate_failures do
           make_request
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(json_response).to eq({
                                         'error'         => true,
                                         'error_message' => 'Knowledge base is unavailable or not properly configured.',

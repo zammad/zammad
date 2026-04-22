@@ -12,7 +12,7 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
     subtype = params.delete(:subtype)
 
     # check min. params
-    raise Exceptions::UnprocessableEntity, __("Need at least an 'article body' field.") if params[:body].nil?
+    raise Exceptions::UnprocessableContent, __("Need at least an 'article body' field.") if params[:body].nil?
 
     # fill default values
     if params[:type_id].blank? && params[:type].blank?
@@ -121,7 +121,7 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
       required_keys.each do |key|
         next if attachment[key]
 
-        raise Exceptions::UnprocessableEntity, "Attachment needs '#{key}' param for attachment with index '#{index}'"
+        raise Exceptions::UnprocessableContent, "Attachment needs '#{key}' param for attachment with index '#{index}'"
       end
 
       preferences = {}
@@ -136,7 +136,7 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
         base64_data = attachment[:data].gsub(%r{[\r\n]}, '')
         attachment_data = Base64.strict_decode64(base64_data)
       rescue ArgumentError
-        raise Exceptions::UnprocessableEntity, "Invalid base64 for attachment with index '#{index}'"
+        raise Exceptions::UnprocessableContent, "Invalid base64 for attachment with index '#{index}'"
       end
 
       attachments << {

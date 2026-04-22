@@ -15,7 +15,7 @@ module Gql::Mutations
     def resolve(source_ticket:, target_ticket:)
       Service::Ticket::Merge.new(current_user: context.current_user).execute(source_ticket: source_ticket, target_ticket: target_ticket)
       { source_ticket: source_ticket, target_ticket: target_ticket }
-    rescue Exceptions::UnprocessableEntity => e
+    rescue Exceptions::UnprocessableContent => e
       error_response({ message: e.message })
     end
   end

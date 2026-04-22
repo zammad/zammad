@@ -20,7 +20,7 @@ class KnowledgeBase::CategoriesController < KnowledgeBase::BaseController
   def reorder_records(collection, ids, klass)
     # Check if ids for models in collection are present
     all_ids_present = collection.map(&:id).sort == ids.sort
-    raise Exceptions::UnprocessableEntity, __('Provide position of all items in scope') if !all_ids_present
+    raise Exceptions::UnprocessableContent, __('Provide position of all items in scope') if !all_ids_present
 
     klass.acts_as_list_no_update do
       ids.each_with_index do |id, index|

@@ -176,7 +176,7 @@ RSpec.describe Group, type: :model do
 
       it 'does check depth on creation', :aggregate_failures do
         expect { groups_1 }.not_to raise_error
-        expect { group_1_11 }.to raise_error(Exceptions::UnprocessableEntity, 'This group or its children exceed the allowed nesting depth.')
+        expect { group_1_11 }.to raise_error(Exceptions::UnprocessableContent, 'This group or its children exceed the allowed nesting depth.')
         expect { group_2_5 }.not_to raise_error
       end
 
@@ -186,7 +186,7 @@ RSpec.describe Group, type: :model do
           groups_2.last
         end.not_to raise_error
 
-        expect { groups_2.last.update!(parent: groups_1.last) }.to raise_error(Exceptions::UnprocessableEntity, 'This group or its children exceed the allowed nesting depth.')
+        expect { groups_2.last.update!(parent: groups_1.last) }.to raise_error(Exceptions::UnprocessableContent, 'This group or its children exceed the allowed nesting depth.')
       end
     end
   end

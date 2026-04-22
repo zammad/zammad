@@ -79,7 +79,7 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
         shared_draft.update! ticket: create(:ticket)
 
         expect { service.execute(ticket:, ticket_data:) }
-          .to raise_error(Exceptions::UnprocessableEntity)
+          .to raise_error(Exceptions::UnprocessableContent)
       end
     end
   end

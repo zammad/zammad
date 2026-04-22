@@ -15,7 +15,7 @@ module Gql::Mutations
       knowledge_base = ::KnowledgeBase.first
 
       if knowledge_base.blank? || !knowledge_base.visible? || !knowledge_base.categories.exists?
-        raise Exceptions::UnprocessableEntity, __('Knowledge base is unavailable or not properly configured.')
+        raise Exceptions::UnprocessableContent, __('Knowledge base is unavailable or not properly configured.')
       end
 
       editable_categories = ::KnowledgeBase::AccessibleCategories
@@ -23,12 +23,12 @@ module Gql::Mutations
         .editor
 
       if editable_categories.empty?
-        raise Exceptions::UnprocessableEntity, __('No editable knowledge base categories available.')
+        raise Exceptions::UnprocessableContent, __('No editable knowledge base categories available.')
       end
 
       job = TicketAIAssistanceGenerateKnowledgeBaseAnswerJob.perform_later(ticket, context.current_user, knowledge_base.id)
 
-      raise Exceptions::UnprocessableEntity, __('Related knowledge base answer creation has already been started for given ticket.') if !job
+      raise Exceptions::UnprocessableContent, __('Related knowledge base answer creation has already been started for given ticket.') if !job
 
       { success: true }
     end

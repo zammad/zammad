@@ -19,7 +19,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
 
     it 'raises an error' do
       expect { service.execute }
-        .to raise_error(Exceptions::UnprocessableEntity)
+        .to raise_error(Exceptions::UnprocessableContent)
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
 
     it 'raises an error' do
       expect { service.execute }
-        .to raise_error(Exceptions::UnprocessableEntity)
+        .to raise_error(Exceptions::UnprocessableContent)
     end
   end
 
@@ -89,7 +89,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
   context 'when method is not configured' do
     it 'raises an error' do
       expect { service.execute }
-        .to raise_error(Exceptions::UnprocessableEntity)
+        .to raise_error(Exceptions::UnprocessableContent)
     end
   end
 

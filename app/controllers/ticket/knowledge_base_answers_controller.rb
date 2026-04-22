@@ -4,7 +4,7 @@ class Ticket::KnowledgeBaseAnswersController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
   def create
-    Service::CheckFeatureEnabled.new(name: 'ai_assistance_kb_answer_from_ticket_generation', custom_exception_class: Exceptions::UnprocessableEntity).execute
+    Service::CheckFeatureEnabled.new(name: 'ai_assistance_kb_answer_from_ticket_generation', custom_exception_class: Exceptions::UnprocessableContent).execute
     Service::CheckFeatureEnabled.new(name: 'ai_provider', custom_error_message: __('AI provider is not configured.')).execute
     authorize!(ticket, :agent_read_access?)
 
@@ -12,7 +12,7 @@ class Ticket::KnowledgeBaseAnswersController < ApplicationController
       return render json: {
         error:         true,
         error_message: __('Knowledge base is unavailable or not properly configured.'),
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
 
     editable_categories = KnowledgeBase::AccessibleCategories
@@ -23,7 +23,7 @@ class Ticket::KnowledgeBaseAnswersController < ApplicationController
       return render json: {
         error:         true,
         error_message: __('No editable knowledge base categories available.'),
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
 
     enqueue_job
@@ -48,7 +48,7 @@ class Ticket::KnowledgeBaseAnswersController < ApplicationController
       render json: {
         error:         true,
         error_message: __('Related knowledge base answer creation has already been started for current ticket.'),
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 end

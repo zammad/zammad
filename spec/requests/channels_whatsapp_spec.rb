@@ -21,7 +21,7 @@ RSpec.describe 'WhatsApp channel webhook endpoints', aggregate_failures: true, t
       it 'returns 422' do
         get "/api/v1/channels_whatsapp_webhook/1337#{Faker::Number.unique.number(digits: 15)}", params: params
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 
@@ -87,7 +87,7 @@ RSpec.describe 'WhatsApp channel webhook endpoints', aggregate_failures: true, t
       it 'returns 422' do
         post "/api/v1/channels_whatsapp_webhook/#{channel.options[:callback_url_uuid]}", headers: { 'X-Hub-Signature-256': "sha256=#{signature}" }, params: json
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 

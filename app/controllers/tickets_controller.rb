@@ -89,7 +89,7 @@ class TicketsController < ApplicationController
         shared_draft = Ticket::SharedDraftStart.find_by id: shared_draft_id
 
         if shared_draft && (shared_draft.group_id.to_s != params[:group_id]&.to_s || !shared_draft.group.shared_drafts?)
-          raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+          raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
         end
 
         shared_draft&.destroy
@@ -116,7 +116,7 @@ class TicketsController < ApplicationController
         email_address = $1
         email_address_validation = EmailAddressValidation.new(email_address)
         if !email_address_validation.valid?
-          render json: { error: "Invalid email '#{email_address}' of customer" }, status: :unprocessable_entity
+          render json: { error: "Invalid email '#{email_address}' of customer" }, status: :unprocessable_content
           return
         end
         local_customer = User.find_by(email: email_address.downcase)
@@ -202,13 +202,13 @@ class TicketsController < ApplicationController
         authorize!(ticket, :agent_create_access?)
 
         links = params[:links].permit!.to_h
-        raise Exceptions::UnprocessableEntity, __('Invalid link structure') if !links.is_a? Hash
+        raise Exceptions::UnprocessableContent, __('Invalid link structure') if !links.is_a? Hash
 
         links.each do |target_object, link_types_with_object_ids|
-          raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object)') if !link_types_with_object_ids.is_a? Hash
+          raise Exceptions::UnprocessableContent, __('Invalid link structure (Object)') if !link_types_with_object_ids.is_a? Hash
 
           link_types_with_object_ids.each do |link_type, object_ids|
-            raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object → LinkType)') if !object_ids.is_a? Array
+            raise Exceptions::UnprocessableContent, __('Invalid link structure (Object → LinkType)') if !object_ids.is_a? Array
 
             object_ids.each do |local_object_id|
               case target_object
@@ -498,7 +498,7 @@ class TicketsController < ApplicationController
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
+    raise Exceptions::UnprocessableContent, __('No source data submitted!') if string.blank?
 
     result = Ticket.csv_import(
       string:       string,
@@ -564,7 +564,7 @@ class TicketsController < ApplicationController
     shared_draft = Ticket::SharedDraftZoom.find_by id: shared_draft_id
 
     if shared_draft && shared_draft.ticket != ticket
-      raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+      raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
     end
 
     shared_draft&.destroy

@@ -18,7 +18,7 @@ class Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer < Service::BaseWi
       knowledge_base: context[:knowledge_base]
     )
 
-    raise Exceptions::UnprocessableEntity, __('Knowledge base draft could not be generated.') if ai_result&.content.blank?
+    raise Exceptions::UnprocessableContent, __('Knowledge base draft could not be generated.') if ai_result&.content.blank?
 
     kb_answer = Service::KnowledgeBase::CreateAnswerFromAIResult.new(
       ai_result:       ai_result.content,
@@ -41,7 +41,7 @@ class Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer < Service::BaseWi
 
   def build_context!
     knowledge_base = KnowledgeBase.find_by(id: knowledge_base_id)
-    raise Exceptions::UnprocessableEntity, __('Knowledge base is unavailable or not properly configured.') if knowledge_base.blank? || !knowledge_base.visible? || !knowledge_base.categories.exists?
+    raise Exceptions::UnprocessableContent, __('Knowledge base is unavailable or not properly configured.') if knowledge_base.blank? || !knowledge_base.visible? || !knowledge_base.categories.exists?
 
     kb_locale = default_kb_locale(knowledge_base)
 
@@ -54,7 +54,7 @@ class Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer < Service::BaseWi
 
   def default_kb_locale(knowledge_base)
     kb_locale = knowledge_base.kb_locales.find_by(primary: true) || knowledge_base.kb_locales.first
-    raise Exceptions::UnprocessableEntity, __('No knowledge base locale configured.') if kb_locale.blank?
+    raise Exceptions::UnprocessableContent, __('No knowledge base locale configured.') if kb_locale.blank?
 
     kb_locale
   end
@@ -91,7 +91,7 @@ class Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer < Service::BaseWi
       .for_user(current_user, categories_filter: knowledge_base.categories.root)
       .editor
 
-    raise Exceptions::UnprocessableEntity, __('No editable knowledge base categories available.') if editable_categories.empty?
+    raise Exceptions::UnprocessableContent, __('No editable knowledge base categories available.') if editable_categories.empty?
 
     Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent.new(
       locale:,

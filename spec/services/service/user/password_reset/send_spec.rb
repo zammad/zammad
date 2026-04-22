@@ -52,7 +52,7 @@ RSpec.describe Service::User::PasswordReset::Send do
 
       it 'raises an error' do
         expect { service.execute }
-          .to raise_error(Exceptions::UnprocessableEntity, %r{import_mode})
+          .to raise_error(Exceptions::UnprocessableContent, %r{import_mode})
       end
 
       it 'does not generate a new token' do

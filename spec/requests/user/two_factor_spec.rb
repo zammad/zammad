@@ -124,7 +124,7 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
     end
 
     it 'fails without needed params' do
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it_behaves_like 'ensuring token is valid'
@@ -233,7 +233,7 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
         let(:method) { 'unknown' }
 
         it 'fails' do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
     end
@@ -263,7 +263,7 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
         let(:method) { 'unknown' }
 
         it 'fails' do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
     end
@@ -301,7 +301,7 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
              params: { token: token_value },
              as:     :json
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     context 'with needed params' do
@@ -359,7 +359,7 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
     end
 
     it 'fails without needed params' do
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     context 'with needed params' do

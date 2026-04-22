@@ -20,7 +20,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         expect do
           TelegramHelper.check_token('invalid_token')
-        end.to raise_error(Exceptions::UnprocessableEntity)
+        end.to raise_error(Exceptions::UnprocessableContent)
       end
 
       it 'valid token' do
@@ -44,7 +44,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         expect do
           TelegramHelper.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
-        end.to raise_error(Exceptions::UnprocessableEntity)
+        end.to raise_error(Exceptions::UnprocessableContent)
       end
 
       it 'via https and invalid port' do
@@ -61,7 +61,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         expect do
           TelegramHelper.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
-        end.to raise_error(Exceptions::UnprocessableEntity)
+        end.to raise_error(Exceptions::UnprocessableContent)
       end
 
       it 'via https and invalid host' do
@@ -78,7 +78,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         expect do
           TelegramHelper.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
-        end.to raise_error(Exceptions::UnprocessableEntity)
+        end.to raise_error(Exceptions::UnprocessableContent)
       end
 
       it 'with https, valid token, host and port' do
@@ -138,14 +138,14 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         it 'bot id is missing' do
           post '/api/v1/channels_telegram_webhook/not_existing', params: read_message('private', 'start'), as: :json
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(json_response['error']).to eq('bot id is missing')
         end
 
         it 'invalid callback token' do
           callback_url = "/api/v1/channels_telegram_webhook/not_existing?bid=#{channel.options[:bot][:id]}"
           post callback_url, params: read_message('private', 'start'), as: :json
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(json_response['error']).to eq('invalid callback token')
         end
 

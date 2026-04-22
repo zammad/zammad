@@ -128,13 +128,13 @@ RSpec.describe 'Selector', authenticated_as: :admin, type: :request do
   describe 'handling wrong parameters', aggregate_failures: true do
     it 'returns error for non existant type' do
       post '/api/v1/blablabla/selector', params: nil, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response['error_human']).to eq('Given object does not support selector')
     end
 
     it 'returns error for object that does not support selectors' do
       post '/api/v1/groups/selector', params: nil, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response['error_human']).to eq('Given object does not support selector')
     end
   end

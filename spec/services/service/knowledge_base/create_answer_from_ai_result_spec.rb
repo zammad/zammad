@@ -63,7 +63,7 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
       end
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'No valid knowledge base category provided.')
+        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'No valid knowledge base category provided.')
       end
     end
 
@@ -120,7 +120,7 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
       let(:kb_locale) { nil }
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'No knowledge base locale configured.')
+        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'No knowledge base locale configured.')
       end
     end
 

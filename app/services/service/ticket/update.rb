@@ -69,7 +69,7 @@ class Service::Ticket::Update < Service::BaseWithCurrentUser
     return if !shared_draft
 
     if shared_draft && shared_draft.ticket != ticket
-      raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+      raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
     end
 
     shared_draft.destroy!

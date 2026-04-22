@@ -420,7 +420,7 @@ returns
       return
     end
 
-    # raise Exceptions::UnprocessableEntity, 'There are no business hours configured.' if hours.blank?
+    # raise Exceptions::UnprocessableContent, 'There are no business hours configured.' if hours.blank?
 
     # validate if business hours are usable by execute a try calculation
     begin

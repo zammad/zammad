@@ -57,7 +57,7 @@ class SMIMECertificate < ApplicationModel
       private_key.valid_smime_private_key!
 
       certificate = find_by(uid: private_key.uid)
-      raise Exceptions::UnprocessableEntity, __('The certificate for this private key could not be found.') if !certificate
+      raise Exceptions::UnprocessableContent, __('The certificate for this private key could not be found.') if !certificate
 
       certificate.update!(private_key: private_key.pem, private_key_secret: secret)
     end

@@ -17,7 +17,7 @@ class Integration::PGPController < ApplicationController
     key = PGPKey.find(params[:id])
 
     if %w[1 true].include?(params[:secret])
-      raise Exceptions::UnprocessableEntity, __('This is not a private PGP key.') if !key.secret
+      raise Exceptions::UnprocessableContent, __('This is not a private PGP key.') if !key.secret
 
       return send_data(
         key.key,

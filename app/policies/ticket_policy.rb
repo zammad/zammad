@@ -33,7 +33,7 @@ class TicketPolicy < ApplicationPolicy
   def ensure_group?
     return true if record.group_id
 
-    not_authorized Exceptions::UnprocessableEntity.new __("The required value 'group_id' is missing.")
+    not_authorized Exceptions::UnprocessableContent.new __("The required value 'group_id' is missing.")
   end
 
   def follow_up?
@@ -46,7 +46,7 @@ class TicketPolicy < ApplicationPolicy
     # Check follow_up_possible configuration, based on the group.
     return true if follow_up_possible? && update?
 
-    not_authorized Exceptions::UnprocessableEntity.new __('Cannot follow-up on a closed ticket. Please create a new ticket.')
+    not_authorized Exceptions::UnprocessableContent.new __('Cannot follow-up on a closed ticket. Please create a new ticket.')
   end
 
   def agent_read_access?

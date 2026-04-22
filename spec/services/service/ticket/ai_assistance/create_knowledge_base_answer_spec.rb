@@ -134,7 +134,7 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
         end
 
         it 'raises an error' do
-          expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'No editable knowledge base categories available.')
+          expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'No editable knowledge base categories available.')
         end
       end
     end
@@ -155,11 +155,11 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
       end
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'Knowledge base draft could not be generated.')
+        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'Knowledge base draft could not be generated.')
       end
 
       it 'does not create a knowledge base answer', :aggregate_failures do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'Knowledge base draft could not be generated.')
+        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'Knowledge base draft could not be generated.')
 
         expect(Service::KnowledgeBase::CreateAnswerFromAIResult).not_to have_received(:new)
       end
@@ -169,7 +169,7 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
       let(:knowledge_base_id) { -1 }
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'Knowledge base is unavailable or not properly configured.')
+        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'Knowledge base is unavailable or not properly configured.')
       end
     end
 
@@ -178,7 +178,7 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
       let(:knowledge_base_id)                 { knowledge_base_without_categories.id }
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'Knowledge base is unavailable or not properly configured.')
+        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'Knowledge base is unavailable or not properly configured.')
       end
     end
   end

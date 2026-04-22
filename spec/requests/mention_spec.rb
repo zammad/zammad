@@ -67,7 +67,7 @@ RSpec.describe 'Mention', aggregate_failures: true, authenticated_as: :user, typ
       it 'fails if non-ticket given' do
         get '/api/v1/mentions', params: { mentionable_type: 'NonTicket', mentionable_id: ticket.id }, as: :json
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(json_response['error']).to eq("The parameter 'mentionable_type' is invalid.")
       end
     end

@@ -39,6 +39,6 @@ class Service::User::PasswordReset::Send < Service::Base
     return if !Setting.get('import_mode')
 
     Rails.logger.error "Could not send password reset email to user #{username} because import_mode setting is on."
-    raise Exceptions::UnprocessableEntity, __('The email could not be sent to the user because import_mode setting is on.')
+    raise Exceptions::UnprocessableContent, __('The email could not be sent to the user because import_mode setting is on.')
   end
 end

@@ -7,16 +7,16 @@ module HandlesOidcAuthorization
     skip_before_action :verify_csrf_token, only: %i[oidc_destroy oidc_bc_logout] # rubocop:disable Rails/LexicallyScopedActionFilter
 
     def oidc_bc_logout
-      raise Exceptions::UnprocessableEntity, __("The required parameter 'logout_token' is missing.") if params[:logout_token].blank?
+      raise Exceptions::UnprocessableContent, __("The required parameter 'logout_token' is missing.") if params[:logout_token].blank?
 
       begin
         decoded = oidc_strategy.decode_logout_token(params[:logout_token])
       rescue => e
         Rails.logger.error "OpenID Connect OP-initiated logout failed: #{e.message}"
-        raise Exceptions::UnprocessableEntity, __("The 'logout_token' is invalid.")
+        raise Exceptions::UnprocessableContent, __("The 'logout_token' is invalid.")
       end
 
-      raise Exceptions::UnprocessableEntity, __("The 'logout_token' does not contain any session information.") if decoded.sid.blank?
+      raise Exceptions::UnprocessableContent, __("The 'logout_token' does not contain any session information.") if decoded.sid.blank?
 
       Session.all.detect { |s| s.data['oidc_sid'] == decoded.sid }&.destroy
     end

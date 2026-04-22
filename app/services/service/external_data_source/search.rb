@@ -6,7 +6,7 @@ class Service::ExternalDataSource::Search < Service::Base
 
     ExternalDataSource.new(options: attribute.data_option, render_context:, term:, limit:).process
   rescue ExternalDataSource::Errors::BaseError => e
-    raise Exceptions::UnprocessableEntity, e.log_message(attribute_display)
+    raise Exceptions::UnprocessableContent, e.log_message(attribute_display)
   end
 
   def attribute_display

@@ -27,7 +27,7 @@ RSpec.describe Service::User::TwoFactor::VerifyMethodConfiguration, current_user
 
     context 'when the given method is not enabled' do
       it 'raises error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'The two-factor authentication method is not enabled.')
+        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'The two-factor authentication method is not enabled.')
       end
     end
 
@@ -75,7 +75,7 @@ RSpec.describe Service::User::TwoFactor::VerifyMethodConfiguration, current_user
     let(:method_name) { 'nonsense' }
 
     it 'raises error' do
-      expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'The given two-factor method does not exist.')
+      expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'The given two-factor method does not exist.')
     end
   end
 end

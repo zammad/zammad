@@ -35,8 +35,8 @@ class Service::KnowledgeBase::CreateAnswerFromAIResult < Service::Base
   private
 
   def validate_context!
-    raise Exceptions::UnprocessableEntity, __('No knowledge base locale configured.') if kb_locale.blank?
-    raise Exceptions::UnprocessableEntity, __('Invalid knowledge base locale.')       if kb_locale.knowledge_base_id != knowledge_base.id
+    raise Exceptions::UnprocessableContent, __('No knowledge base locale configured.') if kb_locale.blank?
+    raise Exceptions::UnprocessableContent, __('Invalid knowledge base locale.')       if kb_locale.knowledge_base_id != knowledge_base.id
   end
 
   def draft_payload
@@ -59,7 +59,7 @@ class Service::KnowledgeBase::CreateAnswerFromAIResult < Service::Base
   end
 
   def resolve_category(data)
-    knowledge_base.categories.find_by(id: data['category_id'].to_i) || raise(Exceptions::UnprocessableEntity, __('No valid knowledge base category provided.'))
+    knowledge_base.categories.find_by(id: data['category_id'].to_i) || raise(Exceptions::UnprocessableContent, __('No valid knowledge base category provided.'))
   end
 
   def resolve_title(data, category)

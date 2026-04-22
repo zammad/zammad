@@ -77,7 +77,7 @@ RSpec.describe Service::ExternalDataSource::Search do
 
         it 'raises error' do
           expect { instance.execute(attribute: attribute, render_context: {}, term: 'term') }
-            .to raise_error(Exceptions::UnprocessableEntity)
+            .to raise_error(Exceptions::UnprocessableContent)
         end
       end
     end

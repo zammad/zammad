@@ -47,7 +47,7 @@ RSpec.describe Gql::Mutations::User::Current::RemoveLinkedAccount, type: :graphq
       let(:uid) { 'invalid-uid' }
 
       it 'raises an error' do
-        expect(gql.result.error_type).to eq(Exceptions::UnprocessableEntity)
+        expect(gql.result.error_type).to eq(Exceptions::UnprocessableContent)
       end
     end
   end

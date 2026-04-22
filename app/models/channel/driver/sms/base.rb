@@ -33,10 +33,10 @@ class Channel::Driver::Sms::Base
   end
 
   def ensure_group!(channel)
-    raise Exceptions::UnprocessableEntity, __('Group needed in channel definition!') if channel.group_id.blank?
+    raise Exceptions::UnprocessableContent, __('Group needed in channel definition!') if channel.group_id.blank?
 
     group = Group.find_by(id: channel.group_id)
-    raise Exceptions::UnprocessableEntity, __('Group is invalid!') if !group
+    raise Exceptions::UnprocessableContent, __('Group is invalid!') if !group
   end
 
   def cut_title(title)

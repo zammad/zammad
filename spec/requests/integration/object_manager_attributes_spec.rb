@@ -76,7 +76,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       }
 
       post '/api/v1/object_manager_attributes', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it 'does add new ticket text object - no default' do
@@ -543,7 +543,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       target_id = target_attribute[0]['id']
 
       delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to include('Overview')
       expect(response.body).to include('test_overview')
       expect(response.body).to include('cannot be deleted!')
@@ -629,7 +629,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       target_id = target_attribute[0]['id']
 
       delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to include('Trigger')
       expect(response.body).to include('test_trigger')
       expect(response.body).to include('cannot be deleted!')
@@ -763,7 +763,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       target_id = target_attribute[0]['id']
 
       delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to include('Job')
       expect(response.body).to include('test_scheduler')
       expect(response.body).to include('cannot be deleted!')
@@ -905,7 +905,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       target_id = target_attribute[0]['id']
 
       delete "/api/v1/object_manager_attributes/#{target_id}", as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to include('Overview')
       expect(response.body).to include('test_overview')
       expect(response.body).to include('cannot be deleted!')
@@ -972,7 +972,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
       }
 
       put "/api/v1/object_manager_attributes/#{json_response['id']}", params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_truthy
       expect(json_response['error']).to be_truthy
 
@@ -1058,7 +1058,7 @@ RSpec.describe 'ObjectManager Attributes', type: :request do
 
       # update the object
       put '/api/v1/object_manager_attributes/abc', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     context 'position handling', authenticated_as: -> { admin } do

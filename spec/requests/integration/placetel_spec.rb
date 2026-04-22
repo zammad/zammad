@@ -167,7 +167,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       Setting.set('placetel_config', {})
       params = 'event=IncomingCall&from=01114100300&to=030600000000&call_id=4991155921769858278-6'
       post "/api/v1/placetel/#{token}", params: params
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       error = nil
       local_response = REXML::Document.new(response.body)

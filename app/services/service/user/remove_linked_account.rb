@@ -18,6 +18,6 @@ class Service::User::RemoveLinkedAccount < Service::Base
       uid:      @uid,
     ).destroy_all
 
-    raise Exceptions::UnprocessableEntity, __('The linked account could not be found.') if records.none?
+    raise Exceptions::UnprocessableContent, __('The linked account could not be found.') if records.none?
   end
 end

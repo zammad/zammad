@@ -12,7 +12,7 @@ class Service::User::TwoFactor::VerifyMethodConfiguration < Service::User::TwoFa
 
   def execute
     if !method&.enabled? || !method&.available?
-      raise Exceptions::UnprocessableEntity, __('The two-factor authentication method is not enabled.')
+      raise Exceptions::UnprocessableContent, __('The two-factor authentication method is not enabled.')
     end
 
     verified = user.two_factor_verify_configuration?(method_name, payload, configuration)

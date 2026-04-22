@@ -21,7 +21,7 @@ RSpec.describe Service::User::RemoveLinkedAccount do
     let(:uid) { 'invalid-uid' }
 
     it 'raises an error' do
-      expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity)
+      expect { service.execute }.to raise_error(Exceptions::UnprocessableContent)
     end
   end
 

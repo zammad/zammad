@@ -6,7 +6,7 @@ class Service::User::Device::Delete < Service::Base
   def initialize(user:, device:)
     super()
 
-    raise Exceptions::UnprocessableEntity, __('UserDevice could not be found.') if device.blank?
+    raise Exceptions::UnprocessableContent, __('UserDevice could not be found.') if device.blank?
 
     @user = user
     @device = device

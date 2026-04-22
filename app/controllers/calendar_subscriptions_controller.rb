@@ -9,7 +9,7 @@ class CalendarSubscriptionsController < ApplicationController
   #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 403          Forbidden / Invalid session.
-  # @response_message 422          Unprocessable Entity.
+  # @response_message 422          Unprocessable Content.
   def all
     calendar_subscriptions = CalendarSubscriptions.new(current_user)
     ical                   = calendar_subscriptions.all
@@ -22,7 +22,7 @@ class CalendarSubscriptionsController < ApplicationController
     )
   rescue => e
     logger.error e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_content
   end
 
   # @path       [GET] /calendar_subscriptions/:object
@@ -32,7 +32,7 @@ class CalendarSubscriptionsController < ApplicationController
   #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 403          Forbidden / Invalid session.
-  # @response_message 422          Unprocessable Entity.
+  # @response_message 422          Unprocessable Content.
   def object
     calendar_subscriptions = CalendarSubscriptions.new(current_user)
     ical                   = calendar_subscriptions.generic(params[:object], params[:method].presence || 'all')
@@ -45,7 +45,7 @@ class CalendarSubscriptionsController < ApplicationController
     )
   rescue => e
     logger.error e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_content
   end
 
 end

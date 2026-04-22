@@ -7,9 +7,9 @@ RSpec.describe 'User email verify endpoint', authenticated_as: false, type: :req
     let(:user)   { create(:user, verified: false) }
     let(:params) { { token: token } }
 
-    shared_examples 'returning unprocessable entity' do |message|
-      it 'returns unprocessable entity' do
-        expect(response).to have_http_status(:unprocessable_entity).and have_attributes(body: include(message))
+    shared_examples 'returning unprocessable content' do |message|
+      it 'returns unprocessable content' do
+        expect(response).to have_http_status(:unprocessable_content).and have_attributes(body: include(message))
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe 'User email verify endpoint', authenticated_as: false, type: :req
         Setting.set('user_create_account', false)
       end
 
-      it_behaves_like 'returning unprocessable entity', 'This feature is not enabled.'
+      it_behaves_like 'returning unprocessable content', 'This feature is not enabled.'
     end
 
     context 'with a valid token' do
@@ -43,13 +43,13 @@ RSpec.describe 'User email verify endpoint', authenticated_as: false, type: :req
     context 'without a token parameter' do
       let(:params) { { foo: 'bar' } }
 
-      it_behaves_like 'returning unprocessable entity', 'No token!'
+      it_behaves_like 'returning unprocessable content', 'No token!'
     end
 
     context 'with an invalid token' do
       let(:token) { SecureRandom.urlsafe_base64(48) }
 
-      it_behaves_like 'returning unprocessable entity', 'The provided token is invalid.'
+      it_behaves_like 'returning unprocessable content', 'The provided token is invalid.'
     end
   end
 end

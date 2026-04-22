@@ -32,7 +32,7 @@ module Gql::Mutations
 
       begin
         item = issue_tracker_item_service.execute
-      rescue Exceptions::UnprocessableEntity => e
+      rescue Exceptions::UnprocessableContent => e
         return error_response({ field: :link, message: e.message })
       end
 

@@ -192,7 +192,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       it 'verifies user has access to given groups' do
         patch path_draft_a, params: base_params.merge(group_id: group_b.id), as: :json
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
 
       it 'grants access via role groups' do
@@ -295,7 +295,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
     it 'raises error if draft is not applicable in this context' do
       post_new_ticket group_b.id, draft_a.id
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it 'keeps draft if not applicable in this context' do
@@ -307,7 +307,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
     it 'raises error if group does not support drafts' do
       post_new_ticket group_c.id, draft_c.id
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it 'succeeds when draft does not exist' do

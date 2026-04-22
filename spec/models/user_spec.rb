@@ -695,11 +695,11 @@ RSpec.describe User, type: :model do
         let(:value) { 'Th1515n0t4v4l1dh45h' }
 
         it 'prevents create' do
-          expect { create(:user, image: value) }.to raise_error(Exceptions::UnprocessableEntity, %r{#{value}})
+          expect { create(:user, image: value) }.to raise_error(Exceptions::UnprocessableContent, %r{#{value}})
         end
 
         it 'prevents update' do
-          expect { create(:user).update!(image: value) }.to raise_error(Exceptions::UnprocessableEntity, %r{#{value}})
+          expect { create(:user).update!(image: value) }.to raise_error(Exceptions::UnprocessableContent, %r{#{value}})
         end
       end
     end
@@ -1068,7 +1068,7 @@ RSpec.describe User, type: :model do
               create_list(:agent, 2)
 
               expect { create(:agent) }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
 
@@ -1078,7 +1078,7 @@ RSpec.describe User, type: :model do
               future_agent = create(:customer)
 
               expect { future_agent.roles = [agent_role] }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
           end
@@ -1127,7 +1127,7 @@ RSpec.describe User, type: :model do
               create_list(:agent, 2)
 
               expect { create(:agent) }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
 
@@ -1137,7 +1137,7 @@ RSpec.describe User, type: :model do
               future_agent = create(:customer)
 
               expect { future_agent.roles = [agent_role] }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
           end
@@ -1171,7 +1171,7 @@ RSpec.describe User, type: :model do
               inactive_agent = create(:agent, active: false)
 
               expect { inactive_agent.update!(active: true) }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
           end
@@ -1185,7 +1185,7 @@ RSpec.describe User, type: :model do
               inactive_agent = create(:agent, active: false)
 
               expect { inactive_agent.update!(active: true) }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
           end
