@@ -9786,6 +9786,12 @@ msgstr ""
 msgid "Load"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:22
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue:18
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:132
+msgid "Load %s more"
+msgstr ""
+
 #: app/frontend/shared/form/i18n/locales.ts:61
 msgid "Load more"
 msgstr ""
@@ -14668,7 +14674,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:268
 msgid "See more"
 msgstr ""
@@ -21675,11 +21680,6 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:27
 msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
-msgstr ""
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue:18
-#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:132
-msgid "load %s more"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:120

@@ -19,9 +19,9 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
     let(:ticket) { create(:ticket, title: 'Ticket Title', group: group) }
     let(:article) { create(:ticket_article, body: 'Article 1', ticket: ticket, internal: false) }
 
-    it 'see a single article and no "load more"' do
+    it 'see a single article and no "Load more"' do
       expect(page).to have_text(article.body)
-      expect(page).to have_no_text('load')
+      expect(page).to have_no_css('button', text: %r{\ALoad \d+ more\z})
     end
 
     it 'switches article to internal' do
@@ -57,7 +57,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
         expect(page).to have_text(article.body, count: 1)
       end
 
-      expect(page).to have_no_text('load')
+      expect(page).to have_no_css('button', text: %r{\ALoad \d+ more\z})
     end
   end
 
@@ -78,7 +78,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
     end
 
     it 'deleting article if every article is loaded', current_user_id: -> { agent.id } do
-      click('button', text: 'load 4 more')
+      click('button', text: 'Load 4 more')
 
       wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
 
@@ -97,7 +97,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
       expect(page).to have_no_text(articles.last.body)
     end
 
-    it 'can use "load more" button' do
+    it 'can use "Load more" button' do
       expect(page).to have_text('Article 1.')
 
       (6..10).each do |number|
@@ -106,7 +106,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
       expect(page).to have_no_text('Article 5.')
 
-      click('button', text: 'load 4 more')
+      click('button', text: 'Load 4 more')
 
       wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
 
@@ -114,14 +114,14 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
         expect(page).to have_text("Article #{number}.", count: 1)
       end
 
-      expect(page).to have_no_text('load')
+      expect(page).to have_no_css('button', text: %r{\ALoad \d+ more\z})
     end
 
     it 'can go back to the same spot' do
       expect(page).to have_text('Article 1.')
       expect(page).to have_no_text('Article 5.')
 
-      click('button', text: 'load 4 more')
+      click('button', text: 'Load 4 more')
 
       page.scroll_to 0, 100
 
