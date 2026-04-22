@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
@@ -13,6 +12,8 @@ import {
   type AutocompleteSearchObjectAttributeExternalDataSourceQuery,
 } from '#shared/graphql/types.ts'
 import { ensureGraphqlId } from '#shared/graphql/utils.ts'
+
+import type { FormKitNode } from '@formkit/core'
 
 const wrapperParameters = {
   form: true,
@@ -38,23 +39,25 @@ beforeAll(async () => {
 // We include only some query-related test cases, as the actual autocomplete component has its own unit test.
 describe('Form - Field - External Data Source - Query', () => {
   it('fetches remote options via GraphQL query', async () => {
+    const ticketId = ensureGraphqlId('Ticket', 123)
+
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         ...testProps,
         debounceInterval: 0,
+        // When we only have one field, the root node is the field itself.
+        // So we are faking the initial entity object.
+        plugins: [
+          (node: FormKitNode) => {
+            node.context!.initialEntityObject = {
+              id: ticketId,
+            }
+          },
+        ],
       },
     })
 
-    // When we only have one field, the root node is the field itself.
-    // So we are faking the initial entity object.
-    const ticketId = ensureGraphqlId('Ticket', 123)
-    const node = getNode('test')
-    node!.context!.initialEntityObject = {
-      id: ticketId,
-    }
-
-    // Resolve `defineAsyncComponent()` calls first.
     await vi.dynamicImportSettled()
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))

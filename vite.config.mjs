@@ -90,37 +90,55 @@ export default defineConfig(({ mode, command }) => {
       logOverride: { 'css-syntax-error': 'silent' },
     },
     build: {
-      rollupOptions: {
+      rolldownOptions: {
         output: {
-          manualChunks: {
-            lodash: ['lodash-es'],
-            vue: ['vue', 'vue-router', 'pinia'],
-            datepicker: ['@vuepic/vue-datepicker'],
-            linkifyjs: ['linkifyjs', 'linkify-string'],
-            graphql: [
-              'graphql',
-              // 🚨 'graphql-ruby-client',
-              // Important: don't include the package root here, it pulls in the Node-only `sync` entry
-              // which imports fs/path/crypto/http/... and triggers Vite "externalized for browser" warnings.
-              'graphql-ruby-client/subscriptions/ActionCableLink',
-              'graphql-tag',
-              '@apollo/client',
-              '@vue/apollo-composable',
-              '@rails/actioncable',
-            ],
-            formkit: [
-              '@formkit/core',
-              '@formkit/dev',
-              // '@formkit/drag-and-drop', # is not used in mobile
-              '@formkit/i18n',
-              '@formkit/inputs',
-              '@formkit/rules',
-              '@formkit/tailwindcss',
-              '@formkit/themes',
-              '@formkit/utils',
-              '@formkit/validation',
-              '@formkit/vue',
-            ],
+          manualChunks(id) {
+            const manualChunksMap = {
+              lodash: ['lodash-es'],
+              vue: ['vue', 'vue-router', 'pinia'],
+              datepicker: ['@vuepic/vue-datepicker'],
+              linkifyjs: ['linkifyjs', 'linkify-string'],
+              graphql: [
+                'graphql',
+                // 🚨 'graphql-ruby-client',
+                // Important: don't include the package root here, it pulls in the Node-only `sync` entry
+                // which imports fs/path/crypto/http/... and triggers Vite "externalized for browser" warnings.
+                'graphql-ruby-client/subscriptions/ActionCableLink',
+                'graphql-tag',
+                '@apollo/client',
+                '@vue/apollo-composable',
+                '@rails/actioncable',
+              ],
+              formkit: [
+                '@formkit/core',
+                '@formkit/dev',
+                // '@formkit/drag-and-drop', # is not used in mobile
+                '@formkit/i18n',
+                '@formkit/inputs',
+                '@formkit/rules',
+                '@formkit/tailwindcss',
+                '@formkit/themes',
+                '@formkit/utils',
+                '@formkit/validation',
+                '@formkit/vue',
+              ],
+            }
+
+            if (!id.includes('node_modules')) return undefined
+
+            for (const [chunkName, packages] of Object.entries(manualChunksMap)) {
+              if (
+                packages.some(
+                  (pkg) =>
+                    id.includes(`node_modules/${pkg}/`) ||
+                    id.includes(`node_modules/.pnpm/${pkg.replace('/', '+').replace('@', '')}`),
+                )
+              ) {
+                return chunkName
+              }
+            }
+
+            return undefined
           },
         },
       },
