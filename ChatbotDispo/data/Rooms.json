@@ -1,0 +1,1702 @@
+[
+  {
+    "MTHAB": "AQ",
+    "MTTEX1": "ENTRADA ACQUA-PLAYA"
+  },
+  {
+    "MTHAB": "AS",
+    "MTTEX1": "DOBLE FAMILIAR SUR"
+  },
+  {
+    "MTHAB": "A1",
+    "MTTEX1": "APTO.4 PERS."
+  },
+  {
+    "MTHAB": "A2",
+    "MTTEX1": "APTO.6 PERS."
+  },
+  {
+    "MTHAB": "A3",
+    "MTTEX1": "APTO.12 PERS."
+  },
+  {
+    "MTHAB": "A5",
+    "MTTEX1": "PROG.ADELGAZAMIENTO"
+  },
+  {
+    "MTHAB": "B3",
+    "MTTEX1": "PROG.BELLEZA 3 DIAS"
+  },
+  {
+    "MTHAB": "B5",
+    "MTTEX1": "PROG.BELLEZA 5 DIAS"
+  },
+  {
+    "MTHAB": "C3",
+    "MTTEX1": "PROG.BELLEZA 3 DIAS"
+  },
+  {
+    "MTHAB": "DB",
+    "MTTEX1": "DOBLE"
+  },
+  {
+    "MTHAB": "DC",
+    "MTTEX1": "DOBLE COMUNICADA"
+  },
+  {
+    "MTHAB": "DF",
+    "MTTEX1": "DOBLE FAMILIAR"
+  },
+  {
+    "MTHAB": "DM",
+    "MTTEX1": "DOBLE MINUSVALIDOS"
+  },
+  {
+    "MTHAB": "DN",
+    "MTTEX1": "DB NO FUMADOR"
+  },
+  {
+    "MTHAB": "DP",
+    "MTTEX1": "DUPLEX"
+  },
+  {
+    "MTHAB": "DS",
+    "MTTEX1": "DOBLE SUPERIOR"
+  },
+  {
+    "MTHAB": "DT",
+    "MTTEX1": "DOBLE TERRAZA"
+  },
+  {
+    "MTHAB": "DU",
+    "MTTEX1": "DOBLE USO INDIVIDUAL"
+  },
+  {
+    "MTHAB": "DV",
+    "MTTEX1": "DOBLE VISTAS MAR"
+  },
+  {
+    "MTHAB": "DW",
+    "MTTEX1": "DOBLE VISTA MAR FRONTAL"
+  },
+  {
+    "MTHAB": "E3",
+    "MTTEX1": "ANTISTRESS 3 DIAS"
+  },
+  {
+    "MTHAB": "E5",
+    "MTTEX1": "ANTISTRESS 5 DIAS"
+  },
+  {
+    "MTHAB": "GF",
+    "MTTEX1": "GREEN FEE"
+  },
+  {
+    "MTHAB": "HJ",
+    "MTTEX1": "HAB.CON JARDIN"
+  },
+  {
+    "MTHAB": "ID",
+    "MTTEX1": "INDIVIDUAL"
+  },
+  {
+    "MTHAB": "IJ",
+    "MTTEX1": "INDIVIDUAL JARDIN"
+  },
+  {
+    "MTHAB": "IS",
+    "MTTEX1": "INDIVIDUAL SUPERIOR"
+  },
+  {
+    "MTHAB": "IT",
+    "MTTEX1": "INDIVIDUAL CON TERRAZA"
+  },
+  {
+    "MTHAB": "IV",
+    "MTTEX1": "INDIVIDUAL CON VISTA MAR"
+  },
+  {
+    "MTHAB": "MW",
+    "MTTEX1": "COCHE ALQUILER"
+  },
+  {
+    "MTHAB": "R2",
+    "MTTEX1": "RELAX FIN DE SEMANA 2 DIAS"
+  },
+  {
+    "MTHAB": "SF",
+    "MTTEX1": "SUITE CON SALON"
+  },
+  {
+    "MTHAB": "SJ",
+    "MTTEX1": "SUITE JUNIOR"
+  },
+  {
+    "MTHAB": "SL",
+    "MTTEX1": "SUITE LUDICA"
+  },
+  {
+    "MTHAB": "SP",
+    "MTTEX1": "SUITE PRESIDENCIAL"
+  },
+  {
+    "MTHAB": "SS",
+    "MTTEX1": "DOBLE CONFORT"
+  },
+  {
+    "MTHAB": "ST",
+    "MTTEX1": "STUDIO"
+  },
+  {
+    "MTHAB": "SW",
+    "MTTEX1": "SUITE WORK"
+  },
+  {
+    "MTHAB": "SY",
+    "MTTEX1": "SENATOR SWIM UP SUITE OCEAN VI"
+  },
+  {
+    "MTHAB": "V3",
+    "MTTEX1": "CURA VITAL 3 DIAS"
+  },
+  {
+    "MTHAB": "01",
+    "MTTEX1": "PARKING PLAYACAPRICHO"
+  },
+  {
+    "MTHAB": "05",
+    "MTTEX1": "PARKING PLAYASOL"
+  },
+  {
+    "MTHAB": "10",
+    "MTTEX1": "PARKING MARBELLA PLAYA"
+  },
+  {
+    "MTHAB": "16",
+    "MTTEX1": "PARKING PLAYABONITA"
+  },
+  {
+    "MTHAB": "17",
+    "MTTEX1": "PARKING PLAYABELLA"
+  },
+  {
+    "MTHAB": "3N",
+    "MTTEX1": "TRIPLE"
+  },
+  {
+    "MTHAB": "3S",
+    "MTTEX1": "TRIPLE SUPERIOR"
+  },
+  {
+    "MTHAB": "3T",
+    "MTTEX1": "TRIPLE TERRAZA"
+  },
+  {
+    "MTHAB": "4S",
+    "MTTEX1": "CUADRUPLE SUPERIOR"
+  },
+  {
+    "MTHAB": "4T",
+    "MTTEX1": "CUADRUPLE CON TERRAZA"
+  },
+  {
+    "MTHAB": "F3",
+    "MTTEX1": "PAQ.ACQUAPLAYA FRAM 3 DIAS"
+  },
+  {
+    "MTHAB": "BI",
+    "MTTEX1": "CIRCUITO DULCE BIENESTAR"
+  },
+  {
+    "MTHAB": "VI",
+    "MTTEX1": "CIRCUITO VINOTERAPIA"
+  },
+  {
+    "MTHAB": "PC",
+    "MTTEX1": "CIRCUITO PIERNAS CANSADAS"
+  },
+  {
+    "MTHAB": "SN",
+    "MTTEX1": "SENATOR JR SUITE OCEAN QUEEN"
+  },
+  {
+    "MTHAB": "1E",
+    "MTTEX1": "PROGRAMA ARMONIA"
+  },
+  {
+    "MTHAB": "1Q",
+    "MTTEX1": "PAC ACQUAPLAYA"
+  },
+  {
+    "MTHAB": "2E",
+    "MTTEX1": "PROG.ARMONIA"
+  },
+  {
+    "MTHAB": "PE",
+    "MTTEX1": "PROGRAMA PARA EL"
+  },
+  {
+    "MTHAB": "GU",
+    "MTTEX1": "HABITACIÓN DOBLE USO VISTA G.V"
+  },
+  {
+    "MTHAB": "2P",
+    "MTTEX1": "APTO 2 DORM CON PISCINA"
+  },
+  {
+    "MTHAB": "3P",
+    "MTTEX1": "APTO 3 DORM CON PISCINA"
+  },
+  {
+    "MTHAB": "PR",
+    "MTTEX1": "DOBLE"
+  },
+  {
+    "MTHAB": "CA",
+    "MTTEX1": "CARICIA"
+  },
+  {
+    "MTHAB": "PB",
+    "MTTEX1": "A2 BAJO CON PISCINA"
+  },
+  {
+    "MTHAB": "ET",
+    "MTTEX1": "ESCAPADA TROPICAL"
+  },
+  {
+    "MTHAB": "E2",
+    "MTTEX1": "ESPECIAL DUO"
+  },
+  {
+    "MTHAB": "MM",
+    "MTTEX1": "MAS QUE MASAJE"
+  },
+  {
+    "MTHAB": "4C",
+    "MTTEX1": "4 CONTINENTES"
+  },
+  {
+    "MTHAB": "RN",
+    "MTTEX1": "RENACER EXPRESS"
+  },
+  {
+    "MTHAB": "4L",
+    "MTTEX1": "CUADRUPLE CON LITERA"
+  },
+  {
+    "MTHAB": "ED",
+    "MTTEX1": "ESPECIAL DUO"
+  },
+  {
+    "MTHAB": "DH",
+    "MTTEX1": "DOBLE + ESPECTACULO"
+  },
+  {
+    "MTHAB": "PS",
+    "MTTEX1": "PAUSA"
+  },
+  {
+    "MTHAB": "CD",
+    "MTTEX1": "CIRCUITO DRENANTE"
+  },
+  {
+    "MTHAB": "T2",
+    "MTTEX1": "TIEMPO PARA DOS"
+  },
+  {
+    "MTHAB": "SD",
+    "MTTEX1": "SUAVE DESPERTAR"
+  },
+  {
+    "MTHAB": "FL",
+    "MTTEX1": "EFECTO FLASH"
+  },
+  {
+    "MTHAB": "EM",
+    "MTTEX1": "ESPECIAL MASAJE"
+  },
+  {
+    "MTHAB": "SB",
+    "MTTEX1": "SUBLIME"
+  },
+  {
+    "MTHAB": "BA",
+    "MTTEX1": "ESPECIAL BELLEZA ACQUAPLAYA"
+  },
+  {
+    "MTHAB": "EP",
+    "MTTEX1": "ESPECIAL PARAISO"
+  },
+  {
+    "MTHAB": "SI",
+    "MTTEX1": "SILUETA"
+  },
+  {
+    "MTHAB": "DK",
+    "MTTEX1": "HAB DOBLE USO KING SIZE"
+  },
+  {
+    "MTHAB": "2F",
+    "MTTEX1": "2 DORM SIN PISC FRONTAL MAR"
+  },
+  {
+    "MTHAB": "B2",
+    "MTTEX1": "APTO 2 DORM V/MAR LATERAL"
+  },
+  {
+    "MTHAB": "C2",
+    "MTTEX1": "APTO 2 DORM V/MAR FRONTAL"
+  },
+  {
+    "MTHAB": "D2",
+    "MTTEX1": "APTO 2 DORM V/MAR FRONT PTA AL"
+  },
+  {
+    "MTHAB": "F2",
+    "MTTEX1": "APTO 2 DORM V/MAR FRON,AS+PTAA"
+  },
+  {
+    "MTHAB": "PG",
+    "MTTEX1": "PONTE GUAPA"
+  },
+  {
+    "MTHAB": "PL",
+    "MTTEX1": "PIERNAS LIGERAS"
+  },
+  {
+    "MTHAB": "DQ",
+    "MTTEX1": "DESPERTAR"
+  },
+  {
+    "MTHAB": "P1",
+    "MTTEX1": "1º PASE 22.00"
+  },
+  {
+    "MTHAB": "P2",
+    "MTTEX1": "1º PASE 22.30"
+  },
+  {
+    "MTHAB": "P3",
+    "MTTEX1": "2º PASE 00.30"
+  },
+  {
+    "MTHAB": "ES",
+    "MTTEX1": "ENTRADA ESTUDIANTES"
+  },
+  {
+    "MTHAB": "C1",
+    "MTTEX1": "CIRCUITO REDUCTOR"
+  },
+  {
+    "MTHAB": "TN",
+    "MTTEX1": "TENTACION"
+  },
+  {
+    "MTHAB": "EB",
+    "MTTEX1": "ESPECIAL BRONCEADO"
+  },
+  {
+    "MTHAB": "KE",
+    "MTTEX1": "KARITE ECOTREATMENT"
+  },
+  {
+    "MTHAB": "MV",
+    "MTTEX1": "MASAJE VELA PERFUMADA"
+  },
+  {
+    "MTHAB": "CO",
+    "MTTEX1": "CIRCUITO OASYS"
+  },
+  {
+    "MTHAB": "PF",
+    "MTTEX1": "PIERNAS PERFECTAS"
+  },
+  {
+    "MTHAB": "RV",
+    "MTTEX1": "CIRCUITO RENOVADOR"
+  },
+  {
+    "MTHAB": "SR",
+    "MTTEX1": "SPA RELAX"
+  },
+  {
+    "MTHAB": "DE",
+    "MTTEX1": "DOBLE ECONOMICA"
+  },
+  {
+    "MTHAB": "HD",
+    "MTTEX1": "DOBLE DUO"
+  },
+  {
+    "MTHAB": "HS",
+    "MTTEX1": "INDIV. DUO SUPERIOR"
+  },
+  {
+    "MTHAB": "3R",
+    "MTTEX1": "TRIPLE"
+  },
+  {
+    "MTHAB": "OF",
+    "MTTEX1": "HABITACION OFERTA PRIX ESPC."
+  },
+  {
+    "MTHAB": "TZ",
+    "MTTEX1": "HABITACION TEMATIZADA"
+  },
+  {
+    "MTHAB": "DX",
+    "MTTEX1": "DOBLE DELUXE"
+  },
+  {
+    "MTHAB": "PT",
+    "MTTEX1": "DUPLEX PENTHOUSE"
+  },
+  {
+    "MTHAB": "DD",
+    "MTTEX1": "DOBLE 2 CAMAS 1,05X2,00"
+  },
+  {
+    "MTHAB": "VS",
+    "MTTEX1": "VUELO SALIDA"
+  },
+  {
+    "MTHAB": "VL",
+    "MTTEX1": "VUELO LLEGADA"
+  },
+  {
+    "MTHAB": "MB",
+    "MTTEX1": "SUITE MARGARITA BONITA"
+  },
+  {
+    "MTHAB": "FR",
+    "MTTEX1": "DOBLE SUPERIOR CON SALON"
+  },
+  {
+    "MTHAB": "DJ",
+    "MTTEX1": "DOBLE CON JARDIN"
+  },
+  {
+    "MTHAB": "DG",
+    "MTTEX1": "DOBLE CON JARDIN DS"
+  },
+  {
+    "MTHAB": "AR",
+    "MTTEX1": "APARTAMENTO SUPERIOR 1 DORM"
+  },
+  {
+    "MTHAB": "VP",
+    "MTTEX1": "DOBLE VISTA PISCINA"
+  },
+  {
+    "MTHAB": "3A",
+    "MTTEX1": "TRIPLE"
+  },
+  {
+    "MTHAB": "3B",
+    "MTTEX1": "TRIPLE"
+  },
+  {
+    "MTHAB": "B1",
+    "MTTEX1": "HABITACIÓN DOBLE (2+2)BELLA"
+  },
+  {
+    "MTHAB": "3V",
+    "MTTEX1": "TRIPLE VISTA MAR"
+  },
+  {
+    "MTHAB": "TA",
+    "MTTEX1": "TEMATIZADA CON TERRAZA"
+  },
+  {
+    "MTHAB": "FV",
+    "MTTEX1": "HABITACION FAMILIAR V/MAR"
+  },
+  {
+    "MTHAB": "SV",
+    "MTTEX1": "SENATOR JR. SUITE OCEAN VIEW"
+  },
+  {
+    "MTHAB": "KV",
+    "MTTEX1": "HAB DOBLE V/MAR KING SIZE"
+  },
+  {
+    "MTHAB": "DL",
+    "MTTEX1": "HABITACION DOBLE CON SOFA"
+  },
+  {
+    "MTHAB": "EV",
+    "MTTEX1": "ESTUDIO VISTA MAR LATERAL"
+  },
+  {
+    "MTHAB": "M2",
+    "MTTEX1": "MASAJE 20'"
+  },
+  {
+    "MTHAB": "M5",
+    "MTTEX1": "MASAJE 50'"
+  },
+  {
+    "MTHAB": "SK",
+    "MTTEX1": "SENATOR JR SUITE QUEEN SIZE BE"
+  },
+  {
+    "MTHAB": "2S",
+    "MTTEX1": "APTO 2 DORM LADO SOL"
+  },
+  {
+    "MTHAB": "1S",
+    "MTTEX1": "APTO 1 DORM LADO SOL"
+  },
+  {
+    "MTHAB": "2T",
+    "MTTEX1": "APTO 2 DORM ACCESO PISCINA"
+  },
+  {
+    "MTHAB": "1T",
+    "MTTEX1": "APTO 1 DORM ACCESO PISCINA"
+  },
+  {
+    "MTHAB": "BS",
+    "MTTEX1": "OFERTA SALUD, BUS + HOTEL"
+  },
+  {
+    "MTHAB": "GD",
+    "MTTEX1": "DOBLE VISTA GRAN VIA"
+  },
+  {
+    "MTHAB": "VR",
+    "MTTEX1": "DOBLE SUPERIOR VISTA MAR"
+  },
+  {
+    "MTHAB": "DI",
+    "MTTEX1": "DOBLE SIN REFORMAR"
+  },
+  {
+    "MTHAB": "VX",
+    "MTTEX1": "SENATOR LUXURY JR SUITE OCEAN"
+  },
+  {
+    "MTHAB": "CR",
+    "MTTEX1": "CAJAS REGALOS"
+  },
+  {
+    "MTHAB": "D",
+    "MTTEX1": "DOBLE"
+  },
+  {
+    "MTHAB": "I",
+    "MTTEX1": "INDIVIDUAL"
+  },
+  {
+    "MTHAB": "RT",
+    "MTTEX1": "SUPERIOR TERRAZA"
+  },
+  {
+    "MTHAB": "B",
+    "MTTEX1": "HABITACION TRIPLE"
+  },
+  {
+    "MTHAB": "WR",
+    "MTTEX1": "DOBLE SUPERIOR VISTA MAR FRONT"
+  },
+  {
+    "MTHAB": "R",
+    "MTTEX1": "DOBLE SUPERIOR"
+  },
+  {
+    "MTHAB": "X",
+    "MTTEX1": "HABITACION EXECUTIVE"
+  },
+  {
+    "MTHAB": "PA",
+    "MTTEX1": "LMALE SUPERIOR"
+  },
+  {
+    "MTHAB": "DR",
+    "MTTEX1": "HABITACION DOBLE SUPERIOR"
+  },
+  {
+    "MTHAB": "2A",
+    "MTTEX1": "APTO 2 DORM TERRZA PISCINA"
+  },
+  {
+    "MTHAB": "KR",
+    "MTTEX1": "DOBLE KING SIZE BED SUPERIOR"
+  },
+  {
+    "MTHAB": "DZ",
+    "MTTEX1": "DOBLE CONFORT"
+  },
+  {
+    "MTHAB": "QV",
+    "MTTEX1": "FAMILIAR VISTA MAR"
+  },
+  {
+    "MTHAB": "2",
+    "MTTEX1": "APARTAMENTO 2 DORMITORIOS"
+  },
+  {
+    "MTHAB": "E",
+    "MTTEX1": "ESTUDIO"
+  },
+  {
+    "MTHAB": "BW",
+    "MTTEX1": "CUADRUPLE VISTA MAR"
+  },
+  {
+    "MTHAB": "3",
+    "MTTEX1": "APARTAMENTOS 3 DORMITORIOS"
+  },
+  {
+    "MTHAB": "1A",
+    "MTTEX1": "APTO 1 DORM ACCESO PISCINA"
+  },
+  {
+    "MTHAB": "BT",
+    "MTTEX1": "TRIPLE CON TERRAZA"
+  },
+  {
+    "MTHAB": "BV",
+    "MTTEX1": "TRIPLE VISTA MAR"
+  },
+  {
+    "MTHAB": "LN",
+    "MTTEX1": "CUADRUPLE CON LITERAS"
+  },
+  {
+    "MTHAB": "1",
+    "MTTEX1": "APARTAMENTOS 1 DORMITORIO"
+  },
+  {
+    "MTHAB": "1W",
+    "MTTEX1": "APTO 1 DORM FRONTAL MAR"
+  },
+  {
+    "MTHAB": "1M",
+    "MTTEX1": "APTO 1 DORM MINUSVALIDOS"
+  },
+  {
+    "MTHAB": "1R",
+    "MTTEX1": "APTO SUPERIOR 1 DORMITORIO"
+  },
+  {
+    "MTHAB": "2W",
+    "MTTEX1": "APTO 2 DORMITORIOS FRONTAL MAR"
+  },
+  {
+    "MTHAB": "DO",
+    "MTTEX1": "DOBLE VISTA TEIDE"
+  },
+  {
+    "MTHAB": "Q",
+    "MTTEX1": "FAMILIAR"
+  },
+  {
+    "MTHAB": "IO",
+    "MTTEX1": "INDIVIDUAL VISTA TEIDE"
+  },
+  {
+    "MTHAB": "M",
+    "MTTEX1": "SUITE MARGARITA BONITA"
+  },
+  {
+    "MTHAB": "2B",
+    "MTTEX1": "PLANTA BAJA 2 DORM CON PISCINA"
+  },
+  {
+    "MTHAB": "SQ",
+    "MTTEX1": "SUITE REAL"
+  },
+  {
+    "MTHAB": "TT",
+    "MTTEX1": "TEMATIZADA CON TERRAZA"
+  },
+  {
+    "MTHAB": "T",
+    "MTTEX1": "TEMATIZADA"
+  },
+  {
+    "MTHAB": "C",
+    "MTTEX1": "TRIPLE"
+  },
+  {
+    "MTHAB": "WU",
+    "MTTEX1": "DOBLE VISTA MAR USO INDIVIDUAL"
+  },
+  {
+    "MTHAB": "VU",
+    "MTTEX1": "DOBLE VISTA MAR LAT. USO IND."
+  },
+  {
+    "MTHAB": "CT",
+    "MTTEX1": "TRIPLE CON TERRAZA"
+  },
+  {
+    "MTHAB": "RU",
+    "MTTEX1": "R"
+  },
+  {
+    "MTHAB": "5E",
+    "MTTEX1": "ARMONIA"
+  },
+  {
+    "MTHAB": "UV",
+    "MTTEX1": "DOBLE VISTA MAR LAT.USO.IND."
+  },
+  {
+    "MTHAB": "UW",
+    "MTTEX1": "DOBLE VISTA MAR USO INDIVIDUAL"
+  },
+  {
+    "MTHAB": "UR",
+    "MTTEX1": "DOBLE SUPERIOR USO INDIVIDUAL"
+  },
+  {
+    "MTHAB": "UF",
+    "MTTEX1": "SUITE CON SALON USO INDIVIDUAL"
+  },
+  {
+    "MTHAB": "UJ",
+    "MTTEX1": "SUITE JUNIOR USO INDIVIDUAL"
+  },
+  {
+    "MTHAB": "U",
+    "MTTEX1": "DOBLE USO INDIVIDUAL"
+  },
+  {
+    "MTHAB": "YT",
+    "MTTEX1": "DOBLE TERRAZA GRAN VIA"
+  },
+  {
+    "MTHAB": "YU",
+    "MTTEX1": "D.USO IND. VISTA GRAN VIA"
+  },
+  {
+    "MTHAB": "Y",
+    "MTTEX1": "SENATOR LUX SWIM UP SUI 1KB"
+  },
+  {
+    "MTHAB": "UG",
+    "MTTEX1": "SUPERIOR CON JARDIN USO INDIV."
+  },
+  {
+    "MTHAB": "UP",
+    "MTTEX1": "PROMO USO INDIVIDUAL"
+  },
+  {
+    "MTHAB": "EF",
+    "MTTEX1": "APARTAMENTO 1 DORM.FRONTAL MAR"
+  },
+  {
+    "MTHAB": "SH",
+    "MTTEX1": "SENATOR JR SUITE KING SIZE BED"
+  },
+  {
+    "MTHAB": "SX",
+    "MTTEX1": "SENATOR LUXURY JR SUITE"
+  },
+  {
+    "MTHAB": "SG",
+    "MTTEX1": "SEANTOR LUXURY JR SUITE GARDEN"
+  },
+  {
+    "MTHAB": "S1",
+    "MTTEX1": "SENATOR IMPERIAL 1BEDROOM SUIT"
+  },
+  {
+    "MTHAB": "9",
+    "MTTEX1": "VACATIONS CLUB"
+  },
+  {
+    "MTHAB": "XU",
+    "MTTEX1": "DOBLE DELUXE USO INDIVIDUAL"
+  },
+  {
+    "MTHAB": "9J",
+    "MTTEX1": "CLUB PREMIUM JUNIOR SUITE"
+  },
+  {
+    "MTHAB": "9Y",
+    "MTTEX1": "CLUB PREMIUM JR SUITE SWIM UP"
+  },
+  {
+    "MTHAB": "9P",
+    "MTTEX1": "CLUB PLATINUM PRESIDENTIAL SWI"
+  },
+  {
+    "MTHAB": "15",
+    "MTTEX1": "0PARTAMENTO ADAPTADO MINUSVALI"
+  },
+  {
+    "MTHAB": "PK",
+    "MTTEX1": "PLAZA DE PARKING NORMAL"
+  },
+  {
+    "MTHAB": "EH",
+    "MTTEX1": "PARKING EXT. HOTEL"
+  },
+  {
+    "MTHAB": "EE",
+    "MTTEX1": "PARKING EXT. ELECTRICOS"
+  },
+  {
+    "MTHAB": "EU",
+    "MTTEX1": "PARKING EXT. MINUSVALIDOS"
+  },
+  {
+    "MTHAB": "E1",
+    "MTTEX1": "PARKING EXT. APARTAMENTOS"
+  },
+  {
+    "MTHAB": "IH",
+    "MTTEX1": "PARKING INT. HOTEL"
+  },
+  {
+    "MTHAB": "IE",
+    "MTTEX1": "PARKING INT. ELECTRICOS"
+  },
+  {
+    "MTHAB": "IU",
+    "MTTEX1": "PARKING INT. MINUSVALIDOS"
+  },
+  {
+    "MTHAB": "I1",
+    "MTTEX1": "PARKING INT. APARTAMENTOS"
+  },
+  {
+    "MTHAB": "I9",
+    "MTTEX1": "PARKING INT. MOTOS"
+  },
+  {
+    "MTHAB": "E9",
+    "MTTEX1": "PARKING EXT. MOTOS"
+  },
+  {
+    "MTHAB": "AM",
+    "MTTEX1": "APARTAMENTO MINUSVÁLIDOS"
+  },
+  {
+    "MTHAB": "BN",
+    "MTTEX1": "TRIPLE VISTA PISCINA"
+  },
+  {
+    "MTHAB": "BX",
+    "MTTEX1": "TRIPLE DELUXE"
+  },
+  {
+    "MTHAB": "KN",
+    "MTTEX1": "DOBLE KING SIZE VISTA PISCINA"
+  },
+  {
+    "MTHAB": "YB",
+    "MTTEX1": "SEN. SWIM UP SUITE 1K VIBE"
+  },
+  {
+    "MTHAB": "Z",
+    "MTTEX1": "SEN. SWIM UP SUITE 2Q"
+  },
+  {
+    "MTHAB": "YS",
+    "MTTEX1": "SEN. SWIM UP 1K SPLASH"
+  },
+  {
+    "MTHAB": "ZS",
+    "MTTEX1": "SEN. SWIM UP 2Q SPLASH"
+  },
+  {
+    "MTHAB": "YZ",
+    "MTTEX1": "SEN. SWIM UP 1K SKY"
+  },
+  {
+    "MTHAB": "YW",
+    "MTTEX1": "SEN. SWIM UP 1K FRONT OCEAN VI"
+  },
+  {
+    "MTHAB": "ZW",
+    "MTTEX1": "SEN. SWIM UP 2Q FRONT OCEAN VI"
+  },
+  {
+    "MTHAB": "H",
+    "MTTEX1": "SENATOR LUXURY JR SUITE 1K"
+  },
+  {
+    "MTHAB": "G",
+    "MTTEX1": "SEN. LUXURY JR SUITE 2Q"
+  },
+  {
+    "MTHAB": "HW",
+    "MTTEX1": "SEN. LUXURY JR SUITE 1K FOV"
+  },
+  {
+    "MTHAB": "GW",
+    "MTTEX1": "SEN. LUXURY JR SUITE 2Q FOV"
+  },
+  {
+    "MTHAB": "HV",
+    "MTTEX1": "SEN. LUXURY JR SUITE 1K - OV"
+  },
+  {
+    "MTHAB": "GV",
+    "MTTEX1": "SEN. LUXURY JR SUITE 2Q OV"
+  },
+  {
+    "MTHAB": "HL",
+    "MTTEX1": "SEN. LUX JR SUITE 1K LOVE FOV"
+  },
+  {
+    "MTHAB": "T4",
+    "MTTEX1": "TEMATIZADA DEEP SPACE"
+  },
+  {
+    "MTHAB": "T5",
+    "MTTEX1": "TEMATIZADA DINO WORLD"
+  },
+  {
+    "MTHAB": "T6",
+    "MTTEX1": "TEMATIZADA PRINCESS LAND"
+  },
+  {
+    "MTHAB": "T7",
+    "MTTEX1": "TEMATIZADA SEA QUEST"
+  },
+  {
+    "MTHAB": "T8",
+    "MTTEX1": "TEMATIZADA MAYAN MAGIC"
+  },
+  {
+    "MTHAB": "AY",
+    "MTTEX1": "CLUB PR. JR SUITE 2Q SWIM UP"
+  },
+  {
+    "MTHAB": "BY",
+    "MTTEX1": "CLUB PR. JR SUITE 1K SWIM UP"
+  },
+  {
+    "MTHAB": "CY",
+    "MTTEX1": "CLUB PR. CONNECTING SWIM UP"
+  },
+  {
+    "MTHAB": "V",
+    "MTTEX1": "CLUB PLATINUM PRESIDENTIAL SUI"
+  },
+  {
+    "MTHAB": "W2",
+    "MTTEX1": "CLUB PL. PRESIDENTIAL 2BEDROOM"
+  },
+  {
+    "MTHAB": "K",
+    "MTTEX1": "SENATOR JR SUITE KING SIZE BED"
+  },
+  {
+    "MTHAB": "KM",
+    "MTTEX1": "DOBLE MINUSVÁLIDOS"
+  },
+  {
+    "MTHAB": "F",
+    "MTTEX1": "FAMILY ROOM"
+  },
+  {
+    "MTHAB": "O1",
+    "MTTEX1": "SENATOR IMPERIAL ONE BEDROOM"
+  },
+  {
+    "MTHAB": "HF",
+    "MTTEX1": "SENATOR LUXURY JR SUITE FRIEND"
+  },
+  {
+    "MTHAB": "J",
+    "MTTEX1": "SENTOR JR SUITE QUEEN SIZE BED"
+  },
+  {
+    "MTHAB": "JV",
+    "MTTEX1": "SENATOR JR SUITE OCEAN VIEW"
+  },
+  {
+    "MTHAB": "1V",
+    "MTTEX1": "ONE BEDROOM SUITE OCEAN VIEW"
+  },
+  {
+    "MTHAB": "YV",
+    "MTTEX1": "SENATOR SWIM UP SUITE OCEAN"
+  },
+  {
+    "MTHAB": "RW",
+    "MTTEX1": "SUPERIOR FRONT OCEAN VIEW"
+  },
+  {
+    "MTHAB": "WY",
+    "MTTEX1": "CLUB PLATINUM SENATOR"
+  },
+  {
+    "MTHAB": "W",
+    "MTTEX1": "CLUB PLATINUM SENATOR"
+  },
+  {
+    "MTHAB": "OL",
+    "MTTEX1": "SENATOR IMPERIAL SUITE LOVE OV"
+  },
+  {
+    "MTHAB": "O2",
+    "MTTEX1": "SENATOR IMPERIAL SUITE 2 BEDRO"
+  },
+  {
+    "MTHAB": "BR",
+    "MTTEX1": "TRIPLE CON TERRAZA"
+  },
+  {
+    "MTHAB": "VY",
+    "MTTEX1": "CLUB PLATINUM JR PRES. SWIM UP"
+  },
+  {
+    "MTHAB": "GC",
+    "MTTEX1": "SENATOR LUXURY JR SUITE CONNEC"
+  },
+  {
+    "MTHAB": "LZ",
+    "MTTEX1": "SENATOR IMP. SWIM UP SKY OF"
+  },
+  {
+    "MTHAB": "91",
+    "MTTEX1": "CLUB PLATINUM PRESIDENTIAL SUI"
+  },
+  {
+    "MTHAB": "QR",
+    "MTTEX1": "FAMILIAR SUPERIOR"
+  },
+  {
+    "MTHAB": "S7",
+    "MTTEX1": "SUITE FAMILIAR 1 DORMITORIO"
+  },
+  {
+    "MTHAB": "A7",
+    "MTTEX1": "CLUB PREMIUM JR SUITE 2Q"
+  },
+  {
+    "MTHAB": "ZZ",
+    "MTTEX1": "BRAZALETE"
+  },
+  {
+    "MTHAB": "RF",
+    "MTTEX1": "DOBLE SUPERIOR 1 DORMITORIO"
+  },
+  {
+    "MTHAB": "OA",
+    "MTTEX1": "OASYS"
+  },
+  {
+    "MTHAB": "NR",
+    "MTTEX1": "ENTRADA NIÑO + REFRESCO"
+  },
+  {
+    "MTHAB": "NB",
+    "MTTEX1": "ENTRADA NIÑO + BUFFET + REFRES"
+  },
+  {
+    "MTHAB": "AT",
+    "MTTEX1": "SALON A TARDE"
+  },
+  {
+    "MTHAB": "AN",
+    "MTTEX1": "SALON A NOCHE"
+  },
+  {
+    "MTHAB": "BM",
+    "MTTEX1": "SALON B MAÑANA"
+  },
+  {
+    "MTHAB": "CM",
+    "MTTEX1": "SALON C MAÑANA"
+  },
+  {
+    "MTHAB": "CN",
+    "MTTEX1": "SALON C NOCHE"
+  },
+  {
+    "MTHAB": "EN",
+    "MTTEX1": "ESTUDIO VISTA PISCINA"
+  },
+  {
+    "MTHAB": "FM",
+    "MTTEX1": "SALON F MAÑANA"
+  },
+  {
+    "MTHAB": "FN",
+    "MTTEX1": "SALON F NOCHE"
+  },
+  {
+    "MTHAB": "FT",
+    "MTTEX1": "SALON F TARDE"
+  },
+  {
+    "MTHAB": "GM",
+    "MTTEX1": "SALON G MAÑANA"
+  },
+  {
+    "MTHAB": "GN",
+    "MTTEX1": "SALON G NOCHE"
+  },
+  {
+    "MTHAB": "GT",
+    "MTTEX1": "SALON G TARDE"
+  },
+  {
+    "MTHAB": "HM",
+    "MTTEX1": "SALON H MAÑANA"
+  },
+  {
+    "MTHAB": "HN",
+    "MTTEX1": "SALON H NOCHE"
+  },
+  {
+    "MTHAB": "HT",
+    "MTTEX1": "SALON H TARDE"
+  },
+  {
+    "MTHAB": "IM",
+    "MTTEX1": "SALON M MAÑANA"
+  },
+  {
+    "MTHAB": "IN",
+    "MTTEX1": "SALON I NOCHE"
+  },
+  {
+    "MTHAB": "JM",
+    "MTTEX1": "SALON J MAÑANA"
+  },
+  {
+    "MTHAB": "JN",
+    "MTTEX1": "SALON J NOCHE"
+  },
+  {
+    "MTHAB": "JT",
+    "MTTEX1": "SALON J TARDE"
+  },
+  {
+    "MTHAB": "QJ",
+    "MTTEX1": "FAMILIAR SUITE JUNIOR"
+  },
+  {
+    "MTHAB": "1U",
+    "MTTEX1": "APARTAMENTO 1 DORM. USO INDIVI"
+  },
+  {
+    "MTHAB": "I2",
+    "MTTEX1": "INT.MINUSVALIDOS ELECTRICOS"
+  },
+  {
+    "MTHAB": "SE",
+    "MTTEX1": "SERVICIO EXTRA HOTEL"
+  },
+  {
+    "MTHAB": "D4",
+    "MTTEX1": "DOBLE FAMILIAR"
+  },
+  {
+    "MTHAB": "WQ",
+    "MTTEX1": "VISTA MAR FRONTAL ROYAL"
+  },
+  {
+    "MTHAB": "GQ",
+    "MTTEX1": "SUPERIOR CON JARDÍN ROYAL"
+  },
+  {
+    "MTHAB": "AO",
+    "MTTEX1": "ENTRADA ADULTO+OKAVANGO"
+  },
+  {
+    "MTHAB": "EO",
+    "MTTEX1": "ENTRADA ADULTO+ESPECI OKAVANGO"
+  },
+  {
+    "MTHAB": "NO",
+    "MTTEX1": "ENTRADA NIÑO+OKAVANGO"
+  },
+  {
+    "MTHAB": "JU",
+    "MTTEX1": "ENTRADA JUBILADOS"
+  },
+  {
+    "MTHAB": "BD",
+    "MTTEX1": "ENTRADA NIÑO DISC.+BUFFET"
+  },
+  {
+    "MTHAB": "C4",
+    "MTTEX1": "F.COUNTRY"
+  },
+  {
+    "MTHAB": "C5",
+    "MTTEX1": "F.COUNTRY"
+  },
+  {
+    "MTHAB": "C6",
+    "MTTEX1": "F.COUNTRY"
+  },
+  {
+    "MTHAB": "C7",
+    "MTTEX1": "F.COUNTRY"
+  },
+  {
+    "MTHAB": "C8",
+    "MTTEX1": "F.COUNTRY"
+  },
+  {
+    "MTHAB": "C9",
+    "MTTEX1": "F.COUNTRY"
+  },
+  {
+    "MTHAB": "2N",
+    "MTTEX1": "APARTAMENTO 2 DORMITORIOS BAJO"
+  },
+  {
+    "MTHAB": "JB",
+    "MTTEX1": "ENTRADAS JUBILADOS"
+  },
+  {
+    "MTHAB": "N1",
+    "MTTEX1": "AD. NOCHE DESIERTO CON TRANSPO"
+  },
+  {
+    "MTHAB": "N2",
+    "MTTEX1": "NI. NOCHE DESIERTO CON TRANSPO"
+  },
+  {
+    "MTHAB": "N3",
+    "MTTEX1": "AD. NOCHE DESIERTO SIN TRANSPO"
+  },
+  {
+    "MTHAB": "N4",
+    "MTTEX1": "NI. NOCHE DESIERTO SIN TRANSPO"
+  },
+  {
+    "MTHAB": "N5",
+    "MTTEX1": "AD. NOCHE DESIERTO COLABORADOR"
+  },
+  {
+    "MTHAB": "N6",
+    "MTTEX1": "NI. NOCHE DESIERTO COLABORADOR"
+  },
+  {
+    "MTHAB": "EA",
+    "MTTEX1": "ESTUDIO ACCESO DIRECTO PISCINA"
+  },
+  {
+    "MTHAB": "19",
+    "MTTEX1": "APTO 1 DORM. ACCESO PLAYA"
+  },
+  {
+    "MTHAB": "1B",
+    "MTTEX1": "ENTRADA ADULTO+BUFFET+REFRESCO"
+  },
+  {
+    "MTHAB": "AI",
+    "MTTEX1": "PASE ACUARIO ANUAL INFANTIL"
+  },
+  {
+    "MTHAB": "OI",
+    "MTTEX1": "PASE ANUAL OASYS INFANTIL"
+  },
+  {
+    "MTHAB": "AC",
+    "MTTEX1": "TARJETA REGALO ACUARIO"
+  },
+  {
+    "MTHAB": "MF",
+    "MTTEX1": "PARA LA MEJOR FAMILIA"
+  },
+  {
+    "MTHAB": "MG",
+    "MTTEX1": "MIL GRACIAS"
+  },
+  {
+    "MTHAB": "MP",
+    "MTTEX1": "PARA EL MEJOR PAPA DEL MUNDO"
+  },
+  {
+    "MTHAB": "CI",
+    "MTTEX1": "COMUNION INOLVIDABLE"
+  },
+  {
+    "MTHAB": "PI",
+    "MTTEX1": "PASE INFANTIL"
+  },
+  {
+    "MTHAB": "MN",
+    "MTTEX1": "SALÓN M NOCHE"
+  },
+  {
+    "MTHAB": "NN",
+    "MTTEX1": "SALÓN N NOCHE"
+  },
+  {
+    "MTHAB": "ON",
+    "MTTEX1": "SALÓN O NOCHE"
+  },
+  {
+    "MTHAB": "EW",
+    "MTTEX1": "ESTUDIO VISTA MAR FRONTAL"
+  },
+  {
+    "MTHAB": "1N",
+    "MTTEX1": "APARTAMENTO 1 DORM. VISTA PISC"
+  },
+  {
+    "MTHAB": "TH",
+    "MTTEX1": "VENTA T. REGALO CON HOTEL"
+  },
+  {
+    "MTHAB": "AD",
+    "MTTEX1": "ENTRADA ADULTOS"
+  },
+  {
+    "MTHAB": "NI",
+    "MTTEX1": "ENTRADA NIÑO"
+  },
+  {
+    "MTHAB": "BO",
+    "MTTEX1": "ENTRADA BONIFICABLE"
+  },
+  {
+    "MTHAB": "BB",
+    "MTTEX1": "ENTR. BONIFICABLE + BUFFET"
+  },
+  {
+    "MTHAB": "AU",
+    "MTTEX1": "ADULTOS CON BUFFET REEMBOLSABL"
+  },
+  {
+    "MTHAB": "NU",
+    "MTTEX1": "NIÑO CON BUFFET REEMBOLSABLE"
+  },
+  {
+    "MTHAB": "BU",
+    "MTTEX1": "BONIFICALBE BUFFET REEMBOLSABL"
+  },
+  {
+    "MTHAB": "NQ",
+    "MTTEX1": "NIÑO BBQ NO REEMBOLSABLE"
+  },
+  {
+    "MTHAB": "BQ",
+    "MTTEX1": "BONIFICADA CON BBQ NO REEMBOLS"
+  },
+  {
+    "MTHAB": "QA",
+    "MTTEX1": "ADULTO CON BBQ REEMBOLSABLE"
+  },
+  {
+    "MTHAB": "QN",
+    "MTTEX1": "NIÑO CON BBQ REEMBOLSABLE"
+  },
+  {
+    "MTHAB": "QB",
+    "MTTEX1": "BONIFICADA CON BBQ REEMBOLSABL"
+  },
+  {
+    "MTHAB": "AP",
+    "MTTEX1": "ADULTO CON BBQ+ NO REEMBOLSABL"
+  },
+  {
+    "MTHAB": "NP",
+    "MTTEX1": "NIÑO CON BBQ+ NO REEMBOLSABLE"
+  },
+  {
+    "MTHAB": "BP",
+    "MTTEX1": "BONIFICADA CON BBQ+ NO REEMBOL"
+  },
+  {
+    "MTHAB": "PQ",
+    "MTTEX1": "ADULTO BBQ+ REEMBOLSABLE"
+  },
+  {
+    "MTHAB": "PN",
+    "MTTEX1": "NIÑO CON BBQ+ REEMBOLSABLE"
+  },
+  {
+    "MTHAB": "NE",
+    "MTTEX1": "NIÑO BONIFICABLE REEMBOLSABLE"
+  },
+  {
+    "MTHAB": "NM",
+    "MTTEX1": "NIÑOS BUFFET BONIFICADA REEMBO"
+  },
+  {
+    "MTHAB": "NY",
+    "MTTEX1": "NIÑO PONY EXPRESS NO REEMBOLSA"
+  },
+  {
+    "MTHAB": "NX",
+    "MTTEX1": "NIÑO PONY EXPRESS BONIF. REEMB"
+  },
+  {
+    "MTHAB": "NG",
+    "MTTEX1": "NIÑOS GRILL BONIF. NO REEMBOLS"
+  },
+  {
+    "MTHAB": "NL",
+    "MTTEX1": "NIÑOS BONIFICADA GRILL REEMBOL"
+  },
+  {
+    "MTHAB": "AB",
+    "MTTEX1": "AB"
+  },
+  {
+    "MTHAB": "KS",
+    "MTTEX1": "SENATOR JR SUITE-SOLO"
+  },
+  {
+    "MTHAB": "H1",
+    "MTTEX1": "SENATOR 1 DORMITORIO"
+  },
+  {
+    "MTHAB": "FK",
+    "MTTEX1": "SOLO PARENTS PROMO(R0KA)"
+  },
+  {
+    "MTHAB": "FC",
+    "MTTEX1": "KIDS FREE-FAMILY COL.(R0FA)"
+  },
+  {
+    "MTHAB": "FF",
+    "MTTEX1": "FAMILY COLECTION(FC0A)"
+  },
+  {
+    "MTHAB": "UN",
+    "MTTEX1": "ENTRADA NIÑO + BUS"
+  },
+  {
+    "MTHAB": "FB",
+    "MTTEX1": "BONIFICADA + BUS"
+  },
+  {
+    "MTHAB": "IB",
+    "MTTEX1": "INFANTE + BUS"
+  },
+  {
+    "MTHAB": "XA",
+    "MTTEX1": "OASYS BARBACOA NOCTURNA AD BUS"
+  },
+  {
+    "MTHAB": "XN",
+    "MTTEX1": "OASYS BARBACOA NOCTURNA NI BUS"
+  },
+  {
+    "MTHAB": "XB",
+    "MTTEX1": "OASYS BARBACOA NOCTURNA BO BUS"
+  },
+  {
+    "MTHAB": "XX",
+    "MTTEX1": "OASYS BARBACOA NOCTURNA NB BUS"
+  },
+  {
+    "MTHAB": "XI",
+    "MTTEX1": "OASYS BARBACOA NOCTURNA IV BUS"
+  },
+  {
+    "MTHAB": "N",
+    "MTTEX1": "DOBLE REVENUE ROOM"
+  },
+  {
+    "MTHAB": "X1",
+    "MTTEX1": "OASYS BARBACOA NOCTURNA AD"
+  },
+  {
+    "MTHAB": "X2",
+    "MTTEX1": "OASYS BARBACOA NOCTURNA AD BON"
+  },
+  {
+    "MTHAB": "X3",
+    "MTTEX1": "OASYS BARBACOA NOCTURNA NI"
+  },
+  {
+    "MTHAB": "X4",
+    "MTTEX1": "OASYS BARBACOA NOCTURNA NI BON"
+  },
+  {
+    "MTHAB": "KP",
+    "MTTEX1": "SEN.JR SUITE - 1KB-POOLVIEW"
+  },
+  {
+    "MTHAB": "JP",
+    "MTTEX1": "SEN.JR.SUITE 2QB POOL VIEW"
+  },
+  {
+    "MTHAB": "NV",
+    "MTTEX1": "REVENUE STUDIO LATERAL SEA VIE"
+  },
+  {
+    "MTHAB": "7W",
+    "MTTEX1": "SUITE PRESIDEN. VISTA MAR FR"
+  },
+  {
+    "MTHAB": "7N",
+    "MTTEX1": "SUITE PRESIDENCIAL VISTA JARDI"
+  },
+  {
+    "MTHAB": "9W",
+    "MTTEX1": "SUITE 1 DORM. VISTA MAR FRONTA"
+  },
+  {
+    "MTHAB": "9N",
+    "MTTEX1": "SUITE 1 DORM. VISTA JARDIN"
+  },
+  {
+    "MTHAB": "S2",
+    "MTTEX1": "SUITE 2 DORMITORIOS"
+  },
+  {
+    "MTHAB": "6",
+    "MTTEX1": "SUITE 3 DORMITORIOS"
+  },
+  {
+    "MTHAB": "5W",
+    "MTTEX1": "SUITE REAL VISTA MAR FRONTAL"
+  },
+  {
+    "MTHAB": "8W",
+    "MTTEX1": "SUITE 2 DORMITORIOS VISTA MAR"
+  },
+  {
+    "MTHAB": "BF",
+    "MTTEX1": "TRIPLE CON SALON"
+  },
+  {
+    "MTHAB": "AA",
+    "MTTEX1": "PASE ACUARIO ANUAL ADULTO"
+  },
+  {
+    "MTHAB": "4",
+    "MTTEX1": "CUADRUPLE"
+  },
+  {
+    "MTHAB": "P",
+    "MTTEX1": "HABITACIÓN SEXTUPLE"
+  },
+  {
+    "MTHAB": "P8",
+    "MTTEX1": "HABITACION SEXTUPLE MIXTA"
+  },
+  {
+    "MTHAB": "SM",
+    "MTTEX1": "SUITE MONTAÑA"
+  },
+  {
+    "MTHAB": "SA",
+    "MTTEX1": "SUITE VISTA MONTAÑA"
+  },
+  {
+    "MTHAB": "D5",
+    "MTTEX1": "DOBLE VISTA MONTAÑA"
+  },
+  {
+    "MTHAB": "DA",
+    "MTTEX1": "DOBLE VISTA MONTAÑA"
+  },
+  {
+    "MTHAB": "S5",
+    "MTTEX1": "SUITE JUNIOR VISTA MONTAÑA"
+  },
+  {
+    "MTHAB": "2O",
+    "MTTEX1": "ENTRADA 2 DIAS NIÑOS BONIF.NR."
+  },
+  {
+    "MTHAB": "2R",
+    "MTTEX1": "ENTRADA 2 DIAS REEMBOLSABLE"
+  },
+  {
+    "MTHAB": "2C",
+    "MTTEX1": "ENTRADA NIÑO 2 DIAS BONIF.REEM"
+  },
+  {
+    "MTHAB": "NK",
+    "MTTEX1": "SUITE JUNIOR REVENUE"
+  },
+  {
+    "MTHAB": "NJ",
+    "MTTEX1": "SUITE JR REVENUE"
+  },
+  {
+    "MTHAB": "RS",
+    "MTTEX1": "DOBLE SUPERIOR-SNGLE USE"
+  },
+  {
+    "MTHAB": "WS",
+    "MTTEX1": "SUPERIOR OCEAN VIEW SINGLE USE"
+  },
+  {
+    "MTHAB": "QC",
+    "MTTEX1": "FAMILIAR COMUNICADA"
+  },
+  {
+    "MTHAB": "WX",
+    "MTTEX1": "DOUBLE SEA VIEW DELUXE KING SI"
+  },
+  {
+    "MTHAB": "NW",
+    "MTTEX1": "REVENUE VISTA MAR DELUXE"
+  },
+  {
+    "MTHAB": "WK",
+    "MTTEX1": "VISTA MAR DELUXE KING SIZE"
+  },
+  {
+    "MTHAB": "UX",
+    "MTTEX1": "DOUBLE SINGLE USE DELUXE"
+  },
+  {
+    "MTHAB": "UK",
+    "MTTEX1": "DOUBLE SINGLE USO KING SIZE"
+  },
+  {
+    "MTHAB": "UZ",
+    "MTTEX1": "DOBLE VISTA MAR FRONTAL USO IN"
+  },
+  {
+    "MTHAB": "KX",
+    "MTTEX1": "KING PREMIUM"
+  },
+  {
+    "MTHAB": "4N",
+    "MTTEX1": "HABITACION FAMILIAR"
+  },
+  {
+    "MTHAB": "9S",
+    "MTTEX1": "CLUB PLATINUM SENATOR"
+  },
+  {
+    "MTHAB": "A",
+    "MTTEX1": "CLUB PREMIUM JR SUIT"
+  },
+  {
+    "MTHAB": "AF",
+    "MTTEX1": "APARTAMENTO 1 DORMITORIO FRONT"
+  },
+  {
+    "MTHAB": "MD",
+    "MTTEX1": "DOBLE MONOPARENTAL"
+  },
+  {
+    "MTHAB": "ZT",
+    "MTTEX1": "SUITE JUNIOR CON BALCÓN"
+  },
+  {
+    "MTHAB": "RX",
+    "MTTEX1": "DOBLE SUPERIOR DELUXE"
+  },
+  {
+    "MTHAB": "KT",
+    "MTTEX1": "KING TERRAZA"
+  },
+  {
+    "MTHAB": "WT",
+    "MTTEX1": "DOBLE VISTA MAR FRONTAL BALCON"
+  },
+  {
+    "MTHAB": "Z6",
+    "MTTEX1": "SUITE JUNIOR VM FRONTAL BALCÓN"
+  },
+  {
+    "MTHAB": "VK",
+    "MTTEX1": "DOBLE VISTA MAR LATERAL MATRIM"
+  }
+]

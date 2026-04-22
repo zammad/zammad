@@ -1,0 +1,13 @@
+Campos eliminados por ser poco útiles:
+
+rateKey (string encriptado muy largo)
+priceBreakdown (redundante si solo hay 1 noche)
+code de las políticas de cancelación (IDs internos)
+timeZone, maxMinutesForFreeCancellation, applyInOfferPrice, applyIfInsurance, refundableAsBonus
+paymentMethod, paymentMethodText (null)
+additionalInfo (vacío/null)
+alternativeDays, depositInfo, modificationCost, isCancellationGuarantee
+totalPriceModifier (ya reflejado en el precio final)
+priceType, prepayments, taxesIncluded
+currencyIsoCode (asumiendo EUR siempre)
+penaltyNightType, cancellationPolicyType, amountType (simplificado en "penalty")

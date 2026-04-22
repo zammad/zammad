@@ -1,0 +1,394 @@
+{
+  "hotels": [
+    {
+      "idHotel": "10",
+      "nombre": "PLAYACAPRICHO",
+      "provincia": "ALMERÍA"
+    },
+    {
+      "idHotel": "20",
+      "nombre": "SENATOR CASTELLANA",
+      "provincia": "MADRID"
+    },
+    {
+      "idHotel": "30",
+      "nombre": "PLAYADULCE",
+      "provincia": "ALMERÍA"
+    },
+    {
+      "idHotel": "40",
+      "nombre": "MIRADOR DEL CABO",
+      "provincia": "ALMERÍA"
+    },
+    {
+      "idHotel": "50",
+      "nombre": "PLAYASOL",
+      "provincia": "ALMERÍA"
+    },
+    {
+      "idHotel": "51",
+      "nombre": "SENZIA PLAYASOL",
+      "provincia": "ALMERIA"
+    },
+    {
+      "idHotel": "60",
+      "nombre": "DIVER ROQUETAS",
+      "provincia": "ALMERÍA"
+    },
+    {
+      "idHotel": "80",
+      "nombre": "PLAYAVERA",
+      "provincia": "ALMERÍA"
+    },
+    {
+      "idHotel": "90",
+      "nombre": "PLAYAZIMBALI",
+      "provincia": "ALMERÍA"
+    },
+    {
+      "idHotel": "91",
+      "nombre": "SENZIA ZIMBALI PLAYA",
+      "provincia": "ALMERIA"
+    },
+    {
+      "idHotel": "120",
+      "nombre": "SENATOR AGUILAS",
+      "provincia": "MURCIA"
+    },
+    {
+      "idHotel": "121",
+      "nombre": "SPA HOTEL AGUILAS",
+      "provincia": "MURCIA"
+    },
+    {
+      "idHotel": "130",
+      "nombre": "SENATOR MAR MENOR",
+      "provincia": "MURCIA"
+    },
+    {
+      "idHotel": "131",
+      "nombre": "SENZIA SENATOR MAR MENOR",
+      "provincia": "MURCIA"
+    },
+    {
+      "idHotel": "140",
+      "nombre": "CABO DE GATA",
+      "provincia": "ALMERIA"
+    },
+    {
+      "idHotel": "150",
+      "nombre": "SENATOR BARAJAS",
+      "provincia": "MADRID"
+    },
+    {
+      "idHotel": "160",
+      "nombre": "CALEIA MAR MENOR",
+      "provincia": "MURCIA"
+    },
+    {
+      "idHotel": "161",
+      "nombre": "SENZIA CALEIA MAR MENOR",
+      "provincia": "MURCIA"
+    },
+    {
+      "idHotel": "170",
+      "nombre": "PLAYABELLA SPA GRAN HOTEL",
+      "provincia": "ESTEPONA - MALAGA"
+    },
+    {
+      "idHotel": "171",
+      "nombre": "SENZIA PLAYABELLA",
+      "provincia": "MALAGA"
+    },
+    {
+      "idHotel": "180",
+      "nombre": "PLAYABALLENA",
+      "provincia": "CADIZ"
+    },
+    {
+      "idHotel": "181",
+      "nombre": "SENZIA PLAYABALLENA",
+      "provincia": "CADIZ"
+    },
+    {
+      "idHotel": "190",
+      "nombre": "PLAYACALIDA",
+      "provincia": "GRANADA"
+    },
+    {
+      "idHotel": "191",
+      "nombre": "SENZIA PLAYA CALIDA",
+      "provincia": "GRANADA"
+    },
+    {
+      "idHotel": "200",
+      "nombre": "PLAYALINDA",
+      "provincia": "ALMERÍA"
+    },
+    {
+      "idHotel": "210",
+      "nombre": "PLAYABONITA HOTEL****",
+      "provincia": "MÁLAGA"
+    },
+    {
+      "idHotel": "220",
+      "nombre": "MARBELLA PLAYA",
+      "provincia": "MÁLAGA"
+    },
+    {
+      "idHotel": "250",
+      "nombre": "DIVER MARBELLA",
+      "provincia": "MÁLAGA"
+    },
+    {
+      "idHotel": "260",
+      "nombre": "SENATOR CALA MILLOR",
+      "provincia": "BALEARES"
+    },
+    {
+      "idHotel": "270",
+      "nombre": "PLAYACANELA",
+      "provincia": "HUELVA"
+    },
+    {
+      "idHotel": "280",
+      "nombre": "SENATOR HUELVA",
+      "provincia": "HUELVA"
+    },
+    {
+      "idHotel": "290",
+      "nombre": "PLAYAMOJACAR",
+      "provincia": "ALMERIA"
+    },
+    {
+      "idHotel": "310",
+      "nombre": "DIVERHOTEL TENERIFE SPA ****",
+      "provincia": "TENERIFE"
+    },
+    {
+      "idHotel": "311",
+      "nombre": "SENZIA DIVER_TENERIFE",
+      "provincia": "TENERIFE"
+    },
+    {
+      "idHotel": "320",
+      "nombre": "DIVERHOTEL LANZAROTE ****",
+      "provincia": "LANZAROTE"
+    },
+    {
+      "idHotel": "330",
+      "nombre": "GRUPO HOTELES PLAYA, S.A.",
+      "provincia": "LLEIDA"
+    },
+    {
+      "idHotel": "340",
+      "nombre": "VIRGEN DE LOS REYES",
+      "provincia": "SEVILLA"
+    },
+    {
+      "idHotel": "350",
+      "nombre": "SENATOR MARBELLA",
+      "provincia": "MÁLAGA"
+    },
+    {
+      "idHotel": "351",
+      "nombre": "SENZIA SENATOR MBLLA.",
+      "provincia": "MALAGA"
+    },
+    {
+      "idHotel": "360",
+      "nombre": "SENATOR PARQUE CENTRAL",
+      "provincia": "VALENCIA"
+    },
+    {
+      "idHotel": "370",
+      "nombre": "SENATOR BARCELONA",
+      "provincia": "BARCELONA"
+    },
+    {
+      "idHotel": "371",
+      "nombre": "SENZIA SENATOR BCN",
+      "provincia": "BARCELONA"
+    },
+    {
+      "idHotel": "380",
+      "nombre": "PLAYALUNA HOTEL****",
+      "provincia": "ALMERÍA"
+    },
+    {
+      "idHotel": "390",
+      "nombre": "SENATOR GRAN VIA 21 HOTEL****",
+      "provincia": "MADRID"
+    },
+    {
+      "idHotel": "400",
+      "nombre": "SENATOR GRAN VIA 70",
+      "provincia": "MADRID"
+    },
+    {
+      "idHotel": "401",
+      "nombre": "SENZIA GRAN VIA 70",
+      "provincia": "MADRID"
+    },
+    {
+      "idHotel": "410",
+      "nombre": "PLAYAMARINA",
+      "provincia": "HUELVA"
+    },
+    {
+      "idHotel": "411",
+      "nombre": "SENZIA PLAYAMARINA",
+      "provincia": "HUELVA"
+    },
+    {
+      "idHotel": "420",
+      "nombre": "PLAYACARTAYA",
+      "provincia": "HUELVA"
+    },
+    {
+      "idHotel": "421",
+      "nombre": "SENZIA CARTAYA",
+      "provincia": "HUELVA"
+    },
+    {
+      "idHotel": "430",
+      "nombre": "APTOS. PLAYAMARINA",
+      "provincia": "HUELVA"
+    },
+    {
+      "idHotel": "440",
+      "nombre": "SENATOR CADIZ",
+      "provincia": "CADIZ"
+    },
+    {
+      "idHotel": "441",
+      "nombre": "SENZIA SENATOR CADIZ",
+      "provincia": "CADIZ"
+    },
+    {
+      "idHotel": "450",
+      "nombre": "SENATOR GRANADA",
+      "provincia": "GRANADA"
+    },
+    {
+      "idHotel": "451",
+      "nombre": "SENZIA SENATOR GRANADA",
+      "provincia": "GRANADA"
+    },
+    {
+      "idHotel": "460",
+      "nombre": "TALAYOT",
+      "provincia": "BALEARES"
+    },
+    {
+      "idHotel": "461",
+      "nombre": "SENZIA TALAYOT",
+      "provincia": "BALEARES"
+    },
+    {
+      "idHotel": "470",
+      "nombre": "SENATOR BANUS",
+      "provincia": "MÁLAGA"
+    },
+    {
+      "idHotel": "471",
+      "nombre": "SENZIA SENATOR BANUS",
+      "provincia": "MALAGA"
+    },
+    {
+      "idHotel": "480",
+      "nombre": "PARAISO PLAYA",
+      "provincia": "ALMERÍA"
+    },
+    {
+      "idHotel": "500",
+      "nombre": "ALMUÑECAR PLAYA",
+      "provincia": "GRANADA"
+    },
+    {
+      "idHotel": "501",
+      "nombre": "SENZIA ALMUÑECAR PLAYA",
+      "provincia": "GRANADA"
+    },
+    {
+      "idHotel": "600",
+      "nombre": "ALHAURIN",
+      "provincia": "MALAGA"
+    },
+    {
+      "idHotel": "610",
+      "nombre": "SENATOR GANDIA",
+      "provincia": "VALENCIA"
+    },
+    {
+      "idHotel": "611",
+      "nombre": "SENZIA SENATOR GANDIA",
+      "provincia": "VALENCIA"
+    },
+    {
+      "idHotel": "620",
+      "nombre": "INDIGO GANDIA",
+      "provincia": "VALENCIA"
+    },
+    {
+      "idHotel": "650",
+      "nombre": "CLUB SIMÓ",
+      "provincia": "BALEARES"
+    },
+    {
+      "idHotel": "660",
+      "nombre": "BEACH STAR IBIZA",
+      "provincia": "IBIZA"
+    },
+    {
+      "idHotel": "700",
+      "nombre": "MONTANYÀ",
+      "provincia": "BARCELONA"
+    },
+    {
+      "idHotel": "701",
+      "nombre": "SENZIA MONTANYÀ HOTEL & LODGE",
+      "provincia": "BARCELONA"
+    },
+    {
+      "idHotel": "750",
+      "nombre": "GUADACORTE",
+      "provincia": "CADIZ"
+    },
+    {
+      "idHotel": "760",
+      "nombre": "CADIZ PLAZA",
+      "provincia": "CADIZ"
+    },
+    {
+      "idHotel": "761",
+      "nombre": "SENZIA CADIZ PLAZA",
+      "provincia": "CADIZ"
+    },
+    {
+      "idHotel": "770",
+      "nombre": "INDIGO JEREZ",
+      "provincia": "CÁDIZ"
+    },
+    {
+      "idHotel": "780",
+      "nombre": "VIGNETTE CASA COMPOSITOR",
+      "provincia": "CÁDIZ"
+    },
+    {
+      "idHotel": "800",
+      "nombre": "SENATOR BABILONIA",
+      "provincia": "DAKHLA- RÍO DE ORO"
+    },
+    {
+      "idHotel": "820",
+      "nombre": "SENATOR PORT MAÓ",
+      "provincia": "MENORCA"
+    },
+    {
+      "idHotel": "830",
+      "nombre": "AGAMENON",
+      "provincia": "MENORCA"
+    }
+  ]
+}

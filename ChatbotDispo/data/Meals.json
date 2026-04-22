@@ -1,0 +1,1762 @@
+[
+  {
+    "MRHAB": "%% ",
+    "MRTEXT": "DESCTO ABSOLUTO"
+  },
+  {
+    "MRHAB": "%1 ",
+    "MRTEXT": "DESCTO ABSOLUTO"
+  },
+  {
+    "MRHAB": "%2 ",
+    "MRTEXT": "WINE&TAPAS(10%)"
+  },
+  {
+    "MRHAB": "%3 ",
+    "MRTEXT": "RUM&CIGAR(10%) "
+  },
+  {
+    "MRHAB": "%4 ",
+    "MRTEXT": "10%(2ºMASAJE)  "
+  },
+  {
+    "MRHAB": "%5 ",
+    "MRTEXT": "RESTAUR(15%)   "
+  },
+  {
+    "MRHAB": "%6 ",
+    "MRTEXT": "% PARKING(-25%)"
+  },
+  {
+    "MRHAB": "%7 ",
+    "MRTEXT": "TRATA.SPA(-20%)"
+  },
+  {
+    "MRHAB": "AA ",
+    "MRTEXT": "ALMUERZO AÑO NU"
+  },
+  {
+    "MRHAB": "AD ",
+    "MRTEXT": "ALOJ.Y DESAYUNO"
+  },
+  {
+    "MRHAB": "AE ",
+    "MRTEXT": "ARMONIA EL O EL"
+  },
+  {
+    "MRHAB": "AH ",
+    "MRTEXT": "ALHAMBRA(ENTRAD"
+  },
+  {
+    "MRHAB": "AI ",
+    "MRTEXT": "TODO INCLUIDO  "
+  },
+  {
+    "MRHAB": "AL ",
+    "MRTEXT": "ALOJAMIENTO    "
+  },
+  {
+    "MRHAB": "AM ",
+    "MRTEXT": "COMIDA         "
+  },
+  {
+    "MRHAB": "AN ",
+    "MRTEXT": "ALMUERZO NAVIDA"
+  },
+  {
+    "MRHAB": "AO ",
+    "MRTEXT": "ALMUERZO OASYS "
+  },
+  {
+    "MRHAB": "AQ ",
+    "MRTEXT": "SPA SENZIA     "
+  },
+  {
+    "MRHAB": "AR ",
+    "MRTEXT": "ELIXIR ARGAN   "
+  },
+  {
+    "MRHAB": "AT ",
+    "MRTEXT": "ACUPUNT.ANT.TAB"
+  },
+  {
+    "MRHAB": "AV ",
+    "MRTEXT": "AGENTE VIAJES  "
+  },
+  {
+    "MRHAB": "AY ",
+    "MRTEXT": "AYURVEDA HOMBRE"
+  },
+  {
+    "MRHAB": "A1 ",
+    "MRTEXT": "SPA(2X1)PAGO HO"
+  },
+  {
+    "MRHAB": "A3 ",
+    "MRTEXT": "PRIV.AGP(1-3PA)"
+  },
+  {
+    "MRHAB": "A4 ",
+    "MRTEXT": "SD-ALERGIAS/14N"
+  },
+  {
+    "MRHAB": "A6 ",
+    "MRTEXT": "PRIV.AGP(4-6PA)"
+  },
+  {
+    "MRHAB": "A7 ",
+    "MRTEXT": "SD-ALERGIA/7N  "
+  },
+  {
+    "MRHAB": "A8 ",
+    "MRTEXT": "AGUIGOLF(1GF18)"
+  },
+  {
+    "MRHAB": "B  ",
+    "MRTEXT": "COCHE \"B\"      "
+  },
+  {
+    "MRHAB": "BA ",
+    "MRTEXT": "BABY SITTER    "
+  },
+  {
+    "MRHAB": "BB ",
+    "MRTEXT": "PACK BEBIDAS   "
+  },
+  {
+    "MRHAB": "BC ",
+    "MRTEXT": "BOMBONES+CAVA  "
+  },
+  {
+    "MRHAB": "BE ",
+    "MRTEXT": "SPA&BELLEZA    "
+  },
+  {
+    "MRHAB": "BF ",
+    "MRTEXT": "BONO FACEBOOK  "
+  },
+  {
+    "MRHAB": "BG ",
+    "MRTEXT": "BUGGIE         "
+  },
+  {
+    "MRHAB": "BI ",
+    "MRTEXT": "PACK H.BIRTHDAY"
+  },
+  {
+    "MRHAB": "BM ",
+    "MRTEXT": "PACK H.BIRTH MI"
+  },
+  {
+    "MRHAB": "BN ",
+    "MRTEXT": "BOLSA PICNIC   "
+  },
+  {
+    "MRHAB": "BO ",
+    "MRTEXT": "BOMBONES       "
+  },
+  {
+    "MRHAB": "BP ",
+    "MRTEXT": "BIOPARC        "
+  },
+  {
+    "MRHAB": "BQ ",
+    "MRTEXT": "SENZIA(BONO 20)"
+  },
+  {
+    "MRHAB": "BR ",
+    "MRTEXT": "BONO REGALO    "
+  },
+  {
+    "MRHAB": "BS ",
+    "MRTEXT": "BASE           "
+  },
+  {
+    "MRHAB": "BT ",
+    "MRTEXT": "BUS TURISTICO  "
+  },
+  {
+    "MRHAB": "BV ",
+    "MRTEXT": "COCKTAIL BIENVE"
+  },
+  {
+    "MRHAB": "BY ",
+    "MRTEXT": "BICI(TRASNPOR.)"
+  },
+  {
+    "MRHAB": "B0 ",
+    "MRTEXT": "SD-FIBROMIA/10N"
+  },
+  {
+    "MRHAB": "B1 ",
+    "MRTEXT": "SENZIA(BONO 15)"
+  },
+  {
+    "MRHAB": "B3 ",
+    "MRTEXT": "CRUCERO BELLEZA"
+  },
+  {
+    "MRHAB": "B4 ",
+    "MRTEXT": "SD-FIBROMIA/14N"
+  },
+  {
+    "MRHAB": "B7 ",
+    "MRTEXT": "MARBGOLF(L/G18)"
+  },
+  {
+    "MRHAB": "B8 ",
+    "MRTEXT": "MARBGOLF(M/G18)"
+  },
+  {
+    "MRHAB": "B9 ",
+    "MRTEXT": "MARBGOLF(H/G18)"
+  },
+  {
+    "MRHAB": "C  ",
+    "MRTEXT": "COCHE \"C\"      "
+  },
+  {
+    "MRHAB": "CÑ ",
+    "MRTEXT": "BROCHETA ROMANT"
+  },
+  {
+    "MRHAB": "CA ",
+    "MRTEXT": "PR.CARICIAS    "
+  },
+  {
+    "MRHAB": "CB ",
+    "MRTEXT": "PACK COMIDAS   "
+  },
+  {
+    "MRHAB": "CC ",
+    "MRTEXT": "CON COMIDA     "
+  },
+  {
+    "MRHAB": "CD ",
+    "MRTEXT": "CARIBE DREAMS  "
+  },
+  {
+    "MRHAB": "CE ",
+    "MRTEXT": "CENA           "
+  },
+  {
+    "MRHAB": "CF ",
+    "MRTEXT": "COFFEE BREAK   "
+  },
+  {
+    "MRHAB": "CG ",
+    "MRTEXT": "CENA DE GALA   "
+  },
+  {
+    "MRHAB": "CH ",
+    "MRTEXT": "CAVA           "
+  },
+  {
+    "MRHAB": "CK ",
+    "MRTEXT": "COCKTAIL       "
+  },
+  {
+    "MRHAB": "CL ",
+    "MRTEXT": "PAX CELIACA    "
+  },
+  {
+    "MRHAB": "CM ",
+    "MRTEXT": "CARICIA MEDITER"
+  },
+  {
+    "MRHAB": "CN ",
+    "MRTEXT": "CENA DE NAVIDAD"
+  },
+  {
+    "MRHAB": "CO ",
+    "MRTEXT": "COTILLON F.AÑO "
+  },
+  {
+    "MRHAB": "CP ",
+    "MRTEXT": "COMPRAS        "
+  },
+  {
+    "MRHAB": "CQ ",
+    "MRTEXT": "COCKTAIL ROMANT"
+  },
+  {
+    "MRHAB": "CR ",
+    "MRTEXT": "CENA ROMANTICA "
+  },
+  {
+    "MRHAB": "CS ",
+    "MRTEXT": "TR.CASTAÑA     "
+  },
+  {
+    "MRHAB": "CT ",
+    "MRTEXT": "CONSULTA MEDICA"
+  },
+  {
+    "MRHAB": "CU ",
+    "MRTEXT": "CURSO          "
+  },
+  {
+    "MRHAB": "CZ ",
+    "MRTEXT": "CERVEZA        "
+  },
+  {
+    "MRHAB": "C1 ",
+    "MRTEXT": "CAJA FUERTE    "
+  },
+  {
+    "MRHAB": "C4 ",
+    "MRTEXT": "SD-CARDIO/14N  "
+  },
+  {
+    "MRHAB": "C7 ",
+    "MRTEXT": "SD-CARDIO/7N   "
+  },
+  {
+    "MRHAB": "D  ",
+    "MRTEXT": "COCHE \"D\"      "
+  },
+  {
+    "MRHAB": "DA ",
+    "MRTEXT": "DEPOSITO APLICA"
+  },
+  {
+    "MRHAB": "DE ",
+    "MRTEXT": "DESAYUNO       "
+  },
+  {
+    "MRHAB": "DG ",
+    "MRTEXT": "AD GRUPOS      "
+  },
+  {
+    "MRHAB": "DH ",
+    "MRTEXT": "AD CLUB HOUSE  "
+  },
+  {
+    "MRHAB": "DI ",
+    "MRTEXT": "CAPRICHO DIOSES"
+  },
+  {
+    "MRHAB": "DX ",
+    "MRTEXT": "DESAYUNO EXPRES"
+  },
+  {
+    "MRHAB": "D1 ",
+    "MRTEXT": "DS (SUPLEMENTO)"
+  },
+  {
+    "MRHAB": "D2 ",
+    "MRTEXT": "DR (SUPLEMENTO)"
+  },
+  {
+    "MRHAB": "D3 ",
+    "MRTEXT": "DV(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "D4 ",
+    "MRTEXT": "DG(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "D5 ",
+    "MRTEXT": "FV(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "D6 ",
+    "MRTEXT": "DZ(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "D7 ",
+    "MRTEXT": "E (SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "D8 ",
+    "MRTEXT": "WR(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "D9 ",
+    "MRTEXT": "A1(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "E  ",
+    "MRTEXT": "COCHE \"E\"      "
+  },
+  {
+    "MRHAB": "EÑ ",
+    "MRTEXT": "ESP.QUINCEAÑERA"
+  },
+  {
+    "MRHAB": "EA ",
+    "MRTEXT": "ALHAMBRA ENTRAD"
+  },
+  {
+    "MRHAB": "EC ",
+    "MRTEXT": "EARLY CHECK-IN "
+  },
+  {
+    "MRHAB": "ED ",
+    "MRTEXT": "PRG.ESP DUO    "
+  },
+  {
+    "MRHAB": "EE ",
+    "MRTEXT": "EXT. ELECTRICOS"
+  },
+  {
+    "MRHAB": "EF ",
+    "MRTEXT": "PRG EFECT.FLASH"
+  },
+  {
+    "MRHAB": "EH ",
+    "MRTEXT": "EXT. HOTEL     "
+  },
+  {
+    "MRHAB": "EL ",
+    "MRTEXT": "ENVOLTURA LODO "
+  },
+  {
+    "MRHAB": "EM ",
+    "MRTEXT": "PRG.ESP.MASAJE "
+  },
+  {
+    "MRHAB": "EN ",
+    "MRTEXT": "PRG.ENERGIZANTE"
+  },
+  {
+    "MRHAB": "EO ",
+    "MRTEXT": "OASYS(ENTRADA) "
+  },
+  {
+    "MRHAB": "EP ",
+    "MRTEXT": "ESPECIAL PEQUES"
+  },
+  {
+    "MRHAB": "EQ ",
+    "MRTEXT": "EQUIPAJE EXTRA "
+  },
+  {
+    "MRHAB": "ER ",
+    "MRTEXT": "ESPECIAL RELAX "
+  },
+  {
+    "MRHAB": "ES ",
+    "MRTEXT": "ANTI-STRESS    "
+  },
+  {
+    "MRHAB": "ET ",
+    "MRTEXT": "ENTRADA        "
+  },
+  {
+    "MRHAB": "EU ",
+    "MRTEXT": "EXT. MINUSVALI."
+  },
+  {
+    "MRHAB": "EV ",
+    "MRTEXT": "ENVOLTURA      "
+  },
+  {
+    "MRHAB": "E1 ",
+    "MRTEXT": "EXT. APARTAMEN."
+  },
+  {
+    "MRHAB": "E2 ",
+    "MRTEXT": "ESP.PEQUES(2NI)"
+  },
+  {
+    "MRHAB": "E3 ",
+    "MRTEXT": "ESP.PEQUES(3NI)"
+  },
+  {
+    "MRHAB": "E4 ",
+    "MRTEXT": "ESP.PEQUES(4NI)"
+  },
+  {
+    "MRHAB": "E9 ",
+    "MRTEXT": "EXT. MOTOS     "
+  },
+  {
+    "MRHAB": "FA ",
+    "MRTEXT": "FRUTA Y AGUA   "
+  },
+  {
+    "MRHAB": "FB ",
+    "MRTEXT": "ROSAS+BOMBON+CA"
+  },
+  {
+    "MRHAB": "FC ",
+    "MRTEXT": "FIESTA COCKTAIL"
+  },
+  {
+    "MRHAB": "FI ",
+    "MRTEXT": "ESPECIAL DELFI "
+  },
+  {
+    "MRHAB": "FL ",
+    "MRTEXT": "FLORES         "
+  },
+  {
+    "MRHAB": "FP ",
+    "MRTEXT": "FRUTA+BEB.PREMI"
+  },
+  {
+    "MRHAB": "FR ",
+    "MRTEXT": "RON+FRUTA      "
+  },
+  {
+    "MRHAB": "FT ",
+    "MRTEXT": "TERAP.FLOTACION"
+  },
+  {
+    "MRHAB": "FU ",
+    "MRTEXT": "CAMPUS FUTBOL  "
+  },
+  {
+    "MRHAB": "FV ",
+    "MRTEXT": "CAVA+FRUTA     "
+  },
+  {
+    "MRHAB": "F1 ",
+    "MRTEXT": "CAMPUS FUTB(2NI"
+  },
+  {
+    "MRHAB": "F2 ",
+    "MRTEXT": "ESP.DELFI(2NI) "
+  },
+  {
+    "MRHAB": "F3 ",
+    "MRTEXT": "ESP.DELFI(3NI) "
+  },
+  {
+    "MRHAB": "F4 ",
+    "MRTEXT": "ESP.DELFI(4NI) "
+  },
+  {
+    "MRHAB": "F7 ",
+    "MRTEXT": "FLAMGOLF(L/G18)"
+  },
+  {
+    "MRHAB": "F8 ",
+    "MRTEXT": "FLAMGOLF(M/G18)"
+  },
+  {
+    "MRHAB": "F9 ",
+    "MRTEXT": "FLAMGOLF(H/G18)"
+  },
+  {
+    "MRHAB": "GA ",
+    "MRTEXT": "GOLF PAKET A   "
+  },
+  {
+    "MRHAB": "GB ",
+    "MRTEXT": "GOLF PAKET B   "
+  },
+  {
+    "MRHAB": "GC ",
+    "MRTEXT": "GLOBOS Y CHUCHE"
+  },
+  {
+    "MRHAB": "GF ",
+    "MRTEXT": "GREEN FEE(GNK) "
+  },
+  {
+    "MRHAB": "GG ",
+    "MRTEXT": "GASTOS GESTION "
+  },
+  {
+    "MRHAB": "GI ",
+    "MRTEXT": "BUGGIE(GNK)    "
+  },
+  {
+    "MRHAB": "GJ ",
+    "MRTEXT": "GARAJE         "
+  },
+  {
+    "MRHAB": "GL ",
+    "MRTEXT": "VUELO LLEGADA  "
+  },
+  {
+    "MRHAB": "GM ",
+    "MRTEXT": "GIMNASIA MONITO"
+  },
+  {
+    "MRHAB": "GN ",
+    "MRTEXT": "GREEN FEEJR(GNK"
+  },
+  {
+    "MRHAB": "GO ",
+    "MRTEXT": "BOLSA DE GOLF  "
+  },
+  {
+    "MRHAB": "GR ",
+    "MRTEXT": "GUIA ROQUETAS  "
+  },
+  {
+    "MRHAB": "GS ",
+    "MRTEXT": "VUELO SALIDA   "
+  },
+  {
+    "MRHAB": "GU ",
+    "MRTEXT": "VUELO IDA/VUELT"
+  },
+  {
+    "MRHAB": "GV ",
+    "MRTEXT": "GUIA VERA/TOYO "
+  },
+  {
+    "MRHAB": "GY ",
+    "MRTEXT": "GYMKANAS       "
+  },
+  {
+    "MRHAB": "G2 ",
+    "MRTEXT": "GLOB+CHUCH(2NI)"
+  },
+  {
+    "MRHAB": "G3 ",
+    "MRTEXT": "GLOB+CHUCH(3NI)"
+  },
+  {
+    "MRHAB": "G4 ",
+    "MRTEXT": "GLOB+CHUCH(4NI)"
+  },
+  {
+    "MRHAB": "G8 ",
+    "MRTEXT": "GREEN FEE18(GNK"
+  },
+  {
+    "MRHAB": "G9 ",
+    "MRTEXT": "GREEN FEE9(GNK)"
+  },
+  {
+    "MRHAB": "HL ",
+    "MRTEXT": "VUELO LLEGADA(M"
+  },
+  {
+    "MRHAB": "HM ",
+    "MRTEXT": "HAMACAS PLAYA  "
+  },
+  {
+    "MRHAB": "HS ",
+    "MRTEXT": "VUELO SALIDA(M)"
+  },
+  {
+    "MRHAB": "HU ",
+    "MRTEXT": "VUELO I/V (MU) "
+  },
+  {
+    "MRHAB": "H1 ",
+    "MRTEXT": "BONO CENA-1/PAX"
+  },
+  {
+    "MRHAB": "H2 ",
+    "MRTEXT": "BONO CENA-2/PAX"
+  },
+  {
+    "MRHAB": "H3 ",
+    "MRTEXT": "BONO CENA-3/PAX"
+  },
+  {
+    "MRHAB": "H4 ",
+    "MRTEXT": "BONO CENA-4/PAX"
+  },
+  {
+    "MRHAB": "H8 ",
+    "MRTEXT": "ALHAGOLF(1GF18)"
+  },
+  {
+    "MRHAB": "IE ",
+    "MRTEXT": "INT. ELECTRICOS"
+  },
+  {
+    "MRHAB": "IH ",
+    "MRTEXT": "INT. HOTEL     "
+  },
+  {
+    "MRHAB": "IL ",
+    "MRTEXT": "INTOL.LACTOSA  "
+  },
+  {
+    "MRHAB": "IM ",
+    "MRTEXT": "ISLA MAGICA    "
+  },
+  {
+    "MRHAB": "IU ",
+    "MRTEXT": "INT. MINUSVALI."
+  },
+  {
+    "MRHAB": "I0 ",
+    "MRTEXT": "SD-ARTROSIS/7N "
+  },
+  {
+    "MRHAB": "I1 ",
+    "MRTEXT": "INT. APARTAMEN."
+  },
+  {
+    "MRHAB": "I3 ",
+    "MRTEXT": "PRI.RMU-ROQ(1-3"
+  },
+  {
+    "MRHAB": "I6 ",
+    "MRTEXT": "PRI.RMU-ROQ(4-6"
+  },
+  {
+    "MRHAB": "I9 ",
+    "MRTEXT": "INT. MOTOS     "
+  },
+  {
+    "MRHAB": "JN ",
+    "MRTEXT": "JOROBADO NOTRED"
+  },
+  {
+    "MRHAB": "J3 ",
+    "MRTEXT": "PRIV.MJV(1-3PA)"
+  },
+  {
+    "MRHAB": "J6 ",
+    "MRTEXT": "PRIV.MJV(4-6PA)"
+  },
+  {
+    "MRHAB": "KK ",
+    "MRTEXT": "KAJAK          "
+  },
+  {
+    "MRHAB": "KU ",
+    "MRTEXT": "KUR-URLAUB     "
+  },
+  {
+    "MRHAB": "LC ",
+    "MRTEXT": "LATE CHECK OUT "
+  },
+  {
+    "MRHAB": "LH ",
+    "MRTEXT": "L'HEMISFERIC   "
+  },
+  {
+    "MRHAB": "LO ",
+    "MRTEXT": "L'OCEANOGRAFIC "
+  },
+  {
+    "MRHAB": "L3 ",
+    "MRTEXT": "PRIV.ALC(1-3PA)"
+  },
+  {
+    "MRHAB": "L6 ",
+    "MRTEXT": "PRIV.ALC(4-6PA)"
+  },
+  {
+    "MRHAB": "L7 ",
+    "MRTEXT": "ALFEGOLF(L/G18)"
+  },
+  {
+    "MRHAB": "L8 ",
+    "MRTEXT": "ALFEGOLF(M/G18)"
+  },
+  {
+    "MRHAB": "L9 ",
+    "MRTEXT": "ALFEGOLG(H/G18)"
+  },
+  {
+    "MRHAB": "M+ ",
+    "MRTEXT": "MP C/AGUA-VINO "
+  },
+  {
+    "MRHAB": "MA ",
+    "MRTEXT": "MP C/AGUA      "
+  },
+  {
+    "MRHAB": "MB ",
+    "MRTEXT": "REGIMEN+COCHE B"
+  },
+  {
+    "MRHAB": "MC ",
+    "MRTEXT": "MUSEO CIENCIAS "
+  },
+  {
+    "MRHAB": "MD ",
+    "MRTEXT": "MENU DEGUSTACIO"
+  },
+  {
+    "MRHAB": "MG ",
+    "MRTEXT": "GTOS.MODIFIC.  "
+  },
+  {
+    "MRHAB": "MI ",
+    "MRTEXT": "AGUA Y MIEL    "
+  },
+  {
+    "MRHAB": "MJ ",
+    "MRTEXT": "MASAJE         "
+  },
+  {
+    "MRHAB": "MK ",
+    "MRTEXT": "MARIO PARK     "
+  },
+  {
+    "MRHAB": "ML ",
+    "MRTEXT": "MALETERO       "
+  },
+  {
+    "MRHAB": "MM ",
+    "MRTEXT": "MOVE-IN(CLV)   "
+  },
+  {
+    "MRHAB": "MO ",
+    "MRTEXT": "MONOLOGO CHOCIT"
+  },
+  {
+    "MRHAB": "MP ",
+    "MRTEXT": "MEDIA PENSION  "
+  },
+  {
+    "MRHAB": "MR ",
+    "MRTEXT": "MINIBAR ROMANTI"
+  },
+  {
+    "MRHAB": "MS ",
+    "MRTEXT": "MASCOTA(SUPLEM."
+  },
+  {
+    "MRHAB": "MT ",
+    "MRTEXT": "MATERIAL       "
+  },
+  {
+    "MRHAB": "MX ",
+    "MRTEXT": "MEDIA PENSION +"
+  },
+  {
+    "MRHAB": "M1 ",
+    "MRTEXT": "MINIBAR(RE+CE) "
+  },
+  {
+    "MRHAB": "M2 ",
+    "MRTEXT": "MASAJE 20'     "
+  },
+  {
+    "MRHAB": "M3 ",
+    "MRTEXT": "PRIV.RMU(1-3PA)"
+  },
+  {
+    "MRHAB": "M5 ",
+    "MRTEXT": "MASAJE 50'     "
+  },
+  {
+    "MRHAB": "M6 ",
+    "MRTEXT": "PRIV.RMU(4-6PA)"
+  },
+  {
+    "MRHAB": "M7 ",
+    "MRTEXT": "MINIBAR(BEER LO"
+  },
+  {
+    "MRHAB": "M8 ",
+    "MRTEXT": "MINIBAR(HEALTH)"
+  },
+  {
+    "MRHAB": "M9 ",
+    "MRTEXT": "MINIBAR(SWEET S"
+  },
+  {
+    "MRHAB": "NA ",
+    "MRTEXT": "NE.ACREDITACION"
+  },
+  {
+    "MRHAB": "NI ",
+    "MRTEXT": "NIÑO 1º        "
+  },
+  {
+    "MRHAB": "NM ",
+    "MRTEXT": "CE.NOCHEV.MARAO"
+  },
+  {
+    "MRHAB": "NO ",
+    "MRTEXT": "CENA NOCHE VIEJ"
+  },
+  {
+    "MRHAB": "NP ",
+    "MRTEXT": "MEDIA PENSION  "
+  },
+  {
+    "MRHAB": "NR ",
+    "MRTEXT": "SPA ROMANTICO  "
+  },
+  {
+    "MRHAB": "NS ",
+    "MRTEXT": "SPA LOVERS     "
+  },
+  {
+    "MRHAB": "N2 ",
+    "MRTEXT": "NIÑO 2º        "
+  },
+  {
+    "MRHAB": "N4 ",
+    "MRTEXT": "SD-TR.ALIME/14N"
+  },
+  {
+    "MRHAB": "N7 ",
+    "MRTEXT": "SD-TR.ALIME/7N "
+  },
+  {
+    "MRHAB": "OA ",
+    "MRTEXT": "OASYS(EXCURSION"
+  },
+  {
+    "MRHAB": "OE ",
+    "MRTEXT": "PACK OESTE     "
+  },
+  {
+    "MRHAB": "OG ",
+    "MRTEXT": "GNK(VARIOS)    "
+  },
+  {
+    "MRHAB": "OL ",
+    "MRTEXT": "MINI-OLIMPIADAS"
+  },
+  {
+    "MRHAB": "OU ",
+    "MRTEXT": "UGOLF(VARIOS)  "
+  },
+  {
+    "MRHAB": "O2 ",
+    "MRTEXT": "PACK OESTE(2NI)"
+  },
+  {
+    "MRHAB": "O3 ",
+    "MRTEXT": "PACK OESTE(3NI)"
+  },
+  {
+    "MRHAB": "O7 ",
+    "MRTEXT": "TRAMGOLF(1GF18)"
+  },
+  {
+    "MRHAB": "O8 ",
+    "MRTEXT": "TRAMGOLF(1GF18)"
+  },
+  {
+    "MRHAB": "O9 ",
+    "MRTEXT": "TRAMGOLF(1GF18)"
+  },
+  {
+    "MRHAB": "P+ ",
+    "MRTEXT": "PC C/AGUA.VINO "
+  },
+  {
+    "MRHAB": "PA ",
+    "MRTEXT": "PORT AVENTURA  "
+  },
+  {
+    "MRHAB": "PB ",
+    "MRTEXT": "PAINTBALL      "
+  },
+  {
+    "MRHAB": "PC ",
+    "MRTEXT": "PENSION COMPLET"
+  },
+  {
+    "MRHAB": "PE ",
+    "MRTEXT": "PARA EL        "
+  },
+  {
+    "MRHAB": "PG ",
+    "MRTEXT": "PEELING CORPOR."
+  },
+  {
+    "MRHAB": "PH ",
+    "MRTEXT": "PEELING+HIDRAT."
+  },
+  {
+    "MRHAB": "PI ",
+    "MRTEXT": "CUMPLE PIRATA  "
+  },
+  {
+    "MRHAB": "PK ",
+    "MRTEXT": "PARKING        "
+  },
+  {
+    "MRHAB": "PL ",
+    "MRTEXT": "PIERNAS LIGERAS"
+  },
+  {
+    "MRHAB": "PN ",
+    "MRTEXT": "PACK REGALO NIÑ"
+  },
+  {
+    "MRHAB": "PO ",
+    "MRTEXT": "RITUAL POLYNESI"
+  },
+  {
+    "MRHAB": "PP ",
+    "MRTEXT": "PREMIUM PACKAGE"
+  },
+  {
+    "MRHAB": "PQ ",
+    "MRTEXT": "PROGRAMA SPA   "
+  },
+  {
+    "MRHAB": "PR ",
+    "MRTEXT": "CUMPLE PRINCESA"
+  },
+  {
+    "MRHAB": "PS ",
+    "MRTEXT": "PRG.PAUSA      "
+  },
+  {
+    "MRHAB": "PU ",
+    "MRTEXT": "PACK ACCUEIL PE"
+  },
+  {
+    "MRHAB": "PV ",
+    "MRTEXT": "PACK VIP       "
+  },
+  {
+    "MRHAB": "PW ",
+    "MRTEXT": "PARQUE WARNER  "
+  },
+  {
+    "MRHAB": "PX ",
+    "MRTEXT": "PENSION COMP + "
+  },
+  {
+    "MRHAB": "PY ",
+    "MRTEXT": "PACK HAPPY SUMM"
+  },
+  {
+    "MRHAB": "P2 ",
+    "MRTEXT": "HAPPY SUMMER(2N"
+  },
+  {
+    "MRHAB": "P3 ",
+    "MRTEXT": "PRIV.LEI(1-3PA)"
+  },
+  {
+    "MRHAB": "P4 ",
+    "MRTEXT": "SD-PSORIAS/14N "
+  },
+  {
+    "MRHAB": "P6 ",
+    "MRTEXT": "PRIV.LEI(4-6PA)"
+  },
+  {
+    "MRHAB": "P7 ",
+    "MRTEXT": "SD-PSORIAS/7N  "
+  },
+  {
+    "MRHAB": "P8 ",
+    "MRTEXT": "PRIVADO(7-18PAX"
+  },
+  {
+    "MRHAB": "QA ",
+    "MRTEXT": "SPA+ALMUERZO   "
+  },
+  {
+    "MRHAB": "QC ",
+    "MRTEXT": "SPA+CENA       "
+  },
+  {
+    "MRHAB": "QM ",
+    "MRTEXT": "SPA+MERIENDA   "
+  },
+  {
+    "MRHAB": "Q1 ",
+    "MRTEXT": "TZ(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "Q2 ",
+    "MRTEXT": "A2(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "Q3 ",
+    "MRTEXT": "IV(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "Q4 ",
+    "MRTEXT": "KN(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "Q5 ",
+    "MRTEXT": "DN(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "Q6 ",
+    "MRTEXT": "DF(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "Q7 ",
+    "MRTEXT": "Q (SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "Q8 ",
+    "MRTEXT": "QV(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "RA ",
+    "MRTEXT": "R.LA VENTILLA  "
+  },
+  {
+    "MRHAB": "RC ",
+    "MRTEXT": "PETALOS DE ROSA"
+  },
+  {
+    "MRHAB": "RD ",
+    "MRTEXT": "DRIVING RANGE  "
+  },
+  {
+    "MRHAB": "RE ",
+    "MRTEXT": "COMO UNA REINA "
+  },
+  {
+    "MRHAB": "RG ",
+    "MRTEXT": "TARJETA REGALO "
+  },
+  {
+    "MRHAB": "RH ",
+    "MRTEXT": "REST.MIZU JAPON"
+  },
+  {
+    "MRHAB": "RI ",
+    "MRTEXT": "REST.FONTANA PI"
+  },
+  {
+    "MRHAB": "RJ ",
+    "MRTEXT": "PRG.RELAJANTE  "
+  },
+  {
+    "MRHAB": "RL ",
+    "MRTEXT": "RUTA A CABALLO "
+  },
+  {
+    "MRHAB": "RM ",
+    "MRTEXT": "REST.NOMAD     "
+  },
+  {
+    "MRHAB": "RN ",
+    "MRTEXT": "RENACER EXPRESS"
+  },
+  {
+    "MRHAB": "RP ",
+    "MRTEXT": "ROMANTIC PACK  "
+  },
+  {
+    "MRHAB": "RR ",
+    "MRTEXT": "ROCODROMO      "
+  },
+  {
+    "MRHAB": "RS ",
+    "MRTEXT": "RES.OLIVO STEAK"
+  },
+  {
+    "MRHAB": "RT ",
+    "MRTEXT": "REST.CHIMI.MEXI"
+  },
+  {
+    "MRHAB": "RV ",
+    "MRTEXT": "PRG.RENOVADOR  "
+  },
+  {
+    "MRHAB": "RX ",
+    "MRTEXT": "RELAX DELUXE   "
+  },
+  {
+    "MRHAB": "R1 ",
+    "MRTEXT": "TR.ROQU/1 TRAY."
+  },
+  {
+    "MRHAB": "R2 ",
+    "MRTEXT": "ESCAPADA RELAX "
+  },
+  {
+    "MRHAB": "R3 ",
+    "MRTEXT": "PRIV.ROQU(1-3) "
+  },
+  {
+    "MRHAB": "R4 ",
+    "MRTEXT": "SD-REUMA/14N   "
+  },
+  {
+    "MRHAB": "R6 ",
+    "MRTEXT": "PRIV.ROQU(4-6) "
+  },
+  {
+    "MRHAB": "R7 ",
+    "MRTEXT": "SD-REUMA/7N    "
+  },
+  {
+    "MRHAB": "R8 ",
+    "MRTEXT": "DESEGORF(1GF18)"
+  },
+  {
+    "MRHAB": "S% ",
+    "MRTEXT": "SPA(DESCUENTO) "
+  },
+  {
+    "MRHAB": "SA ",
+    "MRTEXT": "SALON ALMERIA  "
+  },
+  {
+    "MRHAB": "SB ",
+    "MRTEXT": "PRG.SUBLIME    "
+  },
+  {
+    "MRHAB": "SC ",
+    "MRTEXT": "SUPL.CAFE      "
+  },
+  {
+    "MRHAB": "SD ",
+    "MRTEXT": "PRG.SUAVE DESPE"
+  },
+  {
+    "MRHAB": "SE ",
+    "MRTEXT": "SERVICIO EXTRA "
+  },
+  {
+    "MRHAB": "SG ",
+    "MRTEXT": "GARANTIA CANCE "
+  },
+  {
+    "MRHAB": "SK ",
+    "MRTEXT": "CENA SNACK     "
+  },
+  {
+    "MRHAB": "SL ",
+    "MRTEXT": "SALON          "
+  },
+  {
+    "MRHAB": "SM ",
+    "MRTEXT": "SELWO MARINA   "
+  },
+  {
+    "MRHAB": "SN ",
+    "MRTEXT": "PRG.SENSACIONES"
+  },
+  {
+    "MRHAB": "SP ",
+    "MRTEXT": "SPA SENZIA     "
+  },
+  {
+    "MRHAB": "SR ",
+    "MRTEXT": "SERENIDAD      "
+  },
+  {
+    "MRHAB": "SS ",
+    "MRTEXT": "STOP STRESS    "
+  },
+  {
+    "MRHAB": "SU ",
+    "MRTEXT": "AD/SHOWCOOKING "
+  },
+  {
+    "MRHAB": "SW ",
+    "MRTEXT": "SELWO(ENTRADA) "
+  },
+  {
+    "MRHAB": "SX ",
+    "MRTEXT": "PROMO SENATOR  "
+  },
+  {
+    "MRHAB": "S1 ",
+    "MRTEXT": "SUPLEMENTO     "
+  },
+  {
+    "MRHAB": "S2 ",
+    "MRTEXT": "SUPLEMENTO     "
+  },
+  {
+    "MRHAB": "S3 ",
+    "MRTEXT": "SJ (SUPLEMENTO)"
+  },
+  {
+    "MRHAB": "S4 ",
+    "MRTEXT": "SF (SUPLEMENTO)"
+  },
+  {
+    "MRHAB": "S5 ",
+    "MRTEXT": "SY (SUPLEMENTO)"
+  },
+  {
+    "MRHAB": "S6 ",
+    "MRTEXT": "SP (SUPLEMENTO)"
+  },
+  {
+    "MRHAB": "S7 ",
+    "MRTEXT": "ID (SUPLEMENTO)"
+  },
+  {
+    "MRHAB": "S8 ",
+    "MRTEXT": "SL (SUPLEMENTO)"
+  },
+  {
+    "MRHAB": "S9 ",
+    "MRTEXT": "DP (SUPLEMENTO)"
+  },
+  {
+    "MRHAB": "T+ ",
+    "MRTEXT": "T.INCL IMPERIAL"
+  },
+  {
+    "MRHAB": "T- ",
+    "MRTEXT": "TODO INC.BASICO"
+  },
+  {
+    "MRHAB": "TA ",
+    "MRTEXT": "TASA TURISTICA "
+  },
+  {
+    "MRHAB": "TB ",
+    "MRTEXT": "TRANSFER BANUS "
+  },
+  {
+    "MRHAB": "TC ",
+    "MRTEXT": "TENTACION CHOCO"
+  },
+  {
+    "MRHAB": "TD ",
+    "MRTEXT": "TALON DESCUENTO"
+  },
+  {
+    "MRHAB": "TF ",
+    "MRTEXT": "TRANSFER DESERT"
+  },
+  {
+    "MRHAB": "TI ",
+    "MRTEXT": "TODO INCLUIDO  "
+  },
+  {
+    "MRHAB": "TJ ",
+    "MRTEXT": "TRANSFER BARAJA"
+  },
+  {
+    "MRHAB": "TL ",
+    "MRTEXT": "TELEF.BENALMAD."
+  },
+  {
+    "MRHAB": "TM ",
+    "MRTEXT": "TRANSF.CMMENOR "
+  },
+  {
+    "MRHAB": "TO ",
+    "MRTEXT": "TOALLAS        "
+  },
+  {
+    "MRHAB": "TP ",
+    "MRTEXT": "TRANSFER POP   "
+  },
+  {
+    "MRHAB": "TR ",
+    "MRTEXT": "TRANSFER ROQUET"
+  },
+  {
+    "MRHAB": "TS ",
+    "MRTEXT": "TRATAMIENTO SPA"
+  },
+  {
+    "MRHAB": "TU ",
+    "MRTEXT": "TASA AYUNTAMIEN"
+  },
+  {
+    "MRHAB": "TV ",
+    "MRTEXT": "TRANSFER VERA  "
+  },
+  {
+    "MRHAB": "TX ",
+    "MRTEXT": "TI PROLONGADO  "
+  },
+  {
+    "MRHAB": "TY ",
+    "MRTEXT": "TRANSFER TOYO  "
+  },
+  {
+    "MRHAB": "TZ ",
+    "MRTEXT": "TRASLADO CONCIE"
+  },
+  {
+    "MRHAB": "T1 ",
+    "MRTEXT": "TODO INCLUIDO  "
+  },
+  {
+    "MRHAB": "T2 ",
+    "MRTEXT": "TODO INCLUIDO  "
+  },
+  {
+    "MRHAB": "T3 ",
+    "MRTEXT": "TODO INCLUIDO  "
+  },
+  {
+    "MRHAB": "T4 ",
+    "MRTEXT": "TODO INCLUIDO  "
+  },
+  {
+    "MRHAB": "T5 ",
+    "MRTEXT": "TODO INCLUIDO  "
+  },
+  {
+    "MRHAB": "T6 ",
+    "MRTEXT": "TODO INCLUIDO  "
+  },
+  {
+    "MRHAB": "T7 ",
+    "MRTEXT": "TODO INCLUIDO  "
+  },
+  {
+    "MRHAB": "T8 ",
+    "MRTEXT": "TODO INCLUIDO  "
+  },
+  {
+    "MRHAB": "T9 ",
+    "MRTEXT": "TODO INCLUIDO  "
+  },
+  {
+    "MRHAB": "UF ",
+    "MRTEXT": "GREEN FEE (UG) "
+  },
+  {
+    "MRHAB": "UI ",
+    "MRTEXT": "BUGGIE(UG)     "
+  },
+  {
+    "MRHAB": "UL ",
+    "MRTEXT": "VUELO LLEGADA  "
+  },
+  {
+    "MRHAB": "UM ",
+    "MRTEXT": "AQUARIUM       "
+  },
+  {
+    "MRHAB": "UN ",
+    "MRTEXT": "GREEN FEEJR(UG)"
+  },
+  {
+    "MRHAB": "UP ",
+    "MRTEXT": "UPGRADE HOTEL  "
+  },
+  {
+    "MRHAB": "US ",
+    "MRTEXT": "VUELO SALIDA   "
+  },
+  {
+    "MRHAB": "UU ",
+    "MRTEXT": "VUELO IDA/VUELT"
+  },
+  {
+    "MRHAB": "U2 ",
+    "MRTEXT": "SD-DEJ.FUMAR/2N"
+  },
+  {
+    "MRHAB": "U3 ",
+    "MRTEXT": "PRIV.AGUA.(1-3)"
+  },
+  {
+    "MRHAB": "U6 ",
+    "MRTEXT": "PRIV.AGUA(4-6) "
+  },
+  {
+    "MRHAB": "U8 ",
+    "MRTEXT": "GREEN FEE18(UG)"
+  },
+  {
+    "MRHAB": "U9 ",
+    "MRTEXT": "GREEN FEE9(UG) "
+  },
+  {
+    "MRHAB": "VA ",
+    "MRTEXT": "VALE CONSUMICIO"
+  },
+  {
+    "MRHAB": "VB ",
+    "MRTEXT": "VISITA BODEGA  "
+  },
+  {
+    "MRHAB": "VC ",
+    "MRTEXT": "V. EN CATAMARAN"
+  },
+  {
+    "MRHAB": "VE ",
+    "MRTEXT": "ESP.DIVER(1NI) "
+  },
+  {
+    "MRHAB": "VG ",
+    "MRTEXT": "VUELO NIÑO GRAT"
+  },
+  {
+    "MRHAB": "VI ",
+    "MRTEXT": "BOTELLA VINO   "
+  },
+  {
+    "MRHAB": "VL ",
+    "MRTEXT": "VUELO LLEGADA  "
+  },
+  {
+    "MRHAB": "VM ",
+    "MRTEXT": "VISTA MAR      "
+  },
+  {
+    "MRHAB": "VP ",
+    "MRTEXT": "VUELO NIÑO/CARG"
+  },
+  {
+    "MRHAB": "VS ",
+    "MRTEXT": "VUELO SALIDA   "
+  },
+  {
+    "MRHAB": "VU ",
+    "MRTEXT": "VUELO IDA/VUELT"
+  },
+  {
+    "MRHAB": "VY ",
+    "MRTEXT": "VIP AMENITY    "
+  },
+  {
+    "MRHAB": "V0 ",
+    "MRTEXT": "VALE 100¤      "
+  },
+  {
+    "MRHAB": "V1 ",
+    "MRTEXT": "ESP.DIVER(2NI) "
+  },
+  {
+    "MRHAB": "V2 ",
+    "MRTEXT": "ESP.DIVER(3NIÑ)"
+  },
+  {
+    "MRHAB": "V3 ",
+    "MRTEXT": "ESP.DIVER(4NIÑ)"
+  },
+  {
+    "MRHAB": "V4 ",
+    "MRTEXT": "ESP.DIVER(5NIÑ)"
+  },
+  {
+    "MRHAB": "V5 ",
+    "MRTEXT": "VALE 50¤       "
+  },
+  {
+    "MRHAB": "WD ",
+    "MRTEXT": "WELCOME DRINK  "
+  },
+  {
+    "MRHAB": "WP ",
+    "MRTEXT": "WELCOME PACK   "
+  },
+  {
+    "MRHAB": "W1 ",
+    "MRTEXT": "TR.VERA/1 TRAY."
+  },
+  {
+    "MRHAB": "XX ",
+    "MRTEXT": "DIURNO         "
+  },
+  {
+    "MRHAB": "X1 ",
+    "MRTEXT": "TZ(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "X2 ",
+    "MRTEXT": "DF(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "X3 ",
+    "MRTEXT": "RF(SUPLEMENTO) "
+  },
+  {
+    "MRHAB": "Y1 ",
+    "MRTEXT": "TR.TOYO/1 TRAY."
+  },
+  {
+    "MRHAB": "Y3 ",
+    "MRTEXT": "PRIV.TOYO(1-3) "
+  },
+  {
+    "MRHAB": "Y6 ",
+    "MRTEXT": "PRIV.TOYO(4-6) "
+  },
+  {
+    "MRHAB": "Y7 ",
+    "MRTEXT": "ATALGOLF(L/G18)"
+  },
+  {
+    "MRHAB": "Y8 ",
+    "MRTEXT": "ATALGOLF(M/G18)"
+  },
+  {
+    "MRHAB": "Y9 ",
+    "MRTEXT": "ATALGOLF(H/G18)"
+  },
+  {
+    "MRHAB": "ZA ",
+    "MRTEXT": "ZAPAT+AMEN.A.MI"
+  },
+  {
+    "MRHAB": "Z1 ",
+    "MRTEXT": "CENA EMBERS STE"
+  },
+  {
+    "MRHAB": "Z2 ",
+    "MRTEXT": "CENA ZAO TEPPAN"
+  },
+  {
+    "MRHAB": "Z3 ",
+    "MRTEXT": "CENA LA GRAPPA "
+  },
+  {
+    "MRHAB": "1A ",
+    "MRTEXT": "ENTRADA FRONT  "
+  },
+  {
+    "MRHAB": "1B ",
+    "MRTEXT": "ENTRADA VIP    "
+  },
+  {
+    "MRHAB": "1E ",
+    "MRTEXT": "FAR WEST(EXPER)"
+  },
+  {
+    "MRHAB": "1G ",
+    "MRTEXT": "CREW+ARTISTAS  "
+  },
+  {
+    "MRHAB": "1T ",
+    "MRTEXT": "PACK GEISHA    "
+  },
+  {
+    "MRHAB": "123",
+    "MRTEXT": "a              "
+  },
+  {
+    "MRHAB": "2C ",
+    "MRTEXT": "2 CENAS        "
+  },
+  {
+    "MRHAB": "2E ",
+    "MRTEXT": "B.E.GIN MASTER "
+  },
+  {
+    "MRHAB": "2G ",
+    "MRTEXT": "PRENSA         "
+  },
+  {
+    "MRHAB": "2Q ",
+    "MRTEXT": "2 ACQUAPLAYA   "
+  },
+  {
+    "MRHAB": "2T ",
+    "MRTEXT": "PACK GIN PREMIU"
+  },
+  {
+    "MRHAB": "3B ",
+    "MRTEXT": "BONO3(COM+BEB) "
+  },
+  {
+    "MRHAB": "3E ",
+    "MRTEXT": "B.E.SENZIA BELL"
+  },
+  {
+    "MRHAB": "3G ",
+    "MRTEXT": "PATROCINADORES "
+  },
+  {
+    "MRHAB": "3T ",
+    "MRTEXT": "PACK ALMUERZO B"
+  },
+  {
+    "MRHAB": "3X ",
+    "MRTEXT": "TERCER PAX(SUP)"
+  },
+  {
+    "MRHAB": "31 ",
+    "MRTEXT": "COCHE \"A\"      "
+  },
+  {
+    "MRHAB": "4B ",
+    "MRTEXT": "BONO4(COM+BEB) "
+  },
+  {
+    "MRHAB": "4C ",
+    "MRTEXT": "PRG. 4 CONTINEN"
+  },
+  {
+    "MRHAB": "4E ",
+    "MRTEXT": "B.E.SECRET SEDU"
+  },
+  {
+    "MRHAB": "4T ",
+    "MRTEXT": "ALBORNOZ+TOALL "
+  },
+  {
+    "MRHAB": "5B ",
+    "MRTEXT": "BONO5(COM+BEB) "
+  },
+  {
+    "MRHAB": "5C ",
+    "MRTEXT": "R.CREDIT-150$  "
+  },
+  {
+    "MRHAB": "5E ",
+    "MRTEXT": "B.E.MI AMIGO DE"
+  },
+  {
+    "MRHAB": "5T ",
+    "MRTEXT": "PACK DUO SPA50'"
+  },
+  {
+    "MRHAB": "50 ",
+    "MRTEXT": "TALON 50       "
+  },
+  {
+    "MRHAB": "6B ",
+    "MRTEXT": "BONO6(COM+BEB) "
+  },
+  {
+    "MRHAB": "6E ",
+    "MRTEXT": "B.E.INMERS.TIBU"
+  },
+  {
+    "MRHAB": "6T ",
+    "MRTEXT": "PACK FACI+PEDIC"
+  },
+  {
+    "MRHAB": "60 ",
+    "MRTEXT": "TALON 60       "
+  },
+  {
+    "MRHAB": "7B ",
+    "MRTEXT": "BONO7(COM+BEB) "
+  },
+  {
+    "MRHAB": "7T ",
+    "MRTEXT": "PACK COCT+SUSHI"
+  },
+  {
+    "MRHAB": "75 ",
+    "MRTEXT": "TALON 75       "
+  },
+  {
+    "MRHAB": "8A ",
+    "MRTEXT": "ATALGOLF(1GF18)"
+  },
+  {
+    "MRHAB": "8B ",
+    "MRTEXT": "ATALGOLF(2GF18)"
+  },
+  {
+    "MRHAB": "8F ",
+    "MRTEXT": "FLAMGOLF(1GF18)"
+  },
+  {
+    "MRHAB": "8G ",
+    "MRTEXT": "AGUIGOLF(1GF18)"
+  },
+  {
+    "MRHAB": "8J ",
+    "MRTEXT": "NARAGOLF(1GF18)"
+  },
+  {
+    "MRHAB": "8L ",
+    "MRTEXT": "ALFEGOLF(1GF18)"
+  },
+  {
+    "MRHAB": "8M ",
+    "MRTEXT": "MARBGOLF(1GF18)"
+  },
+  {
+    "MRHAB": "8N ",
+    "MRTEXT": "MARBGOLF(2GF18)"
+  },
+  {
+    "MRHAB": "90 ",
+    "MRTEXT": "TALON 90       "
+  }
+]

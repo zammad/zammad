@@ -1,0 +1,33 @@
+{
+  "roomCode": "D",
+  "quota": 5,
+  "rates": [
+    {
+      "name": "Base Rate",
+      "isOffer": false,
+      "meals": [
+        { "code": "AL", "pvp": 282, "net": 231.24, "commission": 50.76 },
+        { "code": "AD", "pvp": 306, "net": 250.92, "commission": 55.08 },
+        { "code": "MP", "pvp": 346, "net": 283.72, "commission": 62.28 }
+      ],
+      "cancellation": [
+        { "deadline": "2026-09-15T11:00:00", "penalty": "100%" },
+        { "deadline": "2026-09-14T11:00:00", "penalty": "1 noche" }
+      ]
+    },
+    {
+      "name": "EARLY BOOKING",
+      "isOffer": true,
+      "discount": 42.30,
+      "meals": [
+        { "code": "AL", "pvp": 239.70, "net": 196.55, "commission": 43.15 },
+        { "code": "AD", "pvp": 263.70, "net": 216.23, "commission": 47.47 },
+        { "code": "MP", "pvp": 303.70, "net": 249.03, "commission": 54.67 }
+      ],
+      "cancellation": [
+        { "deadline": "2026-09-15T11:00:00", "penalty": "100%" },
+        { "deadline": "2026-09-14T11:00:00", "penalty": "1 noche" }
+      ]
+    }
+  ]
+}
