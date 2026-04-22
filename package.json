@@ -101,7 +101,7 @@
     "vite": "^8.0.0",
     "vite-plugin-pwa": "^1.2.0",
     "vite-plugin-ruby": "^5.2.1",
-    "vitest": "^4.1.4",
+    "vitest": "^4.1.5",
     "vue-tsc": "^3.2.7"
   },
   "dependencies": {
