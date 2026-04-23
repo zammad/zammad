@@ -3,7 +3,7 @@ class App.DataPrivacyTask extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/data_privacy_tasks'
   @configure_attributes = [
-    { name: 'deletable_id',   display: __('User'),            tag: 'autocompletion_ajax', relation: 'User', do_not_log: true },
+    { name: 'deletable_id',   display: __('User'),            tag: 'autocompletion_ajax', relation: 'User', allow_inactive: true, do_not_log: true },
     { name: 'state',          display: __('State'),           tag: 'input', readonly: 1 },
     { name: 'created_by_id',  display: __('Created by'),      relation: 'User', readonly: 1 },
     { name: 'created_at',     display: __('Created'),         tag: 'datetime', readonly: 1 },
