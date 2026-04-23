@@ -80,7 +80,7 @@
     "eslint-plugin-vuejs-accessibility": "^2.5.0",
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
     "jsdom": "^29.0.2",
-    "markdownlint-cli2": "^0.22.0",
+    "markdownlint-cli2": "^0.22.1",
     "minimatch": "^10.2.5",
     "mock-apollo-client": "^1.4.0",
     "oxfmt": "^0.46.0",
