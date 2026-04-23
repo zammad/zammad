@@ -342,7 +342,7 @@ class _webSocketSingleton extends App.Controller
           @_ajaxInit(force: true)
           @_ajaxReceiveWorking = false
       )
-    , 10000, '_ajaxReceive')
+    , 10000, '_ajaxReceive', 'ws')
 
 class Modal extends App.ControllerModal
   buttonClose: false
