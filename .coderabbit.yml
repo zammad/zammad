@@ -1,4 +1,6 @@
+inheritance: true
 reviews:
+  review_status: false
   auto_review:
     enabled: true
     base_branches:
