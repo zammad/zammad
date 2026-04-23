@@ -49,42 +49,17 @@ class LongPollingController < ApplicationController
 
   # GET /api/v1/message_receive
   def message_receive
-
-    # check client id
     client_id = client_id_verify
     raise Exceptions::UnprocessableEntity, __('Invalid client_id received!') if !client_id
 
-    # check queue to send
     begin
-      # update last ping
-      4.times do
-        sleep 0.25
-      end
-      # sleep 1
       Sessions.touch(client_id) # rubocop:disable Rails/SkipsModelValidations
 
-      # set max loop time to 24 sec. because of 30 sec. timeout of mod_proxy
-      count = 3
-      if Rails.env.production?
-        count = 12
-      end
-      loop do
-        count -= 1
-        queue = Sessions.queue(client_id)
-        if queue && queue[0]
-          logger.debug { "send #{queue.inspect} to #{client_id}" }
-          render json: queue
-          return
-        end
-        8.times do
-          sleep 0.25
-        end
-        # sleep 2
-        if count.zero?
-          render json: { event: 'pong' }
-          return
-        end
-      end
+      queue = Sessions.queue(client_id)
+      return render json: { event: 'pong' } if queue.blank?
+
+      logger.debug { "send #{queue.inspect} to #{client_id}" }
+      render json: queue
     rescue
       raise Exceptions::UnprocessableEntity, __('Invalid client_id in receive loop!')
     end
