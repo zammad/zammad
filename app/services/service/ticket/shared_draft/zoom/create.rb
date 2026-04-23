@@ -1,12 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Ticket::SharedDraft::Zoom::Create < Service::Base
-  attr_reader :user, :form_id, :ticket, :new_article, :ticket_attributes
+  requires_current_user!
 
-  def initialize(user, form_id, ticket:, new_article:, ticket_attributes:)
-    super()
+  attr_reader :form_id, :ticket, :new_article, :ticket_attributes
 
-    @user              = user
+  def initialize(form_id, ticket:, new_article:, ticket_attributes:)
     @form_id           = form_id
     @ticket            = ticket
     @new_article       = new_article
@@ -16,12 +15,10 @@ class Service::Ticket::SharedDraft::Zoom::Create < Service::Base
   def execute
     shared_draft = ::Ticket::SharedDraftZoom.new(ticket:, new_article:, ticket_attributes:)
 
-    Pundit.authorize(user, shared_draft, :update?)
+    Pundit.authorize(current_user, shared_draft, :update?)
 
-    UserInfo.with_user_id(user.id) do
-      shared_draft.save!
-      shared_draft.attach_upload_cache(form_id)
-    end
+    shared_draft.save!
+    shared_draft.attach_upload_cache(form_id)
 
     shared_draft
   end

@@ -7,9 +7,10 @@ RSpec.describe Service::Search do
   let(:current_user) { create(:agent, groups: [Ticket.first.group]) }
   let(:objects)      { [User, Organization, Ticket] }
   let(:options)      { {} }
-  let(:instance)     { described_class.new(current_user:, query:, objects:, options:) }
 
   describe '#execute' do
+    subject(:service_result) { described_class.with_current_user(current_user).execute(query:, objects:, options:) }
+
     let(:customer) { create(:customer, firstname: query) }
     let(:organization) { create(:organization, name: query) }
 
@@ -19,7 +20,7 @@ RSpec.describe Service::Search do
     end
 
     it 'returns combined result with found items' do
-      expect(instance.execute.result).to include(
+      expect(service_result.result).to include(
         User         => include(objects: [customer], total_count: 1),
         Organization => include(objects: [organization], total_count: 1),
         Ticket       => include(objects: be_blank, total_count: 0)
@@ -27,18 +28,18 @@ RSpec.describe Service::Search do
     end
 
     it 'lists models in the result in a specific order' do
-      expect(instance.execute.result.keys).to eq [Ticket, User, Organization]
+      expect(service_result.result.keys).to eq [Ticket, User, Organization]
     end
 
     it 'lists flattened results in correct order' do
-      expect(instance.execute.flattened).to eq [customer, organization]
+      expect(service_result.flattened).to eq [customer, organization]
     end
 
     context 'when objects are restricted' do
       let(:objects) { [User] }
 
       it 'searches given model only' do
-        expect(instance.execute.result.keys).to eq [User]
+        expect(service_result.result.keys).to eq [User]
       end
     end
 
@@ -54,7 +55,7 @@ RSpec.describe Service::Search do
         end
 
         it 'returns only object ids in the result' do
-          expect(instance.execute.result).to include(
+          expect(service_result.result).to include(
             User         => [customer.id.to_s],
             Organization => [organization.id.to_s],
             Ticket       => be_blank
@@ -66,7 +67,7 @@ RSpec.describe Service::Search do
           let(:objects) { [Ticket] }
 
           it 'returns ticket ID' do
-            expect(instance.execute.result).to include(
+            expect(service_result.result).to include(
               Ticket => [Ticket.first.id.to_s]
             )
           end
@@ -75,7 +76,7 @@ RSpec.describe Service::Search do
 
       context 'with SQL fallback' do
         it 'returns only object ids in the result' do
-          expect(instance.execute.result).to include(
+          expect(service_result.result).to include(
             User         => [customer.id],
             Organization => [organization.id],
             Ticket       => be_blank
@@ -87,7 +88,7 @@ RSpec.describe Service::Search do
           let(:objects) { [Ticket] }
 
           it 'returns ticket ID' do
-            expect(instance.execute.result).to include(
+            expect(service_result.result).to include(
               Ticket => [Ticket.first.id]
             )
           end
@@ -96,7 +97,9 @@ RSpec.describe Service::Search do
     end
   end
 
-  describe '#search_single_model' do
+  describe '#search_single_model', current_user_id: -> { current_user.id } do
+    let(:instance) { described_class.new(query:, objects:, options:) }
+
     before do
       allow(SearchIndexBackend).to receive(:search_by_index)
       allow(User).to receive(:search)
@@ -166,8 +169,8 @@ RSpec.describe Service::Search do
     end
   end
 
-  describe '#models' do
-    let(:instance) { described_class.new(current_user: user, query: 'test', objects: Models.searchable) }
+  describe '#models', current_user_id: -> { user.id } do
+    let(:instance) { described_class.new(query: 'test', objects: Models.searchable) }
     let(:models)   { instance.send(:models) }
 
     before do

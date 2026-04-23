@@ -20,8 +20,8 @@ class TicketBulkUpdateJob < ApplicationJob
 
     Ticket.where(id: current_ticket_ids).find_each.with_index(1) do |ticket, i|
       Service::Ticket::Bulk::SingleItemUpdate
-        .new(user:, ticket:, perform:)
-        .execute
+        .with_current_user(user)
+        .execute(ticket:, perform:)
     rescue Service::Ticket::Bulk::SingleItemUpdate::BulkSingleError => e
       failed_ticket_ids << e.record.id
     ensure

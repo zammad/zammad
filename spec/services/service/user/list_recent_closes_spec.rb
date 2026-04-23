@@ -21,21 +21,25 @@ RSpec.describe Service::User::ListRecentCloses do
         create(:recent_close, user:, recently_closed_object: closed_user, updated_at: 1.week.ago)
       end
 
-      it 'returns recently closed objects in correct order' do
-        result = described_class.new(user).execute
+      context 'with default limit' do
+        subject(:service_result) { described_class.with_current_user(user).execute }
 
-        expect(result).to eq([ticket3, organization, ticket1, ticket2, closed_user])
+        it 'returns recently closed objects in correct order' do
+          expect(service_result).to eq([ticket3, organization, ticket1, ticket2, closed_user])
+        end
       end
 
-      it 'respects the limit parameter' do
-        result = described_class.new(user, limit: 2).execute
+      context 'with limit of 2' do
+        subject(:service_result) { described_class.with_current_user(user).execute(limit: 2) }
 
-        expect(result).to eq([ticket3, organization])
+        it 'respects the limit parameter' do
+          expect(service_result).to eq([ticket3, organization])
+        end
       end
 
       it 'returns only objects the user has access to' do
         expect { ticket2.update!(group: create(:group)) }
-          .to change { described_class.new(user).execute }
+          .to change { described_class.with_current_user(user).execute }
           .from([ticket3, organization, ticket1, ticket2, closed_user])
           .to([ticket3, organization, ticket1, closed_user])
       end

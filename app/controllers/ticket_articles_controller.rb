@@ -292,7 +292,7 @@ class TicketArticlesController < ApplicationController
   private
 
   def render_calendar_preview
-    render json: Service::Calendar::IcsFile::Parse.new(current_user:).execute(file: download_file), status: :ok
+    render json: Service::Calendar::IcsFile::Parse.with_current_user(current_user).execute(file: download_file), status: :ok
   rescue => e
     logger.error e
     render json: { error: __('The preview cannot be generated. The format is corrupted or not supported.') }, status: :unprocessable_content

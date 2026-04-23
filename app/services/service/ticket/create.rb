@@ -1,9 +1,17 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Ticket::Create < Service::BaseWithCurrentUser
+class Service::Ticket::Create < Service::Base
   include Service::Concerns::HandlesCoreWorkflow
 
-  def execute(ticket_data:)
+  requires_current_user!
+
+  attr_reader :ticket_data
+
+  def initialize(ticket_data:)
+    @ticket_data = ticket_data
+  end
+
+  def execute
     Transaction.execute do
       handle_shared_draft(ticket_data)
 
@@ -35,7 +43,7 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
     preprocess_article_data! ticket, article_data
 
     Service::Ticket::Article::Create
-      .new(current_user: current_user)
+      .with_current_user(current_user)
       .execute(article_data: article_data, ticket: ticket)
   end
 

@@ -13,18 +13,18 @@ class AIAssistanceController < ApplicationController
 
     authorize!(text_tool, :show?)
 
-    output = Service::AIAssistance::TextTools.new(
+    output = Service::AIAssistance::TextTools.execute(
       input:                   params[:input],
       text_tool:,
       current_user:,
       regeneration_of:,
       template_render_context: template_render_context(params),
-    ).execute
+    )
 
     # Implicitly record the analytics usage for the current user.
     Service::AI::Analytics::UpsertUsage
-      .new(current_user, output.ai_analytics_run)
-      .execute
+      .with_current_user(current_user)
+      .execute(output.ai_analytics_run)
 
     render json: {
       output:    output[:content],

@@ -405,7 +405,7 @@ class TicketsController < ApplicationController
     end
 
     # merge ticket
-    Service::Ticket::Merge.new(current_user:).execute(source_ticket:, target_ticket:)
+    Service::Ticket::Merge.with_current_user(current_user).execute(source_ticket:, target_ticket:)
 
     # return result
     render json: {
@@ -516,8 +516,8 @@ class TicketsController < ApplicationController
     authorize!(ticket, :update?)
 
     Service::Ticket::ForcedUpdate
-      .new(ticket, params.permit(:title))
-      .execute
+      .with_current_user(current_user)
+      .execute(ticket, params.permit(:title).to_h)
 
     render_reloaded_ticket(ticket)
   end
@@ -528,8 +528,8 @@ class TicketsController < ApplicationController
     authorize!(ticket, :agent_update_access?)
 
     Service::Ticket::ForcedUpdate
-      .new(ticket, params.permit(:customer_id, :organization_id))
-      .execute
+      .with_current_user(current_user)
+      .execute(ticket, params.permit(:customer_id, :organization_id).to_h)
 
     render_reloaded_ticket(ticket)
   end

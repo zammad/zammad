@@ -4,8 +4,6 @@ class Service::Translation::Upsert < Service::Base
   attr_reader :locale, :source, :target
 
   def initialize(locale:, source:, target:)
-    super()
-
     @locale = locale
     @source = source
     @target = target

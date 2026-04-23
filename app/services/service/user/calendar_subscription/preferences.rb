@@ -1,13 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::CalendarSubscription::Preferences < Service::Base
-  attr_reader :user
-
-  def initialize(user)
-    super()
-
-    @user = user
-  end
+  requires_current_user!
 
   def execute
     default_preferences
@@ -35,6 +29,6 @@ class Service::User::CalendarSubscription::Preferences < Service::Base
   end
 
   def user_preferences
-    user.preferences[:calendar_subscriptions] || {}
+    current_user.preferences[:calendar_subscriptions] || {}
   end
 end

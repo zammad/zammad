@@ -13,7 +13,7 @@ module Gql::Mutations
 
     def resolve(input:, send_invite: false)
       user = Service::User::AddInternal
-        .new(current_user: context.current_user)
+        .with_current_user(context.current_user)
         .execute(user_data: input.to_h, send_invite:)
 
       { user: }

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::TwoFactor::GetMethodConfiguration do
-  subject(:service) { described_class.new(user:, method_name:) }
+  subject(:service_result) { described_class.with_current_user(user).execute(method_name:) }
 
   let(:user)        { create(:agent) }
   let(:method_name) { 'security_keys' }
@@ -17,7 +17,7 @@ RSpec.describe Service::User::TwoFactor::GetMethodConfiguration do
     let(:method_name) { 'nonsense' }
 
     it 'raises an error' do
-      expect { service.execute }
+      expect { service_result }
         .to raise_error(Exceptions::UnprocessableContent)
     end
   end
@@ -29,7 +29,7 @@ RSpec.describe Service::User::TwoFactor::GetMethodConfiguration do
 
     context 'when method is enabled' do
       it 'returns configuration' do
-        expect(service.execute).to eq(user_preference.configuration)
+        expect(service_result).to eq(user_preference.configuration)
       end
 
       context 'with authenticator app method' do
@@ -37,7 +37,7 @@ RSpec.describe Service::User::TwoFactor::GetMethodConfiguration do
         let(:user_preference) { create(:user_two_factor_preference, :authenticator_app, user:) }
 
         it 'returns nil' do
-          expect(service.execute).to be_nil
+          expect(service_result).to be_nil
         end
       end
     end
@@ -46,14 +46,14 @@ RSpec.describe Service::User::TwoFactor::GetMethodConfiguration do
       let(:enabled) { false }
 
       it 'returns configuration' do
-        expect(service.execute).to eq(user_preference.configuration)
+        expect(service_result).to eq(user_preference.configuration)
       end
     end
   end
 
   context 'when method is not configured' do
     it 'returns nil' do
-      expect(service.execute).to be_nil
+      expect(service_result).to be_nil
     end
   end
 end

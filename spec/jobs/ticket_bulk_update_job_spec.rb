@@ -12,15 +12,15 @@ RSpec.describe TicketBulkUpdateJob do
     context 'with one ticket' do
       it 'passes given perform argument for the ticket to update service' do
         allow(Service::Ticket::Bulk::SingleItemUpdate)
-          .to receive(:new)
+          .to receive(:execute)
           .and_call_original
 
         described_class
           .perform_now(user:, perform:, ticket_ids: [ticket.id])
 
         expect(Service::Ticket::Bulk::SingleItemUpdate)
-          .to have_received(:new)
-          .with(user:, ticket:, perform:)
+          .to have_received(:execute)
+          .with(ticket:, perform:, current_user: user)
           .once
       end
 
@@ -62,28 +62,28 @@ RSpec.describe TicketBulkUpdateJob do
 
       it 'processes a batch of tickets' do
         allow(Service::Ticket::Bulk::SingleItemUpdate)
-          .to receive(:new)
+          .to receive(:execute)
           .and_call_original
 
         described_class
           .perform_now(user:, perform:, ticket_ids: tickets.pluck(:id))
 
         expect(Service::Ticket::Bulk::SingleItemUpdate)
-          .to have_received(:new)
+          .to have_received(:execute)
           .exactly(described_class::TICKETS_PER_JOB_COUNT)
 
         expect(Service::Ticket::Bulk::SingleItemUpdate)
-          .to have_received(:new)
-          .with(user:, ticket: tickets[0], perform:)
+          .to have_received(:execute)
+          .with(ticket: tickets[0], perform:, current_user: user)
           .once
 
         expect(Service::Ticket::Bulk::SingleItemUpdate)
-          .to have_received(:new)
-          .with(user:, ticket: tickets[4], perform:)
+          .to have_received(:execute)
+          .with(ticket: tickets[4], perform:, current_user: user)
 
         expect(Service::Ticket::Bulk::SingleItemUpdate)
-          .not_to have_received(:new)
-          .with(user:, ticket: tickets[5], perform:)
+          .not_to have_received(:execute)
+          .with(ticket: tickets[5], perform:, current_user: user)
       end
 
       it 'updates subscription progress every few tickets' do

@@ -3,13 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
-  subject(:service) { described_class.new(current_user: user) }
+  subject(:service_result) { described_class.with_current_user(user).execute(ticket:, ticket_data:, macro:) }
 
   let(:user)        { create(:agent, groups: [group]) }
   let(:ticket)      { create(:ticket) }
   let(:group)       { ticket.group }
   let(:new_title)   { Faker::Lorem.word }
   let(:new_body)    { Faker::Lorem.sentence }
+  let(:macro)       { nil }
   let(:ticket_data) { { title: new_title, time_unit: 2 } }
 
   let(:ticket_data_with_article) do
@@ -18,7 +19,7 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
 
   describe '#execute' do
     it 'updates a ticket with given metadata' do
-      service.execute(ticket:, ticket_data:)
+      service_result
 
       expect(ticket)
         .to have_attributes(
@@ -26,42 +27,53 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
         )
     end
 
-    it 'adds article when present' do
-      service.execute(ticket:, ticket_data: ticket_data_with_article)
+    context 'when article is present' do
+      let(:ticket_data) { { title: new_title, time_unit: 2, article: { body: new_body } } }
 
-      expect(Ticket.last.articles.last)
-        .to have_attributes(
-          body: new_body,
-        )
+      it 'adds article' do
+        service_result
+
+        expect(Ticket.last.articles.last)
+          .to have_attributes(
+            body: new_body,
+          )
+      end
+
+      it 'adds article accounted time to ticket' do
+        expect(service_result.time_unit).to eq(2)
+      end
     end
 
-    it 'adds article accounted time to ticket' do
-      expect(service.execute(ticket:, ticket_data: ticket_data_with_article).time_unit).to eq(2)
-    end
+    context 'when macro is given' do
+      let(:macro) { create(:macro, perform: { 'ticket.title' => { 'value' => new_title } }) }
 
-    it 'updates ticket with given macro' do
-      macro = create(:macro, perform: { 'ticket.title' => { 'value' => new_title } })
+      it 'updates ticket with given macro' do
+        service_result
 
-      service.execute(ticket:, ticket_data:, macro:)
+        expect(ticket)
+          .to have_attributes(
+            title: new_title,
+          )
+      end
 
-      expect(ticket)
-        .to have_attributes(
-          title: new_title,
-        )
-    end
+      context 'when macro adds an article note' do
+        let(:macro) do
+          create(:macro, perform: {
+                   'article.note' => { 'body' => 'note body', 'internal' => 'true', 'subject' => 'test' }
+                 })
+        end
+        let(:ticket_data) { { title: new_title, time_unit: 2, article: { body: new_body } } }
 
-    it 'adds article note via macro' do
-      macro = create(:macro, perform: {
-                       'article.note' => { 'body' => 'note body', 'internal' => 'true', 'subject' => 'test' }
-                     })
+        it 'adds article note via macro' do
+          service_result
 
-      service.execute(ticket:, ticket_data: ticket_data_with_article, macro:)
-
-      expect(ticket.articles.reload)
-        .to contain_exactly(
-          have_attributes(body: new_body),
-          have_attributes(body: 'note body'),
-        )
+          expect(ticket.articles.reload)
+            .to contain_exactly(
+              have_attributes(body: new_body),
+              have_attributes(body: 'note body'),
+            )
+        end
+      end
     end
 
     describe 'shared draft handling' do
@@ -70,7 +82,7 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
       before { ticket_data[:shared_draft] = shared_draft }
 
       it 'destroys given shared draft' do
-        service.execute(ticket:, ticket_data:)
+        service_result
 
         expect(Ticket::SharedDraftZoom).not_to exist(shared_draft.id)
       end
@@ -78,7 +90,7 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
       it 'raises error if shared draft group does not belong to the ticket' do
         shared_draft.update! ticket: create(:ticket)
 
-        expect { service.execute(ticket:, ticket_data:) }
+        expect { service_result }
           .to raise_error(Exceptions::UnprocessableContent)
       end
     end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::CheckFeatureEnabled do
-  subject(:service) { described_class.new(name:, exception:, custom_error_message:, custom_exception_class:) }
+  subject(:service_result) { described_class.execute(name:, exception:, custom_error_message:, custom_exception_class:) }
 
   let(:name)                   { 'system_online_service' }
   let(:exception)              { true }
@@ -20,7 +20,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { false }
 
         it 'raises FeatureDisabledError' do
-          expect { service.execute }
+          expect { service_result }
             .to raise_error(described_class::FeatureDisabledError, 'This feature is not enabled.')
         end
       end
@@ -29,7 +29,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { true }
 
         it 'returns true' do
-          expect(service.execute).to be_nil
+          expect(service_result).to be_nil
         end
       end
     end
@@ -41,7 +41,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { false }
 
         it 'returns false' do
-          expect(service.execute).to be(false)
+          expect(service_result).to be(false)
         end
       end
 
@@ -49,7 +49,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { true }
 
         it 'returns true' do
-          expect(service.execute).to be(true)
+          expect(service_result).to be(true)
         end
       end
     end
@@ -61,7 +61,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { false }
 
         it 'raises the custom exception' do
-          expect { service.execute }
+          expect { service_result }
             .to raise_error(Exceptions::Forbidden, 'This feature is not enabled.')
         end
       end
@@ -70,7 +70,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { true }
 
         it 'passes' do
-          expect(service.execute).to be_nil
+          expect(service_result).to be_nil
         end
       end
     end
@@ -82,7 +82,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { false }
 
         it 'raises FeatureDisabledError with custom message' do
-          expect { service.execute }
+          expect { service_result }
             .to raise_error(described_class::FeatureDisabledError, 'Custom feature disabled message.')
         end
       end
@@ -91,7 +91,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { true }
 
         it 'passes' do
-          expect(service.execute).to be_nil
+          expect(service_result).to be_nil
         end
       end
     end
@@ -104,7 +104,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { false }
 
         it 'raises the custom exception with custom message' do
-          expect { service.execute }
+          expect { service_result }
             .to raise_error(Exceptions::Forbidden, 'Custom forbidden message.')
         end
       end
@@ -113,7 +113,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { true }
 
         it 'passes' do
-          expect(service.execute).to be_nil
+          expect(service_result).to be_nil
         end
       end
     end
@@ -126,7 +126,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { true }
 
         it 'raises FeatureDisabledError' do
-          expect { service.execute }
+          expect { service_result }
             .to raise_error(described_class::FeatureDisabledError, 'This cannot be enabled!')
         end
       end
@@ -135,7 +135,7 @@ RSpec.describe Service::CheckFeatureEnabled do
         let(:value) { false }
 
         it 'passes' do
-          expect(service.execute).to be_nil
+          expect(service_result).to be_nil
         end
       end
     end

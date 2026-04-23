@@ -1,12 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::TwoFactor::Base < Service::Base
-  attr_reader :user, :method_name
+  requires_current_user!
 
-  def initialize(user:, method_name:)
-    super()
+  attr_reader :method_name
 
-    @user        = user
+  def initialize(method_name:)
     @method_name = method_name
 
     return if method
@@ -17,7 +16,7 @@ class Service::User::TwoFactor::Base < Service::Base
   protected
 
   def method
-    @method ||= user
+    @method ||= current_user
       .auth_two_factor
       .authentication_method_object(method_name)
   end

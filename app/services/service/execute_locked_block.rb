@@ -28,16 +28,15 @@ class Service::ExecuteLockedBlock < Service::Base
     dlm.lock(nil, nil, extend: lock_info)
   end
 
-  def initialize(resource, ttl)
-    super()
-
+  def initialize(resource, ttl, &block)
     @resource = resource
     @ttl = ttl
+    @block = block
   end
 
-  def execute(&)
+  def execute
     dlm = Redlock::Client.new
-    dlm.lock(resource, ttl, &)
+    dlm.lock(resource, ttl, &@block)
   end
 
   class ExecuteLockedBlockError < StandardError

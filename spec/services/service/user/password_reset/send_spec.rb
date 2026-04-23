@@ -3,24 +3,24 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::PasswordReset::Send do
-  subject(:service) { described_class.new(username:) }
+  subject(:service_result) { described_class.execute(username:) }
 
   let(:user)     { create(:user) }
   let(:username) { user.login }
 
   shared_examples 'raising an error' do |klass, message|
     it 'raises an error' do
-      expect { service.execute }.to raise_error(klass, message)
+      expect { service_result }.to raise_error(klass, message)
     end
   end
 
   shared_examples 'sending the token' do
     it 'returns success' do
-      expect(service.execute).to be(true)
+      expect(service_result).to be(true)
     end
 
     it 'generates a new token' do
-      expect { service.execute }.to change(Token, :count)
+      expect { service_result }.to change(Token, :count)
     end
 
     it 'sends a valid password reset link' do
@@ -30,7 +30,7 @@ RSpec.describe Service::User::PasswordReset::Send do
         message = params[:body]
       end
 
-      service.execute
+      service_result
 
       expect(message).to include "<a href=\"http://zammad.example.com/desktop/reset-password/verify/#{Token.last.token}\">"
     end
@@ -38,11 +38,11 @@ RSpec.describe Service::User::PasswordReset::Send do
 
   shared_examples 'returning success' do
     it 'returns success' do
-      expect(service.execute).to be(true)
+      expect(service_result).to be(true)
     end
 
     it 'does not generate a new token' do
-      expect { service.execute }.to not_change(Token, :count)
+      expect { service_result }.to not_change(Token, :count)
     end
   end
 
@@ -51,19 +51,19 @@ RSpec.describe Service::User::PasswordReset::Send do
       before { Setting.set('import_mode', true) }
 
       it 'raises an error' do
-        expect { service.execute }
+        expect { service_result }
           .to raise_error(Exceptions::UnprocessableContent, %r{import_mode})
       end
 
       it 'does not generate a new token' do
-        expect { service.execute rescue nil } # rubocop:disable Style/RescueModifier
+        expect { service_result rescue nil } # rubocop:disable Style/RescueModifier
           .to not_change(Token, :count)
       end
 
       it 'adds message to the log' do
         allow(Rails.logger).to receive(:error)
 
-        service.execute rescue nil # rubocop:disable Style/RescueModifier
+        service_result rescue nil # rubocop:disable Style/RescueModifier
 
         expect(Rails.logger)
           .to have_received(:error)

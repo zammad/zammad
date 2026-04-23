@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Search < Service::BaseWithCurrentUser
+class Service::Search < Service::Base
   Result = Struct.new(:result, :sorting) do
     def flattened
       result
@@ -11,14 +11,11 @@ class Service::Search < Service::BaseWithCurrentUser
 
   attr_reader :query, :objects, :options
 
-  # @param current_user [User] which runs the search
   # @param query [String] to search for
   # @param objects [Array<ActiveRecord::Base>] searchable classes with search_preferences method present
   # @param options [Hash] options to forward to CanSearch and SearchIndexBackend. E.g. offset and limit.
   # @option options [Boolean] :only_ids, if true, only return object ids instead of full objects (default: false)
-  def initialize(current_user:, query:, objects:, options: {})
-    super(current_user:)
-
+  def initialize(query:, objects:, options: {})
     @query   = query
     @objects = objects
     @options = prepare_options(options)

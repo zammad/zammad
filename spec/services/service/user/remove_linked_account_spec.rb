@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::RemoveLinkedAccount do
-  subject(:service) { described_class.new(provider:, uid:, current_user: user) }
+  subject(:service_result) { described_class.with_current_user(user).execute(provider:, uid:) }
 
   let(:user)          { create(:agent) }
   let(:authorization) { create(:twitter_authorization, user: user) }
@@ -12,7 +12,7 @@ RSpec.describe Service::User::RemoveLinkedAccount do
 
   context 'with a valid authorization' do
     it 'removes the linked account' do
-      service.execute
+      service_result
       expect { authorization.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
@@ -21,7 +21,7 @@ RSpec.describe Service::User::RemoveLinkedAccount do
     let(:uid) { 'invalid-uid' }
 
     it 'raises an error' do
-      expect { service.execute }.to raise_error(Exceptions::UnprocessableContent)
+      expect { service_result }.to raise_error(Exceptions::UnprocessableContent)
     end
   end
 

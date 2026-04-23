@@ -13,17 +13,13 @@ module Gql::Mutations
     allow_public_access!
 
     def resolve(token:)
-      verify = Service::User::SignupVerify.new(token: token)
-
-      begin
-        user = verify.execute
-      rescue Service::User::SignupVerify::InvalidTokenError => e
-        return error_response({ message: e.message })
-      end
+      user = Service::User::SignupVerify.with_current_user(false).execute(token:)
 
       create_session(user, false, 'password')
 
       authenticate_result
+    rescue Service::User::SignupVerify::InvalidTokenError => e
+      error_response({ message: e.message })
     end
   end
 end

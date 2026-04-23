@@ -3,13 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
-  subject(:service) do
-    described_class.new(
-      ai_result:,
-      knowledge_base:,
-      kb_locale:,
-      current_user_id: current_user.id
-    )
+  subject(:service_result) do
+    described_class
+      .with_current_user(current_user)
+      .execute(
+        ai_result:,
+        knowledge_base:,
+        kb_locale:,
+      )
   end
 
   let(:current_user)     { create(:agent) }
@@ -29,8 +30,8 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
       end
 
       it 'creates a draft answer using the expected values', :aggregate_failures do
-        kb_answer = service.execute
-        translation = kb_answer.translations.find_by(kb_locale: kb_locale)
+        kb_answer   = service_result
+        translation = service_result.translations.find_by(kb_locale: kb_locale)
 
         expect(kb_answer).to be_persisted
         expect(kb_answer.category_id).to eq(second_category.id)
@@ -40,14 +41,11 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
       end
 
       it 'adds the ai-generated tag to the answer' do
-        kb_answer = service.execute
-
-        expect(kb_answer.tag_list).to include('ai-generated')
+        expect(service_result.tag_list).to include('ai-generated')
       end
 
       it 'appends a translated AI disclaimer note to the body' do
-        kb_answer = service.execute
-        translation = kb_answer.translations.find_by(kb_locale: kb_locale)
+        translation = service_result.translations.find_by(kb_locale: kb_locale)
 
         expect(translation.content.body).to include('<p><br><small><em>Be sure to check AI-generated content for accuracy.</em></small></p>')
       end
@@ -63,7 +61,7 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
       end
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'No valid knowledge base category provided.')
+        expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'No valid knowledge base category provided.')
       end
     end
 
@@ -76,7 +74,7 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
       end
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(StandardError)
+        expect { service_result }.to raise_error(StandardError)
       end
     end
 
@@ -85,7 +83,7 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
       let(:ai_result) { { title: long_title, category_id: first_category.id } }
 
       it 'truncates title to 250 characters' do
-        kb_answer = service.execute
+        kb_answer = service_result
         translation = kb_answer.translations.find_by(kb_locale: kb_locale)
 
         expect(translation.title).to eq(long_title.truncate(250))
@@ -108,7 +106,7 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
       end
 
       it 'appends a duplicate suffix to the title' do
-        kb_answer = service.execute
+        kb_answer = service_result
         translation = kb_answer.translations.find_by(kb_locale: kb_locale)
 
         expect(translation.title).to match(%r{^Reset a locked account \(Duplicate [a-zA-Z0-9]{4}\)$})
@@ -120,7 +118,7 @@ RSpec.describe Service::KnowledgeBase::CreateAnswerFromAIResult do
       let(:kb_locale) { nil }
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'No knowledge base locale configured.')
+        expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'No knowledge base locale configured.')
       end
     end
 

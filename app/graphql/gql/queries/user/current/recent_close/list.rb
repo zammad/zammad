@@ -11,8 +11,8 @@ module Gql::Queries
 
     def resolve(limit: 10)
       Service::User::ListRecentCloses
-        .new(context.current_user, limit:)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(limit:)
     end
   end
 end

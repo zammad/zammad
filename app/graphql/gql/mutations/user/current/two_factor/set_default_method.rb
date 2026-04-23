@@ -12,8 +12,8 @@ module Gql::Mutations
 
     def resolve(method_name:)
       Service::User::TwoFactor::SetDefaultMethod
-        .new(user: context.current_user, method_name:)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(method_name:)
 
       { success: true }
     end

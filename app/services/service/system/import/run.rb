@@ -2,8 +2,6 @@
 
 class Service::System::Import::Run < Service::Base
   def initialize
-    super
-
     configured!
   end
 

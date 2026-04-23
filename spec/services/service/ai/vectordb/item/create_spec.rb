@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Service::AI::VectorDB::Item::Create do
+  subject(:service_result) { described_class.execute(object_id: object.id, object_name: object.class.name, content: 'Test content', metadata: 'metadata') }
+
   let(:object) { create(:ticket) }
 
   before do
@@ -16,8 +18,6 @@ RSpec.describe Service::AI::VectorDB::Item::Create do
       .to receive(:create)
       .with(object_id: object.id, object_name: object.class.name, content: 'Test content', metadata: 'metadata', embedding: 'test embedding')
 
-    described_class
-      .new(object_id: object.id, object_name: object.class.name, content: 'Test content', metadata: 'metadata')
-      .execute
+    service_result
   end
 end

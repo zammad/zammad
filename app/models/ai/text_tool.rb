@@ -27,8 +27,7 @@ class AI::TextTool < ApplicationModel
 
   def satisfaction_ratio
     Service::AI::Analytics::AggregateSatisfactionRatio
-      .new(triggered_by: self)
-      .execute
+      .execute(triggered_by: self)
   end
 
   def attributes_with_association_ids

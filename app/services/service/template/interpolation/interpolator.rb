@@ -7,8 +7,6 @@ class Service::Template::Interpolation::Interpolator < Service::Base
   attr_reader :template, :track_objects, :additional_track_generate_data, :mode
 
   def initialize(template:, tracks:, additional_track_generate_data: nil, mode: :json)
-    super()
-
     @template = template
     @track_objects = tracks
     @additional_track_generate_data = additional_track_generate_data

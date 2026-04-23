@@ -9,8 +9,8 @@ module Gql::Mutations
     field :success, Boolean, description: 'Whether the generation job was enqueued successfully.'
 
     def resolve(ticket:)
-      Service::CheckFeatureEnabled.new(name: 'ai_assistance_kb_answer_from_ticket_generation').execute
-      Service::CheckFeatureEnabled.new(name: 'ai_provider', custom_error_message: __('AI provider is not configured.')).execute
+      Service::CheckFeatureEnabled.execute(name: 'ai_assistance_kb_answer_from_ticket_generation')
+      Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
 
       knowledge_base = ::KnowledgeBase.first
 

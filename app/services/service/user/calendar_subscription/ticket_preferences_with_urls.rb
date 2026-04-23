@@ -1,13 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::CalendarSubscription::TicketPreferencesWithUrls < Service::Base
-  attr_reader :user
-
-  def initialize(user)
-    super()
-
-    @user = user
-  end
+  requires_current_user!
 
   def execute
     output = {
@@ -24,7 +18,7 @@ class Service::User::CalendarSubscription::TicketPreferencesWithUrls < Service::
 
   def preferences
     @preferences ||= Service::User::CalendarSubscription::Preferences
-      .new(user)
+      .with_current_user(current_user)
       .execute
       .fetch(:tickets)
   end

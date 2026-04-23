@@ -32,13 +32,12 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::RecoveryCodesGenerate, 
       end
 
       it 'generates recovery codes of current user', aggregate_failures: true do
-        allow(Service::User::TwoFactor::GenerateRecoveryCodes).to receive(:new).and_call_original
-        expect_any_instance_of(Service::User::TwoFactor::GenerateRecoveryCodes).to receive(:execute)
+        allow(Service::User::TwoFactor::GenerateRecoveryCodes).to receive(:execute).and_call_original
 
         gql.execute(mutation, variables: variables)
 
         expect(Service::User::TwoFactor::GenerateRecoveryCodes)
-          .to have_received(:new).with(user: user, force: true)
+          .to have_received(:execute).with(force: true, current_user: user)
       end
 
       it_behaves_like 'cleaning up used token', operation_name: :mutation

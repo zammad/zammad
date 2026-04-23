@@ -18,8 +18,7 @@ module Gql::Mutations
 
     def resolve(input:)
       Service::User::Signup
-        .new(user_data: input.to_h)
-        .execute
+        .execute(user_data: input.to_h)
 
       { success: true }
     rescue PasswordPolicy::Error => e

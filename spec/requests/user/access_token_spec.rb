@@ -27,17 +27,13 @@ RSpec.describe 'User Access token', authenticated_as: :user, type: :request do
 
     it 'uses tokens list service', aggregate_failures: true do
       allow(Service::User::AccessToken::List)
-        .to receive(:new)
-        .and_call_original
-
-      expect_any_instance_of(Service::User::AccessToken::List)
         .to receive(:execute)
         .and_call_original
 
       get '/api/v1/user_access_token'
 
       expect(Service::User::AccessToken::List)
-        .to have_received(:new)
+        .to have_received(:execute)
     end
   end
 
@@ -60,17 +56,13 @@ RSpec.describe 'User Access token', authenticated_as: :user, type: :request do
 
       it 'users token create service', aggregate_failures: true do
         allow(Service::User::AccessToken::Create)
-          .to receive(:new)
-          .and_call_original
-
-        expect_any_instance_of(Service::User::AccessToken::Create)
           .to receive(:execute)
           .and_call_original
 
         post '/api/v1/user_access_token', params: { name: 'test', permission: %w[ticket.agent] }, as: :json
 
         expect(Service::User::AccessToken::Create)
-          .to have_received(:new)
+          .to have_received(:execute)
       end
     end
 

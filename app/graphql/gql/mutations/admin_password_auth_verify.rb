@@ -12,8 +12,7 @@ module Gql::Mutations
     allow_public_access!
 
     def resolve(token:)
-      verify = Service::Auth::VerifyAdminToken.new(token: token)
-      user = verify.execute
+      user = Service::Auth::VerifyAdminToken.execute(token: token)
 
       { login: user.login }
     end

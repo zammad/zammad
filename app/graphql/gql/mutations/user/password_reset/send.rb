@@ -20,8 +20,7 @@ module Gql::Mutations
 
     def resolve(username:)
       Service::User::PasswordReset::Send
-        .new(username: username)
-        .execute
+        .execute(username: username)
 
       { success: true }
     rescue Exceptions::UnprocessableContent => e

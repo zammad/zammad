@@ -17,7 +17,7 @@
 # event, to avoid redundancy.)
 #
 # Example:
-# Service::History::Group.new(current_user:).execute(object: ticket)
+# Service::History::Group.with_current_user(current_user).execute(object: ticket)
 # # => [
 # #      {
 # #        created_at: ActiveRecord::DateTime,
@@ -37,10 +37,19 @@
 # #        ]
 # #      }
 # #    ]
-class Service::History::Group < Service::BaseWithCurrentUser
-  def execute(object:, interval: 15.seconds)
+class Service::History::Group < Service::Base
+  requires_current_user!
+
+  attr_reader :object, :interval
+
+  def initialize(object:, interval: 15.seconds)
+    @object = object
+    @interval = interval
+  end
+
+  def execute
     list = Service::History::List
-      .new(current_user:)
+      .with_current_user(current_user)
       .execute(object:)
 
     group_by_time_and_issuer(list, interval)

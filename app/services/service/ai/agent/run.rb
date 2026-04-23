@@ -4,8 +4,6 @@ class Service::AI::Agent::Run < Service::Base
   attr_reader :ai_agent, :agent_definition, :action_definition, :ticket, :article
 
   def initialize(ai_agent:, ticket:, article: nil)
-    super()
-
     @ai_agent = ai_agent
     @agent_definition = ai_agent.execution_definition
     @action_definition = ai_agent.execution_action_definition
@@ -14,11 +12,11 @@ class Service::AI::Agent::Run < Service::Base
   end
 
   def execute
-    Service::CheckFeatureEnabled.new(name: 'ai_provider', custom_error_message: __('AI provider is not configured.')).execute
+    Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
 
     ai_agent_result = fetch_ai_agent_result
 
-    ai_agent_perform_template = Service::AI::Agent::Run::Perform::Agent.new(ai_agent:, ai_result: ai_agent_result)
+    ai_agent_perform_template = Service::AI::Agent::Run::Perform::Agent.new(ai_agent:, ai_result: ai_agent_result) # rubocop:disable Zammad/ForbidCallingServiceDirectly
 
     # When ai result content is not matching the expected result structure, raise an temporary error to retry the job.
     if !ai_agent_perform_template.result_structure_matches_content?
@@ -55,7 +53,7 @@ class Service::AI::Agent::Run < Service::Base
   end
 
   def ai_agent_service_result
-    context = Service::AI::Agent::Run::Context.new(
+    context = Service::AI::Agent::Run::Context.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
       instruction_context:           agent_definition['instruction_context'],
       entity_object:                 ticket,
       entity_context:                agent_definition['entity_context'],

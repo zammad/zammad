@@ -527,7 +527,6 @@ returns
 =end
 
   def self.signup_verify_via_token(token, user = nil)
-
     # check token
     local_user = Token.check(action: 'Signup', token: token)
     return if !local_user

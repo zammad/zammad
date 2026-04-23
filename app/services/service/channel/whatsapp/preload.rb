@@ -5,8 +5,6 @@ module Service::Channel::Whatsapp
     attr_reader :business_id, :access_token
 
     def initialize(business_id:, access_token:)
-      super()
-
       @business_id  = business_id
       @access_token = access_token
     end

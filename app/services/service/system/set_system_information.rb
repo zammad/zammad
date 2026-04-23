@@ -14,8 +14,6 @@ class Service::System::SetSystemInformation < Service::Base
   attr_reader :new_setting_data
 
   def initialize(data:)
-    super()
-
     @new_settings = parse_data(data)
   end
 

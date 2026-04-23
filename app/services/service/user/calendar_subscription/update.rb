@@ -1,20 +1,18 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::CalendarSubscription::Update < Service::Base
-  attr_reader :user, :input
+  requires_current_user!
+  attr_reader :input
 
-  def initialize(user, input:)
-    super()
-
-    @user  = user
+  def initialize(input:)
     @input = input
   end
 
   def execute
-    user.preferences[:calendar_subscriptions] ||= {}
-    user.preferences[:calendar_subscriptions][:tickets] = build_subscription_preferences(input)
+    current_user.preferences[:calendar_subscriptions] ||= {}
+    current_user.preferences[:calendar_subscriptions][:tickets] = build_subscription_preferences(input)
 
-    user.save!
+    current_user.save!
   end
 
   private

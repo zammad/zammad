@@ -55,8 +55,7 @@ class TriggerAIAgentJob < AIJob
     @event_type = event_type
 
     Service::AI::Agent::Run
-      .new(ai_agent:, ticket:, article:)
-      .execute
+      .execute(ai_agent:, ticket:, article:)
 
     mark_as_gone!
   end

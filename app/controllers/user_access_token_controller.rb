@@ -27,7 +27,7 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
 =end
 
   def index
-    tokens      = Service::User::AccessToken::List.new(current_user).execute
+    tokens      = Service::User::AccessToken::List.with_current_user(current_user).execute
     permissions = current_user.permissions_with_child_and_parent_elements
 
     render json: {
@@ -67,8 +67,8 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password} -H "Co
     end
 
     token = Service::User::AccessToken::Create
-      .new(current_user, **params.permit(:name, :expires_at, permission: []).to_h.to_options)
-      .execute
+      .with_current_user(current_user)
+      .execute(**params.permit(:name, :expires_at, permission: []).to_h.to_options)
 
     render json: {
       token: token.token,

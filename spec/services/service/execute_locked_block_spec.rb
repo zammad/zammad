@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Service::ExecuteLockedBlock, :aggregate_failures do
 
   describe '#execute' do
-    subject(:object) { described_class.new(resource, ttl) }
+    subject(:service_result) { described_class.execute(resource, ttl, &block) }
 
     let(:resource) { 'resource' }
     let(:ttl)      { 1 }
@@ -14,14 +14,14 @@ RSpec.describe Service::ExecuteLockedBlock, :aggregate_failures do
     it 'return block result' do
       allow_any_instance_of(Redlock::Client).to receive(:lock).with(resource, ttl, &block).and_return(true)
 
-      expect(object.execute(&block)).to be(true)
+      expect(service_result).to be(true)
     end
 
     context 'when resource is already locked' do
       it 'returns nil' do
         allow_any_instance_of(Redlock::Client).to receive(:lock).with(resource, ttl, &block).and_return(nil)
 
-        expect(object.execute(&block)).to be_nil
+        expect(service_result).to be_nil
       end
     end
   end

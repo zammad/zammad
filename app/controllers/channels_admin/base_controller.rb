@@ -8,7 +8,7 @@ class ChannelsAdmin::BaseController < ApplicationController
   end
 
   def index
-    channels = Service::Channel::Admin::List.new(area: area).execute
+    channels = Service::Channel::Admin::List.execute(area: area)
 
     assets = {}
     channel_ids = []
@@ -26,24 +26,21 @@ class ChannelsAdmin::BaseController < ApplicationController
 
   def enable
     Service::Channel::Admin::Enable
-      .new(area: area, channel_id: params[:id])
-      .execute
+      .execute(area: area, channel_id: params[:id])
 
     render json: { status: :ok }
   end
 
   def disable
     Service::Channel::Admin::Disable
-      .new(area: area, channel_id: params[:id])
-      .execute
+      .execute(area: area, channel_id: params[:id])
 
     render json: { status: :ok }
   end
 
   def destroy
     Service::Channel::Admin::Destroy
-      .new(area: area, channel_id: params[:id])
-      .execute
+      .execute(area: area, channel_id: params[:id])
 
     render json: { status: :ok }
   end

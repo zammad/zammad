@@ -1,12 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::OutOfOffice < Service::Base
-  attr_reader :user, :enabled, :start_at, :end_at, :replacement, :text
+  requires_current_user!
 
-  def initialize(user, enabled:, start_at: nil, end_at: nil, replacement: nil, text: nil)
-    super()
+  attr_reader :enabled, :start_at, :end_at, :replacement, :text
 
-    @user        = user
+  def initialize(enabled:, start_at: nil, end_at: nil, replacement: nil, text: nil)
     @enabled     = enabled
     @start_at    = start_at
     @end_at      = end_at
@@ -15,12 +14,12 @@ class Service::User::OutOfOffice < Service::Base
   end
 
   def execute
-    user.out_of_office                    = enabled
-    user.out_of_office_start_at           = start_at
-    user.out_of_office_end_at             = end_at
-    user.out_of_office_replacement        = replacement
-    user.preferences[:out_of_office_text] = text
+    current_user.out_of_office                    = enabled
+    current_user.out_of_office_start_at           = start_at
+    current_user.out_of_office_end_at             = end_at
+    current_user.out_of_office_replacement        = replacement
+    current_user.preferences[:out_of_office_text] = text
 
-    user.save!
+    current_user.save!
   end
 end

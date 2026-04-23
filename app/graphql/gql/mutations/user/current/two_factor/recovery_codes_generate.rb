@@ -14,8 +14,8 @@ module Gql::Mutations
       token_object = verify_token!(token)
 
       codes = Service::User::TwoFactor::GenerateRecoveryCodes
-        .new(user: context.current_user, force: true)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(force: true)
 
       if !codes
         raise Exceptions::UnprocessableContent, __('Could not generate recovery codes')

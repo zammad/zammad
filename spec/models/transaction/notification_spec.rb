@@ -151,10 +151,10 @@ RSpec.describe Transaction::Notification, type: :model do
       allow_any_instance_of(Net::SMTP).to receive(:start).and_raise(error)
 
       Service::System::SetEmailNotificationConfiguration
-        .new(
+        .execute(
           adapter:           'smtp',
           new_configuration: {}
-        ).execute
+        )
     end
 
     context 'when there is a problem with the sending SMTP server' do

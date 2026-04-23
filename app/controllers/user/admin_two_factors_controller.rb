@@ -5,8 +5,8 @@ class User::AdminTwoFactorsController < ApplicationController
 
   def remove_authentication_method
     Service::User::TwoFactor::RemoveMethod
-      .new(user: params_user, method_name: params[:method])
-      .execute
+      .with_current_user(params_user)
+      .execute(method_name: params[:method])
 
     render json: {}
   end

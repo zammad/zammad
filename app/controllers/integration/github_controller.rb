@@ -25,21 +25,21 @@ class Integration::GitHubController < ApplicationController
   end
 
   def query
-    issue_tracker_list_service = if params[:ticket_id]
-                                   Service::Ticket::ExternalReferences::IssueTracker::TicketList.new(
-                                     type:   'github',
-                                     ticket: Ticket.find(params[:ticket_id]),
-                                   )
-                                 else
-                                   Service::Ticket::ExternalReferences::IssueTracker::FetchMetadata.new(
-                                     type:        'github',
-                                     issue_links: params[:links],
-                                   )
-                                 end
+    response = if params[:ticket_id]
+                 Service::Ticket::ExternalReferences::IssueTracker::TicketList.execute(
+                   type:   'github',
+                   ticket: Ticket.find(params[:ticket_id]),
+                 )
+               else
+                 Service::Ticket::ExternalReferences::IssueTracker::FetchMetadata.execute(
+                   type:        'github',
+                   issue_links: params[:links],
+                 )
+               end
 
     render json: {
       result:   'ok',
-      response: issue_tracker_list_service.execute,
+      response: response,
     }
   rescue => e
     logger.error e

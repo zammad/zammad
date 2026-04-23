@@ -28,7 +28,7 @@ RSpec.describe 'AI::TextTool', :aggregate_failures, authenticated_as: :user, typ
 
       before do
         allow(Service::AI::Analytics::AggregateSatisfactionRatio)
-          .to receive_message_chain(:new, :execute) { expected_result } # rubocop:disable RSpec/MessageChain
+          .to receive(:execute) { expected_result }
       end
 
       it 'includes correct satisfaction_ratio for every tool' do

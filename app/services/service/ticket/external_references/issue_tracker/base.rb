@@ -4,8 +4,6 @@ class Service::Ticket::ExternalReferences::IssueTracker::Base < Service::Base
   attr_reader :type
 
   def initialize(type:)
-    super()
-
     @type = type
   end
 

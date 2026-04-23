@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
-  subject(:service) { described_class.new(user:, method_name:, credential_id:) }
+  subject(:service_result) { described_class.with_current_user(user).execute(method_name:, credential_id:) }
 
   let(:user)          { create(:agent) }
   let(:method_name)   { 'security_keys' }
@@ -18,7 +18,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
     let(:method_name) { 'nonsense' }
 
     it 'raises an error' do
-      expect { service.execute }
+      expect { service_result }
         .to raise_error(Exceptions::UnprocessableContent)
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
     let(:method_name)     { 'authenticator_app' }
 
     it 'raises an error' do
-      expect { service.execute }
+      expect { service_result }
         .to raise_error(Exceptions::UnprocessableContent)
     end
   end
@@ -54,13 +54,13 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
         end
 
         it 'removes one of credentials' do
-          expect { service.execute }
+          expect { service_result }
             .to change { credentials?(credential_id) }
             .to be_falsey
         end
 
         it 'keeps other credentials' do
-          expect { service.execute }
+          expect { service_result }
             .not_to change { credentials?(other_credential_id) }
             .from be_truthy
         end
@@ -68,7 +68,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
 
       context 'when last credentails are removed' do
         it 'removes whole user preference' do
-          expect { service.execute }
+          expect { service_result }
             .to change { User::TwoFactorPreference.exists?(user_preference.id) }
             .to be_falsey
         end
@@ -79,7 +79,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
       let(:enabled) { false }
 
       it 'removes whole user preference' do
-        expect { service.execute }
+        expect { service_result }
           .to change { User::TwoFactorPreference.exists?(user_preference.id) }
           .to be_falsey
       end
@@ -88,7 +88,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethodCredentials do
 
   context 'when method is not configured' do
     it 'raises an error' do
-      expect { service.execute }
+      expect { service_result }
         .to raise_error(Exceptions::UnprocessableContent)
     end
   end

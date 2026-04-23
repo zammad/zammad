@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::TwoFactor::SetDefaultMethod do
-  subject(:service) { described_class.new(user:, method_name:) }
+  subject(:service_result) { described_class.with_current_user(user).execute(method_name:) }
 
   let(:user) { create(:agent) }
 
@@ -12,7 +12,7 @@ RSpec.describe Service::User::TwoFactor::SetDefaultMethod do
 
     context 'when the given method not enabled' do
       it 'raises error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent)
+        expect { service_result }.to raise_error(Exceptions::UnprocessableContent)
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe Service::User::TwoFactor::SetDefaultMethod do
         before { other_preference && preference }
 
         it 'sets the given method as default' do
-          expect { service.execute }
+          expect { service_result }
             .to change { user.reload.preferences.dig(:two_factor_authentication, :default) }
             .to('authenticator_app')
         end
@@ -37,7 +37,7 @@ RSpec.describe Service::User::TwoFactor::SetDefaultMethod do
 
       context 'when user does not have the given method configured' do
         it 'raises error' do
-          expect { service.execute }.to raise_error(Exceptions::UnprocessableContent)
+          expect { service_result }.to raise_error(Exceptions::UnprocessableContent)
         end
       end
     end
@@ -47,7 +47,7 @@ RSpec.describe Service::User::TwoFactor::SetDefaultMethod do
     let(:method_name) { 'nonsense' }
 
     it 'raises error' do
-      expect { service.execute }.to raise_error(Exceptions::UnprocessableContent)
+      expect { service_result }.to raise_error(Exceptions::UnprocessableContent)
     end
   end
 end

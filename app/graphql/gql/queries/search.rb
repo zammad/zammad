@@ -17,12 +17,13 @@ module Gql::Queries
     type Gql::Types::SearchResultType, null: false
 
     def resolve(search:, only_in:, order_by: nil, order_direction: nil, offset: 0, limit: 10)
-      search_result = Service::Search.new(
-        current_user: context.current_user,
-        query:        search,
-        objects:      [only_in],
-        options:      { offset:, limit:, sort_by: [order_by].compact, order_by: [order_direction].compact }
-      ).execute.result[only_in]
+      search_result = Service::Search
+        .with_current_user(context.current_user)
+        .execute(
+          query:   search,
+          objects: [only_in],
+          options: { offset:, limit:, sort_by: [order_by].compact, order_by: [order_direction].compact }
+        ).result[only_in]
 
       return { total_count: 0, items: [] } if !search_result
 

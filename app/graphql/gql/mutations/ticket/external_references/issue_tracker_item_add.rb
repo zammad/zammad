@@ -25,13 +25,11 @@ module Gql::Mutations
         end
       end
 
-      issue_tracker_item_service = Service::Ticket::ExternalReferences::IssueTracker::Item.new(
-        type:       issue_tracker_type,
-        issue_link: issue_tracker_link_string,
-      )
-
       begin
-        item = issue_tracker_item_service.execute
+        item = Service::Ticket::ExternalReferences::IssueTracker::Item.execute(
+          type:       issue_tracker_type,
+          issue_link: issue_tracker_link_string,
+        )
       rescue Exceptions::UnprocessableContent => e
         return error_response({ field: :link, message: e.message })
       end

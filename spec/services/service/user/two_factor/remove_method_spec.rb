@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::TwoFactor::RemoveMethod do
-  subject(:service) { described_class.new(user:, method_name:) }
+  subject(:service_result) { described_class.with_current_user(user).execute(method_name:) }
 
   let(:user) { create(:agent) }
 
@@ -16,7 +16,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethod do
       before { preference }
 
       it 'removes the given method' do
-        expect { service.execute }
+        expect { service_result }
           .to change { preference.class.exists?(preference.id) }
           .to be_falsey
       end
@@ -24,7 +24,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethod do
 
     context 'when user does not have given method configured' do
       it 'does not raise error' do
-        expect { service.execute }.not_to raise_error
+        expect { service_result }.not_to raise_error
       end
     end
   end
@@ -33,7 +33,7 @@ RSpec.describe Service::User::TwoFactor::RemoveMethod do
     let(:method_name) { 'nonsense' }
 
     it 'raises error' do
-      expect { service.execute }.to raise_error(Exceptions::UnprocessableContent)
+      expect { service_result }.to raise_error(Exceptions::UnprocessableContent)
     end
   end
 end

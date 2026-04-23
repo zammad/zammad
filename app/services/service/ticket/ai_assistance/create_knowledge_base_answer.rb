@@ -1,12 +1,12 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer < Service::BaseWithCurrentUser
+class Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer < Service::Base
+  requires_current_user!
+
   attr_reader :ticket, :knowledge_base_id
 
-  def initialize(current_user:, ticket:, knowledge_base_id:)
-    super(current_user:)
-
-    @ticket = ticket
+  def initialize(ticket:, knowledge_base_id:)
+    @ticket            = ticket
     @knowledge_base_id = knowledge_base_id
   end
 
@@ -20,12 +20,13 @@ class Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer < Service::BaseWi
 
     raise Exceptions::UnprocessableContent, __('Knowledge base draft could not be generated.') if ai_result&.content.blank?
 
-    kb_answer = Service::KnowledgeBase::CreateAnswerFromAIResult.new(
-      ai_result:       ai_result.content,
-      knowledge_base:  context[:knowledge_base],
-      kb_locale:       context[:kb_locale],
-      current_user_id: current_user.id
-    ).execute
+    kb_answer = Service::KnowledgeBase::CreateAnswerFromAIResult
+      .with_current_user(current_user)
+      .execute(
+        ai_result:      ai_result.content,
+        knowledge_base: context[:knowledge_base],
+        kb_locale:      context[:kb_locale],
+      )
 
     link_answer_to_ticket(kb_answer)
     create_notification(kb_answer)
@@ -93,12 +94,13 @@ class Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer < Service::BaseWi
 
     raise Exceptions::UnprocessableContent, __('No editable knowledge base categories available.') if editable_categories.empty?
 
-    Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent.new(
-      locale:,
-      ticket:,
-      current_user:,
-      category_options: knowledge_base_category_options(editable_categories)
-    ).execute
+    Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent
+      .with_current_user(current_user)
+      .execute(
+        locale:,
+        ticket:,
+        category_options: knowledge_base_category_options(editable_categories)
+      )
   end
 
   def knowledge_base_category_options(categories)

@@ -2,7 +2,13 @@
 
 class Service::System::RunAutoWizard < Service::Base
 
-  def execute(token:)
+  attr_reader :token
+
+  def initialize(token:)
+    @token = token
+  end
+
+  def execute
     raise Service::System::CheckSetup::SystemSetupError, __('This system has already been configured.') if Service::System::CheckSetup.done?
     raise AutoWizardNotEnabledError if !AutoWizard.enabled?
 

@@ -23,7 +23,7 @@ module Gql::Queries
 
       raise "Could not find object attribute for #{input}." if !attribute
 
-      Service::ExternalDataSource::Search.new.execute(
+      Service::ExternalDataSource::Search.execute(
         attribute:      attribute,
         render_context: input.template_render_context.to_context_hash,
         term:           query,

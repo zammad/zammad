@@ -14,8 +14,7 @@ module Gql::Mutations
     def resolve(input:)
       begin
         # TODO: what are we doing with required string parameter which only holding whitespaces?
-        set_system_information = Service::System::SetSystemInformation.new(data: input.to_h)
-        set_system_information.execute
+        Service::System::SetSystemInformation.execute(data: input.to_h)
       rescue Exceptions::InvalidAttribute => e
         return error_response({ message: e.message, field: e.attribute })
       end

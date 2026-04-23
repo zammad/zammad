@@ -11,7 +11,7 @@ module Gql::Queries
 
     def resolve(file:)
       calendar_data = ::Service::Calendar::IcsFile::Parse
-        .new(current_user: context.current_user)
+        .with_current_user(context.current_user)
         .execute(file:)
 
       return [] if calendar_data.blank? || calendar_data[:events].blank?

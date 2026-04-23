@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::TwoFactor::VerifyMethodConfiguration, current_user_id: 1 do
-  subject(:service) { described_class.new(user:, method_name:, payload:, configuration:) }
+  subject(:service_result) { described_class.with_current_user(user).execute(method_name:, payload:, configuration:) }
 
   let(:user)                  { create(:agent) }
   let(:method_name)           { 'authenticator_app' }
@@ -27,7 +27,7 @@ RSpec.describe Service::User::TwoFactor::VerifyMethodConfiguration, current_user
 
     context 'when the given method is not enabled' do
       it 'raises error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'The two-factor authentication method is not enabled.')
+        expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'The two-factor authentication method is not enabled.')
       end
     end
 
@@ -40,22 +40,20 @@ RSpec.describe Service::User::TwoFactor::VerifyMethodConfiguration, current_user
         let(:verification_code) { 'wrong' }
 
         it 'verify failed' do
-          expect { service.execute }.to raise_error(Service::User::TwoFactor::VerifyMethodConfiguration::Failed, 'The verification of the two-factor authentication method configuration failed.')
+          expect { service_result }.to raise_error(Service::User::TwoFactor::VerifyMethodConfiguration::Failed, 'The verification of the two-factor authentication method configuration failed.')
         end
       end
 
       context 'with correct verification code', :aggregate_failures do
         it 'verify succeeded with recovery codes' do
-          result = service.execute
-          expect(result[:recovery_codes].length).to eq(10)
+          expect(service_result[:recovery_codes].length).to eq(10)
         end
 
         context 'with disabled recovery codes' do
           let(:recover_codes_enabled) { false }
 
           it 'verify succeeded (but without recovery codes)' do
-            result = service.execute
-            expect(result[:recovery_codes]).to be_nil
+            expect(service_result[:recovery_codes]).to be_nil
           end
         end
 
@@ -63,8 +61,7 @@ RSpec.describe Service::User::TwoFactor::VerifyMethodConfiguration, current_user
           let(:has_recovery_codes) { true }
 
           it 'verify succeeded (but without recovery codes)' do
-            result = service.execute
-            expect(result[:recovery_codes]).to be_nil
+            expect(service_result[:recovery_codes]).to be_nil
           end
         end
       end
@@ -75,7 +72,7 @@ RSpec.describe Service::User::TwoFactor::VerifyMethodConfiguration, current_user
     let(:method_name) { 'nonsense' }
 
     it 'raises error' do
-      expect { service.execute }.to raise_error(Exceptions::UnprocessableContent, 'The given two-factor method does not exist.')
+      expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'The given two-factor method does not exist.')
     end
   end
 end

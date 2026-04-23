@@ -119,11 +119,11 @@ module CanXoauth2EmailChannel
       email_address = EmailAddress.find(params[:group_email_address_id])
     end
 
-    Service::Channel::Email::UpdateDestinationGroupEmail.new(
+    Service::Channel::Email::UpdateDestinationGroupEmail.execute(
       group:         Group.find(params[:group_id]),
       channel:       channel,
       email_address:,
-    ).execute
+    )
   end
 
   def handle_group_email_address?

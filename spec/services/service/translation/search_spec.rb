@@ -4,24 +4,21 @@ require 'rails_helper'
 
 RSpec.describe Service::Translation::Search do
   describe '#execute' do
-    let(:locale)                      { 'en-us' }
-    let(:filter_locale)               { locale }
-    let(:query)                       { nil }
-    let(:translation_search_service)  { described_class.new(locale: filter_locale, query:) }
+    subject(:service_result) { described_class.execute(locale: filter_locale, query:) }
 
-    context 'when query is nil', :aggregate_failures do
+    let(:locale)        { 'en-us' }
+    let(:filter_locale) { locale }
+    let(:query)         { nil }
+
+    context 'when query is nil' do
       it 'return default list' do
-        expect(translation_search_service.execute[:items].count).to eq(150)
-        expect(translation_search_service.execute[:total_count]).to be > 150
+        expect(service_result).to include(items: have_attributes(count: 150), total_count: be > 150)
       end
 
       it 'includes already translated suggestions with translation item' do
-        result = translation_search_service.execute
         priority_name = Ticket::Priority.first.name
-        first_priority_translation = result[:items].select { |item| item[:source].eql?(priority_name) }
 
-        expect(first_priority_translation.length).to be(1)
-        expect(first_priority_translation[0][:id]).to eq(Translation.find_source(locale, priority_name).id)
+        expect(service_result).to include(items: include(Translation.find_source(locale, priority_name)))
       end
     end
 
@@ -37,7 +34,7 @@ RSpec.describe Service::Translation::Search do
         let(:filter_locale) { 'de-de' }
 
         it 'returns no result' do
-          expect(translation_search_service.execute[:items].count).to eq(0)
+          expect(service_result[:items].count).to eq(0)
         end
       end
 
@@ -45,7 +42,7 @@ RSpec.describe Service::Translation::Search do
         let(:query) { Translation.last.source.downcase }
 
         it 'returns also with case insensitive a result' do
-          expect(translation_search_service.execute[:items].count).to eq(2)
+          expect(service_result[:items].count).to eq(2)
         end
       end
 
@@ -56,7 +53,7 @@ RSpec.describe Service::Translation::Search do
           end
 
           it 'returns filtered result' do
-            expect(translation_search_service.execute[:items].count).to eq(count)
+            expect(service_result[:items].count).to eq(count)
           end
         end
 
@@ -82,7 +79,7 @@ RSpec.describe Service::Translation::Search do
           end
 
           it 'returns filtered result' do
-            expect(translation_search_service.execute[:items].count).to eq(3)
+            expect(service_result[:items].count).to eq(3)
           end
 
           context 'with not translatabale option' do
@@ -95,7 +92,7 @@ RSpec.describe Service::Translation::Search do
             end
 
             it 'returns filtered result' do
-              expect(translation_search_service.execute[:items].count).to eq(4)
+              expect(service_result[:items].count).to eq(4)
             end
           end
         end
@@ -107,7 +104,7 @@ RSpec.describe Service::Translation::Search do
           end
 
           it 'returns filtered result without duplicate entries' do
-            expect(translation_search_service.execute[:items].count).to eq(2)
+            expect(service_result[:items].count).to eq(2)
           end
         end
       end

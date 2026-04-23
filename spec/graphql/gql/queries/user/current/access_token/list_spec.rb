@@ -28,7 +28,7 @@ RSpec.describe Gql::Queries::User::Current::AccessToken::List, type: :graphql do
     let(:token) { create(:token, user: user) }
 
     it 'returns objects from the service' do
-      allow_any_instance_of(Service::User::AccessToken::List)
+      allow(Service::User::AccessToken::List)
         .to receive(:execute)
         .and_return([token])
 

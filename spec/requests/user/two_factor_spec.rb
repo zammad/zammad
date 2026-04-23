@@ -328,10 +328,6 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
 
         it 'returns ok and updates configuration', :aggregate_failures do
           allow(Service::User::TwoFactor::RemoveMethodCredentials)
-            .to receive(:new)
-            .and_call_original
-
-          expect_any_instance_of(Service::User::TwoFactor::RemoveMethodCredentials)
             .to receive(:execute)
             .and_call_original
 
@@ -341,7 +337,7 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
           expect(response).to have_http_status(:ok)
 
           expect(Service::User::TwoFactor::RemoveMethodCredentials)
-            .to have_received(:new).with(user: agent, method_name: 'security_keys', credential_id:)
+            .to have_received(:execute).with(method_name: 'security_keys', credential_id:, current_user: agent)
         end
       end
     end

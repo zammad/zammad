@@ -1,16 +1,18 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Ticket::Update::Validator
+class Service::Ticket::Update::Validator < Service::Base
   include Mixin::RequiredSubPaths
+
+  requires_current_user!
 
   def self.exceptions
     BaseError.descendants
   end
 
-  attr_reader :user, :ticket, :ticket_data, :article_data, :skip_validators, :macro
+  attr_reader :ticket, :ticket_data, :article_data, :skip_validators, :macro
 
-  def initialize(user:, ticket:, ticket_data:, article_data:, skip_validators:, macro: nil)
-    @user             = user
+  def initialize(ticket:, ticket_data:, article_data:, skip_validators:, macro: nil)
+
     @ticket           = ticket
     @ticket_data      = ticket_data
     @article_data     = article_data
@@ -18,10 +20,10 @@ class Service::Ticket::Update::Validator
     @macro            = macro
   end
 
-  def validate!
+  def execute
     validators.each do |validator|
       validator.new(
-        user:,
+        user:         current_user,
         ticket:,
         ticket_data:,
         article_data:,

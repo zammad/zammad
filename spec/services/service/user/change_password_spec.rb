@@ -3,21 +3,24 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::ChangePassword do
-  let(:user)    { create(:user, password: 'password') }
-  let(:service) { described_class.new(user: user, current_password: current_password, new_password: new_password) }
+  subject(:service_result) { described_class.with_current_user(user).execute(current_password:, new_password:) }
+
+  let(:user) { create(:user, password: 'password') }
 
   shared_examples 'raising an error' do |klass, message, message_placeholder: nil|
-    it 'raises an error', :aggregate_failures do
-      if message_placeholder
-        expect { service.execute }.to raise_error do |error|
+    if message_placeholder
+      it 'raises an error', aggregate_failures: true do
+        expect { service_result }.to raise_error do |error|
           expect(error).to be_a(klass)
             .and have_attributes(
               message:  include(message),
               metadata: [include(message), *message_placeholder],
             )
         end
-      else
-        expect { service.execute }.to raise_error(klass, include(message))
+      end
+    else
+      it 'raises an error' do
+        expect { service_result }.to raise_error(klass, include(message))
       end
     end
   end
@@ -42,11 +45,11 @@ RSpec.describe Service::User::ChangePassword do
       let(:new_password)     { 'IamAnValidPassword111einseinself' }
 
       it 'returns true' do
-        expect(service.execute).to be_truthy
+        expect(service_result).to be_truthy
       end
 
       it 'changes the password' do
-        expect { service.execute }.to change { user.reload.password }
+        expect { service_result }.to change { user.reload.password }
       end
 
       it 'notifies the user' do
@@ -57,7 +60,7 @@ RSpec.describe Service::User::ChangePassword do
             user: user,
           }
         )
-        service.execute
+        service_result
 
         expect(NotificationFactory::Mailer).to have_received(:notification)
       end

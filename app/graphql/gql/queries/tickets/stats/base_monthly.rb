@@ -9,7 +9,7 @@ module Gql::Queries
     requires_permission 'ticket.agent'
 
     def resolve_stats(conditions:)
-      Service::Ticket::Stats::Monthly.new(current_user: context.current_user).execute(conditions:)
+      Service::Ticket::Stats::Monthly.with_current_user(context.current_user).execute(conditions:)
     end
   end
 end

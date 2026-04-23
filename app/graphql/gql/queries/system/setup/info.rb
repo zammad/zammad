@@ -9,13 +9,7 @@ module Gql::Queries
     allow_public_access!
 
     def resolve
-      setup = Service::System::CheckSetup.new
-      setup.execute
-
-      {
-        status: setup.status,
-        type:   setup.type
-      }
+      Service::System::CheckSetup.status_info
     end
   end
 end

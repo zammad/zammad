@@ -12,7 +12,9 @@ module Gql::Mutations
     requires_permission 'user_preferences.device'
 
     def resolve(device:)
-      Service::User::Device::Delete.new(user: context.current_user, device:).execute
+      Service::User::Device::Delete
+        .with_current_user(context.current_user)
+        .execute(device:)
 
       { success: true }
     end

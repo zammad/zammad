@@ -257,7 +257,7 @@ RSpec.describe TriggerWebhookJob, type: :job do
         predefined_payload = Service::Template::Interpolation::Interpolator::Webhook::Track::PreDefinedWebhook.payload('Mattermost')
 
         # Use the new interpolation service
-        interpolator = Service::Template::Interpolation::Interpolator::Webhook.new(
+        interpolator = Service::Template::Interpolation::Interpolator::Webhook.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
           template:                       predefined_payload,
           tracks:                         tracks,
           additional_track_generate_data: data,

@@ -6,7 +6,6 @@ class Service::Auth::VerifyAdminToken < Service::Base
   attr_reader :token
 
   def initialize(token:)
-    super()
     @token = token
   end
 

@@ -12,7 +12,7 @@ module Gql::Mutations
 
     def resolve(input:)
       {
-        success: Service::BetaUi::SendFeedback.new(**input).execute,
+        success: Service::BetaUi::SendFeedback.execute(**input),
       }
     end
   end

@@ -1,15 +1,13 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::AI::Ticket::PreProcessArticleContent < Service::BaseWithCurrentUser
+class Service::AI::Ticket::PreProcessArticleContent < Service::Base
   IMAGE_MIME_TYPES = %w[image/jpeg image/jpg image/png image/gif image/tiff image/bmp image/webp].freeze
   MARKER_START     = "[OCR_TEXT_START]\n".freeze
   MARKER_END       = "\n[OCR_TEXT_END]".freeze
 
   attr_reader :articles, :skip_quotes_strip_first_article
 
-  def initialize(articles:, current_user: nil, skip_quotes_strip_first_article: false)
-    super(current_user:) if current_user.present?
-
+  def initialize(articles:, skip_quotes_strip_first_article: false)
     @articles = articles
     @skip_quotes_strip_first_article = skip_quotes_strip_first_article
   end
@@ -129,7 +127,7 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::BaseWithCurrentUs
 
     images.each do |image|
       ocr_result = AI::Service::OCR
-          .new(current_user:, context_data: { store: image }, prompt_image: image)
+          .new(context_data: { store: image }, prompt_image: image)
           .execute
 
       image_texts[image.store_file_id] = ocr_result.content

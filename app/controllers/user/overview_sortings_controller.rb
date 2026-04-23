@@ -40,8 +40,8 @@ class User::OverviewSortingsController < ApplicationController
       .sort_by { |elem| overview_ids.index(elem.id) }
 
     Service::User::Overview::UpdateOrder
-      .new(current_user, authorized_overviews)
-      .execute
+      .with_current_user(current_user)
+      .execute(authorized_overviews)
 
     Gql::Subscriptions::User::Current::OverviewOrderingUpdates
       .trigger_by(current_user)

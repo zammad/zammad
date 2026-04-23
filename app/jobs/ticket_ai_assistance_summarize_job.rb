@@ -8,13 +8,11 @@ class TicketAIAssistanceSummarizeJob < AIJob
   end
 
   def perform(ticket, locale, regeneration_of: nil)
-    summarize = Service::Ticket::AIAssistance::Summarize.new(
+    ai_result = Service::Ticket::AIAssistance::Summarize.execute(
       locale:,
       ticket:,
       regeneration_of:,
     )
-
-    ai_result = summarize.execute
 
     # Trigger the update for the new desktop view.
     trigger_subscription(ticket:, locale:, data: {

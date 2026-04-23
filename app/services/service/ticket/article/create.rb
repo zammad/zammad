@@ -1,7 +1,16 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
-  def execute(article_data:, ticket:)
+class Service::Ticket::Article::Create < Service::Base
+  requires_current_user!
+
+  attr_reader :article_data, :ticket
+
+  def initialize(article_data:, ticket:)
+    @article_data = article_data
+    @ticket = ticket
+  end
+
+  def execute
     article_data.delete(:ticket_id)
 
     attachments_raw     = article_data.delete(:attachments) || {}

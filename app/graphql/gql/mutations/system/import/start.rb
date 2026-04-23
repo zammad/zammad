@@ -9,7 +9,7 @@ module Gql::Mutations
     allow_public_access!
 
     def resolve
-      Service::System::Import::Run.new.execute
+      Service::System::Import::Run.execute
 
       { success: true }
     end

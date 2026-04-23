@@ -35,7 +35,7 @@ RSpec.describe Gql::Mutations::BetaUi::SendFeedback, :aggregate_failures, type: 
       before do
         Setting.set('ui_desktop_beta_switch', true)
 
-        allow_any_instance_of(Service::BetaUi::SendFeedback).to receive(:execute).and_return(true)
+        allow(Service::BetaUi::SendFeedback).to receive(:execute).and_return(true)
       end
 
       it 'sends feedback' do

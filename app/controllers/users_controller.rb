@@ -283,19 +283,15 @@ curl http://localhost/api/v1/users/email_verify -v -u #{login}:#{password} -H "C
   def email_verify
     raise Exceptions::UnprocessableContent, __('No token!') if !params[:token]
 
-    verify = Service::User::SignupVerify.new(token: params[:token], current_user: current_user)
-
-    begin
-      user = verify.execute
-    rescue Service::CheckFeatureEnabled::FeatureDisabledError, Service::User::SignupVerify::InvalidTokenError => e
-      raise Exceptions::UnprocessableContent, e.message
-    end
+    user = Service::User::SignupVerify.with_current_user(false).execute(token: params[:token])
 
     current_user_set(user) if user
 
     msg = user ? { message: 'ok', user_email: user.email } : { message: 'failed' }
 
     render json: msg, status: :ok
+  rescue Service::CheckFeatureEnabled::FeatureDisabledError, Service::User::SignupVerify::InvalidTokenError => e
+    raise Exceptions::UnprocessableContent, e.message
   end
 
 =begin
@@ -322,10 +318,8 @@ curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} 
 
     raise Exceptions::UnprocessableContent, __('No email!') if !params[:email]
 
-    signup = Service::User::Deprecated::Signup.new(user_data: { email: params[:email] }, resend: true)
-
     begin
-      signup.execute
+      Service::User::Deprecated::Signup.execute(user_data: { email: params[:email] }, resend: true)
     rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
       raise Exceptions::UnprocessableContent, e.message
     rescue Service::User::Signup::TokenGenerationError
@@ -359,9 +353,8 @@ curl http://localhost/api/v1/users/admin_login -v -u #{login}:#{password} -H "Co
   def admin_password_auth_send
     raise Exceptions::UnprocessableContent, 'username param needed!' if params[:username].blank?
 
-    send = Service::Auth::Deprecated::SendAdminToken.new(login: params[:username])
     begin
-      send.execute
+      Service::Auth::Deprecated::SendAdminToken.execute(login: params[:username])
     rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
       raise Exceptions::UnprocessableContent, e.message
     rescue Service::Auth::Deprecated::SendAdminToken::TokenError, Service::Auth::Deprecated::SendAdminToken::EmailError
@@ -375,10 +368,8 @@ curl http://localhost/api/v1/users/admin_login -v -u #{login}:#{password} -H "Co
   def admin_password_auth_verify
     raise Exceptions::UnprocessableContent, 'token param needed!' if params[:token].blank?
 
-    verify = Service::Auth::VerifyAdminToken.new(token: params[:token])
-
     user = begin
-      verify.execute
+      Service::Auth::VerifyAdminToken.execute(token: params[:token])
     rescue => e
       raise Exceptions::UnprocessableContent, e.message
     end
@@ -412,8 +403,7 @@ curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H 
     raise Exceptions::UnprocessableContent, 'username param needed!' if params[:username].blank?
 
     Service::User::PasswordReset::Deprecated::Send
-      .new(username: params[:username])
-      .execute
+      .execute(username: params[:username])
 
     # Result is always positive to avoid leaking of existing user accounts.
     render json: { message: 'ok' }, status: :ok
@@ -447,10 +437,8 @@ curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{passwo
 
     # If no password is given, verify token only.
     if params[:password].blank?
-      verify = Service::User::PasswordReset::Verify.new(token: params[:token])
-
       begin
-        user = verify.execute
+        user = Service::User::PasswordReset::Verify.execute(token: params[:token])
       rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
         raise Exceptions::UnprocessableContent, e.message
       rescue Service::User::PasswordReset::Verify::InvalidTokenError
@@ -462,10 +450,8 @@ curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{passwo
       return
     end
 
-    update = Service::User::PasswordReset::Update.new(token: params[:token], password: params[:password])
-
     begin
-      user = update.execute
+      user = Service::User::PasswordReset::Update.execute(token: params[:token], password: params[:password])
     rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
       raise Exceptions::UnprocessableContent, e.message
     rescue Service::User::PasswordReset::Update::InvalidTokenError, Service::User::PasswordReset::Update::EmailError
@@ -514,11 +500,12 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
     end
 
     begin
-      Service::User::ChangePassword.new(
-        user:             current_user,
-        current_password: params[:password_old],
-        new_password:     params[:password_new]
-      ).execute
+      Service::User::ChangePassword
+        .with_current_user(current_user)
+        .execute(
+          current_password: params[:password_old],
+          new_password:     params[:password_new]
+        )
     rescue PasswordPolicy::Error => e
       render json: { message: 'failed', notice: e.metadata }, status: :unprocessable_content
       return
@@ -533,9 +520,7 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
   def password_check
     raise Exceptions::UnprocessableContent, __("The required parameter 'password' is missing.") if params[:password].blank?
 
-    password_check = Service::User::PasswordCheck.new(user: current_user, password: params[:password])
-
-    render json: password_check.execute, status: :ok
+    render json: Service::User::PasswordCheck.with_current_user(current_user).execute(password: params[:password]), status: :ok
   end
 
 =begin
@@ -623,13 +608,14 @@ curl http://localhost/api/v1/users/out_of_office -v -u #{login}:#{password} -H "
     user = User.find(current_user.id)
 
     Service::User::OutOfOffice
-      .new(user,
-           enabled:     params[:out_of_office],
-           start_at:    params[:out_of_office_start_at],
-           end_at:      params[:out_of_office_end_at],
-           replacement: User.find_by(id: params[:out_of_office_replacement_id]),
-           text:        params[:out_of_office_text])
-      .execute
+      .with_current_user(user)
+      .execute(
+        enabled:     params[:out_of_office],
+        start_at:    params[:out_of_office_start_at],
+        end_at:      params[:out_of_office_end_at],
+        replacement: User.find_by(id: params[:out_of_office_replacement_id]),
+        text:        params[:out_of_office_text]
+      )
 
     render json: { message: 'ok' }, status: :ok
   end
@@ -660,7 +646,7 @@ curl http://localhost/api/v1/users/account -v -u #{login}:#{password} -H "Conten
     raise Exceptions::UnprocessableContent, 'provider needed!' if !params[:provider]
     raise Exceptions::UnprocessableContent, 'uid needed!' if !params[:uid]
 
-    Service::User::RemoveLinkedAccount.new(provider: params[:provider], uid: params[:uid], current_user:).execute
+    Service::User::RemoveLinkedAccount.with_current_user(current_user).execute(provider: params[:provider], uid: params[:uid])
 
     render json: { message: 'ok' }, status: :ok
   end
@@ -722,20 +708,19 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 =end
 
   def avatar_new
-    service = Service::Avatar::ImageValidate.new
-    file_full = service.execute(image_data: params[:avatar_full])
+    file_full = Service::Avatar::ImageValidate.execute(image_data: params[:avatar_full])
     if file_full[:error].present?
       render json: { error: file_full[:message] }, status: :unprocessable_content
       return
     end
 
-    file_resize = service.execute(image_data: params[:avatar_resize])
+    file_resize = Service::Avatar::ImageValidate.execute(image_data: params[:avatar_resize])
     if file_resize[:error].present?
       render json: { error: file_resize[:message] }, status: :unprocessable_content
       return
     end
 
-    render json: { avatar: Service::Avatar::Add.new(current_user: current_user).execute(full_image: file_full, resize_image: file_resize) }, status: :ok
+    render json: { avatar: Service::Avatar::Add.with_current_user(current_user).execute(full_image: file_full, resize_image: file_resize) }, status: :ok
   end
 
   def avatar_set_default
@@ -911,10 +896,8 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       raise Exceptions::UnprocessableContent, __("The required attribute 'email' is missing.")
     end
 
-    signup = Service::User::Deprecated::Signup.new(user_data: new_params)
-
     begin
-      signup.execute
+      Service::User::Deprecated::Signup.execute(user_data: new_params)
     rescue PasswordPolicy::Error => e
       render json: { message: 'failed', notice: e.metadata }, status: :unprocessable_content
       return
@@ -933,7 +916,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   # @response_message 200 [User] Created User record.
   # @response_message 403        Forbidden / Invalid session.
   def create_admin
-    Service::User::AddFirstAdmin.new.execute(
+    Service::User::AddFirstAdmin.execute(
       user_data: clean_user_params.slice(:firstname, :lastname, :email, :password),
       request:   request,
     )

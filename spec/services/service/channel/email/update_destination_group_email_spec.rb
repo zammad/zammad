@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::Channel::Email::UpdateDestinationGroupEmail, current_user_id: 1 do
-  subject(:service) { described_class.new(group:, channel:, email_address:) }
+  subject(:service_result) { described_class.execute(group:, channel:, email_address:) }
 
   let(:channel)       { create(:channel) }
   let(:group)         { create(:group) }
@@ -11,7 +11,7 @@ RSpec.describe Service::Channel::Email::UpdateDestinationGroupEmail, current_use
 
   describe '#execute' do
     it 'update channel email address' do
-      expect { service.execute }.to change { group.reload.email_address_id }.to be(email_address.id)
+      expect { service_result }.to change { group.reload.email_address_id }.to be(email_address.id)
     end
 
     context 'when email address is not given' do
@@ -19,7 +19,7 @@ RSpec.describe Service::Channel::Email::UpdateDestinationGroupEmail, current_use
       let(:email_address2) { create(:email_address, channel: channel) }
 
       it 'does update group email address from channel' do
-        expect { service.execute }.to change { group.reload.email_address_id }.to be(email_address2.id)
+        expect { service_result }.to change { group.reload.email_address_id }.to be(email_address2.id)
       end
     end
   end

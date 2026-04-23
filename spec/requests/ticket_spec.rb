@@ -2846,15 +2846,12 @@ RSpec.describe 'Ticket', type: :request do
       end
 
       it 'uses ForcedUpdate service' do
-        allow(Service::Ticket::ForcedUpdate).to receive(:new).and_call_original
+        allow(Service::Ticket::ForcedUpdate).to receive(:execute).and_call_original
 
         put "/api/v1/tickets/#{ticket.id}/update_title", params: { title:, owner_id: 123 }, as: :json
 
         expect(Service::Ticket::ForcedUpdate)
-          .to have_received(:new) do |param_ticket, params|
-            expect(param_ticket).to eq(ticket)
-            expect(params.to_h).to eq('title' => 'Updated title')
-          end
+          .to have_received(:execute).with(ticket, { title: 'Updated title' }, current_user: agent)
       end
 
       context 'when agent has no access to the ticket' do
@@ -2908,31 +2905,25 @@ RSpec.describe 'Ticket', type: :request do
       end
 
       it 'uses ForcedUpdate service with customer and organization' do
-        allow(Service::Ticket::ForcedUpdate).to receive(:new).and_call_original
+        allow(Service::Ticket::ForcedUpdate).to receive(:execute).and_call_original
 
         put "/api/v1/tickets/#{ticket.id}/update_customer",
             params: { customer_id: customer.id, organization_id: organization.id },
             as:     :json
 
         expect(Service::Ticket::ForcedUpdate)
-          .to have_received(:new) do |param_ticket, params|
-            expect(param_ticket).to eq(ticket)
-            expect(params.to_h).to eq('customer_id' => customer.id, 'organization_id' => organization.id)
-          end
+          .to have_received(:execute).with(ticket, { 'customer_id' => customer.id, 'organization_id' => organization.id }, current_user: agent)
       end
 
       it 'uses ForcedUpdate service with customer only' do
-        allow(Service::Ticket::ForcedUpdate).to receive(:new).and_call_original
+        allow(Service::Ticket::ForcedUpdate).to receive(:execute).and_call_original
 
         put "/api/v1/tickets/#{ticket.id}/update_customer",
             params: { customer_id: customer.id, not_permited: :field },
             as:     :json
 
         expect(Service::Ticket::ForcedUpdate)
-          .to have_received(:new) do |param_ticket, params|
-            expect(param_ticket).to eq(ticket)
-            expect(params.to_h).to eq('customer_id' => customer.id)
-          end
+          .to have_received(:execute).with(ticket, { 'customer_id' => customer.id }, current_user: agent)
       end
     end
 

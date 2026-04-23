@@ -9,8 +9,7 @@ class ChannelsAdmin::WhatsappController < ChannelsAdmin::BaseController
 
   def create
     channel = Service::Channel::Whatsapp::Create
-      .new(params: params.permit!)
-      .execute
+      .execute(params: params.permit!)
 
     render json: mask_sensitive_values(channel.as_json, channel)
   rescue => e
@@ -22,8 +21,7 @@ class ChannelsAdmin::WhatsappController < ChannelsAdmin::BaseController
     unmasked_params  = unmask_sensitive_params(params.permit!.to_h, channel.options)
 
     channel = Service::Channel::Whatsapp::Update
-      .new(params: unmasked_params, channel_id: params[:id])
-      .execute
+      .execute(params: unmasked_params, channel_id: params[:id])
 
     render json: mask_sensitive_values(channel.as_json, channel)
   rescue => e
@@ -34,8 +32,7 @@ class ChannelsAdmin::WhatsappController < ChannelsAdmin::BaseController
     unmasked = unmask_preload_params
 
     data = Service::Channel::Whatsapp::Preload
-      .new(business_id: unmasked[:business_id], access_token: unmasked[:access_token])
-      .execute
+      .execute(business_id: unmasked[:business_id], access_token: unmasked[:access_token])
 
     render json: { data: }
   end

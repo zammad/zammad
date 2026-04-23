@@ -15,16 +15,16 @@ module Gql::Queries
     def resolve(issue_tracker_type:, input:)
       if input.ticket.present?
         Service::Ticket::ExternalReferences::IssueTracker::TicketList
-          .new(
+          .execute(
             ticket: input.ticket,
             type:   issue_tracker_type
-          ).execute
+          )
       else
         Service::Ticket::ExternalReferences::IssueTracker::FetchMetadata
-          .new(
+          .execute(
             type:        issue_tracker_type,
             issue_links: input.issue_tracker_links.map(&:to_s),
-          ).execute
+          )
       end
     end
   end

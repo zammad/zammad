@@ -3,15 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe Service::Channel::Whatsapp::Create, :aggregate_failures, current_user_id: 1 do
-  subject(:service) { described_class.new(params: params) }
-
   shared_examples 'raising an error' do |klass, message|
     it 'raises an error' do
-      expect { service.execute }.to raise_error(klass, message)
+      expect { service_result }.to raise_error(klass, message)
     end
   end
 
   describe '#execute' do
+    subject(:service_result) { described_class.execute(params:) }
+
     let(:phone_number_id) { Faker::Number.unique.number(digits: 15) }
 
     let(:params) do
@@ -47,7 +47,7 @@ RSpec.describe Service::Channel::Whatsapp::Create, :aggregate_failures, current_
       end
 
       it 'adds a new channel' do
-        expect { service.execute }.to change(Channel, :count).by(1)
+        expect { service_result }.to change(Channel, :count).by(1)
         expect(Channel.last).to have_attributes(
           group_id: params[:group_id],
           options:  {

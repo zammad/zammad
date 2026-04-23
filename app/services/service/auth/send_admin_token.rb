@@ -6,7 +6,6 @@ class Service::Auth::SendAdminToken < Service::Base
   attr_reader :login
 
   def initialize(login:)
-    super()
     @login = login
     @path = 'desktop/login?token='
   end

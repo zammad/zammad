@@ -89,11 +89,9 @@ RSpec.describe Gql::Mutations::Ticket::ExternalReferences::IssueTrackerItemAdd, 
 
         context 'when new link should be added' do
           before do
-            allow_any_instance_of(Service::Ticket::ExternalReferences::IssueTracker::Item)
+            allow(Service::Ticket::ExternalReferences::IssueTracker::Item)
               .to receive(:execute)
               .and_return(issue_item)
-
-            allow(Service::Ticket::ExternalReferences::IssueTracker::Item).to receive(:new).and_call_original
           end
 
           it 'returns issue item', aggregate_failures: true do
@@ -135,11 +133,9 @@ RSpec.describe Gql::Mutations::Ticket::ExternalReferences::IssueTrackerItemAdd, 
 
       context 'when new link should be added' do
         before do
-          allow_any_instance_of(Service::Ticket::ExternalReferences::IssueTracker::Item)
+          allow(Service::Ticket::ExternalReferences::IssueTracker::Item)
             .to receive(:execute)
             .and_return(issue_item)
-
-          allow(Service::Ticket::ExternalReferences::IssueTracker::Item).to receive(:new).and_call_original
         end
 
         it 'returns issue item', aggregate_failures: true do

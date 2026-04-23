@@ -3,7 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent do
-  subject(:service) { described_class.new(ticket:, current_user:, locale: 'en-us', category_options:) }
+  subject(:service_result) do
+    described_class
+      .with_current_user(current_user)
+      .execute(ticket:, locale: 'en-us', category_options:)
+  end
 
   let(:ticket)           { create(:ticket) }
   let(:current_user)     { create(:admin) }
@@ -16,7 +20,7 @@ RSpec.describe Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent
   describe '#execute' do
     context 'when ticket has no articles' do
       it 'returns nil' do
-        expect(service.execute).to be_nil
+        expect(service_result).to be_nil
       end
     end
 
@@ -29,7 +33,7 @@ RSpec.describe Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent
       end
 
       it 'returns AI generated content' do
-        expect(service.execute).to eq(ai_result)
+        expect(service_result).to eq(ai_result)
       end
     end
 
@@ -39,7 +43,7 @@ RSpec.describe Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent
       end
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError, 'AI provider is not configured.')
+        expect { service_result }.to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError, 'AI provider is not configured.')
       end
     end
   end

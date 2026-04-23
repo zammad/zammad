@@ -24,10 +24,6 @@ RSpec.describe 'User Overview sorting', authenticated_as: :user, type: :request 
   describe 'POST /user_overview_sortings_prio' do
     it 'calls sorting creation service', aggregate_failures: true do
       allow(Service::User::Overview::UpdateOrder)
-        .to receive(:new)
-        .and_call_original
-
-      expect_any_instance_of(Service::User::Overview::UpdateOrder)
         .to receive(:execute)
         .and_call_original
 
@@ -35,7 +31,7 @@ RSpec.describe 'User Overview sorting', authenticated_as: :user, type: :request 
            params: { prios: [[overview.id, 0]] }
 
       expect(Service::User::Overview::UpdateOrder)
-        .to have_received(:new)
+        .to have_received(:execute)
 
       expect(response).to have_http_status(:ok)
     end

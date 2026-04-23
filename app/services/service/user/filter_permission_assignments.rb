@@ -1,11 +1,19 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::User::FilterPermissionAssignments < Service::BaseWithCurrentUser
+class Service::User::FilterPermissionAssignments < Service::Base
 
   SUFFIXES = %w[_ids s].freeze
   MODELS = %w[Role Group].freeze
 
-  def execute(user_data:)
+  requires_current_user!
+
+  attr_reader :user_data
+
+  def initialize(user_data:)
+    @user_data = user_data
+  end
+
+  def execute
     return if current_user.permissions?('admin.user')
 
     user_data.deep_stringify_keys! if user_data.is_a?(Hash)

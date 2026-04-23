@@ -41,7 +41,7 @@ RSpec.describe Gql::Mutations::User::Current::CalendarSubscription::Update, type
   end
 
   context 'when user is authenticated', authenticated_as: :user do
-    it 'updates preferences', aggregate_failures: true do
+    it 'updates preferences' do
       execute_graphql_query
 
       expect(user.reload.preferences[:calendar_subscriptions])
@@ -56,21 +56,18 @@ RSpec.describe Gql::Mutations::User::Current::CalendarSubscription::Update, type
     end
 
     it 'sends correct data to the service', aggregate_failures: true do
-      allow(Service::User::CalendarSubscription::Update).to receive(:new).and_call_original
-      expect_any_instance_of(Service::User::CalendarSubscription::Update).to receive(:execute)
+      allow(Service::User::CalendarSubscription::Update).to receive(:execute).and_call_original
 
       execute_graphql_query
 
       expect(Service::User::CalendarSubscription::Update)
-        .to have_received(:new)
+        .to have_received(:execute)
         .with(
-          user,
-          include(
-            input: include(
-              alarm:    true,
-              new_open: include(own: false, not_assigned: false),
-            )
-          )
+          input:        include(
+            alarm:    true,
+            new_open: include(own: false, not_assigned: false),
+          ),
+          current_user: user
         )
     end
 

@@ -74,10 +74,10 @@ RSpec.describe Service::AI::Ticket::PreProcessArticleContent do
   end
 
   describe '#execute' do
-    subject(:service) { described_class.new(articles: ticket.articles.without_system_notifications) }
+    subject(:service_result) { described_class.execute(articles: ticket.articles.without_system_notifications) }
 
     it 'replaces inline images and image attachments with recognized texts' do
-      expect(service.execute).to contain_exactly(
+      expect(service_result).to contain_exactly(
         include(
           sender_type: ticket.articles.first.sender.name,
           sender_name: ticket.articles.first.author.fullname,
@@ -115,7 +115,7 @@ RSpec.describe Service::AI::Ticket::PreProcessArticleContent do
       let(:ocr_active) { false }
 
       it 'strips inline images and does not return image attachments' do
-        expect(service.execute).to contain_exactly(
+        expect(service_result).to contain_exactly(
           include(
             sender_type: ticket.articles.first.sender.name,
             sender_name: ticket.articles.first.author.fullname,
@@ -142,7 +142,7 @@ RSpec.describe Service::AI::Ticket::PreProcessArticleContent do
     end
 
     context 'with skip_quotes_strip_first_article option', aggregate_failures: true do
-      subject(:service) { described_class.new(articles:, skip_quotes_strip_first_article: true) }
+      subject(:service_result) { described_class.execute(articles:, skip_quotes_strip_first_article: true) }
 
       let(:ocr_active) { false }
 
@@ -156,7 +156,7 @@ RSpec.describe Service::AI::Ticket::PreProcessArticleContent do
       end
 
       it 'keeps quotes in the first article but removes them in subsequent articles' do
-        result = service.execute
+        result = service_result
 
         expect(result.first[:text]).to include('quoted text')
         expect(result.first[:text]).not_to include('<p>')
@@ -167,6 +167,8 @@ RSpec.describe Service::AI::Ticket::PreProcessArticleContent do
     end
 
     context 'with plain text articles' do
+      subject(:service_result) { described_class.execute(articles:) }
+
       let(:ocr_active) { false }
 
       let(:articles) do
@@ -177,10 +179,8 @@ RSpec.describe Service::AI::Ticket::PreProcessArticleContent do
       end
 
       it 'does not convert plaintext to HTML or strip tags', aggregate_failures: true do
-        result = described_class.new(articles: articles).execute
-
-        expect(result.first[:text]).to eq('This is a plain text message')
-        expect(result.second[:text]).to eq('Another plain text')
+        expect(service_result.first[:text]).to eq('This is a plain text message')
+        expect(service_result.second[:text]).to eq('Another plain text')
       end
     end
   end

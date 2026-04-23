@@ -8,6 +8,6 @@ module ChecksUserAttributesByCurrentUserPermission
   def check_attributes_by_current_user_permission(params)
     authorize!
 
-    Service::User::FilterPermissionAssignments.new(current_user: current_user).execute(user_data: params)
+    Service::User::FilterPermissionAssignments.with_current_user(current_user).execute(user_data: params)
   end
 end

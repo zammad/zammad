@@ -5,8 +5,6 @@ class Service::System::Import::ApplyConfigurationBase < Service::Base
   attr_reader :url, :endpoint, :secret, :username, :tls_verify
 
   def initialize(url:, secret: nil, username: nil, tls_verify: true)
-    super()
-
     configured!
 
     @url = url

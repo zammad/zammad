@@ -7,7 +7,7 @@ class CalendarSubscriptions
   def initialize(user)
     @user        = user
     @time_zone   = Setting.get('timezone_default')
-    @preferences = Service::User::CalendarSubscription::Preferences.new(@user).execute
+    @preferences = Service::User::CalendarSubscription::Preferences.with_current_user(@user).execute
   end
 
   def all

@@ -15,7 +15,7 @@ module Gql::Queries
       object = fetch_visible_link_object(object_id)
 
       Service::Link::List
-        .new(current_user: context.current_user)
+        .with_current_user(context.current_user)
         .execute(object:, target_type:)
     end
   end

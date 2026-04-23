@@ -3,34 +3,35 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::Bulk::UpdateInline do
+  subject(:service_result) { described_class.with_current_user(user).execute(ticket_ids:, perform:) }
+
   let(:group)      { create(:group) }
   let(:user)       { create(:agent, groups: [group]) }
   let(:tickets)    { create_list(:ticket, 3, group:) }
   let(:perform)    { { input: { title: 'new title' } } }
   let(:ticket_ids) { tickets.map(&:id) }
-  let(:instance)   { described_class.new(user:, ticket_ids:, perform:) }
 
   describe '#execute' do
     it 'passes given tickets to single item update', aggregate_failures: true do
-      allow(Service::Ticket::Bulk::SingleItemUpdate).to receive(:new).and_call_original
+      allow(Service::Ticket::Bulk::SingleItemUpdate).to receive(:execute).and_call_original
 
-      instance.execute
-
-      expect(Service::Ticket::Bulk::SingleItemUpdate)
-        .to have_received(:new)
-        .with(user:, ticket: tickets[0], perform:)
+      service_result
 
       expect(Service::Ticket::Bulk::SingleItemUpdate)
-        .to have_received(:new)
-        .with(user:, ticket: tickets[1], perform:)
+        .to have_received(:execute)
+        .with(ticket: tickets[0], perform:, current_user: user)
 
       expect(Service::Ticket::Bulk::SingleItemUpdate)
-        .to have_received(:new)
-        .with(user:, ticket: tickets[2], perform:)
+        .to have_received(:execute)
+        .with(ticket: tickets[1], perform:, current_user: user)
+
+      expect(Service::Ticket::Bulk::SingleItemUpdate)
+        .to have_received(:execute)
+        .with(ticket: tickets[2], perform:, current_user: user)
     end
 
     it 'returns async false and the counts' do
-      expect(instance.execute).to include(
+      expect(service_result).to include(
         async:                false,
         total:                tickets.size,
         failed_count:         0,
@@ -43,23 +44,23 @@ RSpec.describe Service::Ticket::Bulk::UpdateInline do
       let(:inaccessible_ticket) { tickets[1] }
 
       before do
-        error = Service::Ticket::Bulk::SingleItemUpdate::BulkSingleError.new(
+        error = Service::Ticket::Bulk::SingleItemUpdate::BulkSingleError.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
           record:         inaccessible_ticket,
           original_error: Pundit::NotAuthorizedError.new(record: inaccessible_ticket, message: 'not authorized')
         )
 
         allow(Service::Ticket::Bulk::SingleItemUpdate)
-          .to receive(:new)
+          .to receive(:execute)
           .and_call_original
 
         allow(Service::Ticket::Bulk::SingleItemUpdate)
-          .to receive(:new)
-          .with(user:, ticket: tickets[1], perform:)
+          .to receive(:execute)
+          .with(ticket: tickets[1], perform:, current_user: user)
           .and_raise(error)
       end
 
       it 'returns inaccessible ticket ids' do
-        expect(instance.execute).to include(
+        expect(service_result).to include(
           async:                false,
           total:                3,
           failed_count:         1,
@@ -73,23 +74,23 @@ RSpec.describe Service::Ticket::Bulk::UpdateInline do
       let(:invalid_ticket) { tickets[0] }
 
       before do
-        error = Service::Ticket::Bulk::SingleItemUpdate::BulkSingleError.new(
+        error = Service::Ticket::Bulk::SingleItemUpdate::BulkSingleError.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
           record:         invalid_ticket,
           original_error: ActiveRecord::RecordInvalid.new(invalid_ticket)
         )
 
         allow(Service::Ticket::Bulk::SingleItemUpdate)
-          .to receive(:new)
+          .to receive(:execute)
           .and_call_original
 
         allow(Service::Ticket::Bulk::SingleItemUpdate)
-          .to receive(:new)
-          .with(user:, ticket: tickets[1], perform:)
+          .to receive(:execute)
+          .with(ticket: tickets[1], perform:, current_user: user)
           .and_raise(error)
       end
 
       it 'returns invalid ticket ids' do
-        expect(instance.execute).to include(
+        expect(service_result).to include(
           async:                false,
           total:                3,
           failed_count:         1,

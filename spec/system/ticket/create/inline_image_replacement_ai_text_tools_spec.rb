@@ -56,14 +56,12 @@ RSpec.describe 'Ticket create > Inline Image Replacement for AI Text Tools', aut
 
         expect(page).to have_css('.bubble-menu[role=menu]')
 
-        ai_service_spy = instance_spy(Service::AIAssistance::TextTools)
-        allow(Service::AIAssistance::TextTools).to receive(:new).and_return(ai_service_spy)
-        allow(ai_service_spy).to receive(:execute).and_return(ai_service_text_tool_result)
+        allow(Service::AIAssistance::TextTools).to receive(:execute).and_return(ai_service_text_tool_result)
 
         find("[aria-label='AI Writing Assistant Tools']").click
         find('.js-action', text: 'Dummy').click
 
-        expect(Service::AIAssistance::TextTools).to have_received(:new).with(
+        expect(Service::AIAssistance::TextTools).to have_received(:execute).with(
           hash_including(
             input: 'This is a funny text with multiple images:<br>[[IMAGE_PLACEHOLDER_1]]<br>[[IMAGE_PLACEHOLDER_2]]<br>',
           )

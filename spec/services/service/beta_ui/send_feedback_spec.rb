@@ -3,17 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe Service::BetaUi::SendFeedback do
-  subject(:service) { described_class.new(type:, comment:, time_spent:, rating:) }
-
   let(:type)       { 'manual_feedback' }
   let(:comment)    { Faker::Lorem.unique.paragraph }
   let(:time_spent) { Faker::Number.unique.between(from: 300, to: 1200) }
   let(:rating)     { Faker::Number.unique.between(from: 1, to: 5) }
 
   describe '#execute' do
+    subject(:service_result) { described_class.execute(type:, comment:, time_spent:, rating:) }
+
     context 'when beta ui is enabled' do
-      let(:form_config_route)   { "#{subject.api_host}/api/v1/form_config" }
-      let(:form_submit_route)   { "#{subject.api_host}/api/v1/form_submit" }
+      let(:service_instance)    { described_class.new(type:, comment:, time_spent:, rating:) }
+      let(:form_config_route)   { "#{service_instance.api_host}/api/v1/form_config" }
+      let(:form_submit_route)   { "#{service_instance.api_host}/api/v1/form_submit" }
       let(:form_config_success) { true }
       let(:form_submit_success) { true }
 
@@ -71,14 +72,14 @@ RSpec.describe Service::BetaUi::SendFeedback do
       end
 
       it 'returns the success' do
-        expect(service.execute).to be(true)
+        expect(service_result).to be(true)
       end
 
       context 'when form config fetch fails' do
         let(:form_config_success) { false }
 
         it 'raises a communication error' do
-          expect { service.execute }.to raise_error(described_class::CommunicationError)
+          expect { service_result }.to raise_error(described_class::CommunicationError)
         end
       end
 
@@ -86,7 +87,7 @@ RSpec.describe Service::BetaUi::SendFeedback do
         let(:form_config_data) { {} }
 
         it 'raises an invalid token error' do
-          expect { service.execute }.to raise_error(described_class::InvalidTokenError)
+          expect { service_result }.to raise_error(described_class::InvalidTokenError)
         end
       end
 
@@ -94,7 +95,7 @@ RSpec.describe Service::BetaUi::SendFeedback do
         let(:form_submit_success) { false }
 
         it 'raises a communication error' do
-          expect { service.execute }.to raise_error(described_class::CommunicationError)
+          expect { service_result }.to raise_error(described_class::CommunicationError)
         end
       end
 
@@ -102,14 +103,14 @@ RSpec.describe Service::BetaUi::SendFeedback do
         let(:form_submit_data) { {} }
 
         it 'raises an invalid token error' do
-          expect { service.execute }.to raise_error(described_class::InvalidFeedbackError)
+          expect { service_result }.to raise_error(described_class::InvalidFeedbackError)
         end
       end
     end
 
     context 'when beta ui is disabled' do
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError, 'This feature is not enabled.')
+        expect { service_result }.to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError, 'This feature is not enabled.')
       end
     end
   end

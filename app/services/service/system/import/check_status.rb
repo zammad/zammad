@@ -5,8 +5,6 @@ class Service::System::Import::CheckStatus < Service::Base
   attr_reader :source
 
   def initialize
-    super
-
     @source = Setting.get('import_backend')
 
     running!
@@ -35,11 +33,8 @@ class Service::System::Import::CheckStatus < Service::Base
   end
 
   def running!
-    setup = Service::System::CheckSetup.new
-    setup.execute
-
-    return if setup.status == 'in_progress' && setup.type == 'import'
-    return if setup.status == 'done' && @source.present?
+    return if Service::System::CheckSetup.importing?
+    return if Service::System::CheckSetup.done? && @source.present?
 
     raise Service::System::Import::Run::ExecuteError, __('No import in progress.')
   end

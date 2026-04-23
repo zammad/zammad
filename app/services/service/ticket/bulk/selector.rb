@@ -4,14 +4,13 @@ class Service::Ticket::Bulk::Selector < Service::Base
   MAX_TICKET_IDS = 2_000
   ALLOWED_ATTRIBUTES = %i[id group_id].freeze
 
-  attr_reader :user, :selector, :attribute
+  attr_reader :selector, :attribute
 
-  def initialize(user:, selector:, attribute: :id)
-    @user      = user
+  requires_current_user!
+
+  def initialize(selector:, attribute: :id)
     @selector  = selector
     @attribute = attribute
-
-    super()
   end
 
   def execute
@@ -35,7 +34,7 @@ class Service::Ticket::Bulk::Selector < Service::Base
   end
 
   def overview_entity_ids(overview)
-    tickets = Ticket::Overviews.tickets_for_overview(overview, user)
+    tickets = Ticket::Overviews.tickets_for_overview(overview, current_user)
 
     return [] if !tickets
 
@@ -46,13 +45,11 @@ class Service::Ticket::Bulk::Selector < Service::Base
 
   def search_entity_ids(query)
     Service::Search
-      .new(
-        current_user: user,
+      .execute(
         query:,
-        objects:      [Ticket],
-        options:      { only_ids: return_attribute == :id, limit: MAX_TICKET_IDS }
+        objects: [Ticket],
+        options: { only_ids: return_attribute == :id, limit: MAX_TICKET_IDS }
       )
-      .execute
       .result[Ticket]
   end
 end
