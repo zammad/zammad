@@ -319,28 +319,30 @@ class _webSocketSingleton extends App.Controller
       )
 
   _ajaxReceive: =>
-    return if !@client_id
-    return if @_ajaxReceiveWorking is true
-    @_ajaxReceiveWorking = true
-    App.Ajax.request(
-      id:    'message_receive',
-      type:  'POST'
-      url:   @Config.get('api_path') + '/message_receive'
-      data:  JSON.stringify(client_id: @client_id)
-      processData: false
-      success: (data) =>
-        @log 'debug', 'ajax:onmessage', data
-        @_receiveMessage(data)
-        if data && data.error
+    App.Delay.set(=>
+      return if !@client_id
+      return if @_ajaxReceiveWorking is true
+      @_ajaxReceiveWorking = true
+      App.Ajax.request(
+        id:    'message_receive',
+        type:  'POST'
+        url:   @Config.get('api_path') + '/message_receive'
+        data:  JSON.stringify(client_id: @client_id)
+        processData: false
+        success: (data) =>
+          @log 'debug', 'ajax:onmessage', data
+          @_receiveMessage(data)
+          if data && data.error
+            @client_id = undefined
+            @_ajaxInit(force: true)
+          @_ajaxReceiveWorking = false
+          @_ajaxReceive()
+        error: (data) =>
           @client_id = undefined
           @_ajaxInit(force: true)
-        @_ajaxReceiveWorking = false
-        @_ajaxReceive()
-      error: (data) =>
-        @client_id = undefined
-        @_ajaxInit(force: true)
-        @_ajaxReceiveWorking = false
-    )
+          @_ajaxReceiveWorking = false
+      )
+    , 10000, '_ajaxReceive')
 
 class Modal extends App.ControllerModal
   buttonClose: false
