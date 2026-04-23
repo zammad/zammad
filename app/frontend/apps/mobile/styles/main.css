@@ -13,6 +13,15 @@
   interpolate-size: allow-keywords;
 }
 
+/*
+* We don't use global styling for links on mobile
+* that's why we use a global components name styling
+* for CommonAlert links
+*/
+.Alert a {
+  @apply text-blue;
+}
+
 @layer base {
   html {
     --safe-bottom: env(safe-area-inset-bottom);

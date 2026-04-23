@@ -152,7 +152,7 @@ onMounted(() => {
     />
     <CommonLink
       v-if="hasShowMore"
-      class="mb-1 inline-block! outline-transparent! focus-visible:outline-blue-800!"
+      class="mb-1 inline-block! outline-transparent! hover:underline! focus-visible:outline-blue-800!"
       role="button"
       link="#"
       size="medium"

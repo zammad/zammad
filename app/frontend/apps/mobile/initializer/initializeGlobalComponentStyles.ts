@@ -18,14 +18,17 @@ export const initializeGlobalComponentStyles = () => {
     internal: '',
   })
 
+  // Adding .Alert on mobile to be able to style links inside alerts
+  /* eslint-disable zammad/zammad-detect-translatable-string */
   initializeAlertClasses({
-    base: 'grid w-full content-start items-center justify-items-center text-center grid-flow-col grid-cols-[auto_minmax(auto,1fr)] justify-items-start text-start border w-auto text-sm',
+    base: 'Alert grid w-full content-start items-center justify-items-center text-center grid-flow-col grid-cols-[auto_minmax(auto,1fr)] justify-items-start text-start border w-auto text-sm',
     success: 'alert-success bg-green text-white',
     info: 'alert-info bg-white text-black',
     warning: 'alert-warning bg-yellow text-black',
     danger: 'alert-error bg-red/60 text-white',
     dismissButton: '',
   })
+  /* eslint-enable zammad/zammad-detect-translatable-string */
 
   initializeAvatarClasses({
     base: 'text-black',
