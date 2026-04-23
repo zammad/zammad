@@ -2,7 +2,7 @@
   <span><%- @T(@answer.can_be_published_state()) %></span>
 <% end %>
 
-<% if @answer.is_internally_published_object() && user_id = @translation.updated_by_id: %>
+<% if user_id = @translation.updated_by_id: %>
   <% if user = App.User.find(user_id): %>
     <span><%- user.displayName() %></span>
   <% end %>
