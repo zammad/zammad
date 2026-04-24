@@ -59,11 +59,12 @@ const requestDraft = async () => {
       type="button"
       size="small"
       prefix-icon="ai-knowledge-base"
+      icon-class="text-blue-800"
       class="relative ai-stripe bg-green-200! text-gray-300! before:absolute before:bottom-0 before:w-[85%] hover:bg-green-200! dark:bg-gray-600! dark:text-neutral-400! dark:hover:bg-gray-600!"
       :disabled="isGenerating"
       @click="requestDraft"
     >
-      {{ $t('AI generate') }}
+      {{ $t('Add AI draft') }}
     </CommonButton>
   </div>
 </template>

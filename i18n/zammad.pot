@@ -328,7 +328,7 @@ msgid "%s of my tickets escalated"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
-#: app/graphql/gql/queries/autocomplete_search/generic.rb:61
+#: app/graphql/gql/queries/autocomplete_search/generic.rb:62
 msgid "%s people"
 msgstr ""
 
@@ -710,7 +710,7 @@ msgstr ""
 msgid "AI agent"
 msgstr ""
 
-#: app/services/service/ai/agent/run.rb:24
+#: app/services/service/ai/agent/run.rb:22
 msgid "AI agent result content does not match expected result structure."
 msgstr ""
 
@@ -730,13 +730,12 @@ msgstr ""
 msgid "AI assistance text tool is invalid."
 msgstr ""
 
-#: lib/excel_sheet/ai/analytics/errors.rb:4
-msgid "AI error log"
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:22
+msgid "AI draft"
 msgstr ""
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:23
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:66
-msgid "AI generate"
+#: lib/excel_sheet/ai/analytics/errors.rb:4
+msgid "AI error log"
 msgstr ""
 
 #: db/seeds/settings.rb:6075
@@ -772,11 +771,11 @@ msgstr ""
 #: app/controllers/ticket/summarize_controller.rb:8
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:13
 #: app/graphql/gql/mutations/ticket/ai_assistance/summarize.rb:15
-#: app/services/service/ai/agent/run.rb:17
+#: app/services/service/ai/agent/run.rb:15
 #: app/services/service/ai/vectordb/base.rb:12
 #: app/services/service/ai_assistance/text_tools.rb:19
-#: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:15
-#: app/services/service/ticket/ai_assistance/summarize.rb:17
+#: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
+#: app/services/service/ticket/ai_assistance/summarize.rb:16
 msgid "AI provider is not configured."
 msgstr ""
 
@@ -1157,6 +1156,10 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:267
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:66
+msgid "Add AI draft"
 msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:7
@@ -2543,7 +2546,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:125
-#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:56
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:53
 msgid "Be sure to check AI-generated content for accuracy."
 msgstr ""
 
@@ -3974,7 +3977,7 @@ msgstr ""
 msgid "Core Workflows are actions or constraints on selections in forms. Depending on an action, it is possible to hide or restrict fields or to change the obligation to fill them in."
 msgstr ""
 
-#: app/services/service/user/signup.rb:55
+#: app/services/service/user/signup.rb:53
 msgid "Could not create user and send verification email because import_mode setting is on."
 msgstr ""
 
@@ -4028,7 +4031,7 @@ msgstr ""
 msgid "Could not remove two-factor authentication method."
 msgstr ""
 
-#: app/services/service/user/signup.rb:53
+#: app/services/service/user/signup.rb:51
 msgid "Could not send user verification email because import_mode setting is on."
 msgstr ""
 
@@ -6860,7 +6863,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: app/services/service/system/run_auto_wizard.rb:19
+#: app/services/service/system/run_auto_wizard.rb:25
 msgid "Error during execution of auto wizard."
 msgstr ""
 
@@ -9013,7 +9016,7 @@ msgstr ""
 msgid "Invalid OAuth state parameter."
 msgstr ""
 
-#: app/services/service/system/run_auto_wizard.rb:11
+#: app/services/service/system/run_auto_wizard.rb:17
 msgid "Invalid auto wizard file."
 msgstr ""
 
@@ -9033,7 +9036,7 @@ msgstr ""
 msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr ""
 
-#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:39
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:36
 msgid "Invalid knowledge base locale."
 msgstr ""
 
@@ -9375,7 +9378,7 @@ msgstr ""
 
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:14
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:18
-#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:44
+#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:45
 msgid "Knowledge base is unavailable or not properly configured."
 msgstr ""
 
@@ -9633,7 +9636,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:7
 #: app/assets/javascripts/app/models/overview.coffee:7
 #: app/assets/javascripts/app/models/public_link.coffee:6
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:21
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:24
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:11
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 #: app/frontend/shared/components/Form/FormFieldLink.vue:18
@@ -11358,11 +11361,11 @@ msgstr ""
 
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:25
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:26
-#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:94
+#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:95
 msgid "No editable knowledge base categories available."
 msgstr ""
 
-#: app/controllers/users_controller.rb:275
+#: app/controllers/users_controller.rb:271
 msgid "No email!"
 msgstr ""
 
@@ -11394,7 +11397,7 @@ msgstr ""
 msgid "No folders were found for the given user credentials."
 msgstr ""
 
-#: app/services/service/system/import/check_status.rb:44
+#: app/services/service/system/import/check_status.rb:39
 msgid "No import in progress."
 msgstr ""
 
@@ -11402,8 +11405,8 @@ msgstr ""
 msgid "No items available"
 msgstr ""
 
-#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:38
-#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:57
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:35
+#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:58
 msgid "No knowledge base locale configured."
 msgstr ""
 
@@ -11503,7 +11506,7 @@ msgstr ""
 #: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:243
 #: app/controllers/tickets_controller.rb:459
-#: app/controllers/users_controller.rb:574
+#: app/controllers/users_controller.rb:559
 msgid "No source data submitted!"
 msgstr ""
 
@@ -11548,7 +11551,7 @@ msgstr ""
 msgid "No user creation on logon"
 msgstr ""
 
-#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:62
+#: app/services/service/knowledge_base/create_answer_from_ai_result.rb:59
 msgid "No valid knowledge base category provided."
 msgstr ""
 
@@ -11616,7 +11619,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:123
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row_display_value.jst.eco:16
 #: app/controllers/application_controller/handles_errors.rb:61
-#: app/services/service/ticket/article/create.rb:122
+#: app/services/service/ticket/article/create.rb:131
 msgid "Not authorized"
 msgstr ""
 
@@ -11863,7 +11866,7 @@ msgstr ""
 msgid "Object Manager Attributes"
 msgstr ""
 
-#: app/services/service/history/list.rb:52
+#: app/services/service/history/list.rb:58
 msgid "Object does not support history"
 msgstr ""
 
@@ -12815,7 +12818,7 @@ msgstr ""
 msgid "Please click on the link in the verification email. If you don't see the email, check other places it might be, like your junk, spam, social, or other folders."
 msgstr ""
 
-#: app/services/service/system/import/run.rb:42
+#: app/services/service/system/import/run.rb:40
 msgid "Please configure import source before running."
 msgstr ""
 
@@ -12857,7 +12860,7 @@ msgid "Please fill in all fields"
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:518
-#: app/services/service/system/set_system_information.rb:38
+#: app/services/service/system/set_system_information.rb:36
 msgid "Please include a valid url."
 msgstr ""
 
@@ -12881,13 +12884,13 @@ msgstr ""
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 
-#: app/controllers/users_controller.rb:381
+#: app/controllers/users_controller.rb:367
 msgid "Please provide your current password."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
-#: app/controllers/users_controller.rb:386
+#: app/controllers/users_controller.rb:372
 msgid "Please provide your new password."
 msgstr ""
 
@@ -14900,7 +14903,7 @@ msgstr ""
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
-#: app/services/service/beta_ui/send_feedback.rb:98
+#: app/services/service/beta_ui/send_feedback.rb:96
 msgid "Sending feedback failed, please try again later."
 msgstr ""
 
@@ -15140,8 +15143,8 @@ msgid "Shared draft"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:189
-#: app/services/service/ticket/update.rb:71
+#: app/services/service/ticket/create.rb:197
+#: app/services/service/ticket/update.rb:84
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
@@ -16309,7 +16312,7 @@ msgstr ""
 msgid "The Knowledge Base could not be created."
 msgstr ""
 
-#: app/services/service/avatar/image_validate.rb:14
+#: app/services/service/avatar/image_validate.rb:20
 msgid "The MIME type of the image is invalid."
 msgstr ""
 
@@ -16622,8 +16625,8 @@ msgid "The context is a JSON object that defines what information about the curr
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
-#: app/controllers/users_controller.rb:400
-#: app/graphql/gql/mutations/user/current/change_password.rb:28
+#: app/controllers/users_controller.rb:387
+#: app/graphql/gql/mutations/user/current/change_password.rb:29
 msgid "The current password you provided is incorrect."
 msgstr ""
 
@@ -16673,12 +16676,12 @@ msgstr ""
 msgid "The email address |%s| is already in use by another account."
 msgstr ""
 
-#: app/services/service/user/password_reset/send.rb:41
+#: app/services/service/user/password_reset/send.rb:40
 msgid "The email could not be sent to the user because import_mode setting is on."
 msgstr ""
 
-#: app/services/service/auth/send_admin_token.rb:39
-#: app/services/service/user/password_reset/update.rb:42
+#: app/services/service/auth/send_admin_token.rb:38
+#: app/services/service/user/password_reset/update.rb:40
 msgid "The email could not be sent to the user."
 msgstr ""
 
@@ -16763,7 +16766,7 @@ msgstr ""
 msgid "The given two-factor authentication method is not enabled."
 msgstr ""
 
-#: app/services/service/user/two_factor/base.rb:14
+#: app/services/service/user/two_factor/base.rb:13
 msgid "The given two-factor method does not exist."
 msgstr ""
 
@@ -16799,7 +16802,7 @@ msgstr ""
 msgid "The idoit object is already present on the ticket."
 msgstr ""
 
-#: app/services/service/avatar/image_validate.rb:10
+#: app/services/service/avatar/image_validate.rb:16
 msgid "The image is invalid."
 msgstr ""
 
@@ -16836,7 +16839,7 @@ msgstr ""
 msgid "The issue reference already exists."
 msgstr ""
 
-#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:40
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:38
 msgid "The issue reference could not be found."
 msgstr ""
 
@@ -16856,11 +16859,11 @@ msgstr ""
 msgid "The limit of displayable suggestions was reached, please narrow down your search."
 msgstr ""
 
-#: app/services/service/user/remove_linked_account.rb:21
+#: app/services/service/user/remove_linked_account.rb:19
 msgid "The linked account could not be found."
 msgstr ""
 
-#: app/services/service/auth/verify_admin_token.rb:17
+#: app/services/service/auth/verify_admin_token.rb:16
 msgid "The login is not possible."
 msgstr ""
 
@@ -17034,9 +17037,9 @@ msgstr ""
 #: app/controllers/application_controller/authenticates.rb:99
 #: app/controllers/integration/check_mk_controller.rb:139
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:103
-#: app/services/service/user/password_reset/update.rb:36
-#: app/services/service/user/password_reset/verify.rb:23
-#: app/services/service/user/signup_verify.rb:24
+#: app/services/service/user/password_reset/update.rb:34
+#: app/services/service/user/password_reset/verify.rb:22
+#: app/services/service/user/signup_verify.rb:25
 msgid "The provided token is invalid."
 msgstr ""
 
@@ -17076,12 +17079,12 @@ msgstr ""
 msgid "The required PGP passphrase is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:673
-#: app/services/service/user/add_first_admin.rb:12
+#: app/controllers/users_controller.rb:658
+#: app/services/service/user/add_first_admin.rb:18
 msgid "The required attribute 'email' is missing."
 msgstr ""
 
-#: app/services/service/system/set_system_information.rb:42
+#: app/services/service/system/set_system_information.rb:40
 msgid "The required attribute 'organization' is missing."
 msgstr ""
 
@@ -17151,7 +17154,7 @@ msgstr ""
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:515
+#: app/controllers/users_controller.rb:500
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
@@ -17183,7 +17186,7 @@ msgstr ""
 msgid "The required parameter 'params' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:408
+#: app/controllers/users_controller.rb:395
 msgid "The required parameter 'password' is missing."
 msgstr ""
 
@@ -17199,7 +17202,7 @@ msgstr ""
 msgid "The required parameter 'permission' is missing."
 msgstr ""
 
-#: app/controllers/users_controller.rb:666
+#: app/controllers/users_controller.rb:651
 msgid "The required parameter 'signup' is missing."
 msgstr ""
 
@@ -17249,7 +17252,7 @@ msgstr ""
 msgid "The selected date is invalid."
 msgstr ""
 
-#: app/services/service/system/import/apply_configuration_base.rb:40
+#: app/services/service/system/import/apply_configuration_base.rb:38
 msgid "The server presented a certificate that could not be verified."
 msgstr ""
 
@@ -17336,11 +17339,11 @@ msgstr ""
 msgid "The system report provides a summarized version of the system state and configuration for support and analyzing purposes. You can download the report by clicking the Download-button. Zammad then provides a JSON file as you can see in the preview below. If you get in touch with the Zammad support, this JSON file is helpful identifying your issue."
 msgstr ""
 
-#: app/services/service/system/check_setup.rb:18
+#: app/services/service/system/check_setup.rb:25
 msgid "The system setup cannot be started, because there is another one running or it was completed before."
 msgstr ""
 
-#: app/services/service/system/check_setup.rb:72
+#: app/services/service/system/check_setup.rb:86
 msgid "The system setup is marked as done, but no admin user is existing. Please run the system setup again."
 msgstr ""
 
@@ -17392,7 +17395,7 @@ msgstr ""
 msgid "The time picker"
 msgstr ""
 
-#: app/services/service/user/signup.rb:64
+#: app/services/service/user/signup.rb:62
 msgid "The token could not be generated."
 msgstr ""
 
@@ -17440,7 +17443,7 @@ msgstr ""
 msgid "The user account does not exist. Please contact your administrator."
 msgstr ""
 
-#: app/services/service/auth/send_admin_token.rb:33
+#: app/services/service/auth/send_admin_token.rb:32
 msgid "The user token could not be generated."
 msgstr ""
 
@@ -17937,7 +17940,7 @@ msgstr ""
 msgid "This object is referenced by other object(s) and thus cannot be deleted: %s"
 msgstr ""
 
-#: app/services/service/system/check_setup.rb:29
+#: app/services/service/system/check_setup.rb:43
 msgid "This operation cannot be continued, because the system set-up was not completed yet."
 msgstr ""
 
@@ -17961,7 +17964,7 @@ msgstr ""
 msgid "This permission level is not available based on the current roles permissions."
 msgstr ""
 
-#: app/services/service/execute_locked_block.rb:44
+#: app/services/service/execute_locked_block.rb:43
 msgid "This resource cannot be locked, because it has already been locked by another process."
 msgstr ""
 
@@ -18007,13 +18010,13 @@ msgstr ""
 msgid "This signature is inactive, it won't be included in the reply."
 msgstr ""
 
-#: app/services/service/user/add_first_admin.rb:8
+#: app/services/service/user/add_first_admin.rb:14
 msgid "This system has already been configured and an administrator account exists."
 msgstr ""
 
-#: app/services/service/system/import/apply_configuration_base.rb:46
-#: app/services/service/system/import/run.rb:37
-#: app/services/service/system/run_auto_wizard.rb:6
+#: app/services/service/system/import/apply_configuration_base.rb:44
+#: app/services/service/system/import/run.rb:35
+#: app/services/service/system/run_auto_wizard.rb:12
 msgid "This system has already been configured."
 msgstr ""
 
