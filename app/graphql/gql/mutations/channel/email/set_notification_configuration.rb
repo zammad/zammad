@@ -2,7 +2,7 @@
 
 module Gql::Mutations
   class Channel::Email::SetNotificationConfiguration < Channel::Email::BaseConfiguration
-    description 'Set confioguration for sending system notification emails'
+    description 'Set configuration for sending system notification emails'
 
     argument :outbound_configuration, Gql::Types::Input::Channel::Email::OutboundConfigurationInputType, description: 'Configuration to validate'
 

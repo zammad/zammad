@@ -14,14 +14,10 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
   def initialize(adapter:, new_configuration:)
     @adapter = adapter
     @new_configuration = new_configuration
+    @microsoft_graph_auth = microsoft_graph_auth
   end
 
   def execute
-    # There're two instances of Email::Notification for historical easons
-    # One for SMTP and one for Sendmail.
-    # However, this feature is not used anywhere.
-    # At some point it may be good to clean this up to simply use a single instance
-    # and set adapter as needed.
     ActiveRecord::Base.transaction do
       Channel
         .where(area: 'Email::Notification')
@@ -39,17 +35,38 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
     channel.active = is_matching_adapter
 
     if is_matching_adapter
-      channel.options = {
-        outbound: {
-          adapter: @adapter,
-          options: @new_configuration,
-        },
-      }
+      if @adapter == 'microsoft_graph_outbound'
+        channel.options = build_microsoft_graph_options
+      else
+        channel.options = {
+          outbound: {
+            adapter: @adapter,
+            options: @new_configuration,
+          },
+        }
+      end
 
       channel.status_out   = 'ok'
       channel.last_log_out = nil
     end
 
     channel.save!
+  end
+
+  def build_microsoft_graph_options
+    outbound_options = {
+      user: @new_configuration[:user] || @new_configuration['user'],
+    }
+
+    shared_mailbox = @new_configuration[:shared_mailbox].presence || @new_configuration['shared_mailbox'].presence
+    outbound_options[:shared_mailbox] = shared_mailbox if shared_mailbox
+
+    {
+      outbound: {
+        adapter: 'microsoft_graph_outbound',
+        options: outbound_options.compact_blank,
+      },
+      auth:     @microsoft_graph_auth,
+    }
   end
 end

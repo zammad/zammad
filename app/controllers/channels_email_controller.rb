@@ -210,6 +210,18 @@ class ChannelsEmailController < ApplicationController
 
     adapter = params[:adapter].downcase
 
+    # Microsoft Graph uses OAuth — return a redirect URL instead of probing SMTP.
+    if adapter == 'microsoft_graph_outbound'
+      query = { notification: true }
+      shared_mailbox = params.dig(:options, :shared_mailbox).presence || params[:shared_mailbox].presence
+      query[:shared_mailbox] = shared_mailbox if shared_mailbox.present?
+
+      oauth_url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}#{Rails.configuration.api_path}/external_credentials/microsoft_graph/link_account?#{query.to_query}"
+
+      render json: { result: 'redirect', url: oauth_url }
+      return
+    end
+
     email = Setting.get('notification_sender')
 
     channel = Channel

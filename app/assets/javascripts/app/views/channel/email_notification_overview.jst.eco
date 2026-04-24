@@ -1,0 +1,54 @@
+<% if !_.isEmpty(@notification_channels) && !App.Config.get('system_online_service'): %>
+  <h2><%- @T('Email Notification') %></h2>
+  <% for channel in @notification_channels: %>
+    <div class="action" data-id="<%- channel.id %>">
+      <div class="action-flow action-flow--row">
+        <div class="action-block action-block--flex">
+          <div class="horizontal">
+            <h3><%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %></h3>
+            <div class="btn btn--text js-editNotificationOutbound space-left"><%- @T('Edit') %></div>
+          </div>
+
+          <table class="key-value">
+          <% if channel.options.outbound && channel.options.outbound.options: %>
+            <% if channel.options.outbound.options.host: %>
+            <tr>
+              <td><%- @T('User') %>
+              <td><%= channel.options.outbound.options.user %>
+            <tr>
+              <td><%- @T('Host') %>
+              <td><%= channel.options.outbound.options.host %>
+            <% end %>
+            <% if channel.options.outbound.adapter is 'microsoft_graph_outbound': %>
+            <tr>
+              <td><%- @T('User') %>
+              <td><%= channel.options.outbound.options.user %>
+            <% if channel.options.outbound.options.shared_mailbox: %>
+            <tr>
+              <td><%- @T('Shared Mailbox') %>
+              <td><%= channel.options.outbound.options.shared_mailbox %>
+            <% end %>
+            <% end %>
+          <% end %>
+            <tr>
+              <td><%- @T('Protocol') %>
+              <td><%= channel.options.outbound.adapter %>
+          </table>
+
+          <% if channel.status_out is 'error': %>
+            <div class="alert alert--danger"><%= channel.last_log_out %></div>
+          <% end %>
+        </div>
+        <div class="action-block action-block--flex">
+          <h3><%- @T('Email Address') %></h3>
+          <ul class="list">
+            <li class="list-item"><%= @config?.notification_sender || '-' %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<% if _.isEmpty(@notification_channels) && !App.Config.get('system_online_service'): %>
+  <p><%- @T('No notification channel configured yet.') %></p>
+<% end %>

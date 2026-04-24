@@ -41,8 +41,9 @@ returns
         pop3: __('POP3'),
       },
       outbound: {
-        smtp:     __('SMTP - configure your own outgoing SMTP settings'),
-        sendmail: __('Local MTA (Sendmail/Postfix/Exim/…) - use server setup'),
+        smtp:                      __('SMTP - configure your own outgoing SMTP settings'),
+        sendmail:                  __('Local MTA (Sendmail/Postfix/Exim/…) - use server setup'),
+        microsoft_graph_outbound:  __('Microsoft 365 Graph Email'),
       },
     }
   end
