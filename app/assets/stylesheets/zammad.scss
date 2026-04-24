@@ -8962,14 +8962,13 @@ a.list-group-item.active > .badge,
 }
 
 /* Fixes #6058 - Attachment delete icon disappears when filename is too long
+ * Fixes #6071 - Ticket > Zoom > Sidebar > Tag: Delete icon disappears when name is too long
  * by adding ellipsis to long names and preventing it from overflowing its container
  */
-.knowledge-base-sidebar {
-  .list-item-name {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
+.list-item-name-shrinkable {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .list-item-delete {
