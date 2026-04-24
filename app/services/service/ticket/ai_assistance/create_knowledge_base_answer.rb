@@ -83,7 +83,8 @@ class Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer < Service::Base
       type:          'create',
       user_id:       current_user.id,
       created_by_id: 1,
-      seen:          false
+      seen:          false,
+      meta:          { created_by_ai: true }
     )
   end
 

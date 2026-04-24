@@ -7,6 +7,7 @@ import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvat
 import { useActivityMessage } from '#shared/composables/activity-message/useActivityMessage.ts'
 import type { OnlineNotification } from '#shared/graphql/types.ts'
 
+import AiAgentAvatar from '#desktop/components/AiAgent/AiAgentAvatar.vue'
 import { initializeBetaUi } from '#desktop/components/BetaUi/composables/useBetaUi.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
@@ -23,7 +24,6 @@ const emit = defineEmits<{
 }>()
 
 const { link, builder, highlightedMessage } = useActivityMessage(toRef(props, 'notification'))
-
 const { clearSwitchAndRedirect } = initializeBetaUi()
 
 const handleLinkClick = (event: Event, notification: OnlineNotification) => {
@@ -47,7 +47,7 @@ const handleLinkClick = (event: Event, notification: OnlineNotification) => {
 
 <template>
   <li>
-    <div class="group flex items-center justify-between gap-3">
+    <div class="group isolate flex items-center justify-between gap-3">
       <component
         :is="link ? 'CommonLink' : 'div'"
         v-if="builder"
@@ -61,8 +61,9 @@ const handleLinkClick = (event: Event, notification: OnlineNotification) => {
         :link="link ? `/${link}` : undefined"
         @click="handleLinkClick($event, notification)"
       >
+        <AiAgentAvatar v-if="notification?.meta?.createdByAi" class="col-start-1 row-span-2" />
         <CommonUserAvatar
-          v-if="notification.createdBy"
+          v-else-if="notification.createdBy"
           :entity="notification.createdBy"
           size="small"
           class="col-start-1 row-span-2"

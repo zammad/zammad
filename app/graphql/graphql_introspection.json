@@ -14116,6 +14116,22 @@
               "deprecationReason": null
             },
             {
+              "name": "meta",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "OnlineNotificationMeta",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "metaObject",
               "description": "resolver for Rails' belongs_to relationship",
               "args": [],
@@ -14406,6 +14422,33 @@
                     "name": "OnlineNotification",
                     "ofType": null
                   }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "OnlineNotificationMeta",
+          "description": "Meta information for an online notification",
+          "fields": [
+            {
+              "name": "createdByAi",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
                 }
               },
               "isDeprecated": false,
