@@ -96,6 +96,22 @@ class App.ArticleViewItem extends App.ControllerObserver
     # prepare html body
     if article.content_type is 'text/html'
       body = article.body
+
+      domBody = $('<div>').html(body)
+      domBody.find('img')
+        .addBack('img')
+        .each((i, el) ->
+          el = $(el)
+
+          if el[0].style.height
+            el.css('max-height', el[0].style.height)
+            el.css('height', 'auto')
+
+          el.css('max-width', '100%')
+        )
+
+      body = domBody.html()
+
       if article.preferences && article.preferences.signature_detection
         signatureDetected = '<span class="js-signatureMarker"></span>'
         body = body.replace(signatureDetected, '')

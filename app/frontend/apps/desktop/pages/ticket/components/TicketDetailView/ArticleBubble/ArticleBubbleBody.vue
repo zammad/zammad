@@ -8,7 +8,7 @@ import { useHtmlInlineImages } from '#shared/composables/useHtmlInlineImages.ts'
 import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import { type ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
-import { textToHtml } from '#shared/utils/helpers.ts'
+import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.ts'
 
 import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
 
@@ -41,7 +41,7 @@ const body = computed(() => {
   if (props.article.contentType !== 'text/html') {
     return textToHtml(props.article.bodyWithUrls)
   }
-  return props.article.bodyWithUrls
+  return ensureImagesKeepAspectRatio(props.article.bodyWithUrls)
 })
 
 const showAuthorInformation = computed(() => {

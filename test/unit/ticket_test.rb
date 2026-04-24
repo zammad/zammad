@@ -414,7 +414,7 @@ class TicketTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    article_attributes = Ticket::Article.insert_urls(article1.attributes_with_association_ids)
+    article_attributes = article1.attributes_with_association_ids
 
     assert_no_match('15.274327094.140938@zammad.example.com', article_attributes['body'])
     assert_no_match('15.274327094.140939@zammad.example.com', article_attributes['body'])
@@ -500,7 +500,7 @@ class TicketTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    article_attributes = Ticket::Article.insert_urls(article1.attributes_with_association_ids)
+    article_attributes = article1.attributes_with_association_ids
 
     assert_no_match('15.274327094.140938@zammad.example.com', article_attributes['body'])
     assert_no_match('15.274327094.140939@zammad.example.com', article_attributes['body'])

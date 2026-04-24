@@ -18,7 +18,7 @@ import { i18n } from '#shared/i18n.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 import stopEvent from '#shared/utils/events.ts'
-import { textToHtml } from '#shared/utils/helpers.ts'
+import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.ts'
 
 import { useArticleSeen } from '../../composable/useArticleSeen.ts'
 
@@ -86,7 +86,8 @@ const body = computed(() => {
   if (props.contentType !== 'text/html') {
     return textToHtml(props.content)
   }
-  return props.content
+
+  return ensureImagesKeepAspectRatio(props.content)
 })
 
 const colorsClasses = computed(() => {
