@@ -1,0 +1,19 @@
+<title><%= @context_data[:ticket].title %></title>
+<% @context_data[:prepared_articles]&.each do |article| -%>
+<article>
+  <sender_type><%= article[:sender_type] %></sender_type>
+  <created_at><%= article[:created_at] %></created_at>
+  <visibility><%= article[:visibility] %></visibility>
+  <text><![CDATA[<%= article[:text] %>]]></text>
+  <%- if !article[:attachments].blank? -%>
+  <attachments>
+    <%- article[:attachments].each do |attachment| -%>
+    <attachment>
+      <ocr_text><![CDATA[<%= attachment[:text] %>]]></ocr_text>
+      <content_type><%= attachment[:type] %></content_type>
+    </attachment>
+    <%- end -%>
+  </attachments>
+  <%- end -%>
+</article>
+<% end -%>

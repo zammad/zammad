@@ -44,17 +44,11 @@ module Gql::Types::Ticket
     # belongs_to :origin_by, Gql::Types::UserType # see :author instead
 
     def body_with_urls
-      display_article['body']
+      display_article[:body]
     end
 
     def attachments_without_inline
-      # TODO: This uses asset handling related code which does more than what we need here.
-      #   On the long run it might be better to store the display flag directly with the attachments,
-      #   rather than always calculating it on-the-fly.
-      select_ids = display_article['attachments'].pluck('id')
-      @object.attachments.select do |attachment|
-        select_ids.include?(attachment.id)
-      end
+      display_article[:attachments]
     end
 
     def security_state
@@ -72,8 +66,11 @@ module Gql::Types::Ticket
     private
 
     def display_article
-      # TODO: This uses asset handling related code which does more than what we need here.
-      @display_article ||= @object.class.insert_urls(@object.attributes_with_association_ids)
+      @display_article ||= begin
+        body, attachments = @object.class.insert_urls(@object)
+
+        { body:, attachments: }
+      end
     end
   end
 end

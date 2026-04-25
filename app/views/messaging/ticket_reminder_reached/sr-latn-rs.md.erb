@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Dostignuto vreme čekanja!_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Dostignuto vreme čekanja!_
 Tiket zahteva pažnju: dostignuto je vreme čekanja za (#{ticket.title}) sa klijentom „*#{ticket.customer.longname}*”.
 
 <% if @objects[:article] %>

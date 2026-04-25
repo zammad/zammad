@@ -1,9 +1,11 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, useTemplateRef } from 'vue'
+import { computed, toRef, useTemplateRef } from 'vue'
 
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
@@ -19,6 +21,7 @@ import {
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
 import TicketAccountedTime from './TicketSidebarInformationContent/TicketAccountedTime.vue'
+import TicketAIKnowledgeBaseAnswers from './TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue'
 import TicketLinks from './TicketSidebarInformationContent/TicketLinks.vue'
 import TicketSubscribers from './TicketSidebarInformationContent/TicketSubscribers.vue'
 import TicketTags from './TicketSidebarInformationContent/TicketTags.vue'
@@ -32,6 +35,17 @@ const { ticket } = useTicketInformation()
 const ticketLinksInstance = useTemplateRef('ticket-links')
 
 const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
+const config = toRef(useApplicationStore(), 'config')
+const { hasPermission } = useSessionStore()
+
+const showAIKnowledgeBaseAnswers = computed(
+  () =>
+    isTicketAgent.value &&
+    hasPermission('knowledge_base.editor') &&
+    config.value.kb_active &&
+    config.value.ai_provider &&
+    config.value.ai_assistance_kb_answer_from_ticket_generation,
+)
 
 const ticketMergeFlyoutName = 'ticket-merge'
 const ticketChangeCustomerFlyoutName = 'ticket-change-customer'
@@ -112,9 +126,18 @@ const actions = computed<MenuItem[]>(() => [
       v-show="isTicketEditable || ticketLinksInstance?.hasLinks"
       id="ticket-links"
       v-model="persistentStates.collapseLinks"
-      :title="__('Links')"
+      :title="__('Related tickets')"
     >
       <TicketLinks ref="ticket-links" :ticket="ticket" :is-ticket-editable="isTicketEditable" />
+    </CommonSectionCollapse>
+
+    <CommonSectionCollapse
+      v-if="showAIKnowledgeBaseAnswers"
+      id="ticket-ai-knowledge-base-answers"
+      v-model="persistentStates.collapseKnowledgeBase"
+      :title="__('Related knowledge')"
+    >
+      <TicketAIKnowledgeBaseAnswers />
     </CommonSectionCollapse>
 
     <CommonSectionCollapse

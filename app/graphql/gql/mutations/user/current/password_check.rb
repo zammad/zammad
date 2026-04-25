@@ -19,8 +19,8 @@ module Gql::Mutations
 
     def resolve(password:)
       password_check = Service::User::PasswordCheck
-        .new(user: context.current_user, password:)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(password:)
 
       if !password_check[:success]
         return error_response({ field: :password, message: __('The provided password is incorrect.') })

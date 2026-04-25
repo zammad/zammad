@@ -9,19 +9,13 @@ import { edgesToArray } from '#shared/utils/helpers.ts'
 export const useOnlineNotificationList = () => {
   const notificationsQuery = new QueryHandler(useOnlineNotificationsQuery())
 
-  const loading = notificationsQuery.loading()
-
   const result = notificationsQuery.result()
 
   const notificationList = computed(
     () => edgesToArray(result.value?.onlineNotifications) as OnlineNotification[],
   )
 
-  const isLoading = computed(() => {
-    if (result.value !== undefined) return false
-
-    return loading.value
-  })
+  const isLoading = notificationsQuery.loadingWithoutCachedResult()
 
   const hasUnseenNotification = computed(() =>
     notificationList.value.some((notification) => !notification.seen),

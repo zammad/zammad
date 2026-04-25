@@ -40,17 +40,13 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::RemoveMethod, :aggregat
   context 'when user is authenticated', authenticated_as: :user do
     it 'calls remove method service' do
       allow(Service::User::TwoFactor::RemoveMethod)
-        .to receive(:new)
-        .and_call_original
-
-      expect_any_instance_of(Service::User::TwoFactor::RemoveMethod)
         .to receive(:execute)
         .and_call_original
 
       gql.execute(mutation, variables: variables)
 
       expect(Service::User::TwoFactor::RemoveMethod)
-        .to have_received(:new).with(user: user, method_name: 'authenticator_app')
+        .to have_received(:execute).with(method_name: 'authenticator_app', current_user: user)
     end
 
     context 'when given method exists' do

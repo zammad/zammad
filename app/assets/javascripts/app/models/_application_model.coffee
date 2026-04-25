@@ -114,12 +114,14 @@ class App.Model extends Spine.Model
     # return no errors
     return
 
+  # keep in sync with ChecksCoreWorkflow::EMPTY_VALUES
   @_validate_is_empty: (value) ->
     return true if value is ''
     return true if value is null
     return true if value is undefined
     return true if _.isArray(value) is true && value.length is 0
     return true if _.isArray(value) is true && value.length is 1 && value[0] is ''
+    return true if _.isObject(value) is true && _.isEmpty(value)
     false
 
   ###

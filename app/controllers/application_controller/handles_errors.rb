@@ -7,16 +7,16 @@ module ApplicationController::HandlesErrors
     rescue_from StandardError, with: :internal_server_error
     rescue_from 'ExecJS::RuntimeError', with: :internal_server_error
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
-    rescue_from ActiveRecord::StatementInvalid, with: :unprocessable_entity
-    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
-    rescue_from ActiveRecord::DeleteRestrictionError, with: :unprocessable_entity
-    rescue_from ArgumentError, with: :unprocessable_entity
-    rescue_from Exceptions::UnprocessableEntity, with: :unprocessable_entity
+    rescue_from ActiveRecord::StatementInvalid, with: :unprocessable_content
+    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_content
+    rescue_from ActiveRecord::DeleteRestrictionError, with: :unprocessable_content
+    rescue_from ArgumentError, with: :unprocessable_content
+    rescue_from Exceptions::UnprocessableContent, with: :unprocessable_content
     rescue_from Exceptions::NotAuthorized, with: :unauthorized
     rescue_from Exceptions::Forbidden, with: :forbidden
     rescue_from Pundit::NotAuthorizedError, with: :pundit_not_authorized_error
-    rescue_from Store::Provider::S3::Error, with: :unprocessable_entity
-    rescue_from Exceptions::MissingAttribute, Exceptions::InvalidAttribute, ActionController::ParameterMissing, with: :unprocessable_entity
+    rescue_from 'Store::Provider::S3::Error', with: :unprocessable_content
+    rescue_from Exceptions::MissingAttribute, Exceptions::InvalidAttribute, ActionController::ParameterMissing, with: :unprocessable_content
   end
 
   def not_found(e)
@@ -25,9 +25,9 @@ module ApplicationController::HandlesErrors
     http_log
   end
 
-  def unprocessable_entity(e)
+  def unprocessable_content(e)
     logger.error e
-    respond_to_exception(e, :unprocessable_entity)
+    respond_to_exception(e, :unprocessable_content)
     http_log
   end
 
@@ -63,8 +63,8 @@ module ApplicationController::HandlesErrors
     case exception
     when ActiveRecord::RecordNotFound
       not_found(exception)
-    when Exceptions::UnprocessableEntity
-      unprocessable_entity(exception)
+    when Exceptions::UnprocessableContent
+      unprocessable_content(exception)
     else
       forbidden(exception)
     end
@@ -107,9 +107,9 @@ module ApplicationController::HandlesErrors
       data[:error_human] = data[:error]
     elsif e.instance_of?(Exceptions::InvalidAttribute)
       data[:invalid_attribute] = { e.attribute => data[:error] }
-    elsif e.is_a?(Exceptions::UnprocessableEntity)
+    elsif e.is_a?(Exceptions::UnprocessableContent)
       data[:error_human] = data[:error]
-      data[:unprocessable_entity] = e.entity
+      data[:unprocessable_content] = e.content
     elsif e.is_a?(Exceptions::InvalidCSRFToken)
       data[:error_human] = data[:error]
       data[:invalid_csrf_token] = true

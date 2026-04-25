@@ -83,15 +83,47 @@ Browser in CI is not affected.
 
 Example usage: `Rspec.describe :example, time_zone: 'Vilnius/Lithuania'`
 
-### `db_strategy: :reset / :reset_all`
+### `db_strategy: :reset`
 
-RSpec resets database using transaction after each example. But DBs can't handle some changes (e.g. altering schema)
-this way. MySQL is especially bad at this.
+RSpec resets database using transaction after each example. But PostgreSQL can't handle some changes (e.g. altering schema)
+this way. Use `db_strategy: :reset` to reset database schema after each example.
 
-- `db_strategy: :reset` will reset database after each example
-- `db_strategy: :reset_all` will reset database only once after whole context! This is a great way to increase
-  performance. But easy to shoot yourself in the foot too! Use custom `before :all` and `after :all` to setup and tear down
-  environment
+Example usage: `Rspec.describe :example, db_strategy: :reset`
+
+### `type: :db_migration`
+
+By using `type: :db_migration`, you can test database migrations.
+
+Be aware: names of migration class and `Rspec.describe` block must be the same.
+
+Explanation:
+Usually `describe` needs a to be valid class name or any string.
+But `type: :db_migration` is a bit more sensitive.
+Since `migrate` method relies on `described_class` to properly load migration class, use and run it in tests directly.
+
+For example, if your migration class looks like this:
+
+```ruby
+# db/migrate/20240101000000_this_name_needs_to_match.rb
+class ThisNameNeedsToMatch < ActiveRecord::Migration[8.0]
+```
+
+Then in your test you need to have the same name in `Rspec.describe` block, so it can properly load the migration class.
+
+```ruby
+# spec/db/migrate/this_name_needs_to_match_spec.rb
+RSpec.describe ThisNameNeedsToMatch, type: :db_migration do
+```
+
+Run `migrate` to execute the migration
+
+```ruby
+it "test migration changes" do
+  expect { migrate }
+    .to change { object.something }
+    .to(false)
+end
+```
 
 ### `performs_jobs`
 

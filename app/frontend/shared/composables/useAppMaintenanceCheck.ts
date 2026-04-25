@@ -7,6 +7,7 @@ import {
   useNotifications,
   NotificationTypes,
 } from '#shared/components/CommonNotifications/index.ts'
+import type { Notification } from '#shared/components/CommonNotifications/types.ts'
 import { useApplicationBuildChecksumQuery } from '#shared/graphql/queries/applicationBuildChecksum.api.ts'
 import { useAppMaintenanceSubscription } from '#shared/graphql/subscriptions/appMaintenance.api.ts'
 import type {
@@ -36,13 +37,17 @@ interface UseAppMaintenanceCheckOptions {
 }
 
 const useAppMaintenanceCheck = (maintenanceOptions: UseAppMaintenanceCheckOptions = {}) => {
-  const notify = (message: string, callback?: () => void) => {
+  const notify = (
+    notification: Pick<
+      Notification,
+      'message' | 'closeCallback' | 'actionLabel' | 'actionCallback'
+    >,
+  ) => {
     useNotifications().notify({
       id: 'app-maintenance',
-      message,
       type: NotificationTypes.Warn,
       persistent: true,
-      callback,
+      ...notification,
     })
   }
 
@@ -77,24 +82,36 @@ const useAppMaintenanceCheck = (maintenanceOptions: UseAppMaintenanceCheckOption
 
     checksumQuery.watchOnResult((queryResult): void => {
       if (!queryResult?.applicationBuildChecksum.length) return
+
       if (!previousChecksum) {
         previousChecksum = queryResult?.applicationBuildChecksum
         testFlags.set('useApplicationBuildChecksumQuery.firstResult')
       }
-      if (queryResult?.applicationBuildChecksum !== previousChecksum) {
-        notify(notificationMessage, maintenanceOptions.onNeedRefresh)
-      }
+
+      if (queryResult?.applicationBuildChecksum === previousChecksum) return
+
+      notify({
+        message: notificationMessage,
+        closeCallback: maintenanceOptions.onNeedRefresh,
+        actionLabel: __('Reload now'),
+        actionCallback: () => {
+          maintenanceOptions.onNeedRefresh?.()
+          window.location.reload()
+        },
+      })
     })
 
     appMaintenanceSubscription = new SubscriptionHandler(useAppMaintenanceSubscription())
     appMaintenanceSubscription.onResult((result) => {
       const type = result.data?.appMaintenance?.type
+
       let message = notificationMessage
 
       if (!type) {
         testFlags.set('useAppMaintenanceSubscription.subscribed')
         return
       }
+
       switch (type) {
         case EnumAppMaintenanceType.ConfigChanged:
           message = __('The configuration of Zammad has changed. Please reload at your earliest.')
@@ -106,7 +123,12 @@ const useAppMaintenanceCheck = (maintenanceOptions: UseAppMaintenanceCheckOption
         default:
           break
       }
-      notify(message, () => window.location.reload())
+
+      notify({
+        message,
+        actionLabel: __('Reload now'),
+        actionCallback: () => window.location.reload(),
+      })
     })
   })
 }

@@ -38,6 +38,12 @@ describe('guided setup automated run', () => {
 
       const view = await visitView('/guided-setup/automated/run')
 
+      // CommonLoader uses useDebouncedLoading which even in test mode (delay=0) — goes
+      // through useTimeoutFn and schedules a setTimeout(fn, 0). With vi.useFakeTimers() active, this timer
+      // never fires automatically, so debouncedLoading stays false and the spinner icon is never rendered
+      // in the DOM.
+      await vi.advanceTimersByTimeAsync(0)
+
       expect(view.getByText('Automated setup')).toBeInTheDocument()
       expect(view.getByIconName('spinner')).toBeInTheDocument()
 

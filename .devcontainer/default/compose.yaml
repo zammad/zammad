@@ -32,13 +32,21 @@ services:
     command: sleep infinity
 
   elasticsearch:
-    image: elasticsearch:9.0.4
+    image: elasticsearch:9.3.2
     environment:
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
       - discovery.type=single-node
       - xpack.security.enabled=false
       - http.cors.enabled=true
       - http.cors.allow-origin=/https:\/\/app.elasticvue.com/
+      # Uncomment and change the following settings if you need to allow larger payloads, e.g. for debugging or testing.
+      #   Max length of 100MB translates to ~40MB for allowed attachments, due to base64 encoding overhead.
+      #   Indexing pressure limit of 10% of heap memory is enough for ~50MB attachments (see a ES_JAVA_OPTS above).
+      #   Keep in mind to keep these limits aligned with the following Zammad settings:
+      #     `es_attachment_max_size_in_mb=10` and `es_total_max_size_in_mb=300`.
+      # - http.max_content_length=100mb
+      # - indexing_pressure.memory.limit=10%
+      # - indexing_pressure.memory.coordinating.limit=10%
     restart: unless-stopped
     ports:
       # Expose the ES service for direct access if needed, but avoid conflicts with host services.

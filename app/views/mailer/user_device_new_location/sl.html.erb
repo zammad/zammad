@@ -1,0 +1,19 @@
+#{config.product_name} prijava iz nove države
+
+<div>Pozdravljeni #{user.firstname},</div>
+<br>
+<div>Videti je, da ste svoj račun uporabili z <b>znano napravo, vendar iz nove države</b> dne "#{user_device.created_at}":</div>
+<br>
+<div>
+Vaša naprava: #{user_device.name}<br>
+Vaša lokacija (približno): #{user_device.location}<br>
+Vaš IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Država je bila dodana na vaš seznam znanih naprav, ki si ga lahko ogledate tukaj:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Če to niste bili vi, odstranite napravo, spremenite geslo svojega računa in se obrnite na svojega skrbnika. Nekdo je morda nepooblaščeno dostopal do vašega računa.</div>
+<br>
+<div>Vaša ekipa #{config.product_name}</div>

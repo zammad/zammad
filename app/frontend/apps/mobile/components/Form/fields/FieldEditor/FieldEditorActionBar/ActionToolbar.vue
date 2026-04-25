@@ -115,7 +115,7 @@ whenever(
     <div
       ref="action-bar"
       data-test-id="action-bar"
-      class="Menubar relative flex max-w-full items-center gap-1 overflow-x-auto overflow-y-hidden p-2"
+      class="relative scroll-bar-hidden flex max-w-full items-center gap-1 overflow-x-auto overflow-y-hidden p-2"
       role="toolbar"
       tabindex="0"
       @keydown.tab="hideAfterLeaving"
@@ -170,15 +170,6 @@ whenever(
 </template>
 
 <style scoped>
-.Menubar {
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
-
-  &::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-  }
-}
-
 .ShadowGradient {
   position: absolute;
   height: 100%;

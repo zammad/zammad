@@ -1,9 +1,18 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Channel::Email::Create < Service::Base
+  attr_reader :inbound_configuration, :outbound_configuration, :group, :email_address, :email_realname, :group_email_address
 
-  def execute(inbound_configuration:, outbound_configuration:, group:, email_address:, email_realname:, group_email_address: false)
+  def initialize(inbound_configuration:, outbound_configuration:, group:, email_address:, email_realname:, group_email_address: false)
+    @inbound_configuration = inbound_configuration
+    @outbound_configuration = outbound_configuration
+    @group = group
+    @email_address = email_address
+    @email_realname = email_realname
+    @group_email_address = group_email_address
+  end
 
+  def execute
     new_channel = ::Channel.create!(
       area:         'Email::Account',
       options:      {
@@ -21,7 +30,7 @@ class Service::Channel::Email::Create < Service::Base
     end
 
     if group_email_address
-      Service::Channel::Email::UpdateDestinationGroupEmail.new(group:, channel: new_channel).execute
+      Service::Channel::Email::UpdateDestinationGroupEmail.execute(group:, channel: new_channel)
     end
 
     new_channel
@@ -47,5 +56,4 @@ class Service::Channel::Email::Create < Service::Base
 
     address.save!
   end
-
 end

@@ -47,7 +47,7 @@ module ApplicationController::HandlesDevices
       fingerprint = params[:fingerprint] || request.headers['X-Browser-Fingerprint']
 
       if !session[:user_device_updated_at] && !fingerprint && !session[:user_device_fingerprint]
-        raise Exceptions::UnprocessableEntity, __('Need fingerprint param!')
+        raise Exceptions::UnprocessableContent, __('Need fingerprint param!')
       end
 
       if fingerprint

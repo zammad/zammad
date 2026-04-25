@@ -27,7 +27,7 @@ export const useObjectAttributes = (object: EnumObjectManagerObjects) => {
       }),
     )
     const attributesRaw = handler.result()
-    const attributesLoading = handler.loading()
+    const attributesLoading = handler.loadingWithoutCachedResult()
 
     const attributes = computed<ObjectAttribute[]>(() => {
       return [

@@ -16,8 +16,6 @@ class Service::AI::Analytics::GenerateReport::Base < Service::Base
   # @param scope [ActiveRecord::Relation<AI::Analytics::Run>]
   # @param format [Symbol] :json or :xlsx
   def initialize(scope: AI::Analytics::Run.all, format: :json)
-    super()
-
     @scope  = scope
     @format = format.to_sym
   end

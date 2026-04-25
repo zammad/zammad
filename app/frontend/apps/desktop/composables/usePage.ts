@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
 import {
   computed,
   onActivated,
@@ -17,9 +19,10 @@ interface PageOptions {
   pageActive?: Ref<boolean>
   metaTitle?: ComputedRef<string>
   onReactivate?: () => void
+  onDeactivated?: () => void
 }
 
-export const usePage = (pageOptions: PageOptions) => {
+export const usePage = (pageOptions: PageOptions = {}) => {
   const pageActive = pageOptions.pageActive || ref(true)
 
   const pageInactive = computed(() => !pageActive.value)
@@ -54,6 +57,8 @@ export const usePage = (pageOptions: PageOptions) => {
     pageActive.value = false
 
     stopMetaTitleWatcher?.()
+
+    pageOptions.onDeactivated?.()
   })
 
   return {

@@ -6,8 +6,6 @@ class Service::CheckFeatureEnabled < Service::Base
   DEFAULT_ERROR_MESSAGE = __('This feature is not enabled.').freeze
 
   def initialize(name: nil, exception: true, custom_error_message: nil, custom_exception_class: nil)
-    super()
-
     @name                   = name
     @exception              = exception
     @custom_error_message   = custom_error_message

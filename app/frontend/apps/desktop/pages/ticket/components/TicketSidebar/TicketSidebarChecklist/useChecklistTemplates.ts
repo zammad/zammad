@@ -32,15 +32,9 @@ export const useChecklistTemplates = (createNewChecklist: CreateNewChecklist) =>
     ),
   )
 
-  const templatesLoading = checklistTemplatesQuery.loading()
   const checklistTemplates = checklistTemplatesQuery.result()
 
-  const isLoadingTemplates = computed(() => {
-    // Return already true when an templates exists already in the cache.
-    if (checklistTemplates.value !== undefined) return false
-
-    return templatesLoading.value
-  })
+  const isLoadingTemplates = checklistTemplatesQuery.loadingWithoutCachedResult()
 
   checklistTemplatesQuery.subscribeToMore<
     ChecklistTemplateUpdatesSubscriptionVariables,

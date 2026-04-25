@@ -1,0 +1,18 @@
+name: "zammad-devcontainer"
+
+include: [../default/compose.yaml]
+
+services:
+  ldap:
+    build: ./ldap
+    environment:
+      LDAP_BASE_DN: dc=foo,dc=example,dc=com
+      LDAP_ADMIN_DN: cn=admin,dc=foo,dc=example,dc=com
+      LDAP_ADMIN_PASSWORD: test
+      LDAP_DISALLOW_BIND_ANON: "false"
+    volumes:
+      - ./ldap/certs:/certs
+    ports:
+      - 127.0.0.1:1389:389 # LDAP (no TLS/STARTTLS)
+      - 127.0.0.1:1636:636 # LDAP (TLS)
+    restart: unless-stopped

@@ -35,7 +35,7 @@ const noBatchLink = createHttpLink(connectionSettings)
 
 const batchLink = new BatchHttpLink({
   ...connectionSettings,
-  batchMax: 5,
+  batchMax: 3,
   batchInterval: 20,
 })
 

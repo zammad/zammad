@@ -5,8 +5,6 @@ module Service::AI::VectorDB::Item
     attr_reader :o_id, :object_name, :content, :metadata
 
     def initialize(object_id:, object_name:, content:, metadata: {})
-      super()
-
       @o_id = object_id
       @object_name = object_name
       @content = content

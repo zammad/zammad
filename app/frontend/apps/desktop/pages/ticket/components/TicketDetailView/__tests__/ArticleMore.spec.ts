@@ -2,24 +2,35 @@
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import ArticleMore from '#desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue'
+import ArticleMore, {
+  type Props,
+} from '#desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue'
 
-const renderWrapper = (disabled: boolean) => {
-  return renderComponent(ArticleMore, { router: true, props: { disabled } })
+const renderWrapper = (props: Props = { nextFetchCount: 5 }) => {
+  return renderComponent(ArticleMore, { router: true, props })
 }
 
 describe('ArticleMore', () => {
-  it('creates the component with enabled button', () => {
-    const wrapper = renderWrapper(false)
+  it('displays component with count', () => {
+    const wrapper = renderWrapper({ disabled: false, nextFetchCount: 5 })
 
-    expect(wrapper.queryByText('See more')).toBeInTheDocument()
+    expect(wrapper.queryByText('Load 5 more')).toBeInTheDocument()
     expect(wrapper.getByRole('button')).not.toBeDisabled()
   })
 
   it('creates the component with disabled button', () => {
-    const wrapper = renderWrapper(true)
+    const wrapper = renderWrapper({ disabled: true, nextFetchCount: 5 })
 
-    expect(wrapper.queryByText('See more')).toBeInTheDocument()
+    expect(wrapper.queryByText('Load 5 more')).toBeInTheDocument()
+
     expect(wrapper.getByRole('button')).toBeDisabled()
+  })
+
+  it('emits load-more event on click', async () => {
+    const wrapper = renderWrapper({ disabled: false, nextFetchCount: 5 })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Load 5 more' }))
+
+    expect(wrapper.emitted('load-more')).toBeTruthy()
   })
 })

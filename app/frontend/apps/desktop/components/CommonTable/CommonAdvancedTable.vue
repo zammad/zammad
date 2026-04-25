@@ -594,7 +594,7 @@ watch(
                       },
                       getLinkColorClasses(item),
                     ]"
-                    class="block! truncate text-sm group-hover:text-black! group-focus-visible:text-white group-active:text-white hover:no-underline! group-hover:dark:text-white!"
+                    class="block! truncate text-sm group-hover:text-black! group-focus-visible:text-white group-active:text-white! hover:no-underline! group-hover:dark:text-white! group-active:dark:text-white!"
                     @click.stop
                     @keydown.stop
                   >
@@ -607,7 +607,7 @@ watch(
                   <CommonLabel
                     v-else
                     v-tooltip.truncate="getTooltipText(item, tableAttribute)"
-                    class="block! truncate text-gray-100! group-hover:text-black! group-focus-visible:text-white! group-active:text-white! dark:text-neutral-400! group-hover:dark:text-white!"
+                    class="block! truncate text-gray-100! group-hover:text-black! group-focus-visible:text-white! group-active:text-white! dark:text-neutral-400! group-hover:dark:text-white! group-active:dark:text-white!"
                     :class="[
                       {
                         'text-black! dark:text-white!': isRowSelected,

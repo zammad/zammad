@@ -945,7 +945,7 @@ is certain attribute used by triggers, overviews or schedulers
     model.columns
   end
 
-  def check_name
+  def check_name(raise_error: true)
     return if !name
 
     if name.match?(%r{.+?_(id|ids)$}i)
@@ -971,21 +971,21 @@ is certain attribute used by triggers, overviews or schedulers
       errors.add(:name, __('%{name} is a reserved word'), name: name)
     end
 
-    # fixes issue #2236 - Naming an attribute "attribute" causes ActiveRecord failure
-    begin
-      ObjectLookup.by_id(object_lookup_id).constantize.instance_method_already_implemented? name
-    rescue ActiveRecord::DangerousAttributeError
-      errors.add(:name, __('%{name} is a reserved word'), name: name)
+    record = object_lookup.to_class.new
+
+    # https://github.com/zammad/zammad/issues/2236
+    # https://github.com/zammad/zammad/issues/6072
+    if new_record?
+      if record.respond_to?(name, true)
+        errors.add(:name, __('%{name} is a reserved word'), name: name)
+      end
+      if record.attributes.key?(name)
+        errors.add(:name, __('%{name} already exists'), name: name)
+      end
     end
 
-    record = model.constantize.new
-    if new_record? && (record.respond_to?(name.to_sym) || record.attributes.key?(name))
-      errors.add(:name, __('%{name} already exists'), name: name)
-    end
-
-    if errors.present?
-      raise ActiveRecord::RecordInvalid, self
-    end
+    raise ActiveRecord::RecordInvalid, self if raise_error && errors.present?
+    return false if errors.present?
 
     true
   end

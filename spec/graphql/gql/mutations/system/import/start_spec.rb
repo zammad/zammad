@@ -27,7 +27,6 @@ RSpec.describe Gql::Mutations::System::Import::Start, type: :graphql do
 
     context 'with valid configuration' do
       before do
-        allow_any_instance_of(Service::System::Import::Run).to receive(:execute).and_return(nil)
         Setting.set('import_backend', 'otrs')
       end
 

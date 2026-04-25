@@ -13,9 +13,8 @@ module Gql::Types::Input::Ticket
     # We can't use loads: here because it requires a specific graphql type class.
     def load_link_object(payload)
       payload.to_h.tap do |p|
-        p[:link_object] = Gql::ZammadSchema.authorized_object_from_id(
-          p.delete(:link_object_id), type: ApplicationModel, user: context.current_user
-        )
+        p[:link_object] = Gql::ZammadSchema
+          .verified_object_from_id(p.delete(:link_object_id), type: [::Ticket, ::KnowledgeBase::Answer::Translation])
       end
     end
   end

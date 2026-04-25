@@ -41,7 +41,7 @@ const unsetColor = () => {
   <div v-if="editor" class="relative">
     <div
       data-test-id="color-menu-action-bar"
-      class="Menubar relative mx-auto flex max-w-md flex-col overflow-x-auto overflow-y-hidden"
+      class="relative mx-auto scroll-bar-hidden flex max-w-md flex-col overflow-x-auto overflow-y-hidden"
       :class="classes.actionBar.tableMenuContainer"
       role="toolbar"
       tabindex="0"
@@ -82,14 +82,3 @@ const unsetColor = () => {
     </div>
   </div>
 </template>
-
-<style scoped>
-.Menubar {
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
-
-  &::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-  }
-}
-</style>

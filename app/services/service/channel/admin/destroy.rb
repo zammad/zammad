@@ -3,8 +3,6 @@
 module Service::Channel::Admin
   class Destroy < Service::Base
     def initialize(area:, channel_id:)
-      super()
-
       @area       = area
       @channel_id = channel_id
     end

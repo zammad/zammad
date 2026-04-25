@@ -21,7 +21,7 @@ check token and return bot attributes of token
         result = bot.api.getMe
       end
     rescue
-      raise Exceptions::UnprocessableEntity, 'invalid api token'
+      raise Exceptions::UnprocessableContent, 'invalid api token'
     end
     result
   end
@@ -40,7 +40,7 @@ returns
 
   def self.set_webhook(token, callback_url)
     if callback_url.match?(%r{^http://}i)
-      raise Exceptions::UnprocessableEntity, __('The Telegram integration can only be configured on systems using the HTTPS protocol.')
+      raise Exceptions::UnprocessableContent, __('The Telegram integration can only be configured on systems using the HTTPS protocol.')
     end
 
     begin
@@ -48,7 +48,7 @@ returns
         bot.api.setWebhook(url: callback_url)
       end
     rescue
-      raise Exceptions::UnprocessableEntity, __('The webhook could not be saved by Telegram, seems to be an invalid URL.')
+      raise Exceptions::UnprocessableContent, __('The webhook could not be saved by Telegram, seems to be an invalid URL.')
     end
     true
   end
@@ -71,16 +71,16 @@ returns
     bot = check_token(token)
 
     if !channel && bot_duplicate?(bot.id)
-      raise Exceptions::UnprocessableEntity, __('This bot already exists.')
+      raise Exceptions::UnprocessableContent, __('This bot already exists.')
     end
 
     if params[:group_id].blank?
-      raise Exceptions::UnprocessableEntity, __("The required parameter 'group_id' is missing.")
+      raise Exceptions::UnprocessableContent, __("The required parameter 'group_id' is missing.")
     end
 
     group = Group.find_by(id: params[:group_id])
     if !group
-      raise Exceptions::UnprocessableEntity, __("The required parameter 'group_id' is invalid.")
+      raise Exceptions::UnprocessableContent, __("The required parameter 'group_id' is invalid.")
     end
 
     # generate random callback token
@@ -600,7 +600,7 @@ returns
       article.save!
       return article
     end
-    raise Exceptions::UnprocessableEntity, 'invalid telegram message'
+    raise Exceptions::UnprocessableContent, 'invalid telegram message'
   end
 
   def to_group(params, group_id, channel)
@@ -776,7 +776,7 @@ returns
     if !validate_file_size(file)
       message_text = __('The Telegram file is larger than the allowed 20 MB.')
       message(params[:message][:chat][:id], "Sorry, we could not handle your message. #{message_text}", params[:message][:from][:language_code])
-      raise Exceptions::UnprocessableEntity, message_text
+      raise Exceptions::UnprocessableContent, message_text
     end
 
     result = download_file(file[:file_id])
@@ -784,7 +784,7 @@ returns
     if !validate_download(result)
       message_text = __('The file could not be retrieved from the bot.')
       message(params[:message][:chat][:id], "Sorry, we could not handle your message. #{message_text}", params[:message][:from][:language_code])
-      raise Exceptions::UnprocessableEntity, message_text
+      raise Exceptions::UnprocessableContent, message_text
     end
 
     result

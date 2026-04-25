@@ -4,7 +4,6 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
 import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { usePagination } from '#shared/composables/usePagination.ts'
 import { EnumTicketStateTypeCategory, type User } from '#shared/graphql/types.ts'
@@ -39,11 +38,7 @@ const customerTicketsQuery = new QueryHandler(
 
 const customerTicketsResult = customerTicketsQuery.result()
 
-const loading = customerTicketsQuery.loading()
-
-const { debouncedLoading } = useDebouncedLoading({
-  isLoading: loading,
-})
+const loading = customerTicketsQuery.loadingWithoutCachedResult()
 
 const customerTickets = computed(() =>
   normalizeEdges(customerTicketsResult.value?.ticketsByCustomer),
@@ -80,32 +75,32 @@ const goToTicketSearch = () => {
 </script>
 
 <template>
-  <CustomerTicketListSkeleton v-if="debouncedLoading && !customerTickets.array.length" />
-  <CommonSimpleEntityList
-    v-else
-    :id="`customer-ticket-list-${customerOrganizations ? 'orgs-' : ''}${stateTypeCategory}`"
-    :type="EntityType.Ticket"
-    :label="label"
-    :entity="customerTickets"
-    has-popover
-    no-collapse
-  >
-    <template #trailing="{ entities, totalCount }">
-      <div v-if="totalCount" class="flex items-center justify-end gap-2.5">
-        <CommonShowMoreButton
-          :entities="entities"
-          :total-count="totalCount"
-          @click="pagination.fetchNextPage"
-        />
-        <CommonButton
-          v-if="totalCount > 5"
-          variant="secondary"
-          size="small"
-          @click="goToTicketSearch"
-        >
-          {{ $t('Search all') }}
-        </CommonButton>
-      </div>
-    </template>
-  </CommonSimpleEntityList>
+  <CustomerTicketListSkeleton :loading="loading">
+    <CommonSimpleEntityList
+      :id="`customer-ticket-list-${customerOrganizations ? 'orgs-' : ''}${stateTypeCategory}`"
+      :type="EntityType.Ticket"
+      :label="label"
+      :entity="customerTickets"
+      has-popover
+      no-collapse
+    >
+      <template #trailing="{ entities, totalCount }">
+        <div v-if="totalCount" class="flex items-center justify-end gap-2.5">
+          <CommonShowMoreButton
+            :entities="entities"
+            :total-count="totalCount"
+            @click="pagination.fetchNextPage"
+          />
+          <CommonButton
+            v-if="totalCount > 5"
+            variant="secondary"
+            size="small"
+            @click="goToTicketSearch"
+          >
+            {{ $t('Search all') }}
+          </CommonButton>
+        </div>
+      </template>
+    </CommonSimpleEntityList>
+  </CustomerTicketListSkeleton>
 </template>

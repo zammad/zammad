@@ -3,6 +3,7 @@ export interface ConfigList {
   'active_storage.content_types_allowed_inline': string[]
   'auth_saml_credentials.display_name'?: string
   'auth_openid_connect_credentials.display_name'?: string
+  ai_assistance_kb_answer_from_ticket_generation: boolean
   ai_assistance_text_tools: boolean
   ai_assistance_text_tools_fixed_instructions: string
   ai_assistance_ticket_summary: boolean

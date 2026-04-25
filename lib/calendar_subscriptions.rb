@@ -7,7 +7,7 @@ class CalendarSubscriptions
   def initialize(user)
     @user        = user
     @time_zone   = Setting.get('timezone_default')
-    @preferences = Service::User::CalendarSubscription::Preferences.new(@user).execute
+    @preferences = Service::User::CalendarSubscription::Preferences.with_current_user(@user).execute
   end
 
   def all
@@ -28,7 +28,7 @@ class CalendarSubscriptions
     object         = "CalendarSubscriptions::#{sub_class_name}".constantize
     instance       = object.new(@user, @preferences[ object_name ], @time_zone)
 
-    raise Exceptions::UnprocessableEntity, __('An unknown method name was requested.') if object::ALLOWED_METHODS.exclude?(method_name)
+    raise Exceptions::UnprocessableContent, __('An unknown method name was requested.') if object::ALLOWED_METHODS.exclude?(method_name)
 
     instance.send(method_name)
   end

@@ -39,8 +39,9 @@ RSpec.describe TriggerAIAgentJob, type: :job do
       end
 
       it "doesn't perform request" do
-        expect_any_instance_of(Service::AI::Agent::Run).not_to receive(:execute)
+        allow(Service::AI::Agent::Run).to receive(:execute)
         ActiveJob::Base.execute serialized_job
+        expect(Service::AI::Agent::Run).not_to have_received(:execute)
       end
     end
 
@@ -67,16 +68,13 @@ RSpec.describe TriggerAIAgentJob, type: :job do
 
   describe '#perform' do
     before do
-      allow(Service::AI::Agent::Run).to receive(:new).and_call_original
-      allow_any_instance_of(Service::AI::Agent::Run).to receive(:execute)
+      allow(Service::AI::Agent::Run).to receive(:execute).and_call_original
     end
 
     it 'executes the AI Agent service', aggregate_failures: true do
-      expect_any_instance_of(Service::AI::Agent::Run).to receive(:execute)
-
       perform
 
-      expect(Service::AI::Agent::Run).to have_received(:new).with(ai_agent:, ticket:, article:)
+      expect(Service::AI::Agent::Run).to have_received(:execute).with(ai_agent:, ticket:, article:)
     end
   end
 

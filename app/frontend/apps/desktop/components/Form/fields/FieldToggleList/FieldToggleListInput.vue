@@ -103,7 +103,7 @@ const { delegateFocus } = useDelegateFocus(
             ],
           },
         }"
-        @update:model-value="updateValue(option.value, $event)"
+        @update:model-value="updateValue(option.value, $event as boolean | undefined)"
         @blur="index === 0 ? context.handlers.blur : undefined"
       />
     </div>

@@ -11,8 +11,6 @@ class Service::BetaUi::SendFeedback < Service::Base
   attr_reader :type, :comment, :time_spent, :rating
 
   def initialize(type:, comment:, time_spent:, rating: nil)
-    super()
-
     @type = type
     @comment = comment
     @time_spent = time_spent
@@ -20,7 +18,7 @@ class Service::BetaUi::SendFeedback < Service::Base
   end
 
   def execute
-    Service::CheckFeatureEnabled.new(name: 'ui_desktop_beta_switch').execute
+    Service::CheckFeatureEnabled.execute(name: 'ui_desktop_beta_switch')
 
     token = fetch_form_token
 

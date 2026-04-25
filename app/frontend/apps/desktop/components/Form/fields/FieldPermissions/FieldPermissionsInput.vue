@@ -152,7 +152,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
               ],
             },
           }"
-          @update:model-value="updateValue(option.value, $event)"
+          @update:model-value="updateValue(option.value, $event as boolean | undefined)"
           @blur="index === 0 ? context.handlers.blur : undefined"
         />
         <CommonIcon
@@ -240,7 +240,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
                   ],
                 },
               }"
-              @update:model-value="updateValue(childOption.value, $event)"
+              @update:model-value="updateValue(childOption.value, $event as boolean | undefined)"
             />
           </div>
         </div>

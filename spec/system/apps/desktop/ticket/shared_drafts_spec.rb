@@ -15,6 +15,8 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
 
   context 'when using shared drafts' do
     before do
+      agent2
+
       visit "/ticket/#{ticket.id}"
 
       wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
@@ -28,6 +30,8 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
 
     it 'works correctly', performs_jobs: true do
       click_on 'Add phone call'
+
+      wait_for_form_updater(2)
 
       within_form(form_updater_gql_number: 2) do
         find_editor('Text').type('article text content')
@@ -47,17 +51,19 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
       click_on('Discard your unsaved changes')
       click_on('Discard changes')
 
-      within_form(form_updater_gql_number: 3) do
-        click_on('Add internal note')
-      end
+      wait_for_form_updater(6)
 
-      within_form(form_updater_gql_number: 4) do
+      click_on('Add internal note')
+
+      wait_for_form_updater(7)
+
+      within_form(form_updater_gql_number: 7) do
         find_editor('Text').type("Can we send this to the customer?  @@#{agent2.firstname}")
       end
 
       find('li', text: agent2.fullname).click
 
-      wait_for_form_updater(6)
+      wait_for_form_updater(9)
 
       click_on('Update')
 
@@ -83,6 +89,8 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
         # Modify draft
         click_on('Add phone call')
 
+        wait_for_form_updater(2)
+
         within_form(form_updater_gql_number: 2) do
           find_editor('Text').type('force overwrite dialog')
         end
@@ -90,6 +98,8 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
         click_on('Draft available')
         click_on('Apply')
         click_on('Overwrite content')
+
+        wait_for_form_updater(4)
 
         within_form(form_updater_gql_number: 4) do
           find_editor('Text').clear.type('article text content - now with modification')
@@ -106,7 +116,12 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
         # Create an internal note for agent1
         click_on('Discard your unsaved changes')
         click_on('Discard changes')
+
+        wait_for_form_updater(7)
+
         click_on('Add internal note')
+
+        wait_for_form_updater(8)
 
         within_form(form_updater_gql_number: 8) do
           find_editor('Text').type("I changed it slightly, it's ready now.  @@#{agent1.firstname}")
@@ -132,6 +147,8 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
 
       # Apply the draft
       click_on('Add phone call')
+
+      wait_for_form_updater(2)
 
       within_form(form_updater_gql_number: 2) do
         find_editor('Text').type('force overwrite dialog')

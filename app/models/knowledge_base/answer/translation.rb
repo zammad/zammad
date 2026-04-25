@@ -2,6 +2,7 @@
 
 class KnowledgeBase::Answer::Translation < ApplicationModel
   include HasDefaultModelUserRelations
+  include HasOnlineNotifications
 
   include HasAgentAllowedParams
   include HasLinks
@@ -41,11 +42,13 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   def search_index_attribute_lookup(include_references: true)
     attrs = super
 
-    attrs.merge('title'      => ActionController::Base.helpers.strip_tags(attrs['title']),
-                'content'    => content&.search_index_attribute_lookup,
-                'scope_id'   => answer.category_id,
-                'attachment' => answer.attachments_for_search_index_attribute_lookup,
-                'tags'       => answer.tag_list)
+    attrs['title']      = ActionController::Base.helpers.strip_tags(title)
+    attrs['content']    = content&.search_index_attribute_lookup
+    attrs['scope_id']   = answer.category_id
+    attrs['tags']       = answer.tag_list
+    attrs['attachment'] = answer.search_index_attachments_lookup(attrs.to_json.bytesize)
+
+    attrs
   end
 
   def vector_index_data

@@ -541,6 +541,10 @@ class String
     end
   end
 
+  def json_escape
+    to_json[1..-2] # convert to JSON string, and remove surrounding quotes
+  end
+
   private
 
   def viable_encodings(try_first: nil)

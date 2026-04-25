@@ -59,7 +59,7 @@ const searchQuery = new QueryHandler(
   ),
 )
 
-const loading = searchQuery.loading()
+const loading = searchQuery.loadingWithoutCachedResult()
 
 searchQuery.watchOnResult((data) => {
   if (!props.type) return

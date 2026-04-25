@@ -89,7 +89,7 @@ class TicketsController < ApplicationController
         shared_draft = Ticket::SharedDraftStart.find_by id: shared_draft_id
 
         if shared_draft && (shared_draft.group_id.to_s != params[:group_id]&.to_s || !shared_draft.group.shared_drafts?)
-          raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+          raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
         end
 
         shared_draft&.destroy
@@ -116,7 +116,7 @@ class TicketsController < ApplicationController
         email_address = $1
         email_address_validation = EmailAddressValidation.new(email_address)
         if !email_address_validation.valid?
-          render json: { error: "Invalid email '#{email_address}' of customer" }, status: :unprocessable_entity
+          render json: { error: "Invalid email '#{email_address}' of customer" }, status: :unprocessable_content
           return
         end
         local_customer = User.find_by(email: email_address.downcase)
@@ -199,17 +199,26 @@ class TicketsController < ApplicationController
       #   },
       # }
       if params[:links].present?
-        link = params[:links].permit!.to_h
-        raise Exceptions::UnprocessableEntity, __('Invalid link structure') if !link.is_a? Hash
+        authorize!(ticket, :agent_create_access?)
 
-        link.each do |target_object, link_types_with_object_ids|
-          raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object)') if !link_types_with_object_ids.is_a? Hash
+        links = params[:links].permit!.to_h
+        raise Exceptions::UnprocessableContent, __('Invalid link structure') if !links.is_a? Hash
+
+        links.each do |target_object, link_types_with_object_ids|
+          raise Exceptions::UnprocessableContent, __('Invalid link structure (Object)') if !link_types_with_object_ids.is_a? Hash
 
           link_types_with_object_ids.each do |link_type, object_ids|
-            raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object → LinkType)') if !object_ids.is_a? Array
+            raise Exceptions::UnprocessableContent, __('Invalid link structure (Object → LinkType)') if !object_ids.is_a? Array
 
             object_ids.each do |local_object_id|
-              link = Link.add(
+              case target_object
+              when 'Ticket'
+                authorize! Ticket.find(local_object_id), :agent_read_access?
+              when 'KnowledgeBase::Answer::Translation'
+                authorize! KnowledgeBase::Answer::Translation.find(local_object_id), :show?
+              end
+
+              Link.add(
                 link_type:                link_type,
                 link_object_target:       target_object,
                 link_object_target_value: local_object_id,
@@ -396,7 +405,7 @@ class TicketsController < ApplicationController
     end
 
     # merge ticket
-    Service::Ticket::Merge.new(current_user:).execute(source_ticket:, target_ticket:)
+    Service::Ticket::Merge.with_current_user(current_user).execute(source_ticket:, target_ticket:)
 
     # return result
     render json: {
@@ -489,7 +498,7 @@ class TicketsController < ApplicationController
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
+    raise Exceptions::UnprocessableContent, __('No source data submitted!') if string.blank?
 
     result = Ticket.csv_import(
       string:       string,
@@ -507,8 +516,8 @@ class TicketsController < ApplicationController
     authorize!(ticket, :update?)
 
     Service::Ticket::ForcedUpdate
-      .new(ticket, params.permit(:title))
-      .execute
+      .with_current_user(current_user)
+      .execute(ticket, params.permit(:title).to_h)
 
     render_reloaded_ticket(ticket)
   end
@@ -519,8 +528,8 @@ class TicketsController < ApplicationController
     authorize!(ticket, :agent_update_access?)
 
     Service::Ticket::ForcedUpdate
-      .new(ticket, params.permit(:customer_id, :organization_id))
-      .execute
+      .with_current_user(current_user)
+      .execute(ticket, params.permit(:customer_id, :organization_id).to_h)
 
     render_reloaded_ticket(ticket)
   end
@@ -555,7 +564,7 @@ class TicketsController < ApplicationController
     shared_draft = Ticket::SharedDraftZoom.find_by id: shared_draft_id
 
     if shared_draft && shared_draft.ticket != ticket
-      raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+      raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
     end
 
     shared_draft&.destroy

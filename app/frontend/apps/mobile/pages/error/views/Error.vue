@@ -34,7 +34,7 @@ const errorImage = computed(() => {
       <h1 class="mb-9 text-8xl font-bold">
         {{ errorOptions.statusCode }}
       </h1>
-      <img :alt="$t('Error')" :src="errorImage" />
+      <img class="max-h-96 w-135" :alt="$t('Error')" :src="errorImage" />
       <h2 class="mt-9 max-w-prose text-center text-xl font-medium">
         {{ $t(errorOptions.title) }}
       </h2>

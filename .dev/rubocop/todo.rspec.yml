@@ -57,7 +57,6 @@ RSpec/ContextWording:
     - 'spec/models/channel/email_parser_spec.rb'
     - 'spec/models/channel/filter/follow_up_merged_spec.rb'
     - 'spec/models/channel/filter/follow_up_possible_check_spec.rb'
-    - 'spec/models/channel/filter/match/email_regex_spec.rb'
     - 'spec/models/channel/filter/out_of_office_check_spec.rb'
     - 'spec/models/concerns/can_csv_import_examples.rb'
     - 'spec/models/concerns/checks_kb_client_notification_examples.rb'

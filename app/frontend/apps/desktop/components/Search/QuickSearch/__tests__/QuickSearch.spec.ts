@@ -4,7 +4,7 @@ import '#tests/graphql/builders/mocks.ts'
 
 import renderComponent, { initializePiniaStore } from '#tests/support/components/renderComponent.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
-import { waitForNextTick } from '#tests/support/utils.ts'
+import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 
 import { useRecentSearches } from '#shared/composables/useRecentSearches.ts'
 import {
@@ -127,6 +127,10 @@ describe('QuickSearch', () => {
         id: convertToGraphQLId('Ticket', 2),
         title: 'Ticket 1',
         number: '1',
+        state: nullableMock({
+          id: convertToGraphQLId('TicketState', 1),
+          name: 'open',
+        }),
         stateColorCode: EnumTicketStateColorCode.Open,
       } as Ticket,
       {
@@ -155,7 +159,7 @@ describe('QuickSearch', () => {
         wrapper.getByRole('heading', { level: 3, name: 'Recently closed' }),
       ).toBeInTheDocument()
 
-      expect(wrapper.getByRole('link', { name: 'check-circle-noTicket 1' })).toBeInTheDocument()
+      expect(wrapper.getByRole('link', { name: 'openTicket 1' })).toBeInTheDocument()
 
       expect(wrapper.getByRole('link', { name: 'User 1' })).toBeInTheDocument()
 

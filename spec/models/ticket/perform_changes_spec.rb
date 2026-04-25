@@ -634,6 +634,13 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
       }
     end
 
+    before do
+      allow(IPSocket)
+        .to receive(:getaddress)
+        .with('api.example.com')
+        .and_return('8.8.8.8')
+    end
+
     it 'schedules the webhooks notification job' do
       expect { object.perform_changes(trigger, 'trigger', context_data, 1) }.to have_enqueued_job(TriggerWebhookJob).with(
         trigger,

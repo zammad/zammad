@@ -1,6 +1,10 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type { OnlineNotificationStandalone } from '#shared/graphql/types.ts'
+import type {
+  OnlineNotificationStandalone,
+  OnlineNotificationStandaloneBulkJobData,
+  OnlineNotificationStandaloneKbAnswerGenerationFailedData,
+} from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import type { ActivityMessageBuilder } from '../types.ts'
@@ -9,7 +13,7 @@ import type { ActivityMessageBuilder } from '../types.ts'
 const path = () => undefined
 
 const messageText = (
-  type: string,
+  _type: string,
   _authorName: string,
   metaObject?: OnlineNotificationStandalone,
 ): Maybe<string> => {
@@ -17,14 +21,24 @@ const messageText = (
     return i18n.t('You can no longer see the standalone online notification.')
   }
 
-  switch (type) {
-    case 'bulk_job':
+  switch (metaObject.data.__typename) {
+    case 'OnlineNotificationStandaloneBulkJobData': {
+      const data = metaObject.data as OnlineNotificationStandaloneBulkJobData
       return i18n.t(
         'Bulk action completed for |%s| ticket(s): %s successful, %s failed',
-        metaObject.data.total,
-        metaObject.data.total! - metaObject.data.failedCount!,
-        metaObject.data.failedCount,
+        data.total,
+        data.total - data.failedCount,
+        data.failedCount,
       )
+    }
+    case 'OnlineNotificationStandaloneKbAnswerGenerationFailedData': {
+      const data = metaObject.data as OnlineNotificationStandaloneKbAnswerGenerationFailedData
+      return i18n.t(
+        'Failed to generate knowledge base draft for "%s": %s',
+        data.ticketTitle,
+        data.errorMessage,
+      )
+    }
     default:
       return null
   }

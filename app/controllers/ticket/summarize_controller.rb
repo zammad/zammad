@@ -4,8 +4,8 @@ class Ticket::SummarizeController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
   def summarize
-    Service::CheckFeatureEnabled.new(name: 'ai_assistance_ticket_summary', custom_exception_class: Exceptions::UnprocessableEntity).execute
-    Service::CheckFeatureEnabled.new(name: 'ai_provider', custom_error_message: __('AI provider is not configured.')).execute
+    Service::CheckFeatureEnabled.execute(name: 'ai_assistance_ticket_summary', custom_exception_class: Exceptions::UnprocessableContent)
+    Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
 
     authorize!(ticket, :agent_read_access?)
 
@@ -16,11 +16,12 @@ class Ticket::SummarizeController < ApplicationController
     end
 
     ai_result = Service::Ticket::AIAssistance::Summarize
-      .new(
+      .with_current_user(current_user)
+      .execute(
         locale:               current_user.locale,
         ticket:,
         persistence_strategy: :stored_only,
-      ).execute
+      )
 
     if ai_result&.content.blank?
       # When AI analytics error ID is present, return this error message instead of enqueuing a new job.

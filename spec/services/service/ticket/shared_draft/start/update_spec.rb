@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::SharedDraft::Start::Update do
+  subject(:service_result) { described_class.with_current_user(user).execute(shared_draft, form_id, content:, group:) }
+
   let(:group)        { create(:group) }
   let(:content)      { { content: Faker::Lorem.unique.sentence } }
   let(:form_id)      { 123 }
@@ -16,28 +18,26 @@ RSpec.describe Service::Ticket::SharedDraft::Start::Update do
 
   context 'when user has access to the draft group' do
     it 'returns new object' do
-      described_class
-        .new(user, shared_draft, form_id, content:, group:)
-        .execute
+      service_result
 
       expect(shared_draft.reload).to have_attributes(name: draft_name, content:, group:)
     end
 
     # name can be changed via REST api, but GraphQL mutation does not support it
-    it 'changes name if given' do
-      described_class
-        .new(user, shared_draft, form_id, content:, group:, name: 'new name')
-        .execute
+    context 'when name is given' do
+      subject(:service_result) { described_class.with_current_user(user).execute(shared_draft, form_id, content:, group:, name: 'new name') }
 
-      expect(shared_draft.reload).to have_attributes(name: 'new name')
+      it 'changes name if given' do
+        service_result
+
+        expect(shared_draft.reload).to have_attributes(name: 'new name')
+      end
     end
 
     it 'copies attachments from the given form' do
       create(:store, o_id: form_id)
 
-      described_class
-        .new(user, shared_draft, form_id, content:, group:)
-        .execute
+      service_result
 
       expect(Store.list(object: shared_draft.class.name, o_id: shared_draft.id))
         .to contain_exactly(have_attributes(filename: 'test.txt'))
@@ -45,6 +45,8 @@ RSpec.describe Service::Ticket::SharedDraft::Start::Update do
   end
 
   context 'when user has insufficient access to the target draft group' do
+    subject(:service_result) { described_class.with_current_user(user).execute(shared_draft, form_id, content:, group: new_group) }
+
     let(:new_group) { create(:group) }
 
     before do
@@ -52,11 +54,7 @@ RSpec.describe Service::Ticket::SharedDraft::Start::Update do
     end
 
     it 'raises an error' do
-      expect do
-        described_class
-          .new(user, shared_draft, form_id, content:, group: new_group)
-          .execute
-      end
+      expect { service_result }
         .to raise_error(Pundit::NotAuthorizedError)
     end
   end

@@ -137,19 +137,19 @@ RSpec.describe 'External Credentials', type: :request do
       describe '#link_account' do
         describe 'failure cases' do
           context 'with no credentials' do
-            it 'returns 422 unprocessable entity with internal (Zammad) error' do
+            it 'returns 422 unprocessable content with internal (Zammad) error' do
               get '/api/v1/external_credentials/facebook/link_account', as: :json
 
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
               expect(json_response).to include('error' => 'No Facebook app configured!')
             end
           end
 
           context 'with invalid credentials, via request params' do
-            it 'returns 422 unprocessable entity with internal (Zammad) error' do
+            it 'returns 422 unprocessable content with internal (Zammad) error' do
               get '/api/v1/external_credentials/facebook/link_account', params: invalid_credentials, as: :json
 
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
               expect(json_response).to include('error' => 'No Facebook app configured!')
             end
           end
@@ -170,19 +170,19 @@ RSpec.describe 'External Credentials', type: :request do
       describe '#callback' do
         describe 'failure cases' do
           context 'with no credentials' do
-            it 'returns 422 unprocessable entity with internal (Zammad) error' do
+            it 'returns 422 unprocessable content with internal (Zammad) error' do
               get '/api/v1/external_credentials/facebook/callback', as: :json
 
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
               expect(json_response).to include('error' => 'No Facebook app configured!')
             end
           end
 
           context 'with invalid credentials, via request params' do
-            it 'returns 422 unprocessable entity with internal (Zammad) error' do
+            it 'returns 422 unprocessable content with internal (Zammad) error' do
               get '/api/v1/external_credentials/facebook/callback', params: invalid_credentials, as: :json
 
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
               expect(json_response).to include('error' => 'No Facebook app configured!')
             end
           end

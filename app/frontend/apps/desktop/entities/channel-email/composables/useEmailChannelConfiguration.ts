@@ -9,7 +9,6 @@ import type {
   ChannelEmailInboundConfiguration,
   ChannelEmailOutboundConfiguration,
 } from '#shared/graphql/types.ts'
-import { i18n } from '#shared/i18n.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import type { MutationSendError } from '#shared/types/error.ts'
 
@@ -149,7 +148,7 @@ export const useEmailChannelConfiguration = (
       emailChannelForms.emailAccount.setErrors(
         new UserError([
           {
-            message: i18n.t(
+            message: __(
               'Email sending and receiving could not be verified. Please check your settings.',
             ),
           },
@@ -219,7 +218,7 @@ export const useEmailChannelConfiguration = (
           emailChannelForms.emailInbound.setErrors(
             new UserError([
               {
-                message: i18n.t(
+                message: __(
                   'The server settings could not be automatically detected. Please configure them manually.',
                 ),
               },

@@ -21,7 +21,7 @@ attachments:
     To: Martin Edenhofer <me@example.com>
     Message-ID: "<46E5CCBD-A82E-4B69-AF7B-6D31BF5310A3@example.com>"
     Subject: smime sign & crypt
-    Mime-Version: '1.0'
+    MIME-Version: '1.0'
     Content-Type: application/pkcs7-mime; name=smime.p7m; smime-type=enveloped-data
     X-Original-To: me@example.com
     Delivered-To: martin@arber.example.com

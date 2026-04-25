@@ -90,11 +90,19 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       end
     end
 
-    %w[priority state note].each do |existing_attribute|
+    %w[note].each do |existing_attribute|
+      it "rejects '#{existing_attribute}' which is used and reserved" do
+        expect do
+          described_class.add attributes_for :object_manager_attribute_text, name: existing_attribute
+        end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name #{existing_attribute} is a reserved word, Name #{existing_attribute} already exists")
+      end
+    end
+
+    %w[priority state ai_action].each do |existing_attribute|
       it "rejects '#{existing_attribute}' which is used" do
         expect do
           described_class.add attributes_for :object_manager_attribute_text, name: existing_attribute
-        end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name #{existing_attribute} already exists")
+        end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name #{existing_attribute} is a reserved word")
       end
     end
 

@@ -37,9 +37,9 @@ module Tasks
           def self.print_orphaned_errors(orphaned_gems, age)
             return if orphaned_gems.none?
 
-            warn "\nThe following bundled gems were released more than #{age} year(s) ago:"
+            $stderr.puts "\nThe following bundled gems were released more than #{age} year(s) ago:"
             orphaned_gems.each do |s|
-              warn "  #{s.name}:#{s.version} #{s.date.strftime('%F')}"
+              $stderr.puts "  #{s.name}:#{s.version} #{s.date.strftime('%F')}"
               print_dependencies_of(s.name)
             end
           end
@@ -47,9 +47,9 @@ module Tasks
           def self.print_unreleased_errors(unreleased_gems)
             return if unreleased_gems.none?
 
-            warn "\nThe following bundled gems are installed from git sources and not from official releases:"
+            $stderr.puts "\nThe following bundled gems are installed from git sources and not from official releases:"
             unreleased_gems.each do |s|
-              warn "  #{s.name}:#{s.version} #{s.source}"
+              $stderr.puts "  #{s.name}:#{s.version} #{s.source}"
               print_dependencies_of(s.name)
             end
           end
@@ -67,7 +67,7 @@ module Tasks
             return if !deps
 
             deps.each do |dep|
-              warn "  #{'  ' * level} - #{dep}"
+              $stderr.puts "  #{'  ' * level} - #{dep}"
               print_dependencies_of(dep, level + 1)
             end
           end

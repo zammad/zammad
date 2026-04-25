@@ -26,6 +26,8 @@ class TriggerWebhookJob < ApplicationJob
     return if request.success?
 
     raise TriggerWebhookJob::RequestError
+  rescue HostnameSafetyCheck::SafetyError => e
+    Rails.logger.error "Can't execute Webhook with ID #{webhook_id} for Trigger '#{trigger.name}' with ID #{trigger.id}: #{e.message}"
   end
 
   private
@@ -87,6 +89,7 @@ class TriggerWebhookJob < ApplicationJob
         log:                     {
           facility: 'webhook',
         },
+        validate_safety:         { allow_private: true, allow_loopback: true },
       },
     )
   end
@@ -122,7 +125,7 @@ class TriggerWebhookJob < ApplicationJob
     tracks = { ticket:, article: }
 
     # Use the new interpolation service
-    interpolator = Service::Template::Interpolation::Interpolator::Webhook.new(
+    interpolator = Service::Template::Interpolation::Interpolator::Webhook.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
       template:                       payload,
       tracks:,
       additional_track_generate_data: webhook_data,
@@ -158,7 +161,7 @@ class TriggerWebhookJob < ApplicationJob
     tracks = { ticket:, article: }
 
     # Use the interpolation service for scanning and parsing
-    interpolator = Service::Template::Interpolation::Interpolator.new(
+    interpolator = Service::Template::Interpolation::Interpolator.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
       template: endpoint,
       tracks:,
       mode:     :string,

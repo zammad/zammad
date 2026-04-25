@@ -4,17 +4,15 @@ class TicketAIAssistanceSummarizeJob < AIJob
   include HasActiveJobLock
 
   def lock_key
-    "#{self.class.name}/#{arguments[0].id}/#{arguments[0].articles.last&.created_at}/#{arguments[1]}"
+    "#{self.class.name}/#{arguments[0].id}/#{arguments[0].articles.without_system_notifications.last&.created_at}/#{arguments[1]}"
   end
 
   def perform(ticket, locale, regeneration_of: nil)
-    summarize = Service::Ticket::AIAssistance::Summarize.new(
+    ai_result = Service::Ticket::AIAssistance::Summarize.execute(
       locale:,
       ticket:,
       regeneration_of:,
     )
-
-    ai_result = summarize.execute
 
     # Trigger the update for the new desktop view.
     trigger_subscription(ticket:, locale:, data: {

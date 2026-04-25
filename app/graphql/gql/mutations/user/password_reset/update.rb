@@ -14,10 +14,8 @@ module Gql::Mutations
     allow_public_access!
 
     def resolve(token:, password:)
-      update = Service::User::PasswordReset::Update.new(token: token, password: password)
-
       begin
-        update.execute
+        Service::User::PasswordReset::Update.execute(token: token, password: password)
       rescue Service::User::PasswordReset::Update::InvalidTokenError, Service::User::PasswordReset::Update::EmailError => e
         return error_response({ message: e.message })
       rescue PasswordPolicy::Error => e

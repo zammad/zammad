@@ -13,7 +13,7 @@ module Gql::Subscriptions
 
     def update(ignore_user_conditions:)
       {
-        ticket_overviews: ::Service::User::Overview::List.new(context.current_user, ignore_user_conditions:).execute
+        ticket_overviews: ::Service::User::Overview::List.with_current_user(context.current_user).execute(ignore_user_conditions:)
       }
     end
   end

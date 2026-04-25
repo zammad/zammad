@@ -11,8 +11,8 @@ module Gql::Mutations
 
     def resolve(name:, input:)
       shared_draft = Service::Ticket::SharedDraft::Start::Create
-        .new(context.current_user, input.form_id, name: name, group: input.group, content: input.content)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(input.form_id, name: name, group: input.group, content: input.content)
 
       { shared_draft: }
     end

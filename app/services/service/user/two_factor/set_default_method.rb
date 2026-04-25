@@ -11,11 +11,11 @@ class Service::User::TwoFactor::SetDefaultMethod < Service::User::TwoFactor::Bas
 
   def execute
     if !method_available? && !force
-      raise Exceptions::UnprocessableEntity, __('The given two-factor authentication method is not enabled.')
+      raise Exceptions::UnprocessableContent, __('The given two-factor authentication method is not enabled.')
     end
 
     if !method_configured? && !force
-      raise Exceptions::UnprocessableEntity, __('The given two-factor authentication method is not configured.')
+      raise Exceptions::UnprocessableContent, __('The given two-factor authentication method is not configured.')
     end
 
     update_user_preferences!
@@ -24,16 +24,16 @@ class Service::User::TwoFactor::SetDefaultMethod < Service::User::TwoFactor::Bas
   private
 
   def method_configured?
-    user
-      .auth_two_factor
-      .user_authentication_methods
-      .find { |elem| elem.method_name == method_name }
+    current_user
+       .auth_two_factor
+       .user_authentication_methods
+       .find { |elem| elem.method_name == method_name }
   end
 
   def update_user_preferences!
-    user.preferences[:two_factor_authentication] ||= {}
-    user.preferences[:two_factor_authentication][:default] = method_name
+    current_user.preferences[:two_factor_authentication] ||= {}
+    current_user.preferences[:two_factor_authentication][:default] = method_name
 
-    user.save!
+    current_user.save!
   end
 end

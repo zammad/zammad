@@ -4,17 +4,20 @@ class AI::Provider::Azure < AI::Provider
   include AI::Provider::Concerns::HandlesOpenAIMessages
 
   def chat(prompt_system:, prompt_user:, prompt_image:)
+    request_body = {
+      messages:        messages_for(prompt_system:, prompt_user:, prompt_image:),
+      response_format: {
+        type: options[:json_response] ? 'json_object' : 'text'
+      },
+      stream:          false,
+      store:           false,
+    }
+
+    request_body[:temperature] = options[:temperature] if model_supports_temperature?
+
     response = UserAgent.post(
       chat_url_for(prompt_image:),
-      {
-        messages:        messages_for(prompt_system:, prompt_user:, prompt_image:),
-        temperature:     options[:temperature],
-        response_format: {
-          type: options[:json_response] ? 'json_object' : 'text'
-        },
-        stream:          false,
-        store:           false,
-      },
+      request_body,
       {
         open_timeout:  4,
         read_timeout:  60,
@@ -59,35 +62,11 @@ class AI::Provider::Azure < AI::Provider
   end
 
   def self.ping!(config)
-    ping_chat!(config)
+    url_models = config[:url_completions].gsub(%r{/deployments/.*$}, '/v1/models')
 
-    # TODO: Enable it when needed.
-    # ping_embeddings!(config)
-
-    nil
-  end
-
-  def self.ping_chat!(config)
-    response = UserAgent.post(
-      config[:url_completions],
-      {
-        messages:        [
-          {
-            role:    'system',
-            content: 'Ping pong in JSON', # rubocop:disable Zammad/DetectTranslatableString
-          },
-          {
-            role:    'user',
-            content: 'Ping pong in JSON', # rubocop:disable Zammad/DetectTranslatableString
-          },
-        ],
-        temperature:     0,
-        response_format: {
-          type: 'json_object'
-        },
-        stream:          false,
-        store:           false,
-      },
+    response = UserAgent.get(
+      url_models,
+      {},
       {
         open_timeout:  4,
         read_timeout:  60,
@@ -107,11 +86,14 @@ class AI::Provider::Azure < AI::Provider
     nil
   end
 
-  def self.ping_embeddings!(config)
+  def self.check_temperature_support!(config)
     response = UserAgent.post(
-      config[:url_embeddings],
+      config[:url_completions],
       {
-        input: 'Ping',
+        messages:    [{ role: 'user', content: 'Hello' }],
+        temperature: 0.1,
+        stream:      false,
+        store:       false,
       },
       {
         open_timeout:  4,
@@ -127,12 +109,20 @@ class AI::Provider::Azure < AI::Provider
       },
     )
 
-    raise AI::Provider::ResponseError, __('API server not accessible') if response.code.to_i != 200
+    return true if response.success?
 
-    nil
+    data = JSON.parse(response.body)
+    data = data.pop if data.is_a?(Array) # Handle case when response is an array of errors
+    message = data.dig('error', 'message')
+    type = data.dig('error', 'type')
+    param = data.dig('error', 'param')
+    code = data.dig('error', 'code')
+    return false if type == 'invalid_request_error' && param == 'temperature' && code == 'unsupported_value'
+
+    raise message
+  rescue => e
+    raise CheckTemperatureSupportError, e.message
   end
-
-  private_class_method %i[ping_chat! ping_embeddings!]
 
   def extract_response_metadata(data)
     @response_metadata = {

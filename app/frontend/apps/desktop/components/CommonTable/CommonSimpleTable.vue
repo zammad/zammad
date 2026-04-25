@@ -77,7 +77,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
             "
             type="checkbox"
             :model-value="allCheckboxRowsSelected"
-            @update:model-value="selectAllRowCheckboxes"
+            @update:model-value="selectAllRowCheckboxes($event as boolean)"
           />
 
           <slot v-else :name="`column-header-${header.key}`" :header="header">
@@ -121,6 +121,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
               cellAlignmentClasses[header.alignContent || 'left'],
               {
                 'max-w-32 truncate text-black dark:text-white': header.truncate,
+                'size-10': hasCheckboxColumn && header.key === 'checkbox',
               },
             ]"
           >

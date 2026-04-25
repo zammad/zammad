@@ -12,7 +12,7 @@ module Gql::Queries
 
     def resolve(ticket:)
       Service::History::Group
-        .new(current_user: context.current_user)
+        .with_current_user(context.current_user)
         .execute(object: ticket)
     end
   end

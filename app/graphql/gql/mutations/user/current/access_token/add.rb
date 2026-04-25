@@ -13,8 +13,8 @@ module Gql::Mutations
 
     def resolve(input:)
       token = Service::User::AccessToken::Create
-          .new(context.current_user, **input)
-          .execute
+          .with_current_user(context.current_user)
+          .execute(**input)
 
       {
         token:,

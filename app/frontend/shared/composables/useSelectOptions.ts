@@ -118,10 +118,13 @@ const useSelectOptions = <T extends SelectOption[] | FlatSelectOption[] | AutoCo
       (optionValueLookup.value[selectedValue] as FlatSelectOption).parents) ||
     []
 
-  const getSelectedOptionFullPath = (selectedValue: string | number) =>
+  const getSelectedOptionParentsPath = (selectedValue: string | number) =>
     getSelectedOptionParents(selectedValue)
       .map((parentValue) => `${getSelectedOptionLabel(parentValue)} \u203A `)
-      .join('') +
+      .join('')
+
+  const getSelectedOptionFullPath = (selectedValue: string | number) =>
+    getSelectedOptionParentsPath(selectedValue) +
     (getSelectedOptionLabel(selectedValue) || i18n.t('%s (unknown)', selectedValue.toString()))
 
   const valueBuilder = (option: SelectOption): AllowedSelectValue => {
@@ -385,6 +388,7 @@ const useSelectOptions = <T extends SelectOption[] | FlatSelectOption[] | AutoCo
     getSelectedOptionLabel,
     getSelectedOptionStatus,
     getSelectedOptionParents,
+    getSelectedOptionParentsPath,
     getSelectedOptionFullPath,
     selectOption,
     getDialogFocusTargets,

@@ -12,12 +12,12 @@ module Exceptions
 
   class Forbidden < StandardError; end
 
-  class UnprocessableEntity < StandardError
-    attr_reader :entity
+  class UnprocessableContent < StandardError
+    attr_reader :content
 
-    def initialize(message, entity = nil)
+    def initialize(message, content = nil)
       super(message)
-      @entity = entity
+      @content = content
     end
   end
 
@@ -39,7 +39,7 @@ module Exceptions
     end
   end
 
-  class ApplicationModel < UnprocessableEntity
+  class ApplicationModel < UnprocessableContent
     attr_reader :record
 
     def initialize(record, message)

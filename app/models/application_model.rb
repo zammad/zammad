@@ -9,6 +9,7 @@ class ApplicationModel < ActiveRecord::Base
   include ApplicationModel::CanLookupSearchIndexAttributes
   include ApplicationModel::ChecksAttributeValuesAndLength
   include ApplicationModel::CanCleanupParam
+  include ApplicationModel::CanDestroyDependentAssociations
   include ApplicationModel::HasRecentViews
   include ApplicationModel::ChecksUserColumnsFillup
   include ApplicationModel::CanCreatesAndUpdates

@@ -158,7 +158,7 @@ RSpec.describe Checklist, :aggregate_failures, current_user_id: 1, type: :model 
 
       expect { described_class.create_from_template!(ticket, template) }
         .to raise_error(
-          Exceptions::UnprocessableEntity,
+          Exceptions::UnprocessableContent,
           'Checklist template must be active to use as a checklist starting point.'
         )
     end

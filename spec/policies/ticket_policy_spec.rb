@@ -237,7 +237,7 @@ describe TicketPolicy do
       let(:user)   { create(:customer, organization: create(:organization)) }
 
       it { is_expected.to forbid_action(:follow_up) }
-      it { expect { policy.follow_up? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableEntity) }
+      it { expect { policy.follow_up? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableContent) }
     end
 
     context 'when groups.follow_up_possible is new_ticket_after_certain_time' do
@@ -256,7 +256,7 @@ describe TicketPolicy do
         end
 
         it { is_expected.to forbid_action(:follow_up) }
-        it { expect { policy.follow_up? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableEntity) }
+        it { expect { policy.follow_up? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableContent) }
       end
     end
 

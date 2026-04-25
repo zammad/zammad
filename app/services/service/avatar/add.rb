@@ -1,7 +1,16 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Avatar::Add < Service::BaseWithCurrentUser
-  def execute(full_image:, resize_image:)
+class Service::Avatar::Add < Service::Base
+  requires_current_user!
+
+  attr_reader :full_image, :resize_image
+
+  def initialize(full_image:, resize_image:)
+    @full_image = full_image
+    @resize_image = resize_image
+  end
+
+  def execute
     Avatar.add(
       object:    'User',
       o_id:      current_user.id,

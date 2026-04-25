@@ -9,8 +9,7 @@ RSpec.describe 'AI::Analytics::UsageController', :aggregate_failures, authentica
     let(:ai_analytics_run) { create(:ai_analytics_run, related_object: nil) }
 
     before do
-      allow(Service::AI::Analytics::UpsertUsage).to receive(:new).and_call_original
-      allow_any_instance_of(Service::AI::Analytics::UpsertUsage).to receive(:execute).and_return(true)
+      allow(Service::AI::Analytics::UpsertUsage).to receive(:execute).and_return(true)
 
       put '/api/v1/ai/analytics/usages', params:, as: :json
     end
@@ -24,8 +23,8 @@ RSpec.describe 'AI::Analytics::UsageController', :aggregate_failures, authentica
 
       it 'passes correct arguments to service' do
         expect(Service::AI::Analytics::UpsertUsage)
-          .to have_received(:new)
-          .with(user, ai_analytics_run, rating: true)
+          .to have_received(:execute)
+          .with(ai_analytics_run, rating: true, current_user: user)
       end
     end
 
@@ -38,8 +37,8 @@ RSpec.describe 'AI::Analytics::UsageController', :aggregate_failures, authentica
 
       it 'passes correct arguments to service' do
         expect(Service::AI::Analytics::UpsertUsage)
-          .to have_received(:new)
-          .with(user, ai_analytics_run, comment: 'Comment here')
+          .to have_received(:execute)
+          .with(ai_analytics_run, comment: 'Comment here', current_user: user)
       end
     end
 
@@ -52,8 +51,8 @@ RSpec.describe 'AI::Analytics::UsageController', :aggregate_failures, authentica
 
       it 'passes correct arguments to service' do
         expect(Service::AI::Analytics::UpsertUsage)
-          .to have_received(:new)
-          .with(user, ai_analytics_run, rating: false, context: { approved: false })
+          .to have_received(:execute)
+          .with(ai_analytics_run, rating: false, context: { approved: false }, current_user: user)
       end
     end
   end

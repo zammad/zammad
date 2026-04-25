@@ -9,8 +9,8 @@ class AI::Analytics::UsagesController < ApplicationController
     authorize! ai_analytics_run, :show?
 
     Service::AI::Analytics::UpsertUsage
-      .new(current_user, ai_analytics_run, **usage_attributes)
-      .execute
+      .with_current_user(current_user)
+      .execute(ai_analytics_run, **usage_attributes)
 
     render json: { status: :ok }
   end

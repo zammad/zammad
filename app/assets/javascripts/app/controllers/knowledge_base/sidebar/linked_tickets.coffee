@@ -49,7 +49,7 @@ class App.KnowledgeBaseSidebarLinkedTickets extends App.Controller
     new App.TicketLinkAdd(
       link_object:    'KnowledgeBase::Answer::Translation'
       link_object_id: @object.translation(@kb_locale.id)?.id
-      link_types:     [['normal', 'Normal']]
+      link_types:     [['normal', __('Normal')]]
       object:         @object.translation(@kb_locale.id)
       parent:         @
       container:      @el.closest('.content')

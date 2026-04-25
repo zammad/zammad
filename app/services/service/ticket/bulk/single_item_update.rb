@@ -1,7 +1,9 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Ticket::Bulk::SingleItemUpdate < Service::Base
-  attr_reader :user, :ticket, :perform
+  requires_current_user!
+
+  attr_reader :ticket, :perform
 
   class BulkSingleError < StandardError
     attr_reader :record, :original_error
@@ -18,25 +20,19 @@ class Service::Ticket::Bulk::SingleItemUpdate < Service::Base
     end
   end
 
-  def initialize(user:, ticket:, perform:)
-    @user    = user
+  def initialize(ticket:, perform:)
     @ticket  = ticket
     @perform = perform
-
-    super()
   end
 
   def execute
     error = nil
 
     ActiveRecord::Base.transaction do
-      Pundit.authorize(user, ticket, :agent_update_access?)
+      Pundit.authorize(current_user, ticket, :agent_update_access?)
 
-      UserInfo.with_user_id(user.id) do
-        Service::Ticket::Update
-          .new(current_user: user)
-          .execute(ticket:, ticket_data:, macro:, skip_validators: Service::Ticket::Update::Validator.exceptions)
-      end
+      Service::Ticket::Update
+        .execute(current_user:, ticket:, ticket_data:, macro:, skip_validators: Service::Ticket::Update::Validator.exceptions)
     rescue => e
       error = BulkSingleError.new(record: ticket, original_error: e)
 
@@ -51,6 +47,8 @@ class Service::Ticket::Bulk::SingleItemUpdate < Service::Base
   private
 
   def ticket_data
+    return {} if perform[:input].blank?
+
     # Deep cloning preserving ActiveRecord object IDs.
     # Service::Ticket::Update and Service::Ticket::Article::Create are mutating the input data in place.
     # A new instance of the input data is needed for each loop run.

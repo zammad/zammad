@@ -326,7 +326,7 @@ RSpec.describe UserAgent, :aggregate_failures do
               {
                 'method'                 => 'post',
                 'submitted'              => 'some value',
-                'body'                   => ['submitted=some+value'],
+                'body'                   => 'submitted=some+value',
                 'content_type_requested' => 'application/x-www-form-urlencoded',
               }
             end
@@ -343,7 +343,7 @@ RSpec.describe UserAgent, :aggregate_failures do
               {
                 'method'                 => 'post',
                 'submitted'              => nil,
-                'body'                   => ['raw body'],
+                'body'                   => 'raw body',
                 'content_type_requested' => nil,
               }
             end
@@ -686,6 +686,42 @@ RSpec.describe UserAgent, :aggregate_failures do
 
             include_examples 'unsuccessful get/post/put/delete request'
           end
+        end
+      end
+    end
+
+    # Tests guarding against SSRF attacks
+    context 'with safety validation' do
+      let(:url) { 'http://example.com/test' }
+
+      before do
+        allow(HostnameSafetyCheck).to receive(:validate!)
+      end
+
+      context 'when safety validation is on' do
+        it 'calls HostnameSafetyCheck.validate!' do
+          described_class.get(url, {}, { validate_safety: true })
+
+          expect(HostnameSafetyCheck)
+            .to have_received(:validate!)
+            .with('example.com')
+        end
+
+        it 'passes given options to HostnameSafetyCheck.validate!' do
+          described_class.get(url, {}, { validate_safety: { allow_private: true } })
+
+          expect(HostnameSafetyCheck)
+            .to have_received(:validate!)
+            .with('example.com', allow_private: true)
+        end
+      end
+
+      context 'when safety validation is off' do
+        it 'does not call HostnameSafetyCheck.validate!' do
+          described_class.get(url, {}, { validate_safety: false })
+
+          expect(HostnameSafetyCheck)
+            .not_to have_received(:validate!)
         end
       end
     end

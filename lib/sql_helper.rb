@@ -196,17 +196,25 @@ sql = 'tickets.created_at ASC, tickets.updated_at DESC'
   end
 
   def array_contains_all(attribute, value, negated: false)
-    value = [''] if value.blank?
-    value = Array(value)
-    result = "(#{db_column(attribute)} @> ARRAY[#{value.map { |v| "'#{self.class.quote_string(v)}'" }.join(',')}]::varchar[])"
+    value = if value.blank?
+              ['']
+            else
+              Array.wrap(value).map { '?' }
+            end
+
+    result = "(#{db_column(attribute)} @> ARRAY[#{value.join(',')}]::varchar[])"
 
     negated ? "NOT(#{result})" : "(#{result})"
   end
 
   def array_contains_one(attribute, value, negated: false)
-    value = [''] if value.blank?
-    value = Array(value)
-    result = "(#{db_column(attribute)} && ARRAY[#{value.map { |v| "'#{self.class.quote_string(v)}'" }.join(',')}]::varchar[])"
+    value = if value.blank?
+              ['']
+            else
+              Array.wrap(value).map { '?' }
+            end
+
+    result = "(#{db_column(attribute)} && ARRAY[#{value.join(',')}]::varchar[])"
 
     negated ? "NOT(#{result})" : "(#{result})"
   end

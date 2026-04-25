@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::Overview::UpdateOrder, current_user_id: 1 do
-  subject(:service) { described_class.new(user, overviews) }
+  subject(:service_result) { described_class.with_current_user(user).execute(overviews) }
 
   let(:user) { create(:agent) }
 
@@ -25,7 +25,7 @@ RSpec.describe Service::User::Overview::UpdateOrder, current_user_id: 1 do
       let(:overviews) { [overview_3, overview_2, overview_1, overview_4] }
 
       it 'sets priorities' do
-        service.execute
+        service_result
 
         expect(user.overview_sortings).to contain_exactly(
           have_attributes(overview: overview_1, prio: 2),
@@ -40,7 +40,7 @@ RSpec.describe Service::User::Overview::UpdateOrder, current_user_id: 1 do
       let(:overviews) { [overview_3, overview_2, overview_1] }
 
       it 'sets given priorities' do
-        service.execute
+        service_result
 
         expect(user.overview_sortings).to contain_exactly(
           have_attributes(overview: overview_1, prio: 2),
@@ -50,7 +50,7 @@ RSpec.describe Service::User::Overview::UpdateOrder, current_user_id: 1 do
       end
 
       it 'has no custom priority for item that was not given' do
-        service.execute
+        service_result
 
         expect(user.overview_sortings.where(user:, overview: overview_4)).not_to be_exists
       end
@@ -69,7 +69,7 @@ RSpec.describe Service::User::Overview::UpdateOrder, current_user_id: 1 do
       let(:overviews) { [overview_3, overview_2, overview_1, overview_4] }
 
       it 'sets priorities' do
-        service.execute
+        service_result
 
         expect(user.overview_sortings).to contain_exactly(
           have_attributes(overview: overview_1, prio: 2),
@@ -84,7 +84,7 @@ RSpec.describe Service::User::Overview::UpdateOrder, current_user_id: 1 do
       let(:overviews) { [overview_3, overview_2, overview_1] }
 
       it 'sets given priorities' do
-        service.execute
+        service_result
 
         expect(user.overview_sortings).to contain_exactly(
           have_attributes(overview: overview_1, prio: 2),
@@ -94,7 +94,7 @@ RSpec.describe Service::User::Overview::UpdateOrder, current_user_id: 1 do
       end
 
       it 'has no custom priority for item that was not given' do
-        service.execute
+        service_result
 
         expect(user.overview_sortings.where(user:, overview: overview_4)).not_to be_exists
       end

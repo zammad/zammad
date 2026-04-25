@@ -8,29 +8,33 @@ RSpec.describe Service::User::AccessToken::Create do
   let(:permission) { %w[ticket.agent] }
   let(:expires_at) { 1.day.from_now.to_date }
 
-  it 'creates persistent API token with given permissions' do
-    token = described_class.new(user, name:, permission:).execute
+  context 'without expiration time' do
+    subject(:service_result) { described_class.with_current_user(user).execute(name:, permission:) }
 
-    expect(token).to have_attributes(
-      user:        user,
-      name:        name,
-      action:      'api',
-      persistent:  true,
-      expires_at:  nil,
-      preferences: include(permission: permission)
-    )
+    it 'creates persistent API token with given permissions' do
+      expect(service_result).to have_attributes(
+        user:        user,
+        name:        name,
+        action:      'api',
+        persistent:  true,
+        expires_at:  nil,
+        preferences: include(permission: permission)
+      )
+    end
   end
 
-  it 'creates token with given expiration time' do
-    token = described_class.new(user, name:, permission:, expires_at:).execute
+  context 'with expiration time' do
+    subject(:service_result) { described_class.with_current_user(user).execute(name:, permission:, expires_at:) }
 
-    expect(token).to have_attributes(
-      user:        user,
-      name:        name,
-      action:      'api',
-      persistent:  true,
-      expires_at:  Time.use_zone(Setting.get('timezone_default')) { expires_at.beginning_of_day },
-      preferences: include(permission: permission)
-    )
+    it 'creates token with given expiration time' do
+      expect(service_result).to have_attributes(
+        user:        user,
+        name:        name,
+        action:      'api',
+        persistent:  true,
+        expires_at:  Time.use_zone(Setting.get('timezone_default')) { expires_at.beginning_of_day },
+        preferences: include(permission: permission)
+      )
+    end
   end
 end

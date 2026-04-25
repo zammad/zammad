@@ -47,7 +47,7 @@ export const useTicketOverviewOrderStore = defineStore('ticketOverviewOrder', ()
   })
 
   const overviewsRaw = ticketOverviewOrderHandler.result()
-  const overviewsLoading = ticketOverviewOrderHandler.loading()
+  const overviewsLoading = ticketOverviewOrderHandler.loadingWithoutCachedResult()
 
   const overviews = computed(() => {
     if (!overviewsRaw.value?.ticketOverviews) return []

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
-  subject(:service) { described_class.new(article_id: article.id) }
+  subject(:service_result) { described_class.execute(article_id: article.id) }
 
   let(:article) { create(:whatsapp_article, :pending_delivery, **(try(:factory_options) || {})) }
 
@@ -30,7 +30,7 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
       it 'raise error and adds a delivery failure note (article) to the ticket' do
         expect do
           begin
-            service.execute
+            service_result
           rescue Service::Ticket::Article::Type::PermanentDeliveryError => e
             expect(Ticket::Article.last.attributes).to include(expected_failure_article_note_data(e.message))
 
@@ -42,7 +42,7 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
 
       it 'sets the appropriate delivery status attributes' do
         begin
-          service.execute
+          service_result
         rescue Service::Ticket::Article::Type::PermanentDeliveryError => e
           expect(article.reload.preferences[:delivery_status]).to eq('fail')
           expect(article.reload.preferences[:delivery_status_date]).to be_an_instance_of(ActiveSupport::TimeWithZone)
@@ -83,13 +83,15 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
         end
 
         shared_examples 'successful delivery' do
-          it 'returns article with delivered message_id', :aggregate_failures do
-            article = service.execute
-
-            expect(article.message_id).to eq(message_id)
-            expect(article.preferences[:delivery_status]).to eq('success')
-            expect(article.preferences[:delivery_status_date]).to be_present
-            expect(article.preferences[:delivery_status_message]).to be_nil
+          it 'returns article with delivered message_id' do
+            expect(service_result).to have_attributes(
+              message_id:  message_id,
+              preferences: include(
+                delivery_status:         'success',
+                delivery_status_date:    be_present,
+                delivery_status_message: nil,
+              ),
+            )
           end
         end
 
@@ -142,7 +144,7 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
           end
 
           it 'raises an temporary delivery error and increased retry count', :aggregate_failures do
-            expect { service.execute }.to raise_error(Service::Ticket::Article::Type::TemporaryDeliveryError)
+            expect { service_result }.to raise_error(Service::Ticket::Article::Type::TemporaryDeliveryError)
 
             expect(article.ticket.reload.articles.count).to eq(1)
             expect(article.reload.preferences[:delivery_status]).to eq('fail')
@@ -156,7 +158,7 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
             it 'raises an temporary delivery error (increased retry count and create failure article note)', :aggregate_failures do
               expect do
                 begin
-                  service.execute
+                  service_result
                 rescue Service::Ticket::Article::Type::TemporaryDeliveryError => e
                   expect(Ticket::Article.last.attributes).to include(expected_failure_article_note_data(e.message))
 

@@ -148,7 +148,7 @@ returns
 =end
 
   def self.deliver(data)
-    raise Exceptions::UnprocessableEntity, "Unable to send mail to user with id #{data[:recipient][:id]} because there is no email available." if data[:recipient][:email].blank?
+    raise Exceptions::UnprocessableContent, "Unable to send mail to user with id #{data[:recipient][:id]} because there is no email available." if data[:recipient][:email].blank?
 
     sender = Setting.get('notification_sender')
     Rails.logger.debug { "Send notification to: #{data[:recipient][:email]} (from:#{sender}/subject:#{data[:subject]})" }

@@ -40,13 +40,15 @@ class SessionsController < ApplicationController
         available_two_factor_authentication_methods: e.available_two_factor_authentication_methods,
         recovery_codes_available:                    e.recovery_codes_available
       }
-    }, status: :unprocessable_entity
+    }, status: :unprocessable_content
   rescue Auth::Error::Base => e
     raise Exceptions::NotAuthorized, e.message
   end
 
   def create_sso
     raise Exceptions::Forbidden, 'SSO authentication disabled!' if !Setting.get('auth_sso')
+
+    verify_sso_trusted_ip!
 
     user = begin
       login = request.env['REMOTE_USER'] ||
@@ -161,7 +163,7 @@ class SessionsController < ApplicationController
   end
 
   def failure_omniauth
-    raise Exceptions::UnprocessableEntity, "Message from #{params[:strategy]}: #{params[:message]}"
+    raise Exceptions::UnprocessableContent, "Message from #{params[:strategy]}: #{params[:message]}"
   end
 
   # "switch" to user
@@ -268,23 +270,30 @@ class SessionsController < ApplicationController
 
   def two_factor_authentication_method_initiate_authentication
     %i[username password method].each do |param|
-      raise Exceptions::UnprocessableEntity, "The required parameter '#{param}' is missing." if params[param].blank?
+      raise Exceptions::UnprocessableContent, "The required parameter '#{param}' is missing." if params[param].blank?
     end
 
     auth = Auth.new(params[:username], params[:password], only_verify_password: true)
     begin
       auth.valid!
     rescue Auth::Error::AuthenticationFailed
-      raise Exceptions::UnprocessableEntity, __('The username or password is incorrect.')
+      raise Exceptions::UnprocessableContent, __('The username or password is incorrect.')
     end
 
     two_factor_method = auth.user.auth_two_factor.authentication_method_object(params[:method])
-    raise Exceptions::UnprocessableEntity, __('The two-factor authentication method is not enabled.') if !two_factor_method&.enabled? || !two_factor_method&.available?
+    raise Exceptions::UnprocessableContent, __('The two-factor authentication method is not enabled.') if !two_factor_method&.enabled? || !two_factor_method&.available?
 
     render json: two_factor_method.initiate_authentication, status: :ok
   end
 
   private
+
+  def verify_sso_trusted_ip!
+    trusted_ips = Auth::Sso::TrustedIps.new(Setting.get('auth_sso_trusted_ips'))
+    return if trusted_ips.blank?
+
+    raise Exceptions::Forbidden, __('SSO request from untrusted IP address.') if trusted_ips.exclude?(request.remote_ip)
+  end
 
   def authenticate_with_password
     auth = Auth.new(params[:username], params[:password],

@@ -431,7 +431,7 @@ RSpec.describe 'Api Auth', type: :request do
 
       context 'without two factor token' do
         it 'rejects the log-in' do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
 

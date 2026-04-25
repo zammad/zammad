@@ -26,14 +26,7 @@ RSpec.describe Gql::Queries::System::Setup::Info, :aggregate_failures, type: :gr
 
     context 'with an invalid state' do
       before do
-        allow(Service::System::CheckSetup).to receive(:new).and_return(
-          instance_double(
-            Service::System::CheckSetup,
-            execute: nil,
-            status:  'failed',
-            type:    nil
-          )
-        )
+        allow(Service::System::CheckSetup).to receive(:status_info).and_return({ status: 'failed', type: nil })
       end
 
       it 'raises an error' do

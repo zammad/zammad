@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { install, type InstalledClock } from '@sinonjs/fake-timers'
+import { install, type Clock } from '@sinonjs/fake-timers'
 
 const useFakeTimers = (config: { now: Date }) => {
-  const clock = install(config) as InstalledClock & { restore(): void }
+  const clock = install(config) as Clock & { restore(): void }
   clock.restore = clock.uninstall
   return clock
 }

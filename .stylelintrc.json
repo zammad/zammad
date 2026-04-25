@@ -49,21 +49,22 @@
     "nesting-selector-no-missing-scoping-root": null
   },
   "ignoreFiles": [
+    "**/bootstrap*.css",
+    "**/codemirror.css",
+    "**/cropper.css",
+    "**/fineuploader.css",
+    "**/jquery*.css",
+    "**/qunit*.css",
+    "**/reset*.css",
+    "**/svg-dimensions.css",
+    "app/assets/builds/**",
+    "coverage/**",
     "public/assets/*.css",
     "public/assets/chat/chat.css",
     "public/assets/doorkeeper/**",
     "public/assets/frontend/vite-dev/**",
     "public/assets/frontend/vite/**",
-    "**/reset*.css",
-    "**/bootstrap*.css",
-    "**/codemirror.css",
-    "**/jquery*.css",
-    "**/cropper.css",
-    "**/fineuploader.css",
-    "**/qunit*.css",
-    "**/svg-dimensions.css",
     "tmp/**",
-    "vendor/**",
-    "coverage/**"
+    "vendor/**"
   ]
 }

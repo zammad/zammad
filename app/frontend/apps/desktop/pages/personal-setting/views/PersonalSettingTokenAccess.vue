@@ -58,7 +58,7 @@ const newAccessTokenFlyout = useFlyout({
 const accessTokenListQuery = new QueryHandler(useUserCurrentAccessTokenListQuery())
 
 const accessTokenListQueryResult = accessTokenListQuery.result()
-const accessTokenListLoading = accessTokenListQuery.loading()
+const accessTokenListLoading = accessTokenListQuery.loadingWithoutCachedResult()
 
 accessTokenListQuery.subscribeToMore<
   UserCurrentAccessTokenUpdatesSubscriptionVariables,

@@ -17,6 +17,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
+  action: [Notification]
   close: [Notification, boolean?]
 }>()
 
@@ -34,8 +35,16 @@ const notificationMessageHtml = computed(() =>
   <Component
     :is="notification.persistent || notification.currentProgress !== undefined ? 'div' : 'button'"
     data-test-id="notification"
-    @keydown.enter="emit('close', notification)"
-    @click="emit('close', notification)"
+    @keydown.enter="
+      !notification.persistent && notification.currentProgress === undefined
+        ? emit('close', notification)
+        : undefined
+    "
+    @click="
+      !notification.persistent && notification.currentProgress === undefined
+        ? emit('close', notification)
+        : undefined
+    "
   >
     <CommonIcon
       class="col-span-1 self-center"
@@ -57,15 +66,26 @@ const notificationMessageHtml = computed(() =>
     />
 
     <button
+      v-if="notification.persistent && notification.actionLabel && notification.actionCallback"
+      class="col-start-3 ps-2.5 text-sm leading-snug transition-colors hover:text-black focus-visible:text-white focus-visible:outline-none dark:hover:text-white"
+      :class="{
+        'row-span-2': notification.currentProgress !== undefined,
+      }"
+      @click.stop="emit('action', notification)"
+    >
+      {{ $t(notification.actionLabel) }}
+    </button>
+
+    <button
       v-if="notification.persistent"
-      class="col-start-3 ps-2.5 pe-1.5 text-sm leading-snug transition-colors hover:text-black focus-visible:text-white focus-visible:outline-none dark:hover:text-white"
+      class="col-start-4 ps-2.5 pe-1.5 text-sm leading-snug transition-colors hover:text-black focus-visible:text-white focus-visible:outline-none dark:hover:text-white"
       :class="{
         'row-span-2': notification.currentProgress !== undefined,
       }"
       :aria-label="$t('Hide notification')"
       @click.stop="emit('close', notification, true)"
     >
-      {{ $t('Hide') }}
+      {{ $t(notification.closeLabel || 'Hide') }}
     </button>
 
     <CommonProgressBar

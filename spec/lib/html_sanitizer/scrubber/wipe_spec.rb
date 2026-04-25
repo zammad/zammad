@@ -88,6 +88,41 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
       end
     end
 
+    context 'when href contains javascript: scheme' do
+      let(:input)  { '<a href="javascript:alert()">click</a>' }
+      let(:target) { '<a>click</a>' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when href contains data: scheme' do
+      let(:input)  { '<a href="data:text/html,<h1>XSS</h1>">click</a>' }
+      let(:target) { '<a>click</a>' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when href contains data: scheme with javascript' do
+      let(:input)  { '<a href="data:text/javascript,alert(1)">click</a>' }
+      let(:target) { '<a>click</a>' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when href contains data: scheme uppercased' do
+      let(:input)  { '<a href="DATA:text/html,<b>test</b>">click</a>' }
+      let(:target) { '<a>click</a>' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when style contains data: scheme' do
+      let(:input)  { '<a style="data:text/html,something">click</a>' }
+      let(:target) { '<a>click</a>' }
+
+      it { is_expected.to eq target }
+    end
+
     context 'when has an image with a proper link' do
       let(:input)  { '<img style="width:100%" src="https://zammad.org/dummy.png">' }
       let(:target) { '' }

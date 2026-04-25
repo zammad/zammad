@@ -1,0 +1,287 @@
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import '#tests/graphql/builders/mocks.ts'
+
+import { createPinia, setActivePinia } from 'pinia'
+import { ref } from 'vue'
+
+import renderComponent from '#tests/support/components/renderComponent.ts'
+
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
+import {
+  mockTicketUpdateBulkMutation,
+  waitForTicketUpdateBulkMutationCalls,
+} from '#desktop/entities/ticket/graphql/mutations/updateBulk.mocks.ts'
+import { useTicketBulkUpdateStore } from '#desktop/entities/user/current/stores/ticketBulkUpdate.ts'
+
+import { useDragAndDropBulk } from '../useDragAndDropBulk.ts'
+
+// We try to simulate the table action as in an integration test
+const triggerDragAndDrop = async ({
+  rowItemId,
+  target,
+  checkboxDisabled = false,
+}: {
+  rowItemId: string
+  target: HTMLElement
+  checkboxDisabled?: boolean
+}) => {
+  const row = document.createElement('tr')
+  row.dataset.itemId = rowItemId
+
+  const checkbox = document.createElement('div')
+  checkbox.setAttribute('role', 'checkbox')
+  checkbox.setAttribute('aria-disabled', String(checkboxDisabled))
+  row.appendChild(checkbox)
+
+  const rowInner = document.createElement('td')
+  row.appendChild(rowInner)
+
+  document.body.appendChild(row)
+  document.body.appendChild(target)
+
+  rowInner.dispatchEvent(
+    new PointerEvent('pointerdown', {
+      bubbles: true,
+      button: 0,
+      clientX: 10,
+      clientY: 10,
+    }),
+  )
+
+  document.dispatchEvent(
+    new PointerEvent('pointermove', {
+      bubbles: true,
+      clientX: 30,
+      clientY: 30,
+    }),
+  )
+
+  await vi.advanceTimersByTimeAsync(250)
+
+  const targetInner = document.createElement('span')
+  target.appendChild(targetInner)
+
+  targetInner.dispatchEvent(
+    new PointerEvent('pointerup', {
+      bubbles: true,
+    }),
+  )
+
+  row.remove()
+  target.remove()
+}
+
+const mountDragAndDropBulk = (options: Parameters<typeof useDragAndDropBulk>[0]) => {
+  let composable!: ReturnType<typeof useDragAndDropBulk>
+
+  renderComponent({
+    setup() {
+      composable = useDragAndDropBulk(options)
+      return () => null
+    },
+  })
+
+  return composable
+}
+
+describe('useDragAndDropBulk', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+    document.body.innerHTML = ''
+  })
+
+  it('calls ticket bulk update mutation when dropping on a macro target', async () => {
+    const ticketInternalId = '1'
+    const macroInternalId = '2'
+
+    mockTicketUpdateBulkMutation({
+      ticketUpdateBulk: {
+        async: false,
+        total: 1,
+        failedCount: 0,
+        invalidTicketIds: [],
+        inaccessibleTicketIds: [],
+      },
+    })
+
+    mountDragAndDropBulk({
+      checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
+      bulkSelector: ref({ entityIds: [convertToGraphQLId('Ticket', ticketInternalId)] }),
+    })
+
+    const macroTarget = document.createElement('li')
+    macroTarget.dataset.internalId = macroInternalId
+    macroTarget.dataset.type = 'macro'
+
+    await triggerDragAndDrop({ rowItemId: ticketInternalId, target: macroTarget })
+
+    const calls = await waitForTicketUpdateBulkMutationCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      selector: {
+        entityIds: [convertToGraphQLId('Ticket', ticketInternalId)],
+      },
+      perform: {
+        macroId: convertToGraphQLId('Macro', macroInternalId),
+      },
+    })
+  })
+
+  it('uses overview id selector when bulk count and overview context are present', async () => {
+    const ticketInternalId = '1'
+    const macroInternalId = '2'
+    const overviewId = convertToGraphQLId('Overview', 1)
+
+    mockTicketUpdateBulkMutation({
+      ticketUpdateBulk: {
+        async: false,
+        total: 1,
+        failedCount: 0,
+        invalidTicketIds: [],
+        inaccessibleTicketIds: [],
+      },
+    })
+    mountDragAndDropBulk({
+      checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
+      bulkSelector: ref({ overviewId }),
+    })
+
+    const macroTarget = document.createElement('li')
+    macroTarget.dataset.internalId = macroInternalId
+    macroTarget.dataset.type = 'macro'
+
+    await triggerDragAndDrop({ rowItemId: ticketInternalId, target: macroTarget })
+
+    const calls = await waitForTicketUpdateBulkMutationCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      selector: {
+        overviewId,
+      },
+      perform: {
+        macroId: convertToGraphQLId('Macro', macroInternalId),
+      },
+    })
+  })
+
+  it('does not start drag when the row checkbox is disabled (no write permission)', async () => {
+    const ticketInternalId = '1'
+    const macroInternalId = '3'
+
+    const useDragAndDropBulk = mountDragAndDropBulk({
+      checkedTicketIds: ref(new Set<ID>()),
+      bulkSelector: ref({}),
+    })
+
+    const macroTarget = document.createElement('li')
+    macroTarget.dataset.internalId = macroInternalId
+    macroTarget.dataset.type = 'macro'
+
+    await triggerDragAndDrop({
+      rowItemId: ticketInternalId,
+      target: macroTarget,
+      checkboxDisabled: true,
+    })
+
+    expect(useDragAndDropBulk.isActive.value).toBe(false)
+  })
+
+  it('uses search query selector when bulk count and search context are present', async () => {
+    const ticketInternalId = '1'
+    const macroInternalId = '3'
+
+    mockTicketUpdateBulkMutation({
+      ticketUpdateBulk: {
+        async: false,
+        total: 1,
+        failedCount: 0,
+        invalidTicketIds: [],
+        inaccessibleTicketIds: [],
+      },
+    })
+
+    mountDragAndDropBulk({
+      checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
+      bulkSelector: ref({ searchQuery: 'state:new' }),
+    })
+
+    const macroTarget = document.createElement('li')
+    macroTarget.dataset.internalId = macroInternalId
+    macroTarget.dataset.type = 'macro'
+
+    await triggerDragAndDrop({ rowItemId: ticketInternalId, target: macroTarget })
+
+    const calls = await waitForTicketUpdateBulkMutationCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      selector: {
+        searchQuery: 'state:new',
+      },
+      perform: {
+        macroId: convertToGraphQLId('Macro', macroInternalId),
+      },
+    })
+  })
+
+  it('skips activation if touch device', () => {
+    vi.doMock('#shared/composables/useTouchDevice.ts', () => ({
+      useTouchDevice: () => ({
+        isTouchDevice: ref(true),
+      }),
+    }))
+
+    const { isActive } = mountDragAndDropBulk({
+      checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', 1)])),
+      bulkSelector: ref({ searchQuery: 'state:new' }),
+    })
+
+    expect(isActive.value).toBe(false)
+
+    vi.clearAllMocks()
+  })
+
+  it('triggers confirmation when selected count is greater than threshold', async () => {
+    vi.useFakeTimers()
+
+    const ticketInternalId = '1'
+    const macroInternalId = '2'
+
+    mockTicketUpdateBulkMutation({
+      ticketUpdateBulk: {
+        async: false,
+        total: 1,
+        failedCount: 0,
+        invalidTicketIds: [],
+        inaccessibleTicketIds: [],
+      },
+    })
+
+    mountDragAndDropBulk({
+      checkedTicketIds: ref(
+        new Set(Array.from({ length: 20 }, (_, i) => convertToGraphQLId('Ticket', i + 1))),
+      ),
+      bulkSelector: ref({ entityIds: [convertToGraphQLId('Ticket', ticketInternalId)] }),
+    })
+
+    const store = useTicketBulkUpdateStore()
+    const spy = vi.spyOn(store, 'requestBulkConfirmation')
+
+    const macroTarget = document.createElement('li')
+    macroTarget.dataset.internalId = macroInternalId
+    macroTarget.dataset.type = 'macro'
+
+    await triggerDragAndDrop({ rowItemId: ticketInternalId, target: macroTarget })
+
+    await vi.runAllTimersAsync()
+
+    expect(spy).toHaveBeenCalledWith('macro', expect.objectContaining({ resolveImmediate: false }))
+    vi.useRealTimers()
+  })
+})

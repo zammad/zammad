@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require_relative 'shared_examples/ping'
+require_relative 'shared_examples/check_temperature_support'
 
 # TODO: Add AZURE_URL_EMBEDDINGS when needed.
 RSpec.describe AI::Provider::Azure, integration: true, required_envs: %w[AZURE_TOKEN AZURE_URL_COMPLETIONS AZURE_HOST], use_vcr: true do
@@ -23,6 +24,7 @@ RSpec.describe AI::Provider::Azure, integration: true, required_envs: %w[AZURE_T
   end
 
   include_examples 'provider/ping!'
+  include_examples 'provider/check_temperature_support'
 
   it 'does exchange data with azure ai endpoint' do
     expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })

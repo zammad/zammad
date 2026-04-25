@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Will escalate at #{ticket.escalation_at}_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Will escalate at #{ticket.escalation_at}_
 The ticket (#{ticket.title}) from "#{ticket.customer.longname}" will escalate at "#{ticket.escalation_at}"!
 
 <% if @objects[:article] %>

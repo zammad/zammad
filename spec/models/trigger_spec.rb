@@ -256,8 +256,76 @@ RSpec.describe Trigger, type: :model do
         end
       end
 
+      context 'when ticket has attachments or inline images (#5918)' do
+        let(:condition) do
+          { 'ticket.action' => { 'operator' => 'is', 'value' => 'update' } }
+        end
+
+        let(:perform) do
+          { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'some body with #{last_external_article.body_as_html}', 'include_attachments' => true } } # rubocop:disable Lint/InterpolationCheck
+        end
+
+        context 'when inline images are used' do
+          it 'does add attachments because last article has inline attachments' do
+            ticket = create(:ticket)
+            create(:ticket_article, :with_inline_attachment, ticket: ticket)
+            TransactionDispatcher.commit
+
+            UserInfo.current_user_id = 1
+            create(:ticket_article, :with_inline_attachment, ticket: ticket, body: 'Second article with inline attachments')
+
+            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+
+            note = Ticket::Article.last
+            expect(note.attachments.count).to eq(1)
+          end
+
+          it 'does not add attachments from first article because perform only uses last_external_article' do
+            ticket = create(:ticket)
+            create(:ticket_article, :with_inline_attachment, ticket: ticket)
+            TransactionDispatcher.commit
+
+            UserInfo.current_user_id = 1
+            create(:ticket_article, ticket: ticket, body: 'Second article without inline attachments')
+            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+
+            note = Ticket::Article.last
+            expect(note.attachments.count).to eq(0)
+          end
+        end
+
+        context 'when attachments are used' do
+          it 'does add attachments because latest article has attachments and include_attachments is activated' do
+            ticket = create(:ticket)
+            create(:ticket_article, :with_attachment, ticket: ticket)
+            TransactionDispatcher.commit
+
+            UserInfo.current_user_id = 1
+            create(:ticket_article, :with_attachment, ticket: ticket, body: 'Second article with attachments')
+
+            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+
+            note = Ticket::Article.last
+            expect(note.attachments.count).to eq(1)
+          end
+
+          it 'does not add attachments from first article because attachments are only used from the latest article if activated' do
+            ticket = create(:ticket)
+            create(:ticket_article, :with_attachment, ticket: ticket)
+            TransactionDispatcher.commit
+
+            UserInfo.current_user_id = 1
+            create(:ticket_article, ticket: ticket, body: 'Second article without attachments')
+            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+
+            note = Ticket::Article.last
+            expect(note.attachments.count).to eq(0)
+          end
+        end
+      end
+
       context 'notification.email recipient' do
-        let!(:ticket) { create(:ticket) }
+        let!(:ticket)     { create(:ticket) }
         let!(:recipient1) { create(:user, email: 'test1@zammad-test.com') }
         let!(:recipient2) { create(:user, email: 'test2@zammad-test.com') }
         let!(:recipient3) { create(:user, email: 'test3@zammad-test.com') }

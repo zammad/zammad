@@ -53,10 +53,10 @@ bundle exec rubocop --autocorrect app/path/to/file.rb                        # L
 Always use pnpm for frontend and cross-stack commands.
 
 ```bash
-pnpm test -- app/frontend/path/to/file.spec.ts  # Run specific Vitest test
-pnpm lint                                       # Run all linters
-pnpm generate-graphql-api                       # Regenerate GraphQL types after schema changes
-pnpm generate-setting-types                     # Regenerate Config types after setting changes
+pnpm test app/frontend/path/to/file.spec.ts # Run specific Vitest test
+pnpm lint                                   # Run all linters
+pnpm generate-graphql-api                   # Regenerate GraphQL types after schema changes
+pnpm generate-setting-types                 # Regenerate Config types after setting changes
 ```
 
 ## Agent Reference Docs

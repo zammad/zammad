@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require 'aws-sdk-s3'
-
 module Store::Provider::S3
 
   class Store::Provider::S3::Error < StandardError; end
@@ -19,6 +17,8 @@ module Store::Provider::S3
     end
 
     def client
+      require 'aws-sdk-s3'
+
       Certificate::ApplySSLCertificates.ensure_fresh_ssl_context
 
       @client.presence ||
@@ -50,6 +50,8 @@ module Store::Provider::S3
     end
 
     def url(sha, expires_in: 3600)
+      require 'aws-sdk-s3'
+
       object = Aws::S3::Object.new(bucket_name: bucket, key: sha, client: client)
       object.presigned_url(:get, expires_in: expires_in)
     rescue => e

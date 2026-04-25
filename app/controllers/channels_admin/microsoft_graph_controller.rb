@@ -13,10 +13,10 @@ class ChannelsAdmin::MicrosoftGraphController < ChannelsAdmin::BaseController
 
   def folders
     channel = Channel.find_by(id: params[:id], area:)
-    raise Exceptions::UnprocessableEntity, __('Could not find the channel.') if channel.nil?
+    raise Exceptions::UnprocessableContent, __('Could not find the channel.') if channel.nil?
 
     channel_mailbox = channel.options.dig('inbound', 'options', 'shared_mailbox') || channel.options.dig('inbound', 'options', 'user')
-    raise Exceptions::UnprocessableEntity, __('Could not identify the channel mailbox.') if channel_mailbox.nil?
+    raise Exceptions::UnprocessableContent, __('Could not identify the channel mailbox.') if channel_mailbox.nil?
 
     channel.refresh_xoauth2!(force: true)
 

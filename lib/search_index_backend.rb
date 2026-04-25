@@ -1132,4 +1132,30 @@ helper method for making HTTP calls and raising error if response was not succes
       'aggregations' => { 'time_buckets' => { 'buckets' => [] } }
     }
   end
+
+  def self.attachment_ignored?(attachment)
+    return true if attachment.filename.blank?
+
+    extension = File.extname(attachment.filename).downcase
+
+    Setting.get('es_attachment_ignore').include?(extension)
+  end
+
+  def self.attachment_too_big?(attachment)
+    return true if attachment.content.blank?
+
+    attachment.content.bytesize > Setting.get('es_attachment_max_size_in_mb').megabyte
+  end
+
+  def self.payload_too_big?(new_size)
+    new_size >= Setting.get('es_total_max_size_in_mb').megabyte
+  end
+
+  def self.attachment_to_attributes(attachment)
+    {
+      '_size'    => attachment.content.bytesize,
+      '_name'    => attachment.filename,
+      '_content' => Base64.encode64(attachment.content).delete("\n")
+    }
+  end
 end

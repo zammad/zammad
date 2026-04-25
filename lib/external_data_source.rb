@@ -30,7 +30,9 @@ class ExternalDataSource
     response = UserAgent.get(
       search_url,
       {},
-      HttpOptions.new(options).build
+      HttpOptions.new(options)
+        .build
+        .merge(validate_safety: { allow_private: true, allow_loopback: true })
     )
 
     raise Errors::NetworkError.new(self, response.error) if !response.success?
@@ -38,6 +40,8 @@ class ExternalDataSource
     response.data
   rescue ArgumentError, URI::InvalidURIError
     raise Errors::SearchUrlInvalidError, self
+  rescue HostnameSafetyCheck::SafetyError
+    raise Errors::SearchUrlUnsafe, self
   end
 
   def search_url

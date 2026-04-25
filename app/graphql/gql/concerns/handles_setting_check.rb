@@ -29,23 +29,21 @@ module Gql::Concerns::HandlesSettingCheck
   def validate_settings
     required_enabled_settings.each do |elem|
       Service::CheckFeatureEnabled
-        .new(
+        .execute(
           name:                   elem[:name],
           custom_exception_class: Exceptions::Forbidden,
           custom_error_message:   elem[:error_message]
         )
-        .execute
     end
 
     required_disabled_settings.each do |elem|
       Service::CheckFeatureEnabled
-        .new(
+        .execute(
           name:                   elem[:name],
           custom_exception_class: Exceptions::Forbidden,
           exception:              :on_enabled,
           custom_error_message:   elem[:error_message]
         )
-        .execute
     end
 
     true

@@ -21,6 +21,7 @@ import { useHeader } from '#mobile/composables/useHeader.ts'
 import ArticlesList from '../components/TicketDetailView/ArticlesList.vue'
 import TicketDetailViewHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketDetailViewTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
+import { ARTICLE_PAGE_SIZE } from '../composable/useTicketArticlesRows.ts'
 import { useTicketArticlesQueryVariables } from '../composable/useTicketArticlesVariables.ts'
 import { useTicketInformation } from '../composable/useTicketInformation.ts'
 
@@ -104,7 +105,7 @@ const onAddArticleCallback = ({
   } else {
     ;(articlesQuery as QueryHandler).fetchMore({
       variables: {
-        pageSize: 100,
+        pageSize: ARTICLE_PAGE_SIZE,
         loadFirstArticles: false,
         afterCursor: result.value?.articles.pageInfo.endCursor,
       },
@@ -132,9 +133,7 @@ const loadPreviousArticles = async () => {
   })
 }
 
-const isLoadingTicket = computed(() => {
-  return ticketQuery.loading().value && !ticket.value
-})
+const isLoadingTicket = ticketQuery.loadingWithoutCachedResult()
 
 const isRefetchingTicket = computed(() => ticketQuery.loading().value && !!ticket.value)
 

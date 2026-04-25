@@ -68,7 +68,7 @@ class Integration::CtiController < ApplicationController
   end
 
   def response_error(error)
-    render json: { error: error }, status: :unprocessable_entity
+    render json: { error: error }, status: :unprocessable_content
   end
 
   def response_unauthorized(error)

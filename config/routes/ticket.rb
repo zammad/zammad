@@ -73,5 +73,8 @@ Zammad::Application.routes.draw do
   match api_path + '/ticket_articles/:id/retry_whatsapp_attachment_download', to: 'ticket_articles#retry_whatsapp_attachment_download',        via: :post
 
   # ticket summarize (AI)
-  match api_path + '/tickets/:id/summarize',                          to: 'ticket/summarize#summarize',   via: :post
+  match api_path + '/tickets/:id/summarize',                           to: 'ticket/summarize#summarize',                        via: :post
+
+  # generate knowledge base answer (AI)
+  match api_path + '/tickets/:id/knowledge_base_answers', to: 'ticket/knowledge_base_answers#create', via: :post
 end

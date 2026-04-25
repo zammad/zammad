@@ -25,7 +25,7 @@ fi
 if [ "${DB_HOST}x" == "x" ]; then
    DB_HOST="localhost"
 fi
-if [ -n "$(which psql 2> /dev/null)" ]; then
+if command -v psql > /dev/null 2>&1; then
    if [ "${DB_PORT}x" == "x" ]; then
       DB_PORT="5432"
    fi
@@ -48,7 +48,7 @@ if [[ $state -gt 0 ]]; then
 fi
 
 # remove local files of the packages
-if [ -n "$(which zammad 2> /dev/null)" ]; then
+if command -v zammad > /dev/null 2>&1; then
    PATH=/opt/zammad/bin:/opt/zammad/vendor/bundle/bin:/sbin:/bin:/usr/sbin:/usr/bin:
 
    RAKE_TASKS=$(zammad run rake --tasks | grep "zammad:package:uninstall_all_files")
@@ -59,7 +59,7 @@ if [ -n "$(which zammad 2> /dev/null)" ]; then
       exit 0
    fi
 
-   if [ "$(zammad run rails r 'puts Package.count.positive?')" == "true" ] && [ -n "$(which pnpm 2> /dev/null)" ] && [ -n "$(which node 2> /dev/null)" ]; then
+   if [ "$(zammad run rails r 'puts Package.count.positive?')" == "true" ] && zammad run bash -c 'command -v pnpm > /dev/null 2>&1' && zammad run bash -c 'command -v node > /dev/null 2>&1'; then
       echo "# Detected custom packages..."
       echo "# Remove custom packages files temporarily..."
       zammad run rake zammad:package:uninstall_all_files

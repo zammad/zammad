@@ -87,7 +87,7 @@ describe Controllers::LinksControllerPolicy do
 
     context 'with target knowledge base answer and source ticket' do
       let(:ticket_source)    { create(:ticket) }
-      let(:kb_answer_target) { published_answer.translations.first }
+      let(:kb_answer_target) { internal_answer.translations.first }
       let(:action_name)      { :remove }
       let(:params) do
         {
@@ -106,7 +106,8 @@ describe Controllers::LinksControllerPolicy do
       end
 
       context 'when user has no permission on target' do
-        let(:user) { create(:agent, groups: [ticket_source.group]) }
+        let(:role) { create(:role, permission_names: %w[ticket.agent]) }
+        let(:user) { create(:user, groups: [ticket_source.group], roles: [role]) }
 
         it { is_expected.to forbid_action(action_name) }
       end
@@ -192,7 +193,7 @@ describe Controllers::LinksControllerPolicy do
 
     context 'with target knowledge base answer and source ticket' do
       let(:ticket_source)    { create(:ticket) }
-      let(:kb_answer_target) { published_answer.translations.first }
+      let(:kb_answer_target) { internal_answer.translations.first }
       let(:action_name)      { :remove }
       let(:params) do
         {
@@ -211,7 +212,8 @@ describe Controllers::LinksControllerPolicy do
       end
 
       context 'when user has no permission on target' do
-        let(:user) { create(:agent, groups: [ticket_source.group]) }
+        let(:role) { create(:role, permission_names: %w[ticket.agent]) }
+        let(:user) { create(:user, groups: [ticket_source.group], roles: [role]) }
 
         it { is_expected.to forbid_action(action_name) }
       end

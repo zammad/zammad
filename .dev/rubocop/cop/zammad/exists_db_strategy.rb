@@ -17,10 +17,10 @@ module RuboCop
         PATTERN
 
         def_node_matcher :has_reset?, <<-PATTERN
-          $(send _ {:describe :context :it :shared_examples} (_ ...) (hash <(pair (sym :db_strategy) (sym {:reset :reset_all})) ...>  ))
+          $(send _ {:describe :context :it :shared_examples} (_ ...) (hash <(pair (sym :db_strategy) (sym {:reset})) ...>  ))
         PATTERN
 
-        MSG = 'Add a `db_strategy: :reset` to your context/decribe when you are creating object manager attributes!'.freeze
+        MSG = 'Add a `db_strategy: :reset` to your context/describe when you are creating object manager attributes!'.freeze
 
         def on_send(node)
           return if !migration_execute?(node) && !create_attribute?(node)

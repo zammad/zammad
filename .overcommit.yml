@@ -106,13 +106,13 @@ PreCommit:
       - 'app/frontend/**/*.vue'
       - '.eslint-plugin-zammad/**/*.js'
       - '.eslint-plugin-zammad/**/*.ts'
-  Markdownlint:
+  Mdl:
     required_executable: 'pnpm'
     enabled: true
     command: ['pnpm', 'lint:md:cmd']
-    flags: ['*.md', '**/*.md', '#node_modules', '#**/node_modules']
     exclude:
       - 'node_modules'
+      - 'tmp'
     include:
       - '**/*.md'
 

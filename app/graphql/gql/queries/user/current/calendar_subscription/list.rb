@@ -11,7 +11,7 @@ module Gql::Queries
 
     def resolve
       Service::User::CalendarSubscription::TicketPreferencesWithUrls
-        .new(context.current_user)
+        .with_current_user(context.current_user)
         .execute
     end
   end

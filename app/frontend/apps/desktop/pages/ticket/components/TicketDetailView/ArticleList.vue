@@ -25,21 +25,31 @@ const emit = defineEmits<{
   'scroll-to-end': []
 }>()
 
+const PAGE_SIZE = 100
+
 const route = useRoute()
 const { context } = useArticleContext()
 
-const totalCount = computed(() => context.articles.value?.articles.totalCount || 0)
-
-const leadingNodesCount = computed(() => edgesToArray(context.articles.value?.firstArticles).length)
+const leadingNodes = computed(() => edgesToArray(context.articles.value?.firstArticles))
+const leadingNodesCount = computed(() => leadingNodes.value.length)
 
 const articles = computed(() => {
-  if (!context.articles.value) {
-    return []
-  }
-  const leadingNodes = edgesToArray(context.articles.value.firstArticles)
+  if (!context.articles.value) return []
+
   const trailingNodes = edgesToArray(context.articles.value.articles)
 
-  return unionBy(leadingNodes, trailingNodes, (elem) => elem.id)
+  return unionBy(leadingNodes.value, trailingNodes, (elem) => elem.id)
+})
+
+const totalCount = computed(() => context.articles.value?.articles.totalCount || 0)
+
+const nextFetchCount = computed(() => {
+  const loadedArticlesCount = articles.value.length
+  const totalArticles = totalCount.value
+
+  const remainingCount = Math.max(0, totalArticles - loadedArticlesCount)
+
+  return remainingCount > PAGE_SIZE ? PAGE_SIZE : remainingCount
 })
 
 const { rows } = useTicketArticleRows(articles, leadingNodesCount, totalCount)
@@ -47,14 +57,14 @@ const { rows } = useTicketArticleRows(articles, leadingNodesCount, totalCount)
 const loadPrevious = async () => {
   await context.articlesQuery.fetchMore({
     variables: {
-      pageSize: 100,
+      pageSize: PAGE_SIZE,
       loadFirstArticles: false,
       beforeCursor: context.articles.value?.articles.pageInfo.startCursor,
     },
   })
 }
 
-const isLoading = computed(() => context.articlesQuery.loading().value)
+const isFetchingMore = context.articlesQuery.loading()
 
 const getArticleElement = async (key: string): Promise<Element | null> => {
   const row = rows.value.find(
@@ -142,8 +152,9 @@ whenever(
         <ArticleBubble v-if="row.type === 'article-bubble'" :article="row.article" />
         <ArticleMore
           v-else-if="row.type === 'more'"
-          :disabled="isLoading"
-          @click="loadPrevious()"
+          :disabled="isFetchingMore"
+          :next-fetch-count="nextFetchCount"
+          @load-more="loadPrevious()"
         />
         <DeliveryMessage
           v-else-if="row.type === 'delivery' && row.content"

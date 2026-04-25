@@ -3,35 +3,37 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::PasswordReset::Update do
-  subject(:service) { described_class.new(token: token, password: password) }
+  subject(:service_result) { described_class.execute(token:, password:) }
 
   let(:user)     { create(:user) }
   let(:token)    { User.password_reset_new_token(user.login)[:token].token }
   let(:password) { 'Cw8OH8yT2b' }
 
   shared_examples 'raising an error' do |klass, message, message_placeholder: nil|
-    it 'raises an error', :aggregate_failures do
-      if message_placeholder
-        expect { service.execute }.to raise_error do |error|
+    if message_placeholder
+      it 'raises an error', :aggregate_failures do
+        expect { service_result }.to raise_error do |error|
           expect(error).to be_a(klass)
             .and have_attributes(
               message:  include(message),
               metadata: [include(message), *message_placeholder],
             )
         end
-      else
-        expect { service.execute }.to raise_error(klass, include(message))
+      end
+    else
+      it 'raises an error' do
+        expect { service_result }.to raise_error(klass, include(message))
       end
     end
   end
 
   shared_examples 'changing password of the user' do
     it 'returns user' do
-      expect(service.execute).to eq(user)
+      expect(service_result).to eq(user)
     end
 
     it 'changes password of the user' do
-      expect { service.execute }.to change { user.reload.password }
+      expect { service_result }.to change { user.reload.password }
     end
 
     it 'sends an email notification' do
@@ -41,7 +43,7 @@ RSpec.describe Service::User::PasswordReset::Update do
         message = params[:body]
       end
 
-      service.execute
+      service_result
 
       expect(message).to include 'If you did not initiate this change, please contact your system administrator.'
     end

@@ -31,10 +31,6 @@ export const useAppUsage = () => {
    */
   const totalAppUsageTime = useLocalStorage('app-usage-total-time', 0)
 
-  const resetTotalAppUsageTime = () => {
-    totalAppUsageTime.value = 0
-  }
-
   const neverAskAgainForTimedFeedback = useLocalStorage(
     'beta-ui-feedback-never-ask-again-timed',
     false,
@@ -49,7 +45,6 @@ export const useAppUsage = () => {
     triggerMilestone,
     resetMilestoneHistory,
     totalAppUsageTime,
-    resetTotalAppUsageTime,
     neverAskAgainForTimedFeedback,
     setNeverAskAgainForTimedFeedback,
   }

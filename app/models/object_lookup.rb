@@ -22,4 +22,37 @@ class ObjectLookup < ApplicationModel
     lookup.id
   end
 
+=begin
+
+This function returns the rails class for the frontend class name (legacy). To reverse this, check Class::to_app_model.
+
+  result = ObjectLookup.find_by(name: 'TicketArticle').to_class
+
+returns
+
+  result = Ticket::Article
+
+=end
+
+  def to_class
+    self.class.to_class(name)
+  end
+
+=begin
+
+This function returns the rails class for the frontend class name (legacy). To reverse this, check Class::to_app_model.
+
+  result = ObjectLookup.to_class('TicketArticle')
+
+returns
+
+  result = Ticket::Article
+
+=end
+
+  def self.to_class(name)
+    Auth::RequestCache.fetch_value('ObjectLookup/to_class') do
+      Models.all.keys.index_by { it.to_app_model.to_s }
+    end[name.to_s]
+  end
 end

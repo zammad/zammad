@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import gql from 'graphql-tag'
+import { uniq } from 'lodash-es'
 import { computed, inject, provide, ref, toRef } from 'vue'
 
+import type { TicketBulkSelectorInput, TicketMacrosSelectorInput } from '#shared/graphql/types.ts'
 import { getApolloClient } from '#shared/server/apollo/client.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -12,7 +14,7 @@ import { useFlyout } from '../../CommonFlyout/useFlyout.ts'
 
 import type { TicketBulkEditReturn } from './types.ts'
 
-const TICKET_BULK_EDIT_SYMBOL = Symbol('ticket-bulk-edit')
+export const TICKET_BULK_EDIT_SYMBOL = Symbol('ticket-bulk-edit')
 
 export interface TicketBulkOverviewContext {
   overviewId: ID
@@ -35,6 +37,8 @@ export const useTicketBulkEdit = () => {
 
   const checkedTicketIds = ref<Set<ID>>(new Set())
 
+  const selectAllActive = ref(false)
+
   const bulkCount = ref(0)
 
   const bulkHasMoreItems = ref(false)
@@ -43,8 +47,20 @@ export const useTicketBulkEdit = () => {
 
   const ticketIds = computed<ID[]>(() => Array.from(checkedTicketIds.value.keys()))
 
-  const groupIds = computed(() =>
-    ticketIds.value.map((ticketId) => {
+  const bulkSelector = computed(() => {
+    let selector: TicketBulkSelectorInput = {}
+
+    if (bulkCount.value && bulkContext.value) {
+      if ('overviewId' in bulkContext.value) selector = { overviewId: bulkContext.value.overviewId }
+      else if ('searchQuery' in bulkContext.value)
+        selector = { searchQuery: bulkContext.value.searchQuery }
+    } else selector = { entityIds: Array.from(ticketIds.value) }
+
+    return selector
+  })
+
+  const groupIds = computed(() => {
+    const ids = ticketIds.value.map((ticketId) => {
       const cache = apolloClient.cache.readFragment<{ group: { id: ID } }>({
         id: `Ticket:${ticketId}`,
         fragment: gql`
@@ -56,9 +72,26 @@ export const useTicketBulkEdit = () => {
           }
         `,
       })
+
       return cache?.group.id ?? ''
-    }),
-  )
+    })
+
+    return uniq(ids)
+  })
+
+  const macrosSelector = computed(() => {
+    let selector: TicketMacrosSelectorInput = {}
+
+    if (bulkCount.value && bulkContext.value) {
+      if ('overviewId' in bulkContext.value) selector = { overviewId: bulkContext.value.overviewId }
+      else if ('searchQuery' in bulkContext.value)
+        selector = { searchQuery: bulkContext.value.searchQuery }
+    } else selector = { entityIds: groupIds.value }
+
+    return selector
+  })
+
+  const currentSelectedTicketCount = computed(() => bulkCount.value || ticketIds.value.length)
 
   const { hasPermission } = useSessionStore()
 
@@ -75,17 +108,19 @@ export const useTicketBulkEdit = () => {
 
   const openBulkEditFlyout = () => {
     open({
-      ticketIds,
       bulkCount,
+      currentSelectedTicketCount,
       bulkHasMoreItems,
-      bulkContext,
-      groupIds,
+      bulkSelector,
+      macrosSelector,
       onSuccess: () => {
         checkedTicketIds.value.clear()
+        selectAllActive.value = false
         onSuccessCallback?.()
       },
       onFailure: (invalidTicketIds: ID[]) => {
         checkedTicketIds.value = new Set(invalidTicketIds)
+        selectAllActive.value = false
         onFailureCallback?.(invalidTicketIds)
       },
     })
@@ -95,9 +130,14 @@ export const useTicketBulkEdit = () => {
     bulkEditActive,
     isBulkTaskRunning,
     checkedTicketIds,
+    currentSelectedTicketCount,
+    groupIds,
+    selectAllActive,
     bulkCount,
     bulkHasMoreItems,
     bulkContext,
+    bulkSelector,
+    macrosSelector,
     openBulkEditFlyout,
     setOnSuccessCallback: (callback: () => void) => {
       onSuccessCallback = callback

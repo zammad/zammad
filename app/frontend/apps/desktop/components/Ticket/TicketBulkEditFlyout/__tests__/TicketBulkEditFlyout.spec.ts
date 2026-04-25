@@ -21,7 +21,9 @@ import { useTicketBulkUpdateStore } from '#desktop/entities/user/current/stores/
 
 const ids = [convertToGraphQLId('Ticket', 1), convertToGraphQLId('Ticket', 2)]
 
-const groupIds = [convertToGraphQLId('Group', 1), convertToGraphQLId('Group', 2)]
+const macrosSelector = {
+  entityIds: [convertToGraphQLId('Group', 1), convertToGraphQLId('Group', 2)],
+}
 
 const renderBulkEditFlyout = () => {
   initializePiniaStore()
@@ -62,10 +64,12 @@ const renderBulkEditFlyout = () => {
 
   return renderComponent(TicketBulkEditFlyout, {
     props: {
-      ticketIds: ids,
-      groupIds,
-      bulkContext: {},
+      currentSelectedTicketCount: ids.length,
       bulkCount: 0,
+      bulkSelector: {
+        entityIds: ids,
+      },
+      macrosSelector,
     },
     form: true,
     router: true,
@@ -99,7 +103,7 @@ describe('TicketBulkEditFlyout', () => {
     expect(calls.at(-1)?.variables).toMatchObject({
       meta: {
         additionalData: {
-          ticketIds: '1,2',
+          entityIds: [convertToGraphQLId('Ticket', 1), convertToGraphQLId('Ticket', 2)],
         },
       },
     })
@@ -131,7 +135,7 @@ describe('TicketBulkEditFlyout', () => {
         },
       },
       selector: {
-        ticketIds: ids,
+        entityIds: ids,
       },
     })
   })
@@ -166,7 +170,7 @@ describe('TicketBulkEditFlyout', () => {
         },
       },
       selector: {
-        ticketIds: ids,
+        entityIds: ids,
       },
     })
   })
@@ -202,7 +206,7 @@ describe('TicketBulkEditFlyout', () => {
         macroId: convertToGraphQLId('Macro', 1),
       },
       selector: {
-        ticketIds: ids,
+        entityIds: ids,
       },
     })
   })
@@ -310,7 +314,7 @@ describe('TicketBulkEditFlyout', () => {
         },
       },
       selector: {
-        ticketIds: ids,
+        entityIds: ids,
       },
     })
   })

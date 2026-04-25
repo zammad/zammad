@@ -45,7 +45,7 @@ RSpec.describe Gql::Subscriptions::LinkUpdates, type: :graphql do
       let(:agent) { create(:agent) }
 
       it 'raises an error' do
-        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+        expect(gql.result.error_type).to eq(Pundit::NotAuthorizedError)
       end
     end
 

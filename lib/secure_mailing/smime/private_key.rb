@@ -7,7 +7,7 @@ class SecureMailing::SMIME::PrivateKey
     begin
       new(pem, secret)
     rescue OpenSSL::PKey::PKeyError
-      raise Exceptions::UnprocessableEntity, __('The private key is not valid for S/MIME usage. Please check the key format and the secret.')
+      raise Exceptions::UnprocessableContent, __('The private key is not valid for S/MIME usage. Please check the key format and the secret.')
     end
   end
 
@@ -33,7 +33,7 @@ class SecureMailing::SMIME::PrivateKey
     Rails.logger.error { "SMIME::PrivateKey: #{message}" }
     Rails.logger.error { "SMIME::PrivateKey:\n #{@key.to_pem}" }
 
-    raise Exceptions::UnprocessableEntity, message
+    raise Exceptions::UnprocessableContent, message
   end
 
   def rsa?

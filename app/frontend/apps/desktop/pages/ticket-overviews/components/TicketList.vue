@@ -178,11 +178,7 @@ const refreshRefetchAbortController = () => {
 
 const loading = ticketsQuery.loading()
 
-const isLoadingTickets = computed(() => {
-  if (ticketsResult.value !== undefined) return false
-
-  return loading.value
-})
+const isLoadingTickets = ticketsQuery.loadingWithoutCachedResult()
 
 const tickets = computed(() => edgesToArray(ticketsResult.value?.ticketsCachedByOverview))
 

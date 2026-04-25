@@ -21,7 +21,7 @@ class ChannelsTelegramController < ApplicationController
     begin
       channel = TelegramHelper.create_or_update_channel(params[:api_token], params)
     rescue => e
-      raise Exceptions::UnprocessableEntity, e.message
+      raise Exceptions::UnprocessableContent, e.message
     end
     render json: mask_sensitive_values(channel.as_json, channel)
   end
@@ -31,7 +31,7 @@ class ChannelsTelegramController < ApplicationController
     begin
       channel = TelegramHelper.create_or_update_channel(params[:api_token], params, channel)
     rescue => e
-      raise Exceptions::UnprocessableEntity, e.message
+      raise Exceptions::UnprocessableContent, e.message
     end
     render json: mask_sensitive_values(channel.as_json, channel)
   end
@@ -57,19 +57,19 @@ class ChannelsTelegramController < ApplicationController
   end
 
   def webhook
-    raise Exceptions::UnprocessableEntity, 'bot id is missing' if params['bid'].blank?
+    raise Exceptions::UnprocessableContent, 'bot id is missing' if params['bid'].blank?
 
     channel = TelegramHelper.bot_by_bot_id(params['bid'])
-    raise Exceptions::UnprocessableEntity, 'bot not found' if !channel
+    raise Exceptions::UnprocessableContent, 'bot not found' if !channel
 
     if channel.options[:callback_token] != params['callback_token']
-      raise Exceptions::UnprocessableEntity, 'invalid callback token'
+      raise Exceptions::UnprocessableContent, 'invalid callback token'
     end
 
     telegram = TelegramHelper.new(channel.options[:api_token])
     begin
       telegram.to_group(params, channel.group_id, channel)
-    rescue Exceptions::UnprocessableEntity => e
+    rescue Exceptions::UnprocessableContent => e
       Rails.logger.error e.message
     end
 

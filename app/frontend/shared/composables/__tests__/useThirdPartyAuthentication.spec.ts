@@ -10,18 +10,17 @@ vi.mock('#shared/utils/browser.ts', () => {
   }
 })
 
-vi.mock('vue-router', async (importOriginal) => {
-  const module = await importOriginal<typeof import('vue-router')>()
-
-  return {
-    ...module,
-    useRoute: vi.fn().mockReturnValue({
-      query: {
-        redirect: '/bar',
+vi.mock('#shared/router/router.ts', () => ({
+  getCurrentRouter: vi.fn().mockReturnValue({
+    currentRoute: {
+      value: {
+        query: {
+          redirect: '/bar',
+        },
       },
-    }),
-  }
-})
+    },
+  }),
+}))
 
 describe('useThirdPartyAuthentication', () => {
   beforeEach(() => {

@@ -12,17 +12,18 @@ module Gql::Mutations
     field :analytics, Gql::Types::AI::Analytics::MetadataType, description: 'Analytics metadata', null: true
 
     def resolve(input:, text_tool:, template_render_context:)
-      output = Service::AIAssistance::TextTools.new(
-        input:,
-        text_tool:,
-        template_render_context: template_render_context.to_context_hash,
-        current_user:            context.current_user,
-      ).execute
+      output = Service::AIAssistance::TextTools
+        .with_current_user(context.current_user)
+        .execute(
+          input:,
+          text_tool:,
+          template_render_context: template_render_context.to_context_hash,
+        )
 
       # Implicitly record the analytics usage for the current user.
       Service::AI::Analytics::UpsertUsage
-        .new(context.current_user, output.ai_analytics_run)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(output.ai_analytics_run)
 
       {
         output:    output[:content],

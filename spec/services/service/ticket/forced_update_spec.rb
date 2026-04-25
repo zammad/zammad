@@ -3,8 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::ForcedUpdate, current_user_id: -> { user.id } do
+  subject(:service_result) { described_class.with_current_user(user).execute(ticket, title:) }
+
   let(:user)   { create(:agent, groups: [ticket.group]) }
   let(:ticket) { create(:ticket) }
+  let(:title)  { Faker::Lorem.word }
 
   context 'when updating a ticket with a missing required field', db_strategy: :reset do
     before do
@@ -15,9 +18,7 @@ RSpec.describe Service::Ticket::ForcedUpdate, current_user_id: -> { user.id } do
     end
 
     it 'still saves the new value' do
-      title = Faker::Lorem.word
-
-      described_class.new(ticket, title:).execute
+      service_result
 
       expect(ticket.reload).to have_attributes(title:)
     end

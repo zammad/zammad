@@ -5,12 +5,11 @@ import { refDebounced } from '@vueuse/core'
 import { whenever } from '@vueuse/shared'
 import { computed, toRef } from 'vue'
 
-import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
-import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
 import { useQuickSearchLazyQuery } from '#desktop/components/Search/graphql/queries/quickSearch.api.ts'
+import QuickSearchResultListSkeleton from '#desktop/components/Search/QuickSearch/QuickSearchResultList/skeleton/QuickSearchResultListSkeleton.vue'
 import type { QuickSearchResultData } from '#desktop/components/Search/types.ts'
 
 import { useSearchPlugins } from '../../plugins/index.ts'
@@ -49,7 +48,6 @@ const quickSearchQuery = new QueryHandler(
 )
 
 const quickSearchResult = quickSearchQuery.result()
-const searchResultsLoading = quickSearchQuery.loading()
 
 whenever(
   debouncedSearch,
@@ -85,16 +83,7 @@ const mappedQuickSearchResults = computed(() => {
   return searchResults
 })
 
-const isLoadingSearchResults = computed(() => {
-  if (mappedQuickSearchResults.value !== undefined) return false
-
-  return searchResultsLoading.value
-})
-
-const { debouncedLoading } = useDebouncedLoading({
-  isLoading: isLoadingSearchResults,
-  ms: 150,
-})
+const isLoadingSearchResults = quickSearchQuery.loadingWithoutCachedResult()
 
 const hasResults = computed(() => Boolean(mappedQuickSearchResults.value?.length))
 
@@ -102,23 +91,8 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
 </script>
 
 <template>
-  <div v-if="debouncedLoading" class="mt-4 flex flex-col gap-8">
-    <div v-for="i in 2" :key="i" class="flex flex-col gap-4">
-      <CommonSkeleton
-        v-for="j in 3"
-        :key="j"
-        class="block rounded-lg"
-        :class="{
-          'h-5 w-25': j === 1,
-          'h-6 w-full': j !== 1,
-        }"
-        :style="{ 'animation-delay': `${(i * 3 + j) * 0.1}s` }"
-      />
-    </div>
-  </div>
-  <template v-else>
+  <QuickSearchResultListSkeleton :loading="isLoadingSearchResults">
     <CommonLink
-      v-if="!isLoadingSearchResults"
       class="group/link mb-4 block"
       :link="{ name: 'Search', params: { searchTerm: search } }"
       @click="resetQuickSearchInputField"
@@ -175,8 +149,6 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
         </div>
       </CommonSectionCollapse>
     </div>
-    <CommonLabel v-else-if="!isLoadingSearchResults">{{
-      $t('No results for this query.')
-    }}</CommonLabel>
-  </template>
+    <CommonLabel v-else>{{ $t('No results for this query.') }}</CommonLabel>
+  </QuickSearchResultListSkeleton>
 </template>

@@ -11,6 +11,18 @@ class Class
     end
   end
 
+=begin
+
+This function returns the frontend name for the rails class (legacy). To reverse this, check ObjectLookup::app_model2class.
+
+  result = Ticket::Article.to_app_model
+
+returns
+
+  result = :TicketArticle
+
+=end
+
   def to_app_model
     @to_app_model ||= to_s.gsub(%r{::}, '').to_sym
   end

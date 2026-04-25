@@ -8,6 +8,7 @@ class KnowledgeBase::Answer < ApplicationModel
   include ChecksKbClientNotification
   include ChecksKbClientVisibility
   include CanCloneAttachments
+  include CanLookupSearchIndexAttributesWithAttachments
 
   AGENT_ALLOWED_ATTRIBUTES       = %i[category_id promoted internal_note].freeze
   AGENT_ALLOWED_NESTED_RELATIONS = %i[translations].freeze

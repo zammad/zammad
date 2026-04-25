@@ -126,3 +126,9 @@ schema.graphql
 # Devcontainer
 /.devcontainer/with-mailserver/certs/*
 !/.devcontainer/with-mailserver/certs/.gitkeep
+/.devcontainer/with-ldap/ldap/certs/*
+!/.devcontainer/with-ldap/ldap/certs/.gitkeep
+
+# Dart Sass compiled output (dartsass-rails)
+/app/assets/builds/*
+!/app/assets/builds/.keep

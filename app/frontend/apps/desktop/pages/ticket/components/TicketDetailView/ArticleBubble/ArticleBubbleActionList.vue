@@ -24,12 +24,14 @@ const { ticket, isTicketEditable, showTicketArticleReplyForm, form } = useTicket
 
 const { isTouchDevice } = useTouchDevice()
 
-const buttonVariantClassExtension = computed(() => {
-  // TODO maybe general classes string for same classes
-  if (props.position === 'left')
-    return 'border! border-neutral-100! outline-transparent! hover:border-blue-700! hover:border-blue-800! bg-neutral-50! hover:dark:bg-gray-500! hover:bg-white!  text-gray-100! dark:border-gray-900! dark:bg-gray-500! dark:text-neutral-400!'
+const buttonVariantBaseClasses =
+  'border! border-neutral-100! outline-transparent! hover:border-blue-700! text-gray-100! dark:border-gray-900! dark:text-neutral-400!'
 
-  return 'border! border-neutral-100! outline-transparent! hover:border-blue-700! dark:hover:border-blue-700! bg-blue-100! bg-blue-100!  text-gray-100! dark:border-gray-900! dark:bg-stone-500! dark:text-neutral-400!'
+const buttonVariantClassExtension = computed(() => {
+  if (props.position === 'left')
+    return `${buttonVariantBaseClasses} hover:border-blue-800! bg-neutral-50! hover:dark:bg-gray-500! hover:bg-white! dark:bg-gray-500!`
+
+  return `${buttonVariantBaseClasses} dark:hover:border-blue-700! bg-blue-100! dark:bg-stone-500!`
 })
 
 const { getNewArticleBody, openReplyForm } = useTicketArticleReplyAction(
@@ -88,13 +90,13 @@ const actions = computed(() => {
       label: action.label,
       icon: action.icon,
       link: action.link,
-      ...(action?.perform
+      ...(action.perform
         ? {
             onClick: () => {
-              if (!action?.perform || !ticket.value) return
+              if (!ticket.value) return
 
-              action.perform(ticket.value, props.article, {
-                formId: form.value?.formId || '',
+              action.perform!(ticket.value, props.article, {
+                formId: form.value?.formId ?? '',
                 selection: articleSelection(props.article.internalId),
                 openReplyForm,
                 getNewArticleBody,

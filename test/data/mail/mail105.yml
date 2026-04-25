@@ -17,7 +17,7 @@ attachments:
     To: metest@znuny.com, "Günther John | Example GmbH" <k.günther@example.com>
     Message-ID: "<BC182994-03FA-4DC5-8202-98CBFACA0887@example.com>"
     Subject: aaäöüßad asd
-    Mime-Version: '1.0'
+    MIME-Version: '1.0'
     Content-Type: multipart/mixed; boundary="----_=_NextPart_000_03BED81D.6103DF93"
     X-Universally-Unique-Identifier: d12c15d2-e6d6-4ccd-86c7-abc2c3d0a2a2
     Mime-Type: multipart/mixed

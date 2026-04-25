@@ -36,10 +36,13 @@ export interface Notification {
   persistent?: boolean
   currentProgress?: number
   maxProgress?: number
+  actionLabel?: string
+  actionCallback?: () => void
   /**
    * Will be called when the notification is removed, only by manual close action from the user
    */
-  callback?: () => void
+  closeLabel?: string
+  closeCallback?: () => void
 }
 
 export type NewNotification = SetOptional<Notification, 'id' | 'timeout'>

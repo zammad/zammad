@@ -1,9 +1,17 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Ticket::Create < Service::BaseWithCurrentUser
+class Service::Ticket::Create < Service::Base
   include Service::Concerns::HandlesCoreWorkflow
 
-  def execute(ticket_data:)
+  requires_current_user!
+
+  attr_reader :ticket_data
+
+  def initialize(ticket_data:)
+    @ticket_data = ticket_data
+  end
+
+  def execute
     Transaction.execute do
       handle_shared_draft(ticket_data)
 
@@ -35,7 +43,7 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
     preprocess_article_data! ticket, article_data
 
     Service::Ticket::Article::Create
-      .new(current_user: current_user)
+      .with_current_user(current_user)
       .execute(article_data: article_data, ticket: ticket)
   end
 
@@ -52,7 +60,16 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
   def add_links(ticket, link_data)
     return if link_data.blank?
 
+    Pundit.authorize current_user, ticket, :agent_create_access?
+
     link_data.each do |link|
+      case link[:link_object]
+      when ::Ticket
+        Pundit.authorize current_user, link[:link_object], :agent_read_access?
+      when ::KnowledgeBase::Answer::Translation
+        Pundit.authorize current_user, link[:link_object], :show?
+      end
+
       Link.add(
         link_type:                link[:link_type],
         link_object_target:       link[:link_object].class.name,
@@ -180,7 +197,7 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
     return if !shared_draft
 
     if shared_draft.group_id != ticket_data[:group].id || !shared_draft.group.shared_drafts?
-      raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+      raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
     end
 
     shared_draft.destroy!

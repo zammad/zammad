@@ -84,7 +84,7 @@ RSpec.describe Gql::Subscriptions::Ticket::AIAssistance::SummaryUpdates, authent
       end
 
       before do
-        allow_any_instance_of(Service::Ticket::AIAssistance::Summarize)
+        allow(Service::Ticket::AIAssistance::Summarize)
           .to receive(:execute)
           .and_return(expected_result)
       end

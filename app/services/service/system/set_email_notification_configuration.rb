@@ -12,8 +12,6 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
   # @option new_configuration [String] :password of SMTP server
   # @option new_configuration [Boolean] :ssl_verify Wether SSL verification is performed
   def initialize(adapter:, new_configuration:)
-    super()
-
     @adapter = adapter
     @new_configuration = new_configuration
   end

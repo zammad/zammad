@@ -16,6 +16,8 @@ module Store::Provider::S3::Config
     end
 
     def apply
+      require 'aws-sdk-s3'
+
       return true if Aws.config.present?
 
       begin
@@ -37,6 +39,8 @@ module Store::Provider::S3::Config
     end
 
     def reset
+      require 'aws-sdk-s3'
+
       @config = nil
       Aws.config = {}
 

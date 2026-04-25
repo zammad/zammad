@@ -19,11 +19,12 @@ module Gql::Mutations
 
     def resolve(current_password:, new_password:)
       begin
-        Service::User::ChangePassword.new(
-          user:             context.current_user,
-          current_password: current_password,
-          new_password:     new_password
-        ).execute
+        Service::User::ChangePassword
+          .with_current_user(context.current_user)
+          .execute(
+            current_password: current_password,
+            new_password:     new_password
+          )
       rescue PasswordHash::Error
         return error_response({ message: __('The current password you provided is incorrect.'), field: 'current_password' })
       rescue PasswordPolicy::Error => e

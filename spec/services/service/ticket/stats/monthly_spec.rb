@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::Stats::Monthly, :aggregate_failures do
-  subject(:service) { described_class.new(current_user: user) }
+  subject(:service_result) { described_class.with_current_user(user).execute(conditions:) }
 
-  let(:group) { create(:group) }
-  let(:user)  { create(:agent, groups: [group]) }
+  let(:group)      { create(:group) }
+  let(:user)       { create(:agent, groups: [group]) }
+  let(:conditions) { {} }
 
   describe '#execute' do
     before do
@@ -20,36 +21,24 @@ RSpec.describe Service::Ticket::Stats::Monthly, :aggregate_failures do
       before { ticket_created && ticket_closed }
 
       it 'returns 12 months of data' do
-        result = service.execute(conditions: {})
-
-        expect(result).to be_an(Array)
-        expect(result.size).to eq(12)
+        expect(service_result).to be_an(Array)
+        expect(service_result.size).to eq(12)
       end
 
       it 'includes correct keys in each month' do
-        result = service.execute(conditions: {})
-
-        expect(result.first.keys).to contain_exactly(:year, :month_number, :month_label, :tickets_created, :tickets_closed)
+        expect(service_result.first.keys).to contain_exactly(:year, :month_number, :month_label, :tickets_created, :tickets_closed)
       end
 
       it 'counts tickets created in current month' do
-        result = service.execute(conditions: {})
-
-        current_month = result.first
-        expect(current_month[:tickets_created]).to eq(1)
+        expect(service_result.first[:tickets_created]).to eq(1)
       end
 
       it 'counts tickets closed in current month' do
-        result = service.execute(conditions: {})
-
-        current_month = result.first
-        expect(current_month[:tickets_closed]).to eq(1)
+        expect(service_result.first[:tickets_closed]).to eq(1)
       end
 
       it 'includes correct month information' do
-        result = service.execute(conditions: {})
-
-        current_month = result.first
+        current_month = service_result.first
         now = Time.zone.now
 
         expect(current_month[:year]).to eq(now.year)
@@ -59,16 +48,15 @@ RSpec.describe Service::Ticket::Stats::Monthly, :aggregate_failures do
     end
 
     context 'with additional conditions' do
+      subject(:service_result) { described_class.with_current_user(user).execute(conditions: { state_id: Ticket::State.find_by(name: 'open').id }) }
+
       let!(:open_ticket)   { create(:ticket, group: group, state: Ticket::State.find_by(name: 'open'), created_at: Time.zone.now) }
       let!(:closed_ticket) { create(:ticket, group: group, state: Ticket::State.find_by(name: 'closed'), created_at: Time.zone.now) }
 
       before { open_ticket && closed_ticket }
 
       it 'filters tickets by conditions' do
-        result = service.execute(conditions: { state_id: Ticket::State.find_by(name: 'open').id })
-
-        current_month = result.first
-        expect(current_month[:tickets_created]).to eq(1)
+        expect(service_result.first[:tickets_created]).to eq(1)
       end
     end
 
@@ -80,12 +68,10 @@ RSpec.describe Service::Ticket::Stats::Monthly, :aggregate_failures do
       before { ticket_this_month && ticket_last_month && ticket_two_months }
 
       it 'distributes tickets correctly across months' do
-        result = service.execute(conditions: {})
-
-        expect(result[0][:tickets_created]).to eq(1)  # current month
-        expect(result[1][:tickets_created]).to eq(1)  # last month
-        expect(result[2][:tickets_created]).to eq(1)  # two months ago
-        expect(result[3][:tickets_created]).to eq(0)  # three months ago
+        expect(service_result[0][:tickets_created]).to eq(1)  # current month
+        expect(service_result[1][:tickets_created]).to eq(1)  # last month
+        expect(service_result[2][:tickets_created]).to eq(1)  # two months ago
+        expect(service_result[3][:tickets_created]).to eq(0)  # three months ago
       end
     end
 
@@ -96,10 +82,7 @@ RSpec.describe Service::Ticket::Stats::Monthly, :aggregate_failures do
       before { ticket }
 
       it 'does not count tickets from inaccessible groups' do
-        result = service.execute(conditions: {})
-
-        current_month = result.first
-        expect(current_month[:tickets_created]).to eq(0)
+        expect(service_result.first[:tickets_created]).to eq(0)
       end
     end
 
@@ -117,12 +100,8 @@ RSpec.describe Service::Ticket::Stats::Monthly, :aggregate_failures do
         let(:timezone) { 'Asia/Tokyo' }
 
         it 'returns tickets according to Zammad time zone' do
-          result = service.execute(conditions: {})
-
-          current_month = result.first
-          previous_month = result.second
-          expect(current_month[:tickets_created]).to eq(1)
-          expect(previous_month[:tickets_created]).to eq(0)
+          expect(service_result.first[:tickets_created]).to eq(1)
+          expect(service_result.second[:tickets_created]).to eq(0)
         end
       end
 
@@ -130,12 +109,8 @@ RSpec.describe Service::Ticket::Stats::Monthly, :aggregate_failures do
         let(:timezone) { 'America/New_York' }
 
         it 'returns tickets according to Zammad time zone' do
-          result = service.execute(conditions: {})
-
-          current_month = result.first
-          previous_month = result.second
-          expect(current_month[:tickets_created]).to eq(0)
-          expect(previous_month[:tickets_created]).to eq(1)
+          expect(service_result.first[:tickets_created]).to eq(0)
+          expect(service_result.second[:tickets_created]).to eq(1)
         end
       end
     end

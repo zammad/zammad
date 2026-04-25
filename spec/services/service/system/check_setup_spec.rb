@@ -141,28 +141,30 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
   end
 
   describe '#execute' do
-    subject(:service) { described_class.new }
+    subject(:service_result) { described_class.new.tap(&:execute) }
 
     describe 'with fresh install' do
       before do
         Setting.set('system_init_done', false)
-        service.execute
+        allow(AutoWizard).to receive(:enabled?).and_return(auto_wizard_enabled)
+        service_result
       end
 
-      it 'returns new status' do
-        expect(service.status).to eq('new')
-        expect(service.type).to be_nil
+      context 'when auto wizard is not enabled' do
+        let(:auto_wizard_enabled) { false }
+
+        it 'returns new status' do
+          expect(service_result.status).to eq('new')
+          expect(service_result.type).to be_nil
+        end
       end
 
       context 'when auto wizard is enabled' do
-        before do
-          allow(AutoWizard).to receive(:enabled?).and_return(true)
-          service.execute
-        end
+        let(:auto_wizard_enabled) { true }
 
         it 'returns automated status' do
-          expect(service.status).to eq('automated')
-          expect(service.type).to be_nil
+          expect(service_result.status).to eq('automated')
+          expect(service_result.type).to be_nil
         end
       end
     end
@@ -176,12 +178,12 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
       context 'with manual setup' do
         before do
           Setting.set('import_mode', false)
-          service.execute
+          service_result
         end
 
         it 'returns done status' do
-          expect(service.status).to eq('done')
-          expect(service.type).to be_nil
+          expect(service_result.status).to eq('done')
+          expect(service_result.type).to be_nil
         end
       end
 
@@ -189,24 +191,24 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
         before do
           Setting.set('import_mode', false)
           allow(AutoWizard).to receive(:enabled?).and_return(true)
-          service.execute
+          service_result
         end
 
         it 'returns done status' do
-          expect(service.status).to eq('done')
-          expect(service.type).to be_nil
+          expect(service_result.status).to eq('done')
+          expect(service_result.type).to be_nil
         end
       end
 
       context 'with import setup' do
         before do
           Setting.set('import_mode', true)
-          service.execute
+          service_result
         end
 
         it 'returns done status' do
-          expect(service.status).to eq('in_progress')
-          expect(service.type).to eq('import')
+          expect(service_result.status).to eq('in_progress')
+          expect(service_result.type).to eq('import')
         end
       end
     end
@@ -220,14 +222,14 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
         before do
           Setting.set('import_mode', false)
 
-          Service::ExecuteLockedBlock.new('Zammad::System::Setup', 10_000).execute do
-            service.execute
+          Service::ExecuteLockedBlock.execute('Zammad::System::Setup', 10_000) do
+            service_result
           end
         end
 
         it 'returns in_progress status' do
-          expect(service.status).to eq('in_progress')
-          expect(service.type).to eq('manual')
+          expect(service_result.status).to eq('in_progress')
+          expect(service_result.type).to eq('manual')
         end
       end
 
@@ -235,11 +237,11 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
         before do
           Setting.set('import_mode', false)
 
-          Service::ExecuteLockedBlock.new('Zammad::System::Setup', 10_000).execute do
+          Service::ExecuteLockedBlock.execute('Zammad::System::Setup', 10_000) do
             begin
               json = Rails.root.join('auto_wizard.json')
               FileUtils.touch(json)
-              service.execute
+              service_result
             ensure
               FileUtils.rm(json)
             end
@@ -247,8 +249,8 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
         end
 
         it 'returns in_progress status' do
-          expect(service.status).to eq('in_progress')
-          expect(service.type).to eq('auto')
+          expect(service_result.status).to eq('in_progress')
+          expect(service_result.type).to eq('auto')
         end
       end
 
@@ -256,12 +258,12 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
         before do
           Setting.set('import_mode', true)
 
-          service.execute
+          service_result
         end
 
         it 'returns in_progress status' do
-          expect(service.status).to eq('in_progress')
-          expect(service.type).to eq('import')
+          expect(service_result.status).to eq('in_progress')
+          expect(service_result.type).to eq('import')
         end
       end
     end
@@ -273,7 +275,7 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
         end
 
         it 'raises error' do
-          expect { service.execute }.to raise_error(Service::System::CheckSetup::SystemSetupError)
+          expect { service_result }.to raise_error(Service::System::CheckSetup::SystemSetupError)
         end
       end
 
@@ -285,7 +287,7 @@ RSpec.describe Service::System::CheckSetup, :aggregate_failures do
 
         it 'raises error' do
           allow(Rails.logger).to receive(:warn)
-          service.execute
+          service_result
           expect(Rails.logger).to have_received(:warn).with('The system setup is not marked as done, but at least one admin user is existing. Marking system setup as done.')
         end
       end

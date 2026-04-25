@@ -1,7 +1,18 @@
 {
   "enabledManagers": ["bundler", "npm", "github-actions"],
-  "lockFileMaintenance": {
-    "enabled": false
+  "bundler": {
+    "lockFileMaintenance": {
+      "enabled": true,
+      "extends": ["schedule:weekly"],
+      "branchName": "renovate/lock-file-maintenance-ruby"
+    }
+  },
+  "npm": {
+    "lockFileMaintenance": {
+      "enabled": true,
+      "extends": ["schedule:weekly"],
+      "branchName": "renovate/lock-file-maintenance-js"
+    }
   },
   "packageRules": [
     {
@@ -12,15 +23,13 @@
       "matchCategories": ["ruby"],
       "assignees": ["fl"],
       "addLabels": ["ruby"],
-      "rangeStrategy": "in-range-only",
-      "extends": [":maintainLockFilesWeekly"]
+      "rangeStrategy": "in-range-only"
     },
     {
       "matchCategories": ["js"],
       "assignees": ["dk"],
       "addLabels": ["javascript"],
-      "rangeStrategy": "bump",
-      "extends": [":maintainLockFilesWeekly"]
+      "rangeStrategy": "bump"
     },
     {
       "matchCategories": ["js"],

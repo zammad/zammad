@@ -5,8 +5,6 @@ module Service::AI::VectorDB
     attr_reader :text
 
     def initialize(text:)
-      super()
-
       @text = text
     end
 

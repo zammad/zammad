@@ -33,6 +33,14 @@ const props = defineProps<Props>()
 
 const { showMetaInformation, toggleHeader } = useBubbleHeader()
 
+const toggleHeaderFromKeyboard = () => {
+  toggleHeader(new MouseEvent('click'))
+}
+
+const metaInformationRegionId = computed(
+  () => `article-meta-information-${props.article.internalId}`,
+)
+
 const position = computed(() => {
   switch (props.article.sender?.name) {
     case EnumTicketArticleSenderName.Customer:
@@ -117,7 +125,11 @@ const { showPreview } = useFilePreviewViewer(
         articleWrapperBorderClass,
       ]"
     >
-      <div :aria-hidden="!showMetaInformation" class="grid w-full grid-rows-[0fr] overflow-hidden">
+      <div
+        :id="metaInformationRegionId"
+        :aria-hidden="!showMetaInformation"
+        class="grid w-full grid-rows-[0fr] overflow-hidden"
+      >
         <Transition name="pseudo-transition">
           <ArticleBubbleHeader
             v-if="showMetaInformation"
@@ -139,27 +151,38 @@ const { showPreview } = useFilePreviewViewer(
       <ArticleBubbleSecurityWarning :article="article" />
       <ArticleBubbleMediaError :article="article" />
 
-      <ArticleBubbleBody
-        tabindex="0"
-        :data-test-id="`article-bubble-body-${article.internalId}`"
-        class="focus-visible-app-default last:rounded-b-xl focus-visible:-outline-offset-1"
-        :class="[
-          bodyClasses,
-          {
-            'pt-3': showMetaInformation,
-            '[&:nth-child(2)]:rounded-t-xl': !showMetaInformation,
-            'rtl:rounded-br-none [&:nth-child(2)]:ltr:rounded-br-none': position === 'right',
-            'rtl:rounded-br-none [&:nth-child(2)]:ltr:rounded-bl-none': position === 'left',
-          },
-        ]"
-        :position="position"
-        :show-meta-information="showMetaInformation"
-        :inline-images="inlineImages"
-        :article="article"
-        @click="toggleHeader"
-        @keydown.enter="toggleHeader"
-        @preview="showPreview('image', $event)"
-      />
+      <div
+        class="relative isolate"
+        :class="{
+          'nth-2:rounded-t-xl': !showMetaInformation,
+          'nth-2:ltr:rounded-br-none nth-2:ltr:rounded-bl-xl nth-2:rtl:rounded-br-xl nth-2:rtl:rounded-bl-none':
+            position === 'right',
+          'nth-2:ltr:rounded-br-xl nth-2:ltr:rounded-bl-none nth-2:rtl:rounded-br-none nth-2:rtl:rounded-bl-xl':
+            position === 'left',
+        }"
+      >
+        <button
+          type="button"
+          class="pointer-events-none absolute top-0 z-10 size-full rounded-[inherit] border-blue-800 focus:outline-none focus-visible:border ltr:left-0 rtl:right-0"
+          :aria-label="$t('Toggle article meta information')"
+          :aria-expanded="showMetaInformation"
+          :aria-controls="metaInformationRegionId"
+          @keydown.enter.prevent="toggleHeaderFromKeyboard"
+          @keydown.space.prevent="toggleHeaderFromKeyboard"
+        />
+
+        <ArticleBubbleBody
+          :data-test-id="`article-bubble-body-${article.internalId}`"
+          class="z-5 h-full"
+          :class="[bodyClasses]"
+          :position="position"
+          :show-meta-information="showMetaInformation"
+          :inline-images="inlineImages"
+          :article="article"
+          @preview="showPreview('image', $event)"
+          @click="toggleHeader"
+        />
+      </div>
 
       <ArticleBubbleBlockedContentWarning
         :class="[

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::Signup do
-  subject(:service) { described_class.new(user_data: user_data, resend: resend) }
+  subject(:service_result) { described_class.execute(user_data:, resend:) }
 
   let(:resend) { false }
 
@@ -17,28 +17,30 @@ RSpec.describe Service::User::Signup do
   end
 
   shared_examples 'raising an error' do |klass, message, message_placeholder: nil|
-    it 'raises an error', :aggregate_failures do
-      if message_placeholder
-        expect { service.execute }.to raise_error do |error|
+    if message_placeholder
+      it 'raises an error', :aggregate_failures do
+        expect { service_result }.to raise_error do |error|
           expect(error).to be_a(klass)
             .and have_attributes(
               message:  include(message),
               metadata: [include(message), *message_placeholder],
             )
         end
-      else
-        expect { service.execute }.to raise_error(klass, include(message))
+      end
+    else
+      it 'raises an error' do
+        expect { service_result }.to raise_error(klass, include(message))
       end
     end
   end
 
   shared_examples 'returning success' do |with_new_user: false, with_existing_user: false, with_resend: false|
     it 'returns success' do
-      expect(service.execute).to be(true)
+      expect(service_result).to be(true)
     end
 
     it 'creates an unverified user account', if: with_new_user do
-      service.execute
+      service_result
       expect(User.find_by(email: 'bender@futurama.fiction')).to be_present.and have_attributes(verified: false)
     end
 
@@ -49,7 +51,7 @@ RSpec.describe Service::User::Signup do
         message = params[:body]
       end
 
-      service.execute
+      service_result
 
       expect(message).to include("<a href=\"http://zammad.example.com/desktop/signup/verify/#{Token.last[:token]}\">")
     end
@@ -61,7 +63,7 @@ RSpec.describe Service::User::Signup do
         message = params[:body]
       end
 
-      service.execute
+      service_result
 
       expect(message).to include("<a href=\"http://zammad.example.com/desktop/reset-password/verify/#{Token.last[:token]}\">")
     end
@@ -73,10 +75,11 @@ RSpec.describe Service::User::Signup do
         message = params[:body]
       end
 
-      service.execute
+      service_result
 
       expect(message).to be_nil
     end
+
   end
 
   shared_examples 'raising error if import mode is on' do
@@ -84,14 +87,14 @@ RSpec.describe Service::User::Signup do
       before { Setting.set('import_mode', true) }
 
       it 'raises an error' do
-        expect { service.execute }
-          .to raise_error(Exceptions::UnprocessableEntity, message)
+        expect { service_result }
+          .to raise_error(Exceptions::UnprocessableContent, message)
       end
 
       it 'adds message to the log' do
         allow(Rails.logger).to receive(:error)
 
-        service.execute rescue nil # rubocop:disable Style/RescueModifier
+        service_result rescue nil # rubocop:disable Style/RescueModifier
 
         expect(Rails.logger)
           .to have_received(:error)

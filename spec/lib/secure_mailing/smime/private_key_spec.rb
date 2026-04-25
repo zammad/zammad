@@ -23,7 +23,7 @@ RSpec.describe SecureMailing::SMIME::PrivateKey do
 
       it 'raises an error' do
         message = 'The private key is not valid for S/MIME usage. Please check the key format and the secret.'
-        expect { described_class.read(key, secret) }.to raise_error(Exceptions::UnprocessableEntity, message)
+        expect { described_class.read(key, secret) }.to raise_error(Exceptions::UnprocessableContent, message)
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe SecureMailing::SMIME::PrivateKey do
 
       it 'raises an error' do
         message = 'The private key is not valid for S/MIME usage. Please check the key format and the secret.'
-        expect { described_class.read(key, secret) }.to raise_error(Exceptions::UnprocessableEntity, message)
+        expect { described_class.read(key, secret) }.to raise_error(Exceptions::UnprocessableContent, message)
       end
     end
   end
@@ -166,7 +166,7 @@ RSpec.describe SecureMailing::SMIME::PrivateKey do
 
       it 'returns true' do
         message = 'The private key is not valid for S/MIME usage. Please check the key cryptographic algorithm.'
-        expect { described_class.new(key, secret).valid_smime_private_key! }.to raise_error(Exceptions::UnprocessableEntity, message)
+        expect { described_class.new(key, secret).valid_smime_private_key! }.to raise_error(Exceptions::UnprocessableContent, message)
       end
     end
   end

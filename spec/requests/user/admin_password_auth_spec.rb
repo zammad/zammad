@@ -9,7 +9,7 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
 
       it 'is not processable' do
         post api_v1_users_admin_password_auth_path, params: { username: 'john.doe' }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 
@@ -19,7 +19,7 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
       context 'when no third-party authenticator is enabled' do
         it 'is not processable' do
           post api_v1_users_admin_password_auth_path, params: { username: 'john.doe' }
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
 
@@ -78,7 +78,7 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
 
       it 'is not processable' do
         post api_v1_users_admin_password_auth_verify_path, params: { token: 4711, }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 
@@ -88,7 +88,7 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
       context 'when no third-party authenticator is enabled' do
         it 'is not processable' do
           post api_v1_users_admin_password_auth_verify_path, params: { token: 4711 }
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
 
@@ -106,7 +106,7 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
 
         it 'is not processable with invalid token' do
           post api_v1_users_admin_password_auth_verify_path, params: { token: 4711 }
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
     end

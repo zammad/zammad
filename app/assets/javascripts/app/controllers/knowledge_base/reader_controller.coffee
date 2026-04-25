@@ -58,6 +58,11 @@ class App.KnowledgeBaseReaderController extends App.Controller
       @renderAnswer(@object, kb_locale, true)
 
   renderAnswer: (answer, kb_locale, onlyVisibility) ->
+    if answer
+      translation = answer.translation(kb_locale.id)
+      if translation
+        App.OnlineNotification.seen('KnowledgeBaseAnswerTranslation', translation.id)
+
     if !answer
       @parentController.renderNotFound()
       return

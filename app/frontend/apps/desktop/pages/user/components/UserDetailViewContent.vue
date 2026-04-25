@@ -37,18 +37,23 @@ const userId = computed(() => convertToGraphQLId('User', props.internalId))
 
 const chartInstance = useTemplateRef('chart')
 
-const { user, objectAttributes, secondaryOrganizations, fetchMoreSecondaryOrganizations } =
-  useUserDetail(
-    userId,
-    4,
-    100,
-    // NB: Silence toast notifications for particular errors, these will be handled by the layout taskbar tab component.
-    (errorHandler) =>
-      errorHandler.type !== GraphQLErrorTypes.Forbidden &&
-      errorHandler.type !== GraphQLErrorTypes.RecordNotFound,
-    'cache-first',
-    true, // include organization ticket counts
-  )
+const {
+  user,
+  loadingWithoutCachedResult,
+  objectAttributes,
+  secondaryOrganizations,
+  fetchMoreSecondaryOrganizations,
+} = useUserDetail(
+  userId,
+  4,
+  100,
+  // NB: Silence toast notifications for particular errors, these will be handled by the layout taskbar tab component.
+  (errorHandler) =>
+    errorHandler.type !== GraphQLErrorTypes.Forbidden &&
+    errorHandler.type !== GraphQLErrorTypes.RecordNotFound,
+  'cache-first',
+  true, // include organization ticket counts
+)
 
 const { userDisplayName } = useUserEntity(user)
 
@@ -107,7 +112,7 @@ customerTicketsSubscription.onResult(({ data }) => {
     content-alignment="center"
     no-scrollable
   >
-    <CommonLoader class="mt-8" :loading="!user">
+    <CommonLoader class="mt-8" :loading="loadingWithoutCachedResult">
       <div ref="content-container" class="h-full w-full overflow-y-auto">
         <UserDetailTopBar
           :user="user"
@@ -158,19 +163,17 @@ customerTicketsSubscription.onResult(({ data }) => {
                 class="mb-3"
                 :tabs="customerTicketsTabs"
               />
-              <KeepAlive>
-                <UserRelatedCustomerTickets
-                  v-if="activeCustomerTicketsTab === 'user'"
-                  id="tab-panel-user"
-                  :customer="user"
-                />
-                <UserRelatedCustomerTickets
-                  v-else-if="activeCustomerTicketsTab === 'organization'"
-                  id="tab-panel-organization"
-                  :customer="user"
-                  customer-organizations
-                />
-              </KeepAlive>
+              <UserRelatedCustomerTickets
+                v-show="activeCustomerTicketsTab === 'user'"
+                id="tab-panel-user"
+                :customer="user"
+              />
+              <UserRelatedCustomerTickets
+                v-show="activeCustomerTicketsTab === 'organization'"
+                id="tab-panel-organization"
+                :customer="user"
+                customer-organizations
+              />
             </template>
             <UserRelatedCustomerTickets v-else :customer="user" />
           </CommonSectionContainer>

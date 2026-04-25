@@ -18,13 +18,12 @@ module Gql::Mutations
 
     def resolve(input:)
       Service::User::Signup
-        .new(user_data: input.to_h)
-        .execute
+        .execute(user_data: input.to_h)
 
       { success: true }
     rescue PasswordPolicy::Error => e
       error_response({ message: e.message, message_placeholder: e.metadata.drop(1), field: 'password' })
-    rescue Exceptions::UnprocessableEntity => e
+    rescue Exceptions::UnprocessableContent => e
       error_response({ message: e.message })
     end
   end

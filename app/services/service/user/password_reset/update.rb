@@ -5,14 +5,12 @@ class Service::User::PasswordReset::Update < Service::Base
   attr_reader :token, :password
 
   def initialize(token:, password:)
-    super()
-
     @token = token
     @password = password
   end
 
   def execute
-    Service::CheckFeatureEnabled.new(name: 'user_lost_password').execute
+    Service::CheckFeatureEnabled.execute(name: 'user_lost_password')
 
     PasswordPolicy.new(password).valid!
 

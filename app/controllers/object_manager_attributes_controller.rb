@@ -27,7 +27,7 @@ class ObjectManagerAttributesController < ApplicationController
       object: permitted_params[:object],
       name:   permitted_params[:name],
     )
-    raise Exceptions::UnprocessableEntity, 'already exists' if exists
+    raise Exceptions::UnprocessableContent, 'already exists' if exists
 
     add_attribute_using_params(permitted_params, status: :created)
   end
@@ -40,7 +40,7 @@ class ObjectManagerAttributesController < ApplicationController
       name:   permitted_params[:name],
     )
 
-    raise Exceptions::UnprocessableEntity, 'does not exist' if !exists
+    raise Exceptions::UnprocessableContent, 'does not exist' if !exists
 
     add_attribute_using_params(permitted_params, status: :ok)
   end
@@ -55,7 +55,7 @@ class ObjectManagerAttributesController < ApplicationController
     model_destroy_render_item
   rescue => e
     logger.error e
-    raise Exceptions::UnprocessableEntity, e
+    raise Exceptions::UnprocessableContent, e
   end
 
   # POST /object_manager_attributes_discard_changes
@@ -139,6 +139,6 @@ class ObjectManagerAttributesController < ApplicationController
     raise e
   rescue => e
     logger.error e
-    raise Exceptions::UnprocessableEntity, e
+    raise Exceptions::UnprocessableContent, e
   end
 end

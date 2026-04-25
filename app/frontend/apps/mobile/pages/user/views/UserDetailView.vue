@@ -37,8 +37,8 @@ const userId = computed(() => convertToGraphQLId('User', props.internalId))
 
 const {
   user,
-  userQuery,
   loading,
+  loadingWithoutCachedResult,
   objectAttributes,
   secondaryOrganizations,
   fetchMoreSecondaryOrganizations,
@@ -53,7 +53,7 @@ useHeader({
   backUrl: '/',
   actionTitle: __('Edit'),
   actionHidden: computed(() => user.value == null || !user.value.policy.update),
-  refetch: computed(() => user.value != null && userQuery.loading().value),
+  refetch: computed(() => user.value != null && loading.value),
   onAction() {
     if (!user.value || !user.value.policy.update) return
     openEditUserDialog(user.value)
@@ -155,5 +155,5 @@ const ticketsData = computed(() => {
       </template>
     </CommonTicketStateList>
   </div>
-  <CommonLoader v-else :loading="loading" />
+  <CommonLoader v-else :loading="loadingWithoutCachedResult" />
 </template>

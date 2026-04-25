@@ -255,7 +255,7 @@ const selectOption = (option: SelectOption, focus = false) => {
   filterInput.value?.focus()
 }
 
-const isLoading = autocompleteQueryHandler.loading()
+const isLoading = autocompleteQueryHandler.loadingWithoutCachedResult()
 const isUserTyping = ref(false)
 
 const selectNewOption = (option: SelectOption, focus = false) => {

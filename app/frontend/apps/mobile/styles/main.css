@@ -1,6 +1,7 @@
 /* stylelint-disable import-notation */
 @import 'tailwindcss';
 @import './tokens.css';
+@import '../../../shared/styles/utilities.css';
 
 @plugin '@formkit/themes/tailwindcss';
 @plugin '../../../build/zammadTailwindPlugin.js';
@@ -10,6 +11,15 @@
 
   /* allows animating of intrinsic absolute <-> relative units */
   interpolate-size: allow-keywords;
+}
+
+/*
+* We don't use global styling for links on mobile
+* that's why we use a global components name styling
+* for CommonAlert links
+*/
+.Alert a {
+  @apply text-blue;
 }
 
 @layer base {

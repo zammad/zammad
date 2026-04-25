@@ -116,12 +116,12 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
 
           it 'raises error on updating to reader permission' do
             expect { described_class.new(child_category).update! role_editor => 'reader' }
-              .to raise_error(Exceptions::UnprocessableEntity)
+              .to raise_error(Exceptions::UnprocessableContent)
           end
 
           it 'raises error on updating to none permission' do
             expect { described_class.new(child_category).update! role_editor => 'none' }
-              .to raise_error(Exceptions::UnprocessableEntity)
+              .to raise_error(Exceptions::UnprocessableContent)
           end
         end
 
@@ -142,12 +142,12 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
 
           it 'raises error on updating to reader permission' do
             expect { described_class.new(child_category).update! role_editor => 'reader' }
-              .to raise_error(Exceptions::UnprocessableEntity)
+              .to raise_error(Exceptions::UnprocessableContent)
           end
 
           it 'raises error on updating to editor permission' do
             expect { described_class.new(child_category).update! role_editor => 'editor' }
-              .to raise_error(Exceptions::UnprocessableEntity)
+              .to raise_error(Exceptions::UnprocessableContent)
           end
         end
       end
@@ -229,7 +229,7 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
 
         it 'raises an error when saving a lockout change for a given user' do
           expect { described_class.new(object, user).update! role => 'reader' }
-            .to raise_error(Exceptions::UnprocessableEntity)
+            .to raise_error(Exceptions::UnprocessableContent)
         end
 
         it 'allows to save same change without a user' do

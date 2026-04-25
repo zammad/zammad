@@ -32,11 +32,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Install pnpm
-        uses: pnpm/action-setup@v5
-      - name: Use Node.js 22
+        uses: pnpm/action-setup@v6
+      - name: Use Node.js 24
         uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: 'pnpm'
       - name: Cache Rubygems
         id: cache-bundler
@@ -55,7 +55,7 @@ jobs:
       - name: Lint
         run: .github/workflows/ci/lint.sh
       - name: Markdownlint
-        uses: DavidAnson/markdownlint-cli2-action@v22
+        uses: DavidAnson/markdownlint-cli2-action@v23
         with:
           globs: |
             *.md

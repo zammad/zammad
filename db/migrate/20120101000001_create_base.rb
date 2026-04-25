@@ -534,6 +534,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.integer :type_lookup_id,                null: false
       t.integer :user_id,                       null: false
       t.boolean :seen,                          null: false, default: false
+      t.jsonb   :meta,                          null: false, default: {}
       t.integer :updated_by_id,                 null: false
       t.integer :created_by_id,                 null: false
       t.timestamps limit: 3, null: false
@@ -949,6 +950,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
 
       t.timestamps limit: 3
     end
+    add_index :ai_analytics_runs, %i[triggered_by_type triggered_by_id], name: 'index_ai_analytics_runs_on_triggered_by'
 
     create_table :ai_stored_results do |t|
       t.string :identifier, null: false
@@ -1005,6 +1007,8 @@ class CreateBase < ActiveRecord::Migration[4.2]
 
       t.timestamps limit: 3, null: false
 
+      t.timestamp :analytics_stats_reset_at, limit: 3, null: true
+
       t.index :name, unique: true
       t.index :active
     end
@@ -1029,6 +1033,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3
 
       t.index %i[ai_analytics_run_id user_id], unique: true
+      t.index %i[ai_analytics_run_id created_at], name: 'index_ai_analytics_usages_on_run_id_and_created_at'
     end
 
     create_table :recent_closes do |t|

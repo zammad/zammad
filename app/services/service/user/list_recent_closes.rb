@@ -1,12 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::ListRecentCloses < Service::Base
-  attr_reader :user, :limit
+  requires_current_user!
 
-  def initialize(user, limit: 10)
-    super()
+  attr_reader :limit
 
-    @user  = user
+  def initialize(limit: 10)
     @limit = limit
   end
 
@@ -17,7 +16,7 @@ class Service::User::ListRecentCloses < Service::Base
   private
 
   def ordered_recent_closes
-    @ordered_recent_closes ||= user.recent_closes.reorder(updated_at: :desc).limit(limit)
+    @ordered_recent_closes ||= current_user.recent_closes.reorder(updated_at: :desc).limit(limit)
   end
 
   def grouped_recent_closes
@@ -56,7 +55,7 @@ class Service::User::ListRecentCloses < Service::Base
     ticket_ids = grouped_recent_closes['Ticket'].map(&:recently_closed_object_id)
 
     TicketPolicy::ReadScope
-      .new(user)
+      .new(current_user)
       .resolve
       .where(id: ticket_ids)
       .to_a
@@ -68,7 +67,7 @@ class Service::User::ListRecentCloses < Service::Base
     organization_ids = grouped_recent_closes['Organization'].map(&:recently_closed_object_id)
 
     OrganizationPolicy::Scope
-      .new(user, Organization.all)
+      .new(current_user, Organization.all)
       .resolve
       .where(id: organization_ids)
       .to_a
@@ -80,7 +79,7 @@ class Service::User::ListRecentCloses < Service::Base
     user_ids = grouped_recent_closes['User'].map(&:recently_closed_object_id)
 
     UserPolicy::Scope
-      .new(user, User.all)
+      .new(current_user, User.all)
       .resolve
       .where(id: user_ids)
       .to_a

@@ -61,4 +61,25 @@ class Ticket::PerformChanges::Action < ::PerformChanges::Action # rubocop:disabl
       last_external_article:  article.internal? ? all_articles.reverse.find { |a| !a.internal? } : article,
     }
   end
+
+  def article_clone_attachments(new_article_id)
+    last_article = notification_factory_template_objects[:article]
+
+    return if !last_article
+    return if ActiveModel::Type::Boolean.new.cast(execution_data['include_attachments']) != true || last_article.attachments.blank?
+
+    last_article.clone_attachments('Ticket::Article', new_article_id, only_attached_attachments: true)
+  end
+
+  def article_clone_attachments_inline(new_article_id)
+    NotificationFactory::Renderer::ARTICLE_TAGS.each do |article_key|
+      article_template = notification_factory_template_objects[article_key]
+
+      next if !article_template
+      next if !article_template.should_clone_inline_attachments?
+
+      article_template.clone_attachments('Ticket::Article', new_article_id, only_inline_attachments: true)
+      article_template.should_clone_inline_attachments = false # cancel the temporary flag after cloning
+    end
+  end
 end

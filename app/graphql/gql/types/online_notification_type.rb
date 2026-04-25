@@ -9,6 +9,7 @@ module Gql::Types
     description 'Online notifications for a user'
 
     field :seen, Boolean, null: false
+    field :meta, OnlineNotification::MetaType, null: false
 
     lookup_field :type_name,   String, foreign_key: :type_lookup_id, null: false
     lookup_field :object_name, String, foreign_key: :object_lookup_id, null: false

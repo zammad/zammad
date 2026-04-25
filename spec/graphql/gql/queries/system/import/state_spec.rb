@@ -54,7 +54,7 @@ RSpec.describe Gql::Queries::System::Import::State, type: :graphql do
           Setting.set('import_backend', 'otrs')
           Setting.set('import_mode', true)
 
-          allow_any_instance_of(Service::System::Import::CheckStatus).to receive(:execute).and_return(status)
+          allow(Service::System::Import::CheckStatus).to receive(:execute).and_return(status)
         end
 
         context 'when the import is in progress' do

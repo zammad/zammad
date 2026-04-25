@@ -3,9 +3,11 @@
 class AI::Provider::CustomOpenAI < AI::Provider
   include AI::Provider::Concerns::HandlesOpenAIMessages
   include AI::Provider::Concerns::HasConfigurableModel
+  include AI::Provider::Concerns::HasModelsWithoutTemperatureFallback
 
   DEFAULT_OPTIONS = {
-    temperature: 0.1,
+    temperature:                0.1,
+    models_without_temperature: ['gpt-5']
   }.freeze
 
   def chat(prompt_system:, prompt_user:, prompt_image:)
@@ -15,7 +17,7 @@ class AI::Provider::CustomOpenAI < AI::Provider
       stream:   false,
     }
 
-    request_body[:temperature] = options[:temperature]
+    request_body[:temperature] = options[:temperature] if model_supports_temperature?
 
     request_options = {
       open_timeout:  4,
@@ -72,6 +74,50 @@ class AI::Provider::CustomOpenAI < AI::Provider
     validate_response!(response)
 
     nil
+  end
+
+  def self.check_temperature_support!(config)
+    request_body = {
+      model:       config[:model],
+      messages:    [{ role: 'user', content: 'Hello' }],
+      temperature: DEFAULT_OPTIONS[:temperature],
+      stream:      false,
+    }
+
+    request_options = {
+      open_timeout:  4,
+      read_timeout:  60,
+      verify_ssl:    true,
+      total_timeout: 60,
+      json:          true,
+      log:           {
+        facility:          'AI::Provider',
+        log_only_on_error: true,
+      },
+    }
+
+    # Token is optional since target host might not require authentication
+    request_options[:bearer_token] = config[:token] if config[:token].present?
+
+    response = UserAgent.post(
+      "#{config[:url]}/chat/completions",
+      request_body,
+      request_options,
+    )
+
+    return true if response.success?
+
+    data = JSON.parse(response.body)
+    data = data.pop if data.is_a?(Array) # Handle case when response is an array of errors
+    message = data.dig('error', 'message')
+    type = data.dig('error', 'type')
+    param = data.dig('error', 'param')
+    code = data.dig('error', 'code')
+    return false if type == 'invalid_request_error' && param == 'temperature' && code == 'unsupported_value'
+
+    raise message
+  rescue => e
+    raise CheckTemperatureSupportError, e.message
   end
 
   private

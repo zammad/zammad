@@ -113,7 +113,7 @@ class Ticket::Stats
 
   def search_stats_year(condition)
     result = Service::Ticket::Stats::Monthly
-      .new(current_user: current_user)
+      .with_current_user(current_user)
       .execute(conditions: condition)
 
     result.each do |elem|

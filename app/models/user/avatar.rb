@@ -34,7 +34,7 @@ class User
       return if changes['image'].blank?
       return if ::Avatar.exists?(store_hash: image)
 
-      raise Exceptions::UnprocessableEntity, "Invalid Store reference '#{image}' in 'image' attribute."
+      raise Exceptions::UnprocessableContent, "Invalid Store reference '#{image}' in 'image' attribute."
     end
 
     def valid_email_for_avatar?

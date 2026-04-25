@@ -238,7 +238,11 @@ const ensureGranularOrFullAccess = (
         :disabled="context.disabled"
         :alternative-border="true"
         @input="
-          ensureGranularOrFullAccess(groupPermission.groupAccess, groupAccess.access, $event!)
+          ensureGranularOrFullAccess(
+            groupPermission.groupAccess,
+            groupAccess.access,
+            $event as boolean,
+          )
         "
       >
         <template #label>

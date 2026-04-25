@@ -44,13 +44,13 @@ RSpec.describe 'TicketsMass', authenticated_as: :user, type: :request do
     it 'returns error if macro not applicable to at least one ticket' do
       post '/api/v1/tickets/mass_macro', params: { macro_id: macro_groups.id, ticket_ids: [ticket_a.id, ticket_b.id] }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it 'checks if user has write access to tickets' do
       post '/api/v1/tickets/mass_macro', params: { macro_id: macro_groups.id, ticket_ids: [ticket_a.id, ticket_c.id] }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 
@@ -84,7 +84,7 @@ RSpec.describe 'TicketsMass', authenticated_as: :user, type: :request do
     it 'checks if user has write access to tickets' do
       post '/api/v1/tickets/mass_update', params: { attributes: { priority_id: 3 }, ticket_ids: [ticket_a.id, ticket_c.id] }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 end

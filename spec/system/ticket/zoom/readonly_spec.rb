@@ -43,7 +43,7 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
 
   shared_examples 'elements' do
     it 'verify all elements available' do
-      %w[TAGS LINKS].each do |element|
+      ['TAGS', 'RELATED TICKETS'].each do |element|
         expect(page).to have_content(element)
       end
     end
@@ -56,9 +56,9 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
 
     it 'shows tag, and link modification buttons' do
       expect(page).to have_css('.tags .icon-diagonal-cross')
-      expect(page).to have_content('+ Add Tag')
+      expect(page).to have_content('+ Tag')
       expect(page).to have_css('.links .icon-diagonal-cross')
-      expect(page).to have_content('+ Add Link')
+      expect(page).to have_content('+ Link')
     end
 
     context 'with select, treeselect, multiselect and multi-treeselect fields', authenticated_as: :authenticated, db_strategy: :reset do
@@ -125,9 +125,9 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
 
     it 'shows no tag and link modification buttons' do
       expect(page).to have_no_selector('.tags .icon-diagonal-cross')
-      expect(page).to have_no_content('+ Add Tag')
+      expect(page).to have_no_content('+ Tag')
       expect(page).to have_no_selector('.links .icon-diagonal-cross')
-      expect(page).to have_no_content('+ Add Link')
+      expect(page).to have_no_content('+ Link')
     end
 
     it 'shows no ticket actions' do

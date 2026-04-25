@@ -99,7 +99,7 @@ class Checklist < ApplicationModel
 
   def self.create_from_template!(ticket, template)
     if !template.active
-      raise Exceptions::UnprocessableEntity, __('Checklist template must be active to use as a checklist starting point.')
+      raise Exceptions::UnprocessableContent, __('Checklist template must be active to use as a checklist starting point.')
     end
 
     ActiveRecord::Base.transaction do

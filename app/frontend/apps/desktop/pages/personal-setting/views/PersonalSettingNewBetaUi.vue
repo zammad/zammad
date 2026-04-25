@@ -88,7 +88,7 @@ const leaveFeedbackProgram = () => {
           :label="__('Do not ask automatically for feedback on the BETA UI')"
           name="toggle-dismiss-beta-ui-switch"
           :model-value="neverAskAgainForTimedFeedback"
-          @update:model-value="setNeverAskAgainForTimedFeedback"
+          @update:model-value="setNeverAskAgainForTimedFeedback($event as boolean)"
         />
 
         <div class="flex gap-4">

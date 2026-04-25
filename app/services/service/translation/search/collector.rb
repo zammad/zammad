@@ -18,8 +18,6 @@ class Service::Translation::Search::Collector
   end
 
   def initialize(locale:, query:, limit:, mode:)
-    super()
-
     @locale = locale
     @query  = query
     @limit  = limit

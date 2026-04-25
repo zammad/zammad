@@ -11,12 +11,13 @@ module Gql::Queries
     type [Gql::Types::Search::CountsResultType], null: false
 
     def resolve(search:, only_in:)
-      search_results = Service::Search.new(
-        current_user: context.current_user,
-        query:        search,
-        objects:      only_in,
-        options:      { only_total_count: true }
-      ).execute.result
+      search_results = Service::Search
+        .with_current_user(context.current_user)
+        .execute(
+          query:   search,
+          objects: only_in,
+          options: { only_total_count: true }
+        ).result
 
       return [] if !search_results
 

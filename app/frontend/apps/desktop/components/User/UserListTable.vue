@@ -31,68 +31,66 @@ const { goToItem, goToItemLinkColumn, loadMore, resort, storageKeyId } = useList
 </script>
 
 <template>
-  <div v-if="loading && !loadingNewPage">
-    <slot name="loading">
-      <CommonTableSkeleton data-test-id="table-skeleton" :rows="skeletonLoadingCount" />
-    </slot>
-  </div>
+  <CommonTableSkeleton
+    :loading="loading"
+    :loading-new-page="loadingNewPage"
+    :rows="skeletonLoadingCount"
+  >
+    <slot v-if="!loading && !items.length" name="empty-list" />
 
-  <template v-else-if="!loading && !items.length">
-    <slot name="empty-list" />
-  </template>
-
-  <div v-else-if="items.length">
-    <CommonAdvancedTable
-      :caption="caption"
-      :object="EnumObjectManagerObjects.User"
-      :headers="headers"
-      :order-by="orderBy"
-      :order-direction="orderDirection"
-      :group-by="groupBy"
-      :reached-scroll-top="reachedScrollTop"
-      :scroll-container="scrollContainer"
-      :attribute-extensions="{
-        login: {
-          columnPreferences: {
-            link: goToItemLinkColumn,
-          },
-        },
-        organization_ids: {
-          headerPreferences: {
-            noSorting: true,
-          },
-        },
-      }"
-      :items="items"
-      :total-items-count="totalCount"
-      :storage-key-id="storageKeyId"
-      :max-items="maxItems"
-      :is-sorting="resorting"
-      @load-more="loadMore"
-      @click-row="goToItem"
-      @sort="resort"
-    >
-      <template #column-cell-organization_ids="{ item, isRowSelected }">
-        <CommonLabel
-          v-tooltip.truncate="
-            edgesToArray(item.secondaryOrganizations as OrganizationConnection)
-              .map((organization) => organization.name)
-              .join(', ') || '-'
-          "
-          class="block! truncate text-gray-100! group-hover:text-black! group-focus-visible:text-white! group-active:text-white! dark:text-neutral-400! group-hover:dark:text-white!"
-          :class="[
-            {
-              'text-black! dark:text-white!': isRowSelected,
+    <div v-else-if="items.length">
+      <CommonAdvancedTable
+        :caption="caption"
+        :object="EnumObjectManagerObjects.User"
+        :headers="headers"
+        :order-by="orderBy"
+        :order-direction="orderDirection"
+        :group-by="groupBy"
+        :reached-scroll-top="reachedScrollTop"
+        :scroll-container="scrollContainer"
+        :attribute-extensions="{
+          login: {
+            columnPreferences: {
+              link: goToItemLinkColumn,
             },
-          ]"
-        >
-          {{
-            edgesToArray(item.secondaryOrganizations as OrganizationConnection)
-              .map((organization) => organization.name)
-              .join(', ') || '-'
-          }}
-        </CommonLabel>
-      </template>
-    </CommonAdvancedTable>
-  </div>
+          },
+          organization_ids: {
+            headerPreferences: {
+              noSorting: true,
+            },
+          },
+        }"
+        :items="items"
+        :total-items-count="totalCount"
+        :storage-key-id="storageKeyId"
+        :max-items="maxItems"
+        :is-sorting="resorting"
+        @load-more="loadMore"
+        @click-row="goToItem"
+        @sort="resort"
+      >
+        <template #column-cell-organization_ids="{ item, isRowSelected }">
+          <CommonLabel
+            v-tooltip.truncate="
+              edgesToArray(item.secondaryOrganizations as OrganizationConnection)
+                .map((organization) => organization.name)
+                .join(', ') || '-'
+            "
+            class="block! truncate text-gray-100! group-hover:text-black! group-focus-visible:text-white! group-active:text-white! dark:text-neutral-400! group-hover:dark:text-white!"
+            :class="[
+              {
+                'text-black! dark:text-white!': isRowSelected,
+              },
+            ]"
+          >
+            {{
+              edgesToArray(item.secondaryOrganizations as OrganizationConnection)
+                .map((organization) => organization.name)
+                .join(', ') || '-'
+            }}
+          </CommonLabel>
+        </template>
+      </CommonAdvancedTable>
+    </div>
+  </CommonTableSkeleton>
 </template>

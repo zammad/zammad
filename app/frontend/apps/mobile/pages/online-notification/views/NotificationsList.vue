@@ -17,7 +17,7 @@ import NotificationItem from '../components/NotificationItem.vue'
 
 const notificationsHandler = new QueryHandler(useOnlineNotificationsQuery())
 
-const loading = notificationsHandler.loading()
+const loading = notificationsHandler.loadingWithoutCachedResult()
 const notificationsResult = notificationsHandler.result()
 let mutationTriggered = false
 
@@ -71,7 +71,7 @@ const haveUnread = computed(() => (unseenCount.value ? unseenCount.value > 0 : f
 </script>
 
 <template>
-  <CommonLoader :loading="!notifications.length && loading">
+  <CommonLoader :loading="loading">
     <div class="ltr:pr-4 ltr:pl-3 rtl:pr-3 rtl:pl-4">
       <NotificationItem
         v-for="notification of notifications"

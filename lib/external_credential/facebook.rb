@@ -9,7 +9,7 @@ class ExternalCredential::Facebook
 
   def self.request_account_to_link(credentials = {}, app_required = true)
     external_credential = ExternalCredential.find_by(name: 'facebook')
-    raise Exceptions::UnprocessableEntity, __('No Facebook app configured!') if !external_credential && app_required
+    raise Exceptions::UnprocessableContent, __('No Facebook app configured!') if !external_credential && app_required
 
     if external_credential
       if credentials[:application_id].blank?
@@ -20,8 +20,8 @@ class ExternalCredential::Facebook
       end
     end
 
-    raise Exceptions::UnprocessableEntity, __("The required parameter 'application_id' is missing.") if credentials[:application_id].blank?
-    raise Exceptions::UnprocessableEntity, __("The required parameter 'application_secret' is missing.") if credentials[:application_secret].blank?
+    raise Exceptions::UnprocessableContent, __("The required parameter 'application_id' is missing.") if credentials[:application_id].blank?
+    raise Exceptions::UnprocessableContent, __("The required parameter 'application_secret' is missing.") if credentials[:application_secret].blank?
 
     oauth = Koala::Facebook::OAuth.new(
       credentials[:application_id],
@@ -38,10 +38,11 @@ class ExternalCredential::Facebook
     }
   end
 
-  def self.link_account(_request_token, params)
-    #    fail if request_token.params[:oauth_token] != params[:state]
+  def self.link_account(request_token, params)
+    raise Exceptions::UnprocessableContent, __('Invalid OAuth state parameter.') if params[:state] != request_token
+
     external_credential = ExternalCredential.find_by(name: 'facebook')
-    raise Exceptions::UnprocessableEntity, __('No Facebook app configured!') if !external_credential
+    raise Exceptions::UnprocessableContent, __('No Facebook app configured!') if !external_credential
 
     oauth = Koala::Facebook::OAuth.new(
       external_credential.credentials['application_id'],

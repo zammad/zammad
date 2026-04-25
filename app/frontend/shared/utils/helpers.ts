@@ -119,3 +119,19 @@ export const waitForElement = async (query: string, tries = 60): Promise<Element
  * */
 export const findChangedIndex = <T>(oldArray: T[], newArray: T[]) =>
   oldArray.findIndex((item, index) => !isEqual(item, newArray[index]))
+
+export const ensureImagesKeepAspectRatio = (input: string) => {
+  const domBody = document.createElement('div')
+  domBody.innerHTML = input
+
+  domBody.querySelectorAll<HTMLImageElement>('img').forEach((el) => {
+    if (el.style.height) {
+      el.style.maxHeight = el.style.height
+      el.style.height = 'auto'
+    }
+
+    el.style.maxWidth = '100%'
+  })
+
+  return domBody.innerHTML
+}

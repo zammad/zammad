@@ -1,8 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::LinksControllerPolicy < Controllers::ApplicationControllerPolicy
-  default_permit!('admin.tag')
-
   def add?
     object_target_update? && object_source_show?
   end
@@ -14,13 +12,25 @@ class Controllers::LinksControllerPolicy < Controllers::ApplicationControllerPol
   private
 
   def object_target_update?
-    object_policy(record.params[:link_object_target], id: record.params[:link_object_target_value])
-      .update?
+    policy = object_policy(record.params[:link_object_target], id: record.params[:link_object_target_value])
+
+    case policy
+    when TicketPolicy
+      policy.agent_update_access?
+    when KnowledgeBase::AnswerPolicy
+      policy.show?
+    end
   end
 
   def object_source_show?
-    object_policy(record.params[:link_object_source], number: record.params[:link_object_source_number])
-      .show?
+    policy = object_policy(record.params[:link_object_source], number: record.params[:link_object_source_number])
+
+    case policy
+    when TicketPolicy
+      policy.agent_read_access?
+    when KnowledgeBase::AnswerPolicy
+      policy.show?
+    end
   end
 
   def object_policy(object_name, id: nil, number: nil)

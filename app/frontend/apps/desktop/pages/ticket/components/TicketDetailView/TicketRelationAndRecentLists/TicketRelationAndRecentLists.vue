@@ -35,8 +35,7 @@ const ticketRelationAndRecentListsQuery = new QueryHandler(
   ),
 )
 
-// :TODO introduce debounced loading
-const isLoading = ticketRelationAndRecentListsQuery.loading()
+const isLoading = ticketRelationAndRecentListsQuery.loadingWithoutCachedResult()
 
 const tableData = ticketRelationAndRecentListsQuery.result()
 

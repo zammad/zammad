@@ -36,9 +36,18 @@ class App.SettingsAreaSwitch extends App.Controller
       subSetting: @subSetting
     )
     for localSetting in @subSetting
+      directValue = 0
+      for item in localSetting.options['form']
+        directValue += 1
+
+      if directValue > 1
+        params = localSetting.state_current.value
+      else
+        params = {}
+        params[localSetting.options['form'][0].name] = localSetting.state_current.value
       new App.ControllerForm(
         el: @$('.form-item')
-        params: localSetting.state_current.value
+        params: params
         model: { configure_attributes: localSetting.options['form'], className: '' }
         autofocus: false
       )

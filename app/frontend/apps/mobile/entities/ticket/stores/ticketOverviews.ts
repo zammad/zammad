@@ -51,7 +51,7 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
   })
 
   const overviewsRaw = ticketOverviewHandler.result()
-  const overviewsLoading = ticketOverviewHandler.loading()
+  const overviewsLoading = ticketOverviewHandler.loadingWithoutCachedResult()
 
   const overviews = computed(() => {
     if (!overviewsRaw.value?.ticketOverviews) return []

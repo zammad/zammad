@@ -28,8 +28,8 @@ RSpec.describe 'OAuth', type: :request do
 
     it 'does auth failure' do
       get '/auth/failure?message=123&strategy=some_provider'
-      expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.body).to include('<title>422: Unprocessable Entity</title>')
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(response.body).to include('<title>422: Unprocessable Content</title>')
       expect(response.body).to include('<h1>422: The change you wanted was rejected.</h1>')
       expect(response.body).to include('<div>Message from some_provider: 123</div>')
     end

@@ -8,7 +8,7 @@ import { useHtmlInlineImages } from '#shared/composables/useHtmlInlineImages.ts'
 import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import { type ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
-import { textToHtml } from '#shared/utils/helpers.ts'
+import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.ts'
 
 import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
 
@@ -41,7 +41,7 @@ const body = computed(() => {
   if (props.article.contentType !== 'text/html') {
     return textToHtml(props.article.bodyWithUrls)
   }
-  return props.article.bodyWithUrls
+  return ensureImagesKeepAspectRatio(props.article.bodyWithUrls)
 })
 
 const showAuthorInformation = computed(() => {
@@ -101,7 +101,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
+  <article
     class="Content relative overflow-hidden p-3 transition-[padding]"
     :class="[
       bodyClasses,
@@ -137,7 +137,8 @@ onMounted(() => {
     >
       <!--    Never drop this inner-article-body class used for Highlight feature-->
       <!--    eslint-disable vue/no-v-html-->
-      <div class="inner-article-body" :aria-details="descriptionId" v-html="body" />
+      <section class="inner-article-body" :aria-details="descriptionId" v-html="body" />
+
       <div v-if="descriptionId" :id="descriptionId" class="sr-only">
         {{ description }}
       </div>
@@ -151,7 +152,7 @@ onMounted(() => {
     />
     <CommonLink
       v-if="hasShowMore"
-      class="mb-1 inline-block! outline-transparent! focus-visible:outline-blue-800!"
+      class="mb-1 inline-block! outline-transparent! hover:underline! focus-visible:outline-blue-800!"
       role="button"
       link="#"
       size="medium"
@@ -160,13 +161,14 @@ onMounted(() => {
     >
       {{ shownMore ? $t('See less') : $t('See more') }}
     </CommonLink>
-  </div>
+  </article>
 </template>
 
 <style scoped>
 .inner-article-body {
   word-break: normal;
   overflow-wrap: anywhere;
+  overflow-x: auto;
 
   /*
    * TODO: Consider extending this rule to other elements.
@@ -179,17 +181,6 @@ onMounted(() => {
 
   &:deep(img, svg) {
     display: inline;
-  }
-
-  /* Wrap long lines in code blocks. */
-
-  &:deep(pre) {
-    display: block;
-    overflow-x: auto;
-  }
-
-  &:deep(code) {
-    white-space: pre-wrap;
   }
 
   /*

@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { isEmpty } from 'lodash-es'
 import { computed, onBeforeUnmount, type Ref, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import type { MacroById } from '#shared/entities/macro/types.ts'
 import { useMacrosQuery } from '#shared/graphql/queries/macros.api.ts'
-import { EnumTicketScreenBehavior } from '#shared/graphql/types.ts'
+import { EnumTicketScreenBehavior, type TicketMacrosSelectorInput } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useMacroStore } from '#shared/stores/macro.ts'
 
@@ -16,13 +18,13 @@ export const macroScreenBehaviourMapping: Record<string, EnumTicketScreenBehavio
   none: EnumTicketScreenBehavior.StayOnTab,
 }
 
-export const useMacros = (groupIds: Ref<ID[] | undefined>) => {
+export const useMacros = (selector: Ref<TicketMacrosSelectorInput>) => {
   const macroQuery = new QueryHandler(
     useMacrosQuery(
       () => ({
-        groupIds: groupIds.value as ID[],
+        selector: selector.value,
       }),
-      () => ({ enabled: !!groupIds.value?.length }),
+      () => ({ enabled: !isEmpty(selector.value) }),
     ),
   )
 
@@ -48,7 +50,17 @@ export const useMacros = (groupIds: Ref<ID[] | undefined>) => {
     macrosLoaded.value = true
   })
 
-  const macros = computed(() => result.value?.macros)
+  const translatedMacros = computed(
+    () =>
+      result.value?.macros.map((macro) => Object.assign({}, macro, { name: i18n.t(macro.name) })) ??
+      [],
+  )
+
+  const macros = computed(() =>
+    translatedMacros.value.sort((a, b) =>
+      a.name.localeCompare(b.name, i18n.locale.name, { numeric: true, sensitivity: 'base' }),
+    ),
+  )
 
   return { macrosLoaded, macros }
 }

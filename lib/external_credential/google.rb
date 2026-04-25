@@ -12,7 +12,7 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
 
   def self.request_account_to_link(credentials = {}, app_required = true)
     external_credential = ExternalCredential.find_by(name: 'google')
-    raise Exceptions::UnprocessableEntity, __('There is no Google app configured.') if !external_credential && app_required
+    raise Exceptions::UnprocessableContent, __('There is no Google app configured.') if !external_credential && app_required
 
     if external_credential
       if credentials[:client_id].blank?
@@ -23,28 +23,32 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
       end
     end
 
-    raise Exceptions::UnprocessableEntity, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
-    raise Exceptions::UnprocessableEntity, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
+    raise Exceptions::UnprocessableContent, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
+    raise Exceptions::UnprocessableContent, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
 
-    authorize_url = generate_authorize_url(credentials[:client_id])
+    state         = SecureRandom.urlsafe_base64
+    authorize_url = generate_authorize_url(credentials[:client_id], state: state)
 
     {
       authorize_url: authorize_url,
+      request_token: state,
     }
   end
 
-  def self.link_account(_request_token, params)
+  def self.link_account(request_token, params)
+    raise Exceptions::UnprocessableContent, __('Invalid OAuth state parameter.') if params[:state] != request_token
+
     external_credential = ExternalCredential.find_by(name: 'google')
-    raise Exceptions::UnprocessableEntity, __('There is no Google app configured.') if !external_credential
-    raise Exceptions::UnprocessableEntity, __("The required parameter 'code' is missing.") if !params[:code]
+    raise Exceptions::UnprocessableContent, __('There is no Google app configured.') if !external_credential
+    raise Exceptions::UnprocessableContent, __("The required parameter 'code' is missing.") if !params[:code]
 
     response = authorize_tokens(external_credential.credentials[:client_id], external_credential.credentials[:client_secret], params[:code])
     %w[refresh_token access_token expires_in scope token_type id_token].each do |key|
-      raise Exceptions::UnprocessableEntity, "No #{key} for authorization request found!" if response[key.to_sym].blank?
+      raise Exceptions::UnprocessableContent, "No #{key} for authorization request found!" if response[key.to_sym].blank?
     end
 
     user_data = user_info(response[:id_token])
-    raise Exceptions::UnprocessableEntity, __("User email could not be extracted from 'id_token'.") if user_data[:email].blank?
+    raise Exceptions::UnprocessableContent, __("User email could not be extracted from 'id_token'.") if user_data[:email].blank?
 
     channel_options = {
       inbound:  {
@@ -137,7 +141,7 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
     email_addresses.each do |email|
       next if !EmailAddress.exists?(email: email[:email])
 
-      raise Exceptions::UnprocessableEntity, "Duplicate email address or email alias #{email[:email]} found!"
+      raise Exceptions::UnprocessableContent, "Duplicate email address or email alias #{email[:email]} found!"
     end
 
     # create channel
@@ -164,8 +168,7 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
     channel
   end
 
-  def self.generate_authorize_url(client_id, scope = 'openid email profile https://mail.google.com/')
-
+  def self.generate_authorize_url(client_id, scope: 'openid email profile https://mail.google.com/', state: nil)
     params = {
       'client_id'     => client_id,
       'redirect_uri'  => ExternalCredential.callback_url('google'),
@@ -173,7 +176,8 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
       'response_type' => 'code',
       'access_type'   => 'offline',
       'prompt'        => 'consent',
-    }
+      'state'         => state,
+    }.compact
 
     uri = URI::HTTPS.build(
       host:  'accounts.google.com',

@@ -2,6 +2,10 @@
 
 class FormUpdater::Updater::Ticket::TimeAccounting < FormUpdater::Updater
 
+  def self.required_permissions
+    %w[ticket.agent]
+  end
+
   def resolve
     if meta[:initial]
       result['accounted_time_type_id'] = accounted_time_type_options

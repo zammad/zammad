@@ -48,16 +48,6 @@ describe('TicketListPopoverWithTrigger', () => {
     expect(wrapper.getByText('Open Tickets')).toBeVisible()
   })
 
-  it('shows a skeleton when ticket info is unavailable', async () => {
-    const wrapper = renderTicketListPopover()
-
-    await wrapper.events.hover(wrapper.getByText('Open Tickets'))
-
-    const popover = await wrapper.findByRole('region')
-
-    expect(within(popover).getAllByRole('progressbar').length).toBe(6)
-  })
-
   it('displays a ticket list popover', async () => {
     const wrapper = renderTicketListPopover()
 

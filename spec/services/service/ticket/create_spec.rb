@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
-  subject(:service) { described_class.new(current_user: user) }
+  subject(:service_result) { described_class.with_current_user(user).execute(ticket_data:) }
 
   let(:user)     { create(:agent, groups: [group]) }
   let(:group)    { create(:group) }
@@ -21,9 +21,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
     end
 
     it 'creates a ticket with given metadata' do
-      ticket = service.execute(ticket_data:)
-
-      expect(ticket)
+      expect(service_result)
         .to have_attributes(
           title:    sample_title,
           group:    group,
@@ -35,9 +33,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
       test_email = Faker::Internet.unique.email
       ticket_data[:customer] = test_email
 
-      ticket = service.execute(ticket_data:)
-
-      expect(ticket.customer).to have_attributes(
+      expect(service_result.customer).to have_attributes(
         email:    test_email,
         role_ids: Role.signup_role_ids
       )
@@ -47,7 +43,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
       allow_any_instance_of(TicketPolicy)
         .to receive(:create?).and_return(false)
 
-      expect { service.execute(ticket_data:) }
+      expect { service_result }
         .to raise_error(Pundit::NotAuthorizedError)
     end
 
@@ -57,9 +53,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         body: sample_body
       }
 
-      ticket = service.execute(ticket_data:)
-
-      expect(ticket.articles.first)
+      expect(service_result.articles.first)
         .to have_attributes(
           body: sample_body
         )
@@ -82,7 +76,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
       end
 
       it 'raises an error' do
-        expect { service.execute(ticket_data:) }.to raise_error(Exceptions::InvalidAttribute, 'Sending an email without a valid recipient is not possible.')
+        expect { service_result }.to raise_error(Exceptions::InvalidAttribute, 'Sending an email without a valid recipient is not possible.')
       end
     end
 
@@ -103,7 +97,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
       end
 
       it 'raises an error' do
-        expect { service.execute(ticket_data:) }.to raise_error(Exceptions::InvalidAttribute, 'Sending an email without a valid recipient is not possible.')
+        expect { service_result }.to raise_error(Exceptions::InvalidAttribute, 'Sending an email without a valid recipient is not possible.')
       end
     end
 
@@ -112,28 +106,100 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
 
       ticket_data[:tags] = sample_tags
 
-      ticket = service.execute(ticket_data:)
-
-      expect(ticket.tag_list)
+      expect(service_result.tag_list)
         .to eq sample_tags
     end
 
     context 'when adding links' do
-      let!(:other_ticket) { create(:ticket, customer: customer) }
-      let(:links) do
-        [
-          { link_object: other_ticket, link_type: 'child' },
-          { link_object: other_ticket, link_type: 'normal' },
-        ]
+      context 'when linking to a ticket' do
+        let(:other_ticket) { create(:ticket, customer: customer) }
+        let(:links) do
+          [
+            { link_object: other_ticket, link_type: 'child' },
+            { link_object: other_ticket, link_type: 'normal' },
+          ]
+        end
+        let(:ticket_data) { super().merge(links:) }
+
+        context 'when user has agent access to the other ticket' do
+          before do
+            user.groups << other_ticket.group
+          end
+
+          it 'adds links correctly' do
+            expect(Link.list(link_object: 'Ticket', link_object_value: service_result.id)).to contain_exactly(
+              { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'parent' },
+              { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'normal' },
+            )
+          end
+        end
+
+        context 'when user has no agent access to the other ticket' do
+          it 'raises an error' do
+            expect { service_result }
+              .to raise_error(Pundit::NotAuthorizedError)
+          end
+        end
+
+        context 'when user is customer' do
+          let(:user) { customer }
+
+          it 'raises an error' do
+            expect { service_result }
+              .to raise_error(Pundit::NotAuthorizedError)
+          end
+        end
       end
 
-      it 'adds links correctly' do
-        ticket_data[:links] = links
-        ticket = service.execute(ticket_data:)
-        expect(Link.list(link_object: 'Ticket', link_object_value: ticket.id)).to contain_exactly(
-          { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'parent' },
-          { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'normal' },
-        )
+      context 'when linking to a KB answer' do
+        include_context 'basic Knowledge Base'
+
+        let(:translation) { internal_answer.translations.first }
+        let(:links) do
+          [
+            { link_object: translation, link_type: 'normal' },
+          ]
+        end
+        let(:ticket_data) { super().merge(links:) }
+
+        context 'when the user has no access to the KB answer' do
+          let(:role) { create(:role, permission_names: %w[ticket.agent]) }
+          let(:user) { create(:user, groups: [group], roles: [role]) }
+
+          it 'raises an error' do
+            expect { service_result }
+              .to raise_error(Pundit::NotAuthorizedError)
+          end
+        end
+
+        context 'when the user reader access to the KB answer' do
+          it 'creates the ticket with the link' do
+            expect(Link.list(link_object: 'Ticket', link_object_value: service_result.id))
+              .to contain_exactly(
+                {
+                  'link_object'       => 'KnowledgeBase::Answer::Translation',
+                  'link_object_value' => translation.id,
+                  'link_type'         => 'normal'
+                },
+              )
+          end
+        end
+
+        context 'when the user editor access to the KB answer' do
+          let(:kb_editor_role) { create(:role, permission_names: %w[knowledge_base.editor ticket.agent]) }
+          let(:user)           { create(:agent, groups: [group], roles: [kb_editor_role]) }
+
+          it 'creates the ticket with the link' do
+            expect(Link.list(link_object: 'Ticket', link_object_value: service_result.id))
+              .to contain_exactly(
+                {
+                  'link_object'       => 'KnowledgeBase::Answer::Translation',
+                  'link_object_value' => translation.id,
+                  'link_type'         => 'normal'
+                },
+              )
+          end
+        end
       end
     end
 
@@ -147,9 +213,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
 
         ticket_data[:tags] = sample_tags
 
-        ticket = service.execute(ticket_data:)
-
-        expect(ticket.tag_list).to be_empty
+        expect(service_result.tag_list).to be_empty
       end
     end
 
@@ -159,7 +223,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
       before { ticket_data[:shared_draft] = shared_draft }
 
       it 'destroys given shared draft' do
-        service.execute(ticket_data:)
+        service_result
 
         expect(Ticket::SharedDraftStart).not_to exist(shared_draft.id)
       end
@@ -167,8 +231,8 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
       it 'raises error if shared drafts are disabled on that group' do
         group.update! shared_drafts: false
 
-        expect { service.execute(ticket_data:) }
-          .to raise_error(Exceptions::UnprocessableEntity)
+        expect { service_result }
+          .to raise_error(Exceptions::UnprocessableContent)
       end
 
       it 'raises error if shared draft group does not match ticket group' do
@@ -176,8 +240,8 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
 
         group.update! shared_drafts: false
 
-        expect { service.execute(ticket_data:) }
-          .to raise_error(Exceptions::UnprocessableEntity)
+        expect { service_result }
+          .to raise_error(Exceptions::UnprocessableContent)
       end
     end
 
@@ -195,9 +259,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
 
       context 'when none enabled' do
         it 'adds no data' do
-          ticket = service.execute(ticket_data:)
-
-          expect(ticket.preferences).to be_blank
+          expect(service_result.preferences).to be_blank
         end
       end
 
@@ -207,9 +269,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         end
 
         it 'adds gitlab links' do
-          ticket = service.execute(ticket_data:)
-
-          expect(ticket.preferences).to eq({ 'gitlab' => { 'issue_links' => [gitlab_link] } })
+          expect(service_result.preferences).to eq({ 'gitlab' => { 'issue_links' => [gitlab_link] } })
         end
       end
 
@@ -219,9 +279,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         end
 
         it 'adds github links' do
-          ticket = service.execute(ticket_data:)
-
-          expect(ticket.preferences).to eq({ 'github' => { 'issue_links' => [github_link] } })
+          expect(service_result.preferences).to eq({ 'github' => { 'issue_links' => [github_link] } })
         end
       end
 
@@ -231,9 +289,7 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         end
 
         it 'adds github links' do
-          ticket = service.execute(ticket_data:)
-
-          expect(ticket.preferences).to eq({ 'idoit' => { 'object_ids' => [42] } })
+          expect(service_result.preferences).to eq({ 'idoit' => { 'object_ids' => [42] } })
         end
       end
     end

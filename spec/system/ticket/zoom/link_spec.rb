@@ -15,7 +15,7 @@ RSpec.describe 'Ticket zoom > Add Link action', type: :system do
 
       shared_examples 'adding link to target ticket' do
         it 'adds link to target ticket' do
-          click('.js-add', text: 'Add Link')
+          click('.js-add-related-ticket', text: '+ Link')
 
           in_modal do
             fill_in 'ticket_number', with: ticket_number

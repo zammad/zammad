@@ -5,8 +5,6 @@ module Service::Channel::Whatsapp
     attr_reader :channel_id
 
     def initialize(params:, channel_id:)
-      super()
-
       @channel_id = channel_id
       @params     = params
     end

@@ -165,6 +165,10 @@ generate email with S/MIME
     mail['X-Mailer'] = 'Zammad Mail Service'
     # rubocop:enable Zammad/DetectTranslatableString
 
+    # Disallow reactions in Microsoft mail clients,
+    # see https://learn.microsoft.com/en-us/microsoft-365-apps/outlook/manage/manage-outlook-reactions.
+    mail['x-ms-reactions'] = 'disallow'
+
     mail
   end
 

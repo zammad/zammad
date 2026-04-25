@@ -48,17 +48,13 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::RemoveMethodCredentials
   context 'when user is authenticated', authenticated_as: :user do
     it 'calls remove method credentials service' do
       allow(Service::User::TwoFactor::RemoveMethodCredentials)
-        .to receive(:new)
-        .and_call_original
-
-      expect_any_instance_of(Service::User::TwoFactor::RemoveMethodCredentials)
         .to receive(:execute)
         .and_call_original
 
       gql.execute(mutation, variables: variables)
 
       expect(Service::User::TwoFactor::RemoveMethodCredentials)
-        .to have_received(:new).with(user: user, method_name: 'security_keys', credential_id:)
+        .to have_received(:execute).with(method_name: 'security_keys', credential_id:, current_user: user)
     end
 
     context 'when given method exists' do

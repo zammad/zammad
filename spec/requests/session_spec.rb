@@ -276,6 +276,40 @@ RSpec.describe 'Sessions endpoints', type: :request do
         end
       end
     end
+
+    context 'with trusted proxy IPs configured' do
+      before do
+        Setting.set('auth_sso_trusted_ips', '192.168.1.1, 10.0.0.0/8')
+      end
+
+      let(:user)    { create(:agent) }
+      let(:headers) { { 'X-Forwarded-User' => user.login } }
+
+      context 'when request comes from a trusted IP address' do
+        it 'allows the SSO login' do
+          get '/auth/sso', as: :json, headers: headers, env: { 'REMOTE_ADDR' => '192.168.1.1' }
+
+          expect(response).to redirect_to('/#')
+        end
+      end
+
+      context 'when request comes from an IP within a trusted CIDR range' do
+        it 'allows the SSO login' do
+          get '/auth/sso', as: :json, headers: headers, env: { 'REMOTE_ADDR' => '10.1.2.3' }
+
+          expect(response).to redirect_to('/#')
+        end
+      end
+
+      context 'when request comes from an untrusted IP address' do
+        it 'returns 403 Forbidden' do
+          get '/auth/sso', as: :json, headers: headers, env: { 'REMOTE_ADDR' => '1.2.3.4' }
+
+          expect(response).to have_http_status(:forbidden)
+          expect(json_response).to include('error' => 'SSO request from untrusted IP address.')
+        end
+      end
+    end
   end
 
   describe 'POST /api/v1/signin - Doorkeeper OAuth resume via AfterAuth' do
@@ -386,7 +420,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
 
     context 'with missing params' do
       it 'returns an error' do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 
@@ -398,7 +432,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
         let(:password) { 'invalid' }
 
         it 'returns an error' do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
 
@@ -414,7 +448,7 @@ RSpec.describe 'Sessions endpoints', type: :request do
           let(:two_factor_method_enabled) { false }
 
           it 'returns an error' do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
           end
         end
       end

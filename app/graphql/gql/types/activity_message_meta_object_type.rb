@@ -6,6 +6,7 @@ module Gql::Types
     possible_types Gql::Types::UserType, Gql::Types::OrganizationType,
                    Gql::Types::DataPrivacyTaskType, Gql::Types::GroupType, Gql::Types::RoleType,
                    Gql::Types::TicketType, Gql::Types::Ticket::ArticleType,
-                   Gql::Types::OnlineNotificationStandaloneType
+                   Gql::Types::OnlineNotificationStandaloneType,
+                   Gql::Types::KnowledgeBase::Answer::TranslationType
   end
 end

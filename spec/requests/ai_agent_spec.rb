@@ -97,9 +97,9 @@ RSpec.describe 'AI::Agent', :aggregate_failures, authenticated_as: :user, type: 
 
       delete "/api/v1/ai_agents/#{ai_agent.id}", as: :json
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response['error']).to eq('This object is referenced by other object(s) and thus cannot be deleted: %s')
-      expect(json_response['unprocessable_entity']).to include("Trigger / #{trigger.name} (##{trigger.id})")
+      expect(json_response['unprocessable_content']).to include("Trigger / #{trigger.name} (##{trigger.id})")
     end
   end
 

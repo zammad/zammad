@@ -61,12 +61,12 @@ RSpec.describe 'Taskbars', type: :request do
 
       authenticated_as(customer)
       put "/api/v1/taskbar/#{taskbar_id}", params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not allowed to access this task.')
 
       delete "/api/v1/taskbar/#{taskbar_id}", params: {}, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not allowed to access this task.')
 

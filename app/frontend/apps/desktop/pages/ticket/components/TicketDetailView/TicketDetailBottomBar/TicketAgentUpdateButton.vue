@@ -34,12 +34,9 @@ const emit = defineEmits<{
   'execute-macro': [MacroById]
 }>()
 
-const groupIds = computed(() => (props.groupId ? [props.groupId] : undefined))
+const macrosSelector = computed(() => (props.groupId ? { entityIds: [props.groupId] } : {}))
 
-const articleReplyIsPresent = computed(() => !!props.form?.flags.newArticlePresent)
-
-// For now handover ticket editable, flag, maybe later we can move the action menu in an own component.
-const { macrosLoaded, macros } = useMacros(groupIds)
+const { macrosLoaded, macros } = useMacros(macrosSelector)
 
 const { notify } = useNotifications()
 
@@ -54,6 +51,8 @@ const sharedDraftConflictDialog = useDialog({
   name: 'shared-draft-conflict',
   component: () => import('../TicketSharedDraftConflictDialog.vue'),
 })
+
+const articleReplyIsPresent = computed(() => !!props.form?.flags.newArticlePresent)
 
 const actionItems = computed(() => {
   const saveAsDraftAction: MenuItem = {

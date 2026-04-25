@@ -85,7 +85,7 @@ describe('Form - Field - Tags - Features', () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Clear selection' }))
 
-    expect(emittedInput[1][0]).toBeNull()
+    expect(emittedInput[1][0]).toBe(null)
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
   })
 

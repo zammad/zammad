@@ -42,9 +42,7 @@ describe('CommonOverlayContainer', () => {
 
   it('should emit close event when backdrop is clicked, by default', async () => {
     const view = renderComponent({
-      template: html`
-        <div id="test-backdrop" />
-      `,
+      template: html` <div id="test-backdrop" /> `,
     })
 
     const dialog = renderComponent(CommonOverlayContainer, {
@@ -67,9 +65,7 @@ describe('CommonOverlayContainer', () => {
 
   it('should not emit close event when backdrop is clicked, if specified', async () => {
     const view = renderComponent({
-      template: html`
-        <div id="test-backdrop"></div>
-      `,
+      template: html` <div id="test-backdrop"></div> `,
     })
 
     const dialog = renderComponent(CommonOverlayContainer, {

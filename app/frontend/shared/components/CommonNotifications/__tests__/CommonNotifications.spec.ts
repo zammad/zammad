@@ -83,29 +83,29 @@ describe('CommonNotifications.vue', () => {
 
   it('executes callback and removes notification on click', async () => {
     const { notify } = useNotifications()
-    const callback = vi.fn()
+    const closeCallback = vi.fn()
 
     notify({
       message,
       type: NotificationTypes.Warn,
-      callback,
+      closeCallback,
     })
 
     await nextTick()
     await wrapper.events.click(wrapper.getByTestId('notification'))
 
-    expect(callback).toHaveBeenCalledTimes(1)
+    expect(closeCallback).toHaveBeenCalledTimes(1)
     expect(wrapper.queryByTestId('notification')).not.toBeInTheDocument()
   })
 
   it('triggers notification callback on Enter keydown', async () => {
     const { notify } = useNotifications()
-    const callback = vi.fn()
+    const closeCallback = vi.fn()
 
     notify({
       message,
       type: NotificationTypes.Warn,
-      callback,
+      closeCallback,
     })
 
     await nextTick()
@@ -116,19 +116,19 @@ describe('CommonNotifications.vue', () => {
 
     await wrapper.events.keyboard('{Enter}')
 
-    expect(callback).toHaveBeenCalledTimes(2)
+    expect(closeCallback).toHaveBeenCalledTimes(2)
 
     expect(wrapper.queryByTestId('notification')).not.toBeInTheDocument()
   })
 
   it('does not trigger callback on non-Enter keydown', async () => {
     const { notify } = useNotifications()
-    const callback = vi.fn()
+    const closeCallback = vi.fn()
 
     notify({
       message,
       type: NotificationTypes.Warn,
-      callback,
+      closeCallback,
       persistent: true,
     })
     await nextTick()
@@ -138,7 +138,7 @@ describe('CommonNotifications.vue', () => {
     notification.focus()
     await wrapper.events.keyboard('{Escape}')
 
-    expect(callback).not.toHaveBeenCalled()
+    expect(closeCallback).not.toHaveBeenCalled()
     expect(wrapper.getByTestId('notification')).toBeInTheDocument()
   })
 
@@ -316,13 +316,13 @@ describe('CommonNotifications.vue', () => {
 
     it('does not make notification clickable when progress is shown', async () => {
       const { notify } = useNotifications()
-      const callback = vi.fn()
+      const closeCallback = vi.fn()
 
       notify({
         message,
         type: NotificationTypes.Warn,
         currentProgress: 0.5,
-        callback,
+        closeCallback,
         persistent: true,
       })
       await nextTick()
@@ -333,7 +333,7 @@ describe('CommonNotifications.vue', () => {
 
       await wrapper.events.click(notification)
 
-      expect(callback).not.toHaveBeenCalled()
+      expect(closeCallback).not.toHaveBeenCalled()
       expect(wrapper.getByTestId('notification')).toBeInTheDocument()
     })
 

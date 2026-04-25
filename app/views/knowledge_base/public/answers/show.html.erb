@@ -1,6 +1,6 @@
 <main class="main main--article"
-data-base-path='<%= custom_path_if_needed help_answer_path(@category, @object, locale: '{locale}'), @knowledge_base %>'
-data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'>
+data-base-path="<%= custom_path_if_needed help_answer_path(@category, @object, locale: '{locale}'), @knowledge_base %>"
+data-available-locales="<%= @object_locales.map(&:locale).join(',') %>">
   <article class="article">
     <div class="container">
       <h1>
@@ -38,7 +38,7 @@ data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'>
 
       <% if @object.visible? %>
         <div class="article-meta">
-          <%= raw zt 'Published %s', human_time_tag([@object.published_at, @object.translation.updated_at].max) %>
+          <%= raw zt 'Published: %s', human_time_tag([@object.published_at, @object.translation.updated_at].max) %>
         </div>
       <% end %>
     </div>

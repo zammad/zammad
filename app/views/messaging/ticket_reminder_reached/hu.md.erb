@@ -1,6 +1,6 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Emlékeztető elérve!_
-Egy jegy figyelmet igényel: emlékeztető elérve a(z) „*#{ticket.customer.longname}*” ügyfelű (#{ticket.title}) jegynél.
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Emlékeztető elérve!_
+Egy jegy figyelmet igényel: emlékeztető elérve „*#{ticket.customer.longname}*” ügyfél (#{ticket.title}) jegynél.
 
 <% if @objects[:article] %>
 #{article.body_as_text}

@@ -112,7 +112,7 @@ RSpec.describe 'Desktop > Ticket > Edit', app: :desktop_view, authenticated_as: 
       expect(ticket.reload.state.name).to eq('closed')
 
       within '#user-taskbar-tabs' do
-        expect(page).to have_css("a[href=\"/desktop/tickets/#{ticket.id}\"] svg[aria-label=\"check-circle-outline\"]")
+        expect(page).to have_css("a[href=\"/desktop/tickets/#{ticket.id}\"] svg[aria-label=\"closed\"]")
       end
 
       # Issue with underlying apis

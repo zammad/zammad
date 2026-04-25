@@ -5,15 +5,13 @@ module Service::AI::VectorDB
     attr_reader :worker
 
     def initialize(worker: 0)
-      super()
-
       @worker = worker
     end
 
     def execute
-      Service::AI::VectorDB::DropTable.new.execute
-      Service::AI::VectorDB::CreateTable.new.execute
-      Service::AI::VectorDB::Reload.new(worker:).execute
+      Service::AI::VectorDB::DropTable.execute
+      Service::AI::VectorDB::CreateTable.execute
+      Service::AI::VectorDB::Reload.execute(worker:)
     end
   end
 end

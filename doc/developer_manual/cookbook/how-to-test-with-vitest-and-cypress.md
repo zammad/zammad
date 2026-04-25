@@ -32,12 +32,6 @@ The tests will be executed in watch mode by default.
 
 Check the Vitest [CLI documentation](https://vitest.dev/guide/cli.html#options) for more possibilities.
 
-#### Troubleshooting
-
-##### TypeError: localStorage.getItem is not a function
-
-Solution: use `node --version` < 25
-
 ### Cypress
 
 > [!WARNING]

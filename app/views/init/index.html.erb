@@ -31,7 +31,7 @@
 <div id="app"></div>
 <div class="splash">
   <svg class="icon icon-logo"><use xlink:href="<%= icons_url %>#icon-logo" /></svg>
-  <div class="splash-title">Loading…</div>
+  <div class="splash-title"><%= Translation.translate(local_assigns[:locale], 'Loading…') %></div>
   <noscript>
     <style>
       .splash { flex-direction: column; }

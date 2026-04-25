@@ -37,7 +37,7 @@ RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: tr
 
       params = { without_fingerprint: 'none', username: 'user-device-admin', password: 'adminpw' }
       post '/api/v1/signin', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Need fingerprint param!')
@@ -618,7 +618,7 @@ RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: tr
     it 'does login with invalid fingerprint (11)' do
       params = { fingerprint: 'to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890', username: 'user-device-admin', password: 'adminpw' }
       post '/api/v1/signin', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('fingerprint is 198 chars but can only be 160 chars!')

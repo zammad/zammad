@@ -1,8 +1,17 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::ExternalDataSource::Preview < Service::Base
-  def execute(data_option:, render_context:, term:, limit: 10)
-    result = ExternalDataSource.new(options: data_option, render_context:, term:, limit:).process
+  attr_reader :data_option, :render_context, :term, :limit
+
+  def initialize(data_option:, render_context:, term:, limit: 10)
+    @data_option = data_option
+    @render_context = render_context
+    @term = term
+    @limit = limit
+  end
+
+  def execute
+    result = ExternalDataSource.new(options: data_option, render_context: render_context, term: term, limit: limit).process
 
     {
       success: true,

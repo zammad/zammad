@@ -30,13 +30,15 @@ import { useUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentO
 
 const { breadcrumbItems } = useBreadcrumb(__('Overviews'))
 
-const overviewList = ref<OverviewItem[]>([])
-
 const overviewListQuery = new QueryHandler(
   useUserCurrentOverviewListQuery({ ignoreUserConditions: true }),
 )
 
-const overviewListQueryLoading = overviewListQuery.loading()
+const queryResult = overviewListQuery.result()
+
+const overviewList = ref<OverviewItem[]>(queryResult.value?.userCurrentTicketOverviews || [])
+
+const overviewListQueryLoading = overviewListQuery.loadingWithoutCachedResult()
 
 onActivated(() => overviewListQuery.refetch())
 
@@ -58,7 +60,7 @@ overviewListQuery.subscribeToMore<
   },
 })
 
-watch(overviewListQuery.result(), (newValue) => {
+watch(queryResult, (newValue) => {
   overviewList.value = newValue?.userCurrentTicketOverviews || []
 })
 
@@ -114,7 +116,7 @@ const confirmResetOverviewOrder = async () => {
 
 <template>
   <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
-    <CommonLoader class="mt-5 mb-3" :loading="overviewListQueryLoading">
+    <CommonLoader no-transition class="mt-5 mb-3" :loading="overviewListQueryLoading">
       <div v-if="overviewList.length" class="mb-4">
         <CommonLabel id="label-ticket-overview-order" class="mt-0.5! mb-1 block!"
           >{{ $t('Order of ticket overviews') }}

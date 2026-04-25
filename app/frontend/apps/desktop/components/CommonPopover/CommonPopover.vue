@@ -13,6 +13,7 @@ import {
   useCurrentElement,
   type MaybeElementRef,
   type VueInstance,
+  unrefElement,
 } from '@vueuse/core'
 import {
   type ComponentPublicInstance,
@@ -271,7 +272,8 @@ const { moveNextFocusToTrap } = useTrapTab(popoverElement)
 const { instances } = usePopoverInstances()
 
 const updateOwnerAriaExpandedState = () => {
-  const element = props.owner
+  const element = unrefElement(props.owner)
+
   if (!element) return
 
   if ('ariaExpanded' in element) {

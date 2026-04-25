@@ -1,0 +1,72 @@
+---
+name: "Update Zammad dependencies via updatecli"
+
+sources:
+  heroku-buildpack-nodejs:
+    name: heroku-buildpack-nodejs
+    kind: gittag
+    spec:
+      url: "https://github.com/heroku/heroku-buildpack-nodejs.git"
+      versionfilter:
+        kind: "semver"
+  heroku-buildpack-ruby:
+    name: heroku-buildpack-ruby
+    kind: gitbranch
+    spec:
+      url: "https://github.com/pkgr/heroku-buildpack-ruby.git"
+      versionfilter:
+        kind: "regex"
+        pattern: 'v\d{3}-\d+'
+
+conditions: {}
+
+targets:
+  buildpacks-nodejs:
+    name: buildpacks-nodejs
+    kind: file
+    sourceid: heroku-buildpack-nodejs
+    # {{ if .gitlab.enabled }}
+    scmid: zammad
+    # {{ end }}
+    spec:
+      file: .buildpacks
+      matchpattern: 'https://github.com/heroku/heroku-buildpack-nodejs.git#.*'
+      replacepattern: 'https://github.com/heroku/heroku-buildpack-nodejs.git#{{ source `heroku-buildpack-nodejs` }}'
+  buildpacks-ruby:
+    name: buildpacks-ruby
+    kind: file
+    sourceid: heroku-buildpack-ruby
+    # {{ if .gitlab.enabled }}
+    scmid: zammad
+    # {{ end }}
+    spec:
+      file: .buildpacks
+      matchpattern: 'https://github.com/pkgr/heroku-buildpack-ruby.git#.*'
+      replacepattern: 'https://github.com/pkgr/heroku-buildpack-ruby.git#{{ source `heroku-buildpack-ruby` }}'
+
+# {{ if .gitlab.enabled }}
+scms:
+  zammad:
+    kind: "gitlab"
+    spec:
+      url: '{{ requiredEnv "CI_SERVER_URL" }}'
+      owner: "zammad"
+      repository: "zammad"
+      token: '{{ requiredEnv "RENOVATE_TOKEN" }}'
+      username: 'renovate'
+      branch: "develop"
+      workingbranchprefix: "renovate/updatecli"
+      workingbranchseparator: "/"
+
+actions:
+  gitlab:
+    kind: gitlab/mergerequest
+    scmid: zammad
+    spec:
+      automerge: false
+      title: "Maintenance: Update Zammad dependencies via updatecli"
+      assignees:
+        - 115 # fl
+      labels:
+        - "dependencies"
+# {{ end }}

@@ -5791,7 +5791,7 @@ Setting.create_if_not_exists(
   title:       __('Authentication via %s'),
   name:        'auth_sso',
   area:        'Security::ThirdPartyAuthentication',
-  description: __('Enables button for user authentication via %s. The button will redirect to /auth/sso on user interaction.'),
+  description: __('Enables button for user authentication via %s. The button will redirect to /auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR ranges from which authentication headers (%s, %s, %s) are accepted. Leave empty to accept from any IP (not recommended for production).'),
   options:     {
     form: [
       {
@@ -5808,13 +5808,37 @@ Setting.create_if_not_exists(
   },
   preferences: {
     controller:       'SettingsAreaSwitch',
-    sub:              {},
+    sub:              ['auth_sso_trusted_ips'],
     title_i18n:       [__('SSO')],
-    description_i18n: [__('SSO')],
+    description_i18n: [__('SSO'), 'REMOTE_USER', 'HTTP_REMOTE_USER', 'X-Forwarded-User'],
     permission:       ['admin.security'],
   },
   state:       false,
   frontend:    true
+)
+
+Setting.create_if_not_exists(
+  title:       __('Trusted SSO Proxy IPs'),
+  name:        'auth_sso_trusted_ips',
+  area:        'Security::ThirdPartyAuthentication::SSO',
+  description: __('Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO header acceptance.'),
+  options:     {
+    form: [
+      {
+        display:     __('Trusted SSO Proxy IPs'),
+        null:        true,
+        name:        'auth_sso_trusted_ips',
+        tag:         'input',
+        placeholder: '192.168.1.1, 10.0.0.0/8',
+      },
+    ],
+  },
+  preferences: {
+    permission:  ['admin.security'],
+    validations: ['Setting::Validation::SsoTrustedIps'],
+  },
+  state:       '',
+  frontend:    false
 )
 
 Setting.create_if_not_exists(
@@ -6144,6 +6168,20 @@ Setting.create_if_not_exists(
   preferences: {
     authentication: true,
     permission:     ['admin.ai_assistance_text_tools'],
+  },
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('AI Knowledge Base Answer from Ticket'),
+  name:        'ai_assistance_kb_answer_from_ticket_generation',
+  area:        'AI::Assistance',
+  description: __('Enable or disable AI generation of knowledge base answers from ticket content.'),
+  options:     {},
+  state:       false,
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ai_assistance_kb_answer_from_ticket_generation'],
   },
   frontend:    true,
 )

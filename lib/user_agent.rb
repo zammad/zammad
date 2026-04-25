@@ -70,8 +70,9 @@ class UserAgent
       http = Net::HTTP.new(uri.host, uri.port)
     end
 
-    http.open_timeout = options[:open_timeout] || 4
-    http.read_timeout = options[:read_timeout] || 10
+    # Defaults raised for slow links (e.g. OAuth to external IdPs); override globally via ENV, per-request via options. See https://github.com/zammad/zammad/issues/5991
+    http.open_timeout = options[:open_timeout] || ENV.fetch('ZAMMAD_HTTP_OPEN_TIMEOUT', 30).to_i
+    http.read_timeout = options[:read_timeout] || ENV.fetch('ZAMMAD_HTTP_READ_TIMEOUT', 60).to_i
 
     if uri.scheme == 'https'
       http.use_ssl = true
@@ -303,6 +304,7 @@ class UserAgent
   # @option options [Integer] :open_timeout
   # @option options [Integer] :read_timeout
   # @option options [Boolean] :do_not_follow_redirects
+  # @option options [Hash, Boolean] :validate_safety to validate hostname safety via HostnameSafetyCheck.validate! with options as sub-keys
   # @option log [String] :facility is sub-key as in options[:log][:facility] providing name to use when logging in HttpLog
   # @param count [Integer] of redirects. Counts towards zero and then aborts
   #
@@ -319,6 +321,11 @@ class UserAgent
 
     # prepare request
     request = Net::HTTP.const_get(method.capitalize).new(uri)
+
+    if options[:validate_safety]
+      validate_safety_options = options[:validate_safety].is_a?(Hash) ? options[:validate_safety] : nil
+      HostnameSafetyCheck.validate!(uri.hostname, **validate_safety_options)
+    end
 
     # set headers
     request = set_headers(request, options)

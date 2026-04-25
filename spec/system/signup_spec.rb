@@ -3,7 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Signup', authenticated_as: false, type: :system do
+
+  notification_url = ''
+
   before do
+    allow(NotificationFactory::Mailer).to receive(:notification) do |params|
+      notification_url = params[:objects][:url]
+    end
     visit 'signup'
   end
 
@@ -17,6 +23,11 @@ RSpec.describe 'Signup', authenticated_as: false, type: :system do
     click '.js-submit'
 
     expect(page).to have_css '.signup', text: 'Registration successful!'
+    expect(notification_url).to be_present
+
+    visit notification_url
+
+    expect_current_route 'ticket/view/my_tickets'
   end
 
   it 'with a weak password show password strength error' do

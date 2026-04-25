@@ -58,7 +58,6 @@ class Service::Template::Interpolation::Interpolator::Webhook::Track::PreDefined
     def struct(pre_defined_webhook)
       @struct ||= Struct.new('PreDefinedWebhook', *pre_defined_webhook.field_names)
     end
-
   end
 
 end

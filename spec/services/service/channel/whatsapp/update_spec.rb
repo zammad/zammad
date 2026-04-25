@@ -3,15 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe Service::Channel::Whatsapp::Update, current_user_id: 1 do
-  subject(:service) { described_class.new(params:, channel_id: channel.id) }
-
   shared_examples 'raising an error' do |klass, message|
     it 'raises an error' do
-      expect { service.execute }.to raise_error(klass, message)
+      expect { service_result }.to raise_error(klass, message)
     end
   end
 
   describe '#execute' do
+    subject(:service_result) { described_class.execute(params:, channel_id: channel.id) }
+
     let(:channel)         { create(:whatsapp_channel) }
     let(:phone_number_id) { Faker::Number.unique.number(digits: 15) }
 
@@ -39,7 +39,7 @@ RSpec.describe Service::Channel::Whatsapp::Update, current_user_id: 1 do
       end
 
       it 'updates the existing channel' do
-        expect { service.execute }
+        expect { service_result }
           .to change { channel.reload.options['business_id'] }.to(params[:business_id])
           .and change { channel.options['access_token'] }.to(params[:access_token])
           .and change { channel.options['app_secret'] }.to(params[:app_secret])

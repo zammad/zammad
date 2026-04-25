@@ -153,11 +153,22 @@ const ticketArticleTypeSection = getFormSchemaGroupSection(
     {
       if: '$existingAdditionalCreateNotes() && $getAdditionalCreateNote($values.articleSenderType) !== undefined',
       isLayout: true,
-      element: 'p',
-      attrs: {
-        class: 'my-10 text-base text-center text-yellow',
+      component: 'CommonAlert',
+      props: {
+        variant: 'warning',
       },
-      children: '$getAdditionalCreateNote($values.articleSenderType)',
+      children: [
+        {
+          isLayout: true,
+          element: 'div',
+          attrs: {
+            // We convert light weight markup
+            // The input is not sanitized and relies on the administrator to provide safe content
+            innerHTML: '$markup($t($getAdditionalCreateNote($values.articleSenderType)))',
+          },
+          children: '',
+        },
+      ],
     },
   ],
   true,
@@ -352,10 +363,10 @@ const schemaData = reactive({
   allSteps,
   securityIntegration,
   existingAdditionalCreateNotes: () => {
-    return Object.keys(additionalCreateNotes).length > 0
+    return Object.keys(additionalCreateNotes.value).length > 0
   },
   getAdditionalCreateNote: (value: string) => {
-    return i18n.t(additionalCreateNotes.value[value])
+    return additionalCreateNotes.value[value]
   },
 })
 

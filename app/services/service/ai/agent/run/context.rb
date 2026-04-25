@@ -13,7 +13,7 @@ class Service::AI::Agent::Run::Context
   end
 
   def prepare_instructions
-    instruction = Service::AI::Agent::Run::Context::Instruction.new(
+    instruction = Service::AI::Agent::Run::Context::Instruction.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
       instruction_context:,
       placeholder_object_attributes:,
       type_enrichment_data:,
@@ -23,7 +23,7 @@ class Service::AI::Agent::Run::Context
   end
 
   def prepare_entity
-    entity = Service::AI::Agent::Run::Context::Entity.new(
+    entity = Service::AI::Agent::Run::Context::Entity.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
       entity_object:,
       entity_context:,
       entity_article:,

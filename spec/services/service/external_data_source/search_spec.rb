@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe Service::ExternalDataSource::Search do
   describe '#execute' do
     context 'with ElasticSearch', searchindex: true do
+      subject(:service_result) { described_class.execute(attribute: attribute, render_context: {}, term: searchterm) }
+
       let(:attribute) do
         create(:object_manager_attribute_autocompletion_ajax_external_data_source, :elastic_search)
       end
@@ -20,17 +22,16 @@ RSpec.describe Service::ExternalDataSource::Search do
       end
 
       it 'returns search results' do
-        json = described_class.new.execute(attribute: attribute, render_context: {}, term: searchterm)
-
-        expect(json).to eq([
-                             { value: user1.id.to_s, label: user1.email },
-                             { value: user2.id.to_s, label: user2.email }
-                           ])
+        expect(service_result).to eq([
+                                       { value: user1.id.to_s, label: user1.email },
+                                       { value: user2.id.to_s, label: user2.email }
+                                     ])
       end
     end
 
     context 'with mocked response' do
-      let(:instance) { described_class.new }
+      subject(:service_result) { described_class.execute(attribute: attribute, render_context: {}, term: 'term') }
+
       let(:json_response) do
         {
           'deadend' => 'yes',
@@ -62,22 +63,20 @@ RSpec.describe Service::ExternalDataSource::Search do
       end
 
       it 'returns correct data' do
-        json = instance.execute(attribute: attribute, render_context: {}, term: 'term')
-
-        expect(json).to eq([
-                             { value: 1, label: 'name 1' },
-                             { value: 2, label: 'name 2' },
-                             { value: 3, label: false },
-                             { value: 4, label: true },
-                           ])
+        expect(service_result).to eq([
+                                       { value: 1, label: 'name 1' },
+                                       { value: 2, label: 'name 2' },
+                                       { value: 3, label: false },
+                                       { value: 4, label: true },
+                                     ])
       end
 
       context 'when parsing fails' do
         let(:list_key) { 'deadend' }
 
         it 'raises error' do
-          expect { instance.execute(attribute: attribute, render_context: {}, term: 'term') }
-            .to raise_error(Exceptions::UnprocessableEntity)
+          expect { service_result }
+            .to raise_error(Exceptions::UnprocessableContent)
         end
       end
     end

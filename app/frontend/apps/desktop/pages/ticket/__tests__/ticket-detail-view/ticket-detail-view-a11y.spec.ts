@@ -10,9 +10,7 @@ import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/moc
 
 import { mockLinkListQuery } from '../../graphql/queries/linkList.mocks.ts'
 
-// :TODO ArticleBubbleBody is not properly a11y it needs a different implementation for the
-// collapse and expand target
-describe.skip('ticket detail view', () => {
+describe('ticket detail view', () => {
   it('has no accessibility violations in main content', async () => {
     mockPermissions(['ticket.agent'])
 

@@ -29,9 +29,9 @@ module KnowledgeBaseTopBarHelper
       object.can_be_published_aasm.current_state
     when KnowledgeBase::Category
       kb_locale = object&.translation&.kb_locale
-      object.public_content?(kb_locale) ? 'Visible' : 'Invisible'
+      object.public_content?(kb_locale) ? __('Visible') : __('Invisible')
     when KnowledgeBase
-      'Published'
+      __('Published')
     end
   end
 

@@ -5,8 +5,6 @@ module Service::AI::VectorDB
     attr_reader :worker
 
     def initialize(worker: 0)
-      super()
-
       @worker = worker
     end
 

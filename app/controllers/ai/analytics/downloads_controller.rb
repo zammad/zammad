@@ -17,7 +17,7 @@ class AI::Analytics::DownloadsController < ApplicationController
               when 'with_usages'
                 Service::AI::Analytics::GenerateReport::WithUsages
               else
-                raise Exceptions::UnprocessableEntity, 'invalid report type'
+                raise Exceptions::UnprocessableContent, 'invalid report type'
               end
                  .new(scope:, format:)
                  .execute
@@ -32,8 +32,18 @@ class AI::Analytics::DownloadsController < ApplicationController
 
   private
 
-  DIRECT_FILTERS = %i[related_object_type related_object_id ai_service_name].freeze
-  DATE_FILTERS = %i[created_after created_before].freeze
+  DIRECT_FILTERS = %i[
+    related_object_type
+    related_object_id
+    ai_service_name
+    triggered_by_type
+    triggered_by_id
+  ].freeze
+
+  DATE_FILTERS = %i[
+    created_after
+    created_before
+  ].freeze
 
   def scope
     filters = params.permit(filters: (DIRECT_FILTERS + DATE_FILTERS))[:filters] || {}

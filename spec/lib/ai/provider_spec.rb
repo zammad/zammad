@@ -59,6 +59,21 @@ RSpec.describe AI::Provider do
         expect(ai_provider.ask(prompt_system:, prompt_user:)).to eq({ 'key' => 'value' })
       end
 
+      it 'handles literal newlines inside JSON string values' do
+        allow(ai_provider).to receive(:chat).and_return("{\"title\": \"test\", \"body\": \"<p>Hello</p>\n<h3>World</h3>\"}")
+        expect(ai_provider.ask(prompt_system:, prompt_user:)).to eq({ 'title' => 'test', 'body' => "<p>Hello</p>\n<h3>World</h3>" })
+      end
+
+      it 'handles carriage return and tab inside JSON string values' do
+        allow(ai_provider).to receive(:chat).and_return("{\"body\": \"line1\r\nline2\tindented\"}")
+        expect(ai_provider.ask(prompt_system:, prompt_user:)).to eq({ 'body' => "line1\nline2\tindented" })
+      end
+
+      it 'does not break already escaped sequences' do
+        allow(ai_provider).to receive(:chat).and_return('{"body": "line1\\nline2"}')
+        expect(ai_provider.ask(prompt_system:, prompt_user:)).to eq({ 'body' => "line1\nline2" })
+      end
+
       it 'raises OutputFormatError for invalid JSON' do
         allow(ai_provider).to receive(:chat).and_return('invalid json')
         expect { ai_provider.ask(prompt_system:, prompt_user:) }

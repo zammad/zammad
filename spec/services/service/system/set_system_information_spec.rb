@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::System::SetSystemInformation do
-  let(:service) { described_class.new(data: variables) }
+  subject(:service_result) { described_class.execute(data: variables) }
 
   let(:required_variables) do
     {
@@ -17,15 +17,13 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.merge(locale_default: 'lt') }
 
       it 'sets locale' do
-        expect { service.execute }
+        expect { service_result }
           .to change { Setting.get('locale_default') }
           .to('lt')
       end
 
       it 'does return updated settings' do
-        result = service.execute
-
-        expect(result).to include(
+        expect(service_result).to include(
           locale_default: 'lt',
           organization:   'Sample',
           http_type:      'http',
@@ -38,7 +36,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.merge(locale_default: 'lt').tap { it.delete(:url) } }
 
       it 'does not set locale' do
-        expect { service.execute }.to raise_error(Exceptions::InvalidAttribute)
+        expect { service_result }.to raise_error(Exceptions::InvalidAttribute)
       end
     end
 
@@ -46,7 +44,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables }
 
       it 'does not change locale' do
-        expect { service.execute }.not_to change { Setting.get('locale_default') }
+        expect { service_result }.not_to change { Setting.get('locale_default') }
       end
     end
   end
@@ -56,7 +54,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.merge(timezone_default: 'Europe/Vilnius') }
 
       it 'sets timezone' do
-        expect { service.execute }.to change { Setting.get('timezone_default') }.to('Europe/Vilnius')
+        expect { service_result }.to change { Setting.get('timezone_default') }.to('Europe/Vilnius')
       end
     end
 
@@ -64,7 +62,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables }
 
       it 'does not change timezone' do
-        expect { service.execute }.not_to change { Setting.get('timezone_default') }
+        expect { service_result }.not_to change { Setting.get('timezone_default') }
       end
     end
   end
@@ -74,7 +72,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables }
 
       it 'sets organization name' do
-        expect { service.execute }.to change { Setting.get('organization') }.to('Sample')
+        expect { service_result }.to change { Setting.get('organization') }.to('Sample')
       end
     end
 
@@ -82,7 +80,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.tap { it.delete(:url) } }
 
       it 'does not set organization name' do
-        expect { service.execute }.to raise_error(Exceptions::InvalidAttribute)
+        expect { service_result }.to raise_error(Exceptions::InvalidAttribute)
       end
     end
 
@@ -90,7 +88,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.merge(organization: ' ') }
 
       it 'returns an error' do
-        expect { service.execute }.to raise_error(Exceptions::MissingAttribute)
+        expect { service_result }.to raise_error(Exceptions::MissingAttribute)
       end
     end
 
@@ -98,7 +96,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.tap { it.delete(:organization) } }
 
       it 'returns an error' do
-        expect { service.execute }.to raise_error(Exceptions::MissingAttribute)
+        expect { service_result }.to raise_error(Exceptions::MissingAttribute)
       end
     end
   end
@@ -108,7 +106,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables }
 
       it 'sets service name' do
-        expect { service.execute }
+        expect { service_result }
           .to change { [Setting.get('http_type'), Setting.get('fqdn')] }
           .to(['http', 'example.com'])
       end
@@ -117,7 +115,7 @@ RSpec.describe Service::System::SetSystemInformation do
         before { Setting.set('system_online_service', true) }
 
         it 'does not set http type & FQDN' do
-          expect { service.execute }
+          expect { service_result }
             .not_to change { [Setting.get('http_type'), Setting.get('fqdn')] }
         end
       end
@@ -127,7 +125,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.tap { it.delete(:organization) } }
 
       it 'does not set http type & FQDN' do
-        expect { service.execute }.to raise_error(Exceptions::MissingAttribute)
+        expect { service_result }.to raise_error(Exceptions::MissingAttribute)
       end
     end
 
@@ -135,7 +133,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.merge(url: 'meh') }
 
       it 'returns an error' do
-        expect { service.execute }.to raise_error(Exceptions::InvalidAttribute)
+        expect { service_result }.to raise_error(Exceptions::InvalidAttribute)
       end
     end
 
@@ -143,7 +141,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.tap { it.delete(:url) } }
 
       it 'returns an error' do
-        expect { service.execute }.to raise_error(Exceptions::InvalidAttribute)
+        expect { service_result }.to raise_error(Exceptions::InvalidAttribute)
       end
     end
   end
@@ -163,13 +161,13 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.merge(logo: image_data) }
 
       it 'sets updates logo and sets logo timestamp' do
-        expect { service.execute }
+        expect { service_result }
           .to change { Setting.get('product_logo') }
           .to(Time.current.to_i)
       end
 
       it 'stores both original and resized logos' do
-        service.execute
+        service_result
         expect(Service::SystemAssets::ProductLogo).to have_received(:store_one).twice
       end
     end
@@ -178,7 +176,7 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables.merge(logo: image_data).tap { it.delete(:url) } }
 
       it 'does not store logo to storage', :aggregate_failures do
-        expect { service.execute }.to raise_error(Exceptions::InvalidAttribute)
+        expect { service_result }.to raise_error(Exceptions::InvalidAttribute)
         expect(Service::SystemAssets::ProductLogo).not_to have_received(:store_one)
       end
     end
@@ -187,12 +185,12 @@ RSpec.describe Service::System::SetSystemInformation do
       let(:variables) { required_variables }
 
       it 'does not set logo timestamp' do
-        expect { service.execute }
+        expect { service_result }
           .not_to change { Setting.get('product_logo') }
       end
 
       it 'does not store logo to storage' do
-        service.execute
+        service_result
 
         expect(Service::SystemAssets::ProductLogo).not_to have_received(:store_one)
       end

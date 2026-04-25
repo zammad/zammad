@@ -4,8 +4,6 @@ class Service::Ticket::Article::Type::BaseDeliver < Service::Base
   attr_reader :article, :ticket, :channel, :result
 
   def initialize(article_id:)
-    super()
-
     @article = Ticket::Article.find(article_id)
     @ticket = Ticket.lookup(id: article.ticket_id)
 

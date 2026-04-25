@@ -41,6 +41,12 @@ class ExternalDataSource
       end
     end
 
+    class SearchUrlUnsafe < BaseError
+      def message
+        __('Search URL is unsafe.')
+      end
+    end
+
     class ParsingError < BaseError
       attr_reader :parsing_path
 

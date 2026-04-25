@@ -87,7 +87,7 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
 
       it 'raises an error' do
         gql.execute(mutation, variables: variables)
-        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+        expect(gql.result.error_type).to eq(Pundit::NotAuthorizedError)
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
 
       it 'raises an error' do
         gql.execute(mutation, variables: variables)
-        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+        expect(gql.result.error_type).to eq(Pundit::NotAuthorizedError)
       end
     end
   end

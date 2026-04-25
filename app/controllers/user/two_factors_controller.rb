@@ -7,8 +7,8 @@ class User::TwoFactorsController < ApplicationController
 
   def remove_authentication_method
     Service::User::TwoFactor::RemoveMethod
-      .new(user: current_user, method_name: params[:method])
-      .execute
+      .with_current_user(current_user)
+      .execute(method_name: params[:method])
 
     render json: {}
 
@@ -30,9 +30,10 @@ class User::TwoFactorsController < ApplicationController
 
   def verify_configuration
     verify_method_configuration = Service::User::TwoFactor::VerifyMethodConfiguration
-      .new(user: current_user, method_name: params_method_name, payload: params_payload, configuration: params[:configuration].permit!.to_h)
+      .with_current_user(current_user)
+      .execute(method_name: params_method_name, payload: params_payload, configuration: params[:configuration].permit!.to_h)
 
-    render json: verify_method_configuration.execute.merge({ verified: true })
+    render json: verify_method_configuration.merge({ verified: true })
 
     token_object.destroy
   rescue Service::User::TwoFactor::VerifyMethodConfiguration::Failed
@@ -41,15 +42,16 @@ class User::TwoFactorsController < ApplicationController
 
   def authentication_method_initiate_configuration
     initiate_authentication_method_configuration = Service::User::TwoFactor::InitiateMethodConfiguration
-      .new(user: current_user, method_name: params_method_name)
+      .with_current_user(current_user)
+      .execute(method_name: params_method_name)
 
-    render json: { configuration: initiate_authentication_method_configuration.execute }
+    render json: { configuration: initiate_authentication_method_configuration }
   end
 
   def recovery_codes_generate
     codes = Service::User::TwoFactor::GenerateRecoveryCodes
-      .new(user: current_user, force: true)
-      .execute
+      .with_current_user(current_user)
+      .execute(force: true)
 
     render json: codes
 
@@ -58,24 +60,24 @@ class User::TwoFactorsController < ApplicationController
 
   def default_authentication_method
     Service::User::TwoFactor::SetDefaultMethod
-      .new(user: current_user, method_name: params_method_name)
-      .execute
+      .with_current_user(current_user)
+      .execute(method_name: params_method_name)
 
     render json: {}
   end
 
   def authentication_method_configuration
     configuration = Service::User::TwoFactor::GetMethodConfiguration
-      .new(user: current_user, method_name: params_method_name)
-      .execute
+      .with_current_user(current_user)
+      .execute(method_name: params_method_name)
 
     render json: { configuration: configuration || {} }
   end
 
   def authentication_remove_credentials
     Service::User::TwoFactor::RemoveMethodCredentials
-      .new(user: current_user, method_name: params_method_name, credential_id: params[:credential_id])
-      .execute
+      .with_current_user(current_user)
+      .execute(method_name: params_method_name, credential_id: params[:credential_id])
 
     render json: {}
   end

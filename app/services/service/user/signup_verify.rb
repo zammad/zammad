@@ -1,19 +1,20 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::SignupVerify < Service::Base
+  # Current user is used in this serivce, but it is optional.
+  # Thus no need for requires_current_user!
 
-  attr_reader :token, :current_user
+  attr_reader :token
 
-  def initialize(token:, current_user: nil)
-    super()
+  def initialize(token:)
     @token = token
-    @current_user = current_user
   end
 
   def execute
-    Service::CheckFeatureEnabled.new(name: 'user_create_account').execute
+    Service::CheckFeatureEnabled.execute(name: 'user_create_account')
 
     user = ::User.signup_verify_via_token(token, current_user)
+
     raise InvalidTokenError if !user
 
     user

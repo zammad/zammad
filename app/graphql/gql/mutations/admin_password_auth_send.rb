@@ -17,10 +17,8 @@ module Gql::Mutations
     end
 
     def resolve(login:)
-      send = Service::Auth::SendAdminToken.new(login: login)
-
       begin
-        send.execute
+        Service::Auth::SendAdminToken.execute(login: login)
       rescue Service::Auth::SendAdminToken::TokenError, Service::Auth::SendAdminToken::EmailError
         return { success: false }
       end

@@ -19,7 +19,7 @@ module Tasks
             begin
               "Store::Provider::#{provider}".constantize
             rescue NameError
-              warn "Store provider '#{provider}' not found."
+              $stderr.puts "Store provider '#{provider}' not found."
               exit 1
             end
           end
@@ -41,7 +41,7 @@ module Tasks
           puts 'Done.'
           return if status
 
-          warn 'One or more files could not be moved. For further information, please check the logs.'
+          $stderr.puts 'One or more files could not be moved. For further information, please check the logs.'
           exit 1
         end
       end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::AddInternal do
-  subject(:service) { described_class.new(current_user:) }
+  subject(:service_result) { described_class.with_current_user(current_user).execute(user_data:, send_invite:) }
 
   let(:current_user)    { create(:admin) }
   let(:send_invite)     { false }
@@ -18,24 +18,19 @@ RSpec.describe Service::User::AddInternal do
 
   describe 'creating a user' do
     it 'creates a user with valid data' do
-      user = service.execute(user_data:)
-
-      expect(user)
+      expect(service_result)
         .to be_persisted
         .and(have_attributes(**user_data))
     end
 
     it 'sets default roles' do
-      user = service.execute(user_data:)
-
-      expect(user.roles).to match_array(Role.find_by(name: 'Customer'))
+      expect(service_result.roles).to match_array(Role.find_by(name: 'Customer'))
     end
 
     it 'creates a user with given roles' do
       user_data[:roles] = [Role.find_by(name: 'Admin')]
-      user = service.execute(user_data:)
 
-      expect(user.roles).to match_array(Role.find_by(name: 'Admin'))
+      expect(service_result.roles).to match_array(Role.find_by(name: 'Admin'))
     end
 
     context 'with non-admin user' do
@@ -43,9 +38,8 @@ RSpec.describe Service::User::AddInternal do
 
       it 'filters sensitive inputs' do
         user_data[:roles] = [Role.find_by(name: 'Admin')]
-        user = service.execute(user_data:)
 
-        expect(user.roles).to match_array(Role.find_by(name: 'Customer'))
+        expect(service_result.roles).to match_array(Role.find_by(name: 'Customer'))
       end
     end
 
@@ -54,7 +48,7 @@ RSpec.describe Service::User::AddInternal do
 
       user_data[:email] = existing_user.email
 
-      expect { service.execute(user_data:) }
+      expect { service_result }
         .to raise_error(
           ActiveRecord::RecordInvalid,
           "Validation failed: Email address '#{existing_user.email}' is already used for another user."
@@ -64,9 +58,7 @@ RSpec.describe Service::User::AddInternal do
     it 'creates an email-less user' do
       user_data[:email] = nil
 
-      user = service.execute(user_data:)
-
-      expect(user)
+      expect(service_result)
         .to be_persisted
         .and(have_attributes(**user_data))
     end
@@ -77,9 +69,7 @@ RSpec.describe Service::User::AddInternal do
       user_data[:roles] = [Role.find_by(name: 'Agent')] # ticket.agent is required for group access
       user_data[:group_ids_access_map] = { group.id => %w[read change] }
 
-      user = service.execute(user_data:)
-
-      expect(user.group_ids_access_map).to include(group.id => match_array(%w[read change]))
+      expect(service_result.group_ids_access_map).to include(group.id => match_array(%w[read change]))
     end
   end
 
@@ -92,7 +82,7 @@ RSpec.describe Service::User::AddInternal do
       let(:send_invite) { true }
 
       it 'sends invite' do
-        service.execute(user_data:, send_invite:)
+        service_result
 
         expect(NotificationFactory::Mailer)
           .to have_received(:notification)
@@ -103,7 +93,7 @@ RSpec.describe Service::User::AddInternal do
         it 'does not send invite' do
           user_data.delete :email
 
-          service.execute(user_data:, send_invite:)
+          service_result
 
           expect(NotificationFactory::Mailer)
             .not_to have_received(:notification)
@@ -115,7 +105,7 @@ RSpec.describe Service::User::AddInternal do
       let(:send_invite) { false }
 
       it 'does not send invite' do
-        service.execute(user_data:, send_invite:)
+        service_result
 
         expect(NotificationFactory::Mailer).not_to have_received(:notification)
       end

@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Scalato alle #{ticket.escalation_at}_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Scalato alle #{ticket.escalation_at}_
 Il ticket (#{ticket.title}) da "#{ticket.customer.longname}" è andato in escalation dalle "#{ticket.escalation_at}"!
 
 <% if @objects[:article] %>

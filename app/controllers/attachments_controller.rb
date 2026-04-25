@@ -74,10 +74,10 @@ class AttachmentsController < ApplicationController
   private
 
   def render_calendar_preview
-    render json: Service::Calendar::IcsFile::Parse.new(current_user:).execute(file: download_file), status: :ok
+    render json: Service::Calendar::IcsFile::Parse.execute(file: download_file), status: :ok
   rescue => e
     logger.error e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_content
   end
 
   def user_not_authorized(e)
