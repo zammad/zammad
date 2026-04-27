@@ -69,7 +69,7 @@
     "@vue/compiler-dom": "^3.5.33",
     "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/server-renderer": "^3.5.33",
-    "@vue/test-utils": "^2.4.6",
+    "@vue/test-utils": "^2.4.9",
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
