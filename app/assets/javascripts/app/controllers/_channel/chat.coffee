@@ -252,7 +252,7 @@ class ChannelChat extends App.ControllerSubContent
   renderError: (data) =>
     errorMessage = data?.error || __('An error occurred while fetching the website preview.')
 
-    @browserHelp.text(App.i18n.translateInline(errorMessage))
+    @browserHelp.text(App.i18n.translatePlain(errorMessage))
       .show()
 
     @urlInput.removeClass('is-loading')
