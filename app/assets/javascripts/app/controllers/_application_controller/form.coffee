@@ -161,7 +161,7 @@ class App.ControllerForm extends App.Controller
       container = $("<div class='form-buttons #{@fullFormButtonsContainerClass}'>")
 
       for buttonConfig in @fullFormAdditionalButtons
-        btn = $("<button class='btn #{buttonConfig.className}'>").text(buttonConfig.text)
+        btn = $("<button class='btn #{buttonConfig.className}'>").text(App.i18n.translateContent(buttonConfig.text))
         if buttonConfig.disabled
           btn.prop('disabled', true)
         container.append(btn)
