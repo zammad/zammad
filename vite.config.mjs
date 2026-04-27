@@ -83,12 +83,6 @@ export default defineConfig(({ mode, command }) => {
 
   return {
     publicDir,
-    esbuild: {
-      // TODO: Remove the following line once the related upstream TailwindCSS issue has been addressed,
-      //   since it can mask potential syntax errors.
-      //   https://github.com/tailwindlabs/tailwindcss/issues/16582
-      logOverride: { 'css-syntax-error': 'silent' },
-    },
     build: {
       rolldownOptions: {
         output: {
@@ -187,7 +181,9 @@ export default defineConfig(({ mode, command }) => {
       // Node v25+ enables experimental webstorage by default (stability: release candidate).
       // Without --localstorage-file, Node provides localStorage as an empty object (no methods).
       // This conflicts with jsdom's full localStorage implementation needed for tests.
-      ...(parseInt(process.versions.node, 10) >= 25 ? { execArgv: ['--no-experimental-webstorage'] } : {}),
+      ...(parseInt(process.versions.node, 10) >= 25
+        ? { execArgv: ['--no-experimental-webstorage'] }
+        : {}),
       onConsoleLog(log) {
         if (
           log.includes('Not implemented: navigation') ||
