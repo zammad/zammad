@@ -4,14 +4,16 @@
     "lockFileMaintenance": {
       "enabled": true,
       "extends": ["schedule:weekly"],
-      "branchName": "renovate/lock-file-maintenance-ruby"
+      "branchTopic": "lock-file-maintenance-ruby",
+      "commitMessageExtra": "(Ruby)"
     }
   },
   "npm": {
     "lockFileMaintenance": {
       "enabled": true,
       "extends": ["schedule:weekly"],
-      "branchName": "renovate/lock-file-maintenance-js"
+      "branchTopic": "lock-file-maintenance-js",
+      "commitMessageExtra": "(JS)"
     }
   },
   "packageRules": [
