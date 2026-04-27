@@ -447,8 +447,22 @@ class App.TaskManagerSingleton extends App.Controller
     false
 
   TaskbarId: =>
-    if !@TaskbarIdInt
-      @TaskbarIdInt = Math.floor( Math.random() * 99999999 )
+    storageKey = 'taskbar_id'
+
+    try
+      storedTaskbarId = App.LocalStorage.get(storageKey)
+
+      if storedTaskbarId
+        @TaskbarIdInt = storedTaskbarId
+        return @TaskbarIdInt
+
+      if !@TaskbarIdInt
+        @TaskbarIdInt = Math.floor( Math.random() * 99999999 )
+        App.LocalStorage.set(storageKey, @TaskbarIdInt)
+    catch
+      if !@TaskbarIdInt
+        @TaskbarIdInt = Math.floor( Math.random() * 99999999 )
+
     @TaskbarIdInt
 
   taskUpdate: (task, mute = false) ->

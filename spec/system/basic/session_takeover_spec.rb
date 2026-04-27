@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Session takeover check', type: :system do
-  context 'when use logout action' do
+  context 'when opening multiple browser tabs' do
     let(:agent)    { create(:agent) }
 
-    it 'check that all tabs have been logged out', authenticated_as: :agent do
+    it 'keeps the existing tab active', authenticated_as: :agent do
       visit '/'
 
       # open new tab
@@ -17,7 +17,9 @@ RSpec.describe 'Session takeover check', type: :system do
       # Go back and check for session takeover message
       switch_to_window_index(1)
 
-      expect(page).to have_text('A new session was created with your account. This session will be stopped to prevent a conflict.')
+      expect(page).to have_no_text(
+        'A new session was created with your account. This session will be stopped to prevent a conflict.',
+      )
     end
   end
 end
