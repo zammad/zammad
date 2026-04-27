@@ -6,6 +6,7 @@ import '#mobile/styles/main.css'
 
 import { initializeAppName } from '#shared/composables/useAppName.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
+import { initializeDefaultObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
 import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
 import initializeStoreSubscriptions from '#shared/initializer/storeSubscriptions.ts'
@@ -74,6 +75,11 @@ export default async function mountApp(): Promise<void> {
   if (session.id) {
     authentication.authenticated = true
     initalizeAfterSessionCheck.push(session.getCurrentUser())
+
+    // Pre-warm the default object-attribute queries in parallel with the
+    // current-user and config requests, so the cache is hot by the time the
+    // first form mounts and asks for them.
+    initializeDefaultObjectAttributes()
   }
 
   await Promise.all(initalizeAfterSessionCheck)
