@@ -237,6 +237,35 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
           .to have_enqueued_job(SearchIndexJob).with('Ticket', object.id)
       end
     end
+
+    context 'with replace' do
+      let(:tag_operator) { 'replace' }
+
+      before do
+        Transaction.execute do
+          object
+          %w[tag0 tag1].each { |tag| object.tag_add(tag, 1) }
+        end
+
+        perform_enqueued_jobs
+      end
+
+      it 'replaces the tags' do
+        expect { object.perform_changes(performable, 'trigger', object, user.id) }
+          .to change { object.reload.tag_list }.to(%w[tag1 tag2])
+      end
+
+      it 'schedules a search index update job' do
+        allow(SearchIndexBackend).to receive(:enabled?).and_return(true)
+
+        expect do
+          Transaction.execute do
+            object.perform_changes(performable, 'trigger', object, user.id)
+          end
+        end
+          .to have_enqueued_job(SearchIndexJob).with('Ticket', object.id)
+      end
+    end
   end
 
   context 'with "pre_condition" in "perform" hash' do

@@ -54,12 +54,13 @@ update tags of model
 
 =end
 
-  def tag_update(items, current_user_id = nil)
+  def tag_update(items, current_user_id = nil, sourceable: nil)
     Tag.tag_update(
       object:        self.class.to_s,
       o_id:          id,
       items:         items,
       created_by_id: current_user_id,
+      sourceable:    sourceable,
     )
   end
 

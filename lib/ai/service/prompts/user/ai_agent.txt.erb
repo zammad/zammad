@@ -9,6 +9,13 @@
   </<%= attribute_name %>>
 <% end -%>
 <% end -%>
+<% if @context_data[:entity_context].present? && @context_data[:entity_context][:tags].present? -%>
+  <tags>
+<% @context_data[:entity_context][:tags].each do |tag| -%>
+    <tag><%= tag %></tag>
+<% end -%>
+  </tags>
+<% end -%>
 
 <% if @context_data[:entity_context].present? && @context_data[:entity_context][:articles].present? -%>
 <% @context_data[:entity_context][:articles].each do |processed_article| -%>

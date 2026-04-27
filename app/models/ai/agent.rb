@@ -108,10 +108,10 @@ class AI::Agent < ApplicationModel
     end
   end
 
-  def execution_definition
+  def execution_definition(context: {})
     return definition if agent_type.blank?
 
-    agent_type_object.execution_definition.deep_stringify_keys.deep_merge(definition)
+    agent_type_object.execution_definition(context:).deep_stringify_keys.deep_merge(definition)
   end
 
   def execution_action_definition
@@ -124,6 +124,20 @@ class AI::Agent < ApplicationModel
     @agent_type_object ||= agent_type_class&.new(
       type_enrichment_data:,
     )
+  end
+
+  # Merge the agent type's form-visible defaults into the serialized
+  #   `type_enrichment_data` so the legacy edit dialog hydrates fields that
+  #   weren't saved at creation time (e.g. `tag_new_rules` once `tag_new` is
+  #   enabled later). Runtime-only `base_type_enrichment_data` stays on the
+  #   type object and never leaks into the form.
+  def attributes_with_association_ids
+    attrs = super
+    return attrs if agent_type_class.blank?
+
+    defaults = agent_type_class.new.default_type_enrichment_data.stringify_keys
+    attrs['type_enrichment_data'] = defaults.merge(attrs['type_enrichment_data'] || {})
+    attrs
   end
 
   def self.working_on_ticket?(ticket)

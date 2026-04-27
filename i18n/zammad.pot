@@ -710,7 +710,7 @@ msgstr ""
 msgid "AI agent"
 msgstr ""
 
-#: app/services/service/ai/agent/run.rb:22
+#: app/services/service/ai/agent/run.rb:24
 msgid "AI agent result content does not match expected result structure."
 msgstr ""
 
@@ -1346,6 +1346,10 @@ msgstr ""
 msgid "Add this class to a button on your page that should open the chat."
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_tagger.rb:164
+msgid "Add to existing tags"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:158
 msgid "Add unordered list"
 msgstr ""
@@ -1539,7 +1543,7 @@ msgstr ""
 msgid "All affected users and their customer tickets will be scheduled for deletion when this job is run. Once the data privacy task is executed, users and tickets will be deleted and a history entry preserved. There is no rollback of this deletion possible."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:135
+#: app/models/ai/agent/type/ticket_text_extractor.rb:132
 msgid "All articles"
 msgstr ""
 
@@ -1576,7 +1580,7 @@ msgstr ""
 msgid "All two-factor authentication methods were removed for this user."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:65
+#: app/models/ai/agent/type/ticket_text_extractor.rb:62
 msgid "All values will be considered for extracted text from tickets."
 msgstr ""
 
@@ -2047,7 +2051,7 @@ msgstr ""
 msgid "Article#"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:128
+#: app/models/ai/agent/type/ticket_text_extractor.rb:125
 msgid "Article(s) to analyze"
 msgstr ""
 
@@ -2389,7 +2393,7 @@ msgstr ""
 msgid "Available Priorities"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:66
+#: app/models/ai/agent/type/ticket_text_extractor.rb:63
 msgid "Available Values"
 msgstr ""
 
@@ -2401,6 +2405,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:191
 msgid "Available methods"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:119
+msgid "Available tags are limited to existing in the manage tags section. AI agent won't be able to generate new ones. %l"
 msgstr ""
 
 #: db/seeds/settings.rb:888
@@ -2473,7 +2481,7 @@ msgstr ""
 msgid "BETA UI illustration"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:376
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:397
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:399
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:419
@@ -2881,7 +2889,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:359
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:380
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:119
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:8
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:7
@@ -3269,11 +3277,15 @@ msgstr ""
 msgid "Choose the group to which page posts will get added."
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_tagger.rb:168
+msgid "Choose whether the suggested tags are added to or replace the existing tags on the ticket."
+msgstr ""
+
 #: app/models/ai/agent/type/ticket_categorizer.rb:43
 msgid "Choose which attribute values will be considered when categorizing tickets. If you want to limit it to specific options, please select at least two below. Make sure the options have clear names and optional descriptions, as that would comprise the context provided to the AI agent."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:57
+#: app/models/ai/agent/type/ticket_text_extractor.rb:54
 msgid "Choose which attribute values will be considered when extracting text from tickets. If you want to limit it to specific options, please select at least two below. Make sure the options have clear names and optional descriptions, as that would comprise the context provided to the AI agent."
 msgstr ""
 
@@ -3658,6 +3670,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee:18
 msgid "Configure Basic Settings"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:156
+msgid "Configure the way required number of resulting tags are added or replaced in the ticket tags list."
 msgstr ""
 
 #: db/seeds/permissions.rb:6
@@ -4728,11 +4744,15 @@ msgstr ""
 msgid "Define queues or call destinations (whatever fits your PBX) and map your agents to it. By this, Zammad can support your agents by showing them only relevant call entries and notifications."
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_tagger.rb:115
+msgid "Define rules for adding tags in the system."
+msgstr ""
+
 #: db/seeds/settings.rb:2616
 msgid "Define the default agent notifications for new users."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:76
+#: app/models/ai/agent/type/ticket_text_extractor.rb:73
 msgid "Define the extraction rules for the AI agent, e.g. how to identify target text. For examples, please refer to our documentation."
 msgstr ""
 
@@ -4740,11 +4760,11 @@ msgstr ""
 msgid "Define the maximum number of ticket shown in overviews."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:104
+#: app/models/ai/agent/type/ticket_text_extractor.rb:101
 msgid "Define the prioritization rules for the AI agent, e.g. how to choose between multiple occurrences of the target text. For examples, please refer to our documentation."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:124
+#: app/models/ai/agent/type/ticket_text_extractor.rb:121
 msgid "Define which ticket article(s) should be analyzed."
 msgstr ""
 
@@ -6758,7 +6778,7 @@ msgstr ""
 msgid "Enter the code from your two-factor authenticator app."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:33
+#: app/models/ai/agent/type/ticket_text_extractor.rb:30
 msgid "Enter the extraction rules for the AI agent."
 msgstr ""
 
@@ -6774,7 +6794,7 @@ msgstr ""
 msgid "Enter the link provided by the plugin at the end of the installation to link the two systems."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:111
+#: app/models/ai/agent/type/ticket_text_extractor.rb:108
 msgid "Enter the priority rules for the AI agent."
 msgstr ""
 
@@ -7109,7 +7129,7 @@ msgstr ""
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:30
+#: app/models/ai/agent/type/ticket_text_extractor.rb:27
 msgid "Extraction rules"
 msgstr ""
 
@@ -7371,7 +7391,7 @@ msgstr ""
 msgid "First Steps"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:133
+#: app/models/ai/agent/type/ticket_text_extractor.rb:130
 msgid "First article (oldest)"
 msgstr ""
 
@@ -7676,6 +7696,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:136
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee:91
 msgid "General communication error, maybe internet is not available!"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:126
+msgid "General tagging principles"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:180
@@ -8669,7 +8693,7 @@ msgstr ""
 msgid "In order to be able to influence the desired behavior in this regard, you can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:131
+#: app/models/ai/agent/type/ticket_text_extractor.rb:128
 msgid "In the trigger context, the last article will always be the one that activated the trigger."
 msgstr ""
 
@@ -9465,7 +9489,7 @@ msgstr ""
 msgid "Last Internal Article"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:134
+#: app/models/ai/agent/type/ticket_text_extractor.rb:131
 msgid "Last article (newest)"
 msgstr ""
 
@@ -9622,7 +9646,7 @@ msgstr ""
 msgid "Limit tickets per day"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:64
+#: app/models/ai/agent/type/ticket_text_extractor.rb:61
 msgid "Limit values and provide optional descriptions"
 msgstr ""
 
@@ -11148,6 +11172,10 @@ msgstr ""
 msgid "New tab"
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_tagger.rb:145
+msgid "New tags strategy"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/text_module.coffee:35
 msgid "New text module"
 msgstr ""
@@ -11511,7 +11539,7 @@ msgid "No source data submitted!"
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:28
-#: app/models/ai/agent/type/ticket_text_extractor.rb:41
+#: app/models/ai/agent/type/ticket_text_extractor.rb:38
 msgid "No suitable object attributes found, please add one of the supported types first: %s"
 msgstr ""
 
@@ -11793,6 +11821,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:20
 #: app/graphql/gql/types/overview_type.rb:91
 msgid "Number"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:174
+msgid "Number of tags"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:178
+msgid "Number of tags the AI agent may assign."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:12
@@ -12834,7 +12870,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:447
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:468
 #: app/assets/javascripts/app/controllers/webhook.coffee:134
 msgid "Please enter a valid JSON string."
 msgstr ""
@@ -13117,8 +13153,12 @@ msgstr ""
 msgid "Priority icon"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:108
+#: app/models/ai/agent/type/ticket_text_extractor.rb:105
 msgid "Priority rules"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:135
+msgid "Priority tagging rules"
 msgstr ""
 
 #: db/seeds/settings.rb:1979
@@ -13706,6 +13746,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
 msgid "Replace"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:166
+msgid "Replace existing tags with"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:26
@@ -14730,7 +14774,7 @@ msgid "Select table row"
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:34
-#: app/models/ai/agent/type/ticket_text_extractor.rb:47
+#: app/models/ai/agent/type/ticket_text_extractor.rb:44
 msgid "Select the attribute whose value will be automatically set by the AI agent."
 msgstr ""
 
@@ -14738,7 +14782,7 @@ msgstr ""
 msgid "Select the customer of the ticket or create one."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:130
+#: app/models/ai/agent/type/ticket_text_extractor.rb:127
 msgid "Select the ticket article(s) that should be analyzed by the AI agent."
 msgstr ""
 
@@ -15855,7 +15899,7 @@ msgstr ""
 msgid "Subject & References - Additional search for same article subject and same message ID in references header if no follow-up was recognized using default settings."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:385
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:406
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -16076,6 +16120,10 @@ msgstr ""
 msgid "Tag \"%s\" already exists."
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_tagger.rb:160
+msgid "Tag assignment mode"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/tag.coffee:3
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco:5
@@ -16106,7 +16154,7 @@ msgstr ""
 msgid "Target"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:45
+#: app/models/ai/agent/type/ticket_text_extractor.rb:42
 msgid "Target Attribute for Extracted Text"
 msgstr ""
 
@@ -16883,7 +16931,7 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:528
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:549
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:820
@@ -16952,6 +17000,10 @@ msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb:283
 msgid "The preview cannot be generated. The format is corrupted or not supported."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:139
+msgid "The priority rules instruct the AI agent on how to add tags for incoming tickets."
 msgstr ""
 
 #: lib/secure_mailing/pgp/incoming.rb:302
@@ -17210,7 +17262,7 @@ msgstr ""
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:127
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
@@ -17236,12 +17288,20 @@ msgstr ""
 msgid "The retried security process failed!"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:34
+#: app/models/ai/agent/type/ticket_tagger.rb:130
+msgid "The rules instruct the AI agent on how tags are used in the system."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_text_extractor.rb:31
 msgid "The rules instruct the AI agent on how to extract text from incoming tickets. Make sure to include a couple of example formats, and any additional instructions necessary."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_text_extractor.rb:112
+#: app/models/ai/agent/type/ticket_text_extractor.rb:109
 msgid "The rules instruct the AI agent on how to prioritize multiple matches of the extracted text. Make sure to include a couple of example formats, and any additional instructions necessary."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:149
+msgid "The rules instruct the AI agent on when to generate new tags and when to prefer tags from existing tags list."
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
@@ -18052,6 +18112,10 @@ msgstr ""
 msgid "This type of AI agent can prioritize incoming tickets based on their content."
 msgstr ""
 
+#: app/models/ai/agent/type/ticket_tagger.rb:53
+msgid "This type of AI agent can suggest tags for tickets based on their content."
+msgstr ""
+
 #: app/policies/ticket/shared_draft_start_policy.rb:26
 msgid "This user does not have access to the given group"
 msgstr ""
@@ -18260,6 +18324,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:3
 msgid "Ticket Summary provides the functionality to summarize the current ticket state. It will provide a new sidebar which contains information to reduce reading time in the ticket with a summarized version of the problem, open questions and upcoming events."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:49
+msgid "Ticket Tagger"
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:11
@@ -18815,6 +18883,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:946
 msgid "Total display of the number of objects in a grouping."
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:165
+msgid "Total shouldn't exceed"
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:12
@@ -20748,6 +20820,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:50
 msgid "Your rating of the new BETA UI"
+msgstr ""
+
+#: app/models/ai/agent/type/ticket_tagger.rb:57
+msgid "Your task is to analyze an incoming ticket and assign meaningful tags."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:28

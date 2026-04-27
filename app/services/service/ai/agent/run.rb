@@ -5,14 +5,16 @@ class Service::AI::Agent::Run < Service::Base
 
   def initialize(ai_agent:, ticket:, article: nil)
     @ai_agent = ai_agent
-    @agent_definition = ai_agent.execution_definition
-    @action_definition = ai_agent.execution_action_definition
     @ticket = ticket
     @article = article
+    @agent_definition = ai_agent.execution_definition(context: { ticket:, article: })
+    @action_definition = ai_agent.execution_action_definition
   end
 
   def execute
     Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
+
+    return if execution_blocked_by_preconditions?
 
     ai_agent_result = fetch_ai_agent_result
 
@@ -27,6 +29,11 @@ class Service::AI::Agent::Run < Service::Base
   end
 
   private
+
+  def execution_blocked_by_preconditions?
+    checks = ai_agent.agent_type_object&.precondition_checks(ticket:) || []
+    checks.lazy.any? { |check| !check.passed? }
+  end
 
   def fetch_ai_agent_result
     ai_agent_service_result

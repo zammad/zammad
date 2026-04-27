@@ -19,7 +19,8 @@ class Service::AI::Agent::Run::Context
       type_enrichment_data:,
     )
 
-    instruction.prepare
+    prepared = instruction.prepare
+    inject_existing_tags(prepared)
   end
 
   def prepare_entity
@@ -30,5 +31,15 @@ class Service::AI::Agent::Run::Context
     )
 
     entity.prepare
+  end
+
+  private
+
+  def inject_existing_tags(prepared)
+    return prepared if instruction_context.blank?
+    return prepared if !instruction_context.stringify_keys.key?('existing_tags')
+
+    prepared[:existing_tags] = entity_object.tag_list.join(', ')
+    prepared
   end
 end

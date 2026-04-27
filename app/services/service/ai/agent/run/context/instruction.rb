@@ -1,10 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::AI::Agent::Run::Context::Instruction
-  attr_reader :instruction_object_attributes, :placeholder_object_attributes, :type_enrichment_data
+  attr_reader :instruction_object_attributes, :instruction_tags, :placeholder_object_attributes, :type_enrichment_data
 
   def initialize(instruction_context:, placeholder_object_attributes: [], type_enrichment_data: {})
     @instruction_object_attributes = instruction_context['object_attributes']
+    @instruction_tags              = instruction_context['tags'] || false
     @placeholder_object_attributes = placeholder_object_attributes
     @type_enrichment_data = type_enrichment_data
   end
@@ -14,6 +15,10 @@ class Service::AI::Agent::Run::Context::Instruction
 
     if instruction_object_attributes.present?
       result[:object_attributes] = prepare_instruction_object_attributes
+    end
+
+    if instruction_tags
+      result[:tags] = prepare_instruction_tags
     end
 
     result
@@ -45,6 +50,10 @@ class Service::AI::Agent::Run::Context::Instruction
     end
 
     prepared_object_attributes
+  end
+
+  def prepare_instruction_tags
+    Tag::Item.pluck(:name)
   end
 
   def get_object_attribute(name)

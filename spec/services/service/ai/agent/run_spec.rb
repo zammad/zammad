@@ -332,6 +332,63 @@ RSpec.describe Service::AI::Agent::Run do
       end
     end
 
+    context 'when AI agent has TicketTagger agent_type' do
+      let(:ai_agent) { create(:ai_agent, agent_type: 'TicketTagger', type_enrichment_data: type_enrichment_data, definition: {}, action_definition: {}) }
+      let(:type_enrichment_data) { { 'tag_operator' => 'add', 'tagging_principles' => 'Use short tags.' } }
+      let(:ai_result_content) do
+        {
+          'tags' => %w[billing urgent],
+        }
+      end
+      let(:ai_result) do
+        AI::Service::Result.new(
+          content:       ai_result_content,
+          stored_result: nil,
+          fresh:         true
+        )
+      end
+
+      before do
+        allow_any_instance_of(AI::Service::AIAgent).to receive(:execute).and_return(ai_result)
+      end
+
+      it 'applies array tags from the AI result' do
+        service_result
+
+        expect(ticket.reload.tag_list).to contain_exactly('billing', 'urgent')
+      end
+
+      it 'embeds configured guidelines into the instruction sent to the model' do
+        ai_service_spy = instance_double(AI::Service::AIAgent)
+        allow(AI::Service::AIAgent).to receive(:new).and_return(ai_service_spy)
+        allow(ai_service_spy).to receive(:execute).and_return(ai_result)
+
+        service_result
+
+        expect(AI::Service::AIAgent).to have_received(:new).with(
+          hash_including(
+            context_data: hash_including(
+              instruction: include('Use short tags.'),
+            )
+          )
+        )
+      end
+
+      context 'when preconditions are not met (max_tags reached)' do
+        let(:type_enrichment_data) { { 'number_of_tags' => 1, 'tag_operator' => 'fill' } }
+
+        before do
+          ticket.tag_add('existing', 1)
+          allow(AI::Service::AIAgent).to receive(:new)
+        end
+
+        it 'skips the LLM call without raising an error', :aggregate_failures do
+          expect { service_result }.not_to raise_error
+          expect(AI::Service::AIAgent).not_to have_received(:new)
+        end
+      end
+    end
+
     context 'when AI agent handles multiselect field', db_strategy: :reset do
       let(:instruction_context) do
         {
