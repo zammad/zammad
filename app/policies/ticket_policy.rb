@@ -13,7 +13,7 @@ class TicketPolicy < ApplicationPolicy
   end
 
   def update?
-    access?('change')
+    change_access?
   end
 
   def destroy?
@@ -82,6 +82,15 @@ class TicketPolicy < ApplicationPolicy
 
   def access?(access)
     return true if agent_access?(access)
+
+    customer_access?
+  end
+
+  def change_access?
+    # Update permission needs an special handling related to ticket.agent+ticket.customer
+    # situation, because agenr read permission should win over the general customer permission.
+    return true if agent_update_access?
+    return false if agent_read_access?
 
     customer_access?
   end
