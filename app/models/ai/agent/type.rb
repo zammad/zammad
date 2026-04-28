@@ -137,9 +137,9 @@ class AI::Agent::Type
                               .gsub('%\\u003e', '%>')
                               .gsub(%r{-%>\\n}, '-%>')
 
-    sanitized_structure   = sanitize_instruction_template(structure_json)
-    replaced_structure    = replace_placeholders(sanitized_structure)
-    transformed_structure = render_structure(replaced_structure, context:)
+    replaced_structure    = replace_placeholders(structure_json)
+    sanitized_structure   = sanitize_instruction_template(replaced_structure)
+    transformed_structure = render_structure(sanitized_structure, context:)
 
     JSON.parse(transformed_structure)
   end
@@ -189,8 +189,8 @@ class AI::Agent::Type
   def replace_placeholders(structure_string)
     return structure_string if enrichment_data.blank?
 
-    # Placeholder values are always object attribute names (see placeholder_field_names), so they are
-    #   safe to insert directly into the JSON and ERB template without further escaping.
+    # Placeholder values can contain user-provided free text. Insert first and let
+    #   #sanitize_instruction_template neutralize any disallowed ERB tags.
     placeholder_field_names.each do |placeholder_name|
       placeholder_pattern = "\#{placeholder.#{placeholder_name}}"
       replacement_value = enrichment_data[placeholder_name].to_s

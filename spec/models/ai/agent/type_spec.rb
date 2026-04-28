@@ -109,5 +109,22 @@ RSpec.describe AI::Agent::Type, :aggregate_failures, current_user_id: 1, type: :
         expect(result).to include('flag_on')
       end
     end
+
+    context 'with placeholder replacement' do
+      let(:placeholder_type_class) do
+        Class.new(type_class) do
+          def placeholder_field_names
+            ['note']
+          end
+        end
+      end
+
+      it 'sanitizes ERB tags smuggled in placeholder values before rendering' do
+        instance = placeholder_type_class.new(type_enrichment_data: { 'note' => '<%= 1 + 1 %>' })
+        result   = instance.send(:transform_structure, { 'note' => '#{placeholder.note}' }) # rubocop:disable Lint/InterpolationCheck
+
+        expect(result['note']).to eq('<%= 1 + 1 %>')
+      end
+    end
   end
 end

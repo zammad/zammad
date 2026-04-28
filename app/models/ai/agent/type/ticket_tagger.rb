@@ -56,7 +56,7 @@ New Tag Normalization:
   end
 
   def role_description
-    __('Your task is to analyze an incoming ticket and assign meaningful tags.')
+    'Your task is to analyze an incoming ticket and assign meaningful tags.' # rubocop:disable Zammad/DetectTranslatableString
   end
 
   def instruction

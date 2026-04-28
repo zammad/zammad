@@ -173,7 +173,7 @@ msgid "%s ago"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:217
 msgid "%s attached files"
 msgstr ""
 
@@ -486,7 +486,7 @@ msgid "+ %s more"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:215
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
 msgid "1 attached file"
 msgstr ""
 
@@ -703,7 +703,10 @@ msgstr ""
 msgid "AI Writing Assistant: %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:21
+#: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:2
+#: app/assets/javascripts/app/views/widget/online_notification_item.jst.eco:3
+#: app/frontend/apps/desktop/components/AiAgent/AiAgentAvatar.vue:10
+#: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:23
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/historyEventIssuerNames.ts:7
 #: app/frontend/apps/mobile/components/AiAgent/AiAgentAvatar.vue:34
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:44
@@ -1158,7 +1161,7 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:66
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:67
 msgid "Add AI draft"
 msgstr ""
 
@@ -2028,7 +2031,7 @@ msgstr ""
 msgid "Article Language Detection"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:274
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "Article actions"
 msgstr ""
 
@@ -4382,7 +4385,7 @@ msgid "Currently no overview is assigned to your roles. Please contact your admi
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:145
-#: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:25
+#: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:27
 #: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:219
 #: app/frontend/apps/mobile/components/Ticket/TicketItem.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:41
@@ -4618,7 +4621,7 @@ msgstr ""
 msgid "Decrement seconds value"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:297
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
 msgid "Decryption failed!"
 msgstr ""
 
@@ -4627,7 +4630,7 @@ msgstr ""
 msgid "Decryption failed! %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:295
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:311
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
@@ -6045,7 +6048,7 @@ msgstr ""
 msgid "Download raw email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:323
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:339
 msgid "Downloading attachments…"
 msgstr ""
 
@@ -11389,7 +11392,7 @@ msgstr ""
 
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:25
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:26
-#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:95
+#: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:96
 msgid "No editable knowledge base categories available."
 msgstr ""
 
@@ -13676,7 +13679,7 @@ msgstr ""
 msgid "Remove method"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:98
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:99
 msgid "Remove notification"
 msgstr ""
 
@@ -14697,21 +14700,21 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:451
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:467
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:268
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:463
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:268
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr ""
 
@@ -14943,7 +14946,7 @@ msgstr ""
 msgid "Sending Email Address"
 msgstr ""
 
-#: app/models/ticket/article.rb:325
+#: app/models/ticket/article.rb:332
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
@@ -15445,7 +15448,7 @@ msgstr ""
 msgid "Signature"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:286
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 msgid "Signature verification failed!"
 msgstr ""
 
@@ -17282,7 +17285,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:306
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:322
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -17364,7 +17367,7 @@ msgstr ""
 msgid "The signature part of this PGP email is missing or has a wrong content type according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:284
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:300
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
@@ -19742,7 +19745,7 @@ msgstr ""
 msgid "User information could not be retrieved, please check your bind user permissions."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:43
+#: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:37
 #: app/frontend/shared/composables/useAvatarIndicator.ts:77
 msgid "User is editing"
 msgstr ""
@@ -20822,10 +20825,6 @@ msgstr ""
 msgid "Your rating of the new BETA UI"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:57
-msgid "Your task is to analyze an incoming ticket and assign meaningful tags."
-msgstr ""
-
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:28
 msgid "Your theme has been updated."
 msgstr ""
@@ -21220,7 +21219,7 @@ msgstr ""
 msgid "delete"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:172
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
 msgstr ""
@@ -22068,7 +22067,7 @@ msgstr ""
 msgid "reacted with a %s to message from %s '%s'"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:169
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
 msgstr ""
@@ -22166,7 +22165,7 @@ msgstr ""
 msgid "select visible options"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:175
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
 msgstr ""
