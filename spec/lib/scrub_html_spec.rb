@@ -110,6 +110,23 @@ RSpec.describe ScrubHtml do
           expect(scrubbed).to eq('<html><head><meta charset="windows-1257"></head><body><div><scrub2_modified>Ačiū</scrub2_modified></div></body></html>')
         end
       end
+
+      # https://github.com/zammad/zammad/issues/6054
+      context 'with charset that does not cover all characters in the document' do
+        let(:input_html) { '<scrubit>Hello</scrubit>' }
+        let(:html_document) do
+          # U+2013 (en-dash) is valid UTF-8 but undefined in GB2312
+          "<html><head><meta charset=\"gb2312\"></head><body>–#{deeply_nested_html}</body></html>"
+        end
+
+        it 'does not raise an encoding error' do
+          expect do
+            described_class
+              .new(html_document, scrubbers, chunk: :document)
+              .scrub!
+          end.not_to raise_error
+        end
+      end
     end
 
     context 'when non-divs are nested' do
