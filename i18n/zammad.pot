@@ -231,7 +231,7 @@ msgstr ""
 msgid "%s deselected."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:695
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:679
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:260
 #: app/assets/javascripts/app/views/channel/email_archive.jst.eco:7
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:27
@@ -957,9 +957,9 @@ msgstr ""
 msgid "Account Time"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:610
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:594
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:197
-#: app/controllers/channels_email_controller.rb:238
+#: app/controllers/channels_email_controller.rb:249
 msgid "Account already exists!"
 msgstr ""
 
@@ -1922,14 +1922,14 @@ msgstr ""
 msgid "Archive Emails"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:724
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:708
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:43
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:289
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:57
 msgid "Archive cut-off time"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:723
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:707
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:42
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:288
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:65
@@ -1937,7 +1937,7 @@ msgstr ""
 msgid "Archive emails"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:725
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:709
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:44
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:290
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:66
@@ -3944,6 +3944,8 @@ msgstr ""
 msgid "Context menu"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:151
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph_notification.coffee:77
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco:8
@@ -6255,6 +6257,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:77
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:85
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:62
+#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:10
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:68
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:51
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:35
@@ -6474,7 +6477,7 @@ msgstr ""
 msgid "Email Inbound"
 msgstr ""
 
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:162
+#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:2
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:8
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:6
 msgid "Email Notification"
@@ -6528,7 +6531,7 @@ msgstr ""
 msgid "Email outbound"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:891
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:875
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:405
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:152
 msgid "Email sending and receiving could not be verified. Please check your settings."
@@ -6553,7 +6556,7 @@ msgstr ""
 msgid "Email verification"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:724
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:708
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:43
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:289
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:60
@@ -8532,12 +8535,14 @@ msgstr ""
 msgid "Honeypot spam protection"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:138
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:416
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:331
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:80
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:69
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:80
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:73
+#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:20
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:29
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:11
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:107
@@ -9224,6 +9229,8 @@ msgstr ""
 msgid "Invalid GitLab issue link format"
 msgstr ""
 
+#: app/controllers/external_credentials_controller.rb:73
+#: config/initializers/microsoft_graph_notification.rb:157
 #: lib/external_credential/exchange.rb:43
 #: lib/external_credential/facebook.rb:42
 #: lib/external_credential/google.rb:39
@@ -10774,6 +10781,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:4
 #: db/seeds/permissions.rb:161
+#: lib/email_helper.rb:27
 msgid "Microsoft 365 Graph Email"
 msgstr ""
 
@@ -11516,6 +11524,8 @@ msgstr ""
 msgid "No Microsoft 365 app configured!"
 msgstr ""
 
+#: app/controllers/external_credentials_controller.rb:76
+#: config/initializers/microsoft_graph_notification.rb:160
 #: lib/external_credential/microsoft_graph.rb:9
 msgid "No Microsoft Graph app configured!"
 msgstr ""
@@ -11524,7 +11534,7 @@ msgstr ""
 msgid "No Proxy"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:419
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:403
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:204
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:43
@@ -12477,7 +12487,7 @@ msgstr ""
 msgid "Organization"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:379
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:363
 msgid "Organization & Department Name"
 msgstr ""
 
@@ -12485,7 +12495,7 @@ msgstr ""
 msgid "Organization Name"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:379
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:363
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:12
 msgid "Organization Support"
 msgstr ""
@@ -12606,6 +12616,7 @@ msgid "Out of office settings have been saved successfully"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:99
+#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:9
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:24
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:85
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:56
@@ -12795,7 +12806,8 @@ msgstr ""
 msgid "Parent group"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:381
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:140
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:365
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:10
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:82
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:71
@@ -13111,6 +13123,10 @@ msgstr ""
 msgid "Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:207
+msgid "Please enter a shared mailbox address."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:383
 msgid "Please enter a text."
 msgstr ""
@@ -13237,7 +13253,8 @@ msgstr ""
 msgid "Please wait…"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:421
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:141
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:405
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:85
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:72
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:159
@@ -13475,6 +13492,7 @@ msgid "Proof Key for Code Exchange is currently only supporting SHA256 as code c
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:76
+#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:35
 msgid "Protocol"
 msgstr ""
 
@@ -14451,7 +14469,7 @@ msgstr ""
 msgid "SMTP - configure your own outgoing SMTP settings"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:419
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:403
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:208
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:47
@@ -14463,7 +14481,8 @@ msgstr ""
 msgid "SSL Certificates"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:420
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:142
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:404
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:707
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:84
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:73
@@ -14479,7 +14498,7 @@ msgstr ""
 msgid "SSL verification"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:419
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:403
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:27
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:33
@@ -14497,7 +14516,7 @@ msgstr ""
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:419
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:403
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:206
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:54
@@ -15189,7 +15208,8 @@ msgstr ""
 msgid "Send Email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:397
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:121
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:381
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
 msgid "Send Mails via"
@@ -16998,7 +17018,7 @@ msgstr ""
 msgid "The certificates for %s were not found."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:309
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:293
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:247
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:123
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:128
@@ -17595,6 +17615,8 @@ msgstr ""
 msgid "The required parameter 'client_secret' is missing."
 msgstr ""
 
+#: app/controllers/external_credentials_controller.rb:77
+#: config/initializers/microsoft_graph_notification.rb:161
 #: lib/external_credential/exchange.rb:47
 #: lib/external_credential/google.rb:43
 #: lib/external_credential/microsoft_base.rb:80
@@ -17723,7 +17745,7 @@ msgstr ""
 msgid "The server returned a redirect response, but the current operation does not allow redirects."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:614
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:598
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:200
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:222
 msgid "The server settings could not be automatically detected. Please configure them manually."
@@ -17915,6 +17937,8 @@ msgstr ""
 msgid "The user token could not be generated."
 msgstr ""
 
+#: app/controllers/external_credentials_controller.rb:85
+#: config/initializers/microsoft_graph_notification.rb:169
 #: lib/external_credential/exchange.rb:55
 #: lib/external_credential/microsoft_base.rb:88
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -19562,7 +19586,7 @@ msgstr ""
 msgid "Two-factor method has been configured successfully."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:415
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:399
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:240
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:288
@@ -20102,7 +20126,8 @@ msgstr ""
 msgid "Used when viewing a Ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:417
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:139
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:401
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:173
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:24
@@ -20121,6 +20146,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/mention.coffee:6
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:2
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:67
+#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:17
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:46
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:38
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:47
