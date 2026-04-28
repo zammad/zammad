@@ -217,7 +217,7 @@ send user notification about new device or new location for device
       template: template,
       user:     user,
       objects:  {
-        user_device: self,
+        user_device: UserDevice::NotificationPresenter.new(self, user.locale),
         user:        user,
       }
     )
