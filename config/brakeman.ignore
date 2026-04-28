@@ -231,6 +231,29 @@
       "note": ""
     },
     {
+      "warning_type": "SSL Verification Bypass",
+      "warning_code": 71,
+      "fingerprint": "539fc6f1e51adf3d01c8f72a88f7964878a9dd4f7bc059433557143d69a2461f",
+      "check_name": "SSLVerify",
+      "message": "SSL certificate verification was bypassed",
+      "file": "lib/user_agent.rb",
+      "line": 58,
+      "link": "https://brakemanscanner.org/docs/warning_types/ssl_verification_bypass/",
+      "code": "UserAgent::HttpClient.get_client(uri, options).new(uri.host, uri.port).verify_mode = OpenSSL::SSL::VERIFY_NONE",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "UserAgent",
+        "method": "self.get_http"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "cwe_id": [
+        295
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "54c6ff0714c6d869037e344ea22bedcece2d2bc3b88f1cdfffe72ce62d8ef816",
@@ -507,29 +530,6 @@
         470
       ],
       "note": ""
-    },
-    {
-      "warning_type": "SSL Verification Bypass",
-      "warning_code": 71,
-      "fingerprint": "a777ed8060d76f50abcc211a4b998a0c7c5d4429b2ca2a275a6b577132e21c69",
-      "check_name": "SSLVerify",
-      "message": "SSL certificate verification was bypassed",
-      "file": "lib/user_agent.rb",
-      "line": 82,
-      "link": "https://brakemanscanner.org/docs/warning_types/ssl_verification_bypass/",
-      "code": "(Net::HTTP.Proxy($1, $2, ((options[\"proxy_username\"] or Setting.get(\"proxy_username\")) or nil), ((options[\"proxy_password\"] or Setting.get(\"proxy_password\")) or nil)).new(uri.host, uri.port) or Net::HTTP.new(uri.host, uri.port)).verify_mode = OpenSSL::SSL::VERIFY_NONE",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "UserAgent",
-        "method": "self.get_http"
-      },
-      "user_input": null,
-      "confidence": "High",
-      "cwe_id": [
-        295
-      ],
-      "note": "SSL Verification can already be requested from callers. The default value should be switched to true at some point."
     },
     {
       "warning_type": "Cross-Site Scripting",
