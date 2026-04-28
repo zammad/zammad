@@ -8542,7 +8542,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:69
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:80
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:73
-#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:20
+#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:32
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:29
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:11
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:107
@@ -10797,6 +10797,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:15
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:153
 msgid "Microsoft Authenticator"
+msgstr ""
+
+#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:39
+msgid "Microsoft Graph API"
 msgstr ""
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb:5
@@ -13492,7 +13496,7 @@ msgid "Proof Key for Code Exchange is currently only supporting SHA256 as code c
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:76
-#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:35
+#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:38
 msgid "Protocol"
 msgstr ""
 
