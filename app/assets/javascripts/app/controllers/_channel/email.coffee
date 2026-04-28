@@ -44,7 +44,6 @@ class ChannelEmailAccountOverview extends App.Controller
     'click .js-emailAddressNew': 'emailAddressNew'
     'click .js-emailAddressEdit': 'emailAddressEdit'
     'click .js-emailAddressDelete': 'emailAddressDelete',
-    'click .js-editNotificationOutbound': 'editNotificationOutbound'
     'click .js-migrateGoogleMail': 'migrateGoogleMail'
     'click .js-migrateMicrosoft365Mail': 'migrateMicrosoft365Mail'
 
@@ -91,18 +90,15 @@ class ChannelEmailAccountOverview extends App.Controller
     for email_address_id in data.not_used_email_address_ids
       not_used_email_addresses.push App.EmailAddress.find(email_address_id)
 
-    # get channels
-    notification_channels = []
-    for channel_id in data.notification_channel_ids
-      notification_channels.push App.Channel.find(channel_id)
-
     @html App.view('channel/email_account_overview')(
       account_channels:         account_channels
       not_used_email_addresses: not_used_email_addresses
-      notification_channels:    notification_channels
       accounts_fixed:           data.accounts_fixed
       config:                   data.config
     )
+
+    # Render the notification section via the shared controller
+    new App.ChannelEmailNotification(el: @$('.js-notificationSection'))
 
   wizard: (e) =>
     e.preventDefault()
@@ -226,18 +222,6 @@ class ChannelEmailAccountOverview extends App.Controller
       item: item
       container: @el.closest('.content')
       callback: @load
-    )
-
-  editNotificationOutbound: (e) =>
-    e.preventDefault()
-    id      = $(e.target).closest('.action').data('id')
-    channel = App.Channel.find(id)
-    slide   = 'js-outbound'
-    new ChannelEmailNotificationWizard(
-      container:     @el.closest('.content')
-      channel:       channel
-      callback:      @load
-      channelDriver: @channelDriver
     )
 
   migrateGoogleMail: (e) =>
