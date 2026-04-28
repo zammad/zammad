@@ -108,7 +108,11 @@ class ExternalCredentialsController < ApplicationController
         microsoft_graph_auth: auth_data,
       ).execute
 
-    redirect_to "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/email", allow_other_host: true
+    redirect_to channels_email_url, allow_other_host: true
+  end
+
+  def channels_email_url
+    "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/email"
   end
 
   def link_params
