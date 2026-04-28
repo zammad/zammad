@@ -3,7 +3,7 @@
 class Service::System::SetEmailNotificationConfiguration < Service::Base
   # Setup Email Notification channel configuration
   #
-  # @param [String] adapter sendmail or smtp
+  # @param [String] adapter sendmail, smtp, or microsoft_graph_outbound
   # @param [Hash] new_configuration email server configuration, empty unless adapter is smtp
   # @option new_configuration [String] :host SMTP server address
   # @option new_configuration [String] :port SMTP server port
@@ -11,7 +11,8 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
   # @option new_configuration [String] :user login of SMTP server
   # @option new_configuration [String] :password of SMTP server
   # @option new_configuration [Boolean] :ssl_verify Wether SSL verification is performed
-  def initialize(adapter:, new_configuration:)
+  # @param [Hash] microsoft_graph_auth OAuth auth data (required when adapter is microsoft_graph_outbound)
+  def initialize(adapter:, new_configuration:, microsoft_graph_auth: nil)
     @adapter = adapter
     @new_configuration = new_configuration
     @microsoft_graph_auth = microsoft_graph_auth
@@ -55,7 +56,8 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
 
   def build_microsoft_graph_options
     outbound_options = {
-      user: @new_configuration[:user] || @new_configuration['user'],
+      user:     @new_configuration[:user] || @new_configuration['user'],
+      password: @microsoft_graph_auth&.dig(:access_token) || @microsoft_graph_auth&.dig('access_token'),
     }
 
     shared_mailbox = @new_configuration[:shared_mailbox].presence || @new_configuration['shared_mailbox'].presence
