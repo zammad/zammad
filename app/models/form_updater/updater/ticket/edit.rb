@@ -58,7 +58,7 @@ class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
   end
 
   def customer?
-    return false if current_user.permissions?('ticket.agent') && current_user.groups.access(:read).include?(object.group)
+    return false if current_user.permissions?('ticket.agent') && current_user.group_access?(object.group, 'read')
     return true if current_user.permissions?('ticket.customer')
 
     false
