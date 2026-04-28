@@ -59,6 +59,19 @@ pnpm generate-graphql-api                   # Regenerate GraphQL types after sch
 pnpm generate-setting-types                 # Regenerate Config types after setting changes
 ```
 
+## Development Lifecycle
+
+Issues are tracked on **GitHub**, code is developed on a self-hosted **GitLab**.
+GitHub hosts a read-only mirror. The agent uses the **GitHub MCP server** for
+issues and **`glab` CLI** for GitLab operations.
+
+Lifecycle: Understand → Research → Plan → Branch (`/prepare-issue-branch`) →
+Implement → Test → Commit → Review → MR (`/create-mr`) → Cherry-pick
+(`/cherry-pick-to-stable`)
+
+See `.dev/agent_docs/development_workflow.md` for the full lifecycle and
+workflow rules.
+
 ## Agent Reference Docs
 
 You MUST read the relevant file(s) below before responding when working on that area — do NOT read them all upfront:
