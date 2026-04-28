@@ -2115,6 +2115,10 @@ msgstr ""
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee:44
+msgid "At least one locale is required."
+msgstr ""
+
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
@@ -16352,7 +16356,7 @@ msgstr ""
 msgid "The Elasticsearch index could not be created"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee:56
+#: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee:61
 msgid "The Knowledge Base could not be created."
 msgstr ""
 
@@ -19221,6 +19225,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/useHistoryEvents.ts:39
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/eventHelpers.ts:11
+#: app/models/user_device/notification_presenter.rb:11
 msgid "Unknown"
 msgstr ""
 
