@@ -16,7 +16,7 @@ namespace :zammad do
         Rails.env = ENV['RAILS_ENV']
 
         Rake::Task['zammad:ci:app:stop'].invoke if args[:no_app].blank?
-        Rake::Task['db:drop:all'].invoke
+        Rake::Task['db:drop'].invoke
 
         next if !SearchIndexBackend.enabled?
 
