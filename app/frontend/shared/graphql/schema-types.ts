@@ -869,6 +869,7 @@ export enum EnumChannelEmailInboundAdapter {
 
 /** Outbound email protocols/adapters */
 export enum EnumChannelEmailOutboundAdapter {
+  MicrosoftGraphOutbound = 'microsoft_graph_outbound',
   Sendmail = 'sendmail',
   Smtp = 'smtp'
 }
