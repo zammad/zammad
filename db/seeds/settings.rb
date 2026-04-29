@@ -577,18 +577,19 @@ Setting.create_if_not_exists(
   title:       __('No Proxy'),
   name:        'proxy_no',
   area:        'System::Network',
-  description: __('No proxy for the following hosts.'),
+  description: __('No proxy for these comma-separated addresses. Supports wildcards like *.example.com. Note: Loopback addresses are always excluded from proxying.'),
   options:     {
     form: [
       {
-        display: '',
-        null:    false,
-        name:    'proxy_no',
-        tag:     'input',
+        display:     '',
+        null:        false,
+        name:        'proxy_no',
+        tag:         'input',
+        placeholder: 'example.com,*.example.org',
       },
     ],
   },
-  state:       'localhost,127.0.0.0,::1',
+  state:       '',
   preferences: {
     disabled:               true,
     online_service_disable: true,
