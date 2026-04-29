@@ -351,8 +351,11 @@ RSpec.describe 'Sessions endpoints', type: :request do
       end
 
       it 'preserves doorkeeper_return_to in the session for later' do
-        # After 2FA setup, the next session show should trigger DoorkeeperAuthorize
-        get '/api/v1/session', as: :json
+        # Simulate 2FA setup completion so two_factor_setup_required? returns false.
+        create(:'user/two_factor_preference', :authenticator_app, user: user)
+
+        # After 2FA setup, the next session show should trigger DoorkeeperAuthorize.
+        get '/api/v1/signshow', as: :json
         expect(json_response['after_auth']).to eq({
                                                     'type' => 'DoorkeeperAuthorize',
                                                     'data' => { 'url' => oauth_path },
