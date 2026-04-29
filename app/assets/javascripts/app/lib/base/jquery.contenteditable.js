@@ -58,6 +58,12 @@
     'h3',
     'insertOrderedList',
     'insertUnorderedList',
+    'foreColor',
+    'hiliteColor',
+    'justifyLeft',
+    'justifyCenter',
+    'justifyRight',
+    'justifyFull',
   ]
 
   function Plugin( element, options ) {
@@ -312,13 +318,13 @@
     }
   }
 
-  Plugin.prototype.executeFormattingAction = function (formattingAction) {
+  Plugin.prototype.executeFormattingAction = function (formattingAction, value) {
     if (!Array.prototype.includes.call(this._supportedFormattingActions, formattingAction)) {
       this.log('unsupported formatting action', formattingAction)
       return
     }
 
-    document.execCommand(formattingAction)
+    document.execCommand(formattingAction, false, value)
   }
 
   Plugin.prototype.getHtmlFromClipboard = function(clipboardData) {
