@@ -3,6 +3,8 @@
 import Blockquote from '@tiptap/extension-blockquote'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import Color from '@tiptap/extension-color'
+import Highlight from '@tiptap/extension-highlight'
+import TextAlign from '@tiptap/extension-text-align'
 import Paragraph from '@tiptap/extension-paragraph'
 import Placeholder from '@tiptap/extension-placeholder'
 import { TextStyle } from '@tiptap/extension-text-style'
@@ -105,6 +107,8 @@ export const getHtmlExtensions = (placeholder = '', meta: FieldEditorProps['meta
   // CharacterCount,
   CodeBlockLowlight.configure({ lowlight }),
   Color,
+  Highlight.configure({ multicolor: true }),
+  TextAlign.configure({ types: ['heading', 'paragraph'] }),
   IndentExtension,
   MarginLeft.configure({
     types: ['listItem', 'taskItem', 'heading', 'paragraph'],
