@@ -122,8 +122,7 @@ translate multiple strings at the same time
 
 =begin
 
-find a translation record for a given locale and source string. 'find_by' might not be enough,
-because it could produce wrong matches on case insensitive MySQL databases.
+nice shorthand to find a translation record for a given locale and source string
 
 =end
 

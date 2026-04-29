@@ -128,10 +128,6 @@ module HasActiveJobLock
     # but it's safe to retry as described in the docs:
     # https://www.postgresql.org/docs/10/transaction-iso.html
     e.message.include?('PG::TRSerializationFailure') ? retry : raise
-  rescue ActiveRecord::Deadlocked => e
-    # MySQL handles lock race condition differently and raises a Deadlock exception:
-    # Mysql2::Error: Deadlock found when trying to get lock; try restarting transaction
-    e.message.include?('Mysql2::Error: Deadlock found when trying to get lock') ? retry : raise
   rescue ActiveRecord::RecordNotUnique
     retry
   end

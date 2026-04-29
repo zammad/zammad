@@ -382,7 +382,6 @@ RSpec.describe Selector::Sql do
           include_examples 'finds the ticket'
         end
 
-        # Skip for MySQL as it handles IN case insensitive.
         context 'with matching upcased string' do
           let(:value) { 'SOME really nice title' }
 
@@ -427,7 +426,6 @@ RSpec.describe Selector::Sql do
           include_examples 'finds the ticket'
         end
 
-        # Skip for MySQL as it handles IN case insensitive.
         context 'with matching upcased string' do
           let(:value) { ['SOME really nice title', 'another example'] }
 
@@ -472,7 +470,6 @@ RSpec.describe Selector::Sql do
           include_examples 'does not find the ticket'
         end
 
-        # Skip for MySQL as it handles IN case insensitive.
         context 'with matching upcased string' do
           let(:value) { 'SOME really nice title' }
 
@@ -517,7 +514,6 @@ RSpec.describe Selector::Sql do
           include_examples 'does not find the ticket'
         end
 
-        # Skip for MySQL as it handles IN case insensitive.
         context 'with matching upcased string' do
           let(:value) { %w[SO SOME] }
 

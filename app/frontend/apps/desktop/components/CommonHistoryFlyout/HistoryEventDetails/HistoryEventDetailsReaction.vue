@@ -16,7 +16,6 @@ const actionName2Source: Record<string, string> = {
   'removed-reaction': __('Removed reaction from message %s from %s'),
   'changed-reaction': __('Changed reaction on message %s from %s'),
   'changed-reaction-to': __('Changed reaction to %s on message %s from %s'),
-  reacted: __('Reacted to message %s from %s'),
   'reacted-with': __('Reacted with %s to message %s from %s'),
 }
 
@@ -49,7 +48,6 @@ const emoji: RenderPlaceholder = {
 const actionName2Placeholder: Record<string, RenderPlaceholder[]> = {
   'changed-reaction': [truncatedArticle, messageCreator],
   'changed-reaction-to': [emoji, truncatedArticle, messageCreator],
-  reacted: [truncatedArticle, messageCreator],
   'reacted-with': [emoji, truncatedArticle, messageCreator],
   'removed-reaction': [truncatedArticle, messageCreator],
 }

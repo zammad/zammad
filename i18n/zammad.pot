@@ -13359,10 +13359,6 @@ msgid "Raw"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
-msgid "Reacted to message %s from %s"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
 msgid "Reacted with %s to message %s from %s"
 msgstr ""
 
@@ -21410,7 +21406,7 @@ msgstr ""
 msgid "forward"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:152
 msgid "from"
 msgstr ""
 
@@ -22059,11 +22055,7 @@ msgstr ""
 msgid "reached"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
-msgid "reacted to message from %s '%s'"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:134
 msgid "reacted with a %s to message from %s '%s'"
 msgstr ""
 
@@ -22102,7 +22094,7 @@ msgstr ""
 msgid "remove option"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:144
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:137
 msgid "removed reaction to message from %s '%s'"
 msgstr ""
 
