@@ -20,6 +20,8 @@ class Maintenance extends App.Controller
             @maintenanceRestartAuto(data)
           when 'restart_manual'
             @maintenanceRestartManual(data)
+          when 'force_refresh'
+            @maintenanceForceRefresh(data)
     )
 
   showMessage: (message = {}) =>
@@ -85,6 +87,12 @@ class Maintenance extends App.Controller
     )
     @disconnectClient()
     @checkAvailability()
+
+  maintenanceForceRefresh: (data) =>
+    return if @forceRefreshed
+    @forceRefreshed = true
+
+    window.location.reload()
 
   maintenanceConfigChanged: (data) =>
     return if @messageConfigChanged

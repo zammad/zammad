@@ -103,6 +103,10 @@ const useAppMaintenanceCheck = (maintenanceOptions: UseAppMaintenanceCheckOption
         case EnumAppMaintenanceType.RestartManual:
           // TODO: this case cannot be handled right now. Legacy interface performs a connectivity check.
           break
+        case EnumAppMaintenanceType.ForceRefresh:
+          maintenanceOptions.onNeedRefresh?.()
+          window.location.reload()
+          return
         default:
           break
       }

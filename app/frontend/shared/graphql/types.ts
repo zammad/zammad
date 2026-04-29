@@ -790,6 +790,8 @@ export enum EnumAppMaintenanceType {
   AppVersion = 'app_version',
   /** The app configuration has changed. */
   ConfigChanged = 'config_changed',
+  /** Force browsers to refresh. */
+  ForceRefresh = 'force_refresh',
   /** App is restarting. */
   RestartAuto = 'restart_auto',
   /** App needs a restart. */
