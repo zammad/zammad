@@ -12,7 +12,12 @@ namespace :zammad do
       source = args.fetch(:source, Rails.root.join('contrib/auto_wizard_test.json'))
       dest = Rails.root.join('auto_wizard.json')
       if File.expand_path(source) != File.expand_path(dest)
-        FileUtils.ln(source, dest, force: true)
+        begin
+          FileUtils.ln(source, dest, force: true)
+        rescue Errno::EPERM, Errno::EXDEV
+          warn "Warning: Could not create hard link for auto_wizard.json, falling back to copy. error: #{$!.message}"
+          FileUtils.cp(source, dest)
+        end
       end
 
       AutoWizard.run
