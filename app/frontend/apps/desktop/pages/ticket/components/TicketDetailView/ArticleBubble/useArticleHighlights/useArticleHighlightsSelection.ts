@@ -273,7 +273,7 @@ export const useArticleHighlightsSelection = (
     }
   }
 
-  const handleMouseUp = () => {
+  const handlePointerUp = () => {
     void applyFromCurrentSelection()
   }
 
@@ -282,8 +282,8 @@ export const useArticleHighlightsSelection = (
   const attachListener = () => {
     if (removeListener) return
 
-    document.addEventListener('mouseup', handleMouseUp)
-    removeListener = () => document.removeEventListener('mouseup', handleMouseUp)
+    document.addEventListener('pointerup', handlePointerUp)
+    removeListener = () => document.removeEventListener('pointerup', handlePointerUp)
   }
 
   const detachListener = () => {
