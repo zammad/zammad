@@ -42,6 +42,7 @@ describe('useAppMaintenanceCheck', () => {
 
   afterEach(() => {
     useNotifications().clearAllNotifications()
+    vi.unstubAllGlobals()
   })
 
   it('reacts to config_updated message', async () => {
@@ -106,6 +107,22 @@ describe('useAppMaintenanceCheck', () => {
     expect(notifications.value[0].message).toBe(
       'A newer version of the app is available. Please reload at your earliest.',
     )
+  })
+
+  it('reacts to force_refresh message by reloading without showing a notification', async () => {
+    const reloadMock = vi.fn()
+    vi.stubGlobal('location', { ...window.location, reload: reloadMock })
+
+    await subscriptionAppMaintenance.next({
+      data: {
+        appMaintenance: {
+          type: EnumAppMaintenanceType.ForceRefresh,
+        },
+      },
+    })
+
+    expect(reloadMock).toHaveBeenCalledOnce()
+    expect(useNotifications().notifications.value).toHaveLength(0)
   })
 
   it('does not raise unhandled exceptions if the payload structure is wrong', async (context) => {

@@ -4986,6 +4986,12 @@
               "description": "The app configuration has changed.",
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "force_refresh",
+              "description": "Force browsers to refresh.",
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "possibleTypes": null

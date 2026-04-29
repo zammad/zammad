@@ -10,6 +10,7 @@ class AppVersion
   MSG_RESTART_MANUAL = 'restart_manual'.freeze
   MSG_RESTART_AUTO   = 'restart_auto'.freeze
   MSG_CONFIG_CHANGED = 'config_changed'.freeze
+  MSG_FORCE_REFRESH  = 'force_refresh'.freeze
 
   class_attribute :_redis
 
@@ -28,6 +29,16 @@ returns
   def self.get
     Setting.get('app_version')
   end
+
+=begin
+
+Force frontend changes to the browsers.
+
+  AppVersion.trigger_browser_reload(AppVersion::MSG_APP_VERSION)
+  AppVersion.trigger_browser_reload(AppVersion::MSG_CONFIG_CHANGED)
+  AppVersion.trigger_browser_reload(AppVersion::MSG_FORCE_REFRESH)
+
+=end
 
   def self.trigger_browser_reload(type, timestamp: make_timestamp)
     return if !Setting.exists?(name: 'app_version')
