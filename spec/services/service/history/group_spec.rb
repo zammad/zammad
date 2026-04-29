@@ -72,6 +72,31 @@ RSpec.describe Service::History::Group, current_user_id: -> { user.id } do
     end
   end
 
+  context 'when events straddle an epoch-aligned 15-second boundary' do
+    subject(:service_result) { described_class.with_current_user(user).execute(object:) }
+
+    let(:group)  { create(:group) }
+    let(:object) { create(:ticket, group:) }
+    let(:user)   { create(:agent, groups: [group]) }
+
+    # Unix timestamp 1_777_494_660 is divisible by 15 (epoch-aligned boundary).
+    # t1 is 7 seconds before it, t2 is 2 seconds after - 9 seconds apart and
+    # within the default 15-second interval, so they must land in one group.
+    let(:t1) { Time.at(1_777_494_653).utc }
+    let(:t2) { Time.at(1_777_494_662).utc }
+
+    before do
+      allow(Service::History::List).to receive(:execute).and_return([
+                                                                      { created_at: t1, issuer: user, action: 'created', object: { klass: 'Ticket' }, attribute: nil, changes: { from: nil, to: nil } },
+                                                                      { created_at: t2, issuer: user, action: 'updated', object: { klass: 'Ticket' }, attribute: 'title', changes: { from: 'Old', to: 'New' } },
+                                                                    ])
+    end
+
+    it 'keeps events within the interval together in one group' do
+      expect(service_result.size).to eq(1)
+    end
+  end
+
   context 'when history object is a organization' do
     let(:object) { create(:organization) }
 

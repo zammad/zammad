@@ -59,8 +59,10 @@ class Service::History::Group < Service::Base
 
   # Group records by given interval and issuers
   def group_by_time_and_issuer(list, interval)
+    start_time = list.first&.dig(:created_at).to_i
+
     list
-      .group_by { |record| [record[:created_at].to_i / interval, record[:issuer]] }
+      .group_by { |record| [(record[:created_at].to_i - start_time) / interval, record[:issuer]] }
       .map do |(_, issuer), records|
         {
           created_at: records.first[:created_at],
@@ -68,7 +70,7 @@ class Service::History::Group < Service::Base
           events:     records.map { |record| record.except(:issuer) }
         }
       end
-      .group_by { |record| record[:created_at].to_i / interval }
+      .group_by { |record| (record[:created_at].to_i - start_time) / interval }
       .map do |_, grouped_records|
         {
           created_at: grouped_records.first[:created_at],
