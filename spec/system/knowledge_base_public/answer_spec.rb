@@ -125,6 +125,20 @@ RSpec.describe 'Public Knowledge Base answer', type: :system do
     end
   end
 
+  context 'attachments' do
+    before do
+      visit help_answer_path(locale_name, category, published_answer)
+    end
+
+    # Making sure it shows the shorthand.
+    # This way we can get away without translating Byte(s).
+    it 'shows an associated attachment' do
+      expect(page)
+        .to have_css('.attachment-size', text: '12 B')
+        .and(have_no_css('.attachment-size', text: 'Byte'))
+    end
+  end
+
   def open_answer(answer, locale: primary_locale.system_locale.locale)
     visit help_answer_path(locale, answer.category, answer)
   end
