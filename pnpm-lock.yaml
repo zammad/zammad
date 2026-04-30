@@ -280,7 +280,7 @@ importers:
         version: 8.0.27
       '@sa11y/vitest':
         specifier: ^8.0.27
-        version: 8.0.27(@types/debug@4.1.13)(@types/node@25.6.0)(jiti@2.6.1)(jsdom@29.1.0)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+        version: 8.0.27(@types/debug@4.1.13)(@types/node@25.6.0)(jiti@2.6.1)(jsdom@29.1.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
       '@sinonjs/fake-timers':
         specifier: ^15.3.2
         version: 15.3.2
@@ -360,8 +360,8 @@ importers:
         specifier: file:.eslint-plugin-zammad
         version: file:.eslint-plugin-zammad(eslint@10.2.1(jiti@2.6.1))
       jsdom:
-        specifier: ^29.1.0
-        version: 29.1.0
+        specifier: ^29.1.1
+        version: 29.1.1
       markdownlint-cli2:
         specifier: ^0.22.1
         version: 0.22.1
@@ -427,7 +427,7 @@ importers:
         version: 5.2.1(vite@8.0.10(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.2)(yaml@2.8.3))
       vitest:
         specifier: ^4.1.5
-        version: 4.1.5(@types/node@25.6.0)(jsdom@29.1.0)(vite@8.0.10(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.2)(yaml@2.8.3))
+        version: 4.1.5(@types/node@25.6.0)(jsdom@29.1.1)(vite@8.0.10(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.2)(yaml@2.8.3))
       vue-tsc:
         specifier: ^3.2.7
         version: 3.2.7(typescript@6.0.3)
@@ -4885,8 +4885,8 @@ packages:
     resolution: {integrity: sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==}
     hasBin: true
 
-  jsdom@29.1.0:
-    resolution: {integrity: sha512-YNUc7fB9QuvSSQWfrH0xF+TyABkxUwx8sswgIDaCrw4Hol8BghdZDkITtZheRJeMtzWlnTfsM3bBBusRvpO1wg==}
+  jsdom@29.1.1:
+    resolution: {integrity: sha512-ECi4Fi2f7BdJtUKTflYRTiaMxIB0O6zfR1fX0GXpUrf6flp8QIYn1UT20YQqdSOfk2dfkCwS8LAFoJDEppNK5Q==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
     peerDependencies:
       canvas: ^3.0.0
@@ -9105,14 +9105,14 @@ snapshots:
     dependencies:
       '@sa11y/common': 8.0.27
 
-  '@sa11y/vitest@8.0.27(@types/debug@4.1.13)(@types/node@25.6.0)(jiti@2.6.1)(jsdom@29.1.0)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)':
+  '@sa11y/vitest@8.0.27(@types/debug@4.1.13)(@types/node@25.6.0)(jiti@2.6.1)(jsdom@29.1.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)':
     dependencies:
       '@sa11y/assert': 8.0.27
       '@sa11y/format': 8.0.27
       '@sa11y/matcher': 8.0.27
       '@sa11y/preset-rules': 8.0.27
       '@vitest/runner': 3.2.4
-      vitest: 3.2.4(@types/debug@4.1.13)(@types/node@25.6.0)(jiti@2.6.1)(jsdom@29.1.0)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest: 3.2.4(@types/debug@4.1.13)(@types/node@25.6.0)(jiti@2.6.1)(jsdom@29.1.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@types/debug'
@@ -11906,7 +11906,7 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  jsdom@29.1.0:
+  jsdom@29.1.1:
     dependencies:
       '@asamuzakjp/css-color': 5.1.11
       '@asamuzakjp/dom-selector': 7.1.1
@@ -14083,7 +14083,7 @@ snapshots:
       terser: 5.46.2
       yaml: 2.8.3
 
-  vitest@3.2.4(@types/debug@4.1.13)(@types/node@25.6.0)(jiti@2.6.1)(jsdom@29.1.0)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3):
+  vitest@3.2.4(@types/debug@4.1.13)(@types/node@25.6.0)(jiti@2.6.1)(jsdom@29.1.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/expect': 3.2.4
@@ -14111,7 +14111,7 @@ snapshots:
     optionalDependencies:
       '@types/debug': 4.1.13
       '@types/node': 25.6.0
-      jsdom: 29.1.0
+      jsdom: 29.1.1
     transitivePeerDependencies:
       - jiti
       - less
@@ -14126,7 +14126,7 @@ snapshots:
       - tsx
       - yaml
 
-  vitest@4.1.5(@types/node@25.6.0)(jsdom@29.1.0)(vite@8.0.10(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.2)(yaml@2.8.3)):
+  vitest@4.1.5(@types/node@25.6.0)(jsdom@29.1.1)(vite@8.0.10(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.2)(yaml@2.8.3)):
     dependencies:
       '@vitest/expect': 4.1.5
       '@vitest/mocker': 4.1.5(vite@8.0.10(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.2)(yaml@2.8.3))
@@ -14150,7 +14150,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 25.6.0
-      jsdom: 29.1.0
+      jsdom: 29.1.1
     transitivePeerDependencies:
       - msw
 
