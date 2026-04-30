@@ -119,7 +119,7 @@ App.RichtextBubbleMenu =
       {
         key: 'foreColor'
         label: __('Text color')
-        icon: 'palette'
+        icon: 'eyedropper'
         action: (e, ce) ->
           color = window.prompt(App.i18n.translateInline('Enter text color (hex like #ff0000, or name like red)'), '#ff0000')
           if color
@@ -128,7 +128,7 @@ App.RichtextBubbleMenu =
       {
         key: 'hiliteColor'
         label: __('Highlight text')
-        icon: 'highlighter'
+        icon: 'marker'
         action: (e, ce) ->
           color = window.prompt(App.i18n.translateInline('Enter highlight color (hex like #ffff00, or name like yellow)'), '#ffff00')
           if color
@@ -137,28 +137,28 @@ App.RichtextBubbleMenu =
       {
         key: 'justifyLeft'
         label: __('Align left')
-        icon: 'align-left'
+        icon: 'arrow-left'
         action: (e, ce) ->
           ce.executeFormattingAction('justifyLeft')
       },
       {
         key: 'justifyCenter'
         label: __('Align center')
-        icon: 'align-center'
+        icon: 'horizontal-rule'
         action: (e, ce) ->
           ce.executeFormattingAction('justifyCenter')
       },
       {
         key: 'justifyRight'
         label: __('Align right')
-        icon: 'align-right'
+        icon: 'arrow-right'
         action: (e, ce) ->
           ce.executeFormattingAction('justifyRight')
       },
       {
         key: 'justifyFull'
         label: __('Justify')
-        icon: 'align-justify'
+        icon: 'list'
         action: (e, ce) ->
           ce.executeFormattingAction('justifyFull')
       },
