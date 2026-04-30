@@ -210,6 +210,10 @@ New Tag Normalization:
         name:      :max_number_of_tags_not_reached,
         condition: -> { max_number_of_tags_not_reached?(ticket) },
       ),
+      PreconditionCheck.new(
+        name:      :tag_pool_available,
+        condition: -> { tag_pool_available? },
+      ),
     ]
   end
 
@@ -228,5 +232,13 @@ New Tag Normalization:
     return true if operator != 'fill'
 
     ticket.tag_list.size < enrichment_data['number_of_tags'].to_i
+  end
+
+  # With `tag_new` disabled the AI may only pick from existing system tags,
+  #   so an empty pool leaves nothing to return — skip before the LLM call.
+  def tag_pool_available?
+    return true if enrichment_data['tag_new']
+
+    Tag::Item.exists?
   end
 end

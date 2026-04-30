@@ -156,5 +156,49 @@ RSpec.describe AI::Agent::Type::TicketTagger, :aggregate_failures, current_user_
         expect(agent_type.precondition_checks(ticket:)).to all(be_passed)
       end
     end
+
+    context 'when tag_new is disabled and no Tag::Item exists' do
+      let(:agent_type) { described_class.new(type_enrichment_data: { 'number_of_tags' => 1, 'tag_operator' => 'add' }) }
+
+      before do
+        Setting.set('tag_new', false)
+        Tag::Item.destroy_all
+      end
+
+      it 'fails the tag_pool_available check' do
+        check = agent_type.precondition_checks(ticket:).find { |c| c.name == :tag_pool_available }
+
+        expect(check.passed?).to be(false)
+      end
+    end
+
+    context 'when tag_new is disabled but tags exist in the system' do
+      let(:agent_type) { described_class.new(type_enrichment_data: { 'number_of_tags' => 1, 'tag_operator' => 'add' }) }
+
+      before do
+        Setting.set('tag_new', false)
+        Tag::Item.lookup_by_name_and_create('existing-tag')
+      end
+
+      it 'passes the tag_pool_available check' do
+        expect(agent_type.precondition_checks(ticket:)).to all(be_passed)
+      end
+    end
+
+    context 'when tag_new is enabled and no Tag::Item exists' do
+      let(:agent_type) { described_class.new(type_enrichment_data: { 'number_of_tags' => 1, 'tag_operator' => 'add' }) }
+
+      before do
+        Setting.set('tag_new', true)
+        Tag::Item.destroy_all
+      end
+
+      it 'passes the tag_pool_available check without hitting the database' do
+        allow(Tag::Item).to receive(:exists?)
+
+        expect(agent_type.precondition_checks(ticket:)).to all(be_passed)
+        expect(Tag::Item).not_to have_received(:exists?)
+      end
+    end
   end
 end
