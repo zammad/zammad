@@ -428,7 +428,7 @@ Capybara/SpecificActions:
   Description: "Checks for there is a more specific actions offered by Capybara."
   Enabled: false
 
-Capybara/NegationMatcher:
+Capybara/RSpec/NegationMatcher:
   Description: Enforces use of have_no_* or not_to for negated expectations.
   EnforcedStyle: have_no
 
@@ -541,7 +541,7 @@ Zammad/MigrationEnsureIntegerForeignKey:
   Include:
     - "db/migrate/*.rb"
 
-Capybara/NegationMatcherAfterVisit:
+Capybara/RSpec/NegationMatcherAfterVisit:
   Description: "Allow to use negated matcher after visit"
   Enabled: false
 

@@ -22,7 +22,7 @@ RSpec.describe 'Admin Panel > Knowledge Base > Create', type: :system do
     it 'shows validation error' do
       click_on 'Create Knowledge Base'
 
-      expect(page).to have_content('At least one locale is required.')
+      expect(page).to have_text('At least one locale is required.')
     end
   end
 end

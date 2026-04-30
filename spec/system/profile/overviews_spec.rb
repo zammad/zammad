@@ -25,7 +25,7 @@ RSpec.describe 'Profile > Overviews', type: :system do
   it 'shows the out of office replacement overview (#5458)' do
     visit 'profile/overviews'
 
-    expect(page).to have_content('My Replacement Tickets Only when out of office replacement')
+    expect(page).to have_text('My Replacement Tickets Only when out of office replacement')
   end
 
   def overview_names

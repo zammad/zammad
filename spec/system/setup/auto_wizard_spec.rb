@@ -8,7 +8,7 @@ RSpec.describe 'Auto wizard', set_up: false, type: :system do
       visit '/'
 
       within '.wizard.setup .wizard-slide' do
-        expect(page).to have_content('The auto wizard is enabled. Please use the provided auto wizard url.')
+        expect(page).to have_text('The auto wizard is enabled. Please use the provided auto wizard url.')
       end
     end
   end
@@ -86,8 +86,8 @@ RSpec.describe 'Auto wizard', set_up: false, type: :system do
         find('.js-content .js-tableBody tr.item').click
 
         within '.active .profile-window' do
-          expect(page).to have_content 'Demo Organization'
-          expect(page).to have_content 'Atila'
+          expect(page).to have_text 'Demo Organization'
+          expect(page).to have_text 'Atila'
         end
       end
     end

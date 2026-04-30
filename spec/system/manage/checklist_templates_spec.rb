@@ -23,7 +23,7 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
     end
 
     it 'shows a help text' do
-      expect(page).to have_content('With checklist templates it is possible to pre-fill new checklists with initial items.')
+      expect(page).to have_text('With checklist templates it is possible to pre-fill new checklists with initial items.')
       expect(page).to have_no_css('.js-description')
     end
 
@@ -36,7 +36,7 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
         in_modal do
           fill_in('Name', with: 'Test Checklist')
           click_on('Submit')
-          expect(page).to have_content('Please add at least one item to the checklist.')
+          expect(page).to have_text('Please add at least one item to the checklist.')
         end
       end
     end
@@ -54,7 +54,7 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
           click_on('Submit')
         end
 
-        expect(page).to have_content('Test Checklist')
+        expect(page).to have_text('Test Checklist')
       end
     end
   end
@@ -67,18 +67,18 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
     end
 
     it 'shows a description button' do
-      expect(page).to have_no_content('With checklist templates it is possible to pre-fill new checklists with initial items.')
+      expect(page).to have_no_text('With checklist templates it is possible to pre-fill new checklists with initial items.')
       expect(page).to have_css('.js-description')
 
       page.find('.js-description').click
 
       in_modal do
-        expect(page).to have_content('With checklist templates it is possible to pre-fill new checklists with initial items.')
+        expect(page).to have_text('With checklist templates it is possible to pre-fill new checklists with initial items.')
       end
     end
 
     it 'successfully updates the checklist' do
-      expect(page).to have_content('Test Checklist')
+      expect(page).to have_text('Test Checklist')
 
       find('.js-checklistTemplatesTable tr.item').click
 
@@ -101,7 +101,7 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
     end
 
     it 'successfully creates a clone' do
-      expect(page).to have_content('Test Checklist')
+      expect(page).to have_text('Test Checklist')
 
       find('.js-checklistTemplatesTable tr.item .js-action').click
       find('.js-table-action-menu .js-clone').click
@@ -110,7 +110,7 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
         click_on('Submit')
       end
 
-      expect(page).to have_content('Clone: Test Checklist')
+      expect(page).to have_text('Clone: Test Checklist')
 
       expect(ChecklistTemplate.last.items.count).to eq(5)
     end
@@ -124,7 +124,7 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
     end
 
     it 'successfully creates a clone' do
-      expect(page).to have_content('Test Checklist')
+      expect(page).to have_text('Test Checklist')
 
       find('.js-checklistTemplatesTable tr.item .js-action').click
       find('.js-table-action-menu .js-delete').click
@@ -133,7 +133,7 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
         click_on('Delete')
       end
 
-      expect(page).to have_no_content('Test Checklist')
+      expect(page).to have_no_text('Test Checklist')
 
       expect(ChecklistTemplate.count).to eq(0)
     end
