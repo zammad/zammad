@@ -8,44 +8,45 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { mountEditor } from './utils.ts'
 
 describe('Testing "text" popup: "::" command', () => {
-  it('inserts a text', () => {
+  before(() => {
+    mountEditor({}, ['ticket.agent'])
+  })
+
+  it('inserts a text > allows spaces in search', () => {
     const client = mockApolloClient()
     const mock = cy.spy(async () => ({
       data: {
         textModuleSuggestions: [
           {
             __typename: 'TextModule',
-            id: convertToGraphQLId('TextModule', '1'),
-            name: 'ass - Anliegen sichten',
+            id: convertToGraphQLId('TextModule', '2'),
+            name: 'fwf - Für weitere Fragen stehe ich...',
             keywords: null,
-            renderedContent:
-              '<p dir="auto">Vielen Dank für Ihre Anfrage.</p><p dir="auto">Wir werden Ihr Anliegen sichten und uns schnellstmöglich mit Ihnen in Verbindung setzen.</p>',
+            renderedContent: 'Für weitere Fragen stehe ich gerne zur Verfügung!',
           },
         ],
       },
     }))
-
     client.setRequestHandler(TextModuleSuggestionsDocument, mock)
 
-    mountEditor({}, ['ticket.agent'], { fqdn: 'example.zammad.com', http_type: 'http' })
-
-    cy.findByRole('textbox').type('::ass')
+    cy.findByRole('textbox').type('::weitere fragen') // supports space
 
     cy.findByTestId('mention-text')
       .should('exist')
-      .and('contain.text', 'Anliegen sichten')
-      .findByText(/Anliegen sichten/)
+      .and('contain.text', 'Für weitere Fragen')
+      .findByText(/Für weitere Fragen/)
       .click()
 
-    cy.findByRole('textbox').shouldContainNormalizedHtml('Vielen Dank für Ihre Anfrage')
-    cy.findByRole('textbox').type('{backspace}{backspace}123')
-    cy.findByRole('textbox').shouldContainNormalizedHtml('Verbindung setze123')
     cy.findByRole('textbox').shouldContainNormalizedHtml(
-      '<p dir="auto">Vielen Dank für Ihre Anfrage.</p><p dir="auto">Wir werden Ihr Anliegen sichten und uns schnellstmöglich mit Ihnen in Verbindung setze123</p>',
+      'Für weitere Fragen stehe ich gerne zur Verfügung!',
+    )
+    cy.findByRole('textbox').type('{backspace}{backspace}123')
+    cy.findByRole('textbox').shouldContainNormalizedHtml(
+      '<p dir="auto">Für weitere Fragen stehe ich gerne zur Verfügun123</p>',
     )
 
     // asserting with `calledWith` is stricter than needed and can fail on unrelated payload expansion.
     // Prefer `calledWithMatch` to lock only the relevant fields.
-    cy.wrap(mock).should('have.been.calledWithMatch', { query: 'ass' })
+    cy.wrap(mock).should('have.been.calledWithMatch', { query: 'weitere fragen' })
   })
 })

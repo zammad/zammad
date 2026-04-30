@@ -2,32 +2,20 @@
 
 import { mockApolloClient } from '#cy/utils.ts'
 
-import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
 import { MentionSuggestionsDocument } from '#shared/components/Form/fields/FieldEditor/graphql/queries/mention/mentionSuggestions.api.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { mountEditor } from './utils.ts'
 
 describe('Testing "user mention" popup: "@@" command', () => {
-  // FIXME: This test is flaky, sometimes it fails when running in CI.
-  //   It's not clear why, but it seems to be related to the useNotifications() composable.
-  //   In general, we should revisit the test setup and make it more reliable (see current workarounds for mocks).
-  it.skip('shows notification when no group is provided', () => {
-    const { notifications } = useNotifications()
-
-    mountEditor({}, ['ticket.agent'])
-
-    cy.findByRole('textbox')
-      .type('@@t')
-      .then(() => {
-        expect(notifications.value).to.have.length(1)
-        expect(notifications.value[0].message).to.equal(
-          'Before you mention a user, please select a group.',
-        )
-      })
+  before(() => {
+    mountEditor({ groupId: '1' }, ['ticket.agent'], {
+      fqdn: 'example.zammad.com',
+      http_type: 'http',
+    })
   })
 
-  it('inserts a user mention', () => {
+  it('inserts a user mention  > allows spaces in search', () => {
     const client = mockApolloClient()
     const mock = cy.spy(async () => ({
       data: {
@@ -37,7 +25,7 @@ describe('Testing "user mention" popup: "@@" command', () => {
             id: convertToGraphQLId('User', '3'),
             internalId: 3,
             fullname: 'Bob Wance',
-            email: 'bob@mail.com',
+            email: 'bob@example.com',
           },
           {
             __typename: 'User',
@@ -51,15 +39,13 @@ describe('Testing "user mention" popup: "@@" command', () => {
     }))
     client.setRequestHandler(MentionSuggestionsDocument, mock)
 
-    mountEditor({ groupId: '1' }, ['ticket.agent'], {
-      fqdn: 'example.zammad.com',
-      http_type: 'http',
-    })
+    // Search for John
+    cy.findByRole('textbox').type('@@Jo mail.com') // supports space
 
-    cy.findByRole('textbox').type('@@Jo')
-
+    // But select Bob
     cy.findByTestId('mention-user')
       .should('exist')
+      .and('contain.text', 'John Doe')
       .and('contain.text', 'Bob Wance')
       .findByText(/Bob Wance/)
       .click()
@@ -78,7 +64,7 @@ describe('Testing "user mention" popup: "@@" command', () => {
     // asserting with `calledWith` is stricter than needed and can fail on unrelated payload expansion.
     // Prefer `calledWithMatch` to lock only the relevant fields.
     cy.wrap(mock).should('have.been.calledWithMatch', {
-      query: 'Jo',
+      query: 'Jo mail.com',
       groupId: convertToGraphQLId('Group', '1'),
     })
   })

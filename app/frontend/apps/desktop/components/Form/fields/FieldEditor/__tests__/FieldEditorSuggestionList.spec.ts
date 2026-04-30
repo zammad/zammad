@@ -112,6 +112,28 @@ describe('component for rendering suggestions', () => {
     expect(view.getByRole('option', { name: 'Text Itemkey' })).toBeInTheDocument()
   })
 
+  it('renders text item with spaces in search query', () => {
+    const items: MentionTextItem[] = [
+      {
+        name: 'the best',
+        keywords: 'best',
+        renderedContent: 'wishing you all the best',
+        id: convertToGraphQLId('TextModule', 1),
+      },
+    ]
+
+    const view = renderComponent(FieldEditorSuggestionList, {
+      props: {
+        query: 'the be',
+        items,
+        type: 'text',
+        command: vi.fn(),
+      },
+    })
+
+    expect(view.getByRole('option', { name: 'the bestbest' })).toBeInTheDocument()
+  })
+
   it('renders user mention', () => {
     const items: MentionUserItem[] = [
       {
@@ -142,6 +164,35 @@ describe('component for rendering suggestions', () => {
 
     expect(
       view.getByRole('option', { name: 'Avatar (Nicole Braun) Nicole Braun' }),
+    ).toBeInTheDocument()
+  })
+
+  it('renders user mention with spaces in search query', () => {
+    const items: MentionUserItem[] = [
+      {
+        id: convertToGraphQLId('User', 1),
+        fullname: 'John Doe',
+        internalId: 1,
+        email: 'john@mail.com',
+      },
+      {
+        id: convertToGraphQLId('User', 2),
+        fullname: 'Nicole Braun',
+        internalId: 2,
+      },
+    ]
+
+    const view = renderComponent(FieldEditorSuggestionList, {
+      props: {
+        query: 'john mail.com',
+        items,
+        type: 'user',
+        command: vi.fn(),
+      },
+    })
+
+    expect(
+      view.getByRole('option', { name: 'Avatar (John Doe) John Doe– john@mail.com' }),
     ).toBeInTheDocument()
   })
 })
@@ -242,7 +293,7 @@ describe('actions in list', () => {
   it('selects on tab', async () => {
     const { command, triggerKey } = renderList()
 
-    await triggerKey('Enter')
+    await triggerKey('Tab')
 
     expect(command).toHaveBeenCalledWith(items[0])
   })
