@@ -163,29 +163,41 @@ onUnmounted(() => {
 <style>
 body.cursor-highlight {
   cursor:
-    url("data:image/svg+xml,%3Csvg width='24' height='19' viewBox='0 0 24 19' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17.5562 2.01065L21.0923 5.54581L21.7437 6.19815L21.147 6.9003L13.1919 16.2694L12.4897 17.0966L11.7231 16.329L11.2671 15.873L10.355 16.2821L9.77881 16.8603L9.48584 17.1523H2.41455L4.12158 15.4452L6.81982 12.746L7.22803 11.8349L6.77295 11.3798L6.00635 10.6122L6.8335 9.91007L16.2026 1.95499L16.9048 1.35929L17.5562 2.01065ZM10.4282 10.7919L12.3091 12.6737L17.6665 6.36319L16.7378 5.43448L10.4282 10.7919Z' fill='black' stroke='white' stroke-width='2'/%3E%3C/svg%3E")
+    image-set(
+        url('./assets/cursor/highlight-light.png') 1x,
+        url('./assets/cursor/highlight-light@2x.png') 2x
+      )
       2 15,
     crosshair;
 }
 
 [data-theme='dark'] body.cursor-highlight {
   cursor:
-    url("data:image/svg+xml,%3Csvg width='24' height='19' viewBox='0 0 24 19' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17.5562 2.01065L21.0923 5.54581L21.7437 6.19815L21.147 6.9003L13.1919 16.2694L12.4897 17.0966L11.7231 16.329L11.2671 15.873L10.355 16.2821L9.77881 16.8603L9.48584 17.1523H2.41455L4.12158 15.4452L6.81982 12.746L7.22803 11.8349L6.77295 11.3798L6.00635 10.6122L6.8335 9.91007L16.2026 1.95499L16.9048 1.35929L17.5562 2.01065ZM10.4282 10.7919L12.3091 12.6737L17.6665 6.36319L16.7378 5.43448L10.4282 10.7919Z' fill='white' stroke='black' stroke-width='2'/%3E%3C/svg%3E")
+    image-set(
+        url('./assets/cursor/highlight-dark.png') 1x,
+        url('./assets/cursor/highlight-dark@2x.png') 2x
+      )
       2 15,
     crosshair;
 }
 
 body.cursor-eraser {
   cursor:
-    url("data:image/svg+xml,%3Csvg width='19' height='18' viewBox='0 0 19 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.75781 1.87891C9.9294 0.707446 11.8285 0.707372 13 1.87891L16.8789 5.75781C18.0501 6.92937 18.0503 8.82853 16.8789 10L11.3789 15.5C10.8164 16.0625 10.0533 16.3788 9.25781 16.3789H6.5C5.7044 16.3789 4.9415 16.0625 4.37891 15.5L1.87891 13C0.70737 11.8285 0.707449 9.92939 1.87891 8.75781L8.75781 1.87891ZM4 10.8789L6.5 13.3789H8.16406L4.83203 10.0469L4 10.8789Z' fill='black' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E")
-      1 15,
+    image-set(
+        url('./assets/cursor/eraser-light.png') 1x,
+        url('./assets/cursor/eraser-light@2x.png') 2x
+      )
+      2 15,
     auto;
 }
 
 [data-theme='dark'] body.cursor-eraser {
   cursor:
-    url("data:image/svg+xml,%3Csvg width='19' height='18' viewBox='0 0 19 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.75781 1.87891C9.9294 0.707446 11.8285 0.707372 13 1.87891L16.8789 5.75781C18.0501 6.92937 18.0503 8.82853 16.8789 10L11.3789 15.5C10.8164 16.0625 10.0533 16.3788 9.25781 16.3789H6.5C5.7044 16.3789 4.9415 16.0625 4.37891 15.5L1.87891 13C0.70737 11.8285 0.707449 9.92939 1.87891 8.75781L8.75781 1.87891ZM4 10.8789L6.5 13.3789H8.16406L4.83203 10.0469L4 10.8789Z' fill='white' stroke='black' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E")
-      1 15,
+    image-set(
+        url('./assets/cursor/eraser-dark.png') 1x,
+        url('./assets/cursor/eraser-dark@2x.png') 2x
+      )
+      2 15,
     auto;
 }
 </style>
