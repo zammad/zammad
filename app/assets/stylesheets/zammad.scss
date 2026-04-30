@@ -16104,3 +16104,36 @@ div.accounted-time-value {
     margin: 0;
   }
 }
+
+/* AGM editor bubble: color palette dropup + ensure new bubble icons render visibly */
+.bubble-menu-item .icon-eyedropper,
+.bubble-menu-item .icon-marker,
+.bubble-menu-item .icon-arrow-left,
+.bubble-menu-item .icon-arrow-right,
+.bubble-menu-item .icon-horizontal-rule,
+.bubble-menu-item .icon-list {
+  fill: currentColor;
+  color: white;
+}
+
+.bubble-color-palette {
+  display: grid;
+  grid-template-columns: repeat(7, 22px);
+  gap: 4px;
+  padding: 8px;
+}
+
+.bubble-color-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.3);
+  cursor: pointer;
+  padding: 0;
+}
+
+.bubble-color-swatch:hover {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+

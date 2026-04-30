@@ -1,6 +1,29 @@
 # Methods for initializing and using text tools in the richtext editor context.
 
 App.RichtextBubbleMenu =
+  foreColors: [
+    '#000000', '#404040', '#808080', '#bfbfbf', '#ffffff',
+    '#dc2626', '#ea580c', '#ca8a04', '#16a34a',
+    '#0284c7', '#2563eb', '#7c3aed', '#db2777',
+  ]
+
+  hiliteColors: [
+    '#ffffff', '#fef08a', '#fed7aa', '#fecaca', '#bbf7d0',
+    '#bfdbfe', '#ddd6fe', '#fbcfe8', '#fde68a',
+    '#a5f3fc', '#fcd34d', '#86efac', '#67e8f9',
+  ]
+
+  renderColorPalette: (e, ce, selection, el, closeDropdown, command, colors) ->
+    container = el.parent().find('.dropup-container')
+    return if not container.length
+    swatches = ("<button type='button' class='bubble-color-swatch' data-color='" + c + "' title='" + c + "' style='background:" + c + "'></button>" for c in colors).join('')
+    container.html("<div class='bubble-color-palette'>" + swatches + "</div>")
+    container.off('mousedown.colorpalette').on 'mousedown.colorpalette', '.bubble-color-swatch', (ev) ->
+      ev.preventDefault()
+      color = ev.currentTarget.getAttribute('data-color')
+      ce.executeFormattingAction(command, color)
+      closeDropdown()
+
   richtextBubbleMenuInit: (el, disabled = false) ->
     return if disabled or (not @bubbleMenuEnabled() and not App.WidgetTextTools.enabled())
 
@@ -117,22 +140,20 @@ App.RichtextBubbleMenu =
           ce.executeFormattingAction('strikeThrough')
       },
       {
+        type: 'dropup'
         key: 'foreColor'
         label: __('Text color')
         icon: 'eyedropper'
-        action: (e, ce) ->
-          color = window.prompt(App.i18n.translateInline('Enter text color (hex like #ff0000, or name like red)'), '#ff0000')
-          if color
-            ce.executeFormattingAction('foreColor', color)
+        action: (e, ce, selection, el, closeDropdown) =>
+          @renderColorPalette(e, ce, selection, el, closeDropdown, 'foreColor', @foreColors)
       },
       {
+        type: 'dropup'
         key: 'hiliteColor'
         label: __('Highlight text')
         icon: 'marker'
-        action: (e, ce) ->
-          color = window.prompt(App.i18n.translateInline('Enter highlight color (hex like #ffff00, or name like yellow)'), '#ffff00')
-          if color
-            ce.executeFormattingAction('hiliteColor', color)
+        action: (e, ce, selection, el, closeDropdown) =>
+          @renderColorPalette(e, ce, selection, el, closeDropdown, 'hiliteColor', @hiliteColors)
       },
       {
         key: 'justifyLeft'
