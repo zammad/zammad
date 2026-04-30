@@ -27,18 +27,6 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const isKnowledgeBaseItem = (item: unknown): item is MentionKnowledgeBaseItem => {
-  return props.type === 'knowledge-base'
-}
-
-const isUserItem = (item: unknown): item is MentionUserItem => {
-  return props.type === 'user'
-}
-
-const isTextItem = (item: unknown): item is MentionTextItem => {
-  return props.type === 'text'
-}
-
 const { selectItem, selectedIndex, onKeyDown } = useNavigateOptions(toRef(props, 'items'), (item) =>
   props.command(item as MentionUserItem),
 )
@@ -79,7 +67,10 @@ const emptyMessage = computed(() => {
     role="listbox"
   >
     <li
-      v-for="(item, index) in items"
+      v-for="(item, index) in items as
+        | MentionKnowledgeBaseItem[]
+        | MentionTextItem[]
+        | MentionUserItem[]"
       :id="`mention-${index}`"
       :key="item.id"
       class="group cursor-pointer px-4 py-2 hover:bg-blue-600 dark:hover:bg-blue-900"
@@ -90,41 +81,45 @@ const emptyMessage = computed(() => {
       @click="selectItem(index)"
       @keydown.space.prevent="selectItem(index)"
     >
-      <div v-if="isKnowledgeBaseItem(item)" class="flex flex-col gap-px">
+      <div v-if="type === 'knowledge-base'" class="flex flex-col gap-px">
         <CommonLabel
           class="inline! truncate text-stone-200 group-hover:text-black dark:text-neutral-500 dark:group-hover:text-white"
           :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
           size="small"
         >
-          {{ getKnowledgeBaseItemBreadcrumb(item) }}
+          {{ getKnowledgeBaseItemBreadcrumb(item as MentionKnowledgeBaseItem) }}
         </CommonLabel>
         <CommonLabel
           class="inline! truncate group-hover:text-black dark:group-hover:text-white"
           :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
         >
-          {{ item.title }}
-          {{ item.maybeLocale ? `(${item.maybeLocale})` : '' }}
+          {{ (item as MentionKnowledgeBaseItem).title }}
+          {{
+            (item as MentionKnowledgeBaseItem).maybeLocale
+              ? `(${(item as MentionKnowledgeBaseItem).maybeLocale})`
+              : ''
+          }}
         </CommonLabel>
       </div>
-      <div v-else-if="isTextItem(item)" class="flex items-center gap-2">
+      <div v-else-if="type === 'text'" class="flex items-center gap-2">
         <CommonLabel
           class="inline! truncate group-hover:text-black dark:group-hover:text-white"
           :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
-          >{{ item.name }}</CommonLabel
+          >{{ (item as MentionTextItem).name }}</CommonLabel
         >
         <span
-          v-if="item.keywords"
+          v-if="(item as MentionTextItem).keywords"
           class="truncate rounded-sm bg-white p-1 font-mono text-xs text-stone-200 group-hover:text-black dark:bg-black dark:text-neutral-500 dark:group-hover:text-white"
           :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
         >
-          {{ item.keywords }}
+          {{ (item as MentionTextItem).keywords }}
         </span>
       </div>
-      <div v-else-if="isUserItem(item)" class="flex items-center gap-2">
+      <div v-else-if="type === 'user'" class="flex items-center gap-2">
         <CommonUserAvatar
           :entity="item"
           :class="{
-            'opacity-30': !item.active,
+            'opacity-30': !(item as MentionUserItem).active,
           }"
           size="xs"
         />
@@ -132,14 +127,14 @@ const emptyMessage = computed(() => {
           class="inline! truncate group-hover:text-black dark:group-hover:text-white"
           :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
         >
-          {{ item.fullname }}
+          {{ (item as MentionUserItem).fullname }}
         </CommonLabel>
         <CommonLabel
-          v-if="item.email"
+          v-if="(item as MentionUserItem).email"
           class="truncate text-stone-200 group-hover:text-black dark:text-neutral-500 dark:group-hover:text-white"
           :class="{ 'text-black! dark:text-white!': selectedIndex === index }"
         >
-          – {{ item.email }}
+          – {{ (item as MentionUserItem).email }}
         </CommonLabel>
       </div>
     </li>
