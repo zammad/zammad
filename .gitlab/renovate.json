@@ -29,7 +29,7 @@
     },
     {
       "matchCategories": ["js"],
-      "assignees": ["dk"],
+      "assignees": ["fl"],
       "addLabels": ["javascript"],
       "rangeStrategy": "bump"
     },
@@ -45,7 +45,6 @@
     },
     {
       "matchCategories": ["js"],
-      "assignees": ["fl"],
       "matchFileNames": [".cypress/package.json"],
       "labels": ["cypress"]
     },
@@ -69,7 +68,6 @@
     },
     {
       "matchCategories": ["js"],
-      "assignees": ["fl"],
       "matchPackageNames": [
         "vitest",
         "jsdom",
@@ -83,7 +81,6 @@
     },
     {
       "matchCategories": ["js"],
-      "assignees": ["fl"],
       "groupName": "Vite packages",
       "groupSlug": "vite-related",
       "matchPackageNames": ["/^vite/", "/^@vitejs/", "!vitest"]
@@ -113,7 +110,6 @@
     },
     {
       "matchCategories": ["js"],
-      "assignees": ["fl"],
       "matchPackageNames": [
         "prosemirror-model",
         "prosemirror-state",
