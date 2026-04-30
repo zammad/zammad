@@ -16105,15 +16105,21 @@ div.accounted-time-value {
   }
 }
 
-/* AGM editor bubble: color palette dropup + ensure new bubble icons render visibly */
+/* AGM editor bubble: color palette dropup + ensure new bubble icons render visibly in BOTH light and dark themes */
 .bubble-menu-item .icon-eyedropper,
 .bubble-menu-item .icon-marker,
 .bubble-menu-item .icon-arrow-left,
 .bubble-menu-item .icon-arrow-right,
 .bubble-menu-item .icon-horizontal-rule,
-.bubble-menu-item .icon-list {
-  fill: currentColor;
-  color: white;
+.bubble-menu-item .icon-list,
+.bubble-menu-item .icon-eyedropper *,
+.bubble-menu-item .icon-marker *,
+.bubble-menu-item .icon-arrow-left *,
+.bubble-menu-item .icon-arrow-right *,
+.bubble-menu-item .icon-horizontal-rule *,
+.bubble-menu-item .icon-list * {
+  fill: currentColor !important;
+  stroke: currentColor !important;
 }
 
 .bubble-color-palette {
