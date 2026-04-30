@@ -73,10 +73,14 @@ class App.GenericHistory extends App.ControllerModal
           created_by: App.User.find( item.created_by_id )
           sources: []
 
-      recordsSource = _.findWhere(newItem.sources, { sourceable_id: item.sourceable_id })
+      recordsSource = _.findWhere(newItem.sources, {
+        sourceable_id: item.sourceable_id,
+        sourceable_type_raw: item.sourceable_type
+      })
       if !recordsSource
         recordsSource = {
           sourceable_id: item.sourceable_id,
+          sourceable_type_raw: item.sourceable_type,
           sourceable_type: @sourceableTypeDisplayName(item.sourceable_type),
           sourceable_name: item.sourceable_name,
           users: []
