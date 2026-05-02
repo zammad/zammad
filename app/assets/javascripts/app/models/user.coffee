@@ -444,30 +444,10 @@ class App.User extends App.Model
   @current: App.Session.get
 
   displayName: ->
-    format = App.Config.get('ui_user_name_format') or 'first_last'
-    parts =
-      if format == 'last_first'
-        [@lastname, @firstname]
-      else
-        [@firstname, @lastname]
-    parts = _.map(parts, (part) -> part?.toString().trim())
-    name = _.compact(parts).join(' ')
-    return name   if name
-    return @email if @email
-    return @phone if @phone
-    return @mobile if @mobile
-    return @login if @login
-    '-'
+    @displayNameFromParts() or @displayNameFallback()
 
   displayNameLong: ->
-    format = App.Config.get('ui_user_name_format') or 'first_last'
-    parts =
-      if format == 'last_first'
-        [@lastname, @firstname]
-      else
-        [@firstname, @lastname]
-    parts = _.map(parts, (part) -> part?.toString().trim())
-    name = _.compact(parts).join(' ')
+    name = @displayNameFromParts()
     if name
       if @organization
         org =
@@ -481,6 +461,22 @@ class App.User extends App.Model
         department = @department?.toString().trim()
         name = "#{name} (#{department})" if department
       return name
+    @displayNameFallback()
+
+  displayNameFromParts: ->
+    format = App.Config.get('ui_user_name_format') or 'first_last'
+    [parts, separator] =
+      switch format
+        when 'last_first'
+          [[@lastname, @firstname], ' ']
+        when 'last_first_comma'
+          [[@lastname, @firstname], ', ']
+        else
+          [[@firstname, @lastname], ' ']
+    parts = _.map(parts, (part) -> part?.toString().trim())
+    _.compact(parts).join(separator)
+
+  displayNameFallback: ->
     return @email  if @email
     return @phone  if @phone
     return @mobile if @mobile

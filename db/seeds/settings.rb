@@ -268,6 +268,7 @@ Setting.create_or_update(
         options:   {
           first_last: __('John Smith'),
           last_first: __('Smith John'),
+          last_first_comma: __('Smith, John'),
         },
         translate: true,
       },

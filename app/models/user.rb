@@ -156,8 +156,21 @@ returns
     # Email sending: always first name last name (regardless of setting)
     format = recipient_line ? 'first_last' : Setting.get('ui_user_name_format')
 
-    parts = format == 'last_first' ? [lastname, firstname] : [firstname, lastname]
-    name = parts.compact.join(' ').strip
+    parts, separator = case format
+                       when 'last_first'
+                         [[lastname, firstname], ' ']
+                       when 'last_first_comma'
+                         [[lastname, firstname], ', ']
+                       else
+                         [[firstname, lastname], ' ']
+                       end
+
+    name = parts
+      .compact
+      .map(&:strip)
+      .reject(&:blank?)
+      .join(separator)
+      .strip
 
     if name.blank? && email.present? && email_fallback
       return email
