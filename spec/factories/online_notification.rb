@@ -12,6 +12,8 @@ FactoryBot.define do
     type_lookup_id   { TypeLookup.by_name(type_name) }
     seen             { false }
     user_id          { 1 }
+    meta             { {} }
+
     created_by_id    { 1 }
     updated_by_id    { 1 }
     created_at       { Time.zone.now }

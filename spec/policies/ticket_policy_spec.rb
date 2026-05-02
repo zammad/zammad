@@ -237,7 +237,7 @@ describe TicketPolicy do
       let(:user)   { create(:customer, organization: create(:organization)) }
 
       it { is_expected.to forbid_action(:follow_up) }
-      it { expect { policy.follow_up? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableEntity) }
+      it { expect { policy.follow_up? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableContent) }
     end
 
     context 'when groups.follow_up_possible is new_ticket_after_certain_time' do
@@ -256,7 +256,7 @@ describe TicketPolicy do
         end
 
         it { is_expected.to forbid_action(:follow_up) }
-        it { expect { policy.follow_up? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableEntity) }
+        it { expect { policy.follow_up? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableContent) }
       end
     end
 
@@ -302,6 +302,7 @@ describe TicketPolicy do
       let(:user)   { create(:agent_and_customer) }
       let(:record) { create(:ticket, customer: user) }
 
+      it { is_expected.to permit_actions(%i[update]) }
       it { is_expected.to forbid_actions(%i[agent_read_access agent_update_access agent_create_access]) }
     end
 
@@ -313,7 +314,7 @@ describe TicketPolicy do
       end
 
       it { is_expected.to permit_actions(%i[agent_read_access]) }
-      it { is_expected.to forbid_actions(%i[agent_update_access agent_create_access]) }
+      it { is_expected.to forbid_actions(%i[update agent_update_access agent_create_access]) }
     end
 
     context 'when user is agent-customer with agent change access to ticket' do
@@ -324,13 +325,13 @@ describe TicketPolicy do
       end
 
       it { is_expected.to forbid_actions(%i[agent_read_access agent_create_access]) }
-      it { is_expected.to permit_actions(%i[agent_update_access]) }
+      it { is_expected.to permit_actions(%i[update agent_update_access]) }
     end
 
     context 'when user is agent-customer with full agent access to ticket' do
       let(:user) { create(:agent_and_customer, groups: [record.group]) }
 
-      it { is_expected.to permit_actions(%i[agent_read_access agent_update_access agent_create_access]) }
+      it { is_expected.to permit_actions(%i[update agent_read_access agent_update_access agent_create_access]) }
     end
   end
 

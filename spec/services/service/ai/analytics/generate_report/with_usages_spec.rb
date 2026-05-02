@@ -10,16 +10,18 @@ RSpec.describe Service::AI::Analytics::GenerateReport::WithUsages do
     before { ai_analytics_run }
 
     context 'when format is xlsx' do
+      subject(:service_result) { described_class.execute(format: :xlsx) }
+
       it 'returns the report as XLSX' do
-        expect(described_class.new(format: :xlsx).execute)
-          .to be_a(String)
+        expect(service_result).to be_a(String)
       end
     end
 
     context 'when format is json' do
+      subject(:service_result) { described_class.execute(format: :json) }
+
       it 'returns the report as JSON' do
-        response = described_class.new(format: :json).execute
-        expect(JSON.parse(response))
+        expect(JSON.parse(service_result))
           .to contain_exactly(include('id' => ai_analytics_run.id))
       end
     end

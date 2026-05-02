@@ -24,7 +24,7 @@ describe('ArticleBubbleBlockedContentWarning', () => {
   })
 
   // TODO: still skipped?!
-  it.skip('shows if there is blocked content', () => {
+  it.todo('shows if there is blocked content', () => {
     const wrapper = renderComponent(ArticleBubbleBlockedContentWarning, {
       router: true,
       props: {

@@ -3,20 +3,20 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::PasswordReset::Verify do
-  subject(:service) { described_class.new(token: token) }
+  subject(:service_result) { described_class.execute(token:) }
 
   let(:user)  { create(:user) }
   let(:token) { User.password_reset_new_token(user.login)[:token].token }
 
   shared_examples 'raising an error' do |klass, message|
     it 'raises an error' do
-      expect { service.execute }.to raise_error(klass, message)
+      expect { service_result }.to raise_error(klass, message)
     end
   end
 
   shared_examples 'returning user' do
     it 'returns user' do
-      expect(service.execute).to eq(user)
+      expect(service_result).to eq(user)
     end
   end
 

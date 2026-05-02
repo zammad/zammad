@@ -331,7 +331,7 @@ const {
   isActive: isDragAndDropActive,
   cursorPosition,
   dragPreviewData,
-  dropSuccessTargetId,
+  dropSuccessTargetEntity,
   reactivateListeners,
   deactivateListeners,
 } = useDragAndDropBulk({
@@ -470,7 +470,7 @@ setOnSuccessCallback(() => {
         v-if="isDragAndDropActive"
         :cursor-position="cursorPosition"
         :preview-data="dragPreviewData"
-        :drop-success-target-id="dropSuccessTargetId"
+        :drop-success-target-entity="dropSuccessTargetEntity"
       />
     </div>
   </LayoutContent>

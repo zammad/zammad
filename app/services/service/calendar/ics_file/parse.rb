@@ -1,7 +1,13 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Calendar::IcsFile::Parse < Service::BaseWithCurrentUser
-  def execute(file:)
+class Service::Calendar::IcsFile::Parse < Service::Base
+  attr_reader :file
+
+  def initialize(file:)
+    @file = file
+  end
+
+  def execute
     parse_calendar(file)
   end
 

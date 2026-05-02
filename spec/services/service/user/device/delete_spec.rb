@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::Device::Delete do
-  subject(:service) { described_class.new(user: agent, device: device) }
+  subject(:service_result) { described_class.with_current_user(agent).execute(device:) }
 
   context 'with given user having one device and one related session' do
     let(:agent)  { create(:agent) }
@@ -17,7 +17,7 @@ RSpec.describe Service::User::Device::Delete do
                'persistent'              => true
              })
 
-      expect { service.execute }.to change(UserDevice, :count).by(-1).and change(Session, :count).by(-1)
+      expect { service_result }.to change(UserDevice, :count).by(-1).and change(Session, :count).by(-1)
     end
   end
 
@@ -50,7 +50,7 @@ RSpec.describe Service::User::Device::Delete do
                     })
       end
 
-      expect { service.execute }.to change(UserDevice, :count).by(-1).and change(Session, :count).by(-1 * sessions)
+      expect { service_result }.to change(UserDevice, :count).by(-1).and change(Session, :count).by(-1 * sessions)
     end
   end
 end

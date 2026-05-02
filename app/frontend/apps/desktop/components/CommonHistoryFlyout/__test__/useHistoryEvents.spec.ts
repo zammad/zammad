@@ -802,7 +802,7 @@ describe('useHistoryEvents', () => {
           const { getEventOutput } = useHistoryEvents()
 
           expect(getEventOutput(event)).toEqual({
-            actionName: 'reacted',
+            actionName: 'reacted-with',
             component: HistoryEventDetailsReaction,
             description: '',
             details: textTruncate(article.body),

@@ -17,14 +17,13 @@ module Gql::Mutations
     def resolve(method_name:, token:, payload:, configuration:)
       token_object = verify_token!(token)
 
-      verify_method_configuration = Service::User::TwoFactor::VerifyMethodConfiguration.new(
-        user:          context.current_user,
-        method_name:,
-        payload:       payload.is_a?(Hash) ? payload.symbolize_keys! : payload,
-        configuration: configuration.symbolize_keys!
-      )
-
-      result = verify_method_configuration.execute
+      result = Service::User::TwoFactor::VerifyMethodConfiguration
+        .with_current_user(context.current_user)
+        .execute(
+          method_name:,
+          payload:       payload.is_a?(Hash) ? payload.symbolize_keys! : payload,
+          configuration: configuration.symbolize_keys!
+        )
 
       token_object.destroy
 

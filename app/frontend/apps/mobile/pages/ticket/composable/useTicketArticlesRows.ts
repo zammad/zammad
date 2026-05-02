@@ -11,6 +11,8 @@ import { useTicketInformation } from './useTicketInformation.ts'
 
 import type { Ref } from 'vue'
 
+export const ARTICLE_PAGE_SIZE = 100
+
 interface ArticleRow {
   type: 'article-bubble'
   article: TicketArticle
@@ -99,10 +101,12 @@ export const useTicketArticleRows = (articles: Ref<TicketArticle[]>, totalCount:
       }
       // after "description" (always first) article is added, add "more" button
       if (index === 0 && needMoreButton) {
+        const remainingCount = totalCount.value - articles.value.length
+
         rows.push({
           type: 'more',
           key: 'more',
-          count: totalCount.value - articles.value.length,
+          count: remainingCount > ARTICLE_PAGE_SIZE ? ARTICLE_PAGE_SIZE : remainingCount,
         })
       }
       const next = articles.value[index + 1]

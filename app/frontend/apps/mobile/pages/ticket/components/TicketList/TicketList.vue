@@ -129,7 +129,7 @@ useInfiniteScroll(
           name="load_more"
           @click="loadMore"
         >
-          {{ $t('load %s more', TICKETS_COUNT) }}
+          {{ $t('Load %s more', TICKETS_COUNT) }}
         </FormKit>
       </div>
     </section>

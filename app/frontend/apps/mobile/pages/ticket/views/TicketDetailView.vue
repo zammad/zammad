@@ -26,6 +26,7 @@ import { useTicketEditForm } from '#shared/entities/ticket/composables/useTicket
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import { TicketUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
 import type { TicketUpdateFormData } from '#shared/entities/ticket/types.ts'
+import type { AppSpecificTicketArticleType } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 import UserError from '#shared/errors/UserError.ts'
 import type {
@@ -93,10 +94,12 @@ const {
   currentArticleType,
   ticketSchema,
   articleSchema,
+  currentSchemaArticleType,
   securityIntegration,
   isTicketEditable,
   articleTypeHandler,
   articleTypeSelectHandler,
+  additionalAddArticleNotes,
 } = useTicketEditForm(ticket, form)
 
 const needSpaceForSaveBanner = computed(() => isTicketEditable.value && isDirty.value)
@@ -283,7 +286,17 @@ const ticketEditSchemaData = reactive({
   securityIntegration,
   newTicketArticleRequested,
   newTicketArticlePresent,
-  currentArticleType,
+  currentArticleType: currentSchemaArticleType,
+  existingAdditionalAddArticleNotes: () => {
+    return Object.keys(additionalAddArticleNotes.value).length > 0
+  },
+  getAdditionalAddArticleNote: (articleType?: AppSpecificTicketArticleType) => {
+    if (!articleType) return undefined
+
+    const accessor = `${articleType.value}-${articleType.internal ? 'internal' : 'public'}`
+
+    return additionalAddArticleNotes.value[accessor]
+  },
 })
 
 const { isOpened: commonSelectOpened } = useCommonSelect()

@@ -31,6 +31,10 @@ export const mockOnlineNotification = (
     },
     typeName: 'update',
     objectName: 'Ticket',
+    meta: {
+      __typename: 'OnlineNotificationMeta',
+      createdByAi: false,
+    },
     metaObject: {
       __typename: 'Ticket',
       id: '111',

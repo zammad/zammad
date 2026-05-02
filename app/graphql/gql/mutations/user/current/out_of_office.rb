@@ -12,8 +12,8 @@ module Gql::Mutations
 
     def resolve(input:)
       Service::User::OutOfOffice
-        .new(context.current_user, **input)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(**input)
 
       { success: true }
     end

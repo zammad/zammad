@@ -57,8 +57,8 @@ describe Controllers::MentionsControllerPolicy do
 
     it { is_expected.to forbid_actions(%i[index create]) }
 
-    it { expect { policy.index? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableEntity) }
-    it { expect { policy.create? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableEntity) }
+    it { expect { policy.index? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableContent) }
+    it { expect { policy.create? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableContent) }
   end
 
   context 'with mention' do

@@ -9,7 +9,7 @@ class Certificate::X509::SMIME < Certificate::X509
     begin
       new(pem)
     rescue OpenSSL::X509::CertificateError
-      raise Exceptions::UnprocessableEntity, __('The certificate is not valid for S/MIME usage. Please check the certificate format.')
+      raise Exceptions::UnprocessableContent, __('The certificate is not valid for S/MIME usage. Please check the certificate format.')
     end
   end
 
@@ -71,6 +71,6 @@ class Certificate::X509::SMIME < Certificate::X509
     Rails.logger.error { "Certificate::X509::SMIME: #{message}" }
     Rails.logger.error { "Certificate::X509::SMIME:\n #{to_text}" }
 
-    raise Exceptions::UnprocessableEntity, message
+    raise Exceptions::UnprocessableContent, message
   end
 end

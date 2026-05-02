@@ -3,12 +3,11 @@
 import { ViewTransitions } from '#mobile/components/transition/TransitionViewNavigation/types.ts'
 import { useViewTransition } from '#mobile/components/transition/TransitionViewNavigation/useViewTransition.ts'
 
-import type { NavigationGuard, RouteLocationNormalized, NavigationGuardNext } from 'vue-router'
+import type { NavigationGuard, RouteLocationNormalized } from 'vue-router'
 
 const transitionViewGuard: NavigationGuard = (
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
-  next: NavigationGuardNext,
 ) => {
   // For now we need to add a workaround solution with a route level for the different transition types
   // until the following feature was added: https://github.com/vuejs/vue-router/issues/3453.
@@ -28,7 +27,7 @@ const transitionViewGuard: NavigationGuard = (
 
   setViewTransition(newViewTransition)
 
-  next()
+  return true
 }
 
 export default transitionViewGuard

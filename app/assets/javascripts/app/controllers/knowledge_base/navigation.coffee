@@ -66,7 +66,7 @@ class App.KnowledgeBaseNavigation extends App.Controller
     if action is 'search'
       App.i18n.translateInline 'Search'
     else if !object
-      App.i18n.translateInline 'Not found'
+      App.i18n.translateInline 'Not Found'
 
   dontRenderFor: (object) ->
     if object instanceof App.Model

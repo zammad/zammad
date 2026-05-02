@@ -31,7 +31,7 @@ RSpec.describe AI::TextTool, type: :model do
 
     it 'returns the response from Service::AI::Analytics::AggregateSatisfactionRatio' do
       allow(Service::AI::Analytics::AggregateSatisfactionRatio)
-        .to receive_message_chain(:new, :execute) { expected_result } # rubocop:disable RSpec/MessageChain
+        .to receive(:execute) { expected_result }
 
       expect(tool.satisfaction_ratio).to eq(expected_result)
     end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::TwoFactor::InitiateMethodConfiguration do
-  subject(:service) { described_class.new(user:, method_name:) }
+  subject(:service_result) { described_class.with_current_user(user).execute(method_name:) }
 
   let(:user) { create(:agent) }
 
@@ -12,7 +12,7 @@ RSpec.describe Service::User::TwoFactor::InitiateMethodConfiguration do
 
     context 'when the given method is not enabled' do
       it 'raises error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'The two-factor authentication method is not enabled.')
+        expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'The two-factor authentication method is not enabled.')
       end
     end
 
@@ -22,7 +22,7 @@ RSpec.describe Service::User::TwoFactor::InitiateMethodConfiguration do
       end
 
       it 'returns secret and provisioning_uri' do
-        expect(service.execute).to include(:secret).and include(:provisioning_uri)
+        expect(service_result).to include(:secret).and include(:provisioning_uri)
       end
     end
   end
@@ -31,7 +31,7 @@ RSpec.describe Service::User::TwoFactor::InitiateMethodConfiguration do
     let(:method_name) { 'nonsense' }
 
     it 'raises error' do
-      expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'The given two-factor method does not exist.')
+      expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'The given two-factor method does not exist.')
     end
   end
 end

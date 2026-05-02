@@ -25,7 +25,7 @@ module Gql::Mutations
 
       {
         ticket: Service::Ticket::Update
-          .new(current_user: context.current_user)
+          .with_current_user(context.current_user)
           .execute(ticket: ticket, ticket_data: input, skip_validators: meta&.dig(:skip_validators), macro: meta&.dig(:macro))
       }
     rescue Exceptions::InvalidAttribute => e

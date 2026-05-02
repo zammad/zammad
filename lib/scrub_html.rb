@@ -58,7 +58,7 @@ class ScrubHtml
     return if charset.match?(REGEXP_UTF8) # Ruby string is UTF-8 anyway
 
     @string = string.encode(charset)
-  rescue Encoding::ConverterNotFoundError
+  rescue EncodingError
     # ignore encoding errors
   end
 end

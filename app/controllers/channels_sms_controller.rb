@@ -53,7 +53,7 @@ class ChannelsSmsController < ApplicationController
   end
 
   def webhook
-    raise Exceptions::UnprocessableEntity, 'token param missing' if params['token'].blank?
+    raise Exceptions::UnprocessableContent, 'token param missing' if params['token'].blank?
 
     ApplicationHandleInfo.in_context('sms') do
       channel = nil

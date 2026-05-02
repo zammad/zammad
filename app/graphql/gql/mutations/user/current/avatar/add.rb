@@ -24,7 +24,7 @@ module Gql::Mutations
     private
 
     def add(original, resized)
-      Service::Avatar::Add.new(current_user: context.current_user).execute(full_image: original, resize_image: resized)
+      Service::Avatar::Add.with_current_user(context.current_user).execute(full_image: original, resize_image: resized)
     end
   end
 end

@@ -177,7 +177,7 @@ RSpec.describe 'Api Auth From', type: :request do
       }
       authenticated_as(admin, from: customer.email)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.header).not_to be_key('Access-Control-Allow-Origin')
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('No lookup value found for \'group\': "secret1234"')

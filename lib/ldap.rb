@@ -129,10 +129,10 @@ class Ldap
     return ldap if ldap.bind
 
     result = ldap.get_operation_result
-    raise Exceptions::UnprocessableEntity, "Can't bind to '#{@host}', #{result.code}, #{result.message}"
+    raise Exceptions::UnprocessableContent, "Can't bind to '#{@host}', #{result.code}, #{result.message}"
   rescue => e
     Rails.logger.error e
-    raise Exceptions::UnprocessableEntity, "Can't connect to '#{@host}' on port '#{@port}', #{e}"
+    raise Exceptions::UnprocessableContent, "Can't connect to '#{@host}' on port '#{@port}', #{e}"
   end
 
   def connection_params

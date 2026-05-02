@@ -48,7 +48,7 @@ RSpec.describe Gql::Mutations::Ticket::Update::Bulk, :aggregate_failures, type: 
 
       context 'when a ticket update fails' do
         before do
-          allow_any_instance_of(Service::Ticket::Update).to receive(:execute).and_wrap_original do |m, *args, **kwargs|
+          allow(Service::Ticket::Update).to receive(:execute).and_wrap_original do |m, *args, **kwargs|
             if kwargs[:ticket].title == 'Ticket 2'
               raise ActiveRecord::RecordNotSaved.new('test failure during update of second ticket', ticket2)
             end
@@ -179,7 +179,7 @@ RSpec.describe Gql::Mutations::Ticket::Update::Bulk, :aggregate_failures, type: 
 
           context 'when one ticket update fails' do
             before do
-              allow_any_instance_of(Service::Ticket::Update).to receive(:execute).and_wrap_original do |m, *args, **kwargs|
+              allow(Service::Ticket::Update).to receive(:execute).and_wrap_original do |m, *args, **kwargs|
                 if kwargs[:ticket].title == 'Ticket 2'
                   raise ActiveRecord::RecordNotSaved.new('test failure during update of second ticket', ticket2)
                 end

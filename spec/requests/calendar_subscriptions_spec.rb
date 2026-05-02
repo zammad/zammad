@@ -109,7 +109,7 @@ RSpec.describe 'iCal endpoints', type: :request do
       get '/ical/tickets/xxx'
 
       expect(json_response['error']).to eq('An unknown method name was requested.')
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 end

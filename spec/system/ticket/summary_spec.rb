@@ -290,7 +290,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
         # Reload the app to ensure the summary subscriptions are not set up
         refresh
 
-        allow(Service::Ticket::AIAssistance::Summarize).to receive(:new).and_call_original
+        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute).and_call_original
 
         visit "ticket/zoom/#{ticket.id}"
 
@@ -299,7 +299,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
         end
 
         # Expect exactly once, this checks if non-active taskbar is not subscribing on app load
-        expect(Service::Ticket::AIAssistance::Summarize).to have_received(:new).once
+        expect(Service::Ticket::AIAssistance::Summarize).to have_received(:execute).once
       end
     end
 
@@ -309,17 +309,17 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
       it 'makes a request for a summary on clicking on sidebar' do
         visit '#dashboard'
 
-        allow(Service::Ticket::AIAssistance::Summarize).to receive(:new).and_call_original
+        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute).and_call_original
 
         visit "ticket/zoom/#{ticket.id}"
 
         expect(page).to have_text ticket.title
 
-        expect(Service::Ticket::AIAssistance::Summarize).not_to have_received(:new)
+        expect(Service::Ticket::AIAssistance::Summarize).not_to have_received(:execute)
 
         click '.tabsSidebar-tab[data-tab=summary]'
 
-        expect(Service::Ticket::AIAssistance::Summarize).to have_received(:new).once
+        expect(Service::Ticket::AIAssistance::Summarize).to have_received(:execute).once
       end
     end
 
@@ -333,17 +333,17 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
       it 'uses the group setting over the default' do
         visit '#dashboard'
 
-        allow(Service::Ticket::AIAssistance::Summarize).to receive(:new).and_call_original
+        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute).and_call_original
 
         visit "ticket/zoom/#{ticket.id}"
 
         expect(page).to have_text ticket.title
 
-        expect(Service::Ticket::AIAssistance::Summarize).not_to have_received(:new)
+        expect(Service::Ticket::AIAssistance::Summarize).not_to have_received(:execute)
 
         click '.tabsSidebar-tab[data-tab=summary]'
 
-        expect(Service::Ticket::AIAssistance::Summarize).to have_received(:new).once
+        expect(Service::Ticket::AIAssistance::Summarize).to have_received(:execute).once
       end
     end
   end

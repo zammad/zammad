@@ -3,25 +3,24 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id } do
-  subject(:service) { described_class.new(current_user: user) }
+  subject(:service_result) { described_class.with_current_user(user).execute(article_data: payload, ticket: ticket) }
 
   let(:ticket)  { create(:ticket, customer: create(:agent)) }
   let(:user)    { create(:agent, groups: [ticket.group]) }
   let(:payload) { { body: 'test' } }
-  let(:article) { service.execute(article_data: payload, ticket: ticket) }
 
   describe '#execute' do
     it 'creates an article' do
-      expect(article).to be_persisted
+      expect(service_result).to be_persisted
     end
 
     it 'creates an article even if contains wrong ticket id' do
       payload[:ticket_id] = 123_456
 
-      expect(article).to be_persisted.and(have_attributes(ticket_id: ticket.id))
+      expect(service_result).to be_persisted.and(have_attributes(ticket_id: ticket.id))
     end
 
-    describe 'time accounting', :aggregate_failures do
+    describe 'time accounting' do
       let(:time_accounting_enabled) { true }
 
       before do
@@ -31,8 +30,7 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
       end
 
       it 'adds time accounting without type' do
-        expect(article.ticket_time_accounting.time_unit).to be_present
-        expect(article.ticket_time_accounting.type).to be_nil
+        expect(service_result.ticket_time_accounting).to have_attributes(time_unit: be_present, type: nil)
       end
 
       context 'with accounting type' do
@@ -43,8 +41,7 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         end
 
         it 'adds time accounting with type' do
-          expect(article.ticket_time_accounting.time_unit).to be_present
-          expect(article.ticket_time_accounting.type).to eq(accounted_time_type)
+          expect(service_result.ticket_time_accounting).to have_attributes(time_unit: be_present, type: accounted_time_type)
         end
 
       end
@@ -53,7 +50,7 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         let(:time_accounting_enabled) { false }
 
         it 'does not save article and raises error' do
-          expect { article }
+          expect { service_result }
             .to raise_error(%r{Time Accounting is not enabled})
         end
       end
@@ -63,26 +60,26 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
       it 'translates to and cc fields from arrays to strings' do
         payload.merge!({ to: %w[a b], cc: %w[b c] })
 
-        expect(article).to have_attributes(to: 'a, b', cc: 'b, c')
+        expect(service_result).to have_attributes(to: 'a, b', cc: 'b, c')
       end
 
       it 'handles string and nil values' do
         payload.merge!({ to: 'a,b', cc: nil })
 
-        expect(article).to have_attributes(to: 'a,b', cc: '')
+        expect(service_result).to have_attributes(to: 'a,b', cc: '')
       end
     end
 
     describe 'sender processing' do
       context 'when user is agent' do
         it 'agent is set to agent' do
-          expect(article.sender.name).to eq 'Agent'
+          expect(service_result.sender.name).to eq 'Agent'
         end
 
         it 'preserves original value if given' do
           payload[:sender] = 'Customer'
 
-          expect(article.sender.name).to eq 'Customer'
+          expect(service_result.sender.name).to eq 'Customer'
         end
       end
 
@@ -91,7 +88,7 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         let(:ticket) { create(:ticket, customer: create(:customer)) }
 
         it 'ensures sender is set to customer' do
-          expect(article.sender.name).to eq 'Customer'
+          expect(service_result.sender.name).to eq 'Customer'
         end
       end
 
@@ -101,7 +98,7 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         let(:user) { ticket.customer }
 
         it 'ensures sender is set to customer' do
-          expect(article.sender.name).to eq 'Agent'
+          expect(service_result.sender.name).to eq 'Agent'
         end
       end
     end
@@ -114,13 +111,13 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         it 'ensures internal is false' do
           payload[:internal] = true
 
-          expect(article.internal).to be_falsey
+          expect(service_result.internal).to be_falsey
         end
 
         it 'changes type from web to note' do
           payload[:type] = 'phone'
 
-          expect(article.type.name).to eq('note')
+          expect(service_result.type.name).to eq('note')
         end
       end
 
@@ -132,13 +129,13 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         it 'ensures internal is false' do
           payload[:internal] = false
 
-          expect(article.internal).to be_falsey
+          expect(service_result.internal).to be_falsey
         end
 
         it 'changes type from web to note' do
           payload[:type] = 'phone'
 
-          expect(article.type.name).to eq('phone')
+          expect(service_result.type.name).to eq('phone')
         end
       end
 
@@ -146,13 +143,13 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         it 'allows internal to be true' do
           payload[:internal] = true
 
-          expect(article.internal).to be_truthy
+          expect(service_result.internal).to be_truthy
         end
 
         it 'applies no changes to type' do
           payload[:type] = 'phone'
 
-          expect(article.type.name).to eq('phone')
+          expect(service_result.type.name).to eq('phone')
         end
       end
     end
@@ -161,10 +158,10 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
       it 'adds attachments with inlines' do
         payload[:content_type] = 'text/html'
         payload[:body] = 'some body <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
-  AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
-  9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" />'
+AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
+9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" />'
 
-        expect(article.attachments).to be_one
+        expect(service_result.attachments).to be_one
       end
 
       context 'when attachment is uploaded' do
@@ -188,7 +185,7 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
           end
         end
 
-        it 'adds attachments with inlines and updates taskbar state', aggregate_failures: true do
+        it 'adds attachments with inlines and updates taskbar state' do
           payload[:content_type] = 'text/html'
           payload[:attachments] = {
             files:   [],
@@ -196,14 +193,12 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
           }
           payload[:body] = "some body <img src='/api/v1/attachments/#{Store.last.id}'> alt='Red dot' />"
 
-          expect(article.attachments).to be_one
-
-          expect(taskbar.reload.state).to eq({})
+          expect([service_result.attachments.count, taskbar.reload.state]).to eq([1, {}])
         end
       end
     end
 
-    describe 'mentions', aggregate_failures: true do
+    describe 'mentions' do
       def text_blob_with(user)
         "Lorem ipsum dolor <a data-mention-user-id='#{user.id}'>#{user.fullname}</a>"
       end
@@ -215,7 +210,7 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
           let(:body) { text_blob_with(user) }
 
           it 'create ticket with mentions' do
-            expect { article }.to change(Mention, :count).by(1)
+            expect { service_result }.to change(Mention, :count).by(1)
           end
         end
 
@@ -223,9 +218,9 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
           let(:body) { text_blob_with(create(:agent)) }
 
           it 'raises an error with one of mentions being invalid' do
-            expect { article }
+            expect { service_result }
               .to raise_error(ActiveRecord::RecordInvalid)
-            expect(Mention.count).to eq(0)
+              .and not_change(Mention, :count)
           end
         end
       end
@@ -235,9 +230,9 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         let(:body) { text_blob_with(create(:agent, groups: [ticket.group])) }
 
         it 'raise an error if author does not have permissions to create mentions' do
-          expect { article }
+          expect { service_result }
             .to raise_error(Pundit::NotAuthorizedError)
-          expect(Mention.count).to eq(0)
+            .and not_change(Mention, :count)
         end
       end
     end

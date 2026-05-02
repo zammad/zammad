@@ -2,7 +2,19 @@
 
 require 'rails_helper'
 
+PENDING_REMINDER_CATEGORY = :pending_reminder
+PENDING_ACTION_CATEGORY = :pending_action
+
+INVALID_PENDING_MACRO_NAMES = {
+  PENDING_REMINDER_CATEGORY => 'pending reminder without date'.freeze,
+  PENDING_ACTION_CATEGORY   => 'pending action without date'.freeze,
+}.freeze
+
 RSpec.describe 'Macro', authenticated_as: :user, type: :request do
+  def persisted_pending_time_for(macro)
+    Time.zone.parse(macro.perform.dig('ticket.pending_time', 'value').to_s)
+  end
+
   let(:successful_params) do
     {
       name:            'asd',
@@ -18,9 +30,32 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
     }
   end
 
+  def macro_params_pending_without_time(category)
+    successful_params.deep_merge(
+      name:    INVALID_PENDING_MACRO_NAMES.fetch(category),
+      perform: {
+        'ticket.state_id': {
+          value: Ticket::State.by_category(category).first.id.to_s
+        }
+      }
+    )
+  end
+
+  shared_examples 'persists pending time' do
+    it 'accepts the request' do
+      expect(response).to have_http_status(success_status)
+    end
+
+    it 'persists the pending time' do
+      expect(persisted_pending_time_for(reloaded_macro)).to be_within(1.second).of(pending_time)
+    end
+  end
+
   describe '#create' do
+    let(:request_params) { successful_params }
+
     before do
-      post '/api/v1/macros', params: successful_params, as: :json
+      post '/api/v1/macros', params: request_params, as: :json
     end
 
     context 'when user is not allowed to create macro' do
@@ -38,13 +73,43 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
         expect(response).to have_http_status(:created)
       end
     end
+
+    [PENDING_REMINDER_CATEGORY, PENDING_ACTION_CATEGORY].each do |category|
+      context "when #{category} macro has no pending time" do
+        let(:user) { create(:admin) }
+        let(:request_params) { macro_params_pending_without_time(category) }
+
+        it 'returns validation error' do
+          expect(response).to have_http_status(:unprocessable_content)
+        end
+
+        it 'does not persist the macro' do
+          expect(Macro.find_by(name: INVALID_PENDING_MACRO_NAMES.fetch(category))).to be_nil
+        end
+      end
+
+      context "when #{category} macro is valid with pending time" do
+        let(:pending_time)     { 5.minutes.from_now }
+        let(:user)             { create(:admin) }
+        let(:success_status)   { :created }
+        let(:reloaded_macro)   { Macro.find_by!(name: INVALID_PENDING_MACRO_NAMES.fetch(category)) }
+        let(:request_params) do
+          macro_params_pending_without_time(category).deep_merge(
+            perform: { 'ticket.pending_time': { value: pending_time } }
+          )
+        end
+
+        include_examples 'persists pending time'
+      end
+    end
   end
 
   describe '#update' do
     let(:macro) { create(:macro, name: 'test') }
+    let(:request_params) { successful_params }
 
     before do
-      put "/api/v1/macros/#{macro.id}", params: successful_params, as: :json
+      put "/api/v1/macros/#{macro.id}", params: request_params, as: :json
     end
 
     context 'when user is not allowed to update macro' do
@@ -68,6 +133,46 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
 
       it 'macro is changed' do
         expect(macro.reload.name).to eq 'asd'
+      end
+    end
+
+    [PENDING_REMINDER_CATEGORY, PENDING_ACTION_CATEGORY].each do |category|
+      context "when #{category} macro has no pending time" do
+        let(:user) { create(:admin) }
+        let(:request_params) { macro_params_pending_without_time(category) }
+
+        it 'returns validation error' do
+          expect(response).to have_http_status(:unprocessable_content)
+        end
+
+        it 'does not update the macro' do
+          expect(macro.reload.name).to eq 'test'
+        end
+      end
+
+      context "when #{category} macro is valid with pending time" do
+        let(:pending_time)     { 5.minutes.from_now }
+        let(:user)             { create(:admin) }
+        let(:success_status)   { :ok }
+        let(:updated_name) do
+          case category
+          when PENDING_REMINDER_CATEGORY then 'updated pending reminder macro'
+          when PENDING_ACTION_CATEGORY then 'updated pending action macro'
+          end
+        end
+        let(:reloaded_macro) { macro.reload }
+        let(:request_params) do
+          macro_params_pending_without_time(category).deep_merge(
+            name:    updated_name,
+            perform: { 'ticket.pending_time': { value: pending_time } }
+          )
+        end
+
+        include_examples 'persists pending time'
+
+        it 'updates the macro name' do
+          expect(reloaded_macro.name).to eq updated_name
+        end
       end
     end
   end

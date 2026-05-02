@@ -58,7 +58,7 @@ class Integration::SMIMEController < ApplicationController
       response: items.map { |c| cert_obj_to_json(c) },
     }
   rescue => e
-    unprocessable_entity(e)
+    unprocessable_content(e)
   end
 
   def private_key_delete
@@ -90,7 +90,7 @@ class Integration::SMIMEController < ApplicationController
       result: 'ok',
     }
   rescue => e
-    unprocessable_entity(e)
+    unprocessable_content(e)
   end
 
   def search

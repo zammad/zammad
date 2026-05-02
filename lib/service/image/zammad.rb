@@ -9,7 +9,7 @@ class Service::Image::Zammad
   DISABLE_IN_TEST_ENV = true
 
   def self.user(email)
-    raise Exceptions::UnprocessableEntity, 'no email given' if email.blank?
+    raise Exceptions::UnprocessableContent, 'no email given' if email.blank?
 
     return if Rails.env.test? && DISABLE_IN_TEST_ENV
 
@@ -42,7 +42,7 @@ class Service::Image::Zammad
   end
 
   def self.organization(domain)
-    raise Exceptions::UnprocessableEntity, 'no domain given' if domain.blank?
+    raise Exceptions::UnprocessableContent, 'no domain given' if domain.blank?
 
     return if Rails.env.test? && DISABLE_IN_TEST_ENV
 

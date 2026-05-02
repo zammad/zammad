@@ -11,7 +11,7 @@ module Gql::Queries
 
     def resolve(ticket:)
       articles = Service::Ticket::Article::List
-        .new(current_user: context.current_user)
+        .with_current_user(context.current_user)
         .execute(ticket:)
 
       return [] if articles.blank?

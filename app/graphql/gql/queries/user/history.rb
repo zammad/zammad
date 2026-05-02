@@ -14,7 +14,7 @@ module Gql::Queries
 
     def resolve(user:)
       Service::History::Group
-        .new(current_user: context.current_user)
+        .with_current_user(context.current_user)
         .execute(object: user)
     end
   end

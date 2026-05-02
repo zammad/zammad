@@ -55,7 +55,7 @@ SUPPORTED_LOCALES = %w[
   zh-tw
 ].freeze
 
-RSpec.describe 'date-fns locale mapping' do # rubocop:disable Rspec/DescribeClass
+RSpec.describe 'date-fns locale mapping' do # rubocop:disable RSpec/DescribeClass
   it 'ensures that all locales match the imported date-fns locales' do
     db_locales = Locale.pluck(:locale).sort
 

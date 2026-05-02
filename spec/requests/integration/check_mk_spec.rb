@@ -25,7 +25,7 @@ RSpec.describe 'Integration Check MK', type: :request do
 
     it 'does fail with invalid token and feature enabled' do
       post '/api/v1/integration/check_mk/invalid_token', params: {}
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('The provided token is invalid.')

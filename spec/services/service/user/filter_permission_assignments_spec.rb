@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::FilterPermissionAssignments do
-  subject(:service) { described_class.new(current_user:) }
+  subject(:service_result) { described_class.with_current_user(current_user).execute(user_data: data) }
 
   let(:example_data) do
     { 'email' => 'some@example.com', 'role_ids' => [1, 2, 3], 'group_ids' => [1] }
@@ -12,48 +12,58 @@ RSpec.describe Service::User::FilterPermissionAssignments do
   context 'when user is admin' do
     let(:current_user) { create(:admin) }
 
-    it 'keeps groups and roles' do
-      data = example_data.deep_dup
+    context 'with full data' do
+      let(:data) { example_data.deep_dup }
 
-      service.execute(user_data: data)
+      it 'keeps groups and roles' do
+        service_result
 
-      expect(data).to eq(example_data)
+        expect(data).to eq(example_data)
+      end
     end
 
-    it 'allows data to have no groups or roles' do
-      data = example_data.slice('email')
+    context 'with data having no groups or roles' do
+      let(:data) { example_data.slice('email') }
 
-      service.execute(user_data: data)
+      it 'allows data to have no groups or roles' do
+        service_result
 
-      expect(data).to eq(example_data.slice('email'))
+        expect(data).to eq(example_data.slice('email'))
+      end
     end
   end
 
   context 'when user is agent' do
     let(:current_user) { create(:agent) }
 
-    it 'removes groups and roles' do
-      data = example_data.deep_dup
+    context 'with full data' do
+      let(:data) { example_data.deep_dup }
 
-      service.execute(user_data: data)
+      it 'removes groups and roles' do
+        service_result
 
-      expect(data).to eq(example_data.slice('email'))
+        expect(data).to eq(example_data.slice('email'))
+      end
     end
 
-    it 'removes groups and roles with direct key name' do
-      data = example_data.deep_dup.transform_keys { |key| key.sub('_ids', 's') }
+    context 'with direct key names' do
+      let(:data) { example_data.deep_dup.transform_keys { |key| key.sub('_ids', 's') } }
 
-      service.execute(user_data: data)
+      it 'removes groups and roles with direct key name' do
+        service_result
 
-      expect(data).to eq(example_data.slice('email'))
+        expect(data).to eq(example_data.slice('email'))
+      end
     end
 
-    it 'allows data to have no groups or roles' do
-      data = example_data.slice('email')
+    context 'with data having no groups or roles' do
+      let(:data) { example_data.slice('email') }
 
-      service.execute(user_data: data)
+      it 'allows data to have no groups or roles' do
+        service_result
 
-      expect(data).to eq(example_data.slice('email'))
+        expect(data).to eq(example_data.slice('email'))
+      end
     end
   end
 end

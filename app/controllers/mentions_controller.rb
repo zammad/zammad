@@ -44,7 +44,7 @@ class MentionsController < ApplicationController
       when 'Ticket'
         Ticket.find_by id: params[:mentionable_id]
       else
-        raise Exceptions::UnprocessableEntity, __("The parameter 'mentionable_type' is invalid.")
+        raise Exceptions::UnprocessableContent, __("The parameter 'mentionable_type' is invalid.")
       end
     end
   end

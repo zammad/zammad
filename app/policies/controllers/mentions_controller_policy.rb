@@ -17,7 +17,7 @@ class Controllers::MentionsControllerPolicy < Controllers::ApplicationController
 
   def object_accessible?
     Mention.mentionable? record.mentionable_object, user
-  rescue Exceptions::UnprocessableEntity => e
+  rescue Exceptions::UnprocessableContent => e
     not_authorized(e)
   end
 

@@ -52,5 +52,88 @@ RSpec.describe PerformChanges::Action::AttributeUpdates, type: :model do
         end
       end
     end
+
+    context 'when tags are provided' do
+      # `tag_add` writes to ticket history via a polymorphic `sourceable` association,
+      #   which requires a real ActiveRecord instance (an `instance_double` raises
+      #   `NoMethodError: undefined method 'has_query_constraints?'`).
+      let(:performable)  { create(:trigger) }
+      let(:context_data) { {} }
+
+      context 'when tags are provided as comma-separated string' do
+        let(:execution_data) do
+          {
+            'tags' => {
+              'operator' => 'add',
+              'value'    => 'alpha, beta,alpha , foo, bar, bar',
+            },
+          }
+        end
+
+        it 'adds normalized unique tags' do
+          action.execute
+
+          expect(ticket.reload.tag_list).to contain_exactly('alpha', 'beta', 'foo', 'bar')
+        end
+      end
+
+      context 'when tags are provided as array' do
+        let(:execution_data) do
+          {
+            'tags' => {
+              'operator' => 'add',
+              'value'    => ['alpha', ' beta ', '', nil, 'alpha', 'foo', 'blub'],
+            },
+          }
+        end
+
+        it 'adds normalized unique tags' do
+          action.execute
+
+          expect(ticket.reload.tag_list).to contain_exactly('alpha', 'beta', 'foo', 'blub')
+        end
+      end
+
+      context 'when operator is replace' do
+        before { ticket.tag_add('existing', 1) }
+
+        let(:execution_data) do
+          {
+            'tags' => {
+              'operator' => 'replace',
+              'value'    => %w[new-tag other],
+            },
+          }
+        end
+
+        it 'replaces all existing tags with the new ones' do
+          action.execute
+
+          expect(ticket.reload.tag_list).to contain_exactly('new-tag', 'other')
+        end
+      end
+
+      context 'when operator is remove' do
+        before do
+          ticket.tag_add('alpha', 1)
+          ticket.tag_add('beta', 1)
+        end
+
+        let(:execution_data) do
+          {
+            'tags' => {
+              'operator' => 'remove',
+              'value'    => ['alpha'],
+            },
+          }
+        end
+
+        it 'removes only the specified tag' do
+          action.execute
+
+          expect(ticket.reload.tag_list).to contain_exactly('beta')
+        end
+      end
+    end
   end
 end

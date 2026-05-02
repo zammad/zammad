@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::ExternalReferences::IssueTracker::TicketList, integration: true, required_envs: %w[GITHUB_ENDPOINT GITHUB_ISSUE_LINK GITHUB_APITOKEN] do
-  subject(:service) { described_class.new(ticket:, type:) }
+  subject(:service_result) { described_class.execute(ticket:, type:) }
 
   context 'when GitHub is used' do
     let(:type)        { 'github' }
@@ -12,7 +12,7 @@ RSpec.describe Service::Ticket::ExternalReferences::IssueTracker::TicketList, in
 
     shared_examples 'raising an error' do |klass, message|
       it 'raises an error' do
-        expect { service.execute }.to raise_error(klass, include(message))
+        expect { service_result }.to raise_error(klass, include(message))
       end
     end
 
@@ -59,7 +59,7 @@ RSpec.describe Service::Ticket::ExternalReferences::IssueTracker::TicketList, in
           end
 
           it 'returns a list of issues' do
-            expect(service.execute).to eq(expected_issues)
+            expect(service_result).to eq(expected_issues)
           end
         end
 
@@ -67,7 +67,7 @@ RSpec.describe Service::Ticket::ExternalReferences::IssueTracker::TicketList, in
           let(:expected_issues) { [] }
 
           it 'returns empty issue list' do
-            expect(service.execute).to eq(expected_issues)
+            expect(service_result).to eq(expected_issues)
           end
         end
       end

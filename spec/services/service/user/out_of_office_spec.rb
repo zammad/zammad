@@ -3,20 +3,23 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::OutOfOffice do
+  subject(:service_result) do
+    described_class
+      .with_current_user(agent)
+      .execute(enabled:, start_at:, end_at:, replacement:, text:)
+  end
+
   let(:agent)       { create(:agent) }
   let(:replacement) { create(:agent) }
+  let(:enabled)     { true }
+  let(:start_at)    { Date.parse('2011-02-03') }
+  let(:end_at)      { Date.parse('2011-03-03') }
+  let(:text)        { 'Out of office message' }
 
   it 'sets and enables Out of Office' do
-    described_class
-      .new(agent,
-           enabled:     true,
-           start_at:    Date.parse('2011-02-03'),
-           end_at:      Date.parse('2011-03-03'),
-           replacement: replacement,
-           text:        'Out of office message')
-      .execute
+    service_result
 
-    expect(agent)
+    expect(agent.reload)
       .to have_attributes(
         out_of_office:                true,
         out_of_office_start_at:       Date.parse('2011-02-03'),
@@ -26,23 +29,26 @@ RSpec.describe Service::User::OutOfOffice do
       )
   end
 
-  it 'disables Out of Office' do
-    described_class
-      .new(agent, enabled: false)
-      .execute
+  context 'when disabling Out of Office' do
+    let(:enabled)      { false }
+    let(:start_at)     { nil }
+    let(:end_at)       { nil }
+    let(:replacement)  { nil }
+    let(:text)         { nil }
 
-    expect(agent)
-      .to have_attributes(out_of_office: false)
+    it 'disables Out of Office' do
+      service_result
+
+      expect(agent.reload)
+        .to have_attributes(out_of_office: false)
+    end
   end
 
-  it 'raises an error if given data is invalid' do
-    service = described_class
-      .new(agent,
-           enabled:  true,
-           start_at: Date.parse('2011-02-03'),
-           end_at:   Date.parse('2011-03-03'))
+  context 'when given data is invalid' do
+    let(:replacement) { nil }
 
-    expect { service.execute }
-      .to raise_error(ActiveRecord::RecordInvalid)
+    it 'raises an error' do
+      expect { service_result }.to raise_error(ActiveRecord::RecordInvalid)
+    end
   end
 end

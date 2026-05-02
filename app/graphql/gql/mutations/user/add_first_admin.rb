@@ -13,7 +13,7 @@ module Gql::Mutations
     allow_public_access!
 
     def resolve(input:)
-      user = Service::User::AddFirstAdmin.new.execute(
+      user = Service::User::AddFirstAdmin.execute(
         user_data: input.to_h,
         request:   context[:controller].request,
       )

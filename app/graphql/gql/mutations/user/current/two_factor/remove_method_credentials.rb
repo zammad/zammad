@@ -17,8 +17,8 @@ module Gql::Mutations
       verify_token!(token)
 
       Service::User::TwoFactor::RemoveMethodCredentials
-        .new(user: context.current_user, method_name:, credential_id:)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(method_name:, credential_id:)
 
       { success: true }
     end

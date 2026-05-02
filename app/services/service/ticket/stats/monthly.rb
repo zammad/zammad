@@ -1,7 +1,15 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Ticket::Stats::Monthly < Service::BaseWithCurrentUser
-  def execute(conditions:)
+class Service::Ticket::Stats::Monthly < Service::Base
+  requires_current_user!
+
+  attr_reader :conditions
+
+  def initialize(conditions:)
+    @conditions = conditions
+  end
+
+  def execute
     Time.use_zone(Setting.get('timezone_default')) do
       result = TicketPolicy::ReadScope
         .new(current_user)

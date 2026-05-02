@@ -11,11 +11,13 @@ class TicketAIAssistanceGenerateKnowledgeBaseAnswerJob < AIJob
   end
 
   def perform(ticket, current_user, knowledge_base_id)
-    Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer.new(
-      current_user:,
-      ticket:,
-      knowledge_base_id:
-    ).execute
+    Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer
+      .with_current_user(current_user)
+      .execute(
+        current_user:,
+        ticket:,
+        knowledge_base_id:
+      )
   rescue => e
     Rails.logger.error(e)
     notify_failure(current_user, ticket, e.message)

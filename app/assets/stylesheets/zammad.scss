@@ -1,3 +1,6 @@
+@use 'sass:list';
+@use 'sass:string';
+
 $high-priority-color: hsl(360, 71%, 60%);
 $low-priority-color: hsl(200, 68%, 73%);
 $minWidth: 1024px;
@@ -114,7 +117,6 @@ $mobileNavigationWidthOpen: 220px;
   --table-border: hsl(0, 0%, 69%);
   --table-header-background: hsla(0, 0%, 0%, 0.1);
 }
-
 // dark mode
 [data-theme='dark'] {
   --button-action-color: hsl(0, 0%, 80%);
@@ -1700,6 +1702,7 @@ td.align-right {
 }
 
 .table tr.is-inactive,
+.table tr.is-inactive td span.text-tools-feedback-output,
 .table tr td span.is-inactive {
   color: var(--text-muted);
   text-decoration: line-through;
@@ -4845,6 +4848,8 @@ footer {
   padding: 0;
   margin-bottom: 9px;
   display: flex;
+  border-bottom: 1px solid var(--background-modifier-border);
+  padding-bottom: 4px;
 
   .icon-holder {
     &:first-child .icon-task-state {
@@ -5669,8 +5674,7 @@ li.add .dropdown-nose {
   }
 
   &--unique {
-    /* stylelint-disable-next-line declaration-property-value-no-unknown */
-    background-image: image_url('/assets/images/avatar-bg.png');
+    background-image: url('/assets/images/avatar-bg.png');
     background-size: 300px 226px;
     color: var(--text-inverted);
     line-height: 40px;
@@ -6682,6 +6686,61 @@ a.list-group-item.active > .badge,
   flex-shrink: 0;
 }
 
+.activity-ai-avatar {
+  &-outer {
+    position: relative;
+    padding: 2px;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-shrink: 0;
+    border: 1px solid transparent;
+    background-clip: border-box;
+    isolation: isolate;
+
+    &::before {
+      content: '';
+      position: absolute;
+      border-radius: 100%;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, var(--ai-assist-blue), var(--ai-assist-pink));
+      animation: 2s rotate infinite linear;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
+
+    @include phone {
+      width: 30px;
+      height: 30px;
+    }
+
+    .icon {
+      fill: var(--text-inverted);
+    }
+  }
+
+  &-inner {
+    border-radius: 100%;
+    background: var(--background-popover);
+    padding: 4px;
+
+    .icon-ai-agent {
+      width: 100%;
+      height: 100%;
+      fill: var(--ai-assist-blue);
+    }
+  }
+}
+
 .activity-body {
   padding: 16px 0 16px 2px;
 
@@ -7385,15 +7444,20 @@ a.list-group-item.active > .badge,
 }
 
 .kb-ai-generate-wrapper {
-  margin-top: 8px;
-}
+  position: relative;
 
-.kb-ai-generate {
-  background-image: linear-gradient(to right, var(--ai-assist-blue), var(--ai-assist-pink));
-  background-size: 100% 2px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  padding-bottom: 2px;
+  &::after {
+    content: ' ';
+    position: absolute;
+    width: 88%; // Minus the plus
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(to right, var(--ai-assist-blue), var(--ai-assist-pink));
+    background-size: 100% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+  }
 }
 
 .is-internal .internal-border {
@@ -7967,10 +8031,7 @@ a.list-group-item.active > .badge,
 
 .text-tools-feedback-output {
   display: inline-block;
-  min-width: 4.5em;
-
-  @include ltr(margin-right, 6px);
-  @include rtl(margin-left, 6px);
+  min-width: 4em;
 }
 
 .bubble-wrapper {
@@ -8901,14 +8962,13 @@ a.list-group-item.active > .badge,
 }
 
 /* Fixes #6058 - Attachment delete icon disappears when filename is too long
+ * Fixes #6071 - Ticket > Zoom > Sidebar > Tag: Delete icon disappears when name is too long
  * by adding ellipsis to long names and preventing it from overflowing its container
  */
-.knowledge-base-sidebar {
-  .list-item-name {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
+.list-item-name-shrinkable {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .list-item-delete {
@@ -9028,6 +9088,10 @@ li.list-item-none {
         height: 100%;
         background: linear-gradient(to right, var(--ai-assist-blue), var(--ai-assist-pink));
         animation: 2s rotate infinite linear;
+
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
       }
 
       @include phone {
@@ -13217,8 +13281,8 @@ output {
     overflow: hidden;
 
     &.is-picking {
-      cursor: /* stylelint-disable-next-line declaration-property-value-no-unknown */
-        image_url('/assets/images/eyedropper.gif') 0 15,
+      cursor:
+        url('/assets/images/eyedropper.gif') 0 15,
         auto;
     }
 
@@ -14401,7 +14465,7 @@ output {
     $rainbow: ();
 
     @while $i <= 360 {
-      $rainbow: append($rainbow, unquote('hsl(#{$i},100%,50%)'), comma);
+      $rainbow: list.append($rainbow, string.unquote('hsl(#{$i},100%,50%)'), comma);
       $i: $i + 60;
     }
 
@@ -14409,8 +14473,8 @@ output {
     background: linear-gradient(to right, $rainbow);
     position: relative;
     overflow: hidden;
-    cursor: /* stylelint-disable-next-line declaration-property-value-no-unknown */
-      image_url('/assets/images/colorcircle.gif') 8 8,
+    cursor:
+      url('/assets/images/colorcircle.gif') 8 8,
       auto;
     user-select: none;
   }
@@ -14647,6 +14711,10 @@ body.fit {
 
 .margin-bottom-5 {
   margin-bottom: 5px;
+}
+
+.gap-16 {
+  gap: 16px;
 }
 
 /*

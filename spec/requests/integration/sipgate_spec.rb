@@ -204,7 +204,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       Setting.set('sipgate_config', {})
       params = 'event=newCall&direction=in&from=4912347114711&to=4930600000000&callId=4991155921769858278-6&user%5B%5D=user+1&user%5B%5D=user+2'
       post "/api/v1/sipgate/#{token}/in", params: params
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       error = nil
       content = response.body
       response_xml = REXML::Document.new(content)

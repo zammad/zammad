@@ -19,7 +19,7 @@ module Gql::Mutations
 
       {
         success:   true,
-        overviews: Service::User::Overview::List.new(context.current_user, ignore_user_conditions: true).execute
+        overviews: Service::User::Overview::List.with_current_user(context.current_user).execute(ignore_user_conditions: true)
       }
     end
   end

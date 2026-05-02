@@ -46,12 +46,12 @@ RSpec.describe 'Search', type: :request do
       it 'passes on limit to search service' do
         params[:limit] = 123
 
-        allow(Service::Search).to receive(:new).and_call_original
+        allow(Service::Search).to receive(:execute).and_call_original
 
         post '/api/v1/search', params: params, as: :json
 
         expect(Service::Search)
-          .to have_received(:new)
+          .to have_received(:execute)
           .with(hash_including(options: include(limit: 123)))
       end
 

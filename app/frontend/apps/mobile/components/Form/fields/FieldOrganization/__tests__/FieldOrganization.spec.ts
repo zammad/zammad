@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { waitFor } from '@testing-library/vue'
 import { escapeRegExp } from 'lodash-es'
@@ -18,6 +17,8 @@ import type {
 } from '#shared/graphql/types.ts'
 
 import testOptions from './test-options.json'
+
+import type { FormKitNode } from '@formkit/core'
 
 const mockQueryResult = (input: {
   query: string
@@ -78,16 +79,20 @@ describe('Form - Field - Organization - Features', () => {
         name: 'organization_id',
         value: 123,
         belongsToObjectField: 'organization',
+        // Add manually the "initialEntityObject" which is normally coming
+        // from the root node (for a single field root node === own node).
+        plugins: [
+          (node: FormKitNode) => {
+            node.context!.initialEntityObject = {
+              organization: {
+                name: 'Zammad Organization',
+                internalId: 123,
+              },
+            }
+          },
+        ],
       },
     })
-
-    const node = getNode('organization_id')
-    node!.context!.initialEntityObject = {
-      organization: {
-        name: 'Zammad Organization',
-        internalId: 123,
-      },
-    }
 
     await waitForNextTick(true)
 

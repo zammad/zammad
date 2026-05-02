@@ -4,8 +4,6 @@ class Service::Translation::Search < Service::Base
   attr_reader :locale, :query, :limit, :collector_mode
 
   def initialize(locale:, query:, limit: 150)
-    super()
-
     @locale  = locale
     @query   = query
     @limit   = limit

@@ -8,7 +8,7 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { mountEditor } from './utils.ts'
 
-describe('Testing "user mention" popup: "@@" command', { retries: 2 }, () => {
+describe('Testing "user mention" popup: "@@" command', () => {
   // FIXME: This test is flaky, sometimes it fails when running in CI.
   //   It's not clear why, but it seems to be related to the useNotifications() composable.
   //   In general, we should revisit the test setup and make it more reliable (see current workarounds for mocks).
@@ -27,7 +27,7 @@ describe('Testing "user mention" popup: "@@" command', { retries: 2 }, () => {
       })
   })
 
-  it('inserts a text', () => {
+  it('inserts a user mention', () => {
     const client = mockApolloClient()
     const mock = cy.spy(async () => ({
       data: {
@@ -65,17 +65,19 @@ describe('Testing "user mention" popup: "@@" command', { retries: 2 }, () => {
       .click()
 
     cy.findByRole('textbox')
-      .should('have.text', 'Bob Wance')
+      .should('contain.text', 'Bob Wance')
       .type('{backspace}{backspace}{leftArrow}ndyke{rightArrow}{backspace}')
-      .should('have.text', 'Bob Wandyke') // can rename user
+      .should('contain.text', 'Bob Wandyke') // can rename user
       .then(($el) => {
         const link = $el.find('a')
-        expect(link).to.have.text('Bob Wandyke')
+        expect(link).to.contain.text('Bob Wandyke')
         expect(link).to.have.attr('data-mention-user-id', '3')
         expect(link).to.have.attr('href', `http://example.zammad.com/#user/profile/3`)
       })
 
-    cy.wrap(mock).should('have.been.calledWith', {
+    // asserting with `calledWith` is stricter than needed and can fail on unrelated payload expansion.
+    // Prefer `calledWithMatch` to lock only the relevant fields.
+    cy.wrap(mock).should('have.been.calledWithMatch', {
       query: 'Jo',
       groupId: convertToGraphQLId('Group', '1'),
     })

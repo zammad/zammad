@@ -3,8 +3,6 @@
 module Service::Channel::Admin
   class List < Service::Base
     def initialize(area:)
-      super()
-
       @area = area
     end
 

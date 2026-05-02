@@ -71,23 +71,44 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
   def tags(value)
     return if record.class.included_modules.exclude?(HasTags)
 
-    tags = value['value'].split(',')
+    tags = normalized_tags(value['value'])
     return if tags.blank?
 
     operator = tags_operator(value)
     return if operator.blank?
 
-    tags.each do |tag|
-      record.send(:"tag_#{operator}", tag, user_id || 1, sourceable: performable)
+    case operator
+    when 'replace'
+      record.tag_update(tags, user_id || 1, sourceable: performable)
+    when 'add', 'remove'
+      tags.each do |tag|
+        record.send(:"tag_#{operator}", tag, user_id || 1, sourceable: performable)
+      end
     end
 
     nil
   end
 
+  def normalized_tags(raw_value)
+    tags = case raw_value
+           when Array
+             raw_value
+           when String
+             raw_value.split(',')
+           else
+             []
+           end
+
+    tags
+      .map { |tag| tag.to_s.strip }
+      .compact_blank
+      .uniq
+  end
+
   def tags_operator(value)
     operator = value['operator']
 
-    if %w[add remove].exclude?(operator)
+    if %w[add remove replace].exclude?(operator)
       Rails.logger.error "Unknown tags operator #{value['operator']}"
       return
     end

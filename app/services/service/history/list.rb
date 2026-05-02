@@ -17,7 +17,7 @@
 #
 # Example:
 #
-#  Service::History::List.new(current_user:).execute(object: ticket)
+#  Service::History::List.with_current_user(current_user).execute(object: ticket)
 #  # => [
 #  #      {
 #  #        created_at: ActiveRecord::DateTime,
@@ -43,12 +43,18 @@
 #  #        changes:    { from: 'Old title', to: 'New title' }
 #  #      }
 #  #    ]
-class Service::History::List < Service::BaseWithCurrentUser
+class Service::History::List < Service::Base
   include Service::History::Concerns::FixEventObject
 
-  def execute(object:)
-    @object = object
+  requires_current_user!
 
+  attr_reader :object
+
+  def initialize(object:)
+    @object = object
+  end
+
+  def execute
     Pundit.authorize(current_user, object, :show?)
     raise __('Object does not support history') if !object.class.const_defined?(:HasHistory)
 
@@ -71,7 +77,7 @@ class Service::History::List < Service::BaseWithCurrentUser
       created_at: entry.created_at,
       issuer:     issuer(entry),
       action:     entry.history_type.name,
-      object:     object(entry),
+      object:     build_object(entry),
       attribute:  entry.history_attribute&.name,
       changes:    changes(entry),
     }
@@ -95,8 +101,8 @@ class Service::History::List < Service::BaseWithCurrentUser
     }
   end
 
-  def object(entry)
-    return { klass: entry.history_object.name } if entry.history_object.name == @object.class.name && entry.o_id == @object.id
+  def build_object(entry)
+    return { klass: entry.history_object.name } if entry.history_object.name == object.class.name && entry.o_id == object.id
 
     begin
       klass = entry.history_object.name.constantize

@@ -68,7 +68,8 @@ RSpec.shared_examples 'HasTags' do
         .with(object:        described_class.name,
               o_id:          subject.id,
               items:         items,
-              created_by_id: nil)
+              created_by_id: nil,
+              sourceable:    nil)
 
       subject.tag_update(items)
     end
@@ -79,7 +80,8 @@ RSpec.shared_examples 'HasTags' do
         .with(object:        described_class.name,
               o_id:          subject.id,
               items:         items,
-              created_by_id: 1)
+              created_by_id: 1,
+              sourceable:    nil)
 
       subject.tag_update(items, 1)
     end

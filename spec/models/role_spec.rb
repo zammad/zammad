@@ -138,7 +138,7 @@ RSpec.describe Role do
 
             it 'fails and raises an error' do
               expect { role.update!(active: true) }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(agents, :count)
             end
           end
@@ -154,14 +154,14 @@ RSpec.describe Role do
           role.default_at_signup = true
 
           expect { role.save }
-            .to raise_error(Exceptions::UnprocessableEntity, %r{Cannot set default at signup})
+            .to raise_error(Exceptions::UnprocessableContent, %r{Cannot set default at signup})
         end
 
         it 'cannot be changed to true' do
           role.save
 
           expect { role.update(default_at_signup: true) }
-            .to raise_error(Exceptions::UnprocessableEntity, %r{Cannot set default at signup})
+            .to raise_error(Exceptions::UnprocessableContent, %r{Cannot set default at signup})
         end
       end
 
@@ -174,14 +174,14 @@ RSpec.describe Role do
           role.default_at_signup = true
 
           expect { role.save }
-            .to raise_error(Exceptions::UnprocessableEntity, %r{Cannot set default at signup})
+            .to raise_error(Exceptions::UnprocessableContent, %r{Cannot set default at signup})
         end
 
         it 'cannot be changed to true' do
           role.save
 
           expect { role.update(default_at_signup: true) }
-            .to raise_error(Exceptions::UnprocessableEntity, %r{Cannot set default at signup})
+            .to raise_error(Exceptions::UnprocessableContent, %r{Cannot set default at signup})
         end
       end
 
@@ -192,14 +192,14 @@ RSpec.describe Role do
           role.default_at_signup = true
 
           expect { role.save }
-            .to raise_error(Exceptions::UnprocessableEntity, %r{Cannot set default at signup})
+            .to raise_error(Exceptions::UnprocessableContent, %r{Cannot set default at signup})
         end
 
         it 'cannot be changed to true' do
           role.save
 
           expect { role.update(default_at_signup: true) }
-            .to raise_error(Exceptions::UnprocessableEntity, %r{Cannot set default at signup})
+            .to raise_error(Exceptions::UnprocessableContent, %r{Cannot set default at signup})
         end
       end
     end

@@ -537,12 +537,13 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
         end
 
         it 'passed to ticket create service' do
-          expect_any_instance_of(Service::Ticket::Create)
-            .to receive(:execute)
-            .with(ticket_data: include(shared_draft:))
-            .and_call_original
+          allow(Service::Ticket::Create).to receive(:execute)
 
           gql.execute(query, variables: variables)
+
+          expect(Service::Ticket::Create)
+            .to have_received(:execute)
+            .with(current_user: agent, ticket_data: include(shared_draft:))
         end
       end
     end

@@ -12,8 +12,8 @@ module Gql::Mutations
 
     def resolve(overview_ids:)
       Service::User::Overview::UpdateOrder
-        .new(context.current_user, authorized_overviews(overview_ids))
-        .execute
+        .with_current_user(context.current_user)
+        .execute(authorized_overviews(overview_ids))
 
       Gql::Subscriptions::User::Current::OverviewOrderingUpdates
         .trigger_by(context.current_user)

@@ -23,7 +23,7 @@ module Gql::Mutations
 
       {
         ticket: Service::Ticket::Create
-          .new(current_user: context.current_user)
+          .with_current_user(context.current_user)
           .execute(ticket_data: input)
       }
     rescue Exceptions::InvalidAttribute => e

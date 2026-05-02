@@ -4986,6 +4986,12 @@
               "description": "The app configuration has changed.",
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "force_refresh",
+              "description": "Force browsers to refresh.",
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "possibleTypes": null
@@ -14116,6 +14122,22 @@
               "deprecationReason": null
             },
             {
+              "name": "meta",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "OnlineNotificationMeta",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "metaObject",
               "description": "resolver for Rails' belongs_to relationship",
               "args": [],
@@ -14406,6 +14428,33 @@
                     "name": "OnlineNotification",
                     "ofType": null
                   }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "OnlineNotificationMeta",
+          "description": "Meta information for an online notification",
+          "fields": [
+            {
+              "name": "createdByAi",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
                 }
               },
               "isDeprecated": false,
@@ -34067,6 +34116,12 @@
               "deprecationReason": null
             },
             {
+              "name": "VARIABLE_DEFINITION",
+              "description": "Location adjacent to a variable definition.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "SCHEMA",
               "description": "Location adjacent to a schema definition.",
               "isDeprecated": false,
@@ -34129,12 +34184,6 @@
             {
               "name": "INPUT_FIELD_DEFINITION",
               "description": "Location adjacent to an input object field definition.",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "VARIABLE_DEFINITION",
-              "description": "Location adjacent to a variable definition.",
               "isDeprecated": false,
               "deprecationReason": null
             }

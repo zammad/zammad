@@ -523,6 +523,7 @@ class Selector::Sql < Selector::Base
         bind_params.push block_condition[:value].count
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_all(attribute_name, block_condition[:value])
+        bind_params += Array.wrap(block_condition[:value])
       end
     elsif block_condition[:operator] == 'contains one'
       if attribute_name == 'tags' && attribute_table == 'ticket'
@@ -532,6 +533,7 @@ class Selector::Sql < Selector::Base
         bind_params.push block_condition[:value]
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_one(attribute_name, block_condition[:value])
+        bind_params += Array.wrap(block_condition[:value])
       end
     elsif block_condition[:operator] == 'contains all not'
       if attribute_name == 'tags' && attribute_table == 'ticket'
@@ -554,6 +556,7 @@ class Selector::Sql < Selector::Base
         bind_params.push block_condition[:value].count
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_all(attribute_name, block_condition[:value], negated: true)
+        bind_params += Array.wrap(block_condition[:value])
       end
     elsif block_condition[:operator] == 'contains one not'
       if attribute_name == 'tags' && attribute_table == 'ticket'
@@ -571,6 +574,7 @@ class Selector::Sql < Selector::Base
         bind_params.push block_condition[:value]
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_one(attribute_name, block_condition[:value], negated: true)
+        bind_params += Array.wrap(block_condition[:value])
       end
     elsif block_condition[:operator] == 'today'
       Time.use_zone(Setting.get('timezone_default')) do

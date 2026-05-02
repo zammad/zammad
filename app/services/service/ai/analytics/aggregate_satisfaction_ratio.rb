@@ -5,8 +5,6 @@ class Service::AI::Analytics::AggregateSatisfactionRatio < Service::Base
 
   def initialize(triggered_by:)
     @triggered_by = triggered_by
-
-    super()
   end
 
   def execute

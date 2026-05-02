@@ -22,6 +22,7 @@ class Validations::VerifyPerformRulesValidator < ActiveModel::EachValidator
 
     check_present(record, attribute, value)
     check_specific_present(record, attribute, value)
+    check_pending_time_present(record, value)
   end
 
   private
@@ -57,6 +58,40 @@ class Validations::VerifyPerformRulesValidator < ActiveModel::EachValidator
 
       result << key if value[key]['value'].blank?
     end
+  end
+
+  def check_pending_time_present(record, value)
+    return if !value.is_a?(Hash) || value.empty?
+    return if pending_time_present?(value)
+    return if !perform_sets_pending_state?(value)
+
+    record.errors.add :base, __('The "Pending till" attribute is required for the selected state action.')
+  end
+
+  # Pending reminder and pending action both use ticket.pending_time
+  # (@see Ticket.process_pending, Ticket::StateType::CATEGORIES[:pending]).
+  def perform_sets_pending_state?(value)
+    state_id = perform_ticket_state_id(value)
+    return false if state_id.blank?
+
+    Ticket::State.by_category(:pending).exists?(id: state_id)
+  end
+
+  def perform_ticket_state_id(value)
+    raw = value.dig('ticket.state_id', 'value')
+    return raw if raw.present?
+
+    name = value.dig('ticket.state', 'value')
+    return if name.blank?
+
+    Ticket::State.lookup(name: name)&.id
+  end
+
+  def pending_time_present?(value)
+    pending_time = value['ticket.pending_time']
+    return false if !pending_time.is_a?(Hash)
+
+    pending_time['value'].present?
   end
 
   def add_error(record, attribute, key, inner)

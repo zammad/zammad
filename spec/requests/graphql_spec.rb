@@ -51,8 +51,8 @@ RSpec.describe 'GraphQL', type: :request do
       post '/graphql', params: { query: '{ abusiveQuery }' }, as: :json
     end
 
-    it 'returns unprocessable entity status' do
-      expect(response).to have_http_status(:unprocessable_entity)
+    it 'returns unprocessable content status' do
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it 'returns JSON error for abusive queries' do

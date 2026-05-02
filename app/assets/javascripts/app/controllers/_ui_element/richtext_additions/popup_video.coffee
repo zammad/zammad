@@ -1,6 +1,6 @@
 class App.UiElement.richtext.additions.RichTextToolPopupVideo extends App.UiElement.richtext.additions.RichTextToolPopup
-  labelNew:      'Insert'
-  labelExisting: 'Replace'
+  labelNew:      __('Insert')
+  labelExisting: __('Replace')
   labelClear:    null
 
   @regexps: {

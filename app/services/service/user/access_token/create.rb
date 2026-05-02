@@ -1,12 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::AccessToken::Create < Service::Base
-  attr_reader :user, :name, :permission, :expires_at
+  requires_current_user!
 
-  def initialize(user, name:, permission:, expires_at: nil)
-    super()
+  attr_reader :name, :permission, :expires_at
 
-    @user       = user
+  def initialize(name:, permission:, expires_at: nil)
     @name       = name
     @permission = permission
     @expires_at = expires_at
@@ -20,7 +19,7 @@ class Service::User::AccessToken::Create < Service::Base
       )
       .create!(
         name:        name,
-        user:        user,
+        user:        current_user,
         expires_at:  expires_at_as_time,
         preferences: {
           permission: permission

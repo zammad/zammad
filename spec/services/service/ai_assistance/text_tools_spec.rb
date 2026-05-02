@@ -3,10 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Service::AIAssistance::TextTools do
-  subject(:service) { described_class.new(input:, text_tool:, template_render_context:) }
+  subject(:service_result) { described_class.with_current_user(user).execute(input:, text_tool:, template_render_context:) }
 
+  let(:user)                    { create(:agent) }
   let(:text_tool)               { create(:ai_text_tool) }
   let(:template_render_context) { {} }
+  let(:input)                   { 'Hello, wrld!' }
 
   context 'when text tool service is used' do
     before do
@@ -18,18 +20,17 @@ RSpec.describe Service::AIAssistance::TextTools do
         .and_return(expected_output)
     end
 
-    let(:input)           { 'Hello, wrld!' }
     let(:expected_output) { Struct.new(:content, :stored_result, :fresh).new(content: 'Hello, world!', stored_result: nil, fresh: false) }
 
     describe '#execute' do
       context 'when valid text tool is used' do
         it 'returns the corrected input' do
-          expect(service.execute).to eq(expected_output)
+          expect(service_result).to eq(expected_output)
         end
       end
 
       context 'when template variables are used in the text tool instruction' do
-        let(:customer) { create(:customer, firstname: 'John', lastname: 'Doe') }
+        let(:customer)     { create(:customer, firstname: 'John', lastname: 'Doe') }
         let(:user)         { create(:user, firstname: 'Jane', lastname: 'Smith') }
         let(:group)        { create(:group, name: 'Support Team') }
         let(:ticket)       { create(:ticket, customer: customer, group: group, title: 'Test Ticket') }
@@ -52,7 +53,7 @@ RSpec.describe Service::AIAssistance::TextTools do
           allow(AI::Service::TextTool).to receive(:new).and_return(ai_service_spy)
           allow(ai_service_spy).to receive(:execute).and_return(expected_output)
 
-          service.execute
+          service_result
 
           expect(AI::Service::TextTool).to have_received(:new).with(hash_including(
                                                                       context_data: hash_including(
@@ -66,7 +67,7 @@ RSpec.describe Service::AIAssistance::TextTools do
         let(:text_tool) { 'i_am_a_string' }
 
         it 'raises an error' do
-          expect { service.execute }.to raise_error(ArgumentError, 'AI assistance text tool is invalid.')
+          expect { service_result }.to raise_error(ArgumentError, 'AI assistance text tool is invalid.')
         end
       end
 
@@ -74,7 +75,7 @@ RSpec.describe Service::AIAssistance::TextTools do
         let(:text_tool) { create(:ai_text_tool, active: false) }
 
         it 'raises an error' do
-          expect { service.execute }.to raise_error(ArgumentError, 'AI assistance text tool is inactive.')
+          expect { service_result }.to raise_error(ArgumentError, 'AI assistance text tool is inactive.')
         end
       end
     end

@@ -4,8 +4,6 @@ class Service::Channel::Email::UpdateDestinationGroupEmail < Service::Base
   attr_reader :group, :channel, :email_address
 
   def initialize(group:, channel:, email_address: nil)
-    super()
-
     @channel = channel
     @group = group
     @email_address = email_address || EmailAddress.find_by(channel_id: channel.id)

@@ -25,21 +25,21 @@ class Integration::GitLabController < ApplicationController
   end
 
   def query
-    issue_tracker_list_service = if params[:ticket_id]
-                                   Service::Ticket::ExternalReferences::IssueTracker::TicketList.new(
-                                     type:   'gitlab',
-                                     ticket: Ticket.find(params[:ticket_id]),
-                                   )
-                                 else
-                                   Service::Ticket::ExternalReferences::IssueTracker::FetchMetadata.new(
-                                     type:        'gitlab',
-                                     issue_links: params[:links],
-                                   )
-                                 end
+    response = if params[:ticket_id]
+                 Service::Ticket::ExternalReferences::IssueTracker::TicketList.execute(
+                   type:   'gitlab',
+                   ticket: Ticket.find(params[:ticket_id]),
+                 )
+               else
+                 Service::Ticket::ExternalReferences::IssueTracker::FetchMetadata.execute(
+                   type:        'gitlab',
+                   issue_links: params[:links],
+                 )
+               end
 
     render json: {
       result:   'ok',
-      response: issue_tracker_list_service.execute,
+      response: response,
     }
   rescue => e
     logger.error e

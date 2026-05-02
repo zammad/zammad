@@ -38,8 +38,8 @@ class FormUpdater::Updater::Ticket::BulkEdit < FormUpdater::Updater
 
     # Add ticket_ids to params for CoreWorkflow to determine common owners
     ticket_ids = Service::Ticket::Bulk::Selector
-      .new(user: current_user, selector:)
-      .execute || []
+      .with_current_user(current_user)
+      .execute(selector:) || []
 
     return payload if ticket_ids.empty?
 

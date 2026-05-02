@@ -6,7 +6,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
 
   # rubocop:disable Lint/InterpolationCheck
   describe '#execute' do
-    subject(:execute) { described_class.new(template: template, tracks: tracks, additional_track_generate_data: webhook_data).execute }
+    subject(:service_result) { described_class.new(template: template, tracks: tracks, additional_track_generate_data: webhook_data).execute }
 
     let(:ticket)                   { create(:ticket, time_unit: 123) }
     let(:article)                  { create(:ticket_article, body: "Text with\nnew line.") }
@@ -26,7 +26,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { {} }
 
       it 'returns an empty JSON object' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -35,7 +35,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { { 'ticket' => '#{}' } }
 
       it 'returns the placeholder' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { { 'ticket' => '#{ticket.title', 'article' => '#{article.id article.note}' } }
 
       it 'returns the placeholder' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { { 'ticket' => '#{no object provided}' } }
 
       it 'returns the placeholder reporting "no object provided"' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
 
     end
@@ -63,7 +63,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { { 'user' => '#{user / no such object}' } }
 
       it 'returns the placehodler reporting "no such object"' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -72,7 +72,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { { 'ticket' => '#{ticket / missing method}', 'Article' => '#{article / missing method}' } }
 
       it 'returns the placeholder reporting "missing method"' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -81,7 +81,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { { 'ticket' => '#{ticket.articles / no such method}' } }
 
       it 'returns the placeholder reporting "no such method"' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -90,7 +90,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { { 'ticket.owner' => '#{ticket.owner.password / no such method}' } }
 
       it 'returns the placeholder reporting "no such method"' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -99,7 +99,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { { 'ticket.owner' => '#{ticket.destroy! / no such method}' } }
 
       it 'returns the placeholder reporting "no such method"' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -108,7 +108,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { { 'ticket' => '#{ticket.group / no such method}' } }
 
       it 'returns the placeholder reporting "no such method"' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -117,7 +117,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { { 'ticket' => '#{ticket.1_article / no such method}' } }
 
       it 'returns the placeholder reporting "no such method"' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -126,7 +126,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data) { { 'ticket.id' => ticket.id } }
 
       it 'returns the determined value' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -145,7 +145,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       end
 
       it 'returns an empty string' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -164,7 +164,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       end
 
       it 'returns the determined value' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -187,7 +187,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       end
 
       it 'returns the placeholder reporting "no such method"' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -234,7 +234,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       end
 
       it 'returns a valid JSON payload' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -244,7 +244,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       let(:json_data)   { { 'ticket.title' => 'Test "Title"' } }
 
       it 'returns the determined value' do
-        expect(execute).to eq(json_data)
+        expect(service_result).to eq(json_data)
       end
     end
 
@@ -270,7 +270,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
           end
 
           it 'returns the determined value' do
-            expect(execute).to eq(json_data)
+            expect(service_result).to eq(json_data)
           end
         end
 
@@ -287,7 +287,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
           end
 
           it 'returns the determined value' do
-            expect(execute).to eq(json_data)
+            expect(service_result).to eq(json_data)
           end
         end
       end
@@ -345,11 +345,11 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
         end
 
         it 'returns a valid json with a notification factory generated information"', :aggregate_failures do
-          expect(execute['subject']).to eq(ticket.title)
-          expect(execute['body']).to eq(article.body_as_text)
-          expect(execute['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
-          expect(execute['message']).to include('Created by')
-          expect(execute['changes']).to include('State: new')
+          expect(service_result['subject']).to eq(ticket.title)
+          expect(service_result['body']).to eq(article.body_as_text)
+          expect(service_result['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
+          expect(service_result['message']).to include('Created by')
+          expect(service_result['changes']).to include('State: new')
         end
       end
 
@@ -364,11 +364,11 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
         end
 
         it 'returns a valid json with a notification factory generated information"', :aggregate_failures do
-          expect(execute['subject']).to eq(ticket.title)
-          expect(execute['body']).to eq(article.body_as_text)
-          expect(execute['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
-          expect(execute['message']).to include('Updated by')
-          expect(execute['changes']).to include('state: open -> closed')
+          expect(service_result['subject']).to eq(ticket.title)
+          expect(service_result['body']).to eq(article.body_as_text)
+          expect(service_result['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
+          expect(service_result['message']).to include('Updated by')
+          expect(service_result['changes']).to include('state: open -> closed')
         end
 
         context 'without changes' do
@@ -381,10 +381,10 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
           end
 
           it 'returns a valid json with a notification factory generated information"', :aggregate_failures do
-            expect(execute['subject']).to eq(ticket.title)
-            expect(execute['body']).to eq(article.body_as_text)
-            expect(execute['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
-            expect(execute['message']).to include('Updated by')
+            expect(service_result['subject']).to eq(ticket.title)
+            expect(service_result['body']).to eq(article.body_as_text)
+            expect(service_result['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
+            expect(service_result['message']).to include('Updated by')
           end
         end
       end
@@ -400,10 +400,10 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
         end
 
         it 'returns a valid json with a notification factory generated information"', :aggregate_failures do
-          expect(execute['subject']).to eq(ticket.title)
-          expect(execute['body']).to eq(article.body_as_text)
-          expect(execute['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
-          expect(execute['message']).to include('Last updated at')
+          expect(service_result['subject']).to eq(ticket.title)
+          expect(service_result['body']).to eq(article.body_as_text)
+          expect(service_result['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
+          expect(service_result['message']).to include('Last updated at')
         end
       end
 
@@ -417,11 +417,11 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
         end
 
         it 'returns a valid json with a notification factory generated information"', :aggregate_failures do
-          expect(execute['subject']).to eq(ticket.title)
-          expect(execute['body']).to eq(article.body_as_text)
-          expect(execute['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
-          expect(execute['message']).to include('Escalated at')
-          expect(execute['changes']).to include('has been escalated since')
+          expect(service_result['subject']).to eq(ticket.title)
+          expect(service_result['body']).to eq(article.body_as_text)
+          expect(service_result['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
+          expect(service_result['message']).to include('Escalated at')
+          expect(service_result['changes']).to include('has been escalated since')
         end
       end
 
@@ -435,11 +435,11 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
         end
 
         it 'returns a valid json with a notification factory generated information"', :aggregate_failures do
-          expect(execute['subject']).to eq(ticket.title)
-          expect(execute['body']).to eq(article.body_as_text)
-          expect(execute['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
-          expect(execute['message']).to include('Will escalate at')
-          expect(execute['changes']).to include('will escalate at')
+          expect(service_result['subject']).to eq(ticket.title)
+          expect(service_result['body']).to eq(article.body_as_text)
+          expect(service_result['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
+          expect(service_result['message']).to include('Will escalate at')
+          expect(service_result['changes']).to include('will escalate at')
         end
       end
 
@@ -453,11 +453,11 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
         end
 
         it 'returns a valid json with a notification factory generated information"', :aggregate_failures do
-          expect(execute['subject']).to eq(ticket.title)
-          expect(execute['body']).to eq(article.body_as_text)
-          expect(execute['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
-          expect(execute['message']).to include('Reminder reached!')
-          expect(execute['changes']).to include('reminder reached for')
+          expect(service_result['subject']).to eq(ticket.title)
+          expect(service_result['body']).to eq(article.body_as_text)
+          expect(service_result['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
+          expect(service_result['message']).to include('Reminder reached!')
+          expect(service_result['changes']).to include('reminder reached for')
         end
       end
 
@@ -475,10 +475,10 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
         let(:tracks)  { { ticket:, article: } }
 
         it 'returns a valid json with a notification factory generated information"', :aggregate_failures do
-          expect(execute['subject']).to eq(ticket.title)
-          expect(execute['body']).to be_empty
-          expect(execute['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
-          expect(execute['message']).to include('Last updated at')
+          expect(service_result['subject']).to eq(ticket.title)
+          expect(service_result['body']).to be_empty
+          expect(service_result['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
+          expect(service_result['message']).to include('Last updated at')
         end
       end
     end
@@ -496,8 +496,8 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
       it 'returns a valid json with webhook information"', :aggregate_failures do
         info = webhook.preferences[:pre_defined_webhook]
 
-        expect(execute[:channel]).to eq(info[:channel])
-        expect(execute[:icon_url]).to eq(info[:icon_url])
+        expect(service_result[:channel]).to eq(info[:channel])
+        expect(service_result[:icon_url]).to eq(info[:icon_url])
       end
 
       context 'when event has no changes' do
@@ -513,9 +513,9 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
         it "returns a valid json with webhook information without 'attachments'", :aggregate_failures do
           info = webhook.preferences[:pre_defined_webhook]
 
-          expect(execute[:channel]).to eq(info[:channel])
-          expect(execute[:icon_url]).to eq(info[:icon_url])
-          expect(execute).to not_include(:attachments)
+          expect(service_result[:channel]).to eq(info[:channel])
+          expect(service_result[:icon_url]).to eq(info[:icon_url])
+          expect(service_result).to not_include(:attachments)
         end
       end
 
@@ -530,7 +530,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
         let(:template) { Service::Template::Interpolation::Interpolator::Webhook::Track::PreDefinedWebhook.payload('Slack') }
 
         it 'returns a valid json with webhook information"', :aggregate_failures do
-          expect(execute['text']).to eq("# #{ticket.title}")
+          expect(service_result['text']).to eq("# #{ticket.title}")
         end
       end
     end

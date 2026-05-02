@@ -10,11 +10,11 @@ module Gql::Mutations
 
     def resolve(input:)
       shared_draft = Service::Ticket::SharedDraft::Zoom::Create
-        .new(
-          context.current_user, input.form_id,
+        .with_current_user(context.current_user)
+        .execute(
+          input.form_id,
           ticket: input.ticket, new_article: input.new_article, ticket_attributes: input.ticket_attributes
         )
-        .execute
 
       { shared_draft: }
     end

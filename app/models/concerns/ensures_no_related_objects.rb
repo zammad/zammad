@@ -27,7 +27,7 @@ module EnsuresNoRelatedObjects
     validator = EnsuresNoRelatedObjects.new(self)
     return if !validator.references?
 
-    raise Exceptions::UnprocessableEntity
+    raise Exceptions::UnprocessableContent
       .new __('This object is referenced by other object(s) and thus cannot be deleted: %s'), [validator.references_text]
   end
 

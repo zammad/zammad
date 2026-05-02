@@ -196,7 +196,7 @@ useEventListener('click', (e) => {
   --dp-border-color: transparent;
   --dp-menu-border-color: transparent;
   --dp-border-color-hover: transparent;
-  --dp-range-between-dates-background-color: var('--color-blue-highlight');
+  --dp-range-between-dates-background-color: var(--color-blue-highlight);
   --dp-range-between-dates-text-color: var(--color-white);
   --dp-range-between-border-color: transparent;
 

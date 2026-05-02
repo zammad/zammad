@@ -47,7 +47,7 @@ RSpec.describe Service::AI::Agent::Run do
   end
 
   describe '#execute' do
-    subject(:service) { described_class.new(ai_agent: ai_agent, ticket: ticket) }
+    subject(:service_result) { described_class.execute(ai_agent: ai_agent, ticket: ticket) }
 
     context 'when AI service returns a successful result' do
       let(:ai_result_content) do
@@ -69,7 +69,7 @@ RSpec.describe Service::AI::Agent::Run do
       end
 
       it 'executes the AI agent service and applies changes to the ticket based on AI result' do
-        expect { service.execute }
+        expect { service_result }
           .to change { ticket.reload.priority.name }.to('3 high')
           .and change { ticket.reload.state.name }.to('open')
       end
@@ -79,7 +79,7 @@ RSpec.describe Service::AI::Agent::Run do
                condition: { 'ticket.priority_id' => { 'operator' => 'is', 'value' => Ticket::Priority.lookup(name: '3 high').id.to_s } },
                perform:   { 'ticket.tags' => { 'operator' => 'add', 'value' => 'ai-trigger-fired' } })
 
-        service.execute
+        service_result
 
         expect(ticket.reload.tag_list).to include('ai-trigger-fired')
       end
@@ -87,7 +87,7 @@ RSpec.describe Service::AI::Agent::Run do
       it 'does not create notifications after applying changes', performs_jobs: true do
         agent = create(:agent, :preferencable, notification_group_ids: [ticket.group_id], groups: [ticket.group])
 
-        service.execute
+        service_result
         perform_enqueued_jobs
 
         expect(OnlineNotification.where(o_id: ticket.id, user_id: agent.id)).to be_empty
@@ -97,7 +97,7 @@ RSpec.describe Service::AI::Agent::Run do
         let(:ai_result_content) { 'unexpected string content' }
 
         it 'raises a TemporaryError to retry the job' do
-          expect { service.execute }
+          expect { service_result }
             .to raise_error(Service::AI::Agent::Run::TemporaryError, 'AI agent result content does not match expected result structure.')
         end
       end
@@ -116,7 +116,7 @@ RSpec.describe Service::AI::Agent::Run do
         let(:ai_result_content) { Ticket::Priority.lookup(name: '3 high').id.to_s }
 
         it 'executes the AI agent service and applies changes to the ticket based on AI result' do
-          expect { service.execute }.to change { ticket.reload.priority.name }.to('3 high')
+          expect { service_result }.to change { ticket.reload.priority.name }.to('3 high')
         end
       end
 
@@ -158,7 +158,7 @@ RSpec.describe Service::AI::Agent::Run do
         end
 
         it 'applies base mapping and condition mapping when condition matches' do
-          expect { service.execute }
+          expect { service_result }
             .to change { ticket.reload.priority.name }.to('3 high')
             .and change { ticket.reload.state.name }.to('closed')
         end
@@ -173,7 +173,7 @@ RSpec.describe Service::AI::Agent::Run do
           end
 
           it 'applies only base mapping when condition does not match' do
-            expect { service.execute }
+            expect { service_result }
               .to change { ticket.reload.priority.name }.to('3 high')
               .and not_change { ticket.reload.state.name }
           end
@@ -219,7 +219,7 @@ RSpec.describe Service::AI::Agent::Run do
       end
 
       it 'executes with merged definitions from agent type and database' do
-        expect { service.execute }
+        expect { service_result }
           .to change { ticket.reload.group.name }.to(Group.first.name)
       end
 
@@ -229,7 +229,7 @@ RSpec.describe Service::AI::Agent::Run do
         allow(AI::Service::AIAgent).to receive(:new).and_return(ai_service_spy)
         allow(ai_service_spy).to receive(:execute).and_return(ai_result)
 
-        service.execute
+        service_result
 
         # Verify that the AI service was called with the merged definition
         expect(AI::Service::AIAgent).to have_received(:new).with(
@@ -281,7 +281,7 @@ RSpec.describe Service::AI::Agent::Run do
       end
 
       it 'executes with placeholder replacement and applies categorization' do
-        expect { service.execute }
+        expect { service_result }
           .to change { ticket.reload.custom_category }.from('').to('technical_support')
       end
 
@@ -291,7 +291,7 @@ RSpec.describe Service::AI::Agent::Run do
         allow(AI::Service::AIAgent).to receive(:new).and_return(ai_service_spy)
         allow(ai_service_spy).to receive(:execute).and_return(ai_result)
 
-        service.execute
+        service_result
 
         # Verify that the AI service was called with the categories in the context
         expect(AI::Service::AIAgent).to have_received(:new).with(
@@ -329,6 +329,63 @@ RSpec.describe Service::AI::Agent::Run do
             )
           )
         )
+      end
+    end
+
+    context 'when AI agent has TicketTagger agent_type' do
+      let(:ai_agent) { create(:ai_agent, agent_type: 'TicketTagger', type_enrichment_data: type_enrichment_data, definition: {}, action_definition: {}) }
+      let(:type_enrichment_data) { { 'tag_operator' => 'add', 'tagging_principles' => 'Use short tags.' } }
+      let(:ai_result_content) do
+        {
+          'tags' => %w[billing urgent],
+        }
+      end
+      let(:ai_result) do
+        AI::Service::Result.new(
+          content:       ai_result_content,
+          stored_result: nil,
+          fresh:         true
+        )
+      end
+
+      before do
+        allow_any_instance_of(AI::Service::AIAgent).to receive(:execute).and_return(ai_result)
+      end
+
+      it 'applies array tags from the AI result' do
+        service_result
+
+        expect(ticket.reload.tag_list).to contain_exactly('billing', 'urgent')
+      end
+
+      it 'embeds configured guidelines into the instruction sent to the model' do
+        ai_service_spy = instance_double(AI::Service::AIAgent)
+        allow(AI::Service::AIAgent).to receive(:new).and_return(ai_service_spy)
+        allow(ai_service_spy).to receive(:execute).and_return(ai_result)
+
+        service_result
+
+        expect(AI::Service::AIAgent).to have_received(:new).with(
+          hash_including(
+            context_data: hash_including(
+              instruction: include('Use short tags.'),
+            )
+          )
+        )
+      end
+
+      context 'when preconditions are not met (max_tags reached)' do
+        let(:type_enrichment_data) { { 'number_of_tags' => 1, 'tag_operator' => 'fill' } }
+
+        before do
+          ticket.tag_add('existing', 1)
+          allow(AI::Service::AIAgent).to receive(:new)
+        end
+
+        it 'skips the LLM call without raising an error', :aggregate_failures do
+          expect { service_result }.not_to raise_error
+          expect(AI::Service::AIAgent).not_to have_received(:new)
+        end
       end
     end
 
@@ -380,7 +437,7 @@ RSpec.describe Service::AI::Agent::Run do
       end
 
       it 'executes the AI agent service and applies multiple values to the multiselect field' do
-        expect { service.execute }
+        expect { service_result }
           .to change { ticket.reload.custom_multiselect }.from([]).to(%w[key_1 key_3])
       end
 
@@ -392,7 +449,7 @@ RSpec.describe Service::AI::Agent::Run do
         end
 
         it 'raises a PermanentError' do
-          expect { service.execute }.to raise_error(Service::AI::Agent::Run::PermanentError, %r{Custom multiselect contains invalid option: invalid_key})
+          expect { service_result }.to raise_error(Service::AI::Agent::Run::PermanentError, %r{Custom multiselect contains invalid option: invalid_key})
         end
       end
     end
@@ -403,7 +460,7 @@ RSpec.describe Service::AI::Agent::Run do
       end
 
       it 'raises the exception' do
-        expect { service.execute }.to raise_error(Service::AI::Agent::Run::PermanentError, 'AI service error')
+        expect { service_result }.to raise_error(Service::AI::Agent::Run::PermanentError, 'AI service error')
       end
 
       context 'when AI service raises an response error' do
@@ -412,7 +469,7 @@ RSpec.describe Service::AI::Agent::Run do
         end
 
         it 'raises the exception' do
-          expect { service.execute }.to raise_error(Service::AI::Agent::Run::TemporaryError, 'AI service error')
+          expect { service_result }.to raise_error(Service::AI::Agent::Run::TemporaryError, 'AI service error')
         end
       end
 
@@ -420,7 +477,7 @@ RSpec.describe Service::AI::Agent::Run do
         let(:ai_provider) { nil }
 
         it 'raises the exception' do
-          expect { service.execute }.to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError, 'AI provider is not configured.')
+          expect { service_result }.to raise_error(Service::CheckFeatureEnabled::FeatureDisabledError, 'AI provider is not configured.')
         end
       end
     end

@@ -140,7 +140,7 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
       it 'raises an error' do
         expect do
           described_class.link_account('wrong_state', authorization_payload)
-        end.to raise_error(Exceptions::UnprocessableEntity, 'Invalid OAuth state parameter.')
+        end.to raise_error(Exceptions::UnprocessableContent, 'Invalid OAuth state parameter.')
       end
     end
 
@@ -323,7 +323,7 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
         it 'raises an exception' do
           expect do
             described_class.request_account_to_link(credentials, app_required)
-          end.to raise_error(Exceptions::UnprocessableEntity, exception_message)
+          end.to raise_error(Exceptions::UnprocessableContent, exception_message)
         end
       end
 

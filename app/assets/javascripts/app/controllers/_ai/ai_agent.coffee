@@ -172,30 +172,42 @@ AIAgentModalMixin =
       @placeholderObjectAttributes[fieldName] = placeholder_attribute
 
   filterByAttributeConditions: (items = []) ->
+    # Reserved first-segment keywords route to alternative sources.
+    #   Any other first segment is treated as a placeholder attribute name.
+    resolvers =
+      app_config: (key) -> App.Config.get(key)
+
     _.filter(items, (item) =>
       # If no condition is specified, include the item.
       return true if not item.condition
 
-      # Parse the condition (format: "key.property").
-      conditionParts = item.condition.split('.')
-      return true if conditionParts.length isnt 2
-
-      [placeholderKey, propertyName] = conditionParts
-
-      # Support negation in condition by prefixing the key with "!".
-      if /^!/.test(placeholderKey)
-        placeholderKey = placeholderKey.replace(/^!/, '')
+      # Support negation in condition by prefixing with "!".
+      condition = item.condition
+      if /^!/.test(condition)
+        condition = condition.replace(/^!/, '')
         negateCondition = true
 
-      # Check if the placeholder attribute exists and has the specified property.
-      placeholderAttr = @placeholderObjectAttributes?[placeholderKey]
-      if not placeholderAttr
-        return false if not negateCondition
-        return true if negateCondition
+      # Parse the condition (format: "key.property").
+      conditionParts = condition.split('.')
+      return true if conditionParts.length isnt 2
 
-      # Check if the property exists and is "truthy"/"not empty".
+      [key, propertyName] = conditionParts
+
+      # Resolve against a reserved source, or fall back to placeholder attributes.
+      value = if resolvers[key]
+        resolvers[key](propertyName)
+      else
+        @placeholderObjectAttributes?[key]?[propertyName]
+
+      # Check if the value is "truthy"/"not empty".
       #   Remember to negate the result if the condition was prefixed with "!".
-      result = placeholderAttr[propertyName] is true or not _.isEmpty(placeholderAttr[propertyName])
+      #   `_.isEmpty` treats numeric scalars as empty, so handle numbers explicitly.
+      result = if _.isBoolean(value)
+        value
+      else if _.isNumber(value)
+        not _.isNaN(value) and value isnt 0
+      else
+        not _.isEmpty(value)
       return result if not negateCondition
       return not result if negateCondition
     )
@@ -220,6 +232,10 @@ AIAgentModalMixin =
 
   stepHelp: ->
     _.find(@agentType?.form_schema, (item) => item.step is @step and item.help)?.help or ''
+
+  stepWarnings: ->
+    warnings = _.find(@agentType?.form_schema, (item) => item.step is @step and item.warnings)?.warnings or []
+    @filterByAttributeConditions(warnings)
 
   stepErrors: ->
     _.find(@agentType?.form_schema, (item) => item.step is @step and item.errors)?.errors or ''
@@ -322,6 +338,11 @@ AIAgentModalMixin =
     if helpText = @stepHelp()
       $('<p />').addClass('text-muted')
         .html(App.i18n.translateContent(helpText))
+        .prependTo(@controller.form)
+
+    for warning in @stepWarnings()
+      $('<div />').addClass('alert alert--warning')
+        .html(App.i18n.translateContent(warning.text, (warning.textPlaceholders or [])...))
         .prependTo(@controller.form)
 
     return if not errorTexts = @stepErrors()

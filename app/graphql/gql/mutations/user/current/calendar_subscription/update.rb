@@ -13,8 +13,8 @@ module Gql::Mutations
 
     def resolve(input:)
       Service::User::CalendarSubscription::Update
-        .new(context.current_user, input: input.to_h)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(input: input.to_h)
 
       { success: true }
     end

@@ -33,7 +33,7 @@ const avatarEntity = computed(() => (props.entity && isOwner.value ? props.entit
 const showInsideGroupAction = computed(() => !props.circle && isGroup.value)
 
 const rootClass = computed(() => [
-  'flex flex-col',
+  'flex flex-col group',
   props.circle
     ? 'size-40 items-center justify-center rounded-full border-2 border-dashed border-stone-200 bg-blue-200 dark:border-neutral-500 dark:bg-gray-500'
     : 'w-40 rounded-lg',
@@ -41,7 +41,9 @@ const rootClass = computed(() => [
 ])
 
 const hoverClass = computed(() =>
-  props.circle ? '' : 'hover:border-blue-800 hover:bg-blue-600 hover:dark:bg-blue-900',
+  props.circle
+    ? ''
+    : 'hover:border-blue-800 hover:text-black dark:hover:text-white hover:bg-blue-600 hover:dark:bg-blue-900',
 )
 
 const figureClass = computed(() => [
@@ -61,7 +63,7 @@ const isSystemUser = computed(() => props.entityInternalId === 1 && isOwner.valu
 const iconContainerClass = computed(() => {
   if (isMacro.value) return 'bg-yellow-300'
   if (isSystemUser.value)
-    return 'rounded-full! border border-stone-200 text-stone-200 dark:border-neutral-500 dark:text-neutral-500'
+    return 'rounded-full! border border-stone-200 text-stone-200 dark:border-neutral-500 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white group-hover:border-black dark:group-hover:border-white'
   if (isGroup.value) return 'bg-green-500'
   return ''
 })
@@ -91,7 +93,7 @@ whenever(isInsideGroupHovered, () => {
         v-if="!circle"
         v-tooltip="parentLabel"
         size="small"
-        class="line-clamp-1! h-4 break-all text-stone-200 dark:text-neutral-500"
+        class="me-auto line-clamp-1! h-4 break-all text-stone-200 group-hover:text-black dark:text-neutral-500 dark:group-hover:text-white"
         :class="{ 'text-white!': dropSuccessActive }"
         >{{ parentLabel }}
       </CommonLabel>
@@ -107,7 +109,7 @@ whenever(isInsideGroupHovered, () => {
       <figcaption :class="{ 'h-10': !circle }">
         <CommonLabel
           v-tooltip="label"
-          class="line-clamp-2! text-center break-word"
+          class="line-clamp-2! text-center break-word group-hover:text-black dark:group-hover:text-white"
           :class="{ 'text-white!': dropSuccessActive }"
           >{{ label }}</CommonLabel
         >

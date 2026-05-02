@@ -250,10 +250,10 @@ RSpec.describe Webhook, type: :model do
       it 'raises error with details' do
         expect { webhook.destroy }
           .to raise_exception(
-            be_an_instance_of(Exceptions::UnprocessableEntity)
+            be_an_instance_of(Exceptions::UnprocessableContent)
             .and(have_attributes(
                    message: 'This object is referenced by other object(s) and thus cannot be deleted: %s',
-                   entity:  eq(["Trigger / #{trigger.name} (##{trigger.id})"])
+                   content: eq(["Trigger / #{trigger.name} (##{trigger.id})"])
                  ))
           )
       end

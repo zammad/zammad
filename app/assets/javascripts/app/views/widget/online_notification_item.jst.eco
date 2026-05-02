@@ -1,7 +1,17 @@
 <div class="js-item activity-entry activity-entry--removeable<% if @item.seen: %> is-inactive<% end %>" data-id="<%- @item.id %>">
-  <a class="activity-avatar user-popover" data-id="<%= @item.created_by_id %>" <% if @item.created_by_id isnt 1: %>href="<%- @item.created_by.uiUrl() %>"<% end %>>
-    <%- @item.created_by.avatar() %>
-  </a>
+  <% if @item.meta?.created_by_ai: %>
+    <a class="activity-avatar activity-ai-avatar user-popover" aria-label="<%- @T('AI agent') %>" data-id="<%= @item.created_by_id %>" <% if @item.created_by_id isnt 1: %>href="<%- @item.created_by.uiUrl() %>"<% end %>>
+      <div class="activity-ai-avatar-outer">
+        <div class="activity-ai-avatar-inner">
+          <%- @Icon('ai-agent') %>
+        </div>
+      </div>
+    </a>
+  <% else: %>
+    <a class="activity-avatar user-popover" data-id="<%= @item.created_by_id %>" <% if @item.created_by_id isnt 1: %>href="<%- @item.created_by.uiUrl() %>"<% end %>>
+      <%- @item.created_by.avatar() %>
+    </a>
+  <% end %>
   <div class="activity-body">
     <a class="activity-message js-locationVerify <%- if !@item.link && @item.seen then 'u-unclickable' %> " href="<%- @item.link %>">
       <span class="activity-text">

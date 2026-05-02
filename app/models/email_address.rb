@@ -56,7 +56,7 @@ check and if channel not exists reset configured channels for email addresses
     self.email = email.downcase.strip
     email_address_validation = EmailAddressValidation.new(email)
     if !email_address_validation.valid?
-      raise Exceptions::UnprocessableEntity, "Invalid email '#{email}'"
+      raise Exceptions::UnprocessableContent, "Invalid email '#{email}'"
     end
 
     true

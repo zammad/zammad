@@ -7,7 +7,6 @@ class CommunicateWhatsappJob < ApplicationJob
   }
 
   def perform(article_id)
-    whatsapp_message_deliver = Service::Ticket::Article::Type::WhatsappMessage::Deliver.new(article_id: article_id)
-    whatsapp_message_deliver.execute
+    Service::Ticket::Article::Type::WhatsappMessage::Deliver.execute(article_id: article_id)
   end
 end

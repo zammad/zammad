@@ -1,22 +1,21 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Ticket::Bulk::UpdateInline < Service::Base
-  attr_reader :user, :ticket_ids, :perform
+  requires_current_user!
 
-  def initialize(user:, ticket_ids:, perform:)
-    @user       = user
+  attr_reader :ticket_ids, :perform
+
+  def initialize(ticket_ids:, perform:)
     @ticket_ids = ticket_ids
     @perform    = perform
     @errors     = []
-
-    super()
   end
 
   def execute
     tickets.each do |ticket|
       Service::Ticket::Bulk::SingleItemUpdate
-        .new(user:, ticket:, perform:)
-        .execute
+        .with_current_user(current_user)
+        .execute(ticket:, perform:)
     rescue Service::Ticket::Bulk::SingleItemUpdate::BulkSingleError => e
       @errors << e
     end

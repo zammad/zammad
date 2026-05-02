@@ -125,7 +125,7 @@ class TriggerWebhookJob < ApplicationJob
     tracks = { ticket:, article: }
 
     # Use the new interpolation service
-    interpolator = Service::Template::Interpolation::Interpolator::Webhook.new(
+    interpolator = Service::Template::Interpolation::Interpolator::Webhook.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
       template:                       payload,
       tracks:,
       additional_track_generate_data: webhook_data,
@@ -161,7 +161,7 @@ class TriggerWebhookJob < ApplicationJob
     tracks = { ticket:, article: }
 
     # Use the interpolation service for scanning and parsing
-    interpolator = Service::Template::Interpolation::Interpolator.new(
+    interpolator = Service::Template::Interpolation::Interpolator.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
       template: endpoint,
       tracks:,
       mode:     :string,

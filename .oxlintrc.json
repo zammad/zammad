@@ -13,19 +13,24 @@
     "perf": "error"
   },
   "rules": {
-    "unicorn/no-thenable": "off",
+    "import/no-cycle": "error",
+    "import/no-unassigned-import": "off",
+    "jest/expect-expect": "off",
+    "jest/no-conditional-expect": "off",
+    "jest/no-export": "off",
     "jest/no-standalone-expect": "off",
     "jest/valid-expect": "off",
-    "jest/no-export": "off",
-    "promise/no-callback-in-promise": "off",
-    "import/no-unassigned-import": "off",
-    "typescript/no-explicit-any": "error",
+    "no-empty-object-type": "error",
     "no-irregular-whitespace": "error",
     "no-use-before-define": "error",
-    "no-empty-object-type": "error",
+    "promise/no-callback-in-promise": "off",
+    "typescript/no-explicit-any": "error",
+    "unicorn/no-thenable": "off",
+    "vitest/expect-expect": "off",
+    "vitest/no-conditional-expect": "off",
     "vitest/require-mock-type-parameters": "off",
-    "vitest/warn-todo": "warn",
-    "import/no-cycle": "error"
+    "vitest/valid-expect": "off",
+    "vitest/warn-todo": "warn"
   },
   "overrides": [
     {

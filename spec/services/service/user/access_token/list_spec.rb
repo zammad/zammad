@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::AccessToken::List do
+  subject(:service_result) { described_class.with_current_user(user).execute }
+
   let(:user) { create(:user) }
 
   let(:token)                { create(:token, user: user) }
@@ -20,14 +22,10 @@ RSpec.describe Service::User::AccessToken::List do
   end
 
   it 'returns persistent api tokens owned by given user' do
-    result = described_class.new(user).execute
-
-    expect(result).to contain_exactly(token, token_second)
+    expect(service_result).to contain_exactly(token, token_second)
   end
 
   it 'does not include sensitive columns' do
-    result = described_class.new(user).execute
-
-    expect(result.first).not_to respond_to(:token)
+    expect(service_result.first).not_to respond_to(:token)
   end
 end

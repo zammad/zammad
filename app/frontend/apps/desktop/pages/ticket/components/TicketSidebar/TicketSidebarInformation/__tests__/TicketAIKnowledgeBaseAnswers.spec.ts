@@ -46,12 +46,14 @@ describe('TicketAIKnowledgeBaseAnswers', () => {
 
     const wrapper = renderKBAnswers()
 
-    await wrapper.events.click(wrapper.getByRole('button', { name: 'Generate Related AI Answer' }))
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Add AI draft' }))
 
     expect(notifications.notify).toHaveBeenCalledWith({
       id: 'ticket-ai-knowledge-base-answers-notification',
-      message: 'Generating knowledge base answer from related ticket…',
+      message:
+        'A related knowledge base answer is being generated. You will be notified once the draft is ready.',
       type: 'info',
+      durationMS: 8000,
     })
 
     const calls = await waitForTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutationCalls()
@@ -65,7 +67,7 @@ describe('TicketAIKnowledgeBaseAnswers', () => {
 
     const wrapper = renderKBAnswers()
 
-    await wrapper.events.click(wrapper.getByRole('button', { name: 'Generate Related AI Answer' }))
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Add AI draft' }))
 
     expect(notifications.notify).toHaveBeenCalledWith({
       id: 'ticket-ai-knowledge-base-answers-notification',

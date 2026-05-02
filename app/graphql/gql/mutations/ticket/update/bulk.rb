@@ -22,8 +22,8 @@ module Gql::Mutations
       return group_has_no_email_error if !group_has_email?(input: perform[:input])
 
       result = Service::Ticket::Bulk::DispatchUpdate
-        .new(user: context.current_user, selector:, perform:)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(selector:, perform:)
 
       convert_to_global_ids(result)
     end

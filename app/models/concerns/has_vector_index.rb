@@ -15,7 +15,7 @@ module HasVectorIndex
   end
 
   def vector_index_update_later
-    return true if !Service::AI::VectorDB::Available.new(ping: false).execute
+    return true if !Service::AI::VectorDB::Available.execute(ping: false)
 
     return true if previous_changes.blank?
 
@@ -32,19 +32,19 @@ module HasVectorIndex
     object_id = data[:object_id] || id
     object_name = data[:object_name] || self.class.to_s
 
-    Service::AI::VectorDB::Item::Upsert.new(object_name:, object_id:, content: data[:content], metadata: data[:metadata]).execute
+    Service::AI::VectorDB::Item::Upsert.execute(object_name:, object_id:, content: data[:content], metadata: data[:metadata])
   end
 
   def vector_index_destroy
     # TODO: as an addition to destory, we need also something for update, when it's no longer "visible" or also category changes...
-    return true if !Service::AI::VectorDB::Available.new(ping: false).execute
+    return true if !Service::AI::VectorDB::Available.execute(ping: false)
 
-    Service::AI::VectorDB::Item::Destroy.new(object_name: self.class.to_s, object_id: id).execute
+    Service::AI::VectorDB::Item::Destroy.execute(object_name: self.class.to_s, object_id: id)
   end
 
   class_methods do
     def vector_index_reload(silent: false, worker: 0)
-      return if !Service::AI::VectorDB::Available.new.execute
+      return if !Service::AI::VectorDB::Available.execute
 
       # TODO: Currently this function is hardcoded for knowledge base answer translations.
       # Because we want to move this stuff to a service layer, it make currently no sense to find a more generic solution here.

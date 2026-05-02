@@ -36,10 +36,10 @@ RSpec.describe AI::Agent, aggregate_failures: true, current_user_id: 1, type: :m
       it 'raises error with details' do
         expect { ai_agent.destroy }
           .to raise_exception(
-            be_an_instance_of(Exceptions::UnprocessableEntity)
+            be_an_instance_of(Exceptions::UnprocessableContent)
             .and(have_attributes(
                    message: 'This object is referenced by other object(s) and thus cannot be deleted: %s',
-                   entity:  eq(["Trigger / #{trigger.name} (##{trigger.id})"])
+                   content: eq(["Trigger / #{trigger.name} (##{trigger.id})"])
                  ))
           )
       end

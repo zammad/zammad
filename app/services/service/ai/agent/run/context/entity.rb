@@ -1,13 +1,14 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::AI::Agent::Run::Context::Entity
-  attr_reader :entity_object, :entity_object_attributes, :entity_articles, :entity_article
+  attr_reader :entity_object, :entity_object_attributes, :entity_articles, :entity_article, :entity_tags
 
   def initialize(entity_object:, entity_context: {}, entity_article: nil)
     @entity_object = entity_object
     @entity_object_attributes = entity_context['object_attributes'] || ['title']
     @entity_articles = entity_context['articles'] || 'all'
     @entity_article = entity_article
+    @entity_tags = entity_context['tags'] || false
   end
 
   def prepare
@@ -21,20 +22,22 @@ class Service::AI::Agent::Run::Context::Entity
       result[:articles] = prepare_entity_articles
     end
 
+    if entity_tags
+      result[:tags] = prepare_entity_tags
+    end
+
     result
   end
 
   private
 
   def prepare_entity_object_attributes
-    prepared_object_attributes = {}
-
-    entity_object_attributes.each do |name|
+    entity_object_attributes.each_with_object({}) do |name, memo|
       object_attribute = get_object_attribute(name)
       next if object_attribute.blank?
 
       # Get the raw value from the entity object
-      raw_value = @entity_object.send(name.to_sym)
+      raw_value = entity_object.send(name.to_sym)
       next if raw_value.blank?
 
       # Determine the appropriate class to handle this attribute type
@@ -46,10 +49,8 @@ class Service::AI::Agent::Run::Context::Entity
         entity_value:     raw_value,
       ).prepare
 
-      prepared_object_attributes[name] = prepared_item if prepared_item.present?
+      memo[name] = prepared_item if prepared_item.present?
     end
-
-    prepared_object_attributes
   end
 
   def prepare_entity_articles
@@ -64,6 +65,10 @@ class Service::AI::Agent::Run::Context::Entity
         processed_body:,
       }
     end
+  end
+
+  def prepare_entity_tags
+    entity_object.tag_list
   end
 
   def skip_quote_removal?(article)
@@ -82,7 +87,7 @@ class Service::AI::Agent::Run::Context::Entity
   end
 
   def last_articles
-    Array(@entity_article.presence || all_articles.last).compact
+    Array(entity_article.presence || all_articles.last).compact
   end
 
   def first_article
@@ -90,7 +95,7 @@ class Service::AI::Agent::Run::Context::Entity
   end
 
   def all_articles
-    @all_articles ||= @entity_object.articles.without_system_notifications
+    @all_articles ||= entity_object.articles.without_system_notifications
   end
 
   def process_article_body(article, skip_quote_removal: false)

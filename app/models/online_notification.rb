@@ -62,6 +62,7 @@ add a new online notification for this user
       object_lookup_id: object_id,
       type_lookup_id:   type_id,
       seen:             data[:seen],
+      meta:             data[:meta] || {},
       user_id:          data[:user_id],
       created_by_id:    data[:created_by_id],
       updated_by_id:    data[:updated_by_id] || data[:created_by_id],

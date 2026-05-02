@@ -5,7 +5,7 @@ module Service::Auth::Concerns::CheckAdminPasswordAuth
 
   included do
     def admin_password_auth!
-      password_login = Service::CheckFeatureEnabled.new(name: 'user_show_password_login', exception: false).execute
+      password_login = Service::CheckFeatureEnabled.execute(name: 'user_show_password_login', exception: false)
       thirdparty_auth = Setting.where('name LIKE ? AND frontend = true', "#{SqlHelper.quote_like('auth_')}%")
         .map { |provider| provider.state_current['value'] }
         .any?(true)

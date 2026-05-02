@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::Overview::List do
-  subject(:service) { described_class.new(user, ignore_user_conditions: false) }
+  subject(:service_result) { described_class.with_current_user(user).execute(ignore_user_conditions: false) }
 
   let(:user) { create(:agent) }
 
@@ -22,7 +22,7 @@ RSpec.describe Service::User::Overview::List do
 
   context 'when no custom sorting exists' do
     it 'returns overviews in correct order' do
-      expect(service.execute).to eq([overview_1, overview_4, overview_3, overview_2])
+      expect(service_result).to eq([overview_1, overview_4, overview_3, overview_2])
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe Service::User::Overview::List do
     end
 
     it 'returns overviews in correct order' do
-      expect(service.execute).to eq([overview_2, overview_1, overview_3, overview_4])
+      expect(service_result).to eq([overview_2, overview_1, overview_3, overview_4])
     end
   end
 
@@ -46,7 +46,7 @@ RSpec.describe Service::User::Overview::List do
     end
 
     it 'returns overviews in correct order' do
-      expect(service.execute).to eq([overview_4, overview_2, overview_1, overview_3])
+      expect(service_result).to eq([overview_4, overview_2, overview_1, overview_3])
     end
   end
 end

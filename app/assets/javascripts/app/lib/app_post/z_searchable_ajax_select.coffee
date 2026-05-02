@@ -133,7 +133,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     {
       name:  name
       value: object.id
-      inactive: object.active == false
+      inactive: !@options.attribute.allowInactive && object.active == false
     }
 
   showLoader: =>

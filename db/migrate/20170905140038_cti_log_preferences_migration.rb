@@ -1,8 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # Rails dropped the class
-# ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter::MysqlDateTime
-# via: https://github.com/rails/rails/commit/f1a0fa9e19b7e4ccaea191fc6cf0613880222ee7
 # ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Integer
 # via: https://github.com/rails/rails/commit/aafee233fb3b4211ee0bfb1fca776c159bd1067e
 # which we use in stored Cti::Log instance preferences.
@@ -11,16 +9,6 @@
 # - loop over all instances
 # - deserialize them in the preferences
 # - replace them in the preferences with the Hash version
-
-# create a dummy class
-module ActiveRecord
-  module ConnectionAdapters
-    class AbstractMysqlAdapter
-      class MysqlDateTime < Type::DateTime
-      end
-    end
-  end
-end
 
 module ActiveRecord
   module ConnectionAdapters

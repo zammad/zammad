@@ -3,17 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe Service::System::SetEmailNotificationConfiguration do
-  let(:service) { described_class.new(adapter:, new_configuration:) }
+  subject(:service_result) { described_class.execute(adapter:, new_configuration:) }
 
   context 'when adapter is sendmail' do
-    let(:adapter) { 'sendmail' }
+    let(:adapter)           { 'sendmail' }
     let(:new_configuration) { nil }
 
     before do
       channel_by_adapter('sendmail').update!(active: false)
       channel_by_adapter('smtp').update!(active: true)
 
-      service.execute
+      service_result
     end
 
     it 'sets smtp to inactive' do
@@ -34,7 +34,7 @@ RSpec.describe Service::System::SetEmailNotificationConfiguration do
   end
 
   context 'when adapter is smtp' do
-    before { service.execute }
+    before { service_result }
 
     let(:adapter) { 'smtp' }
 

@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::SharedDraft::Zoom::Create do
+  subject(:service_result) { described_class.with_current_user(user).execute(form_id, ticket:, new_article:, ticket_attributes:) }
+
   let(:user)              { create(:agent) }
   let(:ticket)            { create(:ticket) }
   let(:form_id)           { 123 }
@@ -11,11 +13,7 @@ RSpec.describe Service::Ticket::SharedDraft::Zoom::Create do
 
   context 'when user has insufficient acces to the draft related ticket' do
     it 'raises an error' do
-      expect do
-        described_class
-          .new(user, form_id, ticket:, new_article:, ticket_attributes:)
-          .execute
-      end.to raise_error(Pundit::NotAuthorizedError)
+      expect { service_result }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 
@@ -25,21 +23,13 @@ RSpec.describe Service::Ticket::SharedDraft::Zoom::Create do
     end
 
     it 'creates a shared draft' do
-      expect do
-        described_class
-          .new(user, form_id, ticket:, new_article:, ticket_attributes:)
-          .execute
-      end.to change(Ticket::SharedDraftZoom, :count).by(1)
+      expect { service_result }.to change(Ticket::SharedDraftZoom, :count).by(1)
     end
 
     it 'copies attachments from the given form' do
       create(:store, o_id: form_id)
 
-      draft = described_class
-        .new(user, form_id, ticket:, new_article:, ticket_attributes:)
-        .execute
-
-      expect(Store.list(object: draft.class.name, o_id: draft.id))
+      expect(Store.list(object: service_result.class.name, o_id: service_result.id))
         .to contain_exactly(have_attributes(filename: 'test.txt'))
     end
   end

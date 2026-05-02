@@ -7,6 +7,8 @@ require 'rails_helper'
 RSpec.describe Service::ExternalDataSource::Preview do
   describe '#execute' do
     context 'with ElasticSearch', searchindex: true do
+      subject(:service_result) { described_class.execute(data_option: data_option, render_context: {}, term: searchterm) }
+
       let(:data_option) do
         create(:object_manager_attribute_autocompletion_ajax_external_data_source, :elastic_search)
           .data_option
@@ -23,9 +25,7 @@ RSpec.describe Service::ExternalDataSource::Preview do
       end
 
       it 'returns search results' do
-        result = described_class.new.execute(data_option: data_option, render_context: {}, term: searchterm)
-
-        expect(result).to include(
+        expect(service_result).to include(
           success: true,
           data:    eq([
                         { value: user1.id.to_s, label: user1.email },
@@ -36,7 +36,8 @@ RSpec.describe Service::ExternalDataSource::Preview do
     end
 
     context 'with mocked response' do
-      let(:instance) { described_class.new }
+      subject(:service_result) { described_class.execute(data_option: data_option, render_context: {}, term: 'term') }
+
       let(:json_response) do
         {
           'deadend' => 'yes',
@@ -69,9 +70,7 @@ RSpec.describe Service::ExternalDataSource::Preview do
       end
 
       it 'returns correct data' do
-        result = instance.execute(data_option: data_option, render_context: {}, term: 'term')
-
-        expect(result).to include(
+        expect(service_result).to include(
           success: true,
           data:    eq([
                         { value: 1, label: 'name 1' },
@@ -86,9 +85,7 @@ RSpec.describe Service::ExternalDataSource::Preview do
         let(:list_key) { 'deadend' }
 
         it 'raises error' do
-          result = instance.execute(data_option: data_option, render_context: {}, term: 'term')
-
-          expect(result).to include(
+          expect(service_result).to include(
             success:       false,
             error:         'Search result list key "deadend" is not an array.',
             response_body: json_response,
@@ -101,9 +98,7 @@ RSpec.describe Service::ExternalDataSource::Preview do
         let(:label_key) { 'nonexistant' }
 
         it 'raises error' do
-          result = instance.execute(data_option: data_option, render_context: {}, term: 'term')
-
-          expect(result).to include(
+          expect(service_result).to include(
             success:       false,
             error:         'Search result label key "nonexistant" was not found.',
             response_body: json_response,

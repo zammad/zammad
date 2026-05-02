@@ -1,5 +1,5 @@
 <% if @aiAgentIsRunning: %>
-  <div  class="aiAgent-outer js-aiAgentAvatar">
+  <div  class="aiAgent-outer js-aiAgentAvatar" aria-label="<%- @T('AI agent') %>">
     <div class="aiAgent-inner">
       <%- @Icon('ai-agent') %>
     </div>

@@ -1,20 +1,19 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::Device::Delete < Service::Base
-  attr_reader :user, :device
+  requires_current_user!
 
-  def initialize(user:, device:)
-    super()
+  attr_reader :device
 
-    raise Exceptions::UnprocessableEntity, __('UserDevice could not be found.') if device.blank?
+  def initialize(device:)
+    raise Exceptions::UnprocessableContent, __('UserDevice could not be found.') if device.blank?
 
-    @user = user
     @device = device
   end
 
   def execute
     Session.all.each do |session|
-      next if session.data['user_id'] != user.id
+      next if session.data['user_id'] != current_user.id
       next if session.data['user_device_fingerprint'] != device.fingerprint
 
       begin

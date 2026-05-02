@@ -1,21 +1,20 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::PasswordCheck < Service::Base
-  attr_reader :user, :password
+  requires_current_user!
 
-  def initialize(user:, password:)
-    super()
+  attr_reader :password
 
-    @user     = user
+  def initialize(password:)
     @password = password
   end
 
   def execute
     Auth
-      .new(user.login, password, only_verify_password: true)
+      .new(current_user.login, password, only_verify_password: true)
       .valid!
 
-    token = Token.create(action: 'PasswordCheck', user_id: user.id, persistent: false, expires_at: 1.hour.from_now)
+    token = Token.create(action: 'PasswordCheck', user_id: current_user.id, persistent: false, expires_at: 1.hour.from_now)
 
     {
       success: true,

@@ -33,7 +33,7 @@ export default function buildMentionExtension<T>(
 ): Omit<SuggestionOptions, 'editor'> {
   return {
     char: options.activator,
-    allowSpaces: options.allowSpaces,
+    allowSpaces: options.allowSpaces ?? true,
     items: options.items,
     pluginKey: new PluginKey(options.type),
     command({ editor, range, props }) {

@@ -160,7 +160,7 @@ class ChannelsEmailController < ApplicationController
       return
     end
 
-    ::Service::Channel::Email::Create.new.execute(
+    ::Service::Channel::Email::Create.execute(
       inbound_configuration:  unmasked_params_inbound,
       outbound_configuration: unmasked_params_outbound,
       group:                  ::Group.find(params[:group_id]),
@@ -225,10 +225,10 @@ class ChannelsEmailController < ApplicationController
     # save settings
     if result[:result] == 'ok'
       Service::System::SetEmailNotificationConfiguration
-        .new(
+        .execute(
           adapter:,
           new_configuration: unmasked_params[:options].to_h
-        ).execute
+        )
     end
 
     render json: mask_sensitive_values(result, nil)
@@ -281,11 +281,11 @@ class ChannelsEmailController < ApplicationController
       email_address = EmailAddress.find(params[:group_email_address_id])
     end
 
-    Service::Channel::Email::UpdateDestinationGroupEmail.new(
+    Service::Channel::Email::UpdateDestinationGroupEmail.execute(
       group:         Group.find(params[:group_id]),
       channel:       channel,
       email_address:,
-    ).execute
+    )
   end
 
   def handle_group_email_address?

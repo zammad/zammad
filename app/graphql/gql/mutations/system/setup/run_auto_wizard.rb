@@ -13,7 +13,7 @@ module Gql::Mutations
     allow_public_access!
 
     def resolve(token: nil)
-      user = Service::System::RunAutoWizard.new.execute(token:)
+      user = Service::System::RunAutoWizard.execute(token:)
 
       create_session(user, false, 'password')
 

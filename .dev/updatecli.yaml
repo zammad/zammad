@@ -1,5 +1,5 @@
 ---
-name: "Update Zammad version and dependency charts (patch and minor only)"
+name: "Update Zammad dependencies via updatecli"
 
 sources:
   heroku-buildpack-nodejs:
@@ -25,6 +25,9 @@ targets:
     name: buildpacks-nodejs
     kind: file
     sourceid: heroku-buildpack-nodejs
+    # {{ if .gitlab.enabled }}
+    scmid: zammad
+    # {{ end }}
     spec:
       file: .buildpacks
       matchpattern: 'https://github.com/heroku/heroku-buildpack-nodejs.git#.*'
@@ -33,7 +36,37 @@ targets:
     name: buildpacks-ruby
     kind: file
     sourceid: heroku-buildpack-ruby
+    # {{ if .gitlab.enabled }}
+    scmid: zammad
+    # {{ end }}
     spec:
       file: .buildpacks
       matchpattern: 'https://github.com/pkgr/heroku-buildpack-ruby.git#.*'
       replacepattern: 'https://github.com/pkgr/heroku-buildpack-ruby.git#{{ source `heroku-buildpack-ruby` }}'
+
+# {{ if .gitlab.enabled }}
+scms:
+  zammad:
+    kind: "gitlab"
+    spec:
+      url: '{{ requiredEnv "CI_SERVER_URL" }}'
+      owner: "zammad"
+      repository: "zammad"
+      token: '{{ requiredEnv "RENOVATE_TOKEN" }}'
+      username: 'renovate'
+      branch: "develop"
+      workingbranchprefix: "renovate/updatecli"
+      workingbranchseparator: "/"
+
+actions:
+  gitlab:
+    kind: gitlab/mergerequest
+    scmid: zammad
+    spec:
+      automerge: false
+      title: "Maintenance: Update Zammad dependencies via updatecli"
+      assignees:
+        - 115 # fl
+      labels:
+        - "dependencies"
+# {{ end }}

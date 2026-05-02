@@ -369,6 +369,9 @@ class ConnectionWizard extends App.ControllerWizardModal
     return if element && element.reportValidity && !element.reportValidity()
 
     params                   = @formParam(e.target)
+
+    delete @wizardConfig.base_dn if @wizardConfig.host and params.host isnt @wizardConfig.host
+
     @wizardConfig.host       = params.host
     @wizardConfig.ssl        = params.ssl
     @wizardConfig.ssl_verify = params.ssl_verify
@@ -392,14 +395,17 @@ class ConnectionWizard extends App.ControllerWizardModal
   hostChange: (e) ->
     e.preventDefault()
 
-    [protocol, host] = $(e.currentTarget).val().split('://')
-    return if _.isEmpty(protocol) || _.isEmpty(host)
+    currentHost = $(e.currentTarget).val()
+    [protocol, host] = currentHost.split('://')
+    normalizedHost = if _.isEmpty(host) then currentHost else host
+
+    return if _.isEmpty(protocol) || _.isEmpty(normalizedHost)
     return if !['ldap', 'ldaps'].includes(protocol)
 
     protocol_ssl_mapping = { ldap: 'off', ldaps: 'ssl' }
 
-    $('.js-hostUrl').val(host)
-    $('.js-Ssl').val(protocol_ssl_mapping[protocol]).trigger('change')
+    @$('.js-hostUrl').val(normalizedHost)
+    @$('.js-Ssl').val(protocol_ssl_mapping[protocol]).trigger('change')
 
   sslChange: (e) =>
     @checkSslVerifyVisibility($(e.currentTarget).val())
@@ -461,6 +467,8 @@ class ConnectionWizard extends App.ControllerWizardModal
         if !_.isEmpty(data.error) && data.error is 'disallow-bind-anon'
           @wizardConfig.disallow_bind_anon = true
 
+        delete @wizardConfig.base_dn if @wizardConfig.host and params.host isnt @wizardConfig.host
+
         @wizardConfig.host       = params.host
         @wizardConfig.ssl        = params.ssl
         @wizardConfig.ssl_verify = params.ssl_verify
@@ -494,22 +502,27 @@ class ConnectionWizard extends App.ControllerWizardModal
   bindShow: (alreadyShown) =>
     @showSlide('js-bind') if !alreadyShown
 
-    if @wizardConfig.disallow_bind_anon
-      baseDnInput = App.UiElement.input.render(
-        name: 'base_dn'
-        id: 'base_dn'
-        display: __('Base DN')
-        tag: 'input'
-        type: 'text'
-        class: 'form-control--small js-baseDn'
-        required: 'required'
-        placeholder: ''
-        value: @wizardConfig.base_dn
-        autocomplete: 'autocomplete="off"'
-      )[0].outerHTML
-      @$('.js-bind .js-baseDn').html(baseDnInput)
-    else
-      @$('.js-bind .js-baseDn').html(@createSelection('base_dn', @wizardConfig.options, @wizardConfig.base_dn || @wizardConfig.option, true))
+    selectedBaseDn = @wizardConfig.base_dn || @wizardConfig.option || ''
+
+    baseDnInput = App.UiElement.input.render(
+      name: 'base_dn'
+      id: 'base_dn'
+      display: __('Base DN')
+      tag: 'input'
+      type: 'text'
+      class: 'form-control--small'
+      placeholder: ''
+      value: selectedBaseDn
+      autocomplete: 'autocomplete="off"'
+    )
+    @$('.js-bind .js-baseDn').empty().append(baseDnInput)
+
+    if !_.isEmpty(@wizardConfig.options)
+      baseDnInput.autocomplete(
+        source: Object.keys(@wizardConfig.options)
+        minLength: 0
+      )
+      baseDnInput.on('click', -> $(@).autocomplete('search', ''))
 
     @$('.js-bind input[name="bind_user"]').val(@wizardConfig.bind_user)
     @$('.js-bind input[name="bind_pw"]').val(@wizardConfig.bind_pw)

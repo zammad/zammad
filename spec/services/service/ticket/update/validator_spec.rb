@@ -3,7 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::Update::Validator, current_user_id: 1 do
-  subject(:validator) { described_class.new(user:, ticket:, ticket_data:, article_data:, skip_validators:, macro:) }
+  subject(:service_result) do
+    described_class
+      .with_current_user(user)
+      .execute(ticket:, ticket_data:, article_data:, skip_validators:, macro:)
+  end
 
   let(:user)            { create(:agent, groups: [group]) }
   let(:ticket)          { create(:ticket) }
@@ -14,9 +18,9 @@ RSpec.describe Service::Ticket::Update::Validator, current_user_id: 1 do
   let(:skip_validators) { nil }
   let(:macro)           { nil }
 
-  describe '#validate!' do
+  describe '#execute' do
     it 'does not raise an error' do
-      expect { validator.validate! }.not_to raise_error
+      expect { service_result }.not_to raise_error
     end
 
     context 'when ticket with a checklist is being closed' do
@@ -28,14 +32,14 @@ RSpec.describe Service::Ticket::Update::Validator, current_user_id: 1 do
       end
 
       it 'raises an error' do
-        expect { validator.validate! }.to raise_error(Service::Ticket::Update::Validator::ChecklistCompleted::Error, 'The ticket checklist is incomplete.')
+        expect { service_result }.to raise_error(Service::Ticket::Update::Validator::ChecklistCompleted::Error, 'The ticket checklist is incomplete.')
       end
 
       context 'when validator is being skipped' do
         let(:skip_validators) { [Service::Ticket::Update::Validator::ChecklistCompleted::Error] }
 
         it 'does not raise an error' do
-          expect { validator.validate! }.not_to raise_error
+          expect { service_result }.not_to raise_error
         end
       end
     end

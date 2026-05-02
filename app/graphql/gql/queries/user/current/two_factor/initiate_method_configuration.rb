@@ -16,8 +16,8 @@ module Gql::Queries
       verify_token!(token)
 
       Service::User::TwoFactor::InitiateMethodConfiguration
-        .new(user: context.current_user, method_name: method_name)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(method_name: method_name)
     end
   end
 end

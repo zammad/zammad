@@ -11,11 +11,9 @@ module Gql::Types::Input
     def prepare
       super
 
-      service = Service::Avatar::ImageValidate.new
-
       {
-        original: service.execute(image_data: original),
-        resized:  service.execute(image_data: resized)
+        original: Service::Avatar::ImageValidate.execute(image_data: original),
+        resized:  Service::Avatar::ImageValidate.execute(image_data: resized)
       }
     end
   end

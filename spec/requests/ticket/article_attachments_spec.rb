@@ -170,7 +170,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
         _ticket_p, article_p, _user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
         post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: {}, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(json_response).to be_a(Hash)
         expect(json_response['error']).to eq("Need 'form_id' to add attachments to new form.")
 

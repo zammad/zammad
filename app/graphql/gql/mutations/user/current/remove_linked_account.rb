@@ -13,7 +13,9 @@ module Gql::Mutations
 
     def resolve(provider:, uid:)
 
-      Service::User::RemoveLinkedAccount.new(provider:, uid:, current_user: context.current_user).execute
+      Service::User::RemoveLinkedAccount
+        .with_current_user(context.current_user)
+        .execute(provider:, uid:)
 
       { success: true }
     end

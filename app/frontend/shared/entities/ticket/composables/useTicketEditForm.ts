@@ -41,6 +41,22 @@ export const useTicketEditForm = (
 
   const currentArticleType = shallowRef<AppSpecificTicketArticleType>()
 
+  const hasInternalArticle = computed(
+    () =>
+      (form.value?.values?.article as { internal?: boolean })?.internal ??
+      currentArticleType.value?.internal ??
+      false,
+  )
+
+  const currentSchemaArticleType = computed(() => {
+    if (!currentArticleType.value) return undefined
+
+    return {
+      ...currentArticleType.value,
+      internal: hasInternalArticle.value,
+    }
+  })
+
   const recipientContact = computed(() => currentArticleType.value?.options?.recipientContact)
   const editorType = computed(() => currentArticleType.value?.contentType)
 
@@ -88,6 +104,12 @@ export const useTicketEditForm = (
 
   const isMobileApp = appName === 'mobile'
 
+  const application = useApplicationStore()
+
+  const additionalAddArticleNotes = computed(
+    () => (application.config.ui_ticket_add_article_hint as Record<string, string>) || {},
+  )
+
   const ticketSchema = {
     type: 'group',
     name: 'ticket', // will be flattened in the form submit result
@@ -125,6 +147,27 @@ export const useTicketEditForm = (
     name: 'article',
     isGroupOrList: true,
     children: [
+      {
+        if: '$existingAdditionalAddArticleNotes() && $getAdditionalAddArticleNote($currentArticleType) !== undefined',
+        isLayout: true,
+        component: 'CommonAlert',
+        props: {
+          variant: 'warning',
+          class: 'col-span-2',
+        },
+        children: [
+          {
+            isLayout: true,
+            element: 'div',
+            attrs: {
+              // We convert light weight markup
+              // The input is not sanitized and relies on the administrator to provide safe content
+              innerHTML: '$markup($t($getAdditionalAddArticleNote($currentArticleType)))',
+            },
+            children: '',
+          },
+        ],
+      },
       {
         type: 'hidden',
         name: 'inReplyTo',
@@ -332,8 +375,6 @@ export const useTicketEditForm = (
     })
   }
 
-  const application = useApplicationStore()
-
   const securityIntegration = computed<boolean>(
     () => (application.config.smime_integration || application.config.pgp_integration) ?? false,
   )
@@ -342,6 +383,7 @@ export const useTicketEditForm = (
     ticketSchema,
     articleSchema,
     currentArticleType,
+    currentSchemaArticleType,
     ticketArticleTypes,
     ticketArticleDefaultValues,
     securityIntegration,
@@ -350,5 +392,6 @@ export const useTicketEditForm = (
     isTicketEditable,
     articleTypeHandler: articleTypeChangeHandler,
     articleTypeSelectHandler,
+    additionalAddArticleNotes,
   }
 }

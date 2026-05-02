@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Service::AI::VectorDB::SimilaritySearch do
+  subject(:service_result) { described_class.execute(text: 'text') }
+
   before do
     setup_ai_provider('open_ai')
   end
@@ -16,6 +18,6 @@ RSpec.describe Service::AI::VectorDB::SimilaritySearch do
       .with(input: 'text')
       .and_return('test embedding')
 
-    expect(described_class.new(text: 'text').execute).to eq('knn response')
+    expect(service_result).to eq('knn response')
   end
 end

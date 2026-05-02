@@ -13,7 +13,7 @@ RSpec.describe 'Mobile > After Auth', :aggregate_failures, app: :mobile, authent
     it 'requires setting up two factor auth' do
       visit '/', skip_waiting: true
 
-      expect(page).to have_content('The two-factor authentication is not configured yet')
+      expect(page).to have_text('The two-factor authentication is not configured yet')
       expect_current_route '/login/after-auth'
     end
   end
@@ -29,12 +29,12 @@ RSpec.describe 'Mobile > After Auth', :aggregate_failures, app: :mobile, authent
 
       click_on('Sign in')
 
-      expect(page).to have_content('The two-factor authentication is not configured yet')
+      expect(page).to have_text('The two-factor authentication is not configured yet')
       expect(page).to have_link('Click here to set up a two-factor authentication method.', href: '/#')
 
       click 'a', text: 'Click here to set up a two-factor authentication method.'
       expect_current_route('dashboard', app: :desktop)
-      expect(page).to have_content('Set up two-factor authentication: Confirm Password')
+      expect(page).to have_text('Set up two-factor authentication: Confirm Password')
     end
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe 'System Assets', type: :request do
   describe '#show' do
     it 'returns content for product logo' do
       allow(Service::SystemAssets::ProductLogo).to receive(:sendable_asset).and_return(
-        Service::SystemAssets::SendableAsset.new(
+        Service::SystemAssets::SendableAsset.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
           content:  'product_logo',
           filename: 'test',
           type:     'image/test'

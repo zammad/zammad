@@ -3,8 +3,6 @@
 module Service::Channel::Whatsapp
   class Create < Base
     def initialize(params:)
-      super()
-
       @params = params
     end
 

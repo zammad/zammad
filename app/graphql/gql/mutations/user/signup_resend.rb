@@ -17,10 +17,8 @@ module Gql::Mutations
     end
 
     def resolve(email:)
-      signup = Service::User::Signup.new(user_data: { email: email }, resend: true)
-
       begin
-        signup.execute
+        Service::User::Signup.execute(user_data: { email: email }, resend: true)
       rescue Service::User::Signup::TokenGenerationError
         return error_response({ message: e.message })
       end

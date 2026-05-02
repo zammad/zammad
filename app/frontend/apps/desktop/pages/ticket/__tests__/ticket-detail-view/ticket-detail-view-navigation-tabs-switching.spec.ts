@@ -148,7 +148,7 @@ describe('Ticket detail view multi tabs switching', () => {
     expect(collapsedSection).toHaveStyle('display: none')
   })
 
-  it.skip('preserves the flyout from the previous taskbar tab', async () => {
+  it.todo('preserves the flyout from the previous taskbar tab', async () => {
     // Current route is not updating when clicking on the link
     // Initial condition of isActive within CommonFlyout is not met
 
@@ -183,7 +183,7 @@ describe('Ticket detail view multi tabs switching', () => {
     )
   })
 
-  it.skip('preserves the conformation dialog from the previous taskbar tab', async () => {
+  it.todo('preserves the conformation dialog from the previous taskbar tab', async () => {
     // Current route is not updating when clicking on the link
     // Initial condition of isActive within CommonDialog is not met
 

@@ -5,7 +5,6 @@ class Service::User::PasswordReset::Send < Service::Base
   attr_reader :username
 
   def initialize(username:)
-    super()
     @username = username
     @path = {
       reset: 'desktop/reset-password/verify/'
@@ -15,7 +14,7 @@ class Service::User::PasswordReset::Send < Service::Base
   def execute
     ensure_not_import_mode!
 
-    Service::CheckFeatureEnabled.new(name: 'user_lost_password').execute
+    Service::CheckFeatureEnabled.execute(name: 'user_lost_password')
 
     result = ::User.password_reset_new_token(username)
 
@@ -39,6 +38,6 @@ class Service::User::PasswordReset::Send < Service::Base
     return if !Setting.get('import_mode')
 
     Rails.logger.error "Could not send password reset email to user #{username} because import_mode setting is on."
-    raise Exceptions::UnprocessableEntity, __('The email could not be sent to the user because import_mode setting is on.')
+    raise Exceptions::UnprocessableContent, __('The email could not be sent to the user because import_mode setting is on.')
   end
 end

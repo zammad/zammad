@@ -9,13 +9,13 @@ module Gql::Mutations
     field :success, Boolean, description: 'Whether the generation job was enqueued successfully.'
 
     def resolve(ticket:)
-      Service::CheckFeatureEnabled.new(name: 'ai_assistance_kb_answer_from_ticket_generation').execute
-      Service::CheckFeatureEnabled.new(name: 'ai_provider', custom_error_message: __('AI provider is not configured.')).execute
+      Service::CheckFeatureEnabled.execute(name: 'ai_assistance_kb_answer_from_ticket_generation')
+      Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
 
       knowledge_base = ::KnowledgeBase.first
 
       if knowledge_base.blank? || !knowledge_base.visible? || !knowledge_base.categories.exists?
-        raise Exceptions::UnprocessableEntity, __('Knowledge base is unavailable or not properly configured.')
+        raise Exceptions::UnprocessableContent, __('Knowledge base is unavailable or not properly configured.')
       end
 
       editable_categories = ::KnowledgeBase::AccessibleCategories
@@ -23,12 +23,12 @@ module Gql::Mutations
         .editor
 
       if editable_categories.empty?
-        raise Exceptions::UnprocessableEntity, __('No editable knowledge base categories available.')
+        raise Exceptions::UnprocessableContent, __('No editable knowledge base categories available.')
       end
 
       job = TicketAIAssistanceGenerateKnowledgeBaseAnswerJob.perform_later(ticket, context.current_user, knowledge_base.id)
 
-      raise Exceptions::UnprocessableEntity, __('Related knowledge base answer creation has already been started for given ticket.') if !job
+      raise Exceptions::UnprocessableContent, __('Related knowledge base answer creation has already been started for given ticket.') if !job
 
       { success: true }
     end

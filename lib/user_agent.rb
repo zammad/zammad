@@ -41,37 +41,13 @@ class UserAgent
   end
 
   def self.get_http(uri, options)
+    http = UserAgent::HttpClient
+      .get_client(uri, options)
+      .new(uri.host, uri.port)
 
-    proxy = options['proxy'] || Setting.get('proxy')
-    proxy_no = options['proxy_no'] || Setting.get('proxy_no') || ''
-    proxy_no = proxy_no.split(',').map(&:strip) || []
-    proxy_no.push('localhost', '127.0.0.1', '::1')
-    if proxy.present? && proxy_no.exclude?(uri.host.downcase)
-      if proxy =~ %r{^(.+?):(.+?)$}
-        proxy_host = $1
-        proxy_port = $2
-      end
-
-      if proxy_host.blank? || proxy_port.blank?
-        raise "Invalid proxy address: #{proxy} - expect e.g. proxy.example.com:3128"
-      end
-
-      proxy_username = options['proxy_username'] || Setting.get('proxy_username')
-      if proxy_username.blank?
-        proxy_username = nil
-      end
-      proxy_password = options['proxy_password'] || Setting.get('proxy_password')
-      if proxy_password.blank?
-        proxy_password = nil
-      end
-
-      http = Net::HTTP::Proxy(proxy_host, proxy_port, proxy_username, proxy_password).new(uri.host, uri.port)
-    else
-      http = Net::HTTP.new(uri.host, uri.port)
-    end
-
-    http.open_timeout = options[:open_timeout] || 4
-    http.read_timeout = options[:read_timeout] || 10
+    # Defaults raised for slow links (e.g. OAuth to external IdPs); override globally via ENV, per-request via options. See https://github.com/zammad/zammad/issues/5991
+    http.open_timeout = options[:open_timeout] || ENV.fetch('ZAMMAD_HTTP_OPEN_TIMEOUT', 30).to_i
+    http.read_timeout = options[:read_timeout] || ENV.fetch('ZAMMAD_HTTP_READ_TIMEOUT', 60).to_i
 
     if uri.scheme == 'https'
       http.use_ssl = true

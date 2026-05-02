@@ -11,8 +11,8 @@ module Gql::Mutations
 
     def resolve(ai_analytics_run:, input:)
       usage = Service::AI::Analytics::UpsertUsage
-        .new(context.current_user, ai_analytics_run, **input)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(ai_analytics_run, **input)
 
       {
         usage:,

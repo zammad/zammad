@@ -34,7 +34,7 @@ examples how to use
 
 =end
 
-  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false, ignore_missing_objects: false)
+  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false, ignore_missing_objects: false, trim_mode: nil)
     @objects  = objects
     @locale   = locale || Locale.default
     @timezone = timezone || Setting.get('timezone_default')
@@ -43,12 +43,13 @@ examples how to use
     @url_encode = url_encode
     @trusted = trusted
     @ignore_missing_objects = ignore_missing_objects
+    @trim_mode = trim_mode
   end
 
   def render(debug_errors: true)
     @debug_errors = debug_errors
     template_str = @template.to_s
-    ERB.new(template_str).result(template_binding)
+    ERB.new(template_str, trim_mode: @trim_mode).result(template_binding)
   rescue Exception => e # rubocop:disable Lint/RescueException
     raise StandardError, e.message if e.is_a? SyntaxError
 

@@ -11,10 +11,8 @@ module Gql::Mutations
     allow_public_access!
 
     def resolve(token:)
-      verify = Service::User::PasswordReset::Verify.new(token: token)
-
       begin
-        verify.execute
+        Service::User::PasswordReset::Verify.execute(token: token)
       rescue Service::User::PasswordReset::Verify::InvalidTokenError => e
         return error_response({ message: e.message })
       end

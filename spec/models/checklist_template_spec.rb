@@ -20,7 +20,7 @@ RSpec.describe ChecklistTemplate, :aggregate_failures, current_user_id: 1, type:
 
       expect { template.replace_items!(huge_list) }
         .to raise_error(
-          Exceptions::UnprocessableEntity,
+          Exceptions::UnprocessableContent,
           'Checklist Template items are limited to 100 items per checklist.'
         )
     end

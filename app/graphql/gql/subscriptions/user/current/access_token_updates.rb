@@ -13,7 +13,7 @@ module Gql::Subscriptions
 
     def update
       tokens = Service::User::AccessToken::List
-        .new(context.current_user)
+        .with_current_user(context.current_user)
         .execute
 
       { tokens: }

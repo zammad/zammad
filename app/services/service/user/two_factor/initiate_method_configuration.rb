@@ -3,7 +3,7 @@
 class Service::User::TwoFactor::InitiateMethodConfiguration < Service::User::TwoFactor::Base
   def execute
     if !method_available?
-      raise Exceptions::UnprocessableEntity, __('The two-factor authentication method is not enabled.')
+      raise Exceptions::UnprocessableContent, __('The two-factor authentication method is not enabled.')
     end
 
     method.initiate_configuration

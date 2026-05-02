@@ -28,6 +28,9 @@ export const OnlineNotificationsDocument = gql`
         }
         typeName
         objectName
+        meta {
+          createdByAi
+        }
         metaObject {
           ... on Ticket {
             id

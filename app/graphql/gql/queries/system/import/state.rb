@@ -10,7 +10,7 @@ module Gql::Queries
 
     def resolve
       begin
-        status = Service::System::Import::CheckStatus.new.execute
+        status = Service::System::Import::CheckStatus.execute
       rescue Service::System::Import::Run::ExecuteError => e
         return build_error(e.message)
       end

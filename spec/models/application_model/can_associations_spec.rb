@@ -45,7 +45,7 @@ RSpec.describe ApplicationModel::CanAssociations, type: :model do
       params = { name: 'org', members: ['nonexistantstring'] }
 
       expect { Organization.association_name_to_id_convert(params) }
-        .to raise_error Exceptions::UnprocessableEntity, %r{No lookup value found}
+        .to raise_error Exceptions::UnprocessableContent, %r{No lookup value found}
     end
 
     it 'converts non-user has many association by name' do
@@ -99,7 +99,7 @@ RSpec.describe ApplicationModel::CanAssociations, type: :model do
       params = { name: 'token', user: 'nonexistantstring' }
 
       expect { Token.association_name_to_id_convert(params) }
-        .to raise_error Exceptions::UnprocessableEntity, %r{No lookup value found}
+        .to raise_error Exceptions::UnprocessableContent, %r{No lookup value found}
     end
 
     it 'converts non-user belongs to association by name' do
@@ -129,7 +129,7 @@ RSpec.describe ApplicationModel::CanAssociations, type: :model do
       params       = { email: 'email@example.org', organization: organization.id }
 
       expect { User.association_name_to_id_convert(params) }
-        .to raise_error Exceptions::UnprocessableEntity, %r{No lookup value found}
+        .to raise_error Exceptions::UnprocessableContent, %r{No lookup value found}
     end
   end
 end

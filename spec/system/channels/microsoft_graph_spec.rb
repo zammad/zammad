@@ -293,7 +293,7 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
 
         expect { channel.reload }.to raise_error(ActiveRecord::RecordNotFound)
 
-        expect(page).to have_content('Notice: Unassigned email addresses, assign them to a channel or delete them.')
+        expect(page).to have_text('Notice: Unassigned email addresses, assign them to a channel or delete them.')
 
         find('.js-emailAddressDelete').click
 
@@ -366,10 +366,10 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
 
       it 'displays user mismatch dialog' do
         in_modal do
-          expect(page).to have_content('The entered user for reauthentication differs from the user that was used for setting up your Microsoft365 channel initially.')
-          expect(page).to have_content('To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication process was aborted.')
-          expect(page).to have_content('Please start the reauthentication again and enter the correct credentials.')
-          expect(page).to have_content("Current User: #{email_address}")
+          expect(page).to have_text('The entered user for reauthentication differs from the user that was used for setting up your Microsoft365 channel initially.')
+          expect(page).to have_text('To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication process was aborted.')
+          expect(page).to have_text('Please start the reauthentication again and enter the correct credentials.')
+          expect(page).to have_text("Current User: #{email_address}")
 
           click_on 'Close'
         end
@@ -385,7 +385,7 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
 
       it 'displays duplicate email address dialog' do
         in_modal do
-          expect(page).to have_content("The email address #{email_address} is already in use by another account.")
+          expect(page).to have_text("The email address #{email_address} is already in use by another account.")
 
           click_on 'Close'
         end
@@ -415,8 +415,8 @@ RSpec.describe 'Manage > Channels > Microsoft 365 Graph Email', time_zone: 'Euro
 
       it 'displays original error message and a helpful hint' do
         in_modal do
-          expect(page).to have_content("#{error[:message]} (#{error[:code]})")
-          expect(page).to have_content('Did you verify that the user has access to the mailbox? Or consider removing this channel and switch to using a different mailbox type.')
+          expect(page).to have_text("#{error[:message]} (#{error[:code]})")
+          expect(page).to have_text('Did you verify that the user has access to the mailbox? Or consider removing this channel and switch to using a different mailbox type.')
 
           click_on 'Cancel & Go Back'
         end

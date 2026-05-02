@@ -188,7 +188,7 @@ returns
     return true if !will_save_change_to_attribute?('active')
     return true if active != false
     return true if !with_permission?(['admin', 'admin.user'])
-    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if !User.admin_user_exists?(except_role_id: [id])
+    raise Exceptions::UnprocessableContent, __('At least one user needs to have admin permissions.') if !User.admin_user_exists?(except_role_id: [id])
 
     true
   end
@@ -196,7 +196,7 @@ returns
   def last_admin_check_by_permission(permission)
     return true if Setting.get('import_mode')
     return true if permission.name != 'admin' && permission.name != 'admin.user'
-    raise Exceptions::UnprocessableEntity, __('At least one user needs to have admin permissions.') if !User.admin_user_exists?(except_role_id: [id])
+    raise Exceptions::UnprocessableContent, __('At least one user needs to have admin permissions.') if !User.admin_user_exists?(except_role_id: [id])
 
     true
   end
@@ -211,7 +211,7 @@ returns
     currents = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct.pluck(:id)
     news = User.joins(:roles).where(roles: { id: id }, users: { active: true }).distinct.pluck(:id)
     count = currents.concat(news).uniq.count
-    raise Exceptions::UnprocessableEntity, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
+    raise Exceptions::UnprocessableContent, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
 
     true
   end
@@ -225,7 +225,7 @@ returns
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent' }, roles: { active: true }).pluck(:id)
     ticket_agent_role_ids.push(id)
     count = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct.count
-    raise Exceptions::UnprocessableEntity, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
+    raise Exceptions::UnprocessableContent, __('Agent limit exceeded, please check your account settings.') if count > Setting.get('system_agent_limit').to_i
 
     true
   end
@@ -236,7 +236,7 @@ returns
     forbidden_permissions = permissions.reject(&:allow_signup)
     return true if forbidden_permissions.blank?
 
-    raise Exceptions::UnprocessableEntity, "Cannot set default at signup when role has #{forbidden_permissions.join(', ')} permissions."
+    raise Exceptions::UnprocessableContent, "Cannot set default at signup when role has #{forbidden_permissions.join(', ')} permissions."
   end
 
   def cache_add_kb_permission(permission)

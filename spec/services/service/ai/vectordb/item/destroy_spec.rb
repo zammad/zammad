@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Service::AI::VectorDB::Item::Destroy do
+  subject(:service_result) { described_class.execute(object_id: object.id, object_name: object.class.name) }
+
   let(:object) { create(:ticket) }
 
   before do
-
     setup_ai_provider('open_ai')
   end
 
@@ -15,8 +16,6 @@ RSpec.describe Service::AI::VectorDB::Item::Destroy do
       .to receive(:destroy)
       .with(object_id: object.id, object_name: object.class.name)
 
-    described_class
-      .new(object_id: object.id, object_name: object.class.name)
-      .execute
+    service_result
   end
 end

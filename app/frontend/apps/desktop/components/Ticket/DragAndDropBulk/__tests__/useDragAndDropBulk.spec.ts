@@ -13,6 +13,7 @@ import {
   mockTicketUpdateBulkMutation,
   waitForTicketUpdateBulkMutationCalls,
 } from '#desktop/entities/ticket/graphql/mutations/updateBulk.mocks.ts'
+import { useTicketBulkUpdateStore } from '#desktop/entities/user/current/stores/ticketBulkUpdate.ts'
 
 import { useDragAndDropBulk } from '../useDragAndDropBulk.ts'
 
@@ -174,7 +175,7 @@ describe('useDragAndDropBulk', () => {
     const ticketInternalId = '1'
     const macroInternalId = '3'
 
-    const composable = mountDragAndDropBulk({
+    const useDragAndDropBulk = mountDragAndDropBulk({
       checkedTicketIds: ref(new Set<ID>()),
       bulkSelector: ref({}),
     })
@@ -189,7 +190,7 @@ describe('useDragAndDropBulk', () => {
       checkboxDisabled: true,
     })
 
-    expect(composable.isActive.value).toBe(false)
+    expect(useDragAndDropBulk.isActive.value).toBe(false)
   })
 
   it('uses search query selector when bulk count and search context are present', async () => {
@@ -227,5 +228,60 @@ describe('useDragAndDropBulk', () => {
         macroId: convertToGraphQLId('Macro', macroInternalId),
       },
     })
+  })
+
+  it('skips activation if touch device', () => {
+    vi.doMock('#shared/composables/useTouchDevice.ts', () => ({
+      useTouchDevice: () => ({
+        isTouchDevice: ref(true),
+      }),
+    }))
+
+    const { isActive } = mountDragAndDropBulk({
+      checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', 1)])),
+      bulkSelector: ref({ searchQuery: 'state:new' }),
+    })
+
+    expect(isActive.value).toBe(false)
+
+    vi.clearAllMocks()
+  })
+
+  it('triggers confirmation when selected count is greater than threshold', async () => {
+    vi.useFakeTimers()
+
+    const ticketInternalId = '1'
+    const macroInternalId = '2'
+
+    mockTicketUpdateBulkMutation({
+      ticketUpdateBulk: {
+        async: false,
+        total: 1,
+        failedCount: 0,
+        invalidTicketIds: [],
+        inaccessibleTicketIds: [],
+      },
+    })
+
+    mountDragAndDropBulk({
+      checkedTicketIds: ref(
+        new Set(Array.from({ length: 20 }, (_, i) => convertToGraphQLId('Ticket', i + 1))),
+      ),
+      bulkSelector: ref({ entityIds: [convertToGraphQLId('Ticket', ticketInternalId)] }),
+    })
+
+    const store = useTicketBulkUpdateStore()
+    const spy = vi.spyOn(store, 'requestBulkConfirmation')
+
+    const macroTarget = document.createElement('li')
+    macroTarget.dataset.internalId = macroInternalId
+    macroTarget.dataset.type = 'macro'
+
+    await triggerDragAndDrop({ rowItemId: ticketInternalId, target: macroTarget })
+
+    await vi.runAllTimersAsync()
+
+    expect(spy).toHaveBeenCalledWith('macro', expect.objectContaining({ resolveImmediate: false }))
+    vi.useRealTimers()
   })
 })

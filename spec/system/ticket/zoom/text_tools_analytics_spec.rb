@@ -30,9 +30,7 @@ RSpec.describe 'Ticket Zoom > Text Tools Analytics', authenticated_as: :authenti
     AI::TextTool.destroy_all
     create(:ai_text_tool, name: 'Dummy', instruction: 'Make it nice.')
 
-    ai_service_spy = instance_spy(Service::AIAssistance::TextTools)
-    allow(Service::AIAssistance::TextTools).to receive(:new).and_return(ai_service_spy)
-    allow(ai_service_spy).to receive(:execute).and_return(ai_service_text_tool_result)
+    allow(Service::AIAssistance::TextTools).to receive(:execute).and_return(ai_service_text_tool_result)
 
     agent
   end

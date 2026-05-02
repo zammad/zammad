@@ -18,7 +18,7 @@ import { useUserCurrentTicketBulkUpdateStatusUpdatesSubscription } from '#deskto
  * Aligns with the default value for the async bulk jobs
  * ENV.fetch('ZAMMAD_UI_BULK_BACKGROUND_UPDATE_THRESHOLD', 20)
  */
-const BULK_CONFIRMATION_THRESHOLD = 20
+export const BULK_CONFIRMATION_THRESHOLD = 20
 
 // Manages the state of the currently running (or recently completed) ticket bulk update operation.
 export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
@@ -161,10 +161,10 @@ export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
   const confirmationResolver = shallowRef<((confirmed: boolean) => void) | null>(null)
 
   const requestBulkConfirmation = (
-    ticketCount: number,
     type: DragAndDropBulkEntityType,
+    { resolveImmediate = false } = {},
   ): Promise<boolean> => {
-    if (ticketCount <= BULK_CONFIRMATION_THRESHOLD) return Promise.resolve(true)
+    if (resolveImmediate) return Promise.resolve(true)
 
     confirmationPending.value = true
     currentActiveEntityType.value = type

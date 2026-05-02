@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::CalendarSubscription::Update do
-  let(:user)    { create(:user) }
-  let(:service) { described_class.new(user, input:) }
+  subject(:service_result) { described_class.with_current_user(user).execute(input:) }
 
-  let(:input)   do
+  let(:user) { create(:user) }
+
+  let(:input) do
     {
       alarm:      true,
       new_open:   { own: false, not_assigned: true },
@@ -16,9 +17,9 @@ RSpec.describe Service::User::CalendarSubscription::Update do
   end
 
   it 'sets alarm and type-specific options' do
-    service.execute
+    service_result
 
-    expect(user.preferences.dig(:calendar_subscriptions, :tickets))
+    expect(user.reload.preferences.dig(:calendar_subscriptions, :tickets))
       .to include(
         alarm:      true,
         new_open:   include(own: false, not_assigned: true),

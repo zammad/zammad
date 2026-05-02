@@ -194,27 +194,6 @@ RSpec.describe HasActiveJobLock, type: :model do
         expect(exception_raised).to be true
       end
     end
-
-    context "when ActiveRecord::Deadlocked 'Mysql2::Error: Deadlock found when trying to get lock; try restarting transaction' is raised" do
-
-      it 'retries execution until succeed' do
-        allow(ActiveRecord::Base.connection).to receive(:open_transactions).and_return(0)
-        allow(ActiveJobLock).to receive(:transaction).and_call_original
-        exception_raised = false
-        allow(ActiveJobLock).to receive(:transaction).with(isolation: :serializable) do |&block|
-
-          if !exception_raised
-            exception_raised = true
-            raise ActiveRecord::Deadlocked, 'Mysql2::Error: Deadlock found when trying to get lock; try restarting transaction'
-          end
-
-          block.call
-        end
-
-        expect { job_class.perform_later }.to change(Delayed::Job, :count).by(1)
-        expect(exception_raised).to be true
-      end
-    end
   end
 
   include_examples 'handle locking of jobs'

@@ -16,7 +16,7 @@ describe('DragAndDropBulkConfirmation', () => {
     const store = useTicketBulkUpdateStore()
 
     // More than 20 tickets triggers the confirmation dialog
-    store.requestBulkConfirmation(25, DragAndDropBulkEntityType.Macro)
+    store.requestBulkConfirmation(DragAndDropBulkEntityType.Macro)
 
     await nextTick()
 
@@ -28,7 +28,7 @@ describe('DragAndDropBulkConfirmation', () => {
     const wrapper = renderComponent(DragAndDropBulkConfirmation, { router: true })
     const store = useTicketBulkUpdateStore()
 
-    store.requestBulkConfirmation(25, DragAndDropBulkEntityType.Macro)
+    store.requestBulkConfirmation(DragAndDropBulkEntityType.Macro)
 
     await nextTick()
 
@@ -43,7 +43,7 @@ describe('DragAndDropBulkConfirmation', () => {
     const wrapper = renderComponent(DragAndDropBulkConfirmation, { router: true })
     const store = useTicketBulkUpdateStore()
 
-    store.requestBulkConfirmation(25, DragAndDropBulkEntityType.Macro)
+    store.requestBulkConfirmation(DragAndDropBulkEntityType.Macro)
 
     await nextTick()
 
@@ -57,7 +57,7 @@ describe('DragAndDropBulkConfirmation', () => {
     const wrapper = renderComponent(DragAndDropBulkConfirmation, { router: true })
     const store = useTicketBulkUpdateStore()
 
-    store.requestBulkConfirmation(25, DragAndDropBulkEntityType.Macro)
+    store.requestBulkConfirmation(DragAndDropBulkEntityType.Macro)
 
     await nextTick()
 
@@ -71,7 +71,7 @@ describe('DragAndDropBulkConfirmation', () => {
     const wrapper = renderComponent(DragAndDropBulkConfirmation, { router: true })
     const store = useTicketBulkUpdateStore()
 
-    store.requestBulkConfirmation(25, DragAndDropBulkEntityType.Macro)
+    store.requestBulkConfirmation(DragAndDropBulkEntityType.Macro)
 
     await nextTick()
 
@@ -80,7 +80,7 @@ describe('DragAndDropBulkConfirmation', () => {
     expect(store.currentActiveEntityType).toBe(null)
     expect(store.confirmationPending).toBe(false)
 
-    store.requestBulkConfirmation(25, DragAndDropBulkEntityType.Macro)
+    store.requestBulkConfirmation(DragAndDropBulkEntityType.Macro)
 
     await wrapper.rerender({})
 

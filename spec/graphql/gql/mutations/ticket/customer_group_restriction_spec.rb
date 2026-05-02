@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'GraphQL Ticket Update - Group Restriction', :aggregate_failures, type: :graphql do # rubocop:disable Rspec/DescribeClass
+RSpec.describe 'GraphQL Ticket Update - Group Restriction', :aggregate_failures, type: :graphql do # rubocop:disable RSpec/DescribeClass
   let(:agent)       { create(:agent, groups: [Group.find_by(name: 'Users'), other_group]) }
   let(:customer)    { create(:customer) }
   let(:ticket)      { create(:ticket, group: agent.groups.first, customer:) }

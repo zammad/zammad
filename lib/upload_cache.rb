@@ -76,12 +76,12 @@ class UploadCache
   # @example
   #   UploadCache.new(form_id).remove_item(store_id)
   #
-  # @raise [Exceptions::UnprocessableEntity] in cases where a Store item should get deleted that is not an UploadCache item
+  # @raise [Exceptions::UnprocessableContent] in cases where a Store item should get deleted that is not an UploadCache item
   #
   def remove_item(store_id = nil)
     store = Store.find(store_id)
     if store.o_id != id || store.store_object_id != store_object_id
-      raise Exceptions::UnprocessableEntity, "Attempt to delete Store item #{store_id} that is not bound to UploadCache object"
+      raise Exceptions::UnprocessableContent, "Attempt to delete Store item #{store_id} that is not bound to UploadCache object"
     end
 
     Store.remove_item(store_id)

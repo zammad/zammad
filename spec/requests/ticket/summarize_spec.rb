@@ -27,7 +27,7 @@ RSpec.describe 'Ticket Summarize API endpoints', authenticated_as: :user, perfor
       it 'raises error', :aggregate_failures do
         make_request
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(json_response['error']).to eq('This feature is not enabled.')
       end
     end

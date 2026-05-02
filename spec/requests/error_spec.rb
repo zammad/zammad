@@ -16,7 +16,7 @@ RSpec.describe 'Error handling', type: :request do
       # a random error code that can be easily found in the logs by an
       # administrator. However, this makes it hard to check for the exact error
       # message. Therefore we only check for the substring in this particular case
-      if ['Please contact your administrator', 'Mysql2::Error', 'PG::ForeignKeyViolation'].include?(message)
+      if ['Please contact your administrator', 'PG::ForeignKeyViolation'].include?(message)
         expect(json_response['error']).to include(message)
       else
         expect(json_response['error']).to eq(message)
@@ -153,9 +153,9 @@ RSpec.describe 'Error handling', type: :request do
       include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403: Forbidden'
       include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403: Forbidden', 'Not authorized'
       include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404: Requested resource was not found'
-      include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
-      include_examples 'handles exception', Exceptions::ApplicationModel, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.', 'The change you wanted was rejected.'
-      include_examples 'masks exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
+      include_examples 'handles exception', Exceptions::UnprocessableContent, :unprocessable_content, '422: Unprocessable Content', '422: The change you wanted was rejected.'
+      include_examples 'handles exception', Exceptions::ApplicationModel, :unprocessable_content, '422: Unprocessable Content', '422: The change you wanted was rejected.', 'The change you wanted was rejected.'
+      include_examples 'masks exception', ArgumentError, :unprocessable_content, '422: Unprocessable Content', '422: The change you wanted was rejected.'
       include_examples 'masks exception', StandardError, :internal_server_error, '500: An unknown error occurred', '500: An unknown error occurred.'
     end
 
@@ -167,8 +167,8 @@ RSpec.describe 'Error handling', type: :request do
       include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403: Forbidden'
       include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403: Forbidden', 'Not authorized'
       include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404: Requested resource was not found'
-      include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
-      include_examples 'handles exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422: The change you wanted was rejected.'
+      include_examples 'handles exception', Exceptions::UnprocessableContent, :unprocessable_content, '422: Unprocessable Content', '422: The change you wanted was rejected.'
+      include_examples 'handles exception', ArgumentError, :unprocessable_content, '422: Unprocessable Content', '422: The change you wanted was rejected.'
       include_examples 'handles exception', StandardError, :internal_server_error, '500: An unknown error occurred', '500: An unknown error occurred.'
     end
 
@@ -184,8 +184,8 @@ RSpec.describe 'Error handling', type: :request do
         include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403'
         include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403', 'Not authorized'
         include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404'
-        include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422'
-        include_examples 'masks exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422'
+        include_examples 'handles exception', Exceptions::UnprocessableContent, :unprocessable_content, '422: Unprocessable Content', '422'
+        include_examples 'masks exception', ArgumentError, :unprocessable_content, '422: Unprocessable Content', '422'
         include_examples 'masks exception', StandardError, :internal_server_error, '500: An unknown error occurred', '500'
       end
 
@@ -197,8 +197,8 @@ RSpec.describe 'Error handling', type: :request do
         include_examples 'handles exception', Exceptions::Forbidden, :forbidden, '403: Forbidden', '403'
         include_examples 'handles exception', Pundit::NotAuthorizedError, :forbidden, '403: Forbidden', '403', 'Not authorized'
         include_examples 'handles exception', ActiveRecord::RecordNotFound, :not_found, '404: Not Found', '404'
-        include_examples 'handles exception', Exceptions::UnprocessableEntity, :unprocessable_entity, '422: Unprocessable Entity', '422'
-        include_examples 'handles exception', ArgumentError, :unprocessable_entity, '422: Unprocessable Entity', '422'
+        include_examples 'handles exception', Exceptions::UnprocessableContent, :unprocessable_content, '422: Unprocessable Content', '422'
+        include_examples 'handles exception', ArgumentError, :unprocessable_content, '422: Unprocessable Content', '422'
         include_examples 'handles exception', StandardError, :internal_server_error, '500: An unknown error occurred', '500'
       end
     end

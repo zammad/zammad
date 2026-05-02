@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::TwoFactor::GenerateRecoveryCodes, current_user_id: 1 do
-  subject(:service) { described_class.new(user:, force:) }
+  subject(:service_result) { described_class.with_current_user(user).execute(force:) }
 
   let(:user) { create(:agent) }
 
@@ -14,17 +14,17 @@ RSpec.describe Service::User::TwoFactor::GenerateRecoveryCodes, current_user_id:
       let(:force) { false }
 
       it 'returns falsey value' do
-        expect(service.execute).to be_falsey
+        expect(service_result).to be_falsey
       end
 
       it 'does not generate recovery codes' do
         expect_any_instance_of(Auth::TwoFactor::RecoveryCodes).not_to receive(:generate)
 
-        service.execute
+        service_result
       end
 
       it 'does not change user recovery codes' do
-        expect { service.execute }
+        expect { service_result }
           .not_to change { user.reload.two_factor_preferences.recovery_codes&.configuration }
       end
     end
@@ -33,17 +33,17 @@ RSpec.describe Service::User::TwoFactor::GenerateRecoveryCodes, current_user_id:
       let(:force) { true }
 
       it 'returns falsey value' do
-        expect(service.execute).to be_falsey
+        expect(service_result).to be_falsey
       end
 
       it 'does not generate recovery codes' do
         expect_any_instance_of(Auth::TwoFactor::RecoveryCodes).not_to receive(:generate)
 
-        service.execute
+        service_result
       end
 
       it 'does not change user recovery codes' do
-        expect { service.execute }
+        expect { service_result }
           .not_to change { user.reload.two_factor_preferences.recovery_codes&.configuration }
       end
     end
@@ -60,17 +60,17 @@ RSpec.describe Service::User::TwoFactor::GenerateRecoveryCodes, current_user_id:
       let(:force) { false }
 
       it 'returns falsey value' do
-        expect(service.execute).to be_falsey
+        expect(service_result).to be_falsey
       end
 
       it 'does not generate recovery codes' do
         expect_any_instance_of(Auth::TwoFactor::RecoveryCodes).not_to receive(:generate)
 
-        service.execute
+        service_result
       end
 
       it 'does not change user recovery codes' do
-        expect { service.execute }
+        expect { service_result }
           .not_to change { user.reload.two_factor_preferences.recovery_codes&.configuration }
       end
     end
@@ -79,18 +79,18 @@ RSpec.describe Service::User::TwoFactor::GenerateRecoveryCodes, current_user_id:
       let(:force) { true }
 
       it 'returns new codes' do
-        expect(service.execute)
+        expect(service_result)
           .to include(be_a(String))
       end
 
       it 'generates recovery codes' do
         expect_any_instance_of(Auth::TwoFactor::RecoveryCodes).to receive(:generate)
 
-        service.execute
+        service_result
       end
 
       it 'updates user recovery codes' do
-        expect { service.execute }
+        expect { service_result }
           .to change { user.reload.two_factor_preferences.recovery_codes&.configuration }
       end
     end
@@ -103,17 +103,17 @@ RSpec.describe Service::User::TwoFactor::GenerateRecoveryCodes, current_user_id:
       let(:force) { false }
 
       it 'returns new codes' do
-        expect(service.execute).to include(be_a(String))
+        expect(service_result).to include(be_a(String))
       end
 
       it 'generates recovery codes' do
         expect_any_instance_of(Auth::TwoFactor::RecoveryCodes).to receive(:generate)
 
-        service.execute
+        service_result
       end
 
       it 'updates user recovery codes' do
-        expect { service.execute }
+        expect { service_result }
           .to change { user.reload.two_factor_preferences.recovery_codes&.configuration }
       end
     end
@@ -122,17 +122,17 @@ RSpec.describe Service::User::TwoFactor::GenerateRecoveryCodes, current_user_id:
       let(:force) { true }
 
       it 'returns new codes' do
-        expect(service.execute).to include(be_a(String))
+        expect(service_result).to include(be_a(String))
       end
 
       it 'generates recovery codes' do
         expect_any_instance_of(Auth::TwoFactor::RecoveryCodes).to receive(:generate)
 
-        service.execute
+        service_result
       end
 
       it 'updates user recovery codes' do
-        expect { service.execute }
+        expect { service_result }
           .to change { user.reload.two_factor_preferences.recovery_codes&.configuration }
       end
     end

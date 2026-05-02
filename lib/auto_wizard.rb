@@ -62,7 +62,7 @@ returns
     raise AutoWizardDisabledError if !enabled?
 
     ttl = 60.minutes.to_i * 60.seconds.to_i * 1000
-    Service::ExecuteLockedBlock.new('Zammad::System::Setup', ttl).execute { run }
+    Service::ExecuteLockedBlock.execute('Zammad::System::Setup', ttl) { run }
   end
 
   def self.run

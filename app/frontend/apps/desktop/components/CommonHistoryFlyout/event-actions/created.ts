@@ -11,11 +11,7 @@ import type { EventActionModule } from '../types.ts'
 export default <EventActionModule>{
   name: 'created',
   actionName: (event) => {
-    if (!event.attribute || event.attribute !== 'reaction') return 'created'
-
-    const emoji = event.changes?.to as string
-
-    return emoji.length > 0 ? 'reacted-with' : 'reacted'
+    return event.attribute === 'reaction' ? 'reacted-with' : 'created'
   },
   content: (event) => {
     if (event.attribute && event.attribute === 'reaction') {

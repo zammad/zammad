@@ -5,8 +5,6 @@ class Service::User::Signup < Service::Base
   attr_reader :user_data, :resend
 
   def initialize(user_data:, resend: false)
-    super()
-
     @user_data = user_data
     @resend = resend
     @path = {
@@ -18,7 +16,7 @@ class Service::User::Signup < Service::Base
   def execute
     ensure_not_import_mode!
 
-    Service::CheckFeatureEnabled.new(name: 'user_create_account').execute
+    Service::CheckFeatureEnabled.execute(name: 'user_create_account')
 
     if resend
       user = ::User.find_by(email: user_data[:email].downcase)
@@ -57,7 +55,7 @@ class Service::User::Signup < Service::Base
               end
 
     Rails.logger.error message
-    raise Exceptions::UnprocessableEntity, message
+    raise Exceptions::UnprocessableContent, message
   end
 
   class TokenGenerationError < StandardError

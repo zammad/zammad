@@ -36,7 +36,10 @@ const requestDraft = async () => {
     notify({
       id: NOTIFICATION_ID,
       type: NotificationTypes.Info,
-      message: __('Generating knowledge base answer from related ticket…'),
+      message: __(
+        'A related knowledge base answer is being generated. You will be notified once the draft is ready.',
+      ),
+      durationMS: 8000,
     })
   } catch (error) {
     notify({
@@ -51,16 +54,17 @@ const requestDraft = async () => {
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex justify-end">
     <CommonButton
       type="button"
       size="small"
       prefix-icon="ai-knowledge-base"
+      icon-class="text-blue-800"
       class="relative ai-stripe bg-green-200! text-gray-300! before:absolute before:bottom-0 before:w-[85%] hover:bg-green-200! dark:bg-gray-600! dark:text-neutral-400! dark:hover:bg-gray-600!"
       :disabled="isGenerating"
       @click="requestDraft"
     >
-      {{ $t('Generate Related AI Answer') }}
+      {{ $t('Add AI draft') }}
     </CommonButton>
   </div>
 </template>

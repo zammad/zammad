@@ -3,12 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
-  subject(:service) do
-    described_class.new(
-      ticket:            ticket,
-      current_user:      user,
-      knowledge_base_id: knowledge_base_id
-    )
+  subject(:service_result) do
+    described_class
+      .with_current_user(user)
+      .execute(
+        ticket:,
+        knowledge_base_id: knowledge_base_id
+      )
   end
 
   let(:ticket) { create(:ticket) }
@@ -21,7 +22,7 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
 
   describe '#execute' do
     context 'when ai result contains content' do
-      let(:service_result) do
+      let(:ai_service_result) do
         AI::Service::Result.new(
           content: {
             'title' => 'Generated draft title'
@@ -29,37 +30,29 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
         )
       end
 
-      let(:request_service) do
-        instance_double(
-          Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent,
-          execute: service_result
-        )
-      end
-
-      let(:kb_answer)             { create(:knowledge_base_answer, category: knowledge_base_category) }
-      let(:create_answer_service) { instance_double(Service::KnowledgeBase::CreateAnswerFromAIResult, execute: kb_answer) }
+      let(:kb_answer) { create(:knowledge_base_answer, category: knowledge_base_category) }
 
       before do
         knowledge_base_category
-        allow(Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent).to receive(:new).and_return(request_service)
-        allow(Service::KnowledgeBase::CreateAnswerFromAIResult).to receive(:new).and_return(create_answer_service)
+        allow(Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent).to receive(:execute).and_return(ai_service_result)
+        allow(Service::KnowledgeBase::CreateAnswerFromAIResult).to receive(:execute).and_return(kb_answer)
       end
 
       it 'creates a knowledge base answer' do
-        service.execute
+        service_result
 
         expect(Service::KnowledgeBase::CreateAnswerFromAIResult)
-          .to have_received(:new)
+          .to have_received(:execute)
           .with(
-            ai_result:       service_result.content,
+            ai_result:      ai_service_result.content,
             knowledge_base:,
             kb_locale:,
-            current_user_id: user.id
+            current_user:   user
           )
       end
 
       it 'links the created answer to the ticket' do
-        service.execute
+        service_result
 
         translation = kb_answer.translations.first
         link = Link.find_by(
@@ -71,7 +64,7 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
       end
 
       it 'creates a notification for the created answer', :aggregate_failures do
-        service.execute
+        service_result
 
         notification = OnlineNotification.last
 
@@ -85,10 +78,10 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
         end
         kb_locale.update!(system_locale: expected_system_locale)
 
-        service.execute
+        service_result
 
         expect(Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent)
-          .to have_received(:new)
+          .to have_received(:execute)
           .with(hash_including(
                   locale:       expected_system_locale.locale,
                   ticket:,
@@ -97,7 +90,7 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
       end
 
       context 'when user cannot edit all categories' do
-        let(:user) { create(:admin_only) }
+        let(:user)                { create(:admin_only) }
         let(:restricted_category) { create(:knowledge_base_category, knowledge_base:) }
 
         before do
@@ -109,10 +102,12 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
         end
 
         it 'passes only editable categories to the ai request service' do
-          service.execute
+          allow(Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent).to receive(:execute).and_return(ai_service_result)
+
+          service_result
 
           expect(Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent)
-            .to have_received(:new)
+            .to have_received(:execute)
             .with(hash_including(
                     category_options: contain_exactly(
                       {
@@ -134,32 +129,26 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
         end
 
         it 'raises an error' do
-          expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'No editable knowledge base categories available.')
+          expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'No editable knowledge base categories available.')
         end
       end
     end
 
     context 'when ai result content is blank' do
-      let(:service_result) { AI::Service::Result.new(content: nil) }
-      let(:request_service) do
-        instance_double(
-          Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent,
-          execute: service_result
-        )
-      end
+      let(:ai_service_result) { AI::Service::Result.new(content: nil) }
 
       before do
         knowledge_base_category
-        allow(Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent).to receive(:new).and_return(request_service)
+        allow(Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent).to receive(:execute).and_return(ai_service_result)
         allow(Service::KnowledgeBase::CreateAnswerFromAIResult).to receive(:new)
       end
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'Knowledge base draft could not be generated.')
+        expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'Knowledge base draft could not be generated.')
       end
 
       it 'does not create a knowledge base answer', :aggregate_failures do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'Knowledge base draft could not be generated.')
+        expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'Knowledge base draft could not be generated.')
 
         expect(Service::KnowledgeBase::CreateAnswerFromAIResult).not_to have_received(:new)
       end
@@ -169,7 +158,7 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
       let(:knowledge_base_id) { -1 }
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'Knowledge base is unavailable or not properly configured.')
+        expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'Knowledge base is unavailable or not properly configured.')
       end
     end
 
@@ -178,7 +167,7 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
       let(:knowledge_base_id)                 { knowledge_base_without_categories.id }
 
       it 'raises an error' do
-        expect { service.execute }.to raise_error(Exceptions::UnprocessableEntity, 'Knowledge base is unavailable or not properly configured.')
+        expect { service_result }.to raise_error(Exceptions::UnprocessableContent, 'Knowledge base is unavailable or not properly configured.')
       end
     end
   end

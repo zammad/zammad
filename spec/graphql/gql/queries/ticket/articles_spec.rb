@@ -185,7 +185,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
             },
             'securityState'            => nil,
             'body'                     => "<img src=\"cid:#{cid}\"> some text",
-            'bodyWithUrls'             => "<img src=\"#{inline_url}\" style=\"max-width:100%;\"> some text",
+            'bodyWithUrls'             => "<img src=\"#{inline_url}\"> some text",
             'attachments'              => [{ 'name'=>'inline_image.jpg' }, { 'name'=>'attached_image.jpg' }],
             'attachmentsWithoutInline' => [{ 'name'=>'attached_image.jpg' }],
           }

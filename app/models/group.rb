@@ -81,7 +81,7 @@ class Group < ApplicationModel
     new_depth = depth(force: true)
     return if new_depth < self.class.max_depth && all_children(force: true).all? { |child| new_depth + (child.depth - old_depth) < self.class.max_depth }
 
-    raise Exceptions::UnprocessableEntity, __('This group or its children exceed the allowed nesting depth.')
+    raise Exceptions::UnprocessableContent, __('This group or its children exceed the allowed nesting depth.')
   end
 
   def update_path

@@ -51,13 +51,13 @@ RSpec.describe Gql::Mutations::Ticket::CustomerUpdate, :aggregate_failures, type
       end
 
       it 'uses forced update service' do
-        allow(Service::Ticket::ForcedUpdate).to receive(:new).and_call_original
+        allow(Service::Ticket::ForcedUpdate).to receive(:execute).and_call_original
 
         gql.execute(query, variables: variables)
 
         expect(Service::Ticket::ForcedUpdate)
-          .to have_received(:new)
-          .with(ticket, { customer:, organization: })
+          .to have_received(:execute)
+          .with(ticket, { customer:, organization: }, current_user: agent)
       end
 
       context 'without organization' do

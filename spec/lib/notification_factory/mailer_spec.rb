@@ -138,8 +138,8 @@ RSpec.describe NotificationFactory::Mailer do
     context 'recipient without email address' do
       let(:user) { create(:agent, email: '') }
 
-      it 'raises Exceptions::UnprocessableEntity' do
-        expect { result }.to raise_error(Exceptions::UnprocessableEntity)
+      it 'raises Exceptions::UnprocessableContent' do
+        expect { result }.to raise_error(Exceptions::UnprocessableContent)
       end
     end
   end

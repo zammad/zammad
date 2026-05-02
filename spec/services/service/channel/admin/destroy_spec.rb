@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Service::Channel::Admin::Destroy, :aggregate_failures, current_user_id: 1 do
-  subject(:service) { described_class.new(area: channel.area, channel_id: channel.id) }
+  subject(:service_result) { described_class.execute(area: channel.area, channel_id: channel.id) }
 
   let!(:channel) { create(:channel) }
 
   describe '#execute' do
     it 'destroys the channel' do
-      expect { service.execute }.to change(Channel, :count).by(-1)
+      expect { service_result }.to change(Channel, :count).by(-1)
       expect { channel.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end

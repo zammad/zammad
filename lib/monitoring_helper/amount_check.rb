@@ -50,20 +50,20 @@ module MonitoringHelper
         next if params[row[:param]].blank?
 
         value = params[row[:param]].to_i
-        raise Exceptions::UnprocessableEntity, "#{row[:param]} needs to be an integer!" if value.zero?
+        raise Exceptions::UnprocessableContent, "#{row[:param]} needs to be an integer!" if value.zero?
 
         [row, value]
       end
     end
 
     def created_at_threshold
-      raise Exceptions::UnprocessableEntity, 'periode is missing!' if given_periode.blank?
+      raise Exceptions::UnprocessableContent, 'periode is missing!' if given_periode.blank?
 
       timescale = TIMESCALE_MAP[ given_periode.last ]
-      raise Exceptions::UnprocessableEntity, 'periode needs to have s, m, h or d as last!' if !timescale
+      raise Exceptions::UnprocessableContent, 'periode needs to have s, m, h or d as last!' if !timescale
 
       periode = given_periode.first.to_i
-      raise Exceptions::UnprocessableEntity, 'periode needs to be an integer!' if periode.zero?
+      raise Exceptions::UnprocessableContent, 'periode needs to be an integer!' if periode.zero?
 
       periode.send(timescale).ago
     end

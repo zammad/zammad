@@ -32,7 +32,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
 
   def self.request_account_to_link(credentials = {}, app_required = true)
     external_credential = ExternalCredential.find_by(name: provider_name)
-    raise Exceptions::UnprocessableEntity, error_missing_app_configuration if !external_credential && app_required
+    raise Exceptions::UnprocessableContent, error_missing_app_configuration if !external_credential && app_required
 
     if external_credential
       if credentials[:client_id].blank?
@@ -48,8 +48,8 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
       end
     end
 
-    raise Exceptions::UnprocessableEntity, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
-    raise Exceptions::UnprocessableEntity, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
+    raise Exceptions::UnprocessableContent, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
+    raise Exceptions::UnprocessableContent, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
 
     state         = SecureRandom.urlsafe_base64
     authorize_url = generate_authorize_url(credentials, state: state)
@@ -64,19 +64,19 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     # return to admin interface if admin Consent is in process and user clicks on "Back to app"
     return "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/#{provider_name}/error/AADSTS65004" if params[:error_description].present? && params[:error_description].include?('AADSTS65004')
 
-    raise Exceptions::UnprocessableEntity, __('Invalid OAuth state parameter.') if params[:state] != request_token
+    raise Exceptions::UnprocessableContent, __('Invalid OAuth state parameter.') if params[:state] != request_token
 
     external_credential = ExternalCredential.find_by(name: provider_name)
-    raise Exceptions::UnprocessableEntity, error_missing_app_configuration if !external_credential
-    raise Exceptions::UnprocessableEntity, __("The required parameter 'code' is missing.") if !params[:code]
+    raise Exceptions::UnprocessableContent, error_missing_app_configuration if !external_credential
+    raise Exceptions::UnprocessableContent, __("The required parameter 'code' is missing.") if !params[:code]
 
     response = authorize_tokens(external_credential.credentials, params[:code])
     %w[refresh_token access_token expires_in scope token_type id_token].each do |key|
-      raise Exceptions::UnprocessableEntity, "No #{key} for authorization request found!" if response[key.to_sym].blank?
+      raise Exceptions::UnprocessableContent, "No #{key} for authorization request found!" if response[key.to_sym].blank?
     end
 
     user_data = user_info(response[:id_token])
-    raise Exceptions::UnprocessableEntity, __("The user's 'preferred_username' could not be extracted from 'id_token'.") if user_data[:preferred_username].blank?
+    raise Exceptions::UnprocessableContent, __("The user's 'preferred_username' could not be extracted from 'id_token'.") if user_data[:preferred_username].blank?
 
     account_data = {}
 

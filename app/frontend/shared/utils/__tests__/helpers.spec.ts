@@ -1,6 +1,11 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { textToHtml, debouncedQuery, findChangedIndex } from '../helpers.ts'
+import {
+  textToHtml,
+  debouncedQuery,
+  findChangedIndex,
+  ensureImagesKeepAspectRatio,
+} from '../helpers.ts'
 
 describe('textToHtml', () => {
   it('adds links to URL-like text', () => {
@@ -68,5 +73,55 @@ describe('findChangedIndex', () => {
     const b = [1, 2, 3, 4, 5]
 
     expect(findChangedIndex(a, b)).toBe(-1)
+  })
+})
+
+describe('ensureImagesKeepAspectRatio', () => {
+  it('sets max-width: 100% on images with no inline style', () => {
+    const input = '<img src="foo.png">'
+    const output = ensureImagesKeepAspectRatio(input)
+
+    expect(output).toContain('max-width: 100%')
+  })
+
+  it('replaces explicit height with max-height and sets height: auto', () => {
+    const input = '<img src="foo.png" style="height: 200px;">'
+    const output = ensureImagesKeepAspectRatio(input)
+
+    expect(output).toContain('max-height: 200px')
+    expect(output).toContain('height: auto')
+  })
+
+  it('sets max-width when an inline width is present', () => {
+    const input = '<img src="foo.png" style="width: 50px;">'
+    const output = ensureImagesKeepAspectRatio(input)
+
+    expect(output).toContain('max-width: 100%')
+  })
+
+  it('sets max-width and retains other style properties', () => {
+    const input = '<img src="foo.png" style="border: 1px solid black">'
+    const output = ensureImagesKeepAspectRatio(input)
+
+    expect(output).toContain('border: 1px solid black')
+    expect(output).toContain('max-width: 100%')
+  })
+
+  it('handles multiple images independently', () => {
+    const input = '<img src="a.png"><img src="b.png" style="height: 100px;">'
+    const output = ensureImagesKeepAspectRatio(input)
+
+    const dom = document.createElement('div')
+    dom.innerHTML = output
+    const [first, second] = dom.querySelectorAll<HTMLImageElement>('img')
+
+    expect(first.style).toMatchObject({ maxWidth: '100%', height: '', maxHeight: '' })
+    expect(second.style).toMatchObject({ maxHeight: '100px', height: 'auto', maxWidth: '100%' })
+  })
+
+  it('returns the HTML string unchanged when there are no images', () => {
+    const input = '<p>Hello world</p>'
+
+    expect(ensureImagesKeepAspectRatio(input)).toBe('<p>Hello world</p>')
   })
 })

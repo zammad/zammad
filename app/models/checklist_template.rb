@@ -13,7 +13,7 @@ class ChecklistTemplate < ApplicationModel
 
   def replace_items!(new_items)
     if new_items.count > 100
-      raise Exceptions::UnprocessableEntity, __('Checklist Template items are limited to 100 items per checklist.')
+      raise Exceptions::UnprocessableContent, __('Checklist Template items are limited to 100 items per checklist.')
     end
 
     ActiveRecord::Base.transaction do

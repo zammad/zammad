@@ -3,19 +3,19 @@
 require 'rails_helper'
 
 RSpec.describe Service::User::SignupVerify do
-  subject(:service) { described_class.new(token: token) }
+  subject(:service_result) { described_class.execute(token: token) }
 
   let(:user) { create(:user, verified: false) }
 
   shared_examples 'raising an error' do |klass, message|
     it 'raises an error' do
-      expect { service.execute }.to raise_error(klass, message)
+      expect { service_result }.to raise_error(klass, message)
     end
   end
 
   shared_examples 'returning the verified user' do
     it 'returns the verified user' do
-      expect(service.execute).to eq(user).and have_attributes(verified: true)
+      expect(service_result).to eq(user).and have_attributes(verified: true)
     end
   end
 
@@ -50,14 +50,14 @@ RSpec.describe Service::User::SignupVerify do
 
     context 'with current user' do
       context 'when same as the user being verified' do
-        subject(:service) { described_class.new(token: token, current_user: user) }
-        let(:token)       { User.signup_new_token(user)[:token].token } # NB: Don't ask!
+        subject(:service_result) { described_class.with_current_user(user).execute(token:) }
+        let(:token) { User.signup_new_token(user)[:token].token } # NB: Don't ask!
 
         it_behaves_like 'returning the verified user'
       end
 
       context 'when different than the user being verified' do
-        subject(:service) { described_class.new(token: token, current_user: agent) }
+        subject(:service_result) { described_class.with_current_user(agent).execute(token:) }
 
         let(:token)       { User.signup_new_token(user)[:token].token } # NB: Don't ask!
         let(:agent)       { create(:agent) }

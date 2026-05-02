@@ -39,6 +39,11 @@ class App.KnowledgeBaseNewController extends App.Controller
 
     params = @formParam(@el)
     @prepareParams(params)
+
+    if params['kb_locales_attributes'].length == 0
+      @formController.showAlert(__('At least one locale is required.'))
+      return
+
     @applyDefaults(params)
 
     @formDisable(@el)

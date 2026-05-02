@@ -7,6 +7,13 @@ class Service::System::CheckSetup < Service::Base
   STATES = %w[new automated in_progress done].freeze
   TYPES = %w[auto manual import].freeze
 
+  def self.status_info
+    setup = new
+    setup.execute
+
+    { status: setup.status, type: setup.type }
+  end
+
   def self.new?
     setup = new
     setup.execute
@@ -23,6 +30,13 @@ class Service::System::CheckSetup < Service::Base
     setup.execute
 
     setup.status == 'done'
+  end
+
+  def self.importing?
+    setup = new
+    setup.execute
+
+    setup.status == 'in_progress' && setup.type == 'import'
   end
 
   def self.done!

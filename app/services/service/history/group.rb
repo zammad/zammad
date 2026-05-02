@@ -17,7 +17,7 @@
 # event, to avoid redundancy.)
 #
 # Example:
-# Service::History::Group.new(current_user:).execute(object: ticket)
+# Service::History::Group.with_current_user(current_user).execute(object: ticket)
 # # => [
 # #      {
 # #        created_at: ActiveRecord::DateTime,
@@ -37,10 +37,19 @@
 # #        ]
 # #      }
 # #    ]
-class Service::History::Group < Service::BaseWithCurrentUser
-  def execute(object:, interval: 15.seconds)
+class Service::History::Group < Service::Base
+  requires_current_user!
+
+  attr_reader :object, :interval
+
+  def initialize(object:, interval: 15.seconds)
+    @object = object
+    @interval = interval
+  end
+
+  def execute
     list = Service::History::List
-      .new(current_user:)
+      .with_current_user(current_user)
       .execute(object:)
 
     group_by_time_and_issuer(list, interval)
@@ -50,8 +59,10 @@ class Service::History::Group < Service::BaseWithCurrentUser
 
   # Group records by given interval and issuers
   def group_by_time_and_issuer(list, interval)
+    start_time = list.first&.dig(:created_at).to_i
+
     list
-      .group_by { |record| [record[:created_at].to_i / interval, record[:issuer]] }
+      .group_by { |record| [(record[:created_at].to_i - start_time) / interval, record[:issuer]] }
       .map do |(_, issuer), records|
         {
           created_at: records.first[:created_at],
@@ -59,7 +70,7 @@ class Service::History::Group < Service::BaseWithCurrentUser
           events:     records.map { |record| record.except(:issuer) }
         }
       end
-      .group_by { |record| record[:created_at].to_i / interval }
+      .group_by { |record| (record[:created_at].to_i - start_time) / interval }
       .map do |_, grouped_records|
         {
           created_at: grouped_records.first[:created_at],

@@ -83,44 +83,56 @@ export default defineConfig(({ mode, command }) => {
 
   return {
     publicDir,
-    esbuild: {
-      // TODO: Remove the following line once the related upstream TailwindCSS issue has been addressed,
-      //   since it can mask potential syntax errors.
-      //   https://github.com/tailwindlabs/tailwindcss/issues/16582
-      logOverride: { 'css-syntax-error': 'silent' },
-    },
     build: {
-      rollupOptions: {
+      rolldownOptions: {
         output: {
-          manualChunks: {
-            lodash: ['lodash-es'],
-            vue: ['vue', 'vue-router', 'pinia'],
-            datepicker: ['@vuepic/vue-datepicker'],
-            linkifyjs: ['linkifyjs', 'linkify-string'],
-            graphql: [
-              'graphql',
-              // 🚨 'graphql-ruby-client',
-              // Important: don't include the package root here, it pulls in the Node-only `sync` entry
-              // which imports fs/path/crypto/http/... and triggers Vite "externalized for browser" warnings.
-              'graphql-ruby-client/subscriptions/ActionCableLink',
-              'graphql-tag',
-              '@apollo/client',
-              '@vue/apollo-composable',
-              '@rails/actioncable',
-            ],
-            formkit: [
-              '@formkit/core',
-              '@formkit/dev',
-              // '@formkit/drag-and-drop', # is not used in mobile
-              '@formkit/i18n',
-              '@formkit/inputs',
-              '@formkit/rules',
-              '@formkit/tailwindcss',
-              '@formkit/themes',
-              '@formkit/utils',
-              '@formkit/validation',
-              '@formkit/vue',
-            ],
+          manualChunks(id) {
+            const manualChunksMap = {
+              lodash: ['lodash-es'],
+              vue: ['vue', 'vue-router', 'pinia'],
+              datepicker: ['@vuepic/vue-datepicker'],
+              linkifyjs: ['linkifyjs', 'linkify-string'],
+              graphql: [
+                'graphql',
+                // 🚨 'graphql-ruby-client',
+                // Important: don't include the package root here, it pulls in the Node-only `sync` entry
+                // which imports fs/path/crypto/http/... and triggers Vite "externalized for browser" warnings.
+                'graphql-ruby-client/subscriptions/ActionCableLink',
+                'graphql-tag',
+                '@apollo/client',
+                '@vue/apollo-composable',
+                '@rails/actioncable',
+              ],
+              formkit: [
+                '@formkit/core',
+                '@formkit/dev',
+                // '@formkit/drag-and-drop', # is not used in mobile
+                '@formkit/i18n',
+                '@formkit/inputs',
+                '@formkit/rules',
+                '@formkit/tailwindcss',
+                '@formkit/themes',
+                '@formkit/utils',
+                '@formkit/validation',
+                '@formkit/vue',
+              ],
+            }
+
+            if (!id.includes('node_modules')) return undefined
+
+            for (const [chunkName, packages] of Object.entries(manualChunksMap)) {
+              if (
+                packages.some(
+                  (pkg) =>
+                    id.includes(`node_modules/${pkg}/`) ||
+                    id.includes(`node_modules/.pnpm/${pkg.replace('/', '+').replace('@', '')}`),
+                )
+              ) {
+                return chunkName
+              }
+            }
+
+            return undefined
           },
         },
       },
@@ -169,7 +181,9 @@ export default defineConfig(({ mode, command }) => {
       // Node v25+ enables experimental webstorage by default (stability: release candidate).
       // Without --localstorage-file, Node provides localStorage as an empty object (no methods).
       // This conflicts with jsdom's full localStorage implementation needed for tests.
-      ...(parseInt(process.versions.node, 10) >= 25 ? { execArgv: ['--no-experimental-webstorage'] } : {}),
+      ...(parseInt(process.versions.node, 10) >= 25
+        ? { execArgv: ['--no-experimental-webstorage'] }
+        : {}),
       onConsoleLog(log) {
         if (
           log.includes('Not implemented: navigation') ||

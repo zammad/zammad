@@ -68,13 +68,9 @@ RSpec.describe Gql::Queries::Ticket::ExternalReferences::IssueTrackerItemList, t
     context 'with a GitHub issue tracker' do
       context 'when ticket is used' do
         before do
-          allow_any_instance_of(Service::Ticket::ExternalReferences::IssueTracker::TicketList)
+          allow(Service::Ticket::ExternalReferences::IssueTracker::TicketList)
             .to receive(:execute)
             .and_return(issue_list)
-
-          allow(Service::Ticket::ExternalReferences::IssueTracker::TicketList)
-            .to receive(:new)
-            .and_call_original
 
           gql.execute(query, variables: variables)
         end
@@ -95,7 +91,7 @@ RSpec.describe Gql::Queries::Ticket::ExternalReferences::IssueTrackerItemList, t
           end)
 
           expect(Service::Ticket::ExternalReferences::IssueTracker::TicketList)
-            .to have_received(:new).with(type: 'github', ticket: ticket)
+            .to have_received(:execute).with(type: 'github', ticket: ticket)
         end
       end
 
@@ -104,13 +100,9 @@ RSpec.describe Gql::Queries::Ticket::ExternalReferences::IssueTrackerItemList, t
         let(:variables)           { { issueTrackerType: issue_tracker_type, issueTrackerLinks: issue_tracker_links } }
 
         before do
-          allow_any_instance_of(Service::Ticket::ExternalReferences::IssueTracker::FetchMetadata)
+          allow(Service::Ticket::ExternalReferences::IssueTracker::FetchMetadata)
             .to receive(:execute)
             .and_return(issue_list)
-
-          allow(Service::Ticket::ExternalReferences::IssueTracker::FetchMetadata)
-            .to receive(:new)
-            .and_call_original
 
           gql.execute(query, variables: variables)
         end
@@ -131,7 +123,7 @@ RSpec.describe Gql::Queries::Ticket::ExternalReferences::IssueTrackerItemList, t
           end)
 
           expect(Service::Ticket::ExternalReferences::IssueTracker::FetchMetadata)
-            .to have_received(:new).with(type: 'github', issue_links: issue_tracker_links)
+            .to have_received(:execute).with(type: 'github', issue_links: issue_tracker_links)
         end
       end
     end

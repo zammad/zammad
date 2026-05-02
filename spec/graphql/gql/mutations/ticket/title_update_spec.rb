@@ -42,13 +42,13 @@ RSpec.describe Gql::Mutations::Ticket::TitleUpdate, :aggregate_failures, type: :
       end
 
       it 'uses forced update service' do
-        allow(Service::Ticket::ForcedUpdate).to receive(:new).and_call_original
+        allow(Service::Ticket::ForcedUpdate).to receive(:execute).and_call_original
 
         gql.execute(query, variables: variables)
 
         expect(Service::Ticket::ForcedUpdate)
-          .to have_received(:new)
-          .with(ticket, { title: })
+          .to have_received(:execute)
+          .with(ticket, { title: }, current_user: agent)
       end
 
       context 'when agent has no access to the ticket' do

@@ -11,8 +11,8 @@ module Gql::Mutations
 
     def resolve(ticket:, input:)
       Service::Ticket::ForcedUpdate
-        .new(ticket, input.to_h)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(ticket, input.to_h)
 
       { ticket: }
     end

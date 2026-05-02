@@ -12,8 +12,8 @@ module Gql::Queries
 
     def resolve(selector:)
       group_ids = Service::Ticket::Bulk::Selector
-        .new(user: context.current_user, selector:, attribute: :group_id)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(selector:, attribute: :group_id)
 
       macros_with_any_group = Macro.available_in_groups(group_ids).sort_by(&:name)
       return macros_with_any_group if group_ids.length <= 1

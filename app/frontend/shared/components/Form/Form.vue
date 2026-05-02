@@ -1366,13 +1366,16 @@ const initializeFormSchema = () => {
 
     formUpdaterScope.run(() => {
       formUpdaterQueryHandler = new QueryHandler(
-        useFormUpdaterQuery(formUpdaterVariables as Ref<FormUpdaterQueryVariables>, {
+        useFormUpdaterQuery(formUpdaterVariables as Ref<FormUpdaterQueryVariables>, () => ({
           context: {
             batch: {
               active: false,
             },
             websocket: {
-              active: true,
+              // Send the initial form load over HTTP — the WebSocket connection
+              // is busy with many other messages during the initial render and
+              // becomes a bottleneck. Subsequent refetches stay on ActionCable.
+              active: !formUpdaterVariables.value?.meta.initial,
             },
             skipSubscription: 'userCurrentTaskbarItemStateUpdates',
             skipSubscriptionAddCallback: (variables: FormUpdaterQueryVariables) => {
@@ -1384,7 +1387,7 @@ const initializeFormSchema = () => {
             },
           },
           fetchPolicy: 'no-cache',
-        }),
+        })),
       )
     })
 

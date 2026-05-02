@@ -114,7 +114,7 @@ class GitHub
 
     def variables!(url)
       if url !~ %r{^https?://([^/]+)/([^/]+)/([^/]+)/issues/(\d+)$}
-        raise Exceptions::UnprocessableEntity, __('Invalid GitHub issue link format')
+        raise Exceptions::UnprocessableContent, __('Invalid GitHub issue link format')
       end
 
       host            = $1
@@ -123,7 +123,7 @@ class GitHub
       id              = $4
 
       if client.endpoint.exclude?(host)
-        raise Exceptions::UnprocessableEntity, "Issue link doesn't match configured GitHub endpoint '#{client.endpoint}'"
+        raise Exceptions::UnprocessableContent, "Issue link doesn't match configured GitHub endpoint '#{client.endpoint}'"
       end
 
       {

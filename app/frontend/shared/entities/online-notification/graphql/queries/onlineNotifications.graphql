@@ -20,6 +20,9 @@ query onlineNotifications {
         }
         typeName
         objectName
+        meta {
+          createdByAi
+        }
         metaObject {
           ... on Ticket {
             id

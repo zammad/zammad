@@ -12,6 +12,7 @@ RSpec.describe AI::Agent::Type::TicketTextExtractor, :aggregate_failures, curren
         'extracted_text'   => 'order_no',
         'extraction_rules' => 'foo',
         'priority_rules'   => 'bar',
+        'articles'         => 'last',
       }
     end
 
@@ -21,8 +22,28 @@ RSpec.describe AI::Agent::Type::TicketTextExtractor, :aggregate_failures, curren
     end
 
     it 'includes extraction and priority rules in the instruction prompt' do
-      expect(subject_attribute['instruction']).to include('foo')
-        .and include('bar')
+      expect(subject_attribute['instruction']).to start_with("foo\n\nbar\n")
+    end
+
+    it 'resolves the configured articles value in entity_context' do
+      expect(subject_attribute['entity_context']).to include('articles' => 'last')
+    end
+
+    context 'when enrichment data contains JSON-unsafe characters' do
+      let(:type_enrichment_data) do
+        {
+          'extracted_text'   => 'order_no',
+          'extraction_rules' => %(line one\n"quoted" line\nline three),
+          'priority_rules'   => 'bar',
+          'articles'         => 'last',
+        }
+      end
+
+      it 'renders them into the instruction without breaking JSON parsing' do
+        expect { subject_attribute }.not_to raise_error
+        expect(subject_attribute['instruction']).to include(%("quoted"))
+          .and include("line one\n")
+      end
     end
   end
 

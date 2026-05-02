@@ -7,10 +7,10 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { mountEditor } from './utils.ts'
 
-describe('Testing "text" popup: "::" command', { retries: 2 }, () => {
+describe('Testing "text" popup: "::" command', () => {
   it('inserts a text', () => {
     const client = mockApolloClient()
-    client.setRequestHandler(TextModuleSuggestionsDocument, async () => ({
+    const mock = cy.spy(async () => ({
       data: {
         textModuleSuggestions: [
           {
@@ -25,7 +25,9 @@ describe('Testing "text" popup: "::" command', { retries: 2 }, () => {
       },
     }))
 
-    mountEditor({}, ['ticket.agent'])
+    client.setRequestHandler(TextModuleSuggestionsDocument, mock)
+
+    mountEditor({}, ['ticket.agent'], { fqdn: 'example.zammad.com', http_type: 'http' })
 
     cy.findByRole('textbox').type('::ass')
 
@@ -41,5 +43,9 @@ describe('Testing "text" popup: "::" command', { retries: 2 }, () => {
     cy.findByRole('textbox').shouldContainNormalizedHtml(
       '<p dir="auto">Vielen Dank für Ihre Anfrage.</p><p dir="auto">Wir werden Ihr Anliegen sichten und uns schnellstmöglich mit Ihnen in Verbindung setze123</p>',
     )
+
+    // asserting with `calledWith` is stricter than needed and can fail on unrelated payload expansion.
+    // Prefer `calledWithMatch` to lock only the relevant fields.
+    cy.wrap(mock).should('have.been.calledWithMatch', { query: 'ass' })
   })
 })

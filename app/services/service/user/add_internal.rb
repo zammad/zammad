@@ -1,13 +1,22 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::User::AddInternal < Service::BaseWithCurrentUser
+class Service::User::AddInternal < Service::Base
   include Service::Concerns::HandlesCoreWorkflow
 
-  def execute(user_data:, send_invite: false)
+  requires_current_user!
+
+  attr_reader :user_data, :send_invite
+
+  def initialize(user_data:, send_invite: false)
+    @user_data = user_data
+    @send_invite = send_invite
+  end
+
+  def execute
     UserInfo.with_user_id(current_user.id) do
       new_user = create_user!(user_data)
 
-      send_invite(new_user) if send_invite
+      deliver_invite(new_user) if send_invite
 
       new_user
     end
@@ -17,14 +26,14 @@ class Service::User::AddInternal < Service::BaseWithCurrentUser
 
   def create_user!(user_data)
     Service::User::FilterPermissionAssignments
-      .new(current_user: current_user)
+      .with_current_user(current_user)
       .execute(user_data: user_data)
 
     set_core_workflow_information(user_data, ::User)
     User.new(user_data).tap(&:save!)
   end
 
-  def send_invite(user)
+  def deliver_invite(user)
     return if user.email.blank?
 
     token = Token.create(action: 'PasswordReset', user_id: user.id)

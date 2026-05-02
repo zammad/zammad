@@ -18,9 +18,6 @@ class AI::Agent::Type::TicketTextExtractor < AI::Agent::Type
   def placeholder_field_names
     %w[
       extracted_text
-      extraction_rules
-      priority_rules
-      articles
     ]
   end
 
@@ -158,9 +155,9 @@ Always return only one match."
   end
 
   def instruction
-    "\#{placeholder.extraction_rules}
+    "\#{type_enrichment_data.extraction_rules}
 
-\#{placeholder.priority_rules}
+\#{type_enrichment_data.priority_rules}
 
 Apply the following principles when extracting text:
 
@@ -175,7 +172,7 @@ Apply the following principles when extracting text:
   def entity_context
     {
       object_attributes: ['title'],
-      articles:          "\#{placeholder.articles}",
+      articles:          "\#{type_enrichment_data.articles}",
     }
   end
 

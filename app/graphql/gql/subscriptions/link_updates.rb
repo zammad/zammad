@@ -19,7 +19,7 @@ module Gql::Subscriptions
       object = Gql::ZammadSchema.object_from_id(object_id)
 
       links = Service::Link::List
-        .new(current_user: context.current_user)
+        .with_current_user(context.current_user)
         .execute(object:, target_type:)
 
       { links: links }

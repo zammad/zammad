@@ -30,7 +30,7 @@ RSpec.describe 'Ticket zoom > Tags', type: :system do
       end
 
       it 'shows recommended tags (#4869)' do
-        click '.js-newTagLabel', text: 'Add Tag'
+        click '.js-newTagLabel', text: '+ Tag'
 
         expect(page).to have_css('ul.ui-autocomplete > li.ui-menu-item', minimum: 3, wait: 30)
 

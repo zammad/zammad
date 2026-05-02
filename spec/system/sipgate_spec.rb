@@ -65,7 +65,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
     it 'increments the call counter notification badge' do
       within '[href="#cti"].js-phoneMenuItem' do
         counter = find('.counter')
-        expect(counter).to have_content 1
+        expect(counter).to have_text 1
       end
     end
   end

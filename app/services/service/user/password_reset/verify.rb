@@ -5,12 +5,11 @@ class Service::User::PasswordReset::Verify < Service::Base
   attr_reader :token
 
   def initialize(token:)
-    super()
     @token = token
   end
 
   def execute
-    Service::CheckFeatureEnabled.new(name: 'user_lost_password').execute
+    Service::CheckFeatureEnabled.execute(name: 'user_lost_password')
 
     user = ::User.by_reset_token(token)
     raise InvalidTokenError if !user

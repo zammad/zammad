@@ -11,7 +11,6 @@ import {
   type FormUpdaterQueryVariables,
 } from '#shared/graphql/types.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
-import getUuid from '#shared/utils/getUuid.ts'
 
 import type { Props as ParentProps } from '#desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue'
 import { useTicketBulkEdit } from '#desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts'
@@ -22,13 +21,11 @@ import BulkScrollList from './components/BulkScrollList.vue'
 import { DragAndDropBulkEntityType, type BulkScrollListItem, type UserOption } from './types.ts'
 import { useGroupWithFlatSelectOptions } from './useGroupWithFlatSelectOptions.ts'
 
-type Props = { isActive: boolean } & Pick<ParentProps, 'dropSuccessTargetId'>
+type Props = { isActive: boolean } & Pick<ParentProps, 'dropSuccessTargetEntity'>
 
 const props = defineProps<Props>()
 
 const { bulkSelector } = useTicketBulkEdit()
-
-const requestId = shallowRef<string>(getUuid())
 
 const selectedGroupInternalId = shallowRef<number | null>(null)
 const selectedGroupLabel = shallowRef<string | null>(null)
@@ -88,7 +85,7 @@ const queryVariables = computed<FormUpdaterQueryVariables>(() => {
       ...bulkSelector.value,
       enrichOwnerOptions: true,
     },
-    requestId: requestId.value,
+    requestId: 'tickets-bulk-edit-drag-and-drop-request',
     formId: 'tickets-bulk-edit-drag-and-drop',
   }
 
@@ -113,11 +110,9 @@ const queryVariables = computed<FormUpdaterQueryVariables>(() => {
       }
 })
 
-const queryHandler = new QueryHandler(
-  useFormUpdaterQuery(queryVariables, { fetchPolicy: 'no-cache' }),
-)
+const queryHandler = new QueryHandler(useFormUpdaterQuery(queryVariables))
 
-const isLoading = queryHandler.loading()
+const isLoading = queryHandler.loadingWithoutCachedResult()
 
 const result = queryHandler.result()
 
@@ -244,7 +239,7 @@ const scrollPosition = ref(0)
             <BulkScrollList
               class="flex justify-center"
               :list="groupMembers"
-              :drop-success-target-id="dropSuccessTargetId"
+              :drop-success-target-entity="dropSuccessTargetEntity"
             />
 
             <CommonLabel class="row-start-3 block! pb-6 text-center" tag="h3">{{
@@ -261,7 +256,7 @@ const scrollPosition = ref(0)
               v-model:scroll-position="scrollPosition"
               class="flex justify-center"
               :list="topLevelList"
-              :drop-success-target-id="dropSuccessTargetId"
+              :drop-success-target-entity="dropSuccessTargetEntity"
               @go-inside-group="goInsideGroup"
             />
           </div>

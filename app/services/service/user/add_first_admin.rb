@@ -2,8 +2,14 @@
 
 class Service::User::AddFirstAdmin < Service::Base
 
-  def execute(user_data:, request:)
+  attr_reader :user_data, :request
 
+  def initialize(user_data:, request:)
+    @user_data = user_data
+    @request = request
+  end
+
+  def execute
     if Service::System::CheckSetup.done?
       raise Service::System::CheckSetup::SystemSetupError, __('This system has already been configured and an administrator account exists.')
     end
@@ -18,7 +24,7 @@ class Service::User::AddFirstAdmin < Service::Base
       user.role_ids  = Role.where(name: %w[Admin Agent]).pluck(:id)
       user.group_ids = Group.pluck(:id)
       UserInfo.ensure_current_user_id { user.save! }
-      configure_system(user:, request:)
+      configure_system(user:, request: request)
     end
   end
 

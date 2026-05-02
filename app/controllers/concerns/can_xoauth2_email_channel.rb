@@ -64,7 +64,7 @@ module CanXoauth2EmailChannel
     inbound_prepare_channel(channel)
 
     result = EmailHelper::Probe.inbound(channel.options[:inbound])
-    raise Exceptions::UnprocessableEntity, (result[:message_human] || result[:message]) if result[:result] == 'invalid'
+    raise Exceptions::UnprocessableContent, (result[:message_human] || result[:message]) if result[:result] == 'invalid'
 
     render json: result
   end
@@ -119,11 +119,11 @@ module CanXoauth2EmailChannel
       email_address = EmailAddress.find(params[:group_email_address_id])
     end
 
-    Service::Channel::Email::UpdateDestinationGroupEmail.new(
+    Service::Channel::Email::UpdateDestinationGroupEmail.execute(
       group:         Group.find(params[:group_id]),
       channel:       channel,
       email_address:,
-    ).execute
+    )
   end
 
   def handle_group_email_address?

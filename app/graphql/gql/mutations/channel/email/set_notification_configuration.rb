@@ -12,10 +12,10 @@ module Gql::Mutations
 
     def resolve(outbound_configuration:)
       Service::System::SetEmailNotificationConfiguration
-        .new(
+        .execute(
           adapter:           outbound_configuration.adapter,
           new_configuration: outbound_configuration.to_h.except(:adapter)
-        ).execute
+        )
 
       { success: true }
     end

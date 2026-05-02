@@ -15,7 +15,7 @@ defineProps<Props>()
       type="button"
       class="relative rounded-2xl border border-white/80 bg-black px-4 py-1 text-xs text-white/80 select-none"
     >
-      {{ $t('load %s more', count) }}
+      {{ $t('Load %s more', count) }}
     </button>
   </div>
 </template>

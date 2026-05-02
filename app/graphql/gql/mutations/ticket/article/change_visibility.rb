@@ -11,7 +11,7 @@ module Gql::Mutations
 
     def resolve(article:, internal:)
       article = Service::Ticket::Article::ChangeVisibility
-        .new(current_user: context.current_user)
+        .with_current_user(context.current_user)
         .execute(article: article, internal: internal)
 
       { article: article }

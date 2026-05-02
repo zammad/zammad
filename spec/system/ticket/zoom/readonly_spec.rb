@@ -43,8 +43,8 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
 
   shared_examples 'elements' do
     it 'verify all elements available' do
-      %w[TAGS LINKS].each do |element|
-        expect(page).to have_content(element)
+      ['TAGS', 'RELATED TICKETS'].each do |element|
+        expect(page).to have_text(element)
       end
     end
   end
@@ -56,9 +56,9 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
 
     it 'shows tag, and link modification buttons' do
       expect(page).to have_css('.tags .icon-diagonal-cross')
-      expect(page).to have_content('+ Add Tag')
+      expect(page).to have_text('+ Tag')
       expect(page).to have_css('.links .icon-diagonal-cross')
-      expect(page).to have_content('+ Add Link')
+      expect(page).to have_text('+ Link')
     end
 
     context 'with select, treeselect, multiselect and multi-treeselect fields', authenticated_as: :authenticated, db_strategy: :reset do
@@ -71,7 +71,7 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
       shared_examples 'allow agents to select another value' do
         it 'allows agents to select another value' do
           within attribute_selector do
-            expect(page).to have_content(%r{#{display}}i)
+            expect(page).to have_text(%r{#{display}}i)
             find(".controls select[name=#{name}]", visible: :all).select value
             expect(page).to have_select(name, selected: value, visible: :all)
           end
@@ -80,7 +80,7 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
 
       shared_examples 'allows agents to select a treeselect/multi-treeselect value' do
         it 'allows agents to select another value' do
-          within attribute_selector { expect(page).to have_content(%r{#{display}}i) }
+          within attribute_selector { expect(page).to have_text(%r{#{display}}i) }
 
           dropdown_toggle
           within attribute_selector do
@@ -125,9 +125,9 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
 
     it 'shows no tag and link modification buttons' do
       expect(page).to have_no_selector('.tags .icon-diagonal-cross')
-      expect(page).to have_no_content('+ Add Tag')
+      expect(page).to have_no_text('+ Tag')
       expect(page).to have_no_selector('.links .icon-diagonal-cross')
-      expect(page).to have_no_content('+ Add Link')
+      expect(page).to have_no_text('+ Link')
     end
 
     it 'shows no ticket actions' do
@@ -159,7 +159,7 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
       shared_examples 'does not allow agents to select another value' do
         it 'does not allow agents to select another value' do
           within attribute_selector do
-            expect(page).to have_content(%r{#{display}}i)
+            expect(page).to have_text(%r{#{display}}i)
             find(".controls select[name=#{name}]", visible: :all).select value, disabled: true
             expect(page).to have_no_select(name, selected: value, visible: :all, disabled: :all)
           end
@@ -169,7 +169,7 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
       shared_examples 'does not allow agents to select another treeselect/multi-treeselect value' do
         it 'does not allow agents to select another value' do
           within attribute_selector do
-            expect(page).to have_content(%r{#{display}}i)
+            expect(page).to have_text(%r{#{display}}i)
             find('.controls .dropdown .dropdown-toggle').click
             expect(page).to have_no_css(".js-optionsList > .js-option[data-value=#{value}]", wait: 15)
           end

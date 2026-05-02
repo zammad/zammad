@@ -36,7 +36,7 @@ class Service::AI::Agent::Run::Perform::Agent < SimpleDelegator
     @perform ||= begin
       action_mapping = prepare_action_mapping
 
-      interpolator = Service::Template::Interpolation::Interpolator::AIAgent.new(
+      interpolator = Service::Template::Interpolation::Interpolator::AIAgent.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
         template:                       action_mapping.to_json,
         tracks:                         {},
         additional_track_generate_data: {

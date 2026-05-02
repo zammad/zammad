@@ -1,12 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::Overview::UpdateOrder < Service::Base
-  attr_reader :user, :overviews
+  requires_current_user!
 
-  def initialize(user, overviews)
-    super()
+  attr_reader :overviews
 
-    @user = user
+  def initialize(overviews)
     @overviews = overviews
   end
 
@@ -21,7 +20,7 @@ class Service::User::Overview::UpdateOrder < Service::Base
 
   def reset_existing
     ::User::OverviewSorting
-      .where(user:)
+      .where(user: current_user)
       .destroy_all
   end
 
@@ -29,7 +28,7 @@ class Service::User::Overview::UpdateOrder < Service::Base
     overviews.each do |overview|
       overview
         .overview_sortings
-        .create! user:
+        .create! user: current_user
     end
   end
 end

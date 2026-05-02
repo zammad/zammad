@@ -34,12 +34,6 @@ module DbMigrationHelper
   # Make sure to define type: :db_migration in your RSpec.describe call
   # and add `self.use_transactional_tests = false` to your context.
   #
-  # ATTENTION: We do not use the same arguments as the internally
-  #            used methods since giving a table name
-  #            as a second argument as e.g.
-  #            `remove_foreign_key(:online_notifications, :users)`
-  #            doesn't remove the index at first execution on at least MySQL
-  #
   # @param [Symbol] from_table the name of the table with the foreign_key column
   # @param [Symbol] column the name of the foreign_key column
   #

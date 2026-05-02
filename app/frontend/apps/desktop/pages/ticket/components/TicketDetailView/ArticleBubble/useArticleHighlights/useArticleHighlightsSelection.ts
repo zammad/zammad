@@ -194,23 +194,16 @@ export const useArticleHighlightsSelection = (
 
     const range = selection.getRangeAt(0)
 
-    const startInContainer = container.contains(range.startContainer)
-    const endInContainer = container.contains(range.endContainer)
-
-    // Skip if the selection doesn't touch this container at all.
-    if (!startInContainer && !endInContainer && !range.intersectsNode(container)) return null
+    // Require the selection to start and end inside this article's container.
+    // This intentionally rejects cross-article drags and document-wide selections
+    // (e.g. Ctrl+A), which users generally do not expect to apply highlights.
+    if (!container.contains(range.startContainer) || !container.contains(range.endContainer))
+      return null
 
     const anchors = collectCharAnchors(container)
 
-    // Clamp: if the start is outside the container, begin from the first char.
-    const startIndex = startInContainer
-      ? domStartToCharIndex(anchors, range.startContainer, range.startOffset)
-      : 0
-
-    // Clamp: if the end is outside the container, extend to the last char.
-    const endIndex = endInContainer
-      ? domEndToCharIndex(anchors, range.endContainer, range.endOffset)
-      : anchors.length
+    const startIndex = domStartToCharIndex(anchors, range.startContainer, range.startOffset)
+    const endIndex = domEndToCharIndex(anchors, range.endContainer, range.endOffset)
 
     if (startIndex >= endIndex) return null
 
@@ -273,7 +266,7 @@ export const useArticleHighlightsSelection = (
     }
   }
 
-  const handleMouseUp = () => {
+  const handlePointerUp = () => {
     void applyFromCurrentSelection()
   }
 
@@ -282,8 +275,8 @@ export const useArticleHighlightsSelection = (
   const attachListener = () => {
     if (removeListener) return
 
-    document.addEventListener('mouseup', handleMouseUp)
-    removeListener = () => document.removeEventListener('mouseup', handleMouseUp)
+    document.addEventListener('pointerup', handlePointerUp)
+    removeListener = () => document.removeEventListener('pointerup', handlePointerUp)
   }
 
   const detachListener = () => {

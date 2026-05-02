@@ -1,15 +1,14 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::KnowledgeBase::CreateAnswerFromAIResult < Service::Base
-  attr_reader :ai_result, :knowledge_base, :current_user_id, :kb_locale
+  requires_current_user!
 
-  def initialize(ai_result:, knowledge_base:, kb_locale:, current_user_id:)
-    super()
+  attr_reader :ai_result, :knowledge_base, :kb_locale
 
+  def initialize(ai_result:, knowledge_base:, kb_locale:)
     @ai_result       = ai_result
     @knowledge_base  = knowledge_base
     @kb_locale       = kb_locale
-    @current_user_id = current_user_id
   end
 
   def execute
@@ -17,26 +16,24 @@ class Service::KnowledgeBase::CreateAnswerFromAIResult < Service::Base
 
     payload = draft_payload
 
-    UserInfo.with_user_id(current_user_id) do
-      ActiveRecord::Base.transaction do
-        kb_answer = KnowledgeBase::Answer.new(category_id: payload[:category].id, promoted: false)
-        translation = kb_answer.translations.build(
-          title:     payload[:title].truncate(250),
-          kb_locale:,
-        )
-        translation.build_content(body: payload[:body])
-        kb_answer.save!
-        kb_answer.tag_add('ai-generated', current_user_id)
-        kb_answer
-      end
+    ActiveRecord::Base.transaction do
+      kb_answer = KnowledgeBase::Answer.new(category_id: payload[:category].id, promoted: false)
+      translation = kb_answer.translations.build(
+        title:     payload[:title].truncate(250),
+        kb_locale:,
+      )
+      translation.build_content(body: payload[:body])
+      kb_answer.save!
+      kb_answer.tag_add('ai-generated', current_user.id)
+      kb_answer
     end
   end
 
   private
 
   def validate_context!
-    raise Exceptions::UnprocessableEntity, __('No knowledge base locale configured.') if kb_locale.blank?
-    raise Exceptions::UnprocessableEntity, __('Invalid knowledge base locale.')       if kb_locale.knowledge_base_id != knowledge_base.id
+    raise Exceptions::UnprocessableContent, __('No knowledge base locale configured.') if kb_locale.blank?
+    raise Exceptions::UnprocessableContent, __('Invalid knowledge base locale.')       if kb_locale.knowledge_base_id != knowledge_base.id
   end
 
   def draft_payload
@@ -59,7 +56,7 @@ class Service::KnowledgeBase::CreateAnswerFromAIResult < Service::Base
   end
 
   def resolve_category(data)
-    knowledge_base.categories.find_by(id: data['category_id'].to_i) || raise(Exceptions::UnprocessableEntity, __('No valid knowledge base category provided.'))
+    knowledge_base.categories.find_by(id: data['category_id'].to_i) || raise(Exceptions::UnprocessableContent, __('No valid knowledge base category provided.'))
   end
 
   def resolve_title(data, category)

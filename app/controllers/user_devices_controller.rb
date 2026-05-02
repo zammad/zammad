@@ -27,8 +27,8 @@ class UserDevicesController < ApplicationController
 
   def destroy
     begin
-      Service::User::Device::Delete.new(user: current_user, device: UserDevice.find_by(user_id: current_user.id, id: params[:id])).execute
-    rescue Exceptions::UnprocessableEntity
+      Service::User::Device::Delete.with_current_user(current_user).execute(device: UserDevice.find_by(user_id: current_user.id, id: params[:id]))
+    rescue Exceptions::UnprocessableContent
       # noop
     end
 

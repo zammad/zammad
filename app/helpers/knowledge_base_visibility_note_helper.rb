@@ -14,28 +14,28 @@ module KnowledgeBaseVisibilityNoteHelper
   def visibility_text(object)
     case object
     when CanBePublished
-      visiblity_text_can_be_published(object)
+      visibility_text_can_be_published(object)
     when KnowledgeBase::Category
-      visiblity_text_category(object)
+      visibility_text_category(object)
     end
   end
 
-  def visiblity_text_can_be_published(object)
+  def visibility_text_can_be_published(object)
     state_text_map = {
-      internal: 'internal',
-      archived: 'archived',
-      draft:    'not published',
+      internal: __('internal'),
+      archived: __('archived'),
+      draft:    __('not published'),
     }
     state_text_map[object.can_be_published_aasm.current_state]
   end
 
-  def visiblity_text_category(object)
+  def visibility_text_category(object)
     return if object.public_content?
 
     if object.self_with_children_answers.only_internal.any?
-      'hidden, visible only internally'
+      __('hidden, visible only internally')
     else
-      'hidden, no published answers'
+      __('hidden, no published answers')
     end
   end
 end

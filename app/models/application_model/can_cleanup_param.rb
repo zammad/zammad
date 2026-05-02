@@ -29,7 +29,7 @@ returns
       end
 
       if params.nil?
-        raise Exceptions::UnprocessableEntity, "No params for #{self}!"
+        raise Exceptions::UnprocessableContent, "No params for #{self}!"
       end
 
       # cleanup each member of array
@@ -63,7 +63,7 @@ returns
 
         # check reference records, referenced by _id attributes
         if attribute_associations[attribute].present? && data[attribute].present? && !attribute_associations[attribute].klass.lookup(id: data[attribute])
-          raise Exceptions::UnprocessableEntity, "Invalid value for param '#{attribute}': #{data[attribute].inspect}" if exceptions
+          raise Exceptions::UnprocessableContent, "Invalid value for param '#{attribute}': #{data[attribute].inspect}" if exceptions
 
           next
         end

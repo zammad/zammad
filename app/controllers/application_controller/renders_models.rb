@@ -114,9 +114,9 @@ module ApplicationController::RendersModels
     result = Models.references(object, generic_object.id)
     return false if result.blank?
 
-    raise Exceptions::UnprocessableEntity, __('Can\'t delete, object has references.')
+    raise Exceptions::UnprocessableContent, __('Can\'t delete, object has references.')
   rescue => e
-    raise Exceptions::UnprocessableEntity, e
+    raise Exceptions::UnprocessableContent, e
   end
 
   def model_search_render(object, params)

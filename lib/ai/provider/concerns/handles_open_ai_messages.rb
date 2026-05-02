@@ -38,7 +38,7 @@ class AI::Provider
         {
           type:      'image_url',
           image_url: {
-            url: "data:#{prompt_image.preferences['Content-Type']};base64,#{Base64.strict_encode64(prompt_image.content_ocr)}",
+            url: "data:#{prompt_image.preferences['Content-Type'].to_s.split(';').first.strip};base64,#{Base64.strict_encode64(prompt_image.content_ocr)}",
           },
         },
       ]

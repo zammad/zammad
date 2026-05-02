@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Service::AI::Analytics::AggregateSatisfactionRatio do
   describe '#execute' do
-    subject(:result) { described_class.new(triggered_by: tool).execute }
+    subject(:service_result) { described_class.execute(triggered_by: tool) }
 
     let(:tool) { create(:ai_text_tool) }
 
@@ -18,7 +18,7 @@ RSpec.describe Service::AI::Analytics::AggregateSatisfactionRatio do
 
     context 'when a tool has no runs' do
       it 'returns empty ratios for the tool' do
-        expect(result).to eq hash_for_counts(positive: [0, 0], negative: [0, 0], neutral: [0, 0])
+        expect(service_result).to eq hash_for_counts(positive: [0, 0], negative: [0, 0], neutral: [0, 0])
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe Service::AI::Analytics::AggregateSatisfactionRatio do
       end
 
       it 'aggregates positive, negative, neutral and total' do
-        expect(result).to eq hash_for_counts(positive: [1, 33.33], negative: [1, 33.33], neutral: [1, 33.33])
+        expect(service_result).to eq hash_for_counts(positive: [1, 33.33], negative: [1, 33.33], neutral: [1, 33.33])
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe Service::AI::Analytics::AggregateSatisfactionRatio do
       end
 
       it 'aggregates positive, negative, neutral and total' do
-        expect(result).to eq hash_for_counts(positive: [1, 50.0], negative: [0, 0.0], neutral: [1, 50.0])
+        expect(service_result).to eq hash_for_counts(positive: [1, 50.0], negative: [0, 0.0], neutral: [1, 50.0])
       end
     end
 
@@ -64,7 +64,7 @@ RSpec.describe Service::AI::Analytics::AggregateSatisfactionRatio do
       end
 
       it 'counts only feedback created after reset_at' do
-        expect(result).to eq hash_for_counts(positive: [0, 0.0], negative: [1, 50.0], neutral: [1, 50.0])
+        expect(service_result).to eq hash_for_counts(positive: [0, 0.0], negative: [1, 50.0], neutral: [1, 50.0])
       end
     end
   end

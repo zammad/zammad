@@ -12,13 +12,13 @@ class ChannelsWhatsappController < ApplicationController
     Rails.logger.error e.message
     log_request
 
-    raise Exceptions::UnprocessableEntity, e.message
+    raise Exceptions::UnprocessableContent, e.message
   end
 
   def perform_webhook
     signature = request.headers['X-Hub-Signature-256'].sub('sha256=', '')
     uuid      = params[:callback_url_uuid]
-    json      = request.body.read
+    json      = request.raw_post
 
     begin
       payload = Whatsapp::Webhook::Payload.new(json:, uuid:, signature:)
@@ -27,7 +27,7 @@ class ChannelsWhatsappController < ApplicationController
       Rails.logger.error e.message
       log_request
 
-      raise Exceptions::UnprocessableEntity, e.message
+      raise Exceptions::UnprocessableContent, e.message
     rescue Whatsapp::Webhook::Payload::ProcessableError, Whatsapp::Webhook::NoChannelError => e
       # Fail silently, any HTTP status code other than 200 will cause WhatsApp
       # to retry the request
@@ -45,6 +45,6 @@ class ChannelsWhatsappController < ApplicationController
     Rails.logger.error "WhatsApp Webhook: #{request.method} #{request.url}"
     Rails.logger.error "WhatsApp Webhook: Headers: #{request.headers.inspect}"
     Rails.logger.error "WhatsApp Webhook: Params: #{params.inspect}"
-    Rails.logger.error "WhatsApp Webhook: Payload: #{request.body.read}"
+    Rails.logger.error "WhatsApp Webhook: Payload: #{request.raw_post}"
   end
 end

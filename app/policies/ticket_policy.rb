@@ -13,7 +13,7 @@ class TicketPolicy < ApplicationPolicy
   end
 
   def update?
-    access?('change')
+    change_access?
   end
 
   def destroy?
@@ -33,7 +33,7 @@ class TicketPolicy < ApplicationPolicy
   def ensure_group?
     return true if record.group_id
 
-    not_authorized Exceptions::UnprocessableEntity.new __("The required value 'group_id' is missing.")
+    not_authorized Exceptions::UnprocessableContent.new __("The required value 'group_id' is missing.")
   end
 
   def follow_up?
@@ -46,7 +46,7 @@ class TicketPolicy < ApplicationPolicy
     # Check follow_up_possible configuration, based on the group.
     return true if follow_up_possible? && update?
 
-    not_authorized Exceptions::UnprocessableEntity.new __('Cannot follow-up on a closed ticket. Please create a new ticket.')
+    not_authorized Exceptions::UnprocessableContent.new __('Cannot follow-up on a closed ticket. Please create a new ticket.')
   end
 
   def agent_read_access?
@@ -82,6 +82,15 @@ class TicketPolicy < ApplicationPolicy
 
   def access?(access)
     return true if agent_access?(access)
+
+    customer_access?
+  end
+
+  def change_access?
+    # Update permission needs an special handling related to ticket.agent+ticket.customer
+    # situation, because agenr read permission should win over the general customer permission.
+    return true if agent_update_access?
+    return false if agent_read_access?
 
     customer_access?
   end

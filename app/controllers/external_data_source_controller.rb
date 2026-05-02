@@ -4,7 +4,7 @@ class ExternalDataSourceController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
   def fetch
-    result = Service::ExternalDataSource::Search.new.execute(
+    result = Service::ExternalDataSource::Search.execute(
       attribute:      attribute,
       render_context: render_context,
       term:           params[:query],
@@ -17,7 +17,7 @@ class ExternalDataSourceController < ApplicationController
   end
 
   def preview
-    result = Service::ExternalDataSource::Preview.new.execute(
+    result = Service::ExternalDataSource::Preview.execute(
       data_option:    params[:data_option],
       render_context: render_context,
       term:           params[:query],

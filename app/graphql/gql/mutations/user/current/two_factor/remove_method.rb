@@ -16,8 +16,8 @@ module Gql::Mutations
       token_object = verify_token!(token)
 
       Service::User::TwoFactor::RemoveMethod
-        .new(user: context.current_user, method_name:)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(method_name:)
 
       token_object.destroy
 

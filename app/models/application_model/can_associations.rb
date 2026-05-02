@@ -52,7 +52,7 @@ returns
 
         # complain if we found no reference
         if !lookup
-          raise Exceptions::UnprocessableEntity, "No value found for '#{assoc_name}' with id #{item_id.inspect}"
+          raise Exceptions::UnprocessableContent, "No value found for '#{assoc_name}' with id #{item_id.inspect}"
         end
 
         list.push item_id
@@ -101,7 +101,7 @@ returns
 
         # complain if we found no reference
         if !lookup
-          raise Exceptions::UnprocessableEntity, "No lookup value found for '#{assoc_name}': #{value.inspect}"
+          raise Exceptions::UnprocessableContent, "No lookup value found for '#{assoc_name}': #{value.inspect}"
         end
 
         list.push lookup.id
@@ -386,7 +386,7 @@ returns
           lookup = nil
           if class_object == User
             if !value.instance_of?(String)
-              raise Exceptions::UnprocessableEntity, "String is needed as ref value #{value.inspect} for '#{assoc_name}'"
+              raise Exceptions::UnprocessableContent, "String is needed as ref value #{value.inspect} for '#{assoc_name}'"
             end
 
             if !lookup
@@ -401,7 +401,7 @@ returns
 
           # complain if we found no reference
           if !lookup
-            raise Exceptions::UnprocessableEntity, "No lookup value found for '#{assoc_name}': #{value.inspect}"
+            raise Exceptions::UnprocessableContent, "No lookup value found for '#{assoc_name}': #{value.inspect}"
           end
 
           # release data value
@@ -433,7 +433,7 @@ returns
           lookup = nil
           if class_object == User
             if !item.instance_of?(String)
-              raise Exceptions::UnprocessableEntity, "String is needed in array ref as ref value #{value.inspect} for '#{assoc_name}'"
+              raise Exceptions::UnprocessableContent, "String is needed in array ref as ref value #{value.inspect} for '#{assoc_name}'"
             end
 
             if !lookup
@@ -448,7 +448,7 @@ returns
 
           # complain if we found no reference
           if !lookup
-            raise Exceptions::UnprocessableEntity, "No lookup value found for '#{assoc_name}': #{item.inspect}"
+            raise Exceptions::UnprocessableContent, "No lookup value found for '#{assoc_name}': #{item.inspect}"
           end
 
           lookup_ids.push lookup.id

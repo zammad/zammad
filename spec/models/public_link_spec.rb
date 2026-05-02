@@ -12,7 +12,7 @@ RSpec.describe PublicLink, type: :model do
     end
 
     it 'raises an exception for an invalid link' do
-      expect { create(:public_link, link: 'invalid') }.to raise_error(Exceptions::UnprocessableEntity)
+      expect { create(:public_link, link: 'invalid') }.to raise_error(Exceptions::UnprocessableContent)
     end
   end
 

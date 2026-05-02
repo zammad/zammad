@@ -5,13 +5,11 @@ module Service::AI::VectorDB
     attr_reader :ping
 
     def initialize(ping: true)
-      super()
-
       @ping = ping
     end
 
     def execute
-      return false if !Service::CheckFeatureEnabled.new(name: 'ai_provider', exception: false).execute
+      return false if !Service::CheckFeatureEnabled.execute(name: 'ai_provider', exception: false)
       return true if !ping
 
       ai_vector_db.ping?

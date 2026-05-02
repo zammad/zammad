@@ -31,26 +31,21 @@ RSpec.describe TicketAIAssistanceGenerateKnowledgeBaseAnswerJob, type: :job do
 
     context 'when CreateKnowledgeBaseAnswer service returns' do
       before do
-        allow_any_instance_of(Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer)
-          .to receive(:execute)
-          .and_return(nil)
+        allow(Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer).to receive(:execute)
       end
 
       it 'forwards given arguments to CreateKnowledgeBaseAnswer service', :aggregate_failures do
-        allow(Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer).to receive(:new).and_call_original
-        expect_any_instance_of(Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer).to receive(:execute)
-
         perform
 
         expect(Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer)
-          .to have_received(:new)
+          .to have_received(:execute)
           .with(ticket:, current_user: user, knowledge_base_id:)
       end
     end
 
     context 'when error is raised' do
       before do
-        allow_any_instance_of(Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer)
+        allow(Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer)
           .to receive(:execute)
           .and_raise(StandardError, 'Something went wrong')
 

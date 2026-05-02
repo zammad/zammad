@@ -75,7 +75,7 @@ RSpec.describe 'AI Assistance API endpoint', authenticated_as: :user, type: :req
       end
 
       it 'raises error' do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 

@@ -352,10 +352,10 @@ returns
     # prevent cross merging tickets
     target_ticket = Ticket.find_by(id: data[:ticket_id])
     raise 'no target ticket given' if !target_ticket
-    raise Exceptions::UnprocessableEntity, __('It is not possible to merge into an already merged ticket.') if target_ticket.state.state_type.name == 'merged'
+    raise Exceptions::UnprocessableContent, __('It is not possible to merge into an already merged ticket.') if target_ticket.state.state_type.name == 'merged'
 
     # check different ticket ids
-    raise Exceptions::UnprocessableEntity, __('A ticket cannot be merged into itself.') if id == target_ticket.id
+    raise Exceptions::UnprocessableContent, __('A ticket cannot be merged into itself.') if id == target_ticket.id
 
     # update articles
     Transaction.execute context: 'merge' do
