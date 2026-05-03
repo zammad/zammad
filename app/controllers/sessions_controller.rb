@@ -66,7 +66,7 @@ class SessionsController < ApplicationController
 
     initiate_session_for(user, 'SSO')
 
-    redirect_after_omniauth('/#')
+    redirect_after_omniauth(safe_return_to_path(params[:return_to]))
   end
 
   # "Delete" a login, aka "log the user out"
@@ -291,6 +291,28 @@ class SessionsController < ApplicationController
     return if trusted_ips.blank?
 
     raise Exceptions::Forbidden, __('SSO request from untrusted IP address.') if trusted_ips.exclude?(request.remote_ip)
+  end
+
+  SAFE_RETURN_TO_DEFAULT = '/#'.freeze
+  SAFE_RETURN_TO_MAX_LENGTH = 1024
+
+  # Validate the optional `return_to` parameter for the SSO flow.
+  #
+  # Only same-origin, relative paths are accepted to prevent open-redirect attacks:
+  #   * Must start with a single "/" and not "//" (which would be protocol-relative)
+  #   * Must not contain control characters or backslashes
+  #   * Must be at most SAFE_RETURN_TO_MAX_LENGTH characters long
+  #
+  # Anything that does not pass these checks falls back to SAFE_RETURN_TO_DEFAULT.
+  def safe_return_to_path(value)
+    return SAFE_RETURN_TO_DEFAULT if value.blank?
+    return SAFE_RETURN_TO_DEFAULT if !value.is_a?(String)
+    return SAFE_RETURN_TO_DEFAULT if value.length > SAFE_RETURN_TO_MAX_LENGTH
+    return SAFE_RETURN_TO_DEFAULT if !value.start_with?('/')
+    return SAFE_RETURN_TO_DEFAULT if value.start_with?('//')
+    return SAFE_RETURN_TO_DEFAULT if value.match?(%r{[\x00-\x1f\x7f\\]})
+
+    value
   end
 
   def authenticate_with_password
