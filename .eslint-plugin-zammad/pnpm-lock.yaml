@@ -16,8 +16,8 @@ importers:
         specifier: ^10.3.0
         version: 10.3.0
       eslint-plugin-eslint-plugin:
-        specifier: ^7.3.2
-        version: 7.3.2(eslint@10.3.0)
+        specifier: ^7.3.3
+        version: 7.3.3(eslint@10.3.0)
       eslint-plugin-n:
         specifier: ^17.24.0
         version: 17.24.0(eslint@10.3.0)(typescript@6.0.3)
@@ -226,8 +226,8 @@ packages:
     peerDependencies:
       eslint: '>=8'
 
-  eslint-plugin-eslint-plugin@7.3.2:
-    resolution: {integrity: sha512-odUwjaeon0s3W96vAmZf13XbTEGKnnXStnRykwM3XysTce7ZI7C8AJRn47OFJMdDNVtG/jLb/gFk0Wvj9zkSbQ==}
+  eslint-plugin-eslint-plugin@7.3.3:
+    resolution: {integrity: sha512-u99Dsum45JP0j3ep4EcaERIT5VpArPgrXryRMeVNMfnY/bTQFkDl25T3y+FBwVbYnEGCoZzW9DLaI21cDwgldw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
     peerDependencies:
       eslint: '>=9.0.0'
@@ -789,7 +789,7 @@ snapshots:
       eslint: 10.3.0
       eslint-compat-utils: 0.5.1(eslint@10.3.0)
 
-  eslint-plugin-eslint-plugin@7.3.2(eslint@10.3.0):
+  eslint-plugin-eslint-plugin@7.3.3(eslint@10.3.0):
     dependencies:
       '@eslint-community/eslint-utils': 4.9.1(eslint@10.3.0)
       eslint: 10.3.0
