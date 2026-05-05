@@ -181,9 +181,9 @@
     "vue-imask": "^7.6.1",
     "vue-router": "^5.0.6",
     "vue3-draggable-resizable": "^1.6.5",
-    "workbox-core": "^7.4.0",
-    "workbox-precaching": "^7.4.0",
-    "workbox-window": "^7.4.0"
+    "workbox-core": "^7.4.1",
+    "workbox-precaching": "^7.4.1",
+    "workbox-window": "^7.4.1"
   },
   "resolutions": {
     "loader-utils": "^3.3.1",
