@@ -151,7 +151,7 @@ RSpec.describe AI::Agent, aggregate_failures: true, current_user_id: 1, type: :m
       end
     end
 
-    context 'with trigger having array ai_agent_id (malformed perform data)' do
+    context 'with trigger having array ai_agent_id in perform data' do
       let(:trigger) do
         create(:trigger,
                perform: {

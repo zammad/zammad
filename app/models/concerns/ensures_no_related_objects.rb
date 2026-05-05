@@ -61,7 +61,7 @@ module EnsuresNoRelatedObjects
 
     def referenced_in?(performable)
       value = performable.perform&.dig(*record.class.ensures_no_related_objects_path)
-      Array.wrap(value).any? { |v| v.respond_to?(:to_i) && v.to_i == record.id }
+      Array.wrap(value).any? { |v| (v.is_a?(String) || v.is_a?(Integer)) && v.to_i == record.id }
     end
 
     def references_text
