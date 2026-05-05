@@ -345,8 +345,12 @@ msgstr ""
 msgid "%s required!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:383
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:381
 msgid "%s result(s) selected"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:381
+msgid "%s result(s) selected, selection limit reached"
 msgstr ""
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
@@ -368,8 +372,12 @@ msgstr ""
 msgid "%s switched to |%s|!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:73
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:70
 msgid "%s ticket(s) selected"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:70
+msgid "%s ticket(s) selected, selection limit reached"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:30
@@ -600,7 +608,7 @@ msgstr ""
 msgid "A new session was created with your account. This session will be stopped to prevent a conflict."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:141
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
 
@@ -3464,7 +3472,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:509
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:32
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -3565,7 +3573,7 @@ msgstr ""
 msgid "Collapse this element"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:268
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:261
 msgid "Color %s highlight applied to \"%s\""
 msgstr ""
 
@@ -3641,7 +3649,7 @@ msgstr ""
 msgid "Config"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:95
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:103
 msgid "Config has changed"
 msgstr ""
 
@@ -3883,7 +3891,7 @@ msgstr ""
 msgid "Continue anyway"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:28
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -8297,7 +8305,7 @@ msgstr ""
 msgid "Highlight options"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:265
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:258
 msgid "Highlight removed from \"%s\""
 msgstr ""
 
@@ -9839,8 +9847,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
 #: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:67
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:464
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:65
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:52
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:53
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:40
 #: app/frontend/shared/form/i18n/locales.ts:57
 #: app/views/init/index.html.erb:34
 #: app/views/init/spinner-loading.html.erb:261
@@ -9924,7 +9932,7 @@ msgstr ""
 msgid "Lost network connection"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:351
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:350
 msgid "Lost network connection!"
 msgstr ""
 
@@ -10351,14 +10359,6 @@ msgstr ""
 
 #: app/models/webhook/pre_defined/mattermost.rb:5
 msgid "Mattermost Notifications"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:381
-msgid "Max %s result(s) selected"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:70
-msgid "Max %s ticket(s) selected"
 msgstr ""
 
 #: app/models/object_manager/attribute/data_option_validator.rb:35
@@ -11137,7 +11137,7 @@ msgstr ""
 msgid "New User Accounts"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:132
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:140
 msgid "New Version"
 msgstr ""
 
@@ -11498,12 +11498,12 @@ msgstr ""
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:716
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:305
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:66
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:54
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:480
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:378
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:53
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:319
 msgid "No results found"
 msgstr ""
@@ -13555,7 +13555,7 @@ msgstr ""
 msgid "Relax, your system is being set up…"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:123
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 msgid "Reload"
 msgstr ""
@@ -14684,7 +14684,7 @@ msgstr ""
 msgid "Security keys are hardware or software credentials that can be used as your two-factor authentication method."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:110
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:118
 msgid "Security token verification failed"
 msgstr ""
 
@@ -14727,6 +14727,10 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:395
+msgid "Select %s result(s)"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee:38
 msgid "Select All"
 msgstr ""
@@ -14763,10 +14767,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/multi_locales_row.coffee:38
 msgid "Select locale…"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:395
-msgid "Select max %s results"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/TableRow.vue:72
@@ -15566,11 +15566,11 @@ msgstr ""
 msgid "Some Text"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:59
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:61
 msgid "Some system settings have changed, Zammad is restarting. Please wait until Zammad is back again."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:78
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:80
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 
@@ -15707,23 +15707,23 @@ msgstr ""
 msgid "Start typing to get the search results."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:68
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:55
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:56
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:43
 msgid "Start typing to search for text modules…"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:763
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:69
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:56
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:44
 msgid "Start typing to search for users…"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:658
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:67
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:55
 msgid "Start typing to search in Knowledge Base…"
 msgstr ""
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:54
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:42
 msgid "Start typing to search in knowledge base…"
 msgstr ""
 
@@ -15741,10 +15741,10 @@ msgid "Start typing to search or enter an email address…"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:54
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:71
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:59
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:37
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:385
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:58
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:46
 msgid "Start typing to search…"
 msgstr ""
 
@@ -16641,7 +16641,7 @@ msgstr ""
 msgid "The chosen unit will be used for display only and will not affect stored values."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:96
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:104
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 
@@ -16866,7 +16866,7 @@ msgstr ""
 msgid "The import was successful."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:111
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:119
 msgid "The included security token is invalid. This may be just a temporary error, please reload your browser, and try again."
 msgstr ""
 
@@ -19000,7 +19000,7 @@ msgstr ""
 msgid "Try using your security key again."
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:354
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:353
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:25
 msgid "Trying to reconnect…"
 msgstr ""
@@ -20876,7 +20876,7 @@ msgstr ""
 msgid "Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:58
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:60
 msgid "Zammad is restarting…"
 msgstr ""
 
@@ -20884,7 +20884,7 @@ msgstr ""
 msgid "Zammad looks like this for \"%s\""
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:77
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:79
 msgid "Zammad requires a restart!"
 msgstr ""
 
@@ -21071,7 +21071,7 @@ msgstr ""
 msgid "checked"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:127
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
 msgid "checked checklist item '%s'"
 msgstr ""
 
@@ -21329,7 +21329,7 @@ msgstr ""
 msgid "email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:100
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
 msgid "email sent to '%s'"
 msgstr ""
 
@@ -21408,7 +21408,7 @@ msgstr ""
 msgid "forward"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:152
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:156
 msgid "from"
 msgstr ""
 
@@ -21969,7 +21969,7 @@ msgstr ""
 msgid "note"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:98
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 msgid "notification sent to '%s'"
 msgstr ""
 
@@ -22057,7 +22057,7 @@ msgstr ""
 msgid "reached"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:134
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
 msgid "reacted with a %s to message from %s '%s'"
 msgstr ""
 
@@ -22096,7 +22096,7 @@ msgstr ""
 msgid "remove option"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:137
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
 msgid "removed reaction to message from %s '%s'"
 msgstr ""
 
@@ -22293,7 +22293,7 @@ msgstr ""
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:124
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "this ticket was merged into ticket %s"
 msgstr ""
 
@@ -22302,7 +22302,7 @@ msgstr ""
 msgid "ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:117
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
 msgid "ticket %s was merged into this ticket"
 msgstr ""
 
@@ -22342,15 +22342,15 @@ msgstr ""
 msgid "translation,locale,localization"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:106
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr ""
 
@@ -22379,7 +22379,7 @@ msgstr ""
 msgid "unassign user"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:129
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
 msgid "unchecked checklist item '%s'"
 msgstr ""
 

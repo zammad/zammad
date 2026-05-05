@@ -67,7 +67,7 @@ const formSchema = defineFormSchema([
           if: '$bulkCount > 0',
           then: {
             if: '$bulkHasMoreItems',
-            then: '$t("Max %s ticket(s) selected", $ticketIdsCount)',
+            then: '$t("%s ticket(s) selected, selection limit reached", $ticketIdsCount)',
             else: '$t("All %s ticket(s) selected", $ticketIdsCount)',
           },
           else: '$t("%s ticket(s) selected", $ticketIdsCount)',

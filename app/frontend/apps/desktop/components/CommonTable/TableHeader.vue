@@ -378,7 +378,7 @@ useOnEmitter('main-sidebar-transition', () => initializeHeaderWidths())
           {{
             selectAllActive
               ? hasMoreItems
-                ? $t('Max %s result(s) selected', itemCount)
+                ? $t('%s result(s) selected, selection limit reached', itemCount)
                 : $t('All %s result(s) selected', itemCount)
               : $t('%s result(s) selected', selectedCount)
           }}
@@ -392,7 +392,7 @@ useOnEmitter('main-sidebar-transition', () => initializeHeaderWidths())
         >
           {{
             hasMoreItems
-              ? $t('Select max %s results', itemCount)
+              ? $t('Select %s result(s)', itemCount)
               : $t('Select all %s results', itemCount)
           }}
         </CommonButton>
