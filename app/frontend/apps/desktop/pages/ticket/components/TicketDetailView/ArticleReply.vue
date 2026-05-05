@@ -7,7 +7,6 @@ import { computed, nextTick, ref, watch, type MaybeRef } from 'vue'
 import type { TicketById } from '#shared/entities/ticket/types'
 import type { AppSpecificTicketArticleType } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
-import type { ButtonVariant } from '#shared/types/button.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
@@ -54,24 +53,14 @@ const availableArticleTypes = computed(() => {
     allowedArticleTypes.value.includes(type.value),
   )
 
-  const hasEmail = availableArticleTypes.some((type) => type.value === 'email')
-
-  let primaryTicketArticleType = currentTicketArticleType.value
-  if (availableArticleTypes.length === 2) {
-    primaryTicketArticleType = props.createArticleType
-  }
-
   return availableArticleTypes.map((type) => {
     return {
       articleType: type.value,
       label:
-        primaryTicketArticleType === type.value && hasEmail ? __('Add reply') : type.buttonLabel,
+        currentTicketArticleType.value === type.value && !props.isTicketCustomer
+          ? __('Reply to customer')
+          : type.buttonLabel,
       icon: type.icon,
-      variant:
-        primaryTicketArticleType === type.value ||
-        (type.value === 'phone' && !hasEmail && availableArticleTypes.length === 2)
-          ? 'primary'
-          : 'secondary',
       performReply: (() =>
         type.performReply?.(props.ticket)) as AppSpecificTicketArticleType['performReply'],
     }
@@ -296,7 +285,6 @@ defineExpose({
         v-for="button in availableArticleTypes"
         :key="button.articleType"
         :prefix-icon="button.icon"
-        :variant="button.variant as ButtonVariant"
         size="large"
         @click="$emit('show-article-form', button.articleType, button.performReply)"
       >

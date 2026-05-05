@@ -9,6 +9,47 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import ArticleReply from '../ArticleReply.vue'
 
+const defaultTicketArticleTypes = [
+  {
+    value: 'note',
+    label: 'Note',
+    buttonLabel: 'Add internal note',
+    icon: 'note',
+    fields: { attachments: {}, body: { required: true } },
+    view: { agent: ['change'] },
+    internal: true,
+  },
+  {
+    value: 'phone',
+    label: 'Phone',
+    buttonLabel: 'Add phone call',
+    icon: 'phone',
+    fields: { attachments: {}, body: { required: true } },
+    view: { agent: ['change'] },
+    internal: false,
+  },
+  {
+    value: 'email',
+    label: 'Email',
+    buttonLabel: 'Add email',
+    icon: 'mail',
+    view: { agent: ['change'] },
+    fields: {
+      to: { required: true },
+      cc: {},
+      body: { required: true },
+      subtype: {},
+      attachments: {},
+      security: {},
+    },
+    internal: false,
+    onDeselected: vi.fn(),
+    onOpened: vi.fn(),
+    onSelected: vi.fn(),
+    performReply: vi.fn(),
+  },
+]
+
 const renderArticleReply = (props: Record<string, unknown> = {}) =>
   renderComponent(ArticleReply, {
     props: {
@@ -26,46 +67,7 @@ const renderArticleReply = (props: Record<string, unknown> = {}) =>
           agentReadAccess: true,
         },
       }),
-      ticketArticleTypes: [
-        {
-          value: 'note',
-          label: 'Note',
-          buttonLabel: 'Add internal note',
-          icon: 'note',
-          fields: { attachments: {}, body: { required: true } },
-          view: { agent: ['change'] },
-          internal: true,
-        },
-        {
-          value: 'phone',
-          label: 'Phone',
-          buttonLabel: 'Add phone call',
-          icon: 'phone',
-          fields: { attachments: {}, body: { required: true } },
-          view: { agent: ['change'] },
-          internal: false,
-        },
-        {
-          value: 'email',
-          label: 'Email',
-          buttonLabel: 'Add email',
-          icon: 'mail',
-          view: { agent: ['change'] },
-          fields: {
-            to: { required: true },
-            cc: {},
-            body: { required: true },
-            subtype: {},
-            attachments: {},
-            security: {},
-          },
-          internal: false,
-          onDeselected: vi.fn(),
-          onOpened: vi.fn(),
-          onSelected: vi.fn(),
-          performReply: vi.fn(),
-        },
-      ],
+      ticketArticleTypes: defaultTicketArticleTypes,
       parentReachedBottomScroll: false,
       ...props,
     },
@@ -84,24 +86,45 @@ describe('ArticleReply', () => {
     expect(wrapper.getByIconName('telephone')).toBeInTheDocument()
   })
 
-  it('shows primary article reply action button for tickets created by phone', () => {
+  it('shows article reply action button for tickets created by phone', () => {
     const wrapper = renderArticleReply({
       createArticleType: 'phone',
     })
 
-    expect(wrapper.getByRole('button', { name: 'Add reply' })).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Reply to customer' })).toBeInTheDocument()
 
     expect(wrapper.getByIconName('envelope')).toBeInTheDocument()
   })
 
-  it('shows primary article reply action button for tickets created by web', () => {
+  it('shows article reply action button for tickets created by web', () => {
     const wrapper = renderArticleReply({
       createArticleType: 'web',
     })
 
-    expect(wrapper.getByRole('button', { name: 'Add reply' })).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Reply to customer' })).toBeInTheDocument()
 
     expect(wrapper.getByIconName('envelope')).toBeInTheDocument()
+  })
+
+  it('does not relabel the reply button on the customer view', () => {
+    const wrapper = renderArticleReply({
+      isTicketCustomer: true,
+      ticketArticleTypes: [
+        ...defaultTicketArticleTypes,
+        {
+          value: 'web',
+          label: 'Web',
+          buttonLabel: 'Add reply',
+          icon: 'web',
+          fields: { attachments: {}, body: { required: true } },
+          view: { agent: ['change'] },
+          internal: false,
+        },
+      ],
+    })
+
+    expect(wrapper.getByRole('button', { name: 'Add reply' })).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Reply to customer' })).not.toBeInTheDocument()
   })
 
   it('can display and pin reply form', async () => {

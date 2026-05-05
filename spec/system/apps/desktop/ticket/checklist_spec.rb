@@ -112,7 +112,7 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
   end
 
   def add_article_to_main_ticket
-    click_on('Add reply')
+    click_on('Reply to customer')
     find_editor('Text').type('Some notes about the new employee onboarding.')
 
     click_on 'Update'
@@ -120,7 +120,7 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
   end
 
   def add_article_to_it_ticket
-    click_on('Add reply')
+    click_on('Reply to customer')
     find_editor('Text').type('Some notes about the new employee onboarding.')
     find_editor('Text').type("ping @@#{agent.firstname}")
     find('li', text: agent.fullname).click

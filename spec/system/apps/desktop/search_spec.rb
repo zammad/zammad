@@ -79,7 +79,7 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
     end
 
     within 'main' do
-      click_on 'Add reply'
+      click_on 'Reply to customer'
       find_editor('Text').type(answer)
 
       wait_for_form_updater

@@ -897,7 +897,7 @@ describe('Ticket detail view', () => {
       await waitForNextTick(true)
 
       // Discard changes inside the reply form
-      await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+      await view.events.click(view.getByRole('button', { name: 'Reply to customer' }))
 
       await waitFor(() => expect(view.queryByRole('textbox', { name: 'Text' })).toBeInTheDocument())
 
@@ -919,7 +919,7 @@ describe('Ticket detail view', () => {
         ).not.toBeInTheDocument()
       })
 
-      await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+      await view.events.click(view.getByRole('button', { name: 'Reply to customer' }))
 
       await view.events.click(view.getByRole('button', { name: 'Discard unsaved reply' }))
 
