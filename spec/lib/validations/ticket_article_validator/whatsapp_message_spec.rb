@@ -120,7 +120,7 @@ RSpec.describe Validations::TicketArticleValidator::WhatsappMessage do
       described_class.new(instance).validate
 
       expect(instance.errors).to have_attributes(
-        errors: include(have_attributes(message: match(%r{File is too big. Document file has to be 10 Bytes or smaller.})))
+        errors: include(have_attributes(message: match(%r{File is too big. Document file has to be 10 B or smaller.})))
       )
     end
 
