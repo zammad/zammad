@@ -48,7 +48,7 @@ available_languages = locales_config
   .sort
 
 # Format languages as YAML list and replace in content
-languages_yaml = available_languages.map { |lang| "    - #{lang}" }.join("\n")
+languages_yaml = available_languages.map { |lang| "    - \"#{lang}\"" }.join("\n")
 publiccode_content.gsub!(%r{  availableLanguages:\n(?:    - .*\n)+}, "  availableLanguages:\n#{languages_yaml}\n")
 
 # Write back to file
