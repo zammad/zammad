@@ -19,7 +19,7 @@ class App.MicrosoftGraphNotification extends App.Controller
 
       # Small delay to let render() finish painting the DOM
       @delay(
-        =>
+        ->
           # Find the Accounts tab content on the MS Graph page
           pageContent = $('#c-account .page-content')
           return if !pageContent.length
