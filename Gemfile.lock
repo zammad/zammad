@@ -813,7 +813,7 @@ GEM
       nokogiri (!= 1.12.3, != 1.12.2, != 1.12.1, != 1.12.0)
       rubyntlm
       syslog
-    vite_rails (3.10.0)
+    vite_rails (3.11.0)
       railties (>= 5.1, < 9)
       vite_ruby (~> 3.0, >= 3.2.2)
     vite_ruby (3.10.2)
