@@ -13485,6 +13485,13 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/doorkeeperReturnTo.ts:11
+#: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/DoorkeeperReturnTo.vue:18
+#: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/doorkeeperReturnTo.ts:11
+#: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/DoorkeeperReturnTo.vue:18
+msgid "Redirecting to authorization…"
+msgstr ""
+
 #: app/models/system_report/plugin/redis.rb:4
 msgid "Redis version"
 msgstr ""
