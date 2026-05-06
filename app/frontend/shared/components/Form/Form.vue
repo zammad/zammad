@@ -342,7 +342,7 @@ const afterSubmitHandling = (
       afterSubmitReset(values)
     }
 
-    // oxlint-disable-next-line eslint-plugin-promise(valid-params)
+    // oxlint-disable-next-line promise/valid-params
     submitReturn.finally?.()
 
     return
