@@ -41,8 +41,16 @@ class HtmlSanitizer
 
       # The HTML5 parser/serializer percent-encodes '{' and '}' in URL attribute values
       # (e.g. href, title), since they are not valid URL code points. This breaks
-      # Zammad variable placeholders like #{ticket.number} in URLs. Decode them back.
-      result.gsub('%7B', '{').gsub('%7D', '}')
+      # Zammad variable placeholders like #{ticket.number} in URLs. Decode them back,
+      # but only within href and title attribute values to avoid affecting other content.
+      # Note: [^"]* is safe here because Nokogiri's HTML5 serializer encodes literal '"'
+      # as '&quot;' (which contains no '"' character), so [^"]* correctly captures the
+      # full attribute value up to the closing double-quote.
+      result.gsub(%r{(?<attr>href|title)="(?<value>[^"]*)"}) do
+        attr_name  = Regexp.last_match(:attr)
+        attr_value = Regexp.last_match(:value).gsub(/%7B/i, '{').gsub(/%7D/i, '}')
+        "#{attr_name}=\"#{attr_value}\""
+      end
     end
 
     def web_app_url_prefix

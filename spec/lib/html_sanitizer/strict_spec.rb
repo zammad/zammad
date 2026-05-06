@@ -265,6 +265,11 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
         expect(sanitize('<a href="https://example.com/path/!pi=#{ticket.number}">Click here</a>', external: true))
           .to eq('<a href="https://example.com/path/!pi=#{ticket.number}" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/path/!pi=#{ticket.number}">Click here</a>')
       end
+
+      it 'preserves multiple variable placeholders in a URL' do
+        expect(sanitize('<a href="https://example.com/?no={ticket.number}&amp;t={ticket.title}">example</a>', external: true))
+          .to eq('<a href="https://example.com/?no={ticket.number}&amp;t={ticket.title}" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?no={ticket.number}&amp;t={ticket.title}">example</a>')
+      end
     end
   end
 end

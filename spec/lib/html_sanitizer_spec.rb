@@ -266,6 +266,11 @@ Building dependency tree...</code></pre>'
         expect(described_class.strict(+'<a href="https://example.com/path/!pi=#{ticket.number}">Click here</a>', true))
           .to eq('<a href="https://example.com/path/!pi=#{ticket.number}" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/path/!pi=#{ticket.number}">Click here</a>')
       end
+
+      it 'preserves multiple curly brace placeholders in the same URL' do
+        expect(described_class.strict(+'<a href="https://example.com/?no={ticket.number}&amp;t={ticket.title}">example</a>', true))
+          .to eq('<a href="https://example.com/?no={ticket.number}&amp;t={ticket.title}" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?no={ticket.number}&amp;t={ticket.title}">example</a>')
+      end
     end
 
     context 'when HTML sanitizer is removing attributes/styles which are white listed. #4605' do
