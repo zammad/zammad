@@ -22,7 +22,7 @@
   "devDependencies": {
     "eslint": "^10.3.0",
     "eslint-plugin-eslint-plugin": "^7.3.3",
-    "eslint-plugin-n": "^17.24.0",
+    "eslint-plugin-n": "^18.0.1",
     "mocha": "^11.7.5",
     "vue-eslint-parser": "^10.4.0"
   },
