@@ -86,6 +86,26 @@ RSpec.describe 'External Credentials', type: :request do
       end
     end
 
+    context 'for Microsoft 365 in online service mode with a multi_tenant_app credential (PKCE)' do
+      let(:client_id)     { 'pkce_client' }
+      let(:client_secret) { 'pkce_secret' }
+
+      before do
+        Setting.set('system_online_service', true)
+        create(:external_credential, name: 'microsoft365', credentials: { client_id: client_id, client_secret: client_secret, multi_tenant_app: true })
+      end
+
+      describe '#link_account' do
+        it 'redirects with code_challenge and stores the code_verifier in the session', :aggregate_failures do
+          get '/api/v1/external_credentials/microsoft365/link_account'
+
+          expect(response).to have_http_status(:redirect)
+          expect(response.location).to include('code_challenge=', '&code_challenge_method=S256')
+          expect(session[:code_verifier]).to be_present
+        end
+      end
+    end
+
     context 'for Facebook' do
       let(:invalid_credentials) do
         { application_id: 123, application_secret: 123 }

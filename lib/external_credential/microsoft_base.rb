@@ -37,7 +37,6 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     if external_credential
       if credentials[:client_id].blank?
         credentials[:client_id] = external_credential.credentials['client_id']
-
       end
       if credentials[:client_secret].blank?
         credentials[:client_secret] = external_credential.credentials['client_secret']
@@ -46,18 +45,28 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
       if !credentials.key? :client_tenant
         credentials[:client_tenant] = external_credential.credentials['client_tenant']
       end
+      # multi_tenant_app may be false. Set only if key is nonexistent at all
+      if !credentials.key? :multi_tenant_app
+        credentials[:multi_tenant_app] = external_credential.credentials['multi_tenant_app']
+      end
     end
 
     raise Exceptions::UnprocessableContent, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
     raise Exceptions::UnprocessableContent, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
 
+    if pkce_enabled?(credentials)
+      code_verifier  = generate_code_verifier
+      code_challenge = code_challenge_for(code_verifier)
+    end
+
     state         = generate_state
-    authorize_url = generate_authorize_url(credentials, state: state)
+    authorize_url = generate_authorize_url(credentials, state: state, code_challenge: code_challenge)
 
     {
       authorize_url: authorize_url,
       request_token: state,
-    }
+      code_verifier: code_verifier,
+    }.compact
   end
 
   def self.link_account(request_token, params)
@@ -70,7 +79,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     raise Exceptions::UnprocessableContent, error_missing_app_configuration if !external_credential
     raise Exceptions::UnprocessableContent, __("The required parameter 'code' is missing.") if !params[:code]
 
-    response = authorize_tokens(external_credential.credentials, params[:code])
+    response = authorize_tokens(external_credential.credentials, params[:code], code_verifier: params[:code_verifier])
     %w[refresh_token access_token expires_in scope token_type id_token].each do |key|
       raise Exceptions::UnprocessableContent, "No #{key} for authorization request found!" if response[key.to_sym].blank?
     end
@@ -180,15 +189,17 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     SecureRandom.urlsafe_base64
   end
 
-  def self.generate_authorize_url(credentials, scope: authorize_scope, state: nil)
+  def self.generate_authorize_url(credentials, scope: authorize_scope, state: nil, code_challenge: nil)
     params = {
-      'client_id'     => credentials[:client_id],
-      'redirect_uri'  => ExternalCredential.callback_url(provider_name),
-      'scope'         => scope,
-      'response_type' => 'code',
-      'access_type'   => 'offline',
-      'prompt'        => credentials[:prompt] || 'login',
-      'state'         => state,
+      'client_id'             => credentials[:client_id],
+      'redirect_uri'          => ExternalCredential.callback_url(provider_name),
+      'scope'                 => scope,
+      'response_type'         => 'code',
+      'access_type'           => 'offline',
+      'prompt'                => credentials[:prompt] || 'login',
+      'state'                 => state,
+      'code_challenge'        => code_challenge,
+      'code_challenge_method' => code_challenge && 'S256',
     }.compact
 
     tenant = credentials[:client_tenant].presence || 'common'
@@ -202,9 +213,9 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     uri.to_s
   end
 
-  def self.authorize_tokens(credentials, authorization_code)
+  def self.authorize_tokens(credentials, authorization_code, code_verifier: nil)
     uri    = authorize_tokens_uri(credentials[:client_tenant])
-    params = authorize_tokens_params(credentials, authorization_code)
+    params = authorize_tokens_params(credentials, authorization_code, code_verifier: code_verifier)
 
     response = UserAgent.post(uri.to_s, params)
     if response.code != 200 && response.body.blank?
@@ -214,7 +225,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
 
     result = JSON.parse(response.body)
     if result['error'] && response.code != 200
-      Rails.logger.error "Request failed! ERROR: #{result['error']} (#{result['error_description']}, params: #{params.to_json})"
+      Rails.logger.error "Request failed! ERROR: #{result['error']} (#{result['error_description']}, params: #{params.except(:client_secret, :code, :code_verifier).to_json})"
       raise "Request failed! ERROR: #{result['error']} (#{result['error_description']})"
     end
 
@@ -223,14 +234,15 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     result.symbolize_keys
   end
 
-  def self.authorize_tokens_params(credentials, authorization_code)
+  def self.authorize_tokens_params(credentials, authorization_code, code_verifier: nil)
     {
       client_secret: credentials[:client_secret],
       code:          authorization_code,
       grant_type:    'authorization_code',
       client_id:     credentials[:client_id],
       redirect_uri:  ExternalCredential.callback_url(provider_name),
-    }
+      code_verifier: code_verifier,
+    }.compact
   end
 
   def self.authorize_tokens_uri(tenant)
@@ -254,7 +266,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
 
     result = JSON.parse(response.body)
     if result['error'] && response.code != 200
-      Rails.logger.error "Request failed! ERROR: #{result['error']} (#{result['error_description']}, params: #{params.to_json})"
+      Rails.logger.error "Request failed! ERROR: #{result['error']} (#{result['error_description']}, params: #{params.except(:client_secret, :refresh_token).to_json})"
       raise "Request failed! ERROR: #{result['error']} (#{result['error_description']})"
     end
 
@@ -294,5 +306,19 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     return if split.blank?
 
     JSON.parse(Base64.decode64(split)).symbolize_keys
+  end
+
+  # PKCE is required when Zammad runs as an online service AND the credential
+  # represents Zammad's shared multi-tenant Microsoft app registration.
+  def self.pkce_enabled?(credentials)
+    Setting.get('system_online_service') && credentials[:multi_tenant_app]
+  end
+
+  def self.generate_code_verifier
+    SecureRandom.urlsafe_base64(64)
+  end
+
+  def self.code_challenge_for(verifier)
+    Base64.urlsafe_encode64(Digest::SHA256.digest(verifier), padding: false)
   end
 end

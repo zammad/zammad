@@ -36,6 +36,7 @@ class ExternalCredentialsController < ApplicationController
     provider = params[:provider].downcase
     attributes = ExternalCredential.request_account_to_link(provider, params)
     session[:request_token] = attributes[:request_token]
+    session[:code_verifier] = attributes[:code_verifier]
     session[:channel_id] = params[:channel_id]
     session[:shared_mailbox] = params[:shared_mailbox]
     redirect_to attributes[:authorize_url], allow_other_host: true
@@ -46,16 +47,18 @@ class ExternalCredentialsController < ApplicationController
     channel = ExternalCredential.link_account(provider, session[:request_token], link_params)
     return redirect_to(channel), allow_other_host: true if channel.instance_of?(String)
 
-    session[:request_token] = nil
-    session[:channel_id] = nil
-    session[:shared_mailbox] = nil
     redirect_to app_url(provider, channel.id), allow_other_host: true
+  ensure
+    session[:request_token]  = nil
+    session[:code_verifier]  = nil
+    session[:channel_id]     = nil
+    session[:shared_mailbox] = nil
   end
 
   private
 
   def link_params
-    params.permit!.to_h.merge(channel_id: session[:channel_id], shared_mailbox: session[:shared_mailbox])
+    params.permit!.to_h.merge(channel_id: session[:channel_id], shared_mailbox: session[:shared_mailbox], code_verifier: session[:code_verifier])
   end
 
   def callback_url(provider)

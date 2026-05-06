@@ -136,6 +136,36 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
       end
     end
 
+    context 'when running as an online service with a multi_tenant_app credential (PKCE)' do
+      let(:code_verifier) { 'test_code_verifier' }
+
+      let(:request_payload) do
+        {
+          'client_secret' => client_secret,
+          'code'          => authorization_code,
+          'grant_type'    => 'authorization_code',
+          'client_id'     => client_id,
+          'redirect_uri'  => ExternalCredential.callback_url(provider),
+          'code_verifier' => code_verifier,
+        }
+      end
+
+      before do
+        Setting.set('system_online_service', true)
+
+        stub_request(:post, token_url)
+          .with(body: hash_including(request_payload))
+          .to_return(status: 200, body: token_response_payload.to_json, headers: {})
+
+        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret, multi_tenant_app: true })
+      end
+
+      it 'forwards code_verifier to the token request' do
+        channel = described_class.link_account(request_token, authorization_payload.merge(code_verifier: code_verifier))
+        expect(channel).to be_a(Channel)
+      end
+    end
+
     context 'when OAuth state is invalid' do
       it 'raises an error' do
         expect do
@@ -173,7 +203,7 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
       end
 
       context 'when 500 Internal Server Error' do
-        let(:response_status) { 500 }
+        let(:response_status)   { 500 }
         let(:response_payload)  { nil }
         let(:exception_message) { 'Request failed! (code: 500)' }
 
@@ -315,6 +345,34 @@ RSpec.describe ExternalCredential::MicrosoftGraph do
 
       expect(request[:authorize_url]).to eq("#{authorize_url}&state=#{state}")
       expect(request[:request_token]).to eq(state)
+      expect(request).not_to have_key(:code_verifier)
+    end
+
+    context 'when running as an online service with a multi_tenant_app credential (PKCE)' do
+      let(:verifier)           { 'test_code_verifier' }
+      let(:expected_challenge) { Base64.urlsafe_encode64(Digest::SHA256.digest(verifier), padding: false) }
+      let(:authorize_url_pkce) { "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?access_type=offline&client_id=#{client_id}&code_challenge=#{expected_challenge}&code_challenge_method=S256&prompt=login&redirect_uri=http%3A%2F%2Fzammad.example.com%2Fapi%2Fv1%2Fexternal_credentials%2Fmicrosoft_graph%2Fcallback&response_type=code&scope=offline_access+openid+profile+email+mail.readwrite+mail.readwrite.shared+mail.send+mail.send.shared" }
+
+      before do
+        Setting.set('system_online_service', true)
+        allow(described_class).to receive(:generate_code_verifier).and_return(verifier)
+      end
+
+      it 'returns code_verifier and adds code_challenge with S256 method to the URL', :aggregate_failures do
+        microsoft_graph = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret, multi_tenant_app: true })
+        request         = described_class.request_account_to_link(microsoft_graph.credentials)
+
+        expect(request[:authorize_url]).to eq("#{authorize_url_pkce}&state=#{state}")
+        expect(request[:request_token]).to eq(state)
+        expect(request[:code_verifier]).to eq(verifier)
+      end
+
+      it 'does not enable PKCE when multi_tenant_app is false' do
+        microsoft_graph = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret, multi_tenant_app: false })
+        request         = described_class.request_account_to_link(microsoft_graph.credentials)
+
+        expect(request).not_to have_key(:code_verifier)
+      end
     end
 
     context 'when errors' do
