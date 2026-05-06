@@ -37,7 +37,12 @@ class HtmlSanitizer
       @remote_content_removed = wipe_scrubber.remote_content_removed
 
       link_scrubber = HtmlSanitizer::Scrubber::Link.new(web_app_url_prefix: web_app_url_prefix, external: external)
-      ScrubHtml.new(string, link_scrubber).scrub!.to_html
+      result = ScrubHtml.new(string, link_scrubber).scrub!.to_html
+
+      # The HTML5 parser/serializer percent-encodes '{' and '}' in URL attribute values
+      # (e.g. href, title), since they are not valid URL code points. This breaks
+      # Zammad variable placeholders like #{ticket.number} in URLs. Decode them back.
+      result.gsub('%7B', '{').gsub('%7D', '}')
     end
 
     def web_app_url_prefix

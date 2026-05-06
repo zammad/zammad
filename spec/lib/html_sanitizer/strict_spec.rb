@@ -254,5 +254,17 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
         expect(sanitize("<a href=\"#{attachment_url_evil_other}\">Evil link</a>")).to eq("<a href=\"#{attachment_url_good}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"#{attachment_url_good}\">Evil link</a>")
       end
     end
+
+    context 'when href contains Zammad variable placeholders' do
+      it 'preserves #{ticket.number} style variables in fragment URL' do
+        expect(sanitize('<a href="https://example.com/?no=#{ticket.number}">example</a>', external: true))
+          .to eq('<a href="https://example.com/?no=#{ticket.number}" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?no=#{ticket.number}">example</a>')
+      end
+
+      it 'preserves #{ticket.number} style variables in path' do
+        expect(sanitize('<a href="https://example.com/path/!pi=#{ticket.number}">Click here</a>', external: true))
+          .to eq('<a href="https://example.com/path/!pi=#{ticket.number}" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/path/!pi=#{ticket.number}">Click here</a>')
+      end
+    end
   end
 end

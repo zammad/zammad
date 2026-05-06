@@ -251,6 +251,23 @@ Building dependency tree...</code></pre>'
       end
     end
 
+    context 'with href links that contain Zammad variable placeholders' do
+      it 'preserves curly braces in fragment (e.g. #{ticket.number} in URL)' do
+        expect(described_class.strict(+'<a href="https://example.com/?no=#{ticket.number}">example</a>', true))
+          .to eq('<a href="https://example.com/?no=#{ticket.number}" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?no=#{ticket.number}">example</a>')
+      end
+
+      it 'preserves curly braces in query (e.g. {ticket.number} in URL)' do
+        expect(described_class.strict(+'<a href="https://example.com/?no={ticket.number}">example</a>', true))
+          .to eq('<a href="https://example.com/?no={ticket.number}" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?no={ticket.number}">example</a>')
+      end
+
+      it 'preserves curly braces when link text differs from URL' do
+        expect(described_class.strict(+'<a href="https://example.com/path/!pi=#{ticket.number}">Click here</a>', true))
+          .to eq('<a href="https://example.com/path/!pi=#{ticket.number}" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/path/!pi=#{ticket.number}">Click here</a>')
+      end
+    end
+
     context 'when HTML sanitizer is removing attributes/styles which are white listed. #4605' do
       it 'does not remove whitelisted attributes width' do
         expect(described_class.strict('<table width=20><tr width=20><td width=20>123</td></tr></table>')).to eq('<table style="width:20px;"><tbody><tr style="width:20px;"><td style="width:20px;">123</td></tr></tbody></table>')
