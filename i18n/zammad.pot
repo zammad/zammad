@@ -3944,7 +3944,7 @@ msgstr ""
 msgid "Context menu"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:151
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:156
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph_notification.coffee:77
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
@@ -8535,8 +8535,8 @@ msgstr ""
 msgid "Honeypot spam protection"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:138
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:416
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:143
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:400
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:331
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:80
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:69
@@ -9230,7 +9230,6 @@ msgid "Invalid GitLab issue link format"
 msgstr ""
 
 #: app/controllers/external_credentials_controller.rb:73
-#: config/initializers/microsoft_graph_notification.rb:157
 #: lib/external_credential/exchange.rb:43
 #: lib/external_credential/facebook.rb:42
 #: lib/external_credential/google.rb:39
@@ -10803,6 +10802,10 @@ msgstr ""
 msgid "Microsoft Graph API"
 msgstr ""
 
+#: app/services/service/system/set_email_notification_configuration.rb:23
+msgid "Microsoft Graph auth data is required for the microsoft_graph_outbound adapter."
+msgstr ""
+
 #: app/models/webhook/pre_defined/microsoft_teams.rb:5
 msgid "Microsoft Teams Notifications"
 msgstr ""
@@ -11529,7 +11532,6 @@ msgid "No Microsoft 365 app configured!"
 msgstr ""
 
 #: app/controllers/external_credentials_controller.rb:76
-#: config/initializers/microsoft_graph_notification.rb:160
 #: lib/external_credential/microsoft_graph.rb:9
 msgid "No Microsoft Graph app configured!"
 msgstr ""
@@ -12810,7 +12812,7 @@ msgstr ""
 msgid "Parent group"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:140
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:145
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:365
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:10
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:82
@@ -13127,7 +13129,7 @@ msgstr ""
 msgid "Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:207
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:212
 msgid "Please enter a shared mailbox address."
 msgstr ""
 
@@ -13257,7 +13259,7 @@ msgstr ""
 msgid "Please wait…"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:141
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:146
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:405
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:85
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:72
@@ -14485,7 +14487,7 @@ msgstr ""
 msgid "SSL Certificates"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:142
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:147
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:404
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:707
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:84
@@ -15212,7 +15214,7 @@ msgstr ""
 msgid "Send Email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:121
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:126
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:381
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
@@ -17620,7 +17622,6 @@ msgid "The required parameter 'client_secret' is missing."
 msgstr ""
 
 #: app/controllers/external_credentials_controller.rb:77
-#: config/initializers/microsoft_graph_notification.rb:161
 #: lib/external_credential/exchange.rb:47
 #: lib/external_credential/google.rb:43
 #: lib/external_credential/microsoft_base.rb:80
@@ -17942,7 +17943,6 @@ msgid "The user token could not be generated."
 msgstr ""
 
 #: app/controllers/external_credentials_controller.rb:85
-#: config/initializers/microsoft_graph_notification.rb:169
 #: lib/external_credential/exchange.rb:55
 #: lib/external_credential/microsoft_base.rb:88
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -20130,7 +20130,7 @@ msgstr ""
 msgid "Used when viewing a Ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:139
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:144
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:401
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:173
