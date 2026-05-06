@@ -26,7 +26,7 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
     raise Exceptions::UnprocessableContent, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
     raise Exceptions::UnprocessableContent, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
 
-    state         = SecureRandom.urlsafe_base64
+    state         = generate_state
     authorize_url = generate_authorize_url(credentials[:client_id], state: state)
 
     {
@@ -287,5 +287,9 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
     return if split.blank?
 
     JSON.parse(Base64.decode64(split)).symbolize_keys
+  end
+
+  def self.generate_state
+    SecureRandom.urlsafe_base64
   end
 end
