@@ -51,7 +51,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     raise Exceptions::UnprocessableContent, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
     raise Exceptions::UnprocessableContent, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
 
-    state         = SecureRandom.urlsafe_base64
+    state         = generate_state
     authorize_url = generate_authorize_url(credentials, state: state)
 
     {
@@ -174,6 +174,10 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     end
 
     channel
+  end
+
+  def self.generate_state
+    SecureRandom.urlsafe_base64
   end
 
   def self.generate_authorize_url(credentials, scope: authorize_scope, state: nil)

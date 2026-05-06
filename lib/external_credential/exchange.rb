@@ -27,7 +27,7 @@ class ExternalCredential::Exchange
     raise Exceptions::UnprocessableContent, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
     raise Exceptions::UnprocessableContent, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
 
-    state         = SecureRandom.urlsafe_base64
+    state         = generate_state
     authorize_url = generate_authorize_url(credentials, state: state)
 
     {
@@ -228,5 +228,9 @@ class ExternalCredential::Exchange
     Setting.set('exchange_oauth', config.merge(client_secret: current_client_secret))
 
     true
+  end
+
+  def self.generate_state
+    SecureRandom.urlsafe_base64
   end
 end

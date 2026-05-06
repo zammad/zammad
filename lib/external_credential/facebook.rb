@@ -29,7 +29,7 @@ class ExternalCredential::Facebook
       ExternalCredential.callback_url('facebook'),
     )
     oauth.get_app_access_token.inspect
-    state = SecureRandom.uuid
+    state = generate_state
     {
       request_token: state,
       # authorize_url: oauth.url_for_oauth_code(permissions: 'publish_pages, manage_pages, user_posts', state: state),
@@ -95,4 +95,7 @@ class ExternalCredential::Facebook
     )
   end
 
+  def self.generate_state
+    SecureRandom.uuid
+  end
 end
