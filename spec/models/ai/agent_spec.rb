@@ -150,6 +150,21 @@ RSpec.describe AI::Agent, aggregate_failures: true, current_user_id: 1, type: :m
         expect(assets).to include('references' => be_empty)
       end
     end
+
+    context 'with trigger having array ai_agent_id in perform data' do
+      let(:trigger) do
+        create(:trigger,
+               perform: {
+                 'ai.ai_agent' => { 'ai_agent_id' => [ai_agent.id.to_s, '999'] }
+               })
+      end
+
+      before { trigger }
+
+      it 'does not raise an error' do
+        expect { ai_agent.assets }.not_to raise_error
+      end
+    end
   end
 
   describe '.working_on_ticket' do
