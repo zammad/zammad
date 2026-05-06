@@ -40,16 +40,16 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
     channel.active = is_matching_adapter
 
     if is_matching_adapter
-      if @adapter == 'microsoft_graph_outbound'
-        channel.options = build_microsoft_graph_options
-      else
-        channel.options = {
-          outbound: {
-            adapter: @adapter,
-            options: @new_configuration,
-          },
-        }
-      end
+      channel.options = if @adapter == 'microsoft_graph_outbound'
+                          build_microsoft_graph_options
+                        else
+                          {
+                            outbound: {
+                              adapter: @adapter,
+                              options: @new_configuration,
+                            },
+                          }
+                        end
 
       channel.status_out   = 'ok'
       channel.last_log_out = nil

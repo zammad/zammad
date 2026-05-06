@@ -29,7 +29,7 @@ RSpec.describe 'Microsoft Graph Email Notification', aggregate_failures: true, a
   end
 
   describe 'GET /api/v1/external_credentials/microsoft_graph/link_account (notification)' do
-    let!(:external_credential) do
+    before do
       create(:external_credential, name: 'microsoft_graph', credentials: {
                client_id:     'test_client_id',
                client_secret: 'test_client_secret',
@@ -46,7 +46,7 @@ RSpec.describe 'Microsoft Graph Email Notification', aggregate_failures: true, a
   end
 
   describe 'GET /api/v1/external_credentials/microsoft_graph/callback (notification)' do
-    let!(:external_credential) do
+    before do
       create(:external_credential, name: 'microsoft_graph', credentials: {
                client_id:     'test_client_id',
                client_secret: 'test_client_secret',
@@ -72,20 +72,20 @@ RSpec.describe 'Microsoft Graph Email Notification', aggregate_failures: true, a
       "header.#{Base64.urlsafe_encode64(payload.to_json)}.signature"
     end
 
+    let(:shared_mailbox) { nil }
+
     before do
       # Simulate session state from link_account
       allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(
         {
-          request_token: state_token,
-          notification:  true,
+          request_token:  state_token,
+          notification:   true,
           shared_mailbox: shared_mailbox,
         }.with_indifferent_access,
       )
 
       allow(ExternalCredential::MicrosoftGraph).to receive(:authorize_tokens).and_return(token_response)
     end
-
-    let(:shared_mailbox) { nil }
 
     it 'exchanges code for tokens and updates the notification channel' do
       get '/api/v1/external_credentials/microsoft_graph/callback', params: { code: 'auth_code', state: state_token }
@@ -99,14 +99,14 @@ RSpec.describe 'Microsoft Graph Email Notification', aggregate_failures: true, a
       end
 
       expect(channel).to have_attributes(
-        active: true,
+        active:  true,
         options: include(
           outbound: include(
             adapter: 'microsoft_graph_outbound',
             options: include(user: 'user@example.com'),
           ),
-          auth: include(
-            provider: 'microsoft_graph',
+          auth:     include(
+            provider:     'microsoft_graph',
             access_token: 'new_access_token',
           ),
         ),
