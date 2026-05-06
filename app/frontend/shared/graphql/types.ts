@@ -783,6 +783,8 @@ export type EmailAddressParsed = {
 
 /** Possible AfterAuth message types */
 export enum EnumAfterAuthType {
+  /** DoorkeeperReturnTo */
+  DoorkeeperReturnTo = 'DoorkeeperReturnTo',
   /** TwoFactorConfiguration */
   TwoFactorConfiguration = 'TwoFactorConfiguration'
 }

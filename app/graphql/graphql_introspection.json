@@ -4947,6 +4947,12 @@
           "interfaces": null,
           "enumValues": [
             {
+              "name": "DoorkeeperReturnTo",
+              "description": "DoorkeeperReturnTo",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "TwoFactorConfiguration",
               "description": "TwoFactorConfiguration",
               "isDeprecated": false,

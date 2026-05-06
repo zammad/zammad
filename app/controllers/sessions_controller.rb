@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
       .json_hash(user)
       .merge(
         config:     config_frontend,
-        after_auth: Auth::AfterAuth.run(user, session, options: { initial: true })
+        after_auth: Auth::AfterAuth.run(user, session, options: { initial: true }),
       )
 
     # return new session data
@@ -66,7 +66,7 @@ class SessionsController < ApplicationController
 
     initiate_session_for(user, 'SSO')
 
-    redirect_to '/#'
+    redirect_after_omniauth('/#')
   end
 
   # "Delete" a login, aka "log the user out"
@@ -149,7 +149,7 @@ class SessionsController < ApplicationController
     end
 
     # redirect to app
-    redirect_to redirect_url
+    redirect_after_omniauth(redirect_url)
   rescue Authorization::Provider::AccountError => e
     forbidden(e)
   end
@@ -373,5 +373,15 @@ class SessionsController < ApplicationController
 
   def omniauth_redirect_path
     request.env['omniauth.params']['redirect'] || ''
+  end
+
+  def redirect_after_omniauth(default_url)
+    return_to = session[:doorkeeper_return_to]
+
+    if return_to.is_a?(String) && return_to.match?(%r{\A/oauth/authorize(?:\z|[/?#])})
+      redirect_to session.delete(:doorkeeper_return_to)
+    else
+      redirect_to default_url
+    end
   end
 end
