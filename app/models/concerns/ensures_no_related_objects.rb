@@ -62,7 +62,7 @@ module EnsuresNoRelatedObjects
     def referenced_in?(performable)
       record.id == performable.perform
         &.dig(*record.class.ensures_no_related_objects_path)
-        &.to_i
+        &.try(:to_i)
     end
 
     def references_text
