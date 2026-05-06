@@ -46,14 +46,6 @@ RSpec.describe 'Microsoft Graph Email Notification', aggregate_failures: true, a
   end
 
   describe 'GET /api/v1/external_credentials/microsoft_graph/callback (notification)' do
-    before do
-      create(:external_credential, name: 'microsoft_graph', credentials: {
-               client_id:     'test_client_id',
-               client_secret: 'test_client_secret',
-               client_tenant: 'common',
-             })
-    end
-
     let(:state_token) { SecureRandom.urlsafe_base64 }
 
     let(:token_response) do
@@ -75,6 +67,12 @@ RSpec.describe 'Microsoft Graph Email Notification', aggregate_failures: true, a
     let(:shared_mailbox) { nil }
 
     before do
+      create(:external_credential, name: 'microsoft_graph', credentials: {
+               client_id:     'test_client_id',
+               client_secret: 'test_client_secret',
+               client_tenant: 'common',
+             })
+
       # Simulate session state from link_account
       allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(
         {
