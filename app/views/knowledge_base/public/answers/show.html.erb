@@ -18,7 +18,7 @@ data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'>
           <% attachments.each do |attachment| %>
             <%= link_to custom_path_if_needed(attachment_path(attachment), @knowledge_base), class: 'attachment', download: true do %>
               <span class="attachment-name u-highlight"><%= attachment.filename %></span>
-              <div class="attachment-size">404kb</div>
+              <div class="attachment-size"><%= number_to_human_size attachment.size %></div>
             <% end %>
           <% end %>
         </div>
