@@ -97,8 +97,8 @@ class ChannelEmailAccountOverview extends App.Controller
       config:                   data.config
     )
 
-    # Render the notification section via the shared controller
-    new App.ChannelEmailNotification(el: @$('.js-notificationSection'))
+    # Render the notification section via the shared controller, passing preloaded data to avoid a second request
+    new App.ChannelEmailNotification(el: @$('.js-notificationSection'), data: data)
 
   wizard: (e) =>
     e.preventDefault()

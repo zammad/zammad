@@ -80,6 +80,17 @@ RSpec.describe Service::System::SetEmailNotificationConfiguration do
     end
   end
 
+  context 'when adapter is microsoft_graph_outbound without auth data' do
+    it 'raises ArgumentError' do
+      expect do
+        described_class.execute(
+          adapter:           'microsoft_graph_outbound',
+          new_configuration: { user: 'user@example.com' },
+        )
+      end.to raise_error(ArgumentError, /microsoft_graph_auth/)
+    end
+  end
+
   context 'when adapter is microsoft_graph_outbound' do
     let(:auth_data) do
       {

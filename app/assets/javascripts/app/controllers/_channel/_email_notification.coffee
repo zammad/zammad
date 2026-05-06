@@ -9,7 +9,12 @@ class App.ChannelEmailNotification extends App.Controller
 
   constructor: ->
     super
-    @load()
+    if @data
+      @channelDriver = @data.channel_driver
+      @config        = @data.config
+      @render(@data)
+    else
+      @load()
 
   load: =>
     @startLoading()
@@ -242,4 +247,5 @@ class App.ChannelEmailNotificationWizardProxy extends App.ControllerWizardModal
         @showSlide('js-outbound')
         @showAlert('js-outbound', data.message_human || data.message || data.error)
         @showInvalidField('js-outbound', data.invalid_field)
+        @enable(e)
     )

@@ -19,6 +19,10 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
   end
 
   def execute
+    if @adapter == 'microsoft_graph_outbound' && @microsoft_graph_auth.blank?
+      raise ArgumentError, __('Microsoft Graph auth data is required for the microsoft_graph_outbound adapter.')
+    end
+
     ActiveRecord::Base.transaction do
       Channel
         .where(area: 'Email::Notification')
