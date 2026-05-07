@@ -77,8 +77,10 @@ RSpec.describe 'Microsoft Graph Email Notification', aggregate_failures: true, a
         }.with_indifferent_access,
       )
 
-      allow(ExternalCredential::MicrosoftGraph).to receive(:authorize_tokens).and_return(token_response)
-      allow(ExternalCredential::MicrosoftGraph).to receive(:user_info).and_return({ preferred_username: 'user@example.com' })
+      allow(ExternalCredential::MicrosoftGraph).to receive_messages(
+        authorize_tokens: token_response,
+        user_info:        { preferred_username: 'user@example.com' },
+      )
     end
 
     it 'exchanges code for tokens and updates the notification channel' do
