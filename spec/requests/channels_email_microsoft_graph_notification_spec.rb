@@ -55,13 +55,8 @@ RSpec.describe 'Microsoft Graph Email Notification', aggregate_failures: true, a
         expires_in:    3600,
         scope:         'offline_access openid profile email mail.send',
         token_type:    'Bearer',
-        id_token:      jwt_id_token,
+        id_token:      'fake.id.token',
       }
-    end
-
-    let(:jwt_id_token) do
-      payload = { preferred_username: 'user@example.com' }
-      "header.#{Base64.urlsafe_encode64(payload.to_json)}.signature"
     end
 
     let(:shared_mailbox) { nil }
@@ -83,6 +78,7 @@ RSpec.describe 'Microsoft Graph Email Notification', aggregate_failures: true, a
       )
 
       allow(ExternalCredential::MicrosoftGraph).to receive(:authorize_tokens).and_return(token_response)
+      allow(ExternalCredential::MicrosoftGraph).to receive(:user_info).and_return({ preferred_username: 'user@example.com' })
     end
 
     it 'exchanges code for tokens and updates the notification channel' do
