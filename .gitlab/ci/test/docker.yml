@@ -4,7 +4,7 @@ docker:
   interruptible: false
   rules:
     - !reference [.job_rules, variable_filters]
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_REF_NAME =~ /^private/
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_REF_NAME =~ /^(private|cherry-pick-|revert-|renovate|dependabot)/
       when: manual
       allow_failure: true
     - when: on_success
