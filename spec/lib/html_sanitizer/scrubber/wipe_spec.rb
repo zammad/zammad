@@ -133,5 +133,100 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
         expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
       end
     end
+
+    context 'when has a remote srcset without src' do
+      let(:input)  { '<img srcset="https://tracking.example.com/pixel.gif">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when has a remote srcset with a local src' do
+      let(:input)  { '<img src="/api/v1/attachments/1" srcset="https://tracking.example.com/pixel.gif 2x">' }
+      let(:target) { '<img src="/api/v1/attachments/1">' } # srcset should be stripped
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when srcset has only safe sources' do
+      let(:input)  { '<img src="/api/v1/attachments/1" srcset="/api/v1/attachments/1 1x, /api/v1/attachments/2 2x">' }
+      let(:target) { '<img src="/api/v1/attachments/1" srcset="/api/v1/attachments/1 1x, /api/v1/attachments/2 2x">' }
+
+      it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when srcset has a mix of safe and unsafe sources' do
+      let(:input)  { '<img src="/api/v1/attachments/1" srcset="/api/v1/attachments/1 1x, https://tracking.example.com/pixel.gif 2x">' }
+      let(:target) { '<img src="/api/v1/attachments/1" srcset="/api/v1/attachments/1 1x">' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when srcset contains a data: URL with a comma in it' do
+      let(:input)  { '<img srcset="data:image/png,abc 1x">' }
+      let(:target) { '<img srcset="data:image/png,abc 1x">' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when srcset has a javascript: URL' do
+      let(:input)  { '<img srcset="javascript:alert() 1x">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when srcset candidates are separated by multiple commas with a remote entry' do
+      let(:input)  { '<img src="/api/v1/attachments/1" srcset="/api/v1/attachments/1 1x,, https://remote.example.com/track.gif 2x">' }
+      let(:target) { '<img src="/api/v1/attachments/1" srcset="/api/v1/attachments/1 1x">' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when src is present but empty' do
+      let(:input)  { '<img src="">' }
+      let(:target) { '<img src="">' }
+
+      it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when srcset is present but empty' do
+      let(:input)  { '<img srcset="">' }
+      let(:target) { '<img srcset="">' }
+
+      it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
   end
 end
