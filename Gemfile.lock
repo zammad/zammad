@@ -252,10 +252,10 @@ GEM
     elastic-transport (8.5.1)
       faraday (< 3)
       multi_json
-    elasticsearch (9.3.1)
+    elasticsearch (9.4.0)
       elastic-transport (~> 8.3)
-      elasticsearch-api (= 9.3.1)
-    elasticsearch-api (9.3.1)
+      elasticsearch-api (= 9.4.0)
+    elasticsearch-api (9.4.0)
       base64
       multi_json
     em-websocket (0.5.3)
@@ -407,7 +407,7 @@ GEM
     mini_portile2 (2.8.9)
     minitest (5.27.0)
     msgpack (1.8.0)
-    multi_json (1.21.0)
+    multi_json (1.21.1)
     multi_xml (0.9.0)
       bigdecimal (>= 3.1, < 5)
     multipart-post (2.4.1)
