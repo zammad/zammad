@@ -67,7 +67,6 @@ class ExternalCredentialsController < ApplicationController
   def handle_notification_callback
     request_token  = session[:request_token]
     shared_mailbox = session[:shared_mailbox]
-    clear_notification_session
 
     raise Exceptions::UnprocessableEntity, __('Invalid OAuth state parameter.') if params[:state] != request_token
 
@@ -85,13 +84,6 @@ class ExternalCredentialsController < ApplicationController
     )
 
     redirect_to channels_email_url, allow_other_host: true
-  end
-
-  def clear_notification_session
-    session[:request_token]  = nil
-    session[:channel_id]     = nil
-    session[:shared_mailbox] = nil
-    session[:notification]   = nil
   end
 
   def fetch_graph_auth_data(external_credential)
