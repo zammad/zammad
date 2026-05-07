@@ -52,9 +52,9 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     end
 
     raise Exceptions::UnprocessableContent, __("The required parameter 'client_id' is missing.") if credentials[:client_id].blank?
-    raise Exceptions::UnprocessableContent, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank?
+    raise Exceptions::UnprocessableContent, __("The required parameter 'client_secret' is missing.") if credentials[:client_secret].blank? && !using_multi_tenant_app?(credentials)
 
-    if pkce_enabled?(credentials)
+    if using_multi_tenant_app?(credentials)
       code_verifier  = generate_code_verifier
       code_challenge = code_challenge_for(code_verifier)
     end
@@ -98,11 +98,13 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
       inbound:  channel_options_inbound(user_data, account_data),
       outbound: channel_options_outbound(user_data, account_data),
       auth:     response.merge(
-        provider:      provider_name,
-        type:          'XOAUTH2',
-        client_id:     external_credential.credentials[:client_id],
-        client_secret: external_credential.credentials[:client_secret],
-        client_tenant: external_credential.credentials[:client_tenant],
+        {
+          provider:      provider_name,
+          type:          'XOAUTH2',
+          client_id:     external_credential.credentials[:client_id],
+          client_secret: external_credential.credentials[:client_secret],
+          client_tenant: external_credential.credentials[:client_tenant],
+        }.compact,
       ),
     }
 
@@ -281,7 +283,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
       client_secret: credentials[:client_secret],
       refresh_token: credentials[:refresh_token],
       grant_type:    'refresh_token',
-    }
+    }.compact
   end
 
   def self.refresh_token_uri(credentials)
@@ -308,9 +310,11 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     JSON.parse(Base64.decode64(split)).symbolize_keys
   end
 
-  # PKCE is required when Zammad runs as an online service AND the credential
-  # represents Zammad's shared multi-tenant Microsoft app registration.
-  def self.pkce_enabled?(credentials)
+  # The credential uses Zammad's shared multi-tenant Microsoft app registration
+  # while Zammad runs as an online service. In this mode the client_secret is
+  # held centrally (not per-instance) and PKCE is used to secure the
+  # authorization code exchange.
+  def self.using_multi_tenant_app?(credentials)
     Setting.get('system_online_service') && credentials[:multi_tenant_app]
   end
 
