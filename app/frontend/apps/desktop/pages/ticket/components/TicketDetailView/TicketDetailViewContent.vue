@@ -325,7 +325,7 @@ const ticketEditSchema = [
         isLayout: true,
         component: 'FormGroup',
         props: {
-          class: '@container/form-group',
+          class: '@sm:*:col-span-1',
           showDirtyMark: true,
         },
         children: [ticketSchema],
@@ -348,9 +348,6 @@ const ticketEditSchema = [
       {
         isLayout: true,
         component: 'FormGroup',
-        props: {
-          class: '@container/form-group',
-        },
         children: [articleSchema],
       },
     ],

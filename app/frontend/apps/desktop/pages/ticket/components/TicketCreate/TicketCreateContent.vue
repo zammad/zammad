@@ -256,7 +256,7 @@ const formSchema = defineFormSchema([
         isLayout: true,
         element: 'div',
         attrs: {
-          class: 'grid grid-cols-2-uneven gap-2.5',
+          class: 'grid @md:grid-cols-2-uneven gap-2.5',
         },
         children: [
           {

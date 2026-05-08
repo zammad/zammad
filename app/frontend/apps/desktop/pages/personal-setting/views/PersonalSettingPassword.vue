@@ -44,14 +44,14 @@ const schema = [
     isLayout: true,
     element: 'div',
     attrs: {
-      class: 'grid grid-cols-2 gap-2.5',
+      class: '@container grid grid-cols-2 gap-2.5',
     },
     children: [
       {
         name: 'current_password',
         label: __('Current password'),
         type: 'password',
-        outerClass: 'col-span-2',
+        outerClass: 'col-span-full',
         props: {
           maxLength: 1001,
           autocomplete: 'current-password',
@@ -62,7 +62,7 @@ const schema = [
         name: 'new_password',
         label: __('New password'),
         type: 'password',
-        outerClass: 'col-span-1',
+        outerClass: 'col-span-full @md:col-span-1',
         props: {
           maxLength: 1001,
           autocomplete: 'new-password',
@@ -73,8 +73,8 @@ const schema = [
         name: 'new_password_confirm',
         label: __('Confirm new password'),
         type: 'password',
+        outerClass: 'col-span-full @md:col-span-1',
         validation: 'confirm',
-        outerClass: 'col-span-1',
         props: {
           maxLength: 1001,
           autocomplete: 'new-password',

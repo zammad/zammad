@@ -55,9 +55,15 @@ export abstract class FieldResolver {
 
     // TODO: Support half-sized/single column fields based on the information hard-coded in the object attribute
     //   backend for now. Later we can make this a concern of the frontend only, and ignore the hard-coded values.
+    // Support half-sized/single column fields based on the information hard-coded in the object attribute backend.
+    // Both 'formGroup--halfSize' (custom attributes) and 'column' (core ticket fields) indicate single-column layout.
+    const itemClass =
+      typeof this.attributeConfig.item_class === 'string'
+        ? this.attributeConfig.item_class
+        : undefined
     if (
-      this.attributeConfig.item_class &&
-      (this.attributeConfig.item_class as string).indexOf('formGroup--halfSize') !== -1
+      itemClass &&
+      (itemClass.indexOf('formGroup--halfSize') !== -1 || itemClass.indexOf('column') !== -1)
     ) {
       resolvedAttributes.outerClass = 'form-group-single-column'
     }

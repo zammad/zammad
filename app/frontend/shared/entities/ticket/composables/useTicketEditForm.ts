@@ -153,7 +153,7 @@ export const useTicketEditForm = (
         component: 'CommonAlert',
         props: {
           variant: 'warning',
-          class: 'col-span-2',
+          class: 'col-span-full',
         },
         children: [
           {
@@ -184,6 +184,7 @@ export const useTicketEditForm = (
         type: 'select',
         hidden: computed(() => ticketArticleTypes.value.length === 1),
         props: {
+          classes: { outer: '@md:col-span-1' },
           // We need to disable the auto preselection when the field
           //  so that we have a correct dirty state.
           noAutoPreselect: true,
@@ -197,6 +198,7 @@ export const useTicketEditForm = (
         hidden: isTicketCustomer,
         type: 'select',
         props: {
+          classes: { outer: '@md:col-span-1' },
           options: [
             {
               value: true,
@@ -221,6 +223,7 @@ export const useTicketEditForm = (
         type: 'recipient',
         validation: articleTypeFieldProps.to.validation,
         props: {
+          classes: { outer: '@md:col-span-1' },
           contact: recipientContact,
           multiple: true,
         },
@@ -233,6 +236,7 @@ export const useTicketEditForm = (
         type: 'recipient',
         validation: articleTypeFieldProps.cc.validation,
         props: {
+          classes: { outer: '@md:col-span-1' },
           contact: recipientContact,
           multiple: true,
         },

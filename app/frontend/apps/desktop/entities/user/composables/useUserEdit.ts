@@ -20,9 +20,6 @@ const userEditFormSchema = defineFormSchema([
   {
     isLayout: true,
     component: 'FormGroup',
-    props: {
-      class: '@container/form-group',
-    },
     children: buildUserSchema('edit'),
   },
 ])

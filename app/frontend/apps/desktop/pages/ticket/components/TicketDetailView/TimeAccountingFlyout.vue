@@ -67,9 +67,6 @@ const formSchema = [
   {
     isLayout: true,
     component: 'FormGroup',
-    props: {
-      class: '@container/form-group',
-    },
     children: [
       {
         id: 'timeUnit',

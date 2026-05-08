@@ -86,18 +86,11 @@
   */
   .form-group .formkit-outer {
     /* All fields default to full-width. */
-    @apply col-span-2;
+    @apply col-span-full;
 
     /* Optional single-column style for configured fields (medium+ breakpoint). */
     &.form-group-single-column {
-      @apply @md/form-group:col-span-1;
-    }
-
-    /* Force full-width style for specific fields. */
-    &[data-type='editor'],
-    &[data-type='file'],
-    &:last-of-type:nth-of-type(odd) {
-      @apply @md/form-group:col-span-2;
+      @apply @md:col-span-1;
     }
   }
 
@@ -107,12 +100,12 @@
     - container query via optional TW `@container/object-attributes` class
   */
   .object-attributes .object-attribute {
-    @apply col-span-2 @md/object-attributes:col-span-1;
+    @apply col-span-full @md/object-attributes:col-span-1;
 
     /* Optional full-width style for configured attributes. */
     &.object-attribute-spanned-column,
     &:last-of-type:nth-of-type(odd) {
-      @apply @md/object-attributes:col-span-2;
+      @apply @md/object-attributes:col-span-full;
     }
   }
 
@@ -145,7 +138,7 @@
     @apply relative;
 
     &::before {
-      @apply absolute start-px top-px bottom-px w-[7px] rounded-ss-lg rounded-es-lg content-[''];
+      @apply absolute inset-s-px top-px bottom-px w-1.75 rounded-ss-lg rounded-es-lg content-[''];
 
       background: repeating-linear-gradient(
           45deg,

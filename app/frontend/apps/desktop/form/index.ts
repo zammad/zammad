@@ -65,7 +65,7 @@ export const initializeFormFields = () => {
   })
 
   initializeFormGroupClasses({
-    container: 'form-group grid grid-cols-2 gap-y-2.5 gap-x-3',
+    container: 'form-group @container grid grid-cols-2 gap-y-2.5 gap-x-3',
     help: 'text-xs',
     dirtyMark: 'form-group-mark-dirty',
     bottomMargin: 'mb-4 last:mb-0',
