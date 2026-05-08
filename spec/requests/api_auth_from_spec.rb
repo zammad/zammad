@@ -212,6 +212,30 @@ RSpec.describe 'Api Auth From', type: :request do
       end
     end
 
+    context 'when API token plus From (impersonation)' do
+      let(:agent)  { create(:agent, groups: [create(:group)]) }
+      let(:admin)  { create(:user, firstname: 'Requester', roles: [admin_user_role]) }
+      let(:token)  { create(:token, user: admin, permissions: %w[admin.user]) }
+
+      let(:admin_user_role) do
+        create(:role).tap { |role| role.permission_grant('admin.user') }
+      end
+
+      it 'does not set UserInfo.current_token for impersonated request' do
+        authenticated_as(admin, token: token, from: agent.email)
+        get '/api/v1/users/me'
+
+        expect(UserInfo.current_token).to be_nil
+      end
+
+      it 'sets UserInfo.current_token for non-impersonated request' do
+        authenticated_as(admin, token: token)
+        get '/api/v1/users/me'
+
+        expect(UserInfo.current_token).to eq(token)
+      end
+    end
+
     context 'when customer account has device user permission' do
       let(:customer_user_devices_role) do
         create(:role).tap { |role| role.permission_grant('user_preferences.device') }

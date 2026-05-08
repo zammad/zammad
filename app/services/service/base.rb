@@ -12,8 +12,6 @@ class Service::Base
   end
 
   def self.execute(*, current_user: nil, **, &)
-    Rails.logger.debug current_user
-
     case { current_user:, current_user_required: }
     in { current_user: nil, current_user_required: false }
       new(*, **, &).execute
