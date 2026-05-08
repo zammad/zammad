@@ -87,7 +87,7 @@ RSpec.describe Service::System::SetEmailNotificationConfiguration do
           adapter:           'microsoft_graph_outbound',
           new_configuration: { user: 'user@example.com' },
         )
-      end.to raise_error(ArgumentError, %r{microsoft_graph_auth})
+      end.to raise_error(ArgumentError, %r{microsoft_graph_outbound})
     end
   end
 

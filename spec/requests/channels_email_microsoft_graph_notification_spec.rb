@@ -68,19 +68,21 @@ RSpec.describe 'Microsoft Graph Email Notification', aggregate_failures: true, a
                client_tenant: 'common',
              })
 
-      # Simulate session state from link_account
-      allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(
-        {
-          request_token:  state_token,
-          notification:   true,
-          shared_mailbox: shared_mailbox,
-        }.with_indifferent_access,
+      allow(ExternalCredential).to receive(:request_account_to_link).and_return(
+        request_token: state_token,
+        authorize_url: 'https://login.microsoftonline.com/dummy',
       )
 
       allow(ExternalCredential::MicrosoftGraph).to receive_messages(
         authorize_tokens: token_response,
         user_info:        { preferred_username: 'user@example.com' },
       )
+
+      # Populate session via link_account so the real Rails session store is used
+      get '/api/v1/external_credentials/microsoft_graph/link_account', params: {
+        notification:   'true',
+        shared_mailbox: shared_mailbox,
+      }
     end
 
     it 'exchanges code for tokens and updates the notification channel' do
@@ -125,10 +127,10 @@ RSpec.describe 'Microsoft Graph Email Notification', aggregate_failures: true, a
     end
 
     context 'with invalid state token' do
-      it 'raises an error' do
-        expect do
-          get '/api/v1/external_credentials/microsoft_graph/callback', params: { code: 'auth_code', state: 'wrong_state' }
-        end.to raise_error(Exceptions::UnprocessableEntity, %r{Invalid OAuth state})
+      it 'returns unprocessable content' do
+        get '/api/v1/external_credentials/microsoft_graph/callback', params: { code: 'auth_code', state: 'wrong_state' }
+
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end

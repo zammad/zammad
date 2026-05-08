@@ -68,11 +68,11 @@ class ExternalCredentialsController < ApplicationController
     request_token  = session[:request_token]
     shared_mailbox = session[:shared_mailbox]
 
-    raise Exceptions::UnprocessableEntity, __('Invalid OAuth state parameter.') if params[:state] != request_token
+    raise Exceptions::UnprocessableContent, __('Invalid OAuth state parameter.') if params[:state] != request_token
 
     external_credential = ExternalCredential.find_by(name: 'microsoft_graph')
-    raise Exceptions::UnprocessableEntity, __('No Microsoft Graph app configured!') if !external_credential
-    raise Exceptions::UnprocessableEntity, __("The required parameter 'code' is missing.") if params[:code].blank?
+    raise Exceptions::UnprocessableContent, __('No Microsoft Graph app configured!') if !external_credential
+    raise Exceptions::UnprocessableContent, __("The required parameter 'code' is missing.") if params[:code].blank?
 
     auth_data          = fetch_graph_auth_data(external_credential)
     preferred_username = extract_preferred_username(auth_data[:id_token])
@@ -89,7 +89,7 @@ class ExternalCredentialsController < ApplicationController
   def fetch_graph_auth_data(external_credential)
     response = ExternalCredential::MicrosoftGraph.authorize_tokens(external_credential.credentials, params[:code])
     %w[refresh_token access_token expires_in scope token_type id_token].each do |key|
-      raise Exceptions::UnprocessableEntity, "No #{key} for authorization request found!" if response[key.to_sym].blank?
+      raise Exceptions::UnprocessableContent, "No #{key} for authorization request found!" if response[key.to_sym].blank?
     end
 
     response.merge(
@@ -103,7 +103,7 @@ class ExternalCredentialsController < ApplicationController
 
   def extract_preferred_username(id_token)
     user_data = ExternalCredential::MicrosoftGraph.user_info(id_token)
-    raise Exceptions::UnprocessableEntity, __("The user's 'preferred_username' could not be extracted from 'id_token'.") if user_data[:preferred_username].blank?
+    raise Exceptions::UnprocessableContent, __("The user's 'preferred_username' could not be extracted from 'id_token'.") if user_data[:preferred_username].blank?
 
     user_data[:preferred_username]
   end
