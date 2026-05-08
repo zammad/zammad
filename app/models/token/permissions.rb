@@ -11,6 +11,8 @@ module Token::Permissions
   end
 
   def permissions?(query)
+    return effective_user.permissions?(query) if preferences[:permission].blank?
+
     effective_user.permissions?(query) && Auth::Permissions.authorized?(self, query)
   end
 

@@ -5,6 +5,19 @@ require 'rails_helper'
 RSpec.describe UserContext do
   subject(:user_context) { described_class.new(user, token) }
 
+  describe '#is_a?' do
+    let(:user)  { create(:user) }
+    let(:token) { nil }
+
+    it 'returns true for User' do
+      expect(user_context.is_a?(User)).to be true
+    end
+
+    it 'returns false for unrelated class' do
+      expect(user_context.is_a?(String)).to be false
+    end
+  end
+
   describe '#permissions?' do
     context 'when user with ticket.agent permission' do
       let(:user)  { create(:user, roles: create_list(:role, 1, :agent)) }
