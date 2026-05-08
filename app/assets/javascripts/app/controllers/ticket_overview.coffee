@@ -49,7 +49,7 @@ class App.TicketOverview extends App.Controller
         parentEl:     elLocal
         appEl:        @appEl
         batchSuccess: =>
-          @render()
+          @contentController.render()
       )
 
     @html elLocal
