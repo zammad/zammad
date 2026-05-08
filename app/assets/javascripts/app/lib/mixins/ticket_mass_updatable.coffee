@@ -6,8 +6,8 @@ InstanceMethods =
     @ajax_mass('macro', data, success)
 
   ajax_mass: (path, data, success) ->
-    loadingTarget = if @className is 'overviews' then @contentController?.el else null
-    @startLoading(loadingTarget)
+    overviewLoadingContainer = if @className is 'overviews' then @contentController?.el else null
+    @startLoading(overviewLoadingContainer)
 
     @ajax(
       id: 'bulk_update'
