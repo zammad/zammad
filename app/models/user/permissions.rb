@@ -62,7 +62,9 @@ returns
   end
 
   def permissions?(query)
-    Auth::Permissions.authorized?(self, query)
+    return Auth::Permissions.authorized?(self, query) if UserInfo.current_token.nil?
+
+    Auth::Permissions.authorized?(self, query) && Auth::Permissions.authorized?(UserInfo.current_token, query)
   end
 
   def permissions!(query)

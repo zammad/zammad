@@ -1246,6 +1246,58 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       expect(User.last).not_to be_role 'Admin'
     end
 
+    context 'with API token authentication' do
+      let(:admin) { create(:admin) }
+      let(:token) { create(:token, user_id: admin.id, preferences: { permission: }) }
+
+      context 'when token has only ticket.agent permission' do
+        let(:permission) { ['ticket.agent'] }
+
+        before { authenticated_as(admin, token:) }
+
+        it 'can create users' do
+          make_request successful_params
+          expect(response).to have_http_status(:created)
+        end
+
+        it 'cannot assign admin role' do
+          make_request params_with_role
+          expect(User.last).not_to be_role 'Admin'
+        end
+      end
+
+      context 'when token has no relevant permissions' do
+        let(:permission) { ['ticket.customer'] }
+
+        before { authenticated_as(admin, token:) }
+
+        it 'cannot create users' do
+          make_request successful_params
+          expect(response).to have_http_status(:forbidden)
+        end
+
+        it 'cannot assign admin role' do
+          make_request params_with_role
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+
+      context 'when using token authentication' do
+        it 'does not leak token between requests' do
+          admin = create(:admin)
+          token = create(:token, user_id: admin.id, preferences: { permission: %w[ticket.agent] })
+
+          authenticated_as(admin, token:)
+          get '/api/v1/users/me'
+          expect(UserInfo.current_token).to eq(token)
+
+          authenticated_as(admin)
+          get '/api/v1/users/me'
+          expect(UserInfo.current_token).to be_nil
+        end
+      end
+    end
+
     it 'does not send email verification notifications' do
       allow(NotificationFactory::Mailer).to receive(:notification)
       make_request successful_params
@@ -1436,7 +1488,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
   end
 
   describe 'POST /api/v1/users/search group ids and generic model_search_render tests' do
-    let(:group1) { create(:group) }
+    let(:group1)         { create(:group) }
     let(:group2)         { create(:group) }
     let!(:agent1)        { create(:agent, firstname: '9U7Z-agent1', groups: [group1]) }
     let!(:agent2)        { create(:agent, firstname: '9U7Z-agent2', groups: [group2]) }

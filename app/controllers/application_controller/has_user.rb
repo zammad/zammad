@@ -41,9 +41,8 @@ module ApplicationController::HasUser
     return if request_header_from.blank? # require header
     return @_user_on_behalf if @_user_on_behalf         # return memoized user
     return if !current_user_real                        # require session user
-    if !SessionsPolicy.new(current_user_real, Sessions).impersonate?
-      raise Exceptions::Forbidden, __("Current user has no permission to use 'From'/'X-On-Behalf-Of'!")
-    end
+
+    impersonate!
 
     @_user_on_behalf = find_on_behalf_user request_header_from.to_s.downcase.strip
 
@@ -53,6 +52,12 @@ module ApplicationController::HasUser
     end
 
     @_user_on_behalf
+  end
+
+  def impersonate!
+    return if SessionsPolicy.new(current_user_real, Sessions).impersonate?
+
+    raise Exceptions::Forbidden, __("Current user has no permission to use 'From'/'X-On-Behalf-Of'!")
   end
 
   def current_user_set(user, auth_type = 'session')
@@ -65,6 +70,11 @@ module ApplicationController::HasUser
   # Sets the current user into a named Thread location so that it can be accessed
   # by models and observers
   def set_user
+    # The order of setting current_user and current_token is important,
+    # because current_token is used in UserInfo.current_user_id= and it needs to be set before.
+    # If current_user is set before current_token, then UserInfo.current_user_id= will use the old token
+    # instead of the new one, which can cause issues with token-based authentication.
+    UserInfo.current_token   = current_user_on_behalf ? nil : @_token
     UserInfo.current_user_id = current_user&.id || 1
   end
 

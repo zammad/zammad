@@ -16,6 +16,18 @@ class UserContext < Delegator
     @user
   end
 
+  # Ruby's Delegator does not delegate `class` or `is_a?`, so override them here
+  # to make UserContext transparent for code that inspects the class or checks
+  # type membership (e.g. AR association type checks via is_a?).
+  def class
+    @user.class
+  end
+
+  def is_a?(klass)
+    super || @user.is_a?(klass)
+  end
+  alias kind_of? is_a?
+
   def permissions?(permissions)
     permissions!(permissions)
     true
@@ -26,9 +38,7 @@ class UserContext < Delegator
   def permissions!(permissions)
     raise Exceptions::Forbidden, __('Authentication required') if !@user
 
-    if @token
-      return @token.with_context(user: @user) { permissions!(permissions) }
-    end
+    return @token.with_context(user: @user) { permissions!(permissions) } if @token
 
     @user.permissions!(permissions)
   end

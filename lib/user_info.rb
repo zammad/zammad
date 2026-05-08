@@ -14,6 +14,14 @@ module UserInfo
     Thread.current[:assets]  = UserInfo::Assets.new(user_id)
   end
 
+  def self.current_token
+    Thread.current[:token]
+  end
+
+  def self.current_token=(token)
+    Thread.current[:token] = token
+  end
+
   def self.assets
     Thread.current[:assets]
   end
