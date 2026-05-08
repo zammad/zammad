@@ -40,6 +40,7 @@ class ExternalCredentialsController < ApplicationController
     session[:channel_id] = params[:channel_id]
     session[:shared_mailbox] = params[:shared_mailbox]
     session[:notification] = [true, 'true'].include?(params[:notification])
+    request.session_options.delete(:skip)
     redirect_to attributes[:authorize_url], allow_other_host: true
   end
 
