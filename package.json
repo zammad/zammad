@@ -46,7 +46,7 @@
     "@faker-js/faker": "^10.4.0",
     "@graphql-codegen/cli": "^6.3.1",
     "@graphql-codegen/introspection": "^5.0.2",
-    "@graphql-codegen/near-operation-file-preset": "^5.2.0",
+    "@graphql-codegen/near-operation-file-preset": "^5.2.1",
     "@graphql-codegen/typescript": "^5.0.10",
     "@graphql-codegen/typescript-operations": "^5.1.0",
     "@graphql-codegen/typescript-vue-apollo": "^5.0.1",
