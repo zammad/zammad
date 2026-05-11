@@ -118,16 +118,19 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
       let(:ticket)   { create(:ticket, group:, customer:, title: 'Test ticket') }
       let(:id)       { Gql::ZammadSchema.id_from_object(ticket) }
       let(:data)     { { 'group_id' => group.id } }
+      let(:signature_body) do
+        'Test ticket: id=#{ticket.id} number=#{ticket.number} title=#{ticket.title} customer=#{ticket.customer.firstname}'
+      end
 
       before do
-        group.update!(signature: create(:signature, body: 'Test ticket: id=#{ticket.id} number=#{ticket.number} title=#{ticket.title} customer=#{ticket.customer.firstname}'))
+        group.update!(signature: create(:signature, body: signature_body))
         resolved_result.authorized?
       end
 
       it 'uses the real ticket object for template rendering' do
-        expect(resolved_result.resolve[:fields].dig('body', :signature, :renderedBody)).to eq(
-          "Test ticket: id=#{ticket.id} number=#{ticket.number} title=#{ticket.title} customer=#{ticket.customer.firstname}"
-        )
+        expected_signature = "Test ticket: id=#{ticket.id} number=#{ticket.number} title=#{ticket.title} customer=#{ticket.customer.firstname}"
+
+        expect(resolved_result.resolve[:fields].dig('body', :signature, :renderedBody)).to eq(expected_signature)
       end
     end
 
