@@ -19,7 +19,7 @@
   "packageRules": [
     {
       "matchCategories": ["ci"],
-      "assignees": ["mg"]
+      "assignees": ["fl"]
     },
     {
       "matchCategories": ["ruby"],
