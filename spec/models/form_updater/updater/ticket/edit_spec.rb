@@ -124,7 +124,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
 
       before do
         group.update!(signature: create(:signature, body: signature_body))
-        resolved_result.authorized?
+        expect(resolved_result.authorized?).to be(true)
       end
 
       it 'uses the real ticket object for template rendering' do
