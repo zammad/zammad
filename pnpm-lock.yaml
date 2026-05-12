@@ -396,8 +396,8 @@ importers:
         specifier: ^17.0.0
         version: 17.0.0(postcss@8.5.14)(stylelint@17.11.0(typescript@6.0.3))
       stylelint-scss:
-        specifier: ^7.1.0
-        version: 7.1.0(stylelint@17.11.0(typescript@6.0.3))
+        specifier: ^7.1.1
+        version: 7.1.1(stylelint@17.11.0(typescript@6.0.3))
       svg-baker:
         specifier: ^1.7.0
         version: 1.7.0
@@ -6228,8 +6228,8 @@ packages:
     peerDependencies:
       stylelint: ^17.0.0
 
-  stylelint-scss@7.1.0:
-    resolution: {integrity: sha512-ByiA9umUGQ8rJXi0cWpnKoGwuco7rWJRLs8XvpKNPBiafQPH8inWVWZkg/AMgkwhqApaMu0tLY8qnmA9gAWn8A==}
+  stylelint-scss@7.1.1:
+    resolution: {integrity: sha512-pLPXJZ7RtAFNLXe8gqarf3B56ScVTd1vPiL9IFgcJkIZsYPzAgLJPh2h9NHrp3BFeKrtAkIgwQ08QSmhvlv1gA==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       stylelint: ^16.8.2 || ^17.0.0
@@ -13375,7 +13375,7 @@ snapshots:
       postcss-scss: 4.0.9(postcss@8.5.14)
       stylelint: 17.11.0(typescript@6.0.3)
       stylelint-config-recommended: 18.0.0(stylelint@17.11.0(typescript@6.0.3))
-      stylelint-scss: 7.1.0(stylelint@17.11.0(typescript@6.0.3))
+      stylelint-scss: 7.1.1(stylelint@17.11.0(typescript@6.0.3))
     optionalDependencies:
       postcss: 8.5.14
 
@@ -13404,7 +13404,7 @@ snapshots:
       stylelint: 17.11.0(typescript@6.0.3)
       stylelint-config-recommended: 18.0.0(stylelint@17.11.0(typescript@6.0.3))
 
-  stylelint-scss@7.1.0(stylelint@17.11.0(typescript@6.0.3)):
+  stylelint-scss@7.1.1(stylelint@17.11.0(typescript@6.0.3)):
     dependencies:
       '@csstools/css-calc': 3.2.0(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
