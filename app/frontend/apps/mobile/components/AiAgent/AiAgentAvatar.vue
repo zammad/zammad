@@ -28,13 +28,13 @@ const sizeClass = computed(() => {
 <template>
   <div
     :class="sizeClass"
-    class="before:from-blue before:to-pink relative rounded-full before:absolute before:inset-0 before:z-0 before:size-full before:animate-spin before:rounded-full before:bg-gradient-to-r before:[animation-duration:2s]"
+    class="relative rounded-full before:absolute before:inset-0 before:z-0 before:size-full before:animate-spin before:rounded-full before:bg-gradient-to-r before:from-blue before:to-pink before:[animation-duration:2s]"
   >
     <div
       :aria-label="$t('AI agent')"
       class="relative z-1 flex rounded-full border border-transparent bg-gray-600/90 bg-clip-padding p-1"
     >
-      <CommonIcon class="text-blue h-full w-full" size="tiny" name="ai-agent" />
+      <CommonIcon class="h-full w-full text-blue" size="tiny" name="ai-agent" />
     </div>
   </div>
 </template>

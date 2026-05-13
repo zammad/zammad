@@ -114,7 +114,7 @@ const ticketsData = computed(() => {
         v-if="user.organization"
         data-test-id="organization-link"
         :link="`/organizations/${user.organization.internalId}`"
-        class="text-blue text-center text-base"
+        class="text-center text-base text-blue"
       >
         {{ user.organization.name }}
       </CommonLink>

@@ -55,7 +55,7 @@ const getTicketsLink = (stateIds: number[]) => {
     </CommonSectionMenuLink>
     <CommonLink
       v-if="createLink && createLabel"
-      class="text-blue flex min-h-[54px] items-center justify-center gap-2"
+      class="flex min-h-[54px] items-center justify-center gap-2 text-blue"
       :link="createLink"
     >
       <CommonIcon name="add" size="tiny" decorative />

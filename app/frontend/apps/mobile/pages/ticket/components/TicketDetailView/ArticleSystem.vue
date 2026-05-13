@@ -25,11 +25,11 @@ useArticleSeen(articleElement, emit)
 </script>
 
 <template>
-  <div ref="articleElement" class="text-gray flex items-center gap-2">
+  <div ref="articleElement" class="flex items-center gap-2 text-gray">
     <div class="grow text-center">"{{ subject }}" -&gt; "{{ to }}"</div>
     <ArticleReactionBadge
       v-if="reaction"
-      class="bg-blue w-7 border border-black text-black"
+      class="w-7 border border-black bg-blue text-black"
       :reaction="reaction"
     />
   </div>

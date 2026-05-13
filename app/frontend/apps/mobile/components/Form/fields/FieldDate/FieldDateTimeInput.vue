@@ -145,7 +145,7 @@ useEventListener('click', (e) => {
       </template>
       <template #clear-icon>
         <CommonIcon
-          class="text-gray absolute -mt-5 shrink-0 ltr:right-2 rtl:left-2"
+          class="absolute -mt-5 shrink-0 text-gray ltr:right-2 rtl:left-2"
           :aria-label="i18n.t('Clear selection')"
           name="close-small"
           size="base"

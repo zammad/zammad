@@ -58,7 +58,7 @@ const customer = computed(() => {
             {{ entity.title }}
           </slot>
         </span>
-        <div v-if="stringUpdated" data-test-id="stringUpdated" class="text-gray truncate">
+        <div v-if="stringUpdated" data-test-id="stringUpdated" class="truncate text-gray">
           {{ stringUpdated }}
         </div>
       </div>

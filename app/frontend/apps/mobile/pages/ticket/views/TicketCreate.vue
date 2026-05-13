@@ -520,7 +520,7 @@ export default {
     :class="{
       'bg-gray-light backdrop-blur-lg': !isScrolledToBottom,
     }"
-    class="pb-safe fixed bottom-0 z-10 w-full px-4 transition"
+    class="fixed bottom-0 z-10 w-full px-4 pb-safe transition"
   >
     <FormKit
       :variant="lastStepName === activeStep ? 'submit' : 'primary'"

@@ -37,7 +37,7 @@ export default {
   <div
     v-else-if="error"
     v-bind="$attrs"
-    class="text-red-bright flex items-center justify-center gap-2 text-base"
+    class="flex items-center justify-center gap-2 text-base text-red-bright"
   >
     <CommonIcon name="close-small" />
     <!--      eslint-disable vue/no-v-html -->

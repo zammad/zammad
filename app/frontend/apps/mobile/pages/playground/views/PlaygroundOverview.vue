@@ -567,7 +567,7 @@ const notifyAllTypes = () => {
       <CommonButton class="flex-1 py-2" variant="submit" />
       <CommonButton class="flex-1 py-2" variant="danger" />
     </div>
-    <h3 class="text-gray mt-2 mb-2 text-lg font-medium">With transparent background</h3>
+    <h3 class="mt-2 mb-2 text-lg font-medium text-gray">With transparent background</h3>
     <div class="flex gap-3">
       <CommonButton class="flex-1 py-2" variant="primary" transparent-background />
       <CommonButton class="flex-1 py-2" variant="secondary" transparent-background />

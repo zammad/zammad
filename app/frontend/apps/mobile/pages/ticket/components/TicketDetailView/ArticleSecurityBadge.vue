@@ -136,7 +136,7 @@ const popupItems = computed(() =>
     v-if="hasError"
     v-bind="$attrs"
     type="button"
-    class="bg-yellow inline-flex h-7 grow items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold text-black"
+    class="inline-flex h-7 grow items-center gap-1 rounded-lg bg-yellow px-2 py-1 text-xs font-bold text-black"
     @click.prevent="showPopup = !showPopup"
     @keydown.space.prevent="showPopup = !showPopup"
   >
@@ -164,7 +164,7 @@ const popupItems = computed(() =>
   <CommonSectionPopup v-model:state="showPopup" :messages="popupItems">
     <template #header>
       <div class="flex flex-col items-center gap-2 border-b border-b-white/10 p-4">
-        <div v-if="hasError" class="text-yellow flex w-full items-center justify-center gap-1">
+        <div v-if="hasError" class="flex w-full items-center justify-center gap-1 text-yellow">
           <CommonIcon :name="securityIcon" size="tiny" />
           {{ $t('Security error') }}
         </div>
