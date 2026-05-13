@@ -1,12 +1,11 @@
 <div class="page-header">
-  <div class="page-header-title">
-    <h1><%- @T('Microsoft 365 Graph Email') %> <small><%- @T('Accounts') %></small></h1>
-  </div>
+  <div class="page-header-title"></div>
 
   <div class="page-header-meta">
     <a class="btn js-configApp"><%- @T('Configure App') %></a>
-    <a class="btn btn--success js-new"><%- @T('Add Account') %></a>
-    <a class="btn btn--success js-admin-consent"><%- @T('Request Admin Consent') %></a>
+    <% if @has_admin_consent: %>
+    <a class="btn js-admin-consent"><%- @T('Request Admin Consent') %></a>
+    <% end %>
   </div>
 </div>
 
@@ -39,6 +38,11 @@
 <% end %>
 <% for channel in @channels: %>
   <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%= channel.id %>">
+    <% if channel.needs_reauthentication: %>
+    <div class="alert alert--warning" style="flex-basis: 100%;">
+      <%- @T('The app configuration has changed since this channel was authenticated. Please click "Reauthenticate" to keep it working.') %>
+    </div>
+    <% end %>
     <div class="action-flow" style="width: 100%;">
       <div class="action-block action-block--flex">
         <div class="horizontal">
@@ -56,7 +60,7 @@
 
         <hr>
 
-        <% if channel.options?.inbound?.options: %>
+        <% if @has_mailbox_info and channel.options?.inbound?.options: %>
           <% if channel.options.inbound.options.shared_mailbox: %>
             <h3><%- @T('Shared Mailbox') %></h3>
             <p><%= channel.options.inbound.options.shared_mailbox %></p>
@@ -124,4 +128,5 @@
     </div>
   </div>
 <% end %>
+  <a class="btn btn--success js-new"><%- @T('Add Account') %></a>
 </div>

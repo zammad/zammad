@@ -59,7 +59,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
       code_challenge = code_challenge_for(code_verifier)
     end
 
-    state         = generate_state
+    state         = generate_state(credentials)
     authorize_url = generate_authorize_url(credentials, state: state, code_challenge: code_challenge)
 
     {
@@ -187,14 +187,14 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
     channel
   end
 
-  def self.generate_state
+  def self.generate_state(_credentials)
     SecureRandom.urlsafe_base64
   end
 
   def self.generate_authorize_url(credentials, scope: authorize_scope, state: nil, code_challenge: nil)
     params = {
       'client_id'             => credentials[:client_id],
-      'redirect_uri'          => ExternalCredential.callback_url(provider_name),
+      'redirect_uri'          => redirect_uri(credentials),
       'scope'                 => scope,
       'response_type'         => 'code',
       'access_type'           => 'offline',
@@ -242,7 +242,7 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
       code:          authorization_code,
       grant_type:    'authorization_code',
       client_id:     credentials[:client_id],
-      redirect_uri:  ExternalCredential.callback_url(provider_name),
+      redirect_uri:  redirect_uri(credentials),
       code_verifier: code_verifier,
     }.compact
   end
@@ -324,5 +324,9 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
 
   def self.code_challenge_for(verifier)
     Base64.urlsafe_encode64(Digest::SHA256.digest(verifier), padding: false)
+  end
+
+  def self.redirect_uri(_credentials)
+    ExternalCredential.callback_url(provider_name)
   end
 end

@@ -12,7 +12,31 @@ class App.ChannelMicrosoftGraph extends App.ControllerTabs
       {
         name:       __('Accounts'),
         target:     'c-account',
-        controller: ChannelAccountOverview,
+        controller: App.ChannelAccountOverview,
+        params:
+          channelKey:             'microsoft_graph'
+          channelAreaName:        'MicrosoftGraph::Account'
+          externalCredentialName: 'microsoft_graph'
+          viewNamespace:          'microsoft_graph'
+          hasAdminConsent:        true
+          hasRollbackMigration:   false
+          hasMailboxInfo:         true
+          hasErrorCodeHandling:   true
+          hasMigrationRedirect:   false
+          hasInboundEditRedirect: true
+          appConfigClass:         AppConfig
+          groupEditClass:         ChannelGroupEdit
+          inboundEditClass:       ChannelInboundEdit
+          inboundNewClass:        ChannelInboundNew
+          emailAddressNewStickyAlerts: [
+            [
+              'warning',
+              [
+                __('Please note that email aliases have to be configured on the Microsoft 365 side beforehand. %l'),
+                'https://admin-docs.zammad.org/microsoft365-graph-account-aliases'
+              ]
+            ]
+          ]
       },
       {
         name:       __('Filter'),
@@ -34,237 +58,6 @@ class App.ChannelMicrosoftGraph extends App.ControllerTabs
 
     @render()
 
-
-class ChannelAccountOverview extends App.ControllerSubContent
-  @requiredPermission: 'admin.channel_microsoft_graph'
-
-  events:
-    'click .js-new':                'new'
-    'click .js-admin-consent':      'adminConsent'
-    'click .js-editInbound':        'editInbound'
-    'click .js-configApp':          'configApp'
-    'click .js-delete':             'delete'
-    'click .js-reauthenticate':     'reauthenticate'
-    'click .js-disable':            'disable'
-    'click .js-enable':             'enable'
-    'click .js-emailAddressNew':    'emailAddressNew'
-    'click .js-emailAddressEdit':   'emailAddressEdit'
-    'click .js-emailAddressDelete': 'emailAddressDelete',
-    'click .js-channelGroupChange': 'groupChange'
-
-  constructor: ->
-    super
-
-    @interval(@load, 30000)
-    @load()
-
-  load: (reset_channel_id = false) =>
-    if reset_channel_id
-      @channel_id = undefined
-      @navigate '#channels/microsoft_graph'
-
-    @startLoading()
-    @ajax(
-      id:   'microsoft_graph_index'
-      type: 'GET'
-      url:  "#{@apiPath}/channels/admin/microsoft_graph"
-      processData: true
-      success: (data, status, xhr) =>
-        @stopLoading()
-        App.Collection.loadAssets(data.assets)
-        @callbackUrl = data.callback_url
-        @render(data)
-    )
-
-  new: (e) ->
-    new ChannelInboundNew(
-      container: @el.closest('.content')
-    )
-
-  adminConsent: (e) ->
-    window.location.href = "#{@apiPath}/external_credentials/microsoft_graph/link_account?prompt=consent"
-
-  delete: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    new App.ControllerConfirm(
-      message:     __('Are you sure?')
-      buttonClass: 'btn--danger'
-      callback: =>
-        @ajax(
-          id:   'microsoft_graph_delete'
-          type: 'DELETE'
-          url:  "#{@apiPath}/channels/admin/microsoft_graph/#{id}"
-          processData: true
-          success: =>
-            @load()
-        )
-      container: @el.closest('.content')
-    )
-
-  emailAddressNew: (e) =>
-    e.preventDefault()
-    channel_id = $(e.target).closest('.action').data('id')
-    new App.ControllerGenericNew(
-      pageData:
-        object: __('Email Address')
-      genericObject: 'EmailAddress'
-      container: @el.closest('.content')
-      item:
-        channel_id: channel_id
-      callback: @load
-      stickyAlerts: [
-        [
-          'warning',
-          [
-            __('Please note that email aliases have to be configured on the Microsoft 365 side beforehand. %l'),
-            'https://admin-docs.zammad.org/microsoft365-graph-account-aliases'
-          ]
-        ]
-      ]
-    )
-
-
-  emailAddressEdit: (e) =>
-    e.preventDefault()
-    id = $(e.target).closest('li').data('id')
-    modal = new App.ControllerGenericEdit(
-      pageData:
-        object: __('Email Address')
-      genericObject: 'EmailAddress'
-      container: @el.closest('.content')
-      id: id
-      callback: @load
-    )
-
-  emailAddressDelete: (e) =>
-    e.preventDefault()
-    id = $(e.target).closest('li').data('id')
-    item = App.EmailAddress.find(id)
-    new App.ControllerGenericDestroyConfirm(
-      item: item
-      container: @el.closest('.content')
-      callback: @load
-    )
-
-  groupChange: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    new ChannelGroupEdit(
-      container: @el.closest('.content')
-      item: item
-      callback: @load
-    )
-
-  reauthenticate: (e) =>
-    e.preventDefault()
-    id                   = $(e.target).closest('.action').data('id')
-    window.location.href = "#{@apiPath}/external_credentials/microsoft_graph/link_account?channel_id=#{id}"
-
-  disable: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    @ajax(
-      id:   'microsoft_graph_disable'
-      type: 'POST'
-      url:  "#{@apiPath}/channels/admin/microsoft_graph/#{id}/disable"
-      processData: true
-      success: =>
-        @load()
-    )
-
-  enable: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    @ajax(
-      id:   'microsoft_graph_enable'
-      type: 'POST'
-      url:  "#{@apiPath}/channels/admin/microsoft_graph/#{id}/enable"
-      processData: true
-      success: =>
-        @load()
-    )
-
-  render: (data) =>
-    # if no microsoft graph app is registered, show intro
-    external_credential = App.ExternalCredential.findByAttribute('name', 'microsoft_graph')
-
-    if !external_credential
-      @html App.view('microsoft_graph/index')()
-      if @channel_id
-        @configApp()
-      return
-
-    channels = []
-
-    for channel_id in data.channel_ids
-      channel = App.Channel.find(channel_id)
-      if channel.group_id
-        channel.group = App.Group.find(channel.group_id)
-      else
-        channel.group = '-'
-
-      email_addresses = App.EmailAddress.search(filter: { channel_id: channel.id })
-      channel.email_addresses = email_addresses
-
-      channels.push channel
-
-    # get all unlinked email addresses
-    not_used_email_addresses = []
-    for email_address_id in data.not_used_email_address_ids
-      not_used_email_addresses.push App.EmailAddress.find(email_address_id)
-
-    @html App.view('microsoft_graph/list')(
-      channels: channels
-      external_credential: external_credential
-      not_used_email_addresses: not_used_email_addresses
-    )
-
-    # On a channel creation we will auto open the edit dialog after the redirect back to zammad to optional
-    # change the inbound configuration.
-    if @channel_id
-      item = App.Channel.find(@channel_id)
-      if item && item.area == 'MicrosoftGraph::Account' && item.options && item.options.backup_imap_classic is undefined && not @error_code
-        @editInbound(undefined, @channel_id, true, true)
-        @channel_id = undefined
-
-    if @error_code is 'AADSTS65004'
-      @error_code = undefined
-      new App.AdminConsentInfo(container: @container, type: 'microsoft_graph')
-
-    if @error_code is 'user_mismatch'
-      @error_code = undefined
-      new App.UserMismatchInfo(container: @container, type: 'microsoft_graph', item: item)
-
-    if @error_code is 'duplicate_email_address'
-      @error_code = undefined
-      new App.DuplicateEmailAddressInfo(container: @container, type: 'microsoft_graph', emailAddress: if @param then decodeURIComponent(@param))
-
-  show: (params) =>
-    for key, value of params
-      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
-        @[key] = value
-
-  configApp: =>
-    new AppConfig(
-      container: @el.parents('.content')
-      callbackUrl: @callbackUrl
-      load: @load
-    )
-
-  editInbound: (e, channel_id, set_active, redirect = false) =>
-    if !channel_id
-      e.preventDefault()
-      channel_id = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(channel_id)
-    new ChannelInboundEdit(
-      container: @el.closest('.content')
-      item: item
-      callback: @load
-      set_active: set_active
-      redirect: redirect
-    )
 
 class ChannelGroupEdit extends App.ControllerModal
   @include App.DestinationGroupEmailAddressesMixin
