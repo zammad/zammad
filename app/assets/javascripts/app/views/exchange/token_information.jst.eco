@@ -5,7 +5,7 @@
     <a class="btn js-config-app"><%- @T('Configure App') %></a>
   <% if _.isEmpty(@oauth): %>
     <a class="btn btn--success js-new-app"><%- @T('Add Account') %></a>
-    <a class="btn btn--success js-admin-consent"><%- @T('Request Admin Consent') %></a>
+    <a class="btn js-admin-consent"><%- @T('Request Admin Consent') %></a>
   <% end %>
   </div>
 </div>

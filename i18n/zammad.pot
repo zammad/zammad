@@ -263,9 +263,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:91
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:58
-#: app/assets/javascripts/app/views/google/list.jst.eco:61
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:62
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:72
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:76
 msgid "%s is inactive, please select an active one."
 msgstr ""
 
@@ -955,7 +953,7 @@ msgstr ""
 msgid "Account not verified"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:128
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:125
 msgid "Account time"
 msgstr ""
 
@@ -968,7 +966,7 @@ msgstr ""
 msgid "Accounted Time"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:77
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:74
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:147
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 msgid "Accounted time"
@@ -985,12 +983,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:10
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:3
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:3
-#: app/assets/javascripts/app/views/google/index.jst.eco:3
-#: app/assets/javascripts/app/views/google/list.jst.eco:3
-#: app/assets/javascripts/app/views/microsoft365/index.jst.eco:3
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:3
-#: app/assets/javascripts/app/views/microsoft_graph/index.jst.eco:4
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:3
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
 msgid "Accounts"
 msgstr ""
@@ -1125,7 +1117,7 @@ msgstr ""
 msgid "Activity Types"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:107
 msgid "Activity type"
 msgstr ""
 
@@ -1139,6 +1131,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:38
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:143
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:37
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:113
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:32
 #: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:26
 #: app/assets/javascripts/app/views/generic/object_attribute_options_context.jst.eco:58
@@ -1146,7 +1139,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:20
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco:17
 #: app/assets/javascripts/app/views/generic/user_permission_group.jst.eco:58
-#: app/assets/javascripts/app/views/google/list.jst.eco:8
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:44
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:51
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:152
@@ -1157,8 +1149,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:38
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco:7
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/linked_tickets.jst.eco:8
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:8
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:8
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco:43
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:39
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:15
@@ -1173,11 +1163,9 @@ msgstr ""
 msgid "Add AI draft"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:131
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:7
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:8
-#: app/assets/javascripts/app/views/google/list.jst.eco:8
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:8
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:8
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:7
 msgid "Add Account"
 msgstr ""
@@ -1401,7 +1389,7 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:510
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:271
 msgid "Admin Consent"
 msgstr ""
 
@@ -1791,9 +1779,9 @@ msgid "App Version"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:187
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:476
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:503
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:373
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:254
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:264
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:166
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:723
 msgid "App could not be verified."
 msgstr ""
@@ -1946,11 +1934,9 @@ msgid "Are you sure you want to unset \"%s\" as default?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:6
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:186
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:145
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:99
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:148
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:169
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:91
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:67
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:68
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:179
@@ -2158,7 +2144,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:221
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:326
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:279
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:283
 msgid "Attachment"
 msgstr ""
 
@@ -2192,7 +2178,7 @@ msgid "Attendees"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:12
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:80
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:77
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:67
 msgid "Attention! Changing the organization will update the user's most recent tickets to the new organization."
 msgstr ""
@@ -2245,7 +2231,7 @@ msgstr ""
 msgid "August"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:379
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:172
 msgid "Authenticate"
 msgstr ""
 
@@ -2747,7 +2733,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:246
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:232
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:235
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
 msgstr ""
@@ -3126,9 +3112,9 @@ msgid "Changes were made that require a database update."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:259
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:277
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:299
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:275
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:55
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:60
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:68
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:163
@@ -3470,7 +3456,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:509
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:270
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:32
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
@@ -3611,7 +3597,7 @@ msgstr ""
 msgid "Company Inc."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:35
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:49
 msgid "Compared to the Microsoft 365 Graph API Email Channel, this is the traditional implementation using OAuth and IMAP. When setting up new channels, we suggest using the Graph API implementation instead. More information can be found here %l."
 msgstr ""
 
@@ -3674,11 +3660,9 @@ msgstr ""
 msgid "Configure"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:5
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:5
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:7
-#: app/assets/javascripts/app/views/google/list.jst.eco:7
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:7
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:7
 msgid "Configure App"
 msgstr ""
 
@@ -3750,7 +3734,7 @@ msgstr ""
 msgid "Confirmation failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:327
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:120
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:21
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:26
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:51
@@ -3775,15 +3759,15 @@ msgstr ""
 msgid "Connect Facebook App"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:430
-#: app/assets/javascripts/app/views/google/index.jst.eco:10
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:208
+#: app/assets/javascripts/app/views/google/index.jst.eco:8
 msgid "Connect Google App"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:457
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:327
-#: app/assets/javascripts/app/views/microsoft365/index.jst.eco:10
-#: app/assets/javascripts/app/views/microsoft_graph/index.jst.eco:11
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:218
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:120
+#: app/assets/javascripts/app/views/microsoft365/index.jst.eco:8
+#: app/assets/javascripts/app/views/microsoft_graph/index.jst.eco:9
 msgid "Connect Microsoft 365 App"
 msgstr ""
 
@@ -3901,7 +3885,7 @@ msgstr ""
 msgid "Continue to desktop"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee:61
+#: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee:73
 #: app/assets/javascripts/app/views/login.jst.eco:125
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:313
 msgid "Continue to mobile"
@@ -4105,7 +4089,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:8
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:78
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:309
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
@@ -5445,15 +5429,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:153
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:74
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:8
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:123
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:38
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:29
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco:6
-#: app/assets/javascripts/app/views/google/list.jst.eco:111
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:75
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:53
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco:18
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:109
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:119
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:29
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:25
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:21
@@ -5695,13 +5677,11 @@ msgid "Desktop BETA UI Switch Roles"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:263
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:281
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:303
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:279
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:59
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:64
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:72
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:88
-#: app/assets/javascripts/app/views/google/list.jst.eco:58
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:69
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:73
 #: app/models/channel/driver/sms/message_bird.rb:93
 #: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
@@ -5718,9 +5698,9 @@ msgid "Destination caller ID or queue"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:264
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:282
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:304
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:280
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:60
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:65
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:73
 msgid "Destination group > Sending email address"
 msgstr ""
 
@@ -5763,11 +5743,11 @@ msgstr ""
 msgid "Dialog window with selections"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:468
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:261
 msgid "Did you check the validity of the configured mailbox? Or consider removing this channel and switch to using a different mailbox type. %l"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:466
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:259
 msgid "Did you confirm that the user has delegation permissions for the mailbox? Or consider removing this channel and switch to using a different mailbox type. %l"
 msgstr ""
 
@@ -5788,7 +5768,7 @@ msgstr ""
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:464
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:257
 msgid "Did you verify that the user has access to the mailbox? Or consider removing this channel and switch to using a different mailbox type. %l"
 msgstr ""
 
@@ -5811,10 +5791,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:149
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:70
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:119
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:31
-#: app/assets/javascripts/app/views/google/list.jst.eco:107
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:105
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:115
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:30
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:40
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:47
@@ -5865,7 +5843,7 @@ msgstr ""
 msgid "Discard snapshot"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:226
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:228
 msgid "Discard unsaved reply"
 msgstr ""
 
@@ -6116,7 +6094,7 @@ msgstr ""
 msgid "Duplicate Detection"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:544
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:305
 msgid "Duplicate Email Address"
 msgstr ""
 
@@ -6140,12 +6118,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:85
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:62
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:68
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:51
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:35
-#: app/assets/javascripts/app/views/google/list.jst.eco:46
 #: app/assets/javascripts/app/views/knowledge_base/navigation.jst.eco:38
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:37
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:47
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:47
 #: app/assets/javascripts/app/views/profile/password.jst.eco:72
 #: app/assets/javascripts/app/views/sla/index.jst.eco:60
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:44
@@ -6204,7 +6180,7 @@ msgstr ""
 msgid "Edit mask"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/organization/composables/useOrganizationEdit.ts:59
+#: app/frontend/apps/desktop/entities/organization/composables/useOrganizationEdit.ts:56
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:39
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:78
 msgid "Edit organization"
@@ -6223,7 +6199,7 @@ msgstr ""
 msgid "Edit ticket title"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:65
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:62
 msgid "Edit user"
 msgstr ""
 
@@ -6343,14 +6319,10 @@ msgstr ""
 msgid "Email Accounts"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:283
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:201
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:241
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:263
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:110
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:126
-#: app/assets/javascripts/app/views/google/list.jst.eco:81
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:82
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:92
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:96
 msgid "Email Address"
 msgstr ""
 
@@ -6456,10 +6428,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:151
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:72
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:121
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:33
-#: app/assets/javascripts/app/views/google/list.jst.eco:109
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:107
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:117
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:31
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:42
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:49
@@ -6818,7 +6788,7 @@ msgid "Enter the security code generated by the authenticator app:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:80
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:77
 msgid "Enter the time you want to record"
 msgstr ""
 
@@ -7213,8 +7183,7 @@ msgstr ""
 msgid "Failed to load content."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:223
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:245
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:265
 msgid "Failed to roll back the migration of the channel!"
 msgstr ""
 
@@ -7322,9 +7291,9 @@ msgid "Filesystem"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:16
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:16
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:16
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:18
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:30
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:30
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:42
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
@@ -7439,9 +7408,9 @@ msgid "Focus on %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:422
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:283
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:305
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:480
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:61
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:66
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:273
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:86
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:62
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:172
@@ -7940,8 +7909,6 @@ msgid "Google Client Secret"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:3
-#: app/assets/javascripts/app/views/google/index.jst.eco:3
-#: app/assets/javascripts/app/views/google/list.jst.eco:3
 #: db/seeds/permissions.rb:149
 msgid "Google Email"
 msgstr ""
@@ -8713,12 +8680,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:60
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:13
-#: app/assets/javascripts/app/views/google/list.jst.eco:44
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:49
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:29
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:45
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:16
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:45
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:45
 msgid "Inbound"
 msgstr ""
 
@@ -8805,7 +8770,7 @@ msgstr ""
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:439
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:436
 msgid "Incomplete ticket checklist"
 msgstr ""
 
@@ -8981,7 +8946,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:203
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:205
 msgid "Internal"
 msgstr ""
 
@@ -9046,7 +9011,7 @@ msgstr ""
 #: lib/external_credential/exchange.rb:43
 #: lib/external_credential/facebook.rb:42
 #: lib/external_credential/google.rb:39
-#: lib/external_credential/microsoft_base.rb:67
+#: lib/external_credential/microsoft_base.rb:76
 msgid "Invalid OAuth state parameter."
 msgstr ""
 
@@ -9315,9 +9280,9 @@ msgid "Kayako"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:423
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:284
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:306
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:481
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:62
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:67
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:274
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:87
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:182
 msgid "Keep messages on server"
@@ -9965,7 +9930,7 @@ msgstr ""
 msgid "Macros make it easy to automate common, multi-step tasks within Zammad.\n\nYou can use macros in Zammad to automate recurring sequences, saving time (and nerves). This allows a combined sequence of actions on the ticket to be executed with just one click."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:384
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:177
 msgid "Mailbox type"
 msgstr ""
 
@@ -10574,15 +10539,11 @@ msgid "Microsoft 365 App Credentials"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:4
-#: app/assets/javascripts/app/views/microsoft_graph/index.jst.eco:4
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:3
 #: db/seeds/permissions.rb:161
 msgid "Microsoft 365 Graph Email"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:3
-#: app/assets/javascripts/app/views/microsoft365/index.jst.eco:3
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:3
 #: db/seeds/permissions.rb:155
 msgid "Microsoft 365 IMAP Email"
 msgstr ""
@@ -11201,7 +11162,7 @@ msgstr ""
 msgid "New ticket: %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:69
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:66
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
 msgid "New user"
 msgstr ""
@@ -11274,18 +11235,16 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:917
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:42
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:5
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:36
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:16
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco:5
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:49
-#: app/assets/javascripts/app/views/google/list.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:65
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:63
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:12
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:6
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:12
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:6
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:37
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:37
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:6
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:3
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:3
@@ -11595,7 +11554,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:442
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:439
 msgid "No, just close the ticket"
 msgstr ""
 
@@ -11740,9 +11699,7 @@ msgid "Notice"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:23
-#: app/assets/javascripts/app/views/google/list.jst.eco:16
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:17
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:17
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:16
 msgid "Notice:"
 msgstr ""
 
@@ -12266,7 +12223,7 @@ msgstr ""
 msgid "Organization Support"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/organization/composables/useOrganizationEdit.ts:67
+#: app/frontend/apps/desktop/entities/organization/composables/useOrganizationEdit.ts:64
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts:76
 msgid "Organization could not be updated."
 msgstr ""
@@ -12383,12 +12340,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:99
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:24
-#: app/assets/javascripts/app/views/google/list.jst.eco:70
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:85
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:56
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:72
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:25
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:71
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:81
 msgid "Outbound"
 msgstr ""
 
@@ -12787,7 +12742,7 @@ msgstr ""
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:233
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
 msgid "Pin this panel"
 msgstr ""
 
@@ -12907,7 +12862,7 @@ msgstr ""
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:120
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:35
 msgid "Please note that email aliases have to be configured on the Microsoft 365 side beforehand. %l"
 msgstr ""
 
@@ -13280,7 +13235,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:208
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:210
 msgid "Public"
 msgstr ""
 
@@ -13383,10 +13338,8 @@ msgstr ""
 msgid "Reason to switch back"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:127
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:39
-#: app/assets/javascripts/app/views/google/list.jst.eco:112
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:113
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:123
 msgid "Reauthenticate"
 msgstr ""
 
@@ -13766,7 +13719,7 @@ msgstr ""
 msgid "Replacement agent"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:69
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:15
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:18
@@ -13783,7 +13736,7 @@ msgstr ""
 msgid "Reply allowed only for open tickets"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:61
 msgid "Reply to customer"
 msgstr ""
 
@@ -13819,9 +13772,8 @@ msgstr ""
 msgid "Request"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:7
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:8
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:9
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:9
 msgid "Request Admin Consent"
 msgstr ""
 
@@ -13937,7 +13889,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:182
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:184
 msgid "Resize article panel"
 msgstr ""
 
@@ -14059,14 +14011,11 @@ msgstr ""
 msgid "Roles:"
 msgstr ""
 
-#: app/assets/javascripts/app/views/google/list.jst.eco:104
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:111
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:121
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:125
 msgid "Rollback migration"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:219
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:241
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:261
 msgid "Rollback of channel migration succeeded!"
 msgstr ""
 
@@ -14245,7 +14194,7 @@ msgstr ""
 msgid "Saturday"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:422
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:215
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:155
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:73
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:133
@@ -14384,7 +14333,7 @@ msgstr ""
 msgid "Scroll down to see new messages"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:262
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:264
 msgid "Scroll to bottom"
 msgstr ""
 
@@ -14631,7 +14580,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:288
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:254
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:258
 #: db/seeds/permissions.rb:209
 msgid "Security"
 msgstr ""
@@ -15145,9 +15094,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:17
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:26
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:26
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:26
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:28
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:40
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
 #: app/assets/javascripts/app/controllers/chat.coffee:869
 #: app/assets/javascripts/app/controllers/manage.coffee:44
@@ -15188,7 +15137,7 @@ msgstr ""
 msgid "Shared Drafts"
 msgstr ""
 
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:61
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:65
 msgid "Shared Mailbox"
 msgstr ""
 
@@ -15224,7 +15173,7 @@ msgstr ""
 msgid "Shared drafts are not activated for the selected group"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:384
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:177
 msgid "Shared mailbox"
 msgstr ""
 
@@ -15465,9 +15414,9 @@ msgid "Signature verification failed! %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:21
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:21
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:21
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:23
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:35
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:35
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:47
 msgid "Signatures"
 msgstr ""
 
@@ -15553,7 +15502,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:133
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:94
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:127
 msgid "Skip"
 msgstr ""
 
@@ -15642,7 +15591,7 @@ msgstr ""
 msgid "Special character required"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:480
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:273
 msgid "Specify which folder to fetch from, or leave empty to fetch from ||inbox||."
 msgstr ""
 
@@ -15901,7 +15850,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:91
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:243
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:247
 msgid "Subject"
 msgstr ""
 
@@ -16495,6 +16444,10 @@ msgstr ""
 msgid "The admin password auth email could not be sent."
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:43
+msgid "The app configuration has changed since this channel was authenticated. Please click \"Reauthenticate\" to keep it working."
+msgstr ""
+
 #: app/frontend/apps/desktop/stores/theme.ts:41
 msgid "The appearance could not be updated."
 msgstr ""
@@ -16619,9 +16572,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:309
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:247
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:345
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:367
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:323
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:123
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:128
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:116
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:212
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:36
 #: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
@@ -16760,9 +16713,9 @@ msgid "The entered user for reauthentication differs from the user that was used
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:183
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:472
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:499
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:369
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:250
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:260
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:162
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:718
 msgid "The entry could not be created."
 msgstr ""
@@ -17192,19 +17145,19 @@ msgstr ""
 
 #: lib/external_credential/exchange.rb:27
 #: lib/external_credential/google.rb:26
-#: lib/external_credential/microsoft_base.rb:51
+#: lib/external_credential/microsoft_base.rb:54
 msgid "The required parameter 'client_id' is missing."
 msgstr ""
 
 #: lib/external_credential/exchange.rb:28
 #: lib/external_credential/google.rb:27
-#: lib/external_credential/microsoft_base.rb:52
+#: lib/external_credential/microsoft_base.rb:55
 msgid "The required parameter 'client_secret' is missing."
 msgstr ""
 
 #: lib/external_credential/exchange.rb:47
 #: lib/external_credential/google.rb:43
-#: lib/external_credential/microsoft_base.rb:71
+#: lib/external_credential/microsoft_base.rb:80
 msgid "The required parameter 'code' is missing."
 msgstr ""
 
@@ -17518,7 +17471,7 @@ msgid "The user token could not be generated."
 msgstr ""
 
 #: lib/external_credential/exchange.rb:55
-#: lib/external_credential/microsoft_base.rb:79
+#: lib/external_credential/microsoft_base.rb:88
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
@@ -17849,7 +17802,7 @@ msgstr ""
 msgid "This field must contain a lowercase letter."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:83
 #: app/frontend/shared/form/i18n/locales.ts:462
 msgid "This field must contain a number."
 msgstr ""
@@ -18139,9 +18092,9 @@ msgid "This user is currently blocked because of too many failed login attempts.
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:264
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:282
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:304
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:280
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:60
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:65
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:73
 msgid "This will adjust the corresponding setting of the destination group within the group management. A group's email address determines which address should be used for outgoing mails, e.g. when an agent is composing an email or a trigger is sending an auto-reply."
 msgstr ""
 
@@ -18485,7 +18438,7 @@ msgid "Ticket update failed."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:531
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:528
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:161
 msgid "Ticket updated successfully."
 msgstr ""
@@ -18638,7 +18591,7 @@ msgstr ""
 msgid "Time Units Total"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:136
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:133
 msgid "Time accounting"
 msgstr ""
 
@@ -18715,7 +18668,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:75
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:89
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:220
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:222
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
 msgstr ""
@@ -19218,9 +19171,7 @@ msgid "Unassigned & Open Tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:23
-#: app/assets/javascripts/app/views/google/list.jst.eco:16
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:17
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:17
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:16
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
 
@@ -19264,11 +19215,11 @@ msgstr ""
 msgid "Unlock"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:233
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
 msgid "Unpin this panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:274
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:276
 msgid "Unread messages count"
 msgstr ""
 
@@ -19701,11 +19652,11 @@ msgstr ""
 msgid "User Filter"
 msgstr ""
 
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:64
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:68
 msgid "User Mailbox"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:527
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:288
 msgid "User Mismatch"
 msgstr ""
 
@@ -19719,12 +19670,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
 #: app/assets/javascripts/app/controllers/signup.coffee:102
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:76
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:73
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:48
 msgid "User could not be created."
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:92
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:89
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:81
 msgid "User could not be updated."
 msgstr ""
@@ -19790,7 +19741,7 @@ msgstr ""
 msgid "User is out of office"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:384
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:177
 msgid "User mailbox"
 msgstr ""
 
@@ -20021,7 +19972,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:195
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:196
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
 msgstr ""
@@ -20396,7 +20347,7 @@ msgid "Yes, add attachments now"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:441
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:438
 msgid "Yes, open the checklist"
 msgstr ""
 
@@ -20438,9 +20389,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco:7
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:9
-#: app/assets/javascripts/app/views/google/index.jst.eco:9
-#: app/assets/javascripts/app/views/microsoft365/index.jst.eco:9
-#: app/assets/javascripts/app/views/microsoft_graph/index.jst.eco:10
+#: app/assets/javascripts/app/views/google/index.jst.eco:7
+#: app/assets/javascripts/app/views/microsoft365/index.jst.eco:7
+#: app/assets/javascripts/app/views/microsoft_graph/index.jst.eco:8
 msgid "You can connect %s with Zammad. But first, you will have to connect your Zammad with %s."
 msgstr ""
 
@@ -20683,7 +20634,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:436
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:433
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 
@@ -21942,12 +21893,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:63
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:34
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:140
+#: app/assets/javascripts/app/views/channel_account/list.jst.eco:110
 #: app/assets/javascripts/app/views/customer_chat/chat_list.jst.eco:3
 #: app/assets/javascripts/app/views/customer_chat/user_list.jst.eco:3
-#: app/assets/javascripts/app/views/google/list.jst.eco:95
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:3
-#: app/assets/javascripts/app/views/microsoft365/list.jst.eco:96
-#: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:106
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:27
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:7
 #: db/seeds/settings.rb:2344
@@ -22005,7 +21954,7 @@ msgstr ""
 msgid "open tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/google.coffee:283
+#: app/assets/javascripts/app/controllers/_channel/google.coffee:61
 msgid "optional"
 msgstr ""
 
@@ -22413,7 +22362,7 @@ msgstr ""
 msgid "updated"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:385
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:178
 msgid "user@your-organization.tld"
 msgstr ""
 
