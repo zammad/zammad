@@ -8,6 +8,7 @@ import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 
+import { useStickyTopCalculator } from '#desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 import { useTopBarHeaderHover } from '#desktop/composables/useTopBarHeaderHover.ts'
 import TopBarHeader from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue'
@@ -24,14 +25,32 @@ const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
 const { hasChannelAlert, channelAlert } = useTicketChannel(ticket)
 
 const headerElement = useTemplateRef('header')
-const wrapperElement = useTemplateRef('wrapper')
+const headerWithHiddenDetails = useTemplateRef('header-with-hidden-details')
 
 const { height: headerHeight } = useElementSize(headerElement, undefined, {
   box: 'border-box',
 })
+const { height: headerWithHiddenDetailsHeight } = useElementSize(
+  headerWithHiddenDetails,
+  undefined,
+  {
+    box: 'border-box',
+  },
+)
+
+const wrapperElement = useTemplateRef('wrapper')
+const wrapperWithHiddenDetails = useTemplateRef('wrapper-with-hidden-details')
+
 const { height: wrapperHeight } = useElementSize(wrapperElement, undefined, {
   box: 'border-box',
 })
+const { height: wrapperWithHiddenDetailsHeight } = useElementSize(
+  wrapperWithHiddenDetails,
+  undefined,
+  {
+    box: 'border-box',
+  },
+)
 const { height: alertHeight } = useElementSize(useTemplateRef('alert'), undefined, {
   box: 'border-box',
 })
@@ -86,6 +105,16 @@ const alertBaseClasses = 'rounded-none px-14 md:grid-cols-none md:justify-center
 
 const alertWithBlurClasses = `${alertBaseClasses} opacity-95 backdrop-blur-2xs`
 
+const currentVisibleHeaderHeight = computed(() => {
+  if (shouldShowChannelAlert.value) {
+    return isHovering.value ? wrapperHeight.value : wrapperWithHiddenDetailsHeight.value
+  }
+
+  return isHovering.value ? headerHeight.value : headerWithHiddenDetailsHeight.value
+})
+
+useStickyTopCalculator(currentVisibleHeaderHeight)
+
 defineExpose({
   hideDetails: () => updateIsHovering(false),
 })
@@ -94,6 +123,7 @@ defineExpose({
 <template>
   <template v-if="shouldShowChannelAlert">
     <div
+      ref="wrapper-with-hidden-details"
       class="absolute top-0 right-0 left-0 z-10"
       data-test-id="ticket-detail-top-bar-clipped-details"
       :style="{
@@ -133,6 +163,7 @@ defineExpose({
 
   <template v-else>
     <TopBarHeader
+      ref="header-with-hidden-details"
       class="absolute top-0 right-0 left-0 z-30 p-3"
       :class="[
         headerBaseClasses,
@@ -148,7 +179,6 @@ defineExpose({
       }"
       v-on="containerEventHandlers"
     />
-
     <TopBarHeader
       ref="header"
       class="sticky top-0 right-0 left-0 z-10 w-full p-3"

@@ -13,6 +13,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useStickyTopCalculator } from '#desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts'
 import OrganizationInfo from '#desktop/components/Organization/OrganizationInfo.vue'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 import { useTopBarHeaderHover } from '#desktop/composables/useTopBarHeaderHover.ts'
@@ -54,13 +55,22 @@ const copyOrganizationDisplayNameToClipboard = () => {
 const { y } = useElementScroll(toRef(props, 'contentContainerElement') as Ref<HTMLDivElement>)
 const { width } = useElementSize(toRef(props, 'contentContainerElement'))
 
-const headerElement = useTemplateRef('header')
+const headerWithDetailsElement = useTemplateRef('header-with-details')
+const headerWithHiddenDetailsElement = useTemplateRef('header-with-hidden-details')
 
-const { height: headerHeight } = useElementSize(headerElement, undefined, {
+const { height: headerWithDetailsHeight } = useElementSize(headerWithDetailsElement, undefined, {
   box: 'border-box',
 })
 
-const { containerEventHandlers, isHovering } = useTopBarHeaderHover([headerElement])
+const { height: headerWithHiddenDetailsHeight } = useElementSize(
+  headerWithHiddenDetailsElement,
+  undefined,
+  {
+    box: 'border-box',
+  },
+)
+
+const { containerEventHandlers, isHovering } = useTopBarHeaderHover([headerWithDetailsElement])
 
 const containerWidth = computed(() => (width.value ? `${width.value}px` : 'auto'))
 
@@ -68,14 +78,14 @@ const containerWidth = computed(() => (width.value ? `${width.value}px` : 'auto'
 const NEGATIVE_PADDING = -30
 
 const absoluteContainerOffset = computed(() => {
-  const offset = y.value - (headerHeight.value + NEGATIVE_PADDING)
+  const offset = y.value - (headerWithDetailsHeight.value + NEGATIVE_PADDING)
   return `${offset > 0 ? 0 : offset}px`
 })
 
 const stickyContainerTop = computed(() => {
   if (isHovering.value) return '0px'
-  if (y.value < headerHeight.value) return `-${y.value}px`
-  return `-${headerHeight.value}px`
+  if (y.value < headerWithDetailsHeight.value) return `-${y.value}px`
+  return `-${headerWithDetailsHeight.value}px`
 })
 
 const { topLevelActions, secondLevelActions } = initializeActionPlugins()
@@ -91,10 +101,18 @@ const allowedTopLevelActions = computed(() =>
 )
 
 const router = useRouter()
+
+const currentVisibleHeaderHeight = computed(() => {
+  return isHovering.value ? headerWithDetailsHeight.value : headerWithHiddenDetailsHeight.value
+})
+
+// 7px is needed to compensate some overlap
+useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
 </script>
 
 <template>
   <header
+    ref="header-with-hidden-details"
     class="absolute top-0 right-0 left-0 z-30 h-17 w-full border-b border-neutral-100 bg-neutral-50/80 p-3 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
     :class="{ '-z-10! opacity-0': isHovering }"
     :style="{
@@ -109,7 +127,7 @@ const router = useRouter()
     </div>
   </header>
   <header
-    ref="header"
+    ref="header-with-details"
     data-test-id="organization-detail-top-bar"
     class="sticky z-20 h-34 border-b border-neutral-100 bg-neutral-50/80 p-3 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
     :class="{

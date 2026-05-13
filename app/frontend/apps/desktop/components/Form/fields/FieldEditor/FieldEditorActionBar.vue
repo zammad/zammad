@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { nextTick, shallowRef, toRef, ref, defineAsyncComponent, watch, computed } from 'vue'
+import { nextTick, shallowRef, toRef, ref, defineAsyncComponent, watch } from 'vue'
 
 import useEditorActionHelper from '#shared/components/Form/fields/FieldEditor/composables/useEditorActionHelper.ts'
 import type {
@@ -118,21 +118,11 @@ watch(
     hideActionBarLocally.value = !!showLoader
   },
 )
-
-const inlineStyle = computed(() => {
-  if (!props.isInlineMode) return {}
-
-  return {
-    '--top-header-height': '0',
-    top: '-4.5px', // needed to offset the negative vertical margin of the inline editor
-  }
-})
 </script>
 
 <template>
   <div
     class="sticky top-(--top-header-height) z-30 -order-1 border-x border-t border-blue-200 bg-neutral-50 ltr:left-0 rtl:right-0 dark:border-gray-700 dark:bg-gray-500"
-    :style="inlineStyle"
   >
     <ActionToolbar
       v-show="!hideActionBarLocally"

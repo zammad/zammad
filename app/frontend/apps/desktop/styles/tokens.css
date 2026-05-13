@@ -98,7 +98,8 @@
 
   --z-index-60: 60;
 
-  --top-header-height: 0;
-
   --blur-2xs: 2px;
+
+  /* Not a design token, used for calculating sticky top for the FieldEditorActionBar */
+  --top-header-height: 0;
 }
