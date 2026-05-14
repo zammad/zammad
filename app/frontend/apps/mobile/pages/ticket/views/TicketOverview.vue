@@ -23,7 +23,7 @@ import TicketOrderBySelector from '../components/TicketList/TicketOrderBySelecto
 const MAX_COUNT = 2000
 
 const props = defineProps<{
-  overviewLink: string
+  overviewLink?: string
 }>()
 
 const router = useRouter()

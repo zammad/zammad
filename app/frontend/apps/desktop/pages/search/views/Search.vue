@@ -7,7 +7,7 @@ import LayoutTaskbarTabContent from '#desktop/components/layout/LayoutTaskbarTab
 import SearchContent from '#desktop/pages/search/components/SearchContent.vue'
 
 defineProps<{
-  searchTerm: string
+  searchTerm?: string
 }>()
 
 defineOptions({

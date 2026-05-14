@@ -17,7 +17,7 @@ import TicketOverviewsSidebar from '#desktop/pages/ticket-overviews/components/T
 import { useTicketOverviews } from '#desktop/pages/ticket-overviews/composables/useTicketOverviews.ts'
 
 interface Props {
-  overviewLink: string
+  overviewLink?: string
 }
 
 const props = defineProps<Props>()
@@ -70,7 +70,7 @@ defineOptions({
 
 const { overviewsByLink, hasOverviews, overviewsTicketCountById } = useTicketOverviews()
 
-const currentOverview = computed(() => overviewsByLink.value[props.overviewLink])
+const currentOverview = computed(() => overviewsByLink.value[props.overviewLink || ''])
 
 const currentOverviewCount = computed(
   () => overviewsTicketCountById.value[currentOverview.value?.id],
