@@ -5,24 +5,33 @@ module Gql::Queries
 
     description 'Generic object search'
 
-    argument :search,  String, description: 'What to search for'
+    argument :search, String, required: false, description: 'What to search for'
     argument :only_in, Gql::Types::Enum::SearchableModelsType, description: 'Which model to search in, e.g. Ticket'
 
     argument :order_by, String, required: false, description: 'Set a custom order by'
     argument :order_direction, Gql::Types::Enum::OrderDirectionType, required: false, description: 'Set a custom order direction'
 
-    argument :limit,   Integer, required: false, description: 'How many entries to find at maximum'
-    argument :offset,  Integer, required: false, description: 'Offset to use for pagination'
+    argument :limit, Integer, required: false, description: 'How many entries to find at maximum'
+    argument :offset, Integer, required: false, description: 'Offset to use for pagination'
+
+    argument :filter, Gql::Types::Input::Selector::NodeInputType, required: false, description: 'Advanced filters as selector conditions'
 
     type Gql::Types::SearchResultType, null: false
 
-    def resolve(search:, only_in:, order_by: nil, order_direction: nil, offset: 0, limit: 10)
+    def resolve(only_in:, search: nil, order_by: nil, order_direction: nil, offset: 0, limit: 10, filter: nil)
       search_result = Service::Search
         .with_current_user(context.current_user)
         .execute(
           query:   search,
           objects: [only_in],
-          options: { offset:, limit:, sort_by: [order_by].compact, order_by: [order_direction].compact }
+          options: {
+            condition:       filter,
+            search_by_index: true,
+            offset:,
+            limit:,
+            sort_by:         [order_by].compact,
+            order_by:        [order_direction].compact,
+          },
         ).result[only_in]
 
       return { total_count: 0, items: [] } if !search_result

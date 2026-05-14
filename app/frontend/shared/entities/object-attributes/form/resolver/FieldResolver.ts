@@ -31,11 +31,18 @@ export abstract class FieldResolver {
   }
 
   private getFieldType(): string {
-    if (typeof this.fieldType === 'function') {
-      return this.fieldType()
-    }
+    if (typeof this.fieldType === 'function') return this.fieldType()
 
     return this.fieldType
+  }
+
+  /**
+   * Operators supported by this attribute for advanced search.
+   * Returning undefined means the attribute is not filterable.
+   * Strings keep this open for addons that introduce custom operators.
+   */
+  public getFieldFilterOperators(): string[] | undefined {
+    return
   }
 
   public fieldAttributes(): FormSchemaField {

@@ -21,6 +21,7 @@ export const UserCurrentTaskbarItemAttributesFragmentDoc = gql`
     ... on UserTaskbarItemEntitySearch {
       query
       model
+      filters
     }
     ... on User {
       id

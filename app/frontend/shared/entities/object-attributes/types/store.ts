@@ -36,10 +36,17 @@ export interface EntityPolicyBasedObjectAttributeScreenMapper<TPolicy = PolicyDe
   }
 }
 
+export interface FilterAttribute {
+  name: string
+  label: string
+  operators: string[]
+}
+
 export interface ObjectAttributesObject {
   attributes: ComputedRef<ObjectAttribute[]>
   screens: ComputedRef<Record<string, string[]>>
   attributesLookup: ComputedRef<Map<string, ObjectAttribute>>
+  filterAttributes: ComputedRef<FilterAttribute[]>
   formFieldAttributesLookup: ComputedRef<Map<string, FormSchemaField>>
   loading: Ref<boolean>
 }

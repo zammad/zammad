@@ -1653,4 +1653,32 @@ RSpec.describe Selector::Base, searchindex: true do
       end
     end
   end
+
+  describe 'Wildcard keyword search is case sensitive #6125', :aggregate_failures do
+    let(:ticket) { create(:ticket, title: 'This is a Test Ticket') }
+
+    before do
+      ticket
+      searchindex_model_reload([Ticket])
+    end
+
+    it 'matches in case-insensitive manner' do
+      condition = {
+        operator:   'AND',
+        conditions: [
+          {
+            name:     'ticket.title',
+            operator: 'contains',
+            value:    'test',
+          },
+        ]
+      }
+
+      count, = Ticket.selectors(condition)
+      expect(count).to eq(1)
+
+      result = SearchIndexBackend.selectors('Ticket', condition)
+      expect(result[:count]).to eq(1)
+    end
+  end
 end

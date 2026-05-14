@@ -17,8 +17,16 @@ RSpec.describe Gql::Queries::Search::Counts, type: :graphql do
     let(:search)    { SecureRandom.uuid }
     let(:query)     do
       <<~QUERY
-        query searchCounts($search: String!, $onlyIn: [EnumSearchableModels!]!) {
-          searchCounts(search: $search, onlyIn: $onlyIn) {
+        query searchCounts(
+          $search: String
+          $onlyIn: [EnumSearchableModels!]!
+          $filters: [SelectorObjectInput!]
+        ) {
+          searchCounts(
+            search: $search
+            onlyIn: $onlyIn
+            filters: $filters
+          ) {
             model
             totalCount
           }
@@ -87,6 +95,35 @@ RSpec.describe Gql::Queries::Search::Counts, type: :graphql do
       end
 
       include_examples 'test search query'
+
+      context 'with an advanced filter and no search term', authenticated_as: :agent do
+        let(:variables) do
+          {
+            onlyIn:  %w[Ticket],
+            filters: [
+              {
+                object:   'Ticket',
+                selector: {
+                  operator:   'AND',
+                  conditions: [
+                    { name: 'ticket.title', operator: 'is', value: ticket.title },
+                  ],
+                },
+              },
+            ],
+          }
+        end
+
+        let(:expected_result) do
+          [
+            { 'model' => 'Ticket', 'totalCount' => 1 },
+          ]
+        end
+
+        it 'finds expected objects via the filter' do
+          expect(gql.result.data).to eq(expected_result)
+        end
+      end
     end
 
     it_behaves_like 'graphql responds with error if unauthenticated'

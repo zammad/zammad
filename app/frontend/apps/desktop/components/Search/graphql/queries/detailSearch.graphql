@@ -1,6 +1,7 @@
 query detailSearch(
   $search: String!
   $onlyIn: EnumSearchableModels!
+  $filter: SelectorNodeInput
   $limit: Int = 30
   $offset: Int
   $orderBy: String
@@ -9,6 +10,7 @@ query detailSearch(
   search(
     search: $search
     onlyIn: $onlyIn
+    filter: $filter
     limit: $limit
     offset: $offset
     orderBy: $orderBy

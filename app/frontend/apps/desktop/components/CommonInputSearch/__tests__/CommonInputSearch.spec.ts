@@ -87,3 +87,16 @@ describe('testing input for searching', () => {
     expect(suggestion).not.toBeInTheDocument()
   })
 })
+
+describe('Advanced filters badge', () => {
+  it('renders with prefix slot', async () => {
+    const modelValue = ref('')
+    const view = renderComponent(CommonInputSearch, {
+      vModel: {
+        modelValue,
+      },
+      slots: { prefix: '3 filter(s)' },
+    })
+    expect(view.container).toHaveTextContent('3 filter(s)')
+  })
+})

@@ -6,6 +6,7 @@ import { computed } from 'vue'
 import ticketObjectAttributes from '#tests/graphql/factories/fixtures/ticket-object-attributes.ts'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
@@ -82,8 +83,13 @@ const createSampleTicket = (id: number, title: string, number = 121) => ({
 })
 
 describe('SearchContent', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     mockPermissions(['ticket.agent'])
+    // The router is a module-level singleton and persists state across tests
+    // — reset the URL so a previous test's filter / search query doesn't leak.
+    // The router is undefined until the first renderComponent call has run.
+    const router = getTestRouter()
+    if (router) await router.push('/')
   })
 
   it('displays breadcrumbs', async () => {
@@ -163,6 +169,41 @@ describe('SearchContent', () => {
     expect(await wrapper.findByText('No search results for this query.')).toBeInTheDocument()
   })
 
+  it('resets to the idle search state when the search term is cleared', async () => {
+    mockTicketSearchResult(1, [createSampleTicket(469, 'Foo ticket title', 12469)])
+
+    const wrapper = renderSearchContent({ searchTerm: 'ticket' })
+
+    const callsForDetailSearchQuery = waitForDetailSearchQueryCalls()
+    const callsForCountsQuery = waitForSearchCountsQueryCalls()
+
+    await wrapper.findByRole('table', {
+      name: 'Search result for: Ticket',
+    })
+
+    await wrapper.rerender({ searchTerm: '' })
+
+    await waitFor(() =>
+      expect(
+        wrapper.getByText('Start typing or apply filters to get the search results.'),
+      ).toBeInTheDocument(),
+    )
+
+    expect(wrapper.queryByText('No search results for this query.')).not.toBeInTheDocument()
+
+    // Queries should not be called anymore when resetting to idle state.
+    expect((await callsForDetailSearchQuery).length).toBe(1)
+    expect((await callsForCountsQuery).length).toBe(1)
+
+    await wrapper.rerender({ searchTerm: 'new ticket search' })
+
+    await waitForDetailSearchQueryCalls()
+    await waitForSearchCountsQueryCalls()
+
+    expect((await callsForDetailSearchQuery).length).toBe(2)
+    expect((await callsForCountsQuery).length).toBe(2)
+  })
+
   it('displays entity counts for agent', async () => {
     mockTicketSearchResult(0, [])
     mockSearchCountsQuery({
@@ -181,6 +222,64 @@ describe('SearchContent', () => {
     expect(wrapper.getByRole('tab', { name: 'Ticket' })).toHaveTextContent('0')
   })
 
+  it('uses the real total count for the visible entity tab, not the loaded page size', async () => {
+    // The detail search returns the total match count alongside a single
+    // page of items. The tab badge has to follow totalCount, otherwise it
+    // would shrink/grow with pagination.
+    mockTicketSearchResult(100, [createSampleTicket(469, 'Foo ticket title')])
+
+    const wrapper = renderSearchContent({ searchTerm: 'ticket' })
+
+    await waitForDetailSearchQueryCalls()
+
+    await waitFor(() =>
+      expect(wrapper.getByRole('tab', { name: 'Ticket' })).toHaveTextContent('100'),
+    )
+  })
+
+  it('shows a dash on every entity tab in the idle state', async () => {
+    // No search term, no filter anywhere — neither query should fire and
+    // every tab should display the dash placeholder, not a stale number.
+    const wrapper = renderSearchContent()
+
+    await wrapper.findByRole('tab', { name: 'Ticket' })
+
+    expect(wrapper.getByRole('tab', { name: 'Ticket' })).toHaveTextContent('-')
+    expect(wrapper.getByRole('tab', { name: 'User' })).toHaveTextContent('-')
+    expect(wrapper.getByRole('tab', { name: 'Organization' })).toHaveTextContent('-')
+  })
+
+  it('drops entity tab counts when the search term is cleared', async () => {
+    mockTicketSearchResult(2, [
+      createSampleTicket(469, 'Ticket A'),
+      createSampleTicket(470, 'Ticket B'),
+    ])
+    mockSearchCountsQuery({
+      searchCounts: [
+        { model: EnumSearchableModels.Organization, totalCount: 100 },
+        { model: EnumSearchableModels.User, totalCount: 250 },
+      ],
+    })
+
+    const wrapper = renderSearchContent({ searchTerm: 'ticket' })
+
+    await Promise.all([waitForSearchCountsQueryCalls(), waitForDetailSearchQueryCalls()])
+
+    await waitFor(() =>
+      expect(wrapper.getByRole('tab', { name: 'Organization' })).toHaveTextContent('100'),
+    )
+    expect(wrapper.getByRole('tab', { name: 'User' })).toHaveTextContent('250')
+    expect(wrapper.getByRole('tab', { name: 'Ticket' })).toHaveTextContent('2')
+
+    await wrapper.rerender({ searchTerm: '' })
+
+    await waitFor(() => {
+      expect(wrapper.getByRole('tab', { name: 'Organization' })).not.toHaveTextContent('100')
+      expect(wrapper.getByRole('tab', { name: 'User' })).not.toHaveTextContent('250')
+      expect(wrapper.getByRole('tab', { name: 'Ticket' })).not.toHaveTextContent('2')
+    })
+  })
+
   it('allows sorting of search results', async () => {
     mockTicketSearchResult(1, [createSampleTicket(469, 'Foo ticket title')])
 
@@ -192,32 +291,6 @@ describe('SearchContent', () => {
     const mocks = await waitForDetailSearchQueryCalls()
 
     expect(mocks[1].variables.orderDirection).toBe('ASCENDING')
-  })
-
-  it('clears search input when reset button is clicked', async () => {
-    mockTicketSearchResult(0, [])
-    const wrapper = renderSearchContent({ searchTerm: 'Foo ticket title' })
-
-    await waitForDetailSearchQueryCalls()
-    await waitForNextTick()
-
-    const panel = wrapper.getByTestId('tab-panel-Ticket')
-
-    await wrapper.events.click(await within(panel).findByRole('button', { name: 'Clear search' }))
-
-    // FIXME: Does not work without this, possibly due to missing route and push on cleared search.
-    wrapper.rerender({ searchTerm: '' })
-
-    await waitForNextTick()
-
-    const searchField = wrapper.getByRole('searchbox', { name: 'Search…' })
-
-    await waitFor(() =>
-      expect(within(panel).queryByRole('button', { name: 'Clear search' })).not.toBeInTheDocument(),
-    )
-
-    expect(searchField).toHaveDisplayValue('')
-    expect(searchField).toHaveFocus()
   })
 
   it('only displays tickets for customer role', async () => {

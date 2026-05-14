@@ -18,10 +18,10 @@ class Service::Ticket::Bulk::Selector < Service::Base
       selector[:entity_ids].take(MAX_TICKET_IDS)
     elsif selector[:overview].present?
       overview_entity_ids(selector[:overview])
-    elsif selector[:search_query].present?
-      search_entity_ids(selector[:search_query])
+    elsif selector[:search_query].present? || selector[:search_filter].present?
+      search_entity_ids(selector[:search_query], selector[:search_filter])
     else
-      raise ArgumentError, 'Invalid selector: one of entity_ids, overview, or search_query must be provided.' # rubocop:disable Zammad/DetectTranslatableString
+      raise ArgumentError, 'Invalid selector: one of entity_ids, overview, or pair of search_query and search_filter must be provided.' # rubocop:disable Zammad/DetectTranslatableString
     end
   end
 
@@ -43,12 +43,17 @@ class Service::Ticket::Bulk::Selector < Service::Base
       .pluck(return_attribute)
   end
 
-  def search_entity_ids(query)
+  def search_entity_ids(query, condition)
     Service::Search
       .execute(
         query:,
         objects: [Ticket],
-        options: { only_ids: return_attribute == :id, limit: MAX_TICKET_IDS }
+        options: {
+          condition:,
+          search_by_index: true,
+          only_ids:        return_attribute == :id,
+          limit:           MAX_TICKET_IDS,
+        },
       )
       .result[Ticket]
   end

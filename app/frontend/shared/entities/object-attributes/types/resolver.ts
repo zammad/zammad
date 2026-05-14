@@ -33,3 +33,10 @@ export type ObjectAttributeSelectOptions =
 export type ObjectAttributeTreeSelectOption = ObjectAttributeSelectOption & {
   children?: ObjectAttributeSelectOption[]
 }
+
+export type FilterSchemaField = {
+  $formkit: string
+  name: string
+  label: string
+  [key: string]: unknown
+}

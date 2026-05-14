@@ -9,11 +9,13 @@ import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import log from '#shared/utils/log.ts'
 
 import getFieldFromAttribute from '../form/getFieldFromAttribute.ts'
+import getFieldResolver from '../form/resolver/getFieldResolver.ts'
 import { useObjectManagerFrontendAttributesQuery } from '../graphql/queries/objectManagerFrontendAttributes.api.ts'
 
 import type {
   EntityStaticObjectAttributes,
   EntityPolicyBasedObjectAttributeScreenMapper,
+  FilterAttribute,
   ObjectAttribute,
   ObjectAttributesObject,
 } from '../types/store.ts'
@@ -145,10 +147,38 @@ export const useObjectAttributesStore = defineStore('objectAttributes', () => {
         return lookup
       })
 
+      // Filter attribute names are emitted in the backend selector shape
+      // `<table>.<attribute>` so they can flow unchanged into URL, storage,
+      // and GraphQL selector payloads. The table prefix is the lowercased
+      // object name, which matches the SQL selector's expected target name
+      // for Ticket/User/Organization (the objects that currently expose
+      // filter operators).
+      const entityLowerCase = object.toLowerCase()
+
+      // Only attributes whose resolver support operators are filterable
+      const filterAttributes = computed<FilterAttribute[]>(() =>
+        attributes.value.flatMap((attribute) => {
+          const resolver = getFieldResolver(object, attribute)
+
+          const operators = resolver.getFieldFilterOperators()
+
+          if (!operators?.length) return []
+
+          return [
+            {
+              name: `${entityLowerCase}.${attribute.name}`,
+              label: attribute.display,
+              operators,
+            },
+          ]
+        }),
+      )
+
       setObjectAttributesForObject(object, {
         attributes,
         screens,
         attributesLookup,
+        filterAttributes,
         formFieldAttributesLookup,
         loading: attributesLoading,
       })

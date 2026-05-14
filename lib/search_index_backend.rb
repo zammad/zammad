@@ -384,7 +384,7 @@ remove whole data from index
 =end
 
   def self.search_by_index(query, index, options = {})
-    return if query.blank?
+    return if query.blank? && !options[:search_by_index]
 
     action = '_search'
     if options[:only_total_count].present?
@@ -395,16 +395,22 @@ remove whole data from index
     return if url.blank?
 
     # real search condition
-    condition = {
-      'query_string' => {
-        'query'            => append_wildcard_to_simple_query(query),
-        'time_zone'        => Setting.get('timezone_default'),
-        'default_operator' => 'AND',
-        'analyze_wildcard' => true,
-      }
-    }
+    condition = if query.blank?
+                  {
+                    match_all: {},
+                  }
+                else
+                  {
+                    'query_string' => {
+                      'query'            => append_wildcard_to_simple_query(query),
+                      'time_zone'        => Setting.get('timezone_default'),
+                      'default_operator' => 'AND',
+                      'analyze_wildcard' => true,
+                    }
+                  }
+                end
 
-    if (fields = options.dig(:query_fields_by_indexes, index.to_sym))
+    if query.present? && (fields = options.dig(:query_fields_by_indexes, index.to_sym))
       condition['query_string']['fields'] = fields
     end
 

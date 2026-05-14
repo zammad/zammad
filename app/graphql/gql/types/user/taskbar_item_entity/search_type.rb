@@ -6,6 +6,7 @@ module Gql::Types::User::TaskbarItemEntity
 
     field :query, String
     field :model, String
+    field :filters, String
 
   end
 end

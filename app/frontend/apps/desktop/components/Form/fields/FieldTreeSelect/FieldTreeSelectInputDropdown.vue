@@ -130,7 +130,7 @@ const openDropdown = (bounds: UseElementBoundingReturn, height: Ref<number>) => 
   inputElementBounds = bounds
   windowHeight = toRef(height)
   instances.value.forEach((instance) => {
-    if (instance.isOpen) instance.closeDropdown()
+    if (instance.isOpen.value) instance.closeDropdown()
   })
   showDropdown.value = true
   lastFocusableOutsideElement = getActiveElement()

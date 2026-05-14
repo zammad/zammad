@@ -13,6 +13,7 @@ const fieldDefinition = createInput(
   FieldSelectInput,
   [
     'alternativeBackground',
+    'autoOpenDropdown',
     'clearable',
     'historicalOptions',
     'multiple',

@@ -89,8 +89,7 @@ describe('CommonTabGroup', () => {
         },
       })
       // A11y
-      expect(wrapper.getByText('Roles')).toBeInTheDocument()
-      expect(wrapper.getAllByLabelText('Roles')).toHaveLength(3)
+      expect(wrapper.getByRole('listbox', { name: 'Roles' })).toBeInTheDocument()
 
       expect(wrapper.getByText('Admin')).toBeInTheDocument()
       expect(wrapper.getByText('Agent')).toBeInTheDocument()

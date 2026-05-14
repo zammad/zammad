@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { useElementBounding, useElementVisibility, useWindowSize } from '@vueuse/core'
 import { escapeRegExp } from 'lodash-es'
-import { computed, nextTick, ref, toRef, watch, useTemplateRef } from 'vue'
+import { computed, nextTick, onMounted, ref, toRef, watch, useTemplateRef } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import useFlatSelectOptions from '#shared/components/Form/fields/FieldTreeSelect/composables/useFlatSelectOptions.ts'
@@ -163,6 +163,15 @@ const openSelectDropdown = () => {
   })
 }
 
+onMounted(async () => {
+  if (!props.context.autoOpenDropdown) return
+  // Defer past the current tick so the parent's reactive updates flush
+  // before the dropdown opens; opening synchronously during the child's
+  // mount can race with focus/click-outside wiring.
+  await nextTick()
+  openSelectDropdown()
+})
+
 const openOrMoveFocusToDropdown = (lastOption = false) => {
   if (!selectInstance.value?.isOpen) {
     openSelectDropdown()
@@ -182,6 +191,10 @@ const onCloseDropdown = () => {
   clearFilter()
   clearPath()
   deactivateTabTrap()
+
+  // Surfaces the close as a FormKit node event so consumers can react via
+  // `node.on('dropdown-close', …)` (or `@node` to bind on creation).
+  props.context.node.emit('dropdown-close')
 }
 
 const onPathPush = (option: FlatSelectOption) => {

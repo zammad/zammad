@@ -19,7 +19,7 @@ const textInputClasses = (classes: Classes = {}) =>
     input:
       'grow bg-transparent px-2.5 py-2 placeholder:text-stone-200 read-only:text-stone-200 dark:placeholder:text-neutral-500 dark:read-only:text-neutral-500',
     label: 'mb-1 block text-sm text-gray-100 dark:text-neutral-400',
-    inner: `flex h-10 w-full items-center bg-blue-200 text-black focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-blue-800 hover:outline hover:outline-1 hover:-outline-offset-1 hover:outline-blue-600 hover:focus-within:outline-blue-800 dark:bg-gray-700 dark:text-white dark:hover:outline-blue-900 dark:hover:focus-within:outline-blue-800 ${innerInvalidAndErrorClasses()}`,
+    inner: `flex h-10 w-full items-center bg-blue-200 text-black data-[alternative-background=true]:bg-neutral-50 focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-blue-800 hover:outline hover:outline-1 hover:-outline-offset-1 hover:outline-blue-600 hover:focus-within:outline-blue-800 dark:bg-gray-700 dark:data-[alternative-background=true]:bg-gray-500 dark:text-white dark:hover:outline-blue-900 dark:hover:focus-within:outline-blue-800 ${innerInvalidAndErrorClasses()}`,
   })
 
 // For select family of fields, we are styling the input element, since it has its own outline handling due to the

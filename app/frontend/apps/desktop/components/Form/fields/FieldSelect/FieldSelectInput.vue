@@ -8,7 +8,7 @@ import {
   useWindowSize,
 } from '@vueuse/core'
 import { escapeRegExp } from 'lodash-es'
-import { useTemplateRef, computed, nextTick, ref, toRef, watch } from 'vue'
+import { useTemplateRef, computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
@@ -115,6 +115,10 @@ const openSelectDropdown = () => {
     else filterInputElement.value?.focus()
   })
 }
+
+onMounted(() => {
+  if (props.context.autoOpenDropdown) openSelectDropdown()
+})
 
 const openOrMoveFocusToDropdown = (lastOption = false) => {
   if (!selectInstance.value?.isOpen) {

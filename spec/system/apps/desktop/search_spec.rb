@@ -58,16 +58,16 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
 
       expect(page).to have_text('No search results for this query.')
 
-      click_on 'Clear search'
+      find('[role="button"][aria-label="Clear search"]').click
 
-      expect(page).to have_text('Start typing to get the search results.')
+      expect(page).to have_text('Start typing or apply filters to get the search results.')
 
       find('[role="searchbox"][aria-label="Search…"').fill_in with: "state.name: closed AND article.from: #{agent.fullname} AND customer.firstname: #{customer.firstname}"
 
       click_on old_ticket.number
     end
 
-    wait.until { current_url.end_with?("tickets/#{old_ticket.id}") }
+    wait.until { current_url.include?("/tickets/#{old_ticket.id}") }
 
     within 'main' do
       expect(page).to have_text(agent.fullname)

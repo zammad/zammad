@@ -15,6 +15,10 @@ export class FieldResolverTextarea extends FieldResolver {
       },
     }
   }
+
+  public override getFieldFilterOperators() {
+    return ['matches']
+  }
 }
 
 export default <FieldResolverModule>{

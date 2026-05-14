@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { EnumSearchableModels } from '#shared/graphql/types.ts'
+import { EnumObjectManagerObjects, EnumSearchableModels } from '#shared/graphql/types.ts'
 
 import OrganizationListTable from '#desktop/components/Organization/OrganizationListTable.vue'
 
@@ -10,6 +10,7 @@ import type { SearchPlugin } from '../types.ts'
 
 export default <SearchPlugin>{
   name: EnumSearchableModels.Organization,
+  object: EnumObjectManagerObjects.Organization,
   label: __('Organization'),
   priority: 300,
   quickSearchResultLabel: __('Found organizations'),

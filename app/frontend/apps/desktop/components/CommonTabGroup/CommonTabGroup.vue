@@ -4,6 +4,8 @@
 import { useResizeObserver } from '@vueuse/core'
 import { computed, ref, useTemplateRef, watch } from 'vue'
 
+import getUuid from '#shared/utils/getUuid.ts'
+
 import CommonTab from '#desktop/components/CommonTabGroup/CommonTab.vue'
 import type { Tab } from '#desktop/components/CommonTabGroup/types.ts'
 
@@ -87,17 +89,20 @@ if (!props.multiple) {
   if (initialTabIndex === -1) updateModelValue(props.tabs[0], 0)
   else updateModelValue(props.tabs[initialTabIndex], initialTabIndex)
 }
+
+const labelId = getUuid()
 </script>
 
 <template>
   <div
     ref="container"
     :role="isTabMode ? 'tablist' : 'listbox'"
+    :aria-labelledby="label ? labelId : undefined"
     class="relative flex w-fit items-center gap-1 rounded-full bg-blue-200 p-1 dark:bg-gray-700"
   >
     <CommonLabel
       v-if="label"
-      id="filter-select-label"
+      :id="labelId"
       class="px-3.5 py-1 text-stone-200 dark:text-neutral-500"
       :size="labelSize"
     >

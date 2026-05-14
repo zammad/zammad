@@ -208,7 +208,7 @@ class Selector::SearchIndex < Selector::Base
     end
 
     # use .keyword and wildcard search in cases where query contains non A-z chars
-    if ['contains', 'contains not', 'starts with one of', 'ends with one of'].include?(data[:operator]) && value_is_string
+    if ['contains', 'contains not', 'matches', 'starts with one of', 'ends with one of'].include?(data[:operator]) && value_is_string
       column_details = klass&.columns_hash&.dig(key_tmp)
 
       # https://github.com/zammad/zammad/issues/5623
@@ -233,12 +233,16 @@ class Selector::SearchIndex < Selector::Base
         data[:value].each do |value|
           t = {}
           t[wildcard_or_term] = {}
-          t[wildcard_or_term][key_tmp] = if data[:operator] == 'starts with one of'
-                                           "#{value}*"
-                                         elsif data[:operator] == 'ends with one of'
-                                           "*#{value}"
+
+          # In case of a wildcard search, switch to the object syntax to be able to set `case_insensitive` flag.
+          #   More information: https://github.com/zammad/zammad/issues/6125
+          t[wildcard_or_term][key_tmp] = if wildcard_or_term == 'wildcard'
+                                           {
+                                             value:            search_term_value(value, data[:operator]),
+                                             case_insensitive: true,
+                                           }
                                          else
-                                           "*#{value}*"
+                                           search_term_value(value, data[:operator])
                                          end
 
           or_condition[:bool][:should] << t
@@ -246,7 +250,7 @@ class Selector::SearchIndex < Selector::Base
 
         data[:value] = or_condition
       else
-        data[:value] = "*#{data[:value]}*"
+        data[:value] = search_term_value(data[:value], data[:operator])
       end
     end
 
@@ -271,7 +275,7 @@ class Selector::SearchIndex < Selector::Base
       query_must.push data[:value]
 
     # is/is not/contains/contains not
-    elsif ['is', 'is not', 'contains', 'contains not', 'is any of', 'is none of'].include?(data[:operator])
+    elsif ['is', 'is not', 'contains', 'contains not', 'matches', 'is any of', 'is none of'].include?(data[:operator])
       t[wildcard_or_term] = {}
 
       # We need a special handling for external data sources, because of the sub-hash.
@@ -284,12 +288,20 @@ class Selector::SearchIndex < Selector::Base
         end
 
         t[wildcard_or_term][key_value] = data[:value].is_a?(Hash) ? data[:value][:value] : data[:value].pluck(:value)
+
+      # In case of a wildcard search, switch to the object syntax to be able to set `case_insensitive` flag.
+      #   More information: https://github.com/zammad/zammad/issues/6125
+      elsif wildcard_or_term == 'wildcard'
+        t[wildcard_or_term][key_tmp] = {
+          value:            data[:value],
+          case_insensitive: true,
+        }
       else
         t[wildcard_or_term][key_tmp] = data[:value]
       end
 
       case data[:operator]
-      when 'is', 'contains', 'is any of'
+      when 'is', 'contains', 'matches', 'is any of'
         query_must.push t
       when 'is not', 'contains not', 'is none of'
         query_must_not.push t
@@ -406,5 +418,13 @@ class Selector::SearchIndex < Selector::Base
     end
 
     data
+  end
+
+  def search_term_value(value, operator)
+    return value if operator == 'matches' && wildcard_value?(value)
+    return "#{value}*" if operator == 'starts with one of'
+    return "*#{value}" if operator == 'ends with one of'
+
+    "*#{value}*"
   end
 end

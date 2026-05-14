@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { EnumSearchableModels } from '#shared/graphql/types.ts'
+import { EnumObjectManagerObjects, EnumSearchableModels } from '#shared/graphql/types.ts'
 
 import TicketListTable from '#desktop/components/Ticket/TicketListTable.vue'
 
@@ -10,6 +10,7 @@ import type { SearchPlugin } from '../types.ts'
 
 export default <SearchPlugin>{
   name: EnumSearchableModels.Ticket,
+  object: EnumObjectManagerObjects.Ticket,
   label: __('Ticket'),
   priority: 100,
   quickSearchResultLabel: __('Found tickets'),
@@ -26,4 +27,10 @@ export default <SearchPlugin>{
     return headers
   },
   detailSearchComponent: TicketListTable,
+  filterAttributesOverride: [
+    {
+      label: __('Ticket number'),
+      name: 'ticket.number',
+    },
+  ],
 }

@@ -17599,13 +17599,9 @@
                   "name": "search",
                   "description": "What to search for",
                   "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
                   },
                   "defaultValue": null
                 },
@@ -17662,6 +17658,16 @@
                     "ofType": null
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "filter",
+                  "description": "Advanced filters as selector conditions",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "SelectorNodeInput",
+                    "ofType": null
+                  },
+                  "defaultValue": null
                 }
               ],
               "type": {
@@ -17684,13 +17690,9 @@
                   "name": "search",
                   "description": "What to search for",
                   "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
                   },
                   "defaultValue": null
                 },
@@ -17711,6 +17713,24 @@
                           "name": "EnumSearchableModels",
                           "ofType": null
                         }
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "filters",
+                  "description": "Per-object advanced filters as selector conditions",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "SelectorObjectInput",
+                        "ofType": null
                       }
                     }
                   },
@@ -19599,6 +19619,128 @@
           ],
           "inputFields": null,
           "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "SelectorNodeInput",
+          "description": "Selector node: either a single condition (name/operator/value) or a subclause (operator/conditions).",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "operator",
+              "description": "Block operator (AND/OR/NOT) for subclauses or the condition operator (e.g. \"is\", \"contains\") for single conditions.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "conditions",
+              "description": "Nested conditions, present on subclauses only.",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "SelectorNodeInput",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "name",
+              "description": "Target attribute, e.g. \"ticket.title\", conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "value",
+              "description": "Condition value (primitive or array), conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "JSON",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "preCondition",
+              "description": "Optional pre-condition (e.g. \"current_user.id\", \"not_set\"), conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "range",
+              "description": "Optional range unit for relative time operators (e.g. \"minute\", \"day\"), conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "SelectorObjectInput",
+          "description": "Per-object selector, pairing a searchable model with its selector conditions.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "object",
+              "description": "Searchable model the selector applies to, e.g. Ticket",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "EnumSearchableModels",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "selector",
+              "description": "Selector conditions to apply for the given object",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "SelectorNodeInput",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -24352,6 +24494,16 @@
                 "ofType": null
               },
               "defaultValue": null
+            },
+            {
+              "name": "searchFilter",
+              "description": "Advanced search filters as selector conditions",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "SelectorNodeInput",
+                "ofType": null
+              },
+              "defaultValue": null
             }
           ],
           "interfaces": null,
@@ -26399,6 +26551,16 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "searchFilter",
+              "description": "Advanced search filters as selector conditions",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "SelectorNodeInput",
                 "ofType": null
               },
               "defaultValue": null
@@ -33594,6 +33756,18 @@
           "name": "UserTaskbarItemEntitySearch",
           "description": "Entity representing taskbar item search",
           "fields": [
+            {
+              "name": "filters",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
             {
               "name": "model",
               "description": null,

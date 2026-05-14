@@ -80,6 +80,37 @@ RSpec.describe SearchIndexBackend do
   end
 
   describe '.search_by_index', searchindex: true do
+    context 'when query is blank' do
+      let(:record_type) { 'Ticket'.freeze }
+      let(:record) { create(:ticket) }
+
+      before do
+        record.search_index_update_backend
+        described_class.refresh
+      end
+
+      it 'returns nil without explicit search_by_index option' do
+        expect(described_class.search_by_index('', record_type, with_total_count: true)).to be_nil
+      end
+
+      it 'supports explicit search_by_index with conditions' do
+        result = described_class.search_by_index('', record_type,
+                                                 search_by_index:  true,
+                                                 with_total_count: true,
+                                                 condition:        {
+                                                   'ticket.id' => {
+                                                     'operator' => 'is',
+                                                     'value'    => record.id.to_s,
+                                                   },
+                                                 })
+
+        expect(result).to include(
+          total_count:     1,
+          object_metadata: include(include(id: record.id.to_s))
+        )
+      end
+    end
+
     context 'query finds results' do
 
       let(:record_type) { 'Ticket'.freeze }
@@ -677,6 +708,32 @@ RSpec.describe SearchIndexBackend do
                                              'value'    => '4',
                                            })
         expect(result).to eq({ count: 1, object_ids: [ticket2.id.to_s] })
+      end
+
+      it 'finds records with matches without explicit wildcard like contains' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'title' => {
+                                               'operator' => 'matches',
+                                               'value'    => 'phrase',
+                                             },
+                                           },
+                                           {},
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 3, object_ids: [ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s] })
+      end
+
+      it 'finds records with matches and preserved wildcard' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'title' => {
+                                               'operator' => 'matches',
+                                               'value'    => 'some*title*',
+                                             },
+                                           })
+        expect(result).to eq({ count: 5, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
       end
     end
 

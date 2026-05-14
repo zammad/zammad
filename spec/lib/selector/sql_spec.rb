@@ -332,6 +332,34 @@ RSpec.describe Selector::Sql do
         end
       end
 
+      describe "operator 'matches'" do
+        let(:operator) { 'matches' }
+
+        context 'with matching string' do
+          let(:value) { 'Some' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { 'SOME' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { 'Other' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with wildcard matching' do
+          let(:value) { 'som*' }
+
+          include_examples 'finds the ticket'
+        end
+      end
+
       describe "operator 'contains not'" do
         let(:operator) { 'contains not' }
 

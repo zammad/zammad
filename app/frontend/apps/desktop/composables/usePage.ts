@@ -17,7 +17,8 @@ import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 
 interface PageOptions {
   pageActive?: Ref<boolean>
-  metaTitle?: ComputedRef<string>
+  metaTitle?: Ref<string> | ComputedRef<string>
+  noTranslateMetaTitle?: Ref<boolean> | ComputedRef<boolean>
   onReactivate?: () => void
   onDeactivated?: () => void
 }
@@ -27,7 +28,7 @@ export const usePage = (pageOptions: PageOptions = {}) => {
 
   const pageInactive = computed(() => !pageActive.value)
 
-  const { metaTitle, onReactivate } = pageOptions
+  const { metaTitle, noTranslateMetaTitle, onReactivate } = pageOptions
 
   let stopMetaTitleWatcher: WatchHandle | undefined
 
@@ -46,7 +47,8 @@ export const usePage = (pageOptions: PageOptions = {}) => {
       stopMetaTitleWatcher = watch(
         metaTitle,
         (newValue) => {
-          setViewTitle(newValue)
+          if (noTranslateMetaTitle) setViewTitle(newValue, !noTranslateMetaTitle.value)
+          else setViewTitle(newValue)
         },
         { immediate: true },
       )

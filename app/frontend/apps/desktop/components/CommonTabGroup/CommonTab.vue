@@ -11,7 +11,7 @@ interface Props {
   label?: string
   icon?: string
   tooltip?: string
-  count?: number
+  count?: number | string
 }
 
 const props = defineProps<Props>()

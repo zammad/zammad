@@ -32,6 +32,7 @@ class Selector::Sql < Selector::Base
     'is not',
     'is set',
     'is',
+    'matches',
     'matches regex',
     'not set',
     'starts with one of',
@@ -484,6 +485,13 @@ class Selector::Sql < Selector::Base
       # https://github.com/zammad/zammad/issues/4948
       query << "#{attribute} NOT ILIKE (?) OR #{attribute} IS NULL"
       bind_params.push "%#{SqlHelper.quote_like(block_condition[:value])}%"
+    elsif block_condition[:operator] == 'matches'
+      query << "#{attribute} ILIKE (?)"
+      if wildcard_value?(block_condition[:value])
+        bind_params.push SqlHelper.quote_like(block_condition[:value]).gsub(MATCH_WILDCARD_REGEX, '%')
+      else
+        bind_params.push "%#{SqlHelper.quote_like(block_condition[:value])}%"
+      end
     elsif block_condition[:operator] == 'matches regex'
       query << sql_helper.regex_match(attribute, negated: false)
       bind_params.push block_condition[:value]

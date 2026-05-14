@@ -32,7 +32,7 @@ const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = import.meta.glob(
   { eager: true },
 )
 export const desktopFormFieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
-  import.meta.glob('../components/Form/fields/**/index.ts', { eager: true })
+  import.meta.glob('../components/Form/fields/*/index.ts', { eager: true })
 const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> = import.meta.glob(
   './theme/global/extensions/*.ts',
   { eager: true },

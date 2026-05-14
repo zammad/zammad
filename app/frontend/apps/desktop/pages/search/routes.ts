@@ -11,7 +11,6 @@ const route: RouteRecordRaw[] = [
     props: true,
     component: () => import('./views/Search.vue'),
     meta: {
-      title: __('Search'),
       requiresAuth: true,
       pageKey: 'search',
       requiredPermission: [],

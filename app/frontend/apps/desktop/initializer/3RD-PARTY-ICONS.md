@@ -68,6 +68,7 @@
 - `assets/pin-angle.svg`
 - `assets/pin.svg`
 - `assets/plus-circle.svg`
+- `assets/plus-square.svg`
 - `assets/printer.svg`
 - `assets/question-circle.svg`
 - `assets/quote.svg`

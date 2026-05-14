@@ -3,16 +3,23 @@
 <script setup lang="ts">
 import { isEqual, omit } from 'lodash-es'
 import { storeToRefs } from 'pinia'
-import { computed, ref, useTemplateRef, watch, type Ref, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
+import {
+  computed,
+  ref,
+  useTemplateRef,
+  watch,
+  type Ref,
+  nextTick,
+  shallowRef,
+  onBeforeMount,
+} from 'vue'
+import { stringifyQuery, useRoute, useRouter } from 'vue-router'
 
 import { useSorting } from '#shared/composables/list/useSorting.ts'
 import {
-  type DetailSearchQuery,
   type DetailSearchQueryVariables,
   type EnumOrderDirection,
   EnumSearchableModels,
-  type SearchCountsQuery,
 } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -33,6 +40,13 @@ import type { TaskbarTabContext } from '#desktop/entities/user/current/types.ts'
 import SearchControls from '#desktop/pages/search/components/SearchControls.vue'
 import SearchEmptyMessage from '#desktop/pages/search/components/SearchEmptyMessage.vue'
 import { useDetailSearchCache } from '#desktop/pages/search/composables/useDetailSearchCache.ts'
+import { useSearchAdvancedFilters } from '#desktop/pages/search/composables/useSearchAdvancedFilters.ts'
+import {
+  buildSearchDeepLink,
+  buildSearchRouteQuery,
+} from '#desktop/pages/search/utils/searchRouteLink.ts'
+
+import { decodeFilters, getSearchQueryWithoutFilters } from '../utils/searchFilterQuery.ts'
 
 const MAX_ITEMS = 2000
 const PAGE_SIZE = 30
@@ -41,52 +55,85 @@ const props = defineProps<{
   searchTerm?: string
 }>()
 
+const route = useRoute()
 const router = useRouter()
 
 const selectedEntity = ref(
-  (router.currentRoute.value.query.entity as EnumSearchableModels) ?? EnumSearchableModels.Ticket,
+  (route.query.entity as EnumSearchableModels) ?? EnumSearchableModels.Ticket,
 )
+
+const {
+  filtersByEntity,
+  entityFields,
+  currentFilters,
+  filterCount,
+  currentFiltersQueryParams,
+  currentFilterSelector,
+  entityFiltersSelector,
+  hasActiveFilters,
+  setEntityFilters,
+  clearCurrentFilters,
+} = useSearchAdvancedFilters(selectedEntity)
 
 const pageActive = ref(false)
 const offset = ref(0)
 
 const { sortedByNamePlugins, searchPluginNames } = useSearchPlugins()
 
-const notVisibleSearchEntities = computed(() =>
-  searchPluginNames.value.filter((name) => name !== selectedEntity.value),
-)
+const scrollContainerElement = useTemplateRef('scroll-container')
+const searchControlsInstance = useTemplateRef('search-controls')
 
-// Remember this in a static way to avoid unnecessary re-fetchtings of the search counts.
-let staticNotVisibleSearchEntities = notVisibleSearchEntities.value
-
-watch(selectedEntity, (newValue) => {
+// Single place that writes to the URL — fires on entity switch or filter
+// value change. vue-router itself no-ops a replace to the same URL
+watch([selectedEntity, currentFiltersQueryParams], ([entity]) => {
   router.replace({
-    query: {
-      entity: newValue,
-    },
+    query: buildSearchRouteQuery({
+      entity,
+      filters: currentFilters.value,
+      baseQuery: getSearchQueryWithoutFilters(route.query),
+    }),
   })
+})
+
+// Repopulate filters on initial load, later it is handled by taskbar and keep alive
+onBeforeMount(() => {
+  const queryEntity = (route.query.entity as EnumSearchableModels) ?? EnumSearchableModels.Ticket
+  const queryFilters = decodeFilters(route.query, entityFields.value[queryEntity] ?? [])
+
+  if (selectedEntity.value !== queryEntity) selectedEntity.value = queryEntity
+
+  setEntityFilters(queryEntity, queryFilters)
 })
 
 const modelSearchTerm = computed({
   get: () => props.searchTerm,
   set: (searchTerm) => {
-    router.push({
-      params: {
-        searchTerm,
-      },
-      query: {
-        entity: selectedEntity.value,
-      },
+    const url = buildSearchDeepLink({
+      searchTerm,
+      entity: selectedEntity.value,
+      filters: currentFilters.value,
+      baseQuery: getSearchQueryWithoutFilters(router.currentRoute.value.query),
     })
+
+    router.push(url)
   },
 })
 
-const sanitizedSearchTerm = computed(() => modelSearchTerm.value ?? '')
+const currentSearchTerm = computed(() => modelSearchTerm.value ?? '')
+
+const notVisibleSearchEntities = computed(() =>
+  searchPluginNames.value.filter(
+    (name) =>
+      name !== selectedEntity.value && (filtersByEntity[name].length || !!currentSearchTerm.value),
+  ),
+)
 
 const tabContext = computed<TaskbarTabContext>((currentContext) => {
   const newContext = {
-    query: sanitizedSearchTerm.value,
+    query: currentSearchTerm.value,
     model: selectedEntity.value,
+    formIsDirty: hasActiveFilters.value,
+    filters: stringifyQuery(currentFiltersQueryParams.value),
   }
 
   if (currentContext && isEqual(newContext, currentContext)) return currentContext
@@ -104,16 +151,13 @@ watch(tabContext, (newValue) => {
   currentTaskbarTabUpdate(currentTaskbarTab.value, newValue)
 })
 
-const scrollContainerElement = useTemplateRef('scroll-container')
-
 const { reachedTop } = useElementScroll(scrollContainerElement as Ref<HTMLElement>)
 
-const searchControlsInstance = useTemplateRef('search-controls')
-
 const searchQueryVariables = computed(() => ({
-  search: sanitizedSearchTerm.value,
+  search: currentSearchTerm.value,
   limit: PAGE_SIZE,
   onlyIn: selectedEntity.value,
+  filter: currentFilterSelector.value,
 }))
 
 const detailSearchQuery = new QueryHandler(
@@ -132,26 +176,32 @@ const detailSearchQuery = new QueryHandler(
 
 const searchCountsQuery = new QueryHandler(
   useSearchCountsLazyQuery(
-    () => {
-      return {
-        search: sanitizedSearchTerm.value,
-        onlyIn: staticNotVisibleSearchEntities,
-      }
-    },
     () => ({
+      search: currentSearchTerm.value,
+      onlyIn: notVisibleSearchEntities.value,
+      filters: entityFiltersSelector.value,
+    }),
+    {
       context: {
         batch: {
           active: false,
         },
       },
       fetchPolicy: 'cache-and-network', // TODO: for now until the cache handling is implemented
-      enabled: searchPluginNames.value.length > 1,
-    }),
+    },
   ),
   {
     triggerRefetchOnConnectionReconnect: () => pageActive.value,
   },
 )
+
+const searchResult = detailSearchQuery.result()
+const currentSearchCountsResult = searchCountsQuery.result()
+
+// We store the search result to be able to overwrite it
+// On entity switch, the result of the previous entity might be reflect and breaks theUI
+// Local state can be overwritten so we always clear the result on entity switch
+const currentSearchResult = shallowRef(searchResult.value)
 
 const refetchQueries = () => {
   detailSearchQuery.refetch({
@@ -164,28 +214,6 @@ const refetchQueries = () => {
   searchCountsQuery.refetch()
 }
 
-const { pageInactive } = usePage({
-  pageActive,
-  metaTitle: sanitizedSearchTerm,
-  onReactivate: () => refetchQueries(),
-})
-
-watch(notVisibleSearchEntities, (newValue) => {
-  staticNotVisibleSearchEntities = newValue
-})
-
-const searchQueriesLoad = () => {
-  detailSearchQuery.load()
-  searchCountsQuery.load()
-}
-
-const searchQueriesStart = () => {
-  detailSearchQuery.start()
-  searchCountsQuery.start()
-}
-
-const searchEntityCurrentCounts = ref<Partial<Record<EnumSearchableModels, number>>>({})
-
 const searchPlugin = computed(() => searchPluginByName[selectedEntity.value])
 
 const { config } = storeToRefs(useApplicationStore())
@@ -196,78 +224,35 @@ const detailSearchHeaders = computed(() =>
     : searchPlugin.value.detailSearchHeaders,
 )
 
-const searchResult = detailSearchQuery.result()
-const currentSearchResult = ref<DetailSearchQuery>()
+// Per-entity counts, accumulated from both queries. Keeping previous entries
+// across an entity switch / refetch is what prevents tab badges from briefly
+// flickering to '-' while the next response is in flight.
+const searchEntityCurrentCounts = ref<Partial<Record<EnumSearchableModels, number>>>({})
 
-// Remember the current search result to avoid always showing the loading state on search term changes.
-// Because the apollo cache is returning undefined when nothing is in currently in the cache.
-watch(searchResult, (newValue) => {
-  if (!newValue) return
-
-  currentSearchResult.value = newValue
+watch(searchResult, (result) => {
+  if (result) searchEntityCurrentCounts.value[selectedEntity.value] = result.search.totalCount
+  currentSearchResult.value = result
 })
 
-const searchCountsResult = searchCountsQuery.result()
-const currentSearchCountsResult = ref<SearchCountsQuery>()
-
-// Remember the current search counts result to avoid always showing the loading state on search term changes.
-// Because the apollo cache is returning undefined when nothing is in currently in the cache.
-watch(searchCountsResult, (newValue) => {
-  if (!newValue) return
-
-  currentSearchCountsResult.value = newValue
+watch(currentSearchCountsResult, (countsResult) => {
+  countsResult?.searchCounts.forEach(({ model, totalCount }) => {
+    if (model !== selectedEntity.value) {
+      searchEntityCurrentCounts.value[model] = totalCount
+    }
+  })
 })
-
-const searchQueriesStop = () => {
-  currentSearchResult.value = undefined
-  searchEntityCurrentCounts.value = {}
-  currentSearchCountsResult.value = undefined
-
-  detailSearchQuery.stop()
-  searchCountsQuery.stop()
-}
-
-const currentSearchCounts = computed(() =>
-  currentSearchCountsResult.value?.searchCounts.reduce(
-    (acc, curr) => {
-      acc[curr.model] = curr.totalCount
-      return acc
-    },
-    {} as Record<EnumSearchableModels, number>,
-  ),
-)
 
 const isLoading = detailSearchQuery.loadingWithoutCachedResult()
 
+// Real total for the visible entity — not just the items loaded into the table.
 const searchResultTotalCount = computed(() => currentSearchResult.value?.search.totalCount ?? 0)
-const searchResultItems = computed(() => currentSearchResult.value?.search.items || [])
-
-// Update counts when needed, but hold the counts always in one object.
-watch([currentSearchCounts, searchResultTotalCount], () => {
-  searchEntityCurrentCounts.value = Object.assign(
-    searchEntityCurrentCounts.value,
-    currentSearchCounts.value,
-  )
-
-  // Change only the current entity count, when needed.
-  if (
-    currentSearchResult.value !== undefined &&
-    searchEntityCurrentCounts.value[selectedEntity.value] !==
-      currentSearchResult.value.search.totalCount
-  ) {
-    searchEntityCurrentCounts.value[selectedEntity.value] =
-      currentSearchResult.value.search.totalCount
-  }
-})
 
 const searchTabs = computed(() =>
-  sortedByNamePlugins.value.map((plugin) => {
-    return {
-      label: plugin.label,
-      key: plugin.name,
-      count: searchEntityCurrentCounts.value[plugin.name] ?? 0,
-    }
-  }),
+  sortedByNamePlugins.value.map((plugin) => ({
+    label: plugin.label,
+    key: plugin.name,
+    count: searchEntityCurrentCounts.value[plugin.name] ?? '-',
+  })),
 )
 
 const { forceDetailSearchCacheOnlyFirstPage } = useDetailSearchCache()
@@ -339,48 +324,139 @@ const {
   bulkSelector,
 })
 
-usePage({ onReactivate: reactivateListeners, onDeactivated: deactivateListeners })
+usePage({
+  pageActive,
+  metaTitle: computed(() => currentSearchTerm.value || __('Extended search')),
+  noTranslateMetaTitle: computed(() => currentSearchTerm.value.length > 0),
+  onReactivate: () => {
+    reactivateListeners()
+    refetchQueries()
+  },
+  onDeactivated: deactivateListeners,
+})
+
+const setNewSearchState = (searchTerm: string) => {
+  checkedTicketIds.value.clear()
+  selectAllActive.value = false
+  bulkContext.value = { searchQuery: searchTerm, searchFilter: currentFilterSelector.value }
+  currentSearchResult.value = undefined
+}
+
+// Conditions under which each query needs to be running. Detail looks at
+// the visible entity only; counts looks at every other entity that has a
+// filter, or at every other entity whenever a search term is present.
+const shouldDetailRun = computed(() => currentSearchTerm.value.length > 0 || filterCount.value > 0)
+const shouldCountsRun = computed(
+  () =>
+    searchPluginNames.value.length > 1 &&
+    (entityFiltersSelector.value.length > 0 || currentSearchTerm.value.length > 0),
+)
+
+// Variables that define what the detail search is looking up. A change to
+// any of these means we must reset bulk-edit state, trim the previous-page
+// apollo cache for the prior variables (so paged results don't leak
+// across queries), and restart pagination at offset 0.
+const detailCriteria = computed<Pick<DetailSearchQueryVariables, 'search' | 'onlyIn' | 'filter'>>(
+  (currentValue) => {
+    const updatedValues = {
+      search: currentSearchTerm.value,
+      onlyIn: selectedEntity.value,
+      filter: currentFilterSelector.value,
+    }
+
+    return currentValue && isEqual(currentValue, updatedValues) ? currentValue : updatedValues
+  },
+)
 
 watch(
-  sanitizedSearchTerm,
-  (newValue, oldValue) => {
-    if (newValue !== oldValue) {
-      checkedTicketIds.value.clear()
-      selectAllActive.value = false
-      bulkContext.value = { searchQuery: newValue }
-    }
+  detailCriteria,
+  (current, previous) => {
+    setNewSearchState(current.search)
 
-    if (newValue && detailSearchQuery.isFirstRun()) {
-      searchQueriesLoad()
-      return
-    }
+    if (!previous) return
 
     resetPagination({
-      search: oldValue,
+      search: previous.search,
+      onlyIn: previous.onlyIn,
+      filter: previous.filter,
     })
 
-    if (oldValue && !newValue) searchQueriesStop()
-    else if (newValue && !oldValue) nextTick(searchQueriesStart)
+    // After a stop/start cycle with the same entity (e.g. clear search term then
+    // retype the same term), Vue Apollo retains the cached value in the result ref
+    // without triggering a reactive change. The watch(searchResult) callback therefore
+    // won't fire and currentSearchResult would be stuck on undefined, so we sync manually!
+    if (previous.onlyIn === current.onlyIn)
+      nextTick(() => {
+        // Only restore when the query is still supposed to be running — i.e. the
+        // user retyped the same term.  If shouldDetailRun is false (search was
+        // cleared) we must not re-populate from the retained cache value.
+        if (
+          shouldDetailRun.value &&
+          currentSearchResult.value === undefined &&
+          searchResult.value !== undefined
+        ) {
+          currentSearchResult.value = searchResult.value
+          searchEntityCurrentCounts.value[selectedEntity.value] =
+            searchResult.value.search.totalCount
+        }
+      })
   },
   { immediate: true },
 )
 
-watch(selectedEntity, (_, oldValue) => {
-  currentSearchResult.value = undefined
+watch(
+  shouldDetailRun,
+  (run, previousRun) => {
+    if (run && detailSearchQuery.isFirstRun()) detailSearchQuery.load()
+    else if (run && !previousRun) nextTick(() => detailSearchQuery.start())
+    else if (!run && previousRun) {
+      detailSearchQuery.stop()
+      delete searchEntityCurrentCounts.value[selectedEntity.value]
+    }
+  },
+  { immediate: true },
+)
 
-  checkedTicketIds.value.clear()
-  selectAllActive.value = false
-
-  resetPagination({
-    onlyIn: oldValue,
-  })
-})
+watch(
+  shouldCountsRun,
+  (run, previousRun) => {
+    if (run && searchCountsQuery.isFirstRun()) searchCountsQuery.load()
+    else if (run && !previousRun) {
+      nextTick(() => {
+        searchCountsQuery.start()
+        // Same retained-cache issue: if the counts result ref already holds the
+        // previous response (stop() didn't clear it), the watcher won't re-fire
+        // and counts would stay at '-'. Re-process the result manually.
+        nextTick(() => {
+          currentSearchCountsResult.value?.searchCounts.forEach(({ model, totalCount }) => {
+            if (model !== selectedEntity.value) {
+              searchEntityCurrentCounts.value[model] = totalCount
+            }
+          })
+        })
+      })
+    } else if (!run && previousRun) {
+      searchCountsQuery.stop()
+      // Strip everything except the visible entity's count — that one
+      const visible = searchEntityCurrentCounts.value[selectedEntity.value]
+      searchEntityCurrentCounts.value =
+        visible !== undefined ? { [selectedEntity.value]: visible } : {}
+    }
+  },
+  { immediate: true },
+)
 
 const currentSearchResultCount = computed(
   () => searchEntityCurrentCounts.value[selectedEntity.value],
 )
 
 const { visibleSkeletonLoadingCount } = useSkeletonLoadingCount(currentSearchResultCount)
+
+const searchResultItems = computed(() =>
+  shouldDetailRun.value
+    ? ((currentSearchResult.value?.search.items ?? []) as Record<string, unknown>[])
+    : [],
+)
 
 const breadcrumbItems = computed(() => [
   { label: __('Search') },
@@ -391,16 +467,7 @@ const breadcrumbItems = computed(() => [
   },
 ])
 
-watch(
-  () => router.currentRoute.value.query.entity,
-  (newValue) => {
-    nextTick(() => {
-      if (pageInactive.value) return
-
-      selectedEntity.value = newValue as EnumSearchableModels
-    })
-  },
-)
+const hasActiveSearch = computed(() => hasActiveFilters.value || currentSearchTerm.value.length > 0)
 
 setOnSuccessCallback(() => {
   resetPagination()
@@ -427,7 +494,12 @@ setOnSuccessCallback(() => {
         v-model:search="modelSearchTerm"
         v-model:selected-entity="selectedEntity"
         :search-tabs="searchTabs"
+        :filters-by-entity="filtersByEntity"
+        :entity-fields="entityFields"
+        :filter-count="filterCount"
         class="px-4"
+        @entity-filters-changed="(entity, value) => setEntityFilters(entity, value)"
+        @clear-filters="clearCurrentFilters"
       />
       <div
         :id="`tab-panel-${selectedEntity}`"
@@ -458,7 +530,7 @@ setOnSuccessCallback(() => {
           <template #empty-list>
             <SearchEmptyMessage
               class="absolute top-1/2 -translate-y-1/2 ltr:left-1/2 ltr:-translate-x-1/2 rtl:right-1/2 rtl:translate-x-1/2"
-              :search-term="sanitizedSearchTerm"
+              :has-active-search="hasActiveSearch"
               :results="searchResultItems"
               @clear-search-input="() => searchControlsInstance?.clearAndFocusSearch()"
             />

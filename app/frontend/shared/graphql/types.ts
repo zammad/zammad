@@ -3340,19 +3340,21 @@ export type QueriesPublicLinksArgs = {
 
 /** All available queries */
 export type QueriesSearchArgs = {
+  filter?: InputMaybe<SelectorNodeInput>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   onlyIn: EnumSearchableModels;
   orderBy?: InputMaybe<Scalars['String']['input']>;
   orderDirection?: InputMaybe<EnumOrderDirection>;
-  search: Scalars['String']['input'];
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** All available queries */
 export type QueriesSearchCountsArgs = {
+  filters?: InputMaybe<Array<SelectorObjectInput>>;
   onlyIn: Array<EnumSearchableModels>;
-  search: Scalars['String']['input'];
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -3614,6 +3616,30 @@ export type SearchResult = {
   items: Array<Item>;
   /** Total count of found entries across all pages */
   totalCount: Scalars['Int']['output'];
+};
+
+/** Selector node: either a single condition (name/operator/value) or a subclause (operator/conditions). */
+export type SelectorNodeInput = {
+  /** Nested conditions, present on subclauses only. */
+  conditions?: InputMaybe<Array<SelectorNodeInput>>;
+  /** Target attribute, e.g. "ticket.title", conditions only. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Block operator (AND/OR/NOT) for subclauses or the condition operator (e.g. "is", "contains") for single conditions. */
+  operator: Scalars['String']['input'];
+  /** Optional pre-condition (e.g. "current_user.id", "not_set"), conditions only. */
+  preCondition?: InputMaybe<Scalars['String']['input']>;
+  /** Optional range unit for relative time operators (e.g. "minute", "day"), conditions only. */
+  range?: InputMaybe<Scalars['String']['input']>;
+  /** Condition value (primitive or array), conditions only. */
+  value?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+/** Per-object selector, pairing a searchable model with its selector conditions. */
+export type SelectorObjectInput = {
+  /** Searchable model the selector applies to, e.g. Ticket */
+  object: EnumSearchableModels;
+  /** Selector conditions to apply for the given object */
+  selector: SelectorNodeInput;
 };
 
 /** Session of the currently logged-in user */
@@ -4422,6 +4448,8 @@ export type TicketBulkSelectorInput = {
   entityIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Ticket overview for selecting tickets */
   overviewId?: InputMaybe<Scalars['ID']['input']>;
+  /** Advanced search filters as selector conditions */
+  searchFilter?: InputMaybe<SelectorNodeInput>;
   /** Search query to filter tickets */
   searchQuery?: InputMaybe<Scalars['String']['input']>;
 };
@@ -4813,6 +4841,8 @@ export type TicketMacrosSelectorInput = {
   entityIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Ticket overview for selecting tickets and their groups */
   overviewId?: InputMaybe<Scalars['ID']['input']>;
+  /** Advanced search filters as selector conditions */
+  searchFilter?: InputMaybe<SelectorNodeInput>;
   /** Search query to filter tickets and their groups */
   searchQuery?: InputMaybe<Scalars['String']['input']>;
 };
@@ -6069,6 +6099,7 @@ export type UserTaskbarItem = {
 /** Entity representing taskbar item search */
 export type UserTaskbarItemEntitySearch = {
   __typename?: 'UserTaskbarItemEntitySearch';
+  filters?: Maybe<Scalars['String']['output']>;
   model?: Maybe<Scalars['String']['output']>;
   query?: Maybe<Scalars['String']['output']>;
 };
@@ -6145,6 +6176,7 @@ export type OrganizationInfoForPopoverQuery = { __typename?: 'Queries', organiza
 export type DetailSearchQueryVariables = Exact<{
   search: Scalars['String']['input'];
   onlyIn: EnumSearchableModels;
+  filter?: InputMaybe<SelectorNodeInput>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Scalars['String']['input']>;
@@ -6181,6 +6213,7 @@ export type QuickSearchQuery = { __typename?: 'Queries', quickSearchOrganization
 export type SearchCountsQueryVariables = Exact<{
   search: Scalars['String']['input'];
   onlyIn: Array<EnumSearchableModels> | EnumSearchableModels;
+  filters?: InputMaybe<Array<SelectorObjectInput> | SelectorObjectInput>;
 }>;
 
 
@@ -6438,7 +6471,7 @@ export type UserCurrentTaskbarItemAttributesFragment = { __typename?: 'UserTaskb
     | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
     | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
     | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-    | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null }
+    | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
     | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
    | null };
 
@@ -6463,7 +6496,7 @@ export type UserCurrentTaskbarItemAddMutation = { __typename?: 'Mutations', user
         | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
         | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
         | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null }
+        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
         | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
        | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, messagePlaceholder?: Array<string> | null, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
 
@@ -6490,7 +6523,7 @@ export type UserCurrentTaskbarItemTouchLastContactMutation = { __typename?: 'Mut
         | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
         | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
         | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null }
+        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
         | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
        | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, messagePlaceholder?: Array<string> | null, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
 
@@ -6504,7 +6537,7 @@ export type UserCurrentTaskbarItemUpdateMutation = { __typename?: 'Mutations', u
         | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
         | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
         | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null }
+        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
         | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
        | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, messagePlaceholder?: Array<string> | null, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
 
@@ -6535,7 +6568,7 @@ export type UserCurrentTaskbarItemListQuery = { __typename?: 'Queries', userCurr
       | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
       | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
       | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-      | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null }
+      | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
       | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
      | null }> | null };
 
@@ -6567,13 +6600,13 @@ export type UserCurrentTaskbarItemUpdatesSubscription = { __typename?: 'Subscrip
         | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
         | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
         | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null }
+        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
         | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
        | null } | null, updateItem?: { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, formNewArticlePresent: boolean, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity?:
         | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
         | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
         | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null }
+        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
         | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
        | null } | null } };
 

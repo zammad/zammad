@@ -16,5 +16,5 @@ export interface Tab {
   default?: boolean
   icon?: string
   tooltip?: string
-  count?: number
+  count?: number | string
 }

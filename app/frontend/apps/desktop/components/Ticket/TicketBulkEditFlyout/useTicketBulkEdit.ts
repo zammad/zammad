@@ -4,7 +4,11 @@ import gql from 'graphql-tag'
 import { uniq } from 'lodash-es'
 import { computed, inject, provide, ref, toRef } from 'vue'
 
-import type { TicketBulkSelectorInput, TicketMacrosSelectorInput } from '#shared/graphql/types.ts'
+import type {
+  SelectorNodeInput,
+  TicketBulkSelectorInput,
+  TicketMacrosSelectorInput,
+} from '#shared/graphql/types.ts'
 import { getApolloClient } from '#shared/server/apollo/client.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -19,11 +23,13 @@ export const TICKET_BULK_EDIT_SYMBOL = Symbol('ticket-bulk-edit')
 export interface TicketBulkOverviewContext {
   overviewId: ID
   searchQuery?: never
+  searchFilter?: never
 }
 
 export interface TicketBulkSearchContext {
   overviewId?: never
-  searchQuery: string
+  searchQuery?: string
+  searchFilter?: SelectorNodeInput | null
 }
 
 export const useTicketBulkEdit = () => {
@@ -52,8 +58,11 @@ export const useTicketBulkEdit = () => {
 
     if (bulkCount.value && bulkContext.value) {
       if ('overviewId' in bulkContext.value) selector = { overviewId: bulkContext.value.overviewId }
-      else if ('searchQuery' in bulkContext.value)
-        selector = { searchQuery: bulkContext.value.searchQuery }
+      else if ('searchQuery' in bulkContext.value || 'searchFilter' in bulkContext.value)
+        selector = {
+          searchQuery: bulkContext.value.searchQuery,
+          searchFilter: bulkContext.value.searchFilter,
+        }
     } else selector = { entityIds: Array.from(ticketIds.value) }
 
     return selector
@@ -84,8 +93,11 @@ export const useTicketBulkEdit = () => {
 
     if (bulkCount.value && bulkContext.value) {
       if ('overviewId' in bulkContext.value) selector = { overviewId: bulkContext.value.overviewId }
-      else if ('searchQuery' in bulkContext.value)
-        selector = { searchQuery: bulkContext.value.searchQuery }
+      else if ('searchQuery' in bulkContext.value || 'searchFilter' in bulkContext.value)
+        selector = {
+          searchQuery: bulkContext.value.searchQuery,
+          searchFilter: bulkContext.value.searchFilter,
+        }
     } else selector = { entityIds: groupIds.value }
 
     return selector

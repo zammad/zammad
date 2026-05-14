@@ -42,12 +42,25 @@ class Service::Search < Service::Base
   end
 
   def search_single_model(model)
+    model_options = options_for_model(model)
+
     if !SearchIndexBackend.enabled? || !models.dig(model, :direct_search_index)
-      return model.search(query:, current_user:, **options)
+      return model.search(query:, current_user:, **model_options)
     end
 
-    result = SearchIndexBackend.search_by_index(query, model.name, options)
+    result = SearchIndexBackend.search_by_index(query, model.name, model_options)
     enrich_with_metadata model, result
+  end
+
+  # When :per_object_conditions is present, each searched model gets its own
+  # :condition value (the matching entry in the hash, or nil if absent),
+  # so a single Service::Search call can apply different filters per model.
+  def options_for_model(model)
+    return options if !options.key?(:per_object_conditions)
+
+    options
+      .except(:per_object_conditions)
+      .merge(condition: options[:per_object_conditions][model])
   end
 
   def enrich_with_metadata(model, result)
