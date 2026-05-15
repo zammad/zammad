@@ -2,7 +2,7 @@
 
 import { injectLocal, provideLocal } from '@vueuse/shared'
 import { isEqual } from 'lodash-es'
-import { computed, ref, type InjectionKey, type Ref } from 'vue'
+import { computed, ref, watch, type InjectionKey, type Ref } from 'vue'
 
 import { useSessionStore } from '#shared/stores/session.ts'
 import emitter from '#shared/utils/emitter.ts'
@@ -76,6 +76,10 @@ export const useProvideTicketSidebar = (context: Ref<TicketSidebarContext>) => {
   })
 
   const hasSidebar = computed(() => Boolean(activeSidebar.value))
+
+  watch(hasSidebar, () => {
+    emitter.emit('resize-layout')
+  })
 
   provideLocal(TICKET_SIDEBAR_SYMBOL, {
     shownSidebars,

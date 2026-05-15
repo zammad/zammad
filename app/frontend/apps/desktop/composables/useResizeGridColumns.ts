@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useLocalStorage, useWindowSize } from '@vueuse/core'
+import { useLocalStorage, useWindowSize, watchThrottled } from '@vueuse/core'
 import { shallowRef, computed, type Ref } from 'vue'
+
+import emitter from '#shared/utils/emitter.ts'
 
 import { SidebarPosition } from '#desktop/components/layout/types.ts'
 
@@ -57,15 +59,27 @@ export const useResizeGridColumns = (
 
   const collapseSidebar = () => {
     isSidebarCollapsed.value = true
+    emitter.emit('resize-layout')
   }
 
   const expandSidebar = () => {
     isSidebarCollapsed.value = false
+    emitter.emit('resize-layout')
   }
 
   const resetSidebarWidth = () => {
     currentSidebarWidth.value = defaultSidebarWidth
   }
+
+  watchThrottled(
+    currentSidebarWidth,
+    () => {
+      emitter.emit('resize-layout')
+    },
+    {
+      throttle: 100,
+    },
+  )
 
   return {
     currentSidebarWidth,

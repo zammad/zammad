@@ -85,7 +85,7 @@ describe('ResizeLine', () => {
 
     const resizeFunction = vi.fn()
 
-    useOnEmitter('resize-element', resizeFunction)
+    useOnEmitter('resize-layout', resizeFunction)
 
     await wrapper.events.click(wrapper.getByRole('button'))
     expect(resizeFunction).toHaveBeenCalledTimes(1)

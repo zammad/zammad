@@ -448,7 +448,7 @@ useOnEmitter('close-popover', () => {
 // We resize the sidebar but since it is a grid we are changing css values
 // Only changes on the window size and element bounding are detected
 // In this cases we need to trigger a manual update
-useOnEmitter('resize-element', () => {
+useOnEmitter('resize-layout', () => {
   if (showPopover.value && targetElementBounds.value) closePopover()
 })
 </script>

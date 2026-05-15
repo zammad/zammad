@@ -8,7 +8,7 @@ type StaticEvents = {
   'focus-quick-search-field': void
   'reset-quick-search-field': void
   'main-sidebar-transition': void
-  'resize-element': void
+  'resize-layout': void
   'close-popover': void
   'websocket-open': void
   'websocket-close': void

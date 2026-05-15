@@ -62,7 +62,7 @@ const addRemoveResizingListener = (event: 'mouseup' | 'touchend') => {
 const handleMousedown = (event: MouseEvent) => {
   if (props.disabled) return
 
-  emitter.emit('resize-element')
+  emitter.emit('resize-layout')
   emit('mousedown-event', event)
   resizing.value = true
 
@@ -72,7 +72,7 @@ const handleMousedown = (event: MouseEvent) => {
 const handleTouchstart = (event: TouchEvent) => {
   if (props.disabled) return
 
-  emitter.emit('resize-element')
+  emitter.emit('resize-layout')
   emit('touchstart-event', event)
   resizing.value = true
 
@@ -82,7 +82,7 @@ const handleTouchstart = (event: TouchEvent) => {
 const handleDoubleClick = (event: MouseEvent) => {
   if (props.disabled) return
 
-  emitter.emit('resize-element')
+  emitter.emit('resize-layout')
   emit('dblclick-event', event)
   resizeLine.value?.blur()
 }
