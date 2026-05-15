@@ -28,19 +28,22 @@ class Service::Template::Interpolation::Interpolator < Service::Base
     # NeverShouldHappen(TM)
     return JSON.parse(template) if mappings.blank?
 
-    replace(template, mappings)
-
-    if mode == :json
+    case mode
+    when :url
+      replace_url_encoded(template, mappings)
+      template
+    when :json
+      replace(template, mappings)
       begin
         valid!(template)
       rescue => e
         return { error: e.message }
       end
-
-      return JSON.parse(template)
+      JSON.parse(template)
+    else
+      replace(template, mappings)
+      template
     end
-
-    template
   end
 
   # The allowed classes and methods are defined within so called track classes,

@@ -6,7 +6,7 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
 
   # rubocop:disable Lint/InterpolationCheck
   describe '#execute' do
-    subject(:service_result) { described_class.new(template: template, tracks: tracks, additional_track_generate_data: webhook_data).execute }
+    subject(:service_result) { described_class.execute(template: template, tracks: tracks, additional_track_generate_data: webhook_data) }
 
     let(:ticket)                   { create(:ticket, time_unit: 123) }
     let(:article)                  { create(:ticket_article, body: "Text with\nnew line.") }
@@ -532,6 +532,42 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
         it 'returns a valid json with webhook information"', :aggregate_failures do
           expect(service_result['text']).to eq("# #{ticket.title}")
         end
+      end
+    end
+  end
+
+  describe '#execute with mode: :url' do
+    subject(:service_result) { described_class.execute(template: template, tracks: tracks, mode: :url) }
+
+    let(:ticket)  { create(:ticket) }
+    let(:article) { create(:ticket_article) }
+    let(:tracks)  { { ticket:, article: } }
+
+    context 'when the template contains multiple variables' do
+      let(:template) { 'http://api.example.com/webhook/tickets/#{ticket.id}?number=#{ticket.number}' }
+
+      it 'interpolates all values' do
+        expect(service_result).to eq("http://api.example.com/webhook/tickets/#{ticket.id}?number=#{ticket.number}")
+      end
+    end
+
+    # Regression: user-controlled fields must not be able to inject additional
+    # query parameters or alter the request target via URL meta-characters.
+    context 'when a user-controlled value attempts query-parameter injection' do
+      let(:ticket)   { create(:ticket, title: 'evil&redirect=https://attacker.example.com/&x=') }
+      let(:template) { 'http://api.example.com/webhook?title=#{ticket.title}' }
+
+      it 'URL-encodes the value so injected separators are neutralized' do
+        expect(service_result).to eq("http://api.example.com/webhook?title=#{CGI.escape(ticket.title)}")
+      end
+    end
+
+    context 'when a user-controlled value attempts host manipulation' do
+      let(:ticket)   { create(:ticket, title: '@attacker.example.com') }
+      let(:template) { 'http://api.example.com/webhook/#{ticket.title}' }
+
+      it 'URL-encodes the @ so the host cannot be hijacked' do
+        expect(service_result).to eq('http://api.example.com/webhook/%40attacker.example.com')
       end
     end
   end

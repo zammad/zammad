@@ -164,7 +164,7 @@ class TriggerWebhookJob < ApplicationJob
     interpolator = Service::Template::Interpolation::Interpolator.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
       template: endpoint,
       tracks:,
-      mode:     :string,
+      mode:     :url,
     )
 
     interpolator.execute
