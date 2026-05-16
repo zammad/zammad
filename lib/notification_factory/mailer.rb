@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class NotificationFactory::Mailer
+  NotificationSender = Struct.new(:email)
+  private_constant :NotificationSender
 
 =begin
 
@@ -177,9 +179,55 @@ returns
         body:         data[:body],
         content_type: content_type,
         attachments:  data[:attachments],
+        security:     secure_mailing_security(sender, data[:recipient]),
       },
       true
     )
+  end
+
+  def self.secure_mailing_security(sender, recipient)
+    return if !Setting.get('smime_sign_system_notifications') && !Setting.get('pgp_sign_system_notifications')
+
+    notification_sender = NotificationSender.new(sender_email_address(sender))
+
+    secure_mailing_security_for(
+      SecureMailing::SMIME,
+      SecureMailing::SMIME::NotificationOptions,
+      signing_setting: 'smime_sign_system_notifications',
+      sender:          notification_sender,
+      recipient:       recipient,
+    ) || secure_mailing_security_for(
+      SecureMailing::PGP,
+      SecureMailing::PGP::NotificationOptions,
+      signing_setting: 'pgp_sign_system_notifications',
+      sender:          notification_sender,
+      recipient:       recipient,
+    )
+  end
+
+  def self.secure_mailing_security_for(backend, notification_options, signing_setting:, sender:, recipient:)
+    return if !Setting.get(signing_setting)
+    return if !backend.active?
+
+    security = notification_options.process(
+      from:       sender,
+      recipients: [recipient[:email]],
+      perform:    {
+        sign:    true,
+        encrypt: false,
+      },
+    )
+
+    return if !security[:sign][:success]
+
+    security
+  rescue => e
+    Rails.logger.info "Unable to sign system notification from #{sender.email} to #{recipient[:email]} with #{notification_options}: #{e.message}"
+    nil
+  end
+
+  def self.sender_email_address(sender)
+    Mail::AddressList.new(sender).addresses.first.address
   end
 
 =begin

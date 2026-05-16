@@ -5736,6 +5736,33 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('S/MIME signing for system notifications'),
+  name:        'smime_sign_system_notifications',
+  area:        'Integration::SMIME',
+  description: __('Defines if system notification emails are S/MIME signed.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'smime_sign_system_notifications',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:       3,
+    permission: ['admin.integration'],
+  },
+  frontend:    false,
+)
+
+Setting.create_if_not_exists(
   title:       __('PGP integration'),
   name:        'pgp_integration',
   area:        'Integration::Switch',
@@ -5775,6 +5802,33 @@ Setting.create_if_not_exists(
     permission: ['admin.integration'],
   },
   frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('PGP signing for system notifications'),
+  name:        'pgp_sign_system_notifications',
+  area:        'Integration::PGP',
+  description: __('Defines if system notification emails are PGP signed.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'pgp_sign_system_notifications',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:       3,
+    permission: ['admin.integration'],
+  },
+  frontend:    false,
 )
 
 Setting.create_if_not_exists(

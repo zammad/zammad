@@ -113,7 +113,7 @@ msgid "%s (option)"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:282
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:565
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:569
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:266
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:353
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:145
@@ -677,7 +677,7 @@ msgstr ""
 msgid "AI Agents"
 msgstr ""
 
-#: db/seeds/settings.rb:6170
+#: db/seeds/settings.rb:6224
 msgid "AI Knowledge Base Answer from Ticket"
 msgstr ""
 
@@ -689,7 +689,7 @@ msgstr ""
 msgid "AI Provider"
 msgstr ""
 
-#: db/seeds/settings.rb:6093
+#: db/seeds/settings.rb:6147
 msgid "AI Provider Config"
 msgstr ""
 
@@ -752,7 +752,7 @@ msgstr ""
 msgid "AI error log"
 msgstr ""
 
-#: db/seeds/settings.rb:6076
+#: db/seeds/settings.rb:6130
 msgid "AI provider"
 msgstr ""
 
@@ -1130,8 +1130,8 @@ msgstr ""
 msgid "Adapter"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:90
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:75
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:95
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:80
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:86
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:38
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:143
@@ -1183,7 +1183,7 @@ msgstr ""
 msgid "Add Bot"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:77
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:82
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:88
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:5
 msgid "Add Certificate"
@@ -1193,12 +1193,12 @@ msgstr ""
 msgid "Add Key"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:120
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:125
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:6
 msgid "Add Private Key"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:92
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:97
 msgid "Add Public or Private Key"
 msgstr ""
 
@@ -1281,7 +1281,7 @@ msgstr ""
 msgid "Add empty checklist"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:358
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:355
 msgid "Add filter"
 msgstr ""
 
@@ -1599,7 +1599,7 @@ msgstr ""
 msgid "Allow AI Agent to select multiple categories from all possible values."
 msgstr ""
 
-#: db/seeds/settings.rb:6061
+#: db/seeds/settings.rb:6115
 msgid "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
 
@@ -1635,7 +1635,7 @@ msgstr ""
 msgid "Allow users to create new tags."
 msgstr ""
 
-#: db/seeds/settings.rb:6052
+#: db/seeds/settings.rb:6106
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr ""
 
@@ -1953,7 +1953,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:67
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:68
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:179
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:239
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:191
@@ -2287,7 +2287,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:5899
+#: db/seeds/settings.rb:5953
 msgid "Authenticator App"
 msgstr ""
 
@@ -2336,7 +2336,7 @@ msgstr ""
 msgid "Auto Assignment Selector"
 msgstr ""
 
-#: db/seeds/settings.rb:6038
+#: db/seeds/settings.rb:6092
 msgid "Auto Shutdown"
 msgstr ""
 
@@ -3244,7 +3244,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
 #: db/seeds/permissions.rb:344
-#: db/seeds/settings.rb:6011
+#: db/seeds/settings.rb:6065
 msgid "Checklists"
 msgstr ""
 
@@ -3272,11 +3272,11 @@ msgstr ""
 msgid "Choose date"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/pgp.jst.eco:10
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:24
 msgid "Choose the default behavior of the PGP integration on per group basis. If signing or encrypting is not possible, the setting has no effect. Agents can always manually alter the behavior for each article."
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/smime.jst.eco:11
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:25
 msgid "Choose the default behavior of the S/MIME integration on per group basis. If signing or encrypting is not possible, the setting has no effect. Agents can always manually alter the behavior for each article."
 msgstr ""
 
@@ -3410,7 +3410,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:405
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:649
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:653
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:373
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:319
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:381
@@ -3596,7 +3596,7 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr ""
 
-#: db/seeds/settings.rb:5818
+#: db/seeds/settings.rb:5872
 msgid "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO header acceptance."
 msgstr ""
 
@@ -3629,7 +3629,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:5891
+#: db/seeds/settings.rb:5945
 msgid "Complete the sign-in with your security key."
 msgstr ""
 
@@ -4672,8 +4672,8 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/pgp.jst.eco:9
-#: app/assets/javascripts/app/views/integration/smime.jst.eco:10
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:23
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:24
 msgid "Default Behavior"
 msgstr ""
 
@@ -4953,7 +4953,7 @@ msgstr ""
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:5735
+#: db/seeds/settings.rb:5762
 msgid "Defines if PGP encryption is enabled or not."
 msgstr ""
 
@@ -4977,7 +4977,7 @@ msgstr ""
 msgid "Defines if application is used as online service."
 msgstr ""
 
-#: db/seeds/settings.rb:5842
+#: db/seeds/settings.rb:5896
 msgid "Defines if calendar weeks are shown in the picker of date/datetime fields to easily select the correct date."
 msgstr ""
 
@@ -4985,7 +4985,7 @@ msgstr ""
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:5934
+#: db/seeds/settings.rb:5988
 msgid "Defines if recovery codes can be used by users in the event they lose access to other two-factor authentication methods."
 msgstr ""
 
@@ -4993,7 +4993,15 @@ msgstr ""
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:6079
+#: db/seeds/settings.rb:5804
+msgid "Defines if system notification emails are PGP signed."
+msgstr ""
+
+#: db/seeds/settings.rb:5735
+msgid "Defines if system notification emails are S/MIME signed."
+msgstr ""
+
+#: db/seeds/settings.rb:6133
 msgid "Defines if the AI provider is configured."
 msgstr ""
 
@@ -5005,7 +5013,7 @@ msgstr ""
 msgid "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:5777
+#: db/seeds/settings.rb:5831
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
 msgstr ""
 
@@ -5017,11 +5025,11 @@ msgstr ""
 msgid "Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery)."
 msgstr ""
 
-#: db/seeds/settings.rb:6187
+#: db/seeds/settings.rb:6241
 msgid "Defines if the bubble menu feature of the richtext editor is enabled. Note that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
-#: db/seeds/settings.rb:5986
+#: db/seeds/settings.rb:6040
 msgid "Defines if the change of the primary organization of a user will update the 100 most recent tickets for this user as well."
 msgstr ""
 
@@ -5049,11 +5057,11 @@ msgstr ""
 msgid "Defines if the time accounting types are enabled."
 msgstr ""
 
-#: db/seeds/settings.rb:5902
+#: db/seeds/settings.rb:5956
 msgid "Defines if the two-factor authentication method authenticator app is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:5870
+#: db/seeds/settings.rb:5924
 msgid "Defines if the two-factor authentication method security keys is enabled or not."
 msgstr ""
 
@@ -5205,7 +5213,7 @@ msgstr ""
 msgid "Defines the HTTP protocol of your instance."
 msgstr ""
 
-#: db/seeds/settings.rb:5763
+#: db/seeds/settings.rb:5790
 msgid "Defines the PGP config."
 msgstr ""
 
@@ -5281,7 +5289,7 @@ msgstr ""
 msgid "Defines the duration of customer activity (in seconds) on a call until the user profile dialog is shown."
 msgstr ""
 
-#: db/seeds/settings.rb:6159
+#: db/seeds/settings.rb:6213
 msgid "Defines the fixed instructions that guide the AI Writing Assistant on e.g. how to format its output."
 msgstr ""
 
@@ -5434,7 +5442,7 @@ msgstr ""
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr ""
 
-#: db/seeds/settings.rb:6070
+#: db/seeds/settings.rb:6124
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 
@@ -5695,15 +5703,15 @@ msgstr ""
 msgid "Desktop"
 msgstr ""
 
-#: db/seeds/settings.rb:6049
+#: db/seeds/settings.rb:6103
 msgid "Desktop BETA UI Switch"
 msgstr ""
 
-#: db/seeds/settings.rb:6058
+#: db/seeds/settings.rb:6112
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr ""
 
-#: db/seeds/settings.rb:6067
+#: db/seeds/settings.rb:6121
 msgid "Desktop BETA UI Switch Roles"
 msgstr ""
 
@@ -5874,7 +5882,7 @@ msgstr ""
 msgid "Discard snapshot"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:228
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:229
 msgid "Discard unsaved reply"
 msgstr ""
 
@@ -5934,7 +5942,7 @@ msgstr ""
 msgid "Do not sign email"
 msgstr ""
 
-#: db/seeds/settings.rb:5996
+#: db/seeds/settings.rb:6050
 msgid "Do not update any tickets."
 msgstr ""
 
@@ -5978,7 +5986,7 @@ msgstr ""
 msgid "Domain"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:122
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:127
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:14
 msgid "Domain Alias"
 msgstr ""
@@ -6484,7 +6492,7 @@ msgstr ""
 msgid "Enable REST API using tokens (not username/email address and password). Each user needs to create its own access tokens in user profile."
 msgstr ""
 
-#: db/seeds/settings.rb:5931
+#: db/seeds/settings.rb:5985
 msgid "Enable Recovery Codes"
 msgstr ""
 
@@ -6504,7 +6512,7 @@ msgstr ""
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 
-#: db/seeds/settings.rb:6014
+#: db/seeds/settings.rb:6068
 msgid "Enable checklists."
 msgstr ""
 
@@ -6520,11 +6528,11 @@ msgstr ""
 msgid "Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available)."
 msgstr ""
 
-#: db/seeds/settings.rb:6173
+#: db/seeds/settings.rb:6227
 msgid "Enable or disable AI generation of knowledge base answers from ticket content."
 msgstr ""
 
-#: db/seeds/settings.rb:6041
+#: db/seeds/settings.rb:6095
 msgid "Enable or disable self-shutdown of Zammad processes after significant configuration changes. This should only be used if the controlling process manager like systemd or docker supports an automatic restart policy."
 msgstr ""
 
@@ -6536,11 +6544,11 @@ msgstr ""
 msgid "Enable or disable the maintenance mode of Zammad. If enabled, all non-administrators get logged out and only administrators can start a new session."
 msgstr ""
 
-#: db/seeds/settings.rb:6112
+#: db/seeds/settings.rb:6166
 msgid "Enable or disable the ticket summary."
 msgstr ""
 
-#: db/seeds/settings.rb:6145
+#: db/seeds/settings.rb:6199
 msgid "Enable or disable the writing assistant text tools."
 msgstr ""
 
@@ -6577,7 +6585,7 @@ msgstr ""
 msgid "Enables a warning to users during ticket creation if there is an existing ticket with the same attributes."
 msgstr ""
 
-#: db/seeds/settings.rb:5788
+#: db/seeds/settings.rb:5842
 msgid "Enables button for user authentication via %s. The button will redirect to /auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR ranges from which authentication headers (%s, %s, %s) are accepted. Leave empty to accept from any IP (not recommended for production)."
 msgstr ""
 
@@ -6711,11 +6719,11 @@ msgstr ""
 msgid "Endpoint Settings"
 msgstr ""
 
-#: db/seeds/settings.rb:5958
+#: db/seeds/settings.rb:6012
 msgid "Enforce the setup of the two-factor authentication"
 msgstr ""
 
-#: db/seeds/settings.rb:5965
+#: db/seeds/settings.rb:6019
 msgid "Enforced for user roles"
 msgstr ""
 
@@ -6741,7 +6749,7 @@ msgstr ""
 msgid "Enter Title…"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:125
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:130
 msgid "Enter a domain name that will be associated with this key, e.g. example.com."
 msgstr ""
 
@@ -7778,7 +7786,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:5923
+#: db/seeds/settings.rb:5977
 msgid "Get the security code from the authenticator app on your device."
 msgstr ""
 
@@ -9840,8 +9848,8 @@ msgstr ""
 msgid "Loading failed, please try again later."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:190
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:183
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:195
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:103
 #: app/assets/javascripts/app/controllers/password_reset.coffee:92
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:46
@@ -12503,16 +12511,20 @@ msgstr ""
 msgid "PGP"
 msgstr ""
 
-#: db/seeds/settings.rb:5774
+#: db/seeds/settings.rb:5828
 msgid "PGP Recipient Alias Configuration"
 msgstr ""
 
-#: db/seeds/settings.rb:5760
+#: db/seeds/settings.rb:5787
 msgid "PGP config"
 msgstr ""
 
-#: db/seeds/settings.rb:5732
+#: db/seeds/settings.rb:5759
 msgid "PGP integration"
+msgstr ""
+
+#: db/seeds/settings.rb:5801
+msgid "PGP signing for system notifications"
 msgstr ""
 
 #: db/seeds/settings.rb:2092
@@ -12678,7 +12690,7 @@ msgstr ""
 msgid "Paste in CSV data"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:106
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:111
 msgid "Paste key"
 msgstr ""
 
@@ -12792,7 +12804,7 @@ msgstr ""
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:236
 msgid "Pin this panel"
 msgstr ""
 
@@ -13063,7 +13075,7 @@ msgstr ""
 msgid "Pretty Date"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:292
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:297
 msgid "Pretty Good Privacy (PGP) enables you to send digitally signed and encrypted messages."
 msgstr ""
 
@@ -13867,7 +13879,7 @@ msgstr ""
 msgid "Requirements"
 msgstr ""
 
-#: db/seeds/settings.rb:5961
+#: db/seeds/settings.rb:6015
 msgid "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
 
@@ -13943,7 +13955,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:184
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:185
 msgid "Resize article panel"
 msgstr ""
 
@@ -13991,7 +14003,7 @@ msgstr ""
 msgid "Result:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:550
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:613
 msgid "Results"
 msgstr ""
 
@@ -14026,7 +14038,7 @@ msgstr ""
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6184
+#: db/seeds/settings.rb:6238
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -14118,12 +14130,16 @@ msgstr ""
 msgid "S/MIME config"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:253
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:258
 msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgstr ""
 
 #: db/seeds/settings.rb:5690
 msgid "S/MIME integration"
+msgstr ""
+
+#: db/seeds/settings.rb:5732
+msgid "S/MIME signing for system notifications"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
@@ -14222,7 +14238,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
-#: db/seeds/settings.rb:5806
+#: db/seeds/settings.rb:5860
 msgid "SSO"
 msgstr ""
 
@@ -14387,7 +14403,7 @@ msgstr ""
 msgid "Scroll down to see new messages"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:264
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:265
 msgid "Scroll to bottom"
 msgstr ""
 
@@ -14399,11 +14415,11 @@ msgstr ""
 msgid "Scroll to start"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:257
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:245
 msgid "Scroll towards end"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:207
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:201
 msgid "Scroll towards start"
 msgstr ""
 
@@ -14413,7 +14429,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:548
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:611
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
 msgid "Search"
@@ -14665,7 +14681,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:5867
+#: db/seeds/settings.rb:5921
 msgid "Security Keys"
 msgstr ""
 
@@ -14781,7 +14797,7 @@ msgstr ""
 msgid "Select all entries"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:354
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:351
 msgid "Select attribute"
 msgstr ""
 
@@ -14859,15 +14875,15 @@ msgstr ""
 msgid "Selector"
 msgstr ""
 
-#: app/graphql/gql/types/input/selector/node_input_type.rb:28
+#: app/graphql/gql/types/input/selector/node_input_type.rb:29
 msgid "Selector exceeded maximum nesting depth."
 msgstr ""
 
-#: app/graphql/gql/types/input/selector/node_input_type.rb:32
+#: app/graphql/gql/types/input/selector/node_input_type.rb:33
 msgid "Selector exceeded maximum number of nodes."
 msgstr ""
 
-#: app/graphql/gql/types/input/selector/node_input_type.rb:48
+#: app/graphql/gql/types/input/selector/node_input_type.rb:49
 msgid "Selector node must be either a subclause (operator + conditions) or a single condition."
 msgstr ""
 
@@ -15019,8 +15035,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:409
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:499
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:252
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:215
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:257
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:220
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:78
 msgid "Server operation failed."
 msgstr ""
@@ -15310,7 +15326,7 @@ msgstr ""
 msgid "Show authenticator app secret"
 msgstr ""
 
-#: db/seeds/settings.rb:5839
+#: db/seeds/settings.rb:5893
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr ""
 
@@ -15343,7 +15359,7 @@ msgstr ""
 msgid "Show more"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsOverflowMenu.vue:92
+#: app/frontend/apps/desktop/components/CommonTabs/TabsOverflowMenu.vue:85
 msgid "Show more tabs"
 msgstr ""
 
@@ -15432,6 +15448,11 @@ msgstr ""
 msgid "Sign"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:18
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:19
+msgid "Sign built-in system notification emails if possible."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:641
 msgid "Sign email (if not possible, discard notification)"
 msgstr ""
@@ -15471,6 +15492,11 @@ msgstr ""
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/logout.ts:7
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:179
 msgid "Sign out"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:16
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:17
+msgid "Sign system notification emails"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/signup.coffee:18
@@ -15909,7 +15935,7 @@ msgstr ""
 msgid "Store"
 msgstr ""
 
-#: db/seeds/settings.rb:6096
+#: db/seeds/settings.rb:6150
 msgid "Stores the AI provider configuration."
 msgstr ""
 
@@ -15921,7 +15947,7 @@ msgstr ""
 msgid "Stores the GitLab configuration."
 msgstr ""
 
-#: db/seeds/settings.rb:6126
+#: db/seeds/settings.rb:6180
 msgid "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
 
@@ -16106,6 +16132,11 @@ msgstr ""
 
 #: db/seeds/settings.rb:17
 msgid "System Init Done"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:9
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:10
+msgid "System Notifications"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
@@ -16908,7 +16939,7 @@ msgid "The image is invalid."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:39
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:111
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:116
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:113
 #: app/assets/javascripts/app/controllers/widget/import.coffee:64
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:62
@@ -18306,7 +18337,7 @@ msgstr ""
 msgid "Ticket Number ignore system_id"
 msgstr ""
 
-#: db/seeds/settings.rb:5983
+#: db/seeds/settings.rb:6037
 msgid "Ticket Organization Reassignment"
 msgstr ""
 
@@ -18371,11 +18402,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
 #: db/seeds/permissions.rb:239
-#: db/seeds/settings.rb:6109
+#: db/seeds/settings.rb:6163
 msgid "Ticket Summary"
 msgstr ""
 
-#: db/seeds/settings.rb:6123
+#: db/seeds/settings.rb:6177
 msgid "Ticket Summary Config"
 msgstr ""
 
@@ -19031,7 +19062,7 @@ msgstr ""
 msgid "Triggers activated by actions are executed whenever a ticket is created or updated, while triggers activated by time events are executed when certain times are reached (e.g. pending time, escalation)."
 msgstr ""
 
-#: db/seeds/settings.rb:5815
+#: db/seeds/settings.rb:5869
 msgid "Trusted SSO Proxy IPs"
 msgstr ""
 
@@ -19315,11 +19346,11 @@ msgstr ""
 msgid "Unlock"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:236
 msgid "Unpin this panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:276
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:277
 msgid "Unread messages count"
 msgstr ""
 
@@ -19339,7 +19370,7 @@ msgstr ""
 msgid "Unseen notifications count"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:575
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:579
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:273
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:337
 msgid "Unselect option"
@@ -19392,8 +19423,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:89
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:88
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco:12
-#: app/assets/javascripts/app/views/integration/pgp.jst.eco:12
-#: app/assets/javascripts/app/views/integration/smime.jst.eco:13
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:26
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:27
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:25
 #: app/assets/javascripts/app/views/session.jst.eco:12
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
@@ -19473,7 +19504,7 @@ msgstr ""
 msgid "Update successful."
 msgstr ""
 
-#: db/seeds/settings.rb:5995
+#: db/seeds/settings.rb:6049
 msgid "Update the most recent tickets."
 msgstr ""
 
@@ -19597,7 +19628,7 @@ msgstr ""
 msgid "Upload image"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:99
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:104
 msgid "Upload key"
 msgstr ""
 
@@ -20392,11 +20423,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
 #: db/seeds/permissions.rb:245
-#: db/seeds/settings.rb:6142
+#: db/seeds/settings.rb:6196
 msgid "Writing Assistant"
 msgstr ""
 
-#: db/seeds/settings.rb:6156
+#: db/seeds/settings.rb:6210
 msgid "Writing Assistant Fixed Instructions"
 msgstr ""
 
@@ -21199,6 +21230,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:216
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/contains-one.ts:6
 msgid "contains one"
 msgstr ""
 
@@ -22071,7 +22103,7 @@ msgstr ""
 msgid "optional"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:144
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:149
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco:14
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco:11

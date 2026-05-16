@@ -43,8 +43,9 @@ class Index extends App.ControllerIntegrationBase
 
 class Form extends App.Controller
   events:
-    'click .js-addKey': 'addKey'
-    'click .js-updateGroup': 'updateGroup'
+    'click .js-addKey':                                 'addKey'
+    'click .js-updateGroup':                            'updateGroup'
+    'change .js-signSystemNotificationsSetting input': 'updateSignSystemNotifications'
 
   constructor: ->
     super
@@ -60,7 +61,8 @@ class Form extends App.Controller
     @config = @currentConfig()
 
     @html App.view('integration/pgp')(
-      config: @config
+      config:                  @config
+      signSystemNotifications: App.Setting.get('pgp_sign_system_notifications')
     )
     @keysList()
     @groupList()
@@ -83,6 +85,9 @@ class Form extends App.Controller
   updateGroup: (e) =>
     params = App.ControllerForm.params(e)
     @setConfig(params)
+
+  updateSignSystemNotifications: (e) =>
+    App.Setting.set('pgp_sign_system_notifications', e.target.checked)
 
 class Key extends App.ControllerModal
   buttonClose: true

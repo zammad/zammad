@@ -21,9 +21,10 @@ class Index extends App.ControllerIntegrationBase
 
 class Form extends App.Controller
   events:
-    'click .js-addCertificate': 'addCertificate'
-    'click .js-addPrivateKey': 'addPrivateKey'
-    'click .js-updateGroup': 'updateGroup'
+    'click .js-addCertificate':                         'addCertificate'
+    'click .js-addPrivateKey':                          'addPrivateKey'
+    'click .js-updateGroup':                            'updateGroup'
+    'change .js-signSystemNotificationsSetting input': 'updateSignSystemNotifications'
 
   constructor: ->
     super
@@ -39,7 +40,8 @@ class Form extends App.Controller
     @config = @currentConfig()
 
     @html App.view('integration/smime')(
-      config: @config
+      config:                  @config
+      signSystemNotifications: App.Setting.get('smime_sign_system_notifications')
     )
     @certList()
     @groupList()
@@ -68,6 +70,9 @@ class Form extends App.Controller
   updateGroup: (e) =>
     params = App.ControllerForm.params(e)
     @setConfig(params)
+
+  updateSignSystemNotifications: (e) =>
+    App.Setting.set('smime_sign_system_notifications', e.target.checked)
 
 class Certificate extends App.ControllerModal
   buttonClose: true

@@ -7,6 +7,20 @@
 
   <hr>
 
+  <h2><%- @T('System Notifications') %></h2>
+  <div class="settings-entry">
+    <div class="page-header-title">
+      <div class="zammad-switch zammad-switch--small js-signSystemNotificationsSetting">
+        <input name="smime_sign_system_notifications" type="checkbox" id="smime-sign-system-notifications" <% if @signSystemNotifications: %>checked<% end %>>
+        <label for="smime-sign-system-notifications"></label>
+      </div>
+      <h3><%- @T('Sign system notification emails') %></h3>
+    </div>
+    <p><%- @T('Sign built-in system notification emails if possible.') %></p>
+  </div>
+
+  <hr>
+
   <h2><%- @T('Default Behavior') %></h2>
   <p><%- @T('Choose the default behavior of the S/MIME integration on per group basis. If signing or encrypting is not possible, the setting has no effect. Agents can always manually alter the behavior for each article.') %></p>
   <div class="settings-entry settings-entry--stretched js-groupList"></div>
