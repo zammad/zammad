@@ -156,7 +156,7 @@ GEM
     biz (1.8.2)
       clavius (~> 1.0)
       tzinfo
-    bootsnap (1.24.3)
+    bootsnap (1.24.4)
       msgpack (~> 1.2)
     brakeman (8.0.4)
       racc
