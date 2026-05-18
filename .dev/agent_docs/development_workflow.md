@@ -25,6 +25,23 @@ Read the GitHub issue thoroughly before writing any code. Clarify scope,
 acceptance criteria, and edge cases. If the issue is ambiguous, ask the user
 for clarification rather than guessing.
 
+**Determine the mode.** If the user supplied `--parent <github_issue_url>`,
+this is **attach mode**: the task is part of a larger story whose branch and
+MR already exist. Otherwise, this is **standalone mode**: the task gets its
+own branch and MR. The parent may live in a different repository — parse
+owner + repo + number from the URL, do not assume same-repo.
+
+In attach mode, also:
+
+- Read the parent issue via the GitHub MCP server (it provides context the
+  task issue alone doesn't have).
+- List the parent's sub-issues. Note which are already closed, which are
+  in progress, and who is assigned — this prevents stepping on a colleague's
+  work.
+- Confirm the existing branch is already checked out in the current workspace
+  (Conductor creates the workspace from a branch; the branch is on disk
+  before the workflow starts). If it is not — abort and ask the user.
+
 Then determine **which parts of the codebase the issue affects**:
 
 - Check labels and comments for scope hints (when available).
@@ -58,9 +75,19 @@ other parts of the system.
 
 ### 4. Branch
 
-Use the `/prepare-issue-branch` skill to create the branch and prepare the
-commit message. It handles naming conventions, public vs. private issue
-detection, and commit message formatting automatically.
+**Standalone mode:** Use the `/prepare-issue-branch` skill to create the
+branch and prepare the commit message. It handles naming conventions, public
+vs. private issue detection, and commit message formatting automatically.
+
+**Attach mode:** Do _not_ invoke `/prepare-issue-branch`. The story branch
+is already checked out (confirmed in step 1). Instead:
+
+- Run `git fetch origin && git pull --rebase` to align with what colleagues
+  have pushed since you started.
+- If `git pull --rebase` produces conflicts, stop and ask the user to
+  resolve them before continuing.
+- Do not prepare a commit message yet — it will be written in step 8
+  based on what was actually changed.
 
 ### 5. Implement
 
@@ -87,17 +114,34 @@ If the sub-agent reports no findings, proceed to commit.
 
 ### 8. Commit
 
-Pre-commit hooks run linting and validation automatically. Use the prepared
-commit message from step 4. If you changed the GraphQL schema or settings,
-the regenerate hook runs the appropriate generators automatically.
+Pre-commit hooks run linting and validation automatically. If you changed
+the GraphQL schema or settings, the regenerate hook runs the appropriate
+generators automatically.
+
+**Standalone mode:** Use the prepared commit message from step 4
+(`/prepare-issue-branch` wrote it to `.git/COMMIT_EDITMSG`).
+
+**Attach mode:** Write a commit message that describes what this commit
+changed — no issue reference, no `Closes`/`Fixes` keywords. The parent
+story's MR carries the issue context; individual commits within it only
+need to describe their own change. Keep it short and conventional, e.g.
+`Add validation for empty subject on ticket form.`
 
 ### 9. Merge Request
 
-Use the `/create-mr` skill to push the branch and create a Merge Request on
-GitLab. It selects the correct MR template, fills in the sections, and targets
-the appropriate branch automatically.
+**Standalone mode:** Use the `/create-mr` skill to push the branch and
+create a Merge Request on GitLab. It selects the correct MR template, fills
+in the sections, and targets the appropriate branch automatically.
 
-CI runs automatically on MR creation. A human review is required before merging.
+**Attach mode:** Do _not_ invoke `/create-mr` — the MR for the parent story
+already exists. Instead:
+
+- Push the new commit to the existing remote branch: `git push origin
+<current-branch>`.
+- The push lands the commit on the existing MR automatically; CI re-runs.
+
+CI runs automatically on MR creation (standalone) or push (attach). A human
+review is required before merging.
 
 ### 10. Cherry-pick
 
