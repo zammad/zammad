@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-09 22:02+0000\n"
+"PO-Revision-Date: 2026-05-06 22:02+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/sr_Cyrl/>\n"
@@ -1193,10 +1193,6 @@ msgstr "Грешка API сервера – молимо покушајте по
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:86
 msgid "API server error: %s"
 msgstr "Грешка API сервера: %s"
-
-#: lib/ai/provider/azure.rb:128
-msgid "API server not accessible"
-msgstr "API сервер није доступан"
 
 #: lib/ai/provider/concerns/handles_response.rb:15
 msgid "API server unavailable - please try again later"
@@ -2644,8 +2640,8 @@ msgid ""
 "Attention! Changing the organization will update the user's most recent "
 "tickets to the new organization."
 msgstr ""
-"Пажња! Измена организације ће пребацити све недавне корисникове тикете на "
-"нову организацију."
+"Пажња! Измена организације ће пребацити све недавне тикете корисника на нову "
+"организацију."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:39
 msgid ""
@@ -2853,11 +2849,11 @@ msgstr ""
 "Аутоматски учитава chat.css датотеку. Уколико желите да користите своје "
 "стилове, подесите на false."
 
-#: app/frontend/shared/components/Form/Form.vue:1296
+#: app/frontend/shared/components/Form/Form.vue:1325
 msgid "Autosave in progress…"
 msgstr "Снимање у току…"
 
-#: app/frontend/shared/components/Form/Form.vue:1305
+#: app/frontend/shared/components/Form/Form.vue:1334
 msgid "Autosaving is taking longer than expected…"
 msgstr "Снимање траје нешто дуже…"
 
@@ -2929,8 +2925,8 @@ msgid "Average: %s%"
 msgstr "Просек: %s%"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
-msgid "Azure AI"
-msgstr "Azure AI"
+msgid "Azure AI (legacy deployment-based endpoints)"
+msgstr "Azure AI (застарела верзија путања)"
 
 #: db/seeds/settings.rb:3493
 msgid "BCC address for all outgoing emails"
@@ -8235,7 +8231,7 @@ msgstr "Издвоји информације о Zammad прилозима из 
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:3
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:3
 #: app/controllers/first_steps_controller.rb:27
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:35
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:38
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:43
 #: db/seeds/permissions.rb:167 db/seeds/settings.rb:1411
 msgid "Facebook"
@@ -8879,7 +8875,7 @@ msgstr "Учитавање информација о кључу из претр�
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:56
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:59
 #: db/seeds/settings.rb:1607
 msgid "GitHub"
 msgstr "GitHub"
@@ -8912,7 +8908,7 @@ msgstr "GitHub: Повежи извештај"
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:63
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:66
 #: db/seeds/settings.rb:1672
 msgid "GitLab"
 msgstr "GitLab"
@@ -8998,7 +8994,7 @@ msgid "Goodbye message"
 msgstr "Поздравна порука"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:77
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:80
 #: db/seeds/settings.rb:1477
 msgid "Google"
 msgstr "Google"
@@ -9607,7 +9603,7 @@ msgstr "Идентификатор теме ћаскања."
 
 #: db/seeds/settings.rb:3607
 msgid "Idle timeout in seconds until agent is set offline automatically."
-msgstr "Време истека у секундама после кога се оператор сматра одсутним."
+msgstr "Време истека у секундама после кога се оператeр сматра одсутним."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:29
 msgid "Idoit objects"
@@ -10257,15 +10253,15 @@ msgstr "Неважећи имејл ’%{email}’"
 msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr "Неисправна i-doit конфигурација (недостаје endpoint или api_token)."
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:193
 msgid "Invalid link structure"
 msgstr "Неисправна структура везе"
 
-#: app/controllers/tickets_controller.rb:197
+#: app/controllers/tickets_controller.rb:199
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "Неисправан структура везе (Object → LinkType)"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:196
 msgid "Invalid link structure (Object)"
 msgstr "Неисправна структура везе (Object)"
 
@@ -10773,11 +10769,11 @@ msgstr "Референца изгледа"
 msgid "Leave BETA UI feedback program?"
 msgstr "Напуштате програм BETA интерфејса?"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:252
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
 msgid "Leave empty to use URL (Completions)"
 msgstr "Оставите празно за коришћење URL адресе (completions)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:242
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
 msgid "Leave empty to use the base model"
 msgstr "Оставите празно за коришћење основног модела"
 
@@ -10956,7 +10952,7 @@ msgid "Linked accounts"
 msgstr "Повезани налози"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:49
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:52
 #: db/seeds/settings.rb:1542
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -11772,7 +11768,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "Метод (AJAX путања)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:70
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:73
 #: db/seeds/settings.rb:1744
 msgid "Microsoft"
 msgstr "Microsoft"
@@ -11889,7 +11885,7 @@ msgstr "Мобилни"
 msgid "Mode"
 msgstr "Режим"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:188
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
 msgid "Model"
 msgstr "Модел"
 
@@ -12167,7 +12163,7 @@ msgstr "Треба вам помоћ? Консултујте Zammad докуме
 msgid "Need session_id."
 msgstr "Неопходан session_id."
 
-#: app/controllers/tickets_controller.rb:407
+#: app/controllers/tickets_controller.rb:416
 msgid "Need user_id or organization_id as param"
 msgstr "Неопходан user_id или organiztion_id параметар"
 
@@ -12788,7 +12784,7 @@ msgstr "Без заједничких нацрта"
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:243
-#: app/controllers/tickets_controller.rb:450
+#: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:574
 msgid "No source data submitted!"
 msgstr "Нису достављени изворни подаци!"
@@ -13106,7 +13102,7 @@ msgstr "OAuth URL путање су:"
 msgid "OAuth2 token is expired!"
 msgstr "OAuth2 кључ је истекао!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:235
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
 msgid "OCR Model"
 msgstr "OCR модел"
 
@@ -13416,7 +13412,7 @@ msgid "OpenAI"
 msgstr "OpenAI"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:107
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
 #: db/seeds/settings.rb:2037
 msgid "OpenID Connect"
 msgstr "OpenID Connect"
@@ -13988,7 +13984,7 @@ msgstr "Особе који отварају тикете и траже помо
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:10
 msgid "Perform actions"
-msgstr "Изврши акције"
+msgstr "Изврши радње"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:49
 msgid "Permanently Delete Knowledge Base"
@@ -14781,7 +14777,7 @@ msgstr "Недавно виђени тикети"
 msgid "Recipient"
 msgstr "Прималац"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:226
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
 msgid "Recognize image text (OCR)"
 msgstr "Препознавање текста са слика (OCR)"
 
@@ -14873,7 +14869,7 @@ msgstr "Врста повезаног објекта"
 
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:153
 msgid "Related tickets"
-msgstr "Сродни тикети"
+msgstr "Повезани тикети"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue:70
 msgid "Relax, your system is being set up…"
@@ -15491,7 +15487,7 @@ msgid "S/MIME integration"
 msgstr "S/MIME интеграција"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:91
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
 #: db/seeds/settings.rb:1879
 msgid "SAML"
 msgstr "SAML"
@@ -15585,7 +15581,7 @@ msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:98
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
 #: db/seeds/settings.rb:5805
 msgid "SSO"
 msgstr "SSO"
@@ -16588,7 +16584,7 @@ msgid "Shared draft"
 msgstr "Заједнички нацрт"
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:180
+#: app/services/service/ticket/create.rb:189
 #: app/services/service/ticket/update.rb:72
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Заједнички нацрт не може бити примењен на овај тикет."
@@ -16905,18 +16901,18 @@ msgstr "Simple Storage (S3)"
 msgid "Simple Storage Service (S3)"
 msgstr "Simple Storage Service (S3)"
 
-#: app/models/store/provider/s3/config.rb:33
+#: app/models/store/provider/s3/config.rb:35
 msgid "Simple Storage Service configuration not found or invalid."
 msgstr "Подешавања Simple Storage сервиса нису пронађена или су нетачна."
 
-#: app/models/store/provider/s3.rb:94
+#: app/models/store/provider/s3.rb:96
 msgid ""
 "Simple Storage Service malfunction. Please contact your Zammad administrator."
 msgstr ""
 "Нешто је кренуло наопако са Simple Storage Service. Молимо контактирајте "
 "вашег Zammad администратора."
 
-#: app/models/store/provider/s3.rb:70
+#: app/models/store/provider/s3.rb:72
 msgid "Simple Storage Service not reachable."
 msgstr "Simple Storage сервис није доступан."
 
@@ -18254,7 +18250,7 @@ msgstr "Није било могуће обрисати уређај."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Сепаратор између прикључка и броја тикета. Нпр. ’: ’."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:137
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr ""
@@ -18873,7 +18869,7 @@ msgstr "Није пронађен обавезни параметар ’value�
 msgid "The required value 'group_id' is missing."
 msgstr "Није пронађена обавезна вредност ’group_id’."
 
-#: lib/ai/provider.rb:65
+#: lib/ai/provider.rb:69
 msgid "The response could not be processed."
 msgstr "Није било могуће обрадити одговор."
 
@@ -18964,7 +18960,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Потпис је успешно потврђен."
 
-#: app/controllers/tickets_controller.rb:361
+#: app/controllers/tickets_controller.rb:370
 msgid "The source ticket could not be found."
 msgstr "Није пронађен изворни тикет."
 
@@ -19031,7 +19027,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Систем је успешно постављен. Преусмеравамо вас на почетну страницу."
 
-#: app/controllers/tickets_controller.rb:352
+#: app/controllers/tickets_controller.rb:361
 msgid "The target ticket number could not be found."
 msgstr "Није пронађен циљни број тикета."
 
@@ -19811,7 +19807,7 @@ msgstr "Овај сервис вам омогућава да повежете %s
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr "Овај сервис вам омогућава да повежете Zammad са AI провајдером."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:88
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -20505,7 +20501,7 @@ msgid "Tickets bulk edit"
 msgstr "Масовно освежавање тикета"
 
 #: app/controllers/ticket_articles_controller.rb:236
-#: app/controllers/tickets_controller.rb:443
+#: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "Тикети могу бити увезени само ако је систем у режиму увоза."
 
@@ -20787,7 +20783,7 @@ msgstr "Укључи/искључи насловни ред"
 msgid "Toggle the overlay"
 msgstr "Укључи/искључи прозорчић"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:178
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -21021,7 +21017,7 @@ msgstr ""
 "само привремена мера. Користите ову опцију на сопствену одговорност!"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:71
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:42
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:45
 #: db/seeds/settings.rb:1347
 msgid "Twitter"
 msgstr "Twitter"
@@ -21150,7 +21146,7 @@ msgstr "UID атрибут назива"
 msgid "UID Field"
 msgstr "UID поље"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:198
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -21167,15 +21163,15 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX путања)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:208
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
 msgid "URL (Completions)"
 msgstr "URL адреса (completions)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:217
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
 msgid "URL (Embeddings)"
 msgstr "URL адреса (embeddings)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:246
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
 msgid "URL (OCR)"
 msgstr "URL (OCR)"
 
@@ -21365,7 +21361,7 @@ msgstr "Освежи постојеће записе са атрибутима �
 msgid "Update shared draft"
 msgstr "Освежи заједнички нацрт"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:347
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -21661,7 +21657,7 @@ msgstr "Користи глобално понашање"
 
 #: app/assets/javascripts/app/models/application.coffee:8
 msgid "Use one line per URI"
-msgstr "Користи једну линију по URI"
+msgstr "Користи једaн ред по URI"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee:5
 msgid "Use one of your safely stored recovery codes."
@@ -22269,7 +22265,7 @@ msgid "Week(s)"
 msgstr "Недеља(е)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:84
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
 #: db/seeds/settings.rb:1815
 msgid "Weibo"
 msgstr "Weibo"
@@ -23035,11 +23031,6 @@ msgstr ""
 "администратора.</p>\n"
 "<br>\n"
 "<p>Ваш #{config.product_name} тим</p>\n"
-
-#: app/assets/javascripts/app/controllers/text_tools_modal.coffee:131
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:137
-msgid "Your AI result usage could not be recorded."
-msgstr "Није било могуће снимити евиденцију коришћења AI резултата."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:64
 msgid "Your API key."
@@ -24876,6 +24867,15 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "API server not accessible"
+#~ msgstr "API сервер није доступан"
+
+#~ msgid "Azure AI"
+#~ msgstr "Azure AI"
+
+#~ msgid "Your AI result usage could not be recorded."
+#~ msgstr "Није било могуће снимити евиденцију коришћења AI резултата."
 
 #~ msgid ""
 #~ "Enables button for user authentication via %s. The button will redirect "

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-08 22:02+0000\n"
-"Last-Translator: mathew-uems <mathew.chen@edgentauems.com.tw>\n"
+"PO-Revision-Date: 2026-04-17 22:02+0000\n"
+"Last-Translator: GoneTone <p29022716@gmail.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://"
 "translations.zammad.org/projects/zammad/zammad-stable/zh_Hant/>\n"
 "Language: zh-tw\n"
@@ -1235,10 +1235,6 @@ msgstr "API 伺服器錯誤 - 請再試一次"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:86
 msgid "API server error: %s"
 msgstr "API 伺服器錯誤：%s"
-
-#: lib/ai/provider/azure.rb:128
-msgid "API server not accessible"
-msgstr "API 伺服器無法存取"
 
 #: lib/ai/provider/concerns/handles_response.rb:15
 msgid "API server unavailable - please try again later"
@@ -2850,11 +2846,11 @@ msgid ""
 "set it to false."
 msgstr "自動加載 chat.css 文件。如果要使用自己的 CSS，請將其設置為 false。"
 
-#: app/frontend/shared/components/Form/Form.vue:1296
+#: app/frontend/shared/components/Form/Form.vue:1325
 msgid "Autosave in progress…"
 msgstr "自動保存進行中…"
 
-#: app/frontend/shared/components/Form/Form.vue:1305
+#: app/frontend/shared/components/Form/Form.vue:1334
 msgid "Autosaving is taking longer than expected…"
 msgstr "自動保存所需時間比預期長…"
 
@@ -2926,8 +2922,8 @@ msgid "Average: %s%"
 msgstr "平均：%s%"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
-msgid "Azure AI"
-msgstr "Azure AI"
+msgid "Azure AI (legacy deployment-based endpoints)"
+msgstr ""
 
 #: db/seeds/settings.rb:3493
 msgid "BCC address for all outgoing emails"
@@ -4532,7 +4528,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/signup.coffee:139
 msgid "Could not process your request"
-msgstr ""
+msgstr "無法處理您的請求"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:135
 msgid "Could not remove all two-factor authentication methods for this user."
@@ -5924,7 +5920,7 @@ msgstr "修改系统顯示在使用者介面上的商標圖像 (Logo)。"
 
 #: db/seeds/settings.rb:3290
 msgid "Defines the maximum accepted email size in MB."
-msgstr ""
+msgstr "定義最大接受的電子郵件大小 (以 MB 為單位)。"
 
 #: db/seeds/settings.rb:1014
 msgid ""
@@ -7952,7 +7948,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:3
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:3
 #: app/controllers/first_steps_controller.rb:27
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:35
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:38
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:43
 #: db/seeds/permissions.rb:167 db/seeds/settings.rb:1411
 msgid "Facebook"
@@ -8587,7 +8583,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:56
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:59
 #: db/seeds/settings.rb:1607
 msgid "GitHub"
 msgstr "GitHub"
@@ -8620,7 +8616,7 @@ msgstr "GitHub: 連結問題"
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:63
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:66
 #: db/seeds/settings.rb:1672
 msgid "GitLab"
 msgstr "GitLab"
@@ -8706,7 +8702,7 @@ msgid "Goodbye message"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:77
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:80
 #: db/seeds/settings.rb:1477
 msgid "Google"
 msgstr "Google"
@@ -9581,7 +9577,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:24
 msgid "Include attachments of the article?"
-msgstr ""
+msgstr "包含文章的附件？"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:92
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:207
@@ -9913,15 +9909,15 @@ msgstr "無效的信箱 '%{email}'"
 msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr "無效的 i-doit 配置（端點或 api_token 遺失）。"
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:193
 msgid "Invalid link structure"
 msgstr "無效的連結結構"
 
-#: app/controllers/tickets_controller.rb:197
+#: app/controllers/tickets_controller.rb:199
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "無效的連結結構（物件 → 連結類型）"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:196
 msgid "Invalid link structure (Object)"
 msgstr "無效的連結結構（物件）"
 
@@ -10420,11 +10416,11 @@ msgstr ""
 msgid "Leave BETA UI feedback program?"
 msgstr "退出 Beta UI 回饋計畫？"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:252
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
 msgid "Leave empty to use URL (Completions)"
 msgstr "留空來使用網址（自動補全）"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:242
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
 msgid "Leave empty to use the base model"
 msgstr ""
 
@@ -10603,7 +10599,7 @@ msgid "Linked accounts"
 msgstr "已連結的帳號"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:49
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:52
 #: db/seeds/settings.rb:1542
 msgid "LinkedIn"
 msgstr ""
@@ -11403,7 +11399,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "Method (AJAX 端點)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:70
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:73
 #: db/seeds/settings.rb:1744
 msgid "Microsoft"
 msgstr "Microsoft"
@@ -11520,7 +11516,7 @@ msgstr "手機"
 msgid "Mode"
 msgstr "模式"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:188
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
 msgid "Model"
 msgstr "模型"
 
@@ -11798,7 +11794,7 @@ msgstr "需要幫助？ 查看Zammad文件來獲得詳細導引。"
 msgid "Need session_id."
 msgstr "需要seesion_id。"
 
-#: app/controllers/tickets_controller.rb:407
+#: app/controllers/tickets_controller.rb:416
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
@@ -12411,7 +12407,7 @@ msgstr "還沒有共享草稿"
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:243
-#: app/controllers/tickets_controller.rb:450
+#: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:574
 msgid "No source data submitted!"
 msgstr ""
@@ -12720,7 +12716,7 @@ msgstr "OAuth 網址是："
 msgid "OAuth2 token is expired!"
 msgstr "OAuth2 Token 已過期！"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:235
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
 msgid "OCR Model"
 msgstr "OCR 模組"
 
@@ -13020,7 +13016,7 @@ msgid "OpenAI"
 msgstr "OpenAI"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:107
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
 #: db/seeds/settings.rb:2037
 msgid "OpenID Connect"
 msgstr "OpenID 連接"
@@ -14357,7 +14353,7 @@ msgstr "最近看過的工單"
 msgid "Recipient"
 msgstr "收件者"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:226
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
 msgid "Recognize image text (OCR)"
 msgstr "圖像文字辨識（OCR）"
 
@@ -14966,7 +14962,7 @@ msgstr ""
 
 #: db/seeds/ai/text_tools.rb:33
 msgid "Rewrite complex section and make it easy to understand"
-msgstr ""
+msgstr "重寫複雜的部分，使其易於理解"
 
 #: db/seeds/settings.rb:6166
 msgid "Richtext Bubble Menu"
@@ -15071,7 +15067,7 @@ msgid "S/MIME integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:91
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
 #: db/seeds/settings.rb:1879
 msgid "SAML"
 msgstr ""
@@ -15165,7 +15161,7 @@ msgid "SSL/STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:98
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
 #: db/seeds/settings.rb:5805
 msgid "SSO"
 msgstr ""
@@ -16178,7 +16174,7 @@ msgid "Shared draft"
 msgstr "共享草稿"
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:180
+#: app/services/service/ticket/create.rb:189
 #: app/services/service/ticket/update.rb:72
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "這個工單無法選擇共享草稿。"
@@ -16509,18 +16505,18 @@ msgstr ""
 msgid "Simple Storage Service (S3)"
 msgstr "圖像服務"
 
-#: app/models/store/provider/s3/config.rb:33
+#: app/models/store/provider/s3/config.rb:35
 msgid "Simple Storage Service configuration not found or invalid."
 msgstr ""
 
-#: app/models/store/provider/s3.rb:94
+#: app/models/store/provider/s3.rb:96
 #, fuzzy
 #| msgid "Failed to sent Email \"%s\". Please contact an administrator."
 msgid ""
 "Simple Storage Service malfunction. Please contact your Zammad administrator."
 msgstr "無法傳送電子郵件 \"%s\"。請聯繫管理員。"
 
-#: app/models/store/provider/s3.rb:70
+#: app/models/store/provider/s3.rb:72
 msgid "Simple Storage Service not reachable."
 msgstr ""
 
@@ -17074,7 +17070,7 @@ msgstr "訂閱設定"
 
 #: db/seeds/ai/text_tools.rb:98
 msgid "Summarize section to about half its current size"
-msgstr ""
+msgstr "將段落縮減至約一半篇幅"
 
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:42
 #: db/seeds/object_manager_attributes.rb:2461
@@ -17946,7 +17942,7 @@ msgstr "%s 個物件已建立。"
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:137
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr "下載無法開始。 請稍後重試。"
@@ -18594,7 +18590,7 @@ msgstr ""
 msgid "The required value 'group_id' is missing."
 msgstr ""
 
-#: lib/ai/provider.rb:65
+#: lib/ai/provider.rb:69
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The response could not be processed."
@@ -18693,7 +18689,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "測試運行成功。"
 
-#: app/controllers/tickets_controller.rb:361
+#: app/controllers/tickets_controller.rb:370
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The source ticket could not be found."
@@ -18754,7 +18750,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:352
+#: app/controllers/tickets_controller.rb:361
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The target ticket number could not be found."
@@ -19539,7 +19535,7 @@ msgstr "此服務使您可以將 %s 與 %s 連接。"
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr "此服務使您可以將 %s 與 %s 連接。"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:88
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -20226,7 +20222,7 @@ msgid "Tickets bulk edit"
 msgstr "工單批次更新"
 
 #: app/controllers/ticket_articles_controller.rb:236
-#: app/controllers/tickets_controller.rb:443
+#: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 
@@ -20527,7 +20523,7 @@ msgstr "開啟備註輸入框"
 msgid "Toggle the overlay"
 msgstr "開啟備註輸入框"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:178
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -20772,7 +20768,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:71
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:42
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:45
 #: db/seeds/settings.rb:1347
 msgid "Twitter"
 msgstr "Twitter"
@@ -20911,7 +20907,7 @@ msgstr "UID 屬性名稱"
 msgid "UID Field"
 msgstr "UID 欄位"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:198
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -20928,17 +20924,17 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL（AJAX 端點）"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:208
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
 #, fuzzy
 #| msgid "set optional"
 msgid "URL (Completions)"
 msgstr "設定為可選"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:217
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
 msgid "URL (Embeddings)"
 msgstr "URL（內嵌）"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:246
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
 msgid "URL (OCR)"
 msgstr "網址（OCR）"
 
@@ -21144,7 +21140,7 @@ msgstr "指定匯入資料中的特定屬性來更新現有的記錄。"
 msgid "Update shared draft"
 msgstr "已分享"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:347
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -22082,7 +22078,7 @@ msgid "Week(s)"
 msgstr "週"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:84
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
 #: db/seeds/settings.rb:1815
 msgid "Weibo"
 msgstr "微博"
@@ -22395,7 +22391,7 @@ msgstr "您已加入 BETA 版使用者介面回饋計畫。"
 #: app/models/transaction/notification.rb:111
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
-msgstr ""
+msgstr "您收到此通知是因為您是此工單所屬群組的成員。"
 
 #: app/models/transaction/notification.rb:192
 msgid ""
@@ -22850,11 +22846,6 @@ msgstr ""
 "<p>如果你對此情形不了解, 請立聯絡系統管理員.</p>\n"
 "<br>\n"
 "<div>你的 #{config.product_name} 團隊</div>\n"
-
-#: app/assets/javascripts/app/controllers/text_tools_modal.coffee:131
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:137
-msgid "Your AI result usage could not be recorded."
-msgstr "您的AI結果使用情況無法記錄。"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:64
 msgid "Your API key."
@@ -24767,6 +24758,15 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#~ msgid "API server not accessible"
+#~ msgstr "API 伺服器無法存取"
+
+#~ msgid "Azure AI"
+#~ msgstr "Azure AI"
+
+#~ msgid "Your AI result usage could not be recorded."
+#~ msgstr "您的AI結果使用情況無法記錄。"
 
 #~ msgid "Till"
 #~ msgstr "直到"

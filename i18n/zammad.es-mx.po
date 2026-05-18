@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-02-12 22:00+0000\n"
-"Last-Translator: Victor Gallegos <vgallegos@kaliroy.com>\n"
+"PO-Revision-Date: 2026-04-28 22:02+0000\n"
+"Last-Translator: Osmar Valdebenito <osmar.valdebenito@uchile.cl>\n"
 "Language-Team: Spanish (Mexico) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/es_MX/>\n"
 "Language: es-mx\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11.4\n"
+"X-Generator: Weblate 5.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -641,7 +641,7 @@ msgstr ""
 
 #: app/models/object_manager/attribute.rb:624
 msgid "%{name} already exists"
-msgstr "¡La cuenta %{name} ya existe!"
+msgstr "La cuenta %{name} ya existe"
 
 #: app/models/object_manager/attribute.rb:608
 msgid "%{name} is a reserved word"
@@ -1198,10 +1198,6 @@ msgstr ""
 msgid "API server error: %s"
 msgstr "Error de API."
 
-#: lib/ai/provider/azure.rb:128
-msgid "API server not accessible"
-msgstr ""
-
 #: lib/ai/provider/concerns/handles_response.rb:15
 msgid "API server unavailable - please try again later"
 msgstr ""
@@ -1634,7 +1630,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:294
 msgid "Add alarm to pending reminder and escalated tickets"
-msgstr "Agregar alarma a recordatorios pendientes y tickets escalados."
+msgstr "Agregar alarma a recordatorios pendientes y tickets escalados"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:34
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -3044,11 +3040,11 @@ msgstr ""
 "Carga automáticamente el archivo chat.css. Si quiere usar su propio CSS, "
 "simplemente configúrelo en falso."
 
-#: app/frontend/shared/components/Form/Form.vue:1296
+#: app/frontend/shared/components/Form/Form.vue:1325
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1305
+#: app/frontend/shared/components/Form/Form.vue:1334
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -3132,7 +3128,7 @@ msgid "Average: %s%"
 msgstr "Promedio: %s%"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
-msgid "Azure AI"
+msgid "Azure AI (legacy deployment-based endpoints)"
 msgstr ""
 
 #: db/seeds/settings.rb:3493
@@ -6292,7 +6288,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:231
 msgid "Defines pretty date format."
-msgstr "Define el formato de fecha bonito."
+msgstr "Define el formato de fecha estilizado."
 
 #: db/seeds/settings.rb:5458
 msgid "Defines processing timeout for the html sanitizer."
@@ -7396,7 +7392,7 @@ msgstr "seleccionar archivo adjunto…"
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:18
 msgid "Draft"
-msgstr "Sequía"
+msgstr "Borrador"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:18
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:31
@@ -7416,10 +7412,8 @@ msgid "Draft could not be updated."
 msgstr "No se pudo crear el usuario."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:47
-#, fuzzy
-#| msgid "Draft"
 msgid "Drafts"
-msgstr "Sequía"
+msgstr "Borradores"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 msgid "Drag ended for %s."
@@ -8772,7 +8766,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:3
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:3
 #: app/controllers/first_steps_controller.rb:27
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:35
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:38
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:43
 #: db/seeds/permissions.rb:167 db/seeds/settings.rb:1411
 msgid "Facebook"
@@ -9489,7 +9483,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:56
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:59
 #: db/seeds/settings.rb:1607
 msgid "GitHub"
 msgstr ""
@@ -9526,7 +9520,7 @@ msgstr "Problema de enlace"
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:63
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:66
 #: db/seeds/settings.rb:1672
 msgid "GitLab"
 msgstr ""
@@ -9622,7 +9616,7 @@ msgid "Goodbye message"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:77
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:80
 #: db/seeds/settings.rb:1477
 msgid "Google"
 msgstr ""
@@ -10975,15 +10969,15 @@ msgstr ""
 msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:193
 msgid "Invalid link structure"
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:197
+#: app/controllers/tickets_controller.rb:199
 msgid "Invalid link structure (Object → LinkType)"
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:196
 msgid "Invalid link structure (Object)"
 msgstr ""
 
@@ -11517,13 +11511,13 @@ msgstr ""
 msgid "Leave BETA UI feedback program?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:252
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
 #, fuzzy
 #| msgid "set optional"
 msgid "Leave empty to use URL (Completions)"
 msgstr "establecer opcional"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:242
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
 msgid "Leave empty to use the base model"
 msgstr ""
 
@@ -11732,7 +11726,7 @@ msgid "Linked accounts"
 msgstr "Cuentas enlazadas"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:49
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:52
 #: db/seeds/settings.rb:1542
 msgid "LinkedIn"
 msgstr ""
@@ -12717,7 +12711,7 @@ msgid "Method (AJAX endpoint)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:70
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:73
 #: db/seeds/settings.rb:1744
 msgid "Microsoft"
 msgstr "Microsoft"
@@ -12846,7 +12840,7 @@ msgstr "Móvil"
 msgid "Mode"
 msgstr "Modo"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:188
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
 #, fuzzy
 #| msgid "Mode"
 msgid "Model"
@@ -13142,7 +13136,7 @@ msgstr ""
 msgid "Need session_id."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:407
+#: app/controllers/tickets_controller.rb:416
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
@@ -13667,10 +13661,8 @@ msgid "No double colons (::) allowed, reserved delimiter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:21
-#, fuzzy
-#| msgid "draft"
 msgid "No drafts"
-msgstr "sequía"
+msgstr "Sin borradores"
 
 #: app/controllers/users_controller.rb:275
 msgid "No email!"
@@ -13835,7 +13827,7 @@ msgstr "Borradores compartidos"
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:243
-#: app/controllers/tickets_controller.rb:450
+#: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:574
 msgid "No source data submitted!"
 msgstr ""
@@ -14185,7 +14177,7 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:235
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
 #, fuzzy
 #| msgid "Mode"
 msgid "OCR Model"
@@ -14556,7 +14548,7 @@ msgid "OpenAI"
 msgstr "Abierto"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:107
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
 #: db/seeds/settings.rb:2037
 #, fuzzy
 #| msgid "Connect"
@@ -15616,7 +15608,7 @@ msgstr "Haga clic en el botón de abajo para crear el primero."
 
 #: db/seeds/settings.rb:228
 msgid "Pretty Date"
-msgstr "Bonita fecha"
+msgstr "Fecha estilizada"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:292
 #, fuzzy
@@ -16090,7 +16082,7 @@ msgstr "Tickets vistos recientemente"
 msgid "Recipient"
 msgstr "Bandeja"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:226
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
 msgid "Recognize image text (OCR)"
 msgstr ""
 
@@ -16452,10 +16444,8 @@ msgid "Reply"
 msgstr "responder"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:90
-#, fuzzy
-#| msgid "reply"
 msgid "Reply all"
-msgstr "responder"
+msgstr "responder a todos"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:62
 #, fuzzy
@@ -16874,7 +16864,7 @@ msgid "S/MIME integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:91
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
 #: db/seeds/settings.rb:1879
 msgid "SAML"
 msgstr ""
@@ -16970,7 +16960,7 @@ msgid "SSL/STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:98
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
 #: db/seeds/settings.rb:5805
 msgid "SSO"
 msgstr ""
@@ -18135,7 +18125,7 @@ msgid "Shared draft"
 msgstr "Borradores compartidos"
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:180
+#: app/services/service/ticket/create.rb:189
 #: app/services/service/ticket/update.rb:72
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
@@ -18499,11 +18489,11 @@ msgstr ""
 msgid "Simple Storage Service (S3)"
 msgstr "Servicio de Imágenes"
 
-#: app/models/store/provider/s3/config.rb:33
+#: app/models/store/provider/s3/config.rb:35
 msgid "Simple Storage Service configuration not found or invalid."
 msgstr ""
 
-#: app/models/store/provider/s3.rb:94
+#: app/models/store/provider/s3.rb:96
 #, fuzzy
 #| msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgid ""
@@ -18512,7 +18502,7 @@ msgstr ""
 "No se pudo enviar el correo electrónico a \"%s\". Póngase en contacto con un "
 "administrador."
 
-#: app/models/store/provider/s3.rb:70
+#: app/models/store/provider/s3.rb:72
 msgid "Simple Storage Service not reachable."
 msgstr ""
 
@@ -20002,7 +19992,7 @@ msgstr "No se pudo eliminar el artículo."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:137
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 #, fuzzy
 #| msgid "The password could not be set. Please contact your administrator."
@@ -20679,7 +20669,7 @@ msgstr ""
 msgid "The required value 'group_id' is missing."
 msgstr ""
 
-#: lib/ai/provider.rb:65
+#: lib/ai/provider.rb:69
 #, fuzzy
 #| msgid "The issue could not be saved."
 msgid "The response could not be processed."
@@ -20778,7 +20768,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "La firma fue verificada con éxito."
 
-#: app/controllers/tickets_controller.rb:361
+#: app/controllers/tickets_controller.rb:370
 #, fuzzy
 #| msgid "The tickets could not be merged."
 msgid "The source ticket could not be found."
@@ -20840,7 +20830,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:352
+#: app/controllers/tickets_controller.rb:361
 #, fuzzy
 #| msgid "The tickets could not be merged."
 msgid "The target ticket number could not be found."
@@ -21699,7 +21689,7 @@ msgstr "Este servicio le permite conectar %s con %s."
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr "Este servicio le permite conectar %s con %s."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:88
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -22398,7 +22388,7 @@ msgid "Tickets bulk edit"
 msgstr "Actualización de Ticket"
 
 #: app/controllers/ticket_articles_controller.rb:236
-#: app/controllers/tickets_controller.rb:443
+#: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 
@@ -22700,7 +22690,7 @@ msgstr "Abrir el cuadro de nota"
 msgid "Toggle the overlay"
 msgstr "Abrir el cuadro de nota"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:178
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -22961,7 +22951,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:71
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:42
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:45
 #: db/seeds/settings.rb:1347
 msgid "Twitter"
 msgstr "Twitter"
@@ -23116,7 +23106,7 @@ msgstr "Atributo %s"
 msgid "UID Field"
 msgstr "Fecha y Hora"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:198
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -23133,17 +23123,17 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:208
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
 #, fuzzy
 #| msgid "set optional"
 msgid "URL (Completions)"
 msgstr "establecer opcional"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:217
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
 msgid "URL (Embeddings)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:246
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
 msgid "URL (OCR)"
 msgstr ""
 
@@ -23357,7 +23347,7 @@ msgstr ""
 msgid "Update shared draft"
 msgstr "Aplicar borrador compartido"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:347
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -24261,7 +24251,7 @@ msgid "Week(s)"
 msgstr "Semana(s)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:84
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
 #: db/seeds/settings.rb:1815
 msgid "Weibo"
 msgstr ""
@@ -25025,13 +25015,6 @@ msgid ""
 "<p>Your #{config.product_name} Team</p>\n"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/text_tools_modal.coffee:131
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:137
-#, fuzzy
-#| msgid "User could not be created."
-msgid "Your AI result usage could not be recorded."
-msgstr "No se pudo crear el usuario."
-
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:64
 msgid "Your API key."
 msgstr ""
@@ -25699,7 +25682,7 @@ msgstr "hecho"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
 msgid "draft"
-msgstr "sequía"
+msgstr "borrador"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco:3
 msgid "drag here to cancel"
@@ -26625,10 +26608,8 @@ msgid "reply"
 msgstr "responder"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:53
-#, fuzzy
-#| msgid "reply"
 msgid "reply all"
-msgstr "responder"
+msgstr "responder a todos"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:103
 #, fuzzy
@@ -27052,6 +27033,11 @@ msgstr "…de toda el área de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Tiempo de espera hoy"
+
+#, fuzzy
+#~| msgid "User could not be created."
+#~ msgid "Your AI result usage could not be recorded."
+#~ msgstr "No se pudo crear el usuario."
 
 #~ msgid "Till"
 #~ msgstr "Hasta"

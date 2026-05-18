@@ -1281,10 +1281,6 @@ msgstr "API-serverfel - försök igen"
 msgid "API server error: %s"
 msgstr "API serverfel: %s"
 
-#: lib/ai/provider/azure.rb:128
-msgid "API server not accessible"
-msgstr "API-servern är inte tillgänglig"
-
 #: lib/ai/provider/concerns/handles_response.rb:15
 msgid "API server unavailable - please try again later"
 msgstr "API-servern är inte tillgänglig - försök igen senare"
@@ -2938,11 +2934,11 @@ msgstr ""
 "Laddar automatiskt chat.css filen. Om du vill använda din egen css, sätt den "
 "till false."
 
-#: app/frontend/shared/components/Form/Form.vue:1296
+#: app/frontend/shared/components/Form/Form.vue:1325
 msgid "Autosave in progress…"
 msgstr "Autosparning pågår…"
 
-#: app/frontend/shared/components/Form/Form.vue:1305
+#: app/frontend/shared/components/Form/Form.vue:1334
 msgid "Autosaving is taking longer than expected…"
 msgstr "Autosparandet tar längre tid än väntat…"
 
@@ -3014,8 +3010,8 @@ msgid "Average: %s%"
 msgstr "Genomsnitt: %s%"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
-msgid "Azure AI"
-msgstr "Azure AI"
+msgid "Azure AI (legacy deployment-based endpoints)"
+msgstr ""
 
 #: db/seeds/settings.rb:3493
 msgid "BCC address for all outgoing emails"
@@ -8370,7 +8366,7 @@ msgstr "Extrahera zammad bilageinformation från fält"
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:3
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:3
 #: app/controllers/first_steps_controller.rb:27
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:35
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:38
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:43
 #: db/seeds/permissions.rb:167 db/seeds/settings.rb:1411
 msgid "Facebook"
@@ -9011,7 +9007,7 @@ msgstr "Hämtar viktig information från webbläsaren…"
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:56
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:59
 #: db/seeds/settings.rb:1607
 msgid "GitHub"
 msgstr "GitHub"
@@ -9045,7 +9041,7 @@ msgstr "GitHub: Länka ärende"
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:63
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:66
 #: db/seeds/settings.rb:1672
 msgid "GitLab"
 msgstr "GitLab"
@@ -9134,7 +9130,7 @@ msgid "Goodbye message"
 msgstr "Hejdå meddelande"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:77
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:80
 #: db/seeds/settings.rb:1477
 msgid "Google"
 msgstr "Google"
@@ -10400,15 +10396,15 @@ msgstr "Ogiltigt email '%{email}'"
 msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr "Ogiltig i-doit-konfiguration (saknar endpoint eller api_token)."
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:193
 msgid "Invalid link structure"
 msgstr "Ogiltig länkstruktur"
 
-#: app/controllers/tickets_controller.rb:197
+#: app/controllers/tickets_controller.rb:199
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "Ogiltig länkstruktur (Objekt → Länktyp)"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:196
 msgid "Invalid link structure (Object)"
 msgstr "Ogiltig länkstruktur (Objekt)"
 
@@ -10920,11 +10916,11 @@ msgstr "Layoutreferens"
 msgid "Leave BETA UI feedback program?"
 msgstr "Vill du gå med i BETA UI feedbackprogram?"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:252
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
 msgid "Leave empty to use URL (Completions)"
 msgstr "Lämna tomt för att använda URL (slutförande)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:242
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
 msgid "Leave empty to use the base model"
 msgstr "Lämna tomt för att använda basmodellen"
 
@@ -11105,7 +11101,7 @@ msgid "Linked accounts"
 msgstr "Länkade konton"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:49
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:52
 #: db/seeds/settings.rb:1542
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -11924,7 +11920,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "Metod (AJAX-slutpunkt)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:70
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:73
 #: db/seeds/settings.rb:1744
 msgid "Microsoft"
 msgstr "Microsoft"
@@ -12041,7 +12037,7 @@ msgstr "Mobil"
 msgid "Mode"
 msgstr "Läge"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:188
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
 msgid "Model"
 msgstr "Modell"
 
@@ -12319,7 +12315,7 @@ msgstr "Behöver du hjälp? Se Zammad-dokumentationen för detaljerad väglednin
 msgid "Need session_id."
 msgstr "Behöver session_id."
 
-#: app/controllers/tickets_controller.rb:407
+#: app/controllers/tickets_controller.rb:416
 msgid "Need user_id or organization_id as param"
 msgstr "Behöver user_id eller organization_id som parameter"
 
@@ -12941,7 +12937,7 @@ msgstr "Inga delade utkast ännu"
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:243
-#: app/controllers/tickets_controller.rb:450
+#: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:574
 msgid "No source data submitted!"
 msgstr "Källdata har inte skickats!"
@@ -13259,7 +13255,7 @@ msgstr "OAuth-URL:er är:"
 msgid "OAuth2 token is expired!"
 msgstr "OAuth2 Token har löpt ut!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:235
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
 msgid "OCR Model"
 msgstr "OCR-modell"
 
@@ -13573,7 +13569,7 @@ msgid "OpenAI"
 msgstr "OpenAI"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:107
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
 #: db/seeds/settings.rb:2037
 msgid "OpenID Connect"
 msgstr "OpenID Connect"
@@ -14940,7 +14936,7 @@ msgstr "Senaste visade ärenden"
 msgid "Recipient"
 msgstr "Mottagare"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:226
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
 msgid "Recognize image text (OCR)"
 msgstr "Känna igen bildtext (OCR)"
 
@@ -15655,7 +15651,7 @@ msgid "S/MIME integration"
 msgstr "S/MIME integration"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:91
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
 #: db/seeds/settings.rb:1879
 msgid "SAML"
 msgstr "SAML"
@@ -15749,7 +15745,7 @@ msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:98
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
 #: db/seeds/settings.rb:5805
 msgid "SSO"
 msgstr "SSO"
@@ -16761,7 +16757,7 @@ msgid "Shared draft"
 msgstr "Delat utkast"
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:180
+#: app/services/service/ticket/create.rb:189
 #: app/services/service/ticket/update.rb:72
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Delat utkast kan inte väljas för detta ärende."
@@ -17079,17 +17075,17 @@ msgstr "Simple Storage (S3)"
 msgid "Simple Storage Service (S3)"
 msgstr "Simple Storage Service (S3)"
 
-#: app/models/store/provider/s3/config.rb:33
+#: app/models/store/provider/s3/config.rb:35
 msgid "Simple Storage Service configuration not found or invalid."
 msgstr ""
 "Konfigurationen för Simple Storage Service hittades inte eller är ogiltig."
 
-#: app/models/store/provider/s3.rb:94
+#: app/models/store/provider/s3.rb:96
 msgid ""
 "Simple Storage Service malfunction. Please contact your Zammad administrator."
 msgstr "Simple Storage Service(S3) funktionsfel. Kontakta en administratör."
 
-#: app/models/store/provider/s3.rb:70
+#: app/models/store/provider/s3.rb:72
 msgid "Simple Storage Service not reachable."
 msgstr "Simple Storage Service kan inte nås."
 
@@ -18449,7 +18445,7 @@ msgstr "Enheten kunde inte tas bort."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Avdelaren mellan TicketHook och ärendenummer. T.ex. ': '."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:137
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr "Nedladdningen kunde inte påbörjas. Vänligen försök igen senare."
@@ -19078,7 +19074,7 @@ msgstr "Obligatorisk parameter 'value' saknas."
 msgid "The required value 'group_id' is missing."
 msgstr "Det obligatoriska värdet 'group_id' saknas."
 
-#: lib/ai/provider.rb:65
+#: lib/ai/provider.rb:69
 msgid "The response could not be processed."
 msgstr "Svaret kunde inte behandlas."
 
@@ -19169,7 +19165,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Signaturen verifierades framgångsrikt."
 
-#: app/controllers/tickets_controller.rb:361
+#: app/controllers/tickets_controller.rb:370
 msgid "The source ticket could not be found."
 msgstr "Det ursprungliga ärendet kunde inte hittas."
 
@@ -19236,7 +19232,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Systemet konfigurerades framgångsrikt. Du omdirigeras."
 
-#: app/controllers/tickets_controller.rb:352
+#: app/controllers/tickets_controller.rb:361
 msgid "The target ticket number could not be found."
 msgstr "Mål-ärendenumret kunde inte hittas."
 
@@ -20010,7 +20006,7 @@ msgstr "Med den här tjänsten kan du ansluta %s med %s."
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr "Med den här tjänsten kan du ansluta Zammad till en AI-leverantör."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:88
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -20727,7 +20723,7 @@ msgid "Tickets bulk edit"
 msgstr "Ärende massredigering"
 
 #: app/controllers/ticket_articles_controller.rb:236
-#: app/controllers/tickets_controller.rb:443
+#: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "Ärenden kan endast importeras om systemet är i importläge."
 
@@ -21006,7 +21002,7 @@ msgstr "Växla rad för header"
 msgid "Toggle the overlay"
 msgstr "Växla overlay"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:178
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -21240,7 +21236,7 @@ msgstr ""
 "tillfälligt. Använd detta alternativ på egen risk!"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:71
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:42
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:45
 #: db/seeds/settings.rb:1347
 msgid "Twitter"
 msgstr "Twitter"
@@ -21370,7 +21366,7 @@ msgstr "UID Attributnamn"
 msgid "UID Field"
 msgstr "UID Fält"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:198
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -21387,15 +21383,15 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX-slutpunkt)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:208
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
 msgid "URL (Completions)"
 msgstr "URL (slutförda)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:217
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
 msgid "URL (Embeddings)"
 msgstr "URL (inbäddning)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:246
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
 msgid "URL (OCR)"
 msgstr "URL (OCR)"
 
@@ -21589,7 +21585,7 @@ msgstr "Uppdatera befintliga poster med attribut som anges i importdata."
 msgid "Update shared draft"
 msgstr "Uppdatera delat utkast"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:347
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -22501,7 +22497,7 @@ msgid "Week(s)"
 msgstr "Vecka/-or"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:84
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
 #: db/seeds/settings.rb:1815
 msgid "Weibo"
 msgstr "Weibo"
@@ -23280,11 +23276,6 @@ msgstr ""
 "systemadministratör.</p>\n"
 "<br>\n"
 "<p>Ditt #{config.product_name} Team</p>\n"
-
-#: app/assets/javascripts/app/controllers/text_tools_modal.coffee:131
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:137
-msgid "Your AI result usage could not be recorded."
-msgstr "Ditt AI-resultat för användning kunde inte registreras."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:64
 msgid "Your API key."
@@ -25141,6 +25132,15 @@ msgstr "...av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "API server not accessible"
+#~ msgstr "API-servern är inte tillgänglig"
+
+#~ msgid "Azure AI"
+#~ msgstr "Azure AI"
+
+#~ msgid "Your AI result usage could not be recorded."
+#~ msgstr "Ditt AI-resultat för användning kunde inte registreras."
 
 #~ msgid ""
 #~ "Enables button for user authentication via %s. The button will redirect "

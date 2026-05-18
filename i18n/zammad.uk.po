@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-13 22:02+0000\n"
-"Last-Translator: Anntoo <jdoomm@gmail.com>\n"
+"PO-Revision-Date: 2026-05-06 22:02+0000\n"
+"Last-Translator: Mantikor <nhyuga.r@gmail.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/uk/>\n"
 "Language: uk\n"
@@ -1214,10 +1214,6 @@ msgstr "Помилка сервера API - спробуйте ще раз"
 msgid "API server error: %s"
 msgstr "Помилка сервера API: %s"
 
-#: lib/ai/provider/azure.rb:128
-msgid "API server not accessible"
-msgstr "Сервер API недоступний"
-
 #: lib/ai/provider/concerns/handles_response.rb:15
 msgid "API server unavailable - please try again later"
 msgstr "Сервер API недоступний - спробуйте пізніше"
@@ -1761,7 +1757,7 @@ msgstr "Адреса"
 
 #: db/seeds/settings.rb:507
 msgid "Address of the proxy server for http and https resources."
-msgstr "Адреса проксі-сервера для HTTP та HTTPS ресурсів."
+msgstr "Адреса проксі-сервера для http і https ресурсів."
 
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
@@ -2879,14 +2875,14 @@ msgid ""
 "Automatically loads the chat.css file. If you want to use your own css, just "
 "set it to false."
 msgstr ""
-"Автоматично завантажувати файл chat.css. Якщо Ви хочете використовувати свій "
-"власний CSS, просто встановіть значення false."
+"Автоматично завантажує файл chat.css. Якщо Ви хочете використовувати власний "
+"css-файл, просто встановіть значення false."
 
-#: app/frontend/shared/components/Form/Form.vue:1296
+#: app/frontend/shared/components/Form/Form.vue:1325
 msgid "Autosave in progress…"
 msgstr "Триває авто-збереження…"
 
-#: app/frontend/shared/components/Form/Form.vue:1305
+#: app/frontend/shared/components/Form/Form.vue:1334
 msgid "Autosaving is taking longer than expected…"
 msgstr "Автозбереження триває довше, ніж очікувалося…"
 
@@ -2958,8 +2954,8 @@ msgid "Average: %s%"
 msgstr "У середньому: %s%"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
-msgid "Azure AI"
-msgstr "Azure ШІ"
+msgid "Azure AI (legacy deployment-based endpoints)"
+msgstr "Azure AI (кінцеві точки на основі застарілого розгортання)"
 
 #: db/seeds/settings.rb:3493
 msgid "BCC address for all outgoing emails"
@@ -4848,8 +4844,7 @@ msgstr "Створюйте організації автоматично, якщ
 msgid ""
 "Create rules that single out the tickets for the Service Level Agreement."
 msgstr ""
-"Створіть правила, які відбирають заявки на угоду про рівень обслуговування "
-"(SLA)."
+"Створіть правила, які виділяють заявки для Угоди про рівень обслуговування."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:167
 msgid "Create shared draft"
@@ -6006,7 +6001,7 @@ msgstr "Визначає зручний формат дати."
 
 #: db/seeds/settings.rb:5458
 msgid "Defines processing timeout for the html sanitizer."
-msgstr "Визначає час очікування очищення HTML."
+msgstr "Визначає час очікування обробки для засобу очищення html."
 
 #: db/seeds/settings.rb:5117
 msgid "Defines sync transaction backend."
@@ -7639,9 +7634,9 @@ msgid ""
 msgstr ""
 "Увімкнути кнопку для аутентифікації користувача через %s. Кнопка "
 "перенаправить на /auth/sso при взаємодії користувача. Налаштуйте IP-адреси "
-"або діапазони CIDR, з яких приймаються заголовки аутентифікації (%s, %s, %s)"
-". Залиште поле порожнім, щоб приймати з будь-якого IP (не рекомендується для "
-"продакшену)."
+"або діапазони CIDR, з яких приймаються заголовки аутентифікації (%s, %s, "
+"%s). Залиште поле порожнім, щоб приймати з будь-якого IP (не рекомендується "
+"для продакшену)."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:62
 msgid "Enables console logging."
@@ -7806,7 +7801,7 @@ msgstr "Примусово для ролей користувачів"
 
 #: db/seeds.rb:37
 msgid "English (United States)"
-msgstr "Англійська (США)"
+msgstr "Англійська (Сполучені Штати)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:96
 msgid "Enter Note or"
@@ -8331,7 +8326,7 @@ msgstr "Вилучення інформації про вкладення zammad
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:3
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:3
 #: app/controllers/first_steps_controller.rb:27
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:35
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:38
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:43
 #: db/seeds/permissions.rb:167 db/seeds/settings.rb:1411
 msgid "Facebook"
@@ -8977,7 +8972,7 @@ msgstr "Отримання ключової інформації з браузе
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:56
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:59
 #: db/seeds/settings.rb:1607
 msgid "GitHub"
 msgstr "GitHub"
@@ -9012,7 +9007,7 @@ msgstr "GitHub: Посилання на проблему"
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:63
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:66
 #: db/seeds/settings.rb:1672
 msgid "GitLab"
 msgstr "GitLab"
@@ -9100,7 +9095,7 @@ msgid "Goodbye message"
 msgstr "Прощальне повідомлення"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:77
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:80
 #: db/seeds/settings.rb:1477
 msgid "Google"
 msgstr "Google"
@@ -9934,7 +9929,7 @@ msgstr "Кінцева точка (Endpoint) для імпорту"
 
 #: db/seeds/settings.rb:3808
 msgid "Import Key"
-msgstr "API-ключ для імпорту"
+msgstr "Ключ для імпорту"
 
 #: db/seeds/settings.rb:3736
 msgid "Import Mode"
@@ -10174,7 +10169,7 @@ msgstr "Вбудований вміст не вдалося згенеруват
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 "Поле вводу має бути текстовим, паролем, телефоном, факсом, електронною "
-"поштою або URL-адресою."
+"поштою або url-адресою."
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
@@ -10387,15 +10382,15 @@ msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr ""
 "Неправильна конфігурація i-doit (відсутня кінцева точка або api_token)."
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:193
 msgid "Invalid link structure"
 msgstr "Неправильна структура посилань"
 
-#: app/controllers/tickets_controller.rb:197
+#: app/controllers/tickets_controller.rb:199
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "Неправильна структура посилання (Об'єкт → Тип посилання)"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:196
 msgid "Invalid link structure (Object)"
 msgstr "Неправильна структура посилань (Об'єкт)"
 
@@ -10906,11 +10901,11 @@ msgstr "Посилання на макет"
 msgid "Leave BETA UI feedback program?"
 msgstr "Залишити програму зворотного зв'язку BETA UI?"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:252
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
 msgid "Leave empty to use URL (Completions)"
 msgstr "Залиште порожнім, щоб використовувати URL-адресу (завершення)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:242
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
 msgid "Leave empty to use the base model"
 msgstr "Залиште порожнім, щоб використовувати базову модель"
 
@@ -11089,7 +11084,7 @@ msgid "Linked accounts"
 msgstr "Пов'язані облікові записи"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:49
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:52
 #: db/seeds/settings.rb:1542
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -11378,7 +11373,7 @@ msgstr "Управління SMS-каналом вашої системи."
 
 #: db/seeds/permissions.rb:72
 msgid "Manage Service Level Agreements of your system."
-msgstr "Керування угодами про рівень обслуговування(SLA) вашої системи."
+msgstr "Керування угодами про рівень обслуговування вашої системи."
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:20
 msgid "Manage Tags"
@@ -11911,7 +11906,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "Метод (AJAX endpoint)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:70
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:73
 #: db/seeds/settings.rb:1744
 msgid "Microsoft"
 msgstr "Microsoft"
@@ -12028,7 +12023,7 @@ msgstr "Мобільний"
 msgid "Mode"
 msgstr "Закрити на обслуговування"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:188
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
 msgid "Model"
 msgstr "Модель"
 
@@ -12308,7 +12303,7 @@ msgstr ""
 msgid "Need session_id."
 msgstr "Необхідний ідентифікатор сеансу (session_id)."
 
-#: app/controllers/tickets_controller.rb:407
+#: app/controllers/tickets_controller.rb:416
 msgid "Need user_id or organization_id as param"
 msgstr ""
 "Необхідний ідентифікатор користувача (user_id) або ідентифікатор організації "
@@ -12935,7 +12930,7 @@ msgstr "Ще немає спільних чернеток"
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:243
-#: app/controllers/tickets_controller.rb:450
+#: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:574
 msgid "No source data submitted!"
 msgstr "Вихідні дані не надані!"
@@ -13254,7 +13249,7 @@ msgstr "OAuth URL-адреси є такими:"
 msgid "OAuth2 token is expired!"
 msgstr "Термін дії токена відкритого протоколу авторизації 2 (OAuth2) минув!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:235
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
 msgid "OCR Model"
 msgstr "Модель OCR"
 
@@ -13488,7 +13483,7 @@ msgstr "Відкрити заявку№ %s"
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
-msgstr "Відкрити заявки"
+msgstr "Відкриті заявки"
 
 #: app/models/system_report/plugin/entities/ticket.rb:4
 msgid "Open and closed tickets ratio (ticket counts based on state)"
@@ -13570,7 +13565,7 @@ msgid "OpenAI"
 msgstr "OpenAI"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:107
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
 #: db/seeds/settings.rb:2037
 msgid "OpenID Connect"
 msgstr "OpenID Connect"
@@ -14345,7 +14340,7 @@ msgstr "Будь ласка, заповніть усі поля"
 #: app/frontend/shared/form/i18n/locales.ts:518
 #: app/services/service/system/set_system_information.rb:38
 msgid "Please include a valid url."
-msgstr "Будь ласка, вкажіть дійсну URL."
+msgstr "Будь ласка, вкажіть дійсну url."
 
 #: app/services/service/system/import/apply_otrs_configuration.rb:82
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
@@ -14439,7 +14434,7 @@ msgstr ""
 
 #: app/controllers/knowledge_base/manage_controller.rb:20
 msgid "Please submit custom address before generating the snippet"
-msgstr "Будь ласка, визначте свою власну URL-адресу перед створенням фрагмента"
+msgstr "Будь ласка, вкажіть користувацьку адресу перед створенням фрагмента"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:11
 msgid "Please use the provided URL."
@@ -14945,7 +14940,7 @@ msgstr "Нещодавно переглянуті заявки"
 msgid "Recipient"
 msgstr "Одержувач"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:226
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
 msgid "Recognize image text (OCR)"
 msgstr "Розпізнавання тексту на зображенні (OCR)"
 
@@ -15660,7 +15655,7 @@ msgid "S/MIME integration"
 msgstr "Інтеграція з S/MIME"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:91
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
 #: db/seeds/settings.rb:1879
 msgid "SAML"
 msgstr "SAML"
@@ -15754,7 +15749,7 @@ msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:98
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
 #: db/seeds/settings.rb:5805
 msgid "SSO"
 msgstr "SSO"
@@ -16759,7 +16754,7 @@ msgid "Shared draft"
 msgstr "Спільна чернетка"
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:180
+#: app/services/service/ticket/create.rb:189
 #: app/services/service/ticket/update.rb:72
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Для цієї заявки не можна вибрати спільну чернетку."
@@ -17076,17 +17071,17 @@ msgstr "Simple Storage (S3)"
 msgid "Simple Storage Service (S3)"
 msgstr "Simple Storage Service (S3)"
 
-#: app/models/store/provider/s3/config.rb:33
+#: app/models/store/provider/s3/config.rb:35
 msgid "Simple Storage Service configuration not found or invalid."
 msgstr "Конфігурація Simple Storage Service (S3) не знайдена або недійсна."
 
-#: app/models/store/provider/s3.rb:94
+#: app/models/store/provider/s3.rb:96
 msgid ""
 "Simple Storage Service malfunction. Please contact your Zammad administrator."
 msgstr ""
 "Несправність Simple Storage Service. Зверніться до адміністратора Zammad."
 
-#: app/models/store/provider/s3.rb:70
+#: app/models/store/provider/s3.rb:72
 msgid "Simple Storage Service not reachable."
 msgstr "Simple Storage Service (S3) недоступна."
 
@@ -18162,7 +18157,7 @@ msgstr "Повідомлення не належить до вказаної з�
 #: app/assets/javascripts/app/views/getting_started/auto_wizard_enabled.jst.eco:6
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
-"Автоматичний майстер увімкнено. Будь ласка, використовуйте наданий URL "
+"Автоматичний майстер увімкнено. Будь ласка, використовуйте наданий url "
 "майстра."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:252
@@ -18434,7 +18429,7 @@ msgstr "Пристрій не вдалося видалити."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Розділювач між ідентифікатором та номером заявки. Наприклад ':'."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:137
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr "Не вдалося розпочати завантаження. Спробуйте ще раз пізніше."
@@ -19064,7 +19059,7 @@ msgstr "Відсутня обов'язковий параметр значенн
 msgid "The required value 'group_id' is missing."
 msgstr "Відсутнє значення «Ідентифікатор_групи» (group_id)."
 
-#: lib/ai/provider.rb:65
+#: lib/ai/provider.rb:69
 msgid "The response could not be processed."
 msgstr "Відповідь не вдалося обробити."
 
@@ -19156,7 +19151,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Підпис було успішно перевірено."
 
-#: app/controllers/tickets_controller.rb:361
+#: app/controllers/tickets_controller.rb:370
 msgid "The source ticket could not be found."
 msgstr "Заявку не вдалося знайти."
 
@@ -19226,7 +19221,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Систему було успішно налаштовано. Вас буде перенаправлено."
 
-#: app/controllers/tickets_controller.rb:352
+#: app/controllers/tickets_controller.rb:361
 msgid "The target ticket number could not be found."
 msgstr "Номер цільової заявки знайти не вдалося."
 
@@ -20021,7 +20016,7 @@ msgstr ""
 "Ця послуга дозволяє вам підключити Zammad до постачальника послуг штучного "
 "інтелекту (AI)."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:88
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -20722,7 +20717,7 @@ msgid "Tickets bulk edit"
 msgstr "Масове редагування заявок"
 
 #: app/controllers/ticket_articles_controller.rb:236
-#: app/controllers/tickets_controller.rb:443
+#: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 "Заявки можна імпортувати, тільки якщо система знаходиться в режимі імпорту."
@@ -21007,7 +21002,7 @@ msgstr "Переключити заголовок рядка"
 msgid "Toggle the overlay"
 msgstr "Переключити оверлей"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:178
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -21242,7 +21237,7 @@ msgstr ""
 "ризик!"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:71
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:42
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:45
 #: db/seeds/settings.rb:1347
 msgid "Twitter"
 msgstr "Twitter"
@@ -21371,7 +21366,7 @@ msgstr "Имя атрибута UID"
 msgid "UID Field"
 msgstr "Поле UID"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:198
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -21388,15 +21383,15 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL-адреса (кінцева точка (endpoint) AJAX)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:208
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
 msgid "URL (Completions)"
 msgstr "URL (Завершення)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:217
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
 msgid "URL (Embeddings)"
 msgstr "URL (Вбудовування)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:246
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
 msgid "URL (OCR)"
 msgstr "URL (OCR)"
 
@@ -21589,7 +21584,7 @@ msgstr ""
 msgid "Update shared draft"
 msgstr "Оновити спільну чернетку"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:347
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -22498,7 +22493,7 @@ msgid "Week(s)"
 msgstr "Тиждень(ні)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:84
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
 #: db/seeds/settings.rb:1815
 msgid "Weibo"
 msgstr "Weibo"
@@ -23280,11 +23275,6 @@ msgstr ""
 "адміністратора..</p>\n"
 "<br>\n"
 "<p>Команда #{config.product_name}</p>\n"
-
-#: app/assets/javascripts/app/controllers/text_tools_modal.coffee:131
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:137
-msgid "Your AI result usage could not be recorded."
-msgstr "Не вдалося записати використання результатів вашого ШІ."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:64
 msgid "Your API key."
@@ -24861,7 +24851,7 @@ msgstr "Пропущено"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/sms.ts:6
 #: db/seeds/ticket_article_types.rb:4
 msgid "sms"
-msgstr "SMS"
+msgstr "sms"
 
 #: app/models/object_manager/attribute.rb:598
 msgid "spaces are not allowed"
@@ -25016,7 +25006,7 @@ msgstr "зняти тільки для читання"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
 msgid "untouched"
-msgstr "неопрацьований"
+msgstr "без змін"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
@@ -25126,6 +25116,15 @@ msgstr "…від усієї текстової ділянки"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Час очікування сьогодні"
+
+#~ msgid "API server not accessible"
+#~ msgstr "Сервер API недоступний"
+
+#~ msgid "Azure AI"
+#~ msgstr "Azure ШІ"
+
+#~ msgid "Your AI result usage could not be recorded."
+#~ msgstr "Не вдалося записати використання результатів вашого ШІ."
 
 #~ msgid ""
 #~ "Enables button for user authentication via %s. The button will redirect "

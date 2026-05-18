@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-09 22:02+0000\n"
+"PO-Revision-Date: 2026-04-16 22:02+0000\n"
 "Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -1213,10 +1213,6 @@ msgstr "API-Serverfehler - bitte versuchen Sie es erneut"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:86
 msgid "API server error: %s"
 msgstr "API Server-Fehler: %s"
-
-#: lib/ai/provider/azure.rb:128
-msgid "API server not accessible"
-msgstr "API-Server nicht erreichbar"
 
 #: lib/ai/provider/concerns/handles_response.rb:15
 msgid "API server unavailable - please try again later"
@@ -2902,11 +2898,11 @@ msgstr ""
 "Lädt automatisch die Datei chat.css. Wenn Sie Ihre eigene CSS-Datei "
 "verwenden möchten, setzen Sie dies einfach auf false."
 
-#: app/frontend/shared/components/Form/Form.vue:1296
+#: app/frontend/shared/components/Form/Form.vue:1325
 msgid "Autosave in progress…"
 msgstr "Automatisches Speichern läuft…"
 
-#: app/frontend/shared/components/Form/Form.vue:1305
+#: app/frontend/shared/components/Form/Form.vue:1334
 msgid "Autosaving is taking longer than expected…"
 msgstr "Das automatische Speichern dauert länger als erwartet…"
 
@@ -2978,8 +2974,8 @@ msgid "Average: %s%"
 msgstr "Durchschnitt: %s%"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
-msgid "Azure AI"
-msgstr "Azure AI"
+msgid "Azure AI (legacy deployment-based endpoints)"
+msgstr "Azure AI (Legacy Deployment-Endpunkte)"
 
 #: db/seeds/settings.rb:3493
 msgid "BCC address for all outgoing emails"
@@ -8395,7 +8391,7 @@ msgstr "Extrahieren von Zammad-Anhangsinformationen aus Arrays"
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:3
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:3
 #: app/controllers/first_steps_controller.rb:27
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:35
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:38
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:43
 #: db/seeds/permissions.rb:167 db/seeds/settings.rb:1411
 msgid "Facebook"
@@ -9049,7 +9045,7 @@ msgstr "Schlüssel-Information vom Browser abfragen…"
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:56
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:59
 #: db/seeds/settings.rb:1607
 msgid "GitHub"
 msgstr "GitHub"
@@ -9083,7 +9079,7 @@ msgstr "GitHub: Issue verknüpfen"
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:63
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:66
 #: db/seeds/settings.rb:1672
 msgid "GitLab"
 msgstr "GitLab"
@@ -9170,7 +9166,7 @@ msgid "Goodbye message"
 msgstr "Abschieds-Nachricht"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:77
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:80
 #: db/seeds/settings.rb:1477
 msgid "Google"
 msgstr "Google"
@@ -10457,15 +10453,15 @@ msgstr "Falsche E-Mail '%{email}'"
 msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr "Ungültige i-doit Konfiguration (fehlender Endpunkt oder api_token)."
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:193
 msgid "Invalid link structure"
 msgstr "Fehlerhafte Link-Struktur"
 
-#: app/controllers/tickets_controller.rb:197
+#: app/controllers/tickets_controller.rb:199
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "Ungültige Linkstruktur (Object → LinkType)"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:196
 msgid "Invalid link structure (Object)"
 msgstr "Ungültige Link-Struktur (Objekt)"
 
@@ -10981,11 +10977,11 @@ msgstr "Layout-Referenz"
 msgid "Leave BETA UI feedback program?"
 msgstr "Feedback-Programm der BETA-UI verlassen?"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:252
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
 msgid "Leave empty to use URL (Completions)"
 msgstr "Leer lassen, um URL (Completions) zu verwenden"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:242
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
 msgid "Leave empty to use the base model"
 msgstr "Leer lassen, um Basismodel zu verwenden"
 
@@ -11164,7 +11160,7 @@ msgid "Linked accounts"
 msgstr "Verknüpfte Konten"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:49
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:52
 #: db/seeds/settings.rb:1542
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -11985,7 +11981,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "Methode (AJAX-Endpunkt)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:70
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:73
 #: db/seeds/settings.rb:1744
 msgid "Microsoft"
 msgstr "Microsoft"
@@ -12102,7 +12098,7 @@ msgstr "Mobil"
 msgid "Mode"
 msgstr "Modus"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:188
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
 msgid "Model"
 msgstr "Model"
 
@@ -12380,7 +12376,7 @@ msgstr "Brauchen Sie Hilfe? Schauen Sie sich die Zammad-Dokumentation an."
 msgid "Need session_id."
 msgstr "session_id wird benötigt."
 
-#: app/controllers/tickets_controller.rb:407
+#: app/controllers/tickets_controller.rb:416
 msgid "Need user_id or organization_id as param"
 msgstr "Benötigt user_id oder organization_id als Parameter"
 
@@ -13006,7 +13002,7 @@ msgstr "Noch keine gemeinsamen Entwürfe"
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:243
-#: app/controllers/tickets_controller.rb:450
+#: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:574
 msgid "No source data submitted!"
 msgstr "Keine Quelldaten übermittelt!"
@@ -13326,7 +13322,7 @@ msgstr "OAuth URLs sind:"
 msgid "OAuth2 token is expired!"
 msgstr "OAuth2 Token ist abgelaufen!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:235
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
 msgid "OCR Model"
 msgstr "OCR-Model"
 
@@ -13646,7 +13642,7 @@ msgid "OpenAI"
 msgstr "OpenAI"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:107
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
 #: db/seeds/settings.rb:2037
 msgid "OpenID Connect"
 msgstr "OpenID Connect"
@@ -15034,7 +15030,7 @@ msgstr "Zuletzt geöffnete Tickets"
 msgid "Recipient"
 msgstr "Empfänger"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:226
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
 msgid "Recognize image text (OCR)"
 msgstr "Texterkennung in Bildern (OCR)"
 
@@ -15756,7 +15752,7 @@ msgid "S/MIME integration"
 msgstr "S/MIME-Integration"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:91
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
 #: db/seeds/settings.rb:1879
 msgid "SAML"
 msgstr "SAML"
@@ -15850,7 +15846,7 @@ msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:98
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
 #: db/seeds/settings.rb:5805
 msgid "SSO"
 msgstr "SSO"
@@ -16868,7 +16864,7 @@ msgid "Shared draft"
 msgstr "Gemeinsamer Entwurf"
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:180
+#: app/services/service/ticket/create.rb:189
 #: app/services/service/ticket/update.rb:72
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Der gemeinsame Entwurf kann für dieses Ticket nicht ausgewählt werden."
@@ -17186,18 +17182,18 @@ msgstr "Simple Storage (S3)"
 msgid "Simple Storage Service (S3)"
 msgstr "Simple Storage Service (S3)"
 
-#: app/models/store/provider/s3/config.rb:33
+#: app/models/store/provider/s3/config.rb:35
 msgid "Simple Storage Service configuration not found or invalid."
 msgstr "Simple Storage Service-Konfiguration nicht gefunden oder ungültig."
 
-#: app/models/store/provider/s3.rb:94
+#: app/models/store/provider/s3.rb:96
 msgid ""
 "Simple Storage Service malfunction. Please contact your Zammad administrator."
 msgstr ""
 "Fehlfunktion des Simple Storage Service. Bitte kontaktieren Sie Ihren "
 "Administrator."
 
-#: app/models/store/provider/s3.rb:70
+#: app/models/store/provider/s3.rb:72
 msgid "Simple Storage Service not reachable."
 msgstr "Der Simple Storage Service ist nicht erreichbar."
 
@@ -18565,7 +18561,7 @@ msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 "Das Trennzeichen zwischen Ticket-Hook und Ticketnummer. Zum Beispiel ': '."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:137
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr ""
@@ -18985,7 +18981,8 @@ msgstr ""
 
 #: app/models/webhook.rb:53
 msgid "The provided endpoint is invalid, it points to a loopback IP address."
-msgstr "Der angegebene Endpunkt ist ungültig, er verweist auf eine Loopback-IP."
+msgstr ""
+"Der angegebene Endpunkt ist ungültig, er verweist auf eine Loopback-IP."
 
 #: app/models/webhook.rb:47
 msgid "The provided endpoint is invalid, no hostname was specified."
@@ -19204,7 +19201,7 @@ msgstr "Der erforderliche Parameter 'value' fehlt."
 msgid "The required value 'group_id' is missing."
 msgstr "Der erforderliche Wert 'group_id' fehlt."
 
-#: lib/ai/provider.rb:65
+#: lib/ai/provider.rb:69
 msgid "The response could not be processed."
 msgstr "Die Antwort konnte nicht verarbeitet werden."
 
@@ -19299,7 +19296,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Die Signatur wurde erfolgreich verifiziert."
 
-#: app/controllers/tickets_controller.rb:361
+#: app/controllers/tickets_controller.rb:370
 msgid "The source ticket could not be found."
 msgstr "Das Ursprungs-Ticket konnte nicht gefunden werden."
 
@@ -19369,7 +19366,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Das System wurde erfolgreich konfiguriert. Sie werden umgeleitet."
 
-#: app/controllers/tickets_controller.rb:352
+#: app/controllers/tickets_controller.rb:361
 msgid "The target ticket number could not be found."
 msgstr "Die Ziel-Ticketnummer konnte nicht gefunden werden."
 
@@ -20193,7 +20190,7 @@ msgid "This service allows you to connect Zammad with an AI provider."
 msgstr ""
 "Dieser Dienst ermöglicht es Ihnen, Zammad mit einem KI-Anbieter zu verbinden."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:88
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -20565,7 +20562,7 @@ msgstr "Ticket-Abos"
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
 #: db/seeds/permissions.rb:239 db/seeds/settings.rb:6105
 msgid "Ticket Summary"
-msgstr "Ticket-Zusammenfassung"
+msgstr "Ticket Zusammenfassung"
 
 #: db/seeds/settings.rb:6119
 msgid "Ticket Summary Config"
@@ -20897,7 +20894,7 @@ msgid "Tickets bulk edit"
 msgstr "Mehrfach-Ticketbearbeitung"
 
 #: app/controllers/ticket_articles_controller.rb:236
-#: app/controllers/tickets_controller.rb:443
+#: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 "Tickets können nur importiert werden, wenn das System im Import-Modus ist."
@@ -21188,7 +21185,7 @@ msgstr "Kopfzeile umschalten"
 msgid "Toggle the overlay"
 msgstr "Overlay umschalten"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:178
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -21423,7 +21420,7 @@ msgstr ""
 "eigene Gefahr!"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:71
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:42
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:45
 #: db/seeds/settings.rb:1347
 msgid "Twitter"
 msgstr "Twitter"
@@ -21560,7 +21557,7 @@ msgstr "UID Attribut-Name"
 msgid "UID Field"
 msgstr "UID-Feld"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:198
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -21577,15 +21574,15 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX-Endpunkt)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:208
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
 msgid "URL (Completions)"
 msgstr "URL (Completions)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:217
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
 msgid "URL (Embeddings)"
 msgstr "URL (Embeddings)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:246
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
 msgid "URL (OCR)"
 msgstr "URL (OCR)"
 
@@ -21780,7 +21777,7 @@ msgstr ""
 msgid "Update shared draft"
 msgstr "Gemeinsamen Entwurf aktualisieren"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:347
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -22061,8 +22058,8 @@ msgid ""
 "Use 'with_private_keyring' to create a private keyring or set @gnupg_home "
 "before calling gpg."
 msgstr ""
-"Verwenden Sie 'with_private_keyring' um einen privaten Schlüsselbund zu "
-"erzeugen, oder setzen Sie @gnupg_home vor dem Aufruf von PGP."
+"Verwenden Sie 'with_private_keyring', um einen privaten Schlüsselbund zu "
+"erzeugen, oder setzen Sie @gnupg_home vor dem Aufruf von GPG."
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco:69
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:65
@@ -22693,7 +22690,7 @@ msgid "Week(s)"
 msgstr "Woche(n)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:84
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
 #: db/seeds/settings.rb:1815
 msgid "Weibo"
 msgstr "Weibo"
@@ -23478,11 +23475,6 @@ msgstr ""
 "an Ihren Systemadministrator.</div>\n"
 "<br>\n"
 "<div>Ihr #{config.product_name}-Team</div>\n"
-
-#: app/assets/javascripts/app/controllers/text_tools_modal.coffee:131
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:137
-msgid "Your AI result usage could not be recorded."
-msgstr "Ihre Verwendung der KI-Ergebnisse konnte nicht gespeichert werden."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:64
 msgid "Your API key."
@@ -25329,6 +25321,15 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "API server not accessible"
+#~ msgstr "API-Server nicht erreichbar"
+
+#~ msgid "Azure AI"
+#~ msgstr "Azure AI"
+
+#~ msgid "Your AI result usage could not be recorded."
+#~ msgstr "Ihre Verwendung der KI-Ergebnisse konnte nicht gespeichert werden."
 
 #~ msgid ""
 #~ "Enables button for user authentication via %s. The button will redirect "

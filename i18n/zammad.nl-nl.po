@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-03-16 22:00+0000\n"
-"Last-Translator: Colin Andries <colin.andries@bisdomantwerpen.be>\n"
+"PO-Revision-Date: 2026-05-18 06:31+0000\n"
+"Last-Translator: Paul van Wanrooij <pvwanrooij@hgvt.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
 "stable/nl/>\n"
 "Language: nl-nl\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11.4\n"
+"X-Generator: Weblate 5.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -62,19 +62,6 @@ msgstr ""
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_create/en.md.erb
-#, fuzzy
-#| msgid ""
-#| "# #{ticket.title}\n"
-#| "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-#| "Ticket##{ticket.number}>: Created by #{current_user.longname} at "
-#| "#{ticket.updated_at}_\n"
-#| "* Group: #{ticket.group.name}\n"
-#| "* Owner: #{ticket.owner.fullname}\n"
-#| "* State: #{t(ticket.state.name)}\n"
-#| "\n"
-#| "<% if @objects[:article] %>\n"
-#| "#{article.body_as_text}\n"
-#| "<% end %>\n"
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -89,9 +76,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Aangemaakt door #{current_user.longname} op "
-"#{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##"
+"{ticket.number}>: Aangemaakt door #{current_user.longname} op #"
+"{ticket.updated_at}_\n"
 "* Groep: #{ticket.group.name}\n"
 "* Behandelaar: #{ticket.owner.fullname}\n"
 "* Status: #{t(ticket.state.name)}\n"
@@ -562,10 +549,8 @@ msgid "%s days ago"
 msgstr "%s dagen geleden"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:60
-#, fuzzy
-#| msgid "%s tickets"
 msgid "%s deselected."
-msgstr "%s tickets"
+msgstr "%s ongeselecteerd."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:695
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:260
@@ -598,10 +583,8 @@ msgid "%s hours ago"
 msgstr "%s uren geleden"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:28
-#, fuzzy
-#| msgid "%s Migration"
 msgid "%s is generating text…"
-msgstr "%s Migratie"
+msgstr "%s is tekst aan het genereren…"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:91
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:58
@@ -694,6 +677,8 @@ msgstr "%s vereist!"
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
+"%s geselecteerd. Gebruik pijltjes toetsen om de positie te kiezen, druk op "
+"spatie om te bevestigen."
 
 #: app/assets/javascripts/app/models/user.coffee:212
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
@@ -711,10 +696,8 @@ msgid "%s switched to |%s|!"
 msgstr "%s schakelde over naar |%s|!"
 
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:70
-#, fuzzy
-#| msgid "%s tickets"
 msgid "%s ticket selected"
-msgstr "%s tickets"
+msgstr "%s tickets geselecteerd"
 
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:30
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:63
@@ -809,7 +792,7 @@ msgstr "%{name} is een gereserveerd woord"
 
 #: app/models/setting/validation/sso_trusted_ips.rb:9
 msgid "'%s' is not a valid IP address or CIDR range."
-msgstr ""
+msgstr "'%s' is geen geldig IP-adres of CIDR range."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
@@ -956,10 +939,8 @@ msgid "2 weeks"
 msgstr "2 weken"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:34
-#, fuzzy
-#| msgid "2 hours"
 msgid "20 hours"
-msgstr "2 uur"
+msgstr "20 uur"
 
 #: db/seeds/ticket_priorities.rb:5
 msgid "3 high"
@@ -974,10 +955,8 @@ msgid "4 weeks"
 msgstr "4 weken"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:33
-#, fuzzy
-#| msgid "2 hours"
 msgid "5 hours"
-msgstr "2 uur"
+msgstr "5 uur"
 
 #: public/assets/chat/chat-no-jquery.coffee:167
 #: public/assets/chat/chat.coffee:165
@@ -1106,10 +1085,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:30
 #: app/assets/javascripts/app/controllers/manage.coffee:45
-#, fuzzy
-#| msgid "API"
 msgid "AI"
-msgstr "API"
+msgstr "AI"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:6
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:42
@@ -1117,30 +1094,22 @@ msgstr "API"
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:60
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:144
 #: app/models/ai/agent.rb:102
-#, fuzzy
-#| msgid "Agent"
 msgid "AI Agent"
-msgstr "Behandelaar"
+msgstr "AI Agent"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:6
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/ai_agent.jst.eco:3
 #: db/seeds/permissions.rb:251
-#, fuzzy
-#| msgid "Agents"
 msgid "AI Agents"
-msgstr "Behandelaren"
+msgstr "AI Agents"
 
 #: db/seeds/permissions.rb:233
-#, fuzzy
-#| msgid "Provider"
 msgid "AI Provider"
-msgstr "Aanbieder"
+msgstr "AI Aanbieder"
 
 #: db/seeds/settings.rb:6089
-#, fuzzy
-#| msgid "Provider"
 msgid "AI Provider Config"
-msgstr "Aanbieder"
+msgstr "AI Aanbieder Configuratie"
 
 #: app/models/setting/validation/ai_provider_config.rb:71
 #, fuzzy
@@ -1156,77 +1125,63 @@ msgid "AI Service Name"
 msgstr "Beelddienst"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:110
-#, fuzzy
-#| msgid "Event Summary"
 msgid "AI Summary"
-msgstr "Evenement Samenvatting"
+msgstr "AI Samenvatting"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:82
-#, fuzzy
-#| msgid "Waiting in %s"
 msgid "AI Writing Assistant Tools"
-msgstr "Wachten in %s"
+msgstr "AI Schrijfassistant"
 
 #: app/assets/javascripts/app/controllers/text_tools_modal.coffee:24
-#, fuzzy
-#| msgid "Waiting in %s"
 msgid "AI Writing Assistant: %s"
-msgstr "Wachten in %s"
+msgstr "AI Schrijfassistent: %s"
 
 #: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:21
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/historyEventIssuerNames.ts:7
 #: app/frontend/apps/mobile/components/AiAgent/AiAgentAvatar.vue:34
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:44
-#, fuzzy
-#| msgid "Agent"
 msgid "AI agent"
-msgstr "Behandelaar"
+msgstr "AI agent"
 
 #: app/services/service/ai/agent/run.rb:32
 msgid "AI agent result content does not match expected result structure."
 msgstr "Het resultaat van de AI agent met de verwachte resultaatstructuur."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:33
-#, fuzzy
-#| msgid "Agents"
 msgid "AI agent used in"
-msgstr "Behandelaren"
+msgstr "AI agent gebruikt in"
 
 #: app/assets/javascripts/app/models/ai_agent.coffee
 msgid ""
 "AI agents enable streamlined processing powered by artificial intelligence. "
 "You can execute AI agents via triggers or schedulers."
 msgstr ""
+"AI-agenten maken gestroomlijnde verwerking mogelijk dankzij kunstmatige "
+"intelligentie. U kunt AI-agenten uitvoeren via triggers of schedulers."
 
 #: app/services/service/ai_assistance/text_tools.rb:22
 msgid "AI assistance text tool is inactive."
-msgstr ""
+msgstr "De teksttool voor AI-assistentie is inactief."
 
 #: app/services/service/ai_assistance/text_tools.rb:21
 msgid "AI assistance text tool is invalid."
-msgstr ""
+msgstr "De teksttool voor AI-assistentie is ongeldig."
 
 #: lib/excel_sheet/ai/analytics/errors.rb:4
-#, fuzzy
-#| msgid "API error."
 msgid "AI error log"
-msgstr "API error."
+msgstr "AI error log"
 
 #: db/seeds/settings.rb:6075
-#, fuzzy
-#| msgid "Provider"
 msgid "AI provider"
-msgstr "Aanbieder"
+msgstr "AI aanbieder"
 
 #: app/models/setting/validation/ai_provider_config.rb:7
-#, fuzzy
-#| msgid "The provided token is invalid."
 msgid "AI provider Azure configuration is incomplete"
-msgstr "Het verstrekte token is ongeldig."
+msgstr "AI aanbieder Azure configuratie in niet compleet."
 
 #: app/models/setting/validation/ai_provider_config.rb:6
 msgid "AI provider Ollama URL is not set"
-msgstr ""
+msgstr "Ai aanbieder Ollama URL is niet ingesteld"
 
 #: app/models/setting/validation/ai_provider_config.rb:70
 #, fuzzy
@@ -1275,7 +1230,7 @@ msgstr "Het verstrekte token is ongeldig."
 
 #: lib/ai/service/ticket_summarize.rb:54
 msgid "AI service result is missing expected keys"
-msgstr ""
+msgstr "Het resultaat van de AI-service mist de verwachte sleutels"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-summary.ts:11
 #, fuzzy
@@ -1327,7 +1282,7 @@ msgstr "API error."
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
-msgstr ""
+msgstr "API server error - probeer opnieuw aub"
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:10
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:7
@@ -1336,10 +1291,6 @@ msgstr ""
 #| msgid "API error."
 msgid "API server error: %s"
 msgstr "API error."
-
-#: lib/ai/provider/azure.rb:128
-msgid "API server not accessible"
-msgstr "API server is niet toegankelijk"
 
 #: lib/ai/provider/concerns/handles_response.rb:15
 #, fuzzy
@@ -2071,11 +2022,11 @@ msgstr "Behandelaren"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
 msgid "Agents with \"%s\" permission"
-msgstr ""
+msgstr "Agenten met \"%s\" toestemming"
 
 #: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:103
 msgid "Agree & join"
-msgstr ""
+msgstr "Meen eens en doe mee"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:27
 msgid "Alarm"
@@ -3046,11 +2997,11 @@ msgstr ""
 "Het chat.css-bestand wordt automatisch geladen. Als je eigen CSS wilt "
 "gebruiken, zet deze waarde op false."
 
-#: app/frontend/shared/components/Form/Form.vue:1296
+#: app/frontend/shared/components/Form/Form.vue:1325
 msgid "Autosave in progress…"
 msgstr "Autosave bezig…"
 
-#: app/frontend/shared/components/Form/Form.vue:1305
+#: app/frontend/shared/components/Form/Form.vue:1334
 msgid "Autosaving is taking longer than expected…"
 msgstr "Het automatisch opslaan duurt langer dan verwacht…"
 
@@ -3130,7 +3081,7 @@ msgid "Average: %s%"
 msgstr "Gemiddeld: %s%"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
-msgid "Azure AI"
+msgid "Azure AI (legacy deployment-based endpoints)"
 msgstr ""
 
 #: db/seeds/settings.rb:3493
@@ -8659,7 +8610,7 @@ msgstr "Extraheer zammad-bijlage-informatie uit arrays"
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:3
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:3
 #: app/controllers/first_steps_controller.rb:27
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:35
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:38
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:43
 #: db/seeds/permissions.rb:167 db/seeds/settings.rb:1411
 msgid "Facebook"
@@ -9327,7 +9278,7 @@ msgstr "Sleutel informatie ophalen uit de browser…"
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:56
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:59
 #: db/seeds/settings.rb:1607
 msgid "GitHub"
 msgstr "GitHub"
@@ -9360,7 +9311,7 @@ msgstr "GitHub: Link issue"
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:63
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:66
 #: db/seeds/settings.rb:1672
 msgid "GitLab"
 msgstr "GitLab"
@@ -9450,7 +9401,7 @@ msgid "Goodbye message"
 msgstr "Vaarwel bericht"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:77
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:80
 #: db/seeds/settings.rb:1477
 msgid "Google"
 msgstr "Google"
@@ -10751,15 +10702,15 @@ msgstr "Ongeldig e-mailadres '%{email}'"
 msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr "Ongeldige i-doit configuratie (endpoint of api_token ontbreekt)."
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:193
 msgid "Invalid link structure"
 msgstr "Ongeldige link structuur"
 
-#: app/controllers/tickets_controller.rb:197
+#: app/controllers/tickets_controller.rb:199
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "Ongeldige link structuur (Object → LinkType)"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:196
 msgid "Invalid link structure (Object)"
 msgstr "Ongeldige link structuur (Object)"
 
@@ -11283,13 +11234,13 @@ msgstr "Lay-outreferentie"
 msgid "Leave BETA UI feedback program?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:252
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
 #, fuzzy
 #| msgid "%s (option)"
 msgid "Leave empty to use URL (Completions)"
 msgstr "%s (optie)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:242
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
 msgid "Leave empty to use the base model"
 msgstr ""
 
@@ -11482,7 +11433,7 @@ msgid "Linked accounts"
 msgstr "Gekoppelde accounts"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:49
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:52
 #: db/seeds/settings.rb:1542
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -12325,7 +12276,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "Methode (AJAX endpoint)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:70
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:73
 #: db/seeds/settings.rb:1744
 msgid "Microsoft"
 msgstr "Microsoft"
@@ -12444,7 +12395,7 @@ msgstr "Mobiel"
 msgid "Mode"
 msgstr "Modus"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:188
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
 #, fuzzy
 #| msgid "Mode"
 msgid "Model"
@@ -12724,7 +12675,7 @@ msgstr ""
 msgid "Need session_id."
 msgstr "Session_id nodig."
 
-#: app/controllers/tickets_controller.rb:407
+#: app/controllers/tickets_controller.rb:416
 msgid "Need user_id or organization_id as param"
 msgstr "User_id of Organization_id nodig als parameter"
 
@@ -13374,7 +13325,7 @@ msgstr "Nog geen gedeelde concepten"
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:243
-#: app/controllers/tickets_controller.rb:450
+#: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:574
 msgid "No source data submitted!"
 msgstr "Geen brongegevens verstuurd!"
@@ -13701,7 +13652,7 @@ msgstr "OAuth URLs zijn:"
 msgid "OAuth2 token is expired!"
 msgstr "OAuth2-token is verlopen!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:235
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
 #, fuzzy
 #| msgid "Mode"
 msgid "OCR Model"
@@ -14039,7 +13990,7 @@ msgid "OpenAI"
 msgstr "Open"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:107
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
 #: db/seeds/settings.rb:2037
 #, fuzzy
 #| msgid "Connect"
@@ -15490,7 +15441,7 @@ msgstr "Recent Bekeken Tickets"
 msgid "Recipient"
 msgstr "Ontvanger"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:226
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
 msgid "Recognize image text (OCR)"
 msgstr ""
 
@@ -16243,7 +16194,7 @@ msgid "S/MIME integration"
 msgstr "S/MIME integratie"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:91
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
 #: db/seeds/settings.rb:1879
 msgid "SAML"
 msgstr "SAML"
@@ -16337,7 +16288,7 @@ msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:98
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
 #: db/seeds/settings.rb:5805
 msgid "SSO"
 msgstr "SSO"
@@ -17445,7 +17396,7 @@ msgid "Shared draft"
 msgstr "Gedeelde Concepten"
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:180
+#: app/services/service/ticket/create.rb:189
 #: app/services/service/ticket/update.rb:72
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Gedeeld concept kan niet worden geselecteerd voor dit ticket."
@@ -17773,17 +17724,17 @@ msgstr "Simple Storage (S3)"
 msgid "Simple Storage Service (S3)"
 msgstr "Simple Storage Service (S3)"
 
-#: app/models/store/provider/s3/config.rb:33
+#: app/models/store/provider/s3/config.rb:35
 msgid "Simple Storage Service configuration not found or invalid."
 msgstr "Simple Storage Service-configuratie niet gevonden of ongeldig."
 
-#: app/models/store/provider/s3.rb:94
+#: app/models/store/provider/s3.rb:96
 msgid ""
 "Simple Storage Service malfunction. Please contact your Zammad administrator."
 msgstr ""
 "Simple Storage Service storing. Neem contact op met de Zammad beheerder."
 
-#: app/models/store/provider/s3.rb:70
+#: app/models/store/provider/s3.rb:72
 msgid "Simple Storage Service not reachable."
 msgstr "Simple Storage Service niet bereikbaar."
 
@@ -19176,7 +19127,7 @@ msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 "Het koppelteken tussen de Ticket-hook en Ticket-nummer. Bijvoorbeeld ':'."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:137
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 #, fuzzy
 #| msgid "Media download failed. Please try again later."
@@ -19822,7 +19773,7 @@ msgstr "De vereiste parameter 'value' ontbreekt."
 msgid "The required value 'group_id' is missing."
 msgstr "De vereiste parameter 'group_id' ontbreekt."
 
-#: lib/ai/provider.rb:65
+#: lib/ai/provider.rb:69
 #, fuzzy
 #| msgid "The request could not be processed."
 msgid "The response could not be processed."
@@ -19913,7 +19864,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "De signature werd succesvol geverifieerd."
 
-#: app/controllers/tickets_controller.rb:361
+#: app/controllers/tickets_controller.rb:370
 msgid "The source ticket could not be found."
 msgstr "De bron ticket kan niet worden gevonden."
 
@@ -19984,7 +19935,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Het systeem is met succes geconfigureerd. Je wordt doorgestuurd."
 
-#: app/controllers/tickets_controller.rb:352
+#: app/controllers/tickets_controller.rb:361
 msgid "The target ticket number could not be found."
 msgstr "Het doel ticket kan niet worden gevonden."
 
@@ -20771,7 +20722,7 @@ msgstr "Met deze service kun je %s met %s verbinden."
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr "Met deze service kun je %s met %s verbinden."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:88
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -21470,7 +21421,7 @@ msgid "Tickets bulk edit"
 msgstr "Ticket bijwerken"
 
 #: app/controllers/ticket_articles_controller.rb:236
-#: app/controllers/tickets_controller.rb:443
+#: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 "Tickets kunnen alleen worden geïmporteerd als het systeem in de importmodus "
@@ -21763,7 +21714,7 @@ msgstr "Toggle header rij"
 msgid "Toggle the overlay"
 msgstr "Toggle de overlay"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:178
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -22020,7 +21971,7 @@ msgstr ""
 "tijdelijk gebruikt worden. Gebruik deze optie op eigen risico!"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:71
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:42
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:45
 #: db/seeds/settings.rb:1347
 msgid "Twitter"
 msgstr "Twitter"
@@ -22159,7 +22110,7 @@ msgstr "UID-Attribuutnaam"
 msgid "UID Field"
 msgstr "Datum veld"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:198
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -22176,17 +22127,17 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX endpoint)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:208
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
 #, fuzzy
 #| msgid "%s (option)"
 msgid "URL (Completions)"
 msgstr "%s (optie)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:217
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
 msgid "URL (Embeddings)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:246
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
 msgid "URL (OCR)"
 msgstr ""
 
@@ -22397,7 +22348,7 @@ msgstr ""
 msgid "Update shared draft"
 msgstr "Gedeeld concept bijwerken"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:347
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -23350,7 +23301,7 @@ msgid "Week(s)"
 msgstr "Week/Weken"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
-#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:84
+#: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
 #: db/seeds/settings.rb:1815
 msgid "Weibo"
 msgstr "Weibo"
@@ -24006,7 +23957,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:15
 msgid "You have no configured %s right now."
-msgstr "Je hebt %s geconfigureerd."
+msgstr "Je hebt %s niet geconfigureerd."
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:7
 msgid "You have no tickets to display in this overview."
@@ -24146,13 +24097,6 @@ msgstr ""
 "systeembeheerder.</p>\n"
 "<br>\n"
 "<p>Het #{config.product_name}-team</p>\n"
-
-#: app/assets/javascripts/app/controllers/text_tools_modal.coffee:131
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:137
-#, fuzzy
-#| msgid "Ticket tag could not be removed."
-msgid "Your AI result usage could not be recorded."
-msgstr "Tickettag kon niet worden verwijderd."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:64
 msgid "Your API key."
@@ -26040,6 +25984,14 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#~ msgid "API server not accessible"
+#~ msgstr "API server is niet toegankelijk"
+
+#, fuzzy
+#~| msgid "Ticket tag could not be removed."
+#~ msgid "Your AI result usage could not be recorded."
+#~ msgstr "Tickettag kon niet worden verwijderd."
 
 #~ msgid ""
 #~ "Enables button for user authentication via %s. The button will redirect "
