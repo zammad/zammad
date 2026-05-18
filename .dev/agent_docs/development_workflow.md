@@ -134,11 +134,14 @@ create a Merge Request on GitLab. It selects the correct MR template, fills
 in the sections, and targets the appropriate branch automatically.
 
 **Attach mode:** Do _not_ invoke `/create-mr` — the MR for the parent story
-already exists. Instead:
+already exists.
 
-- Push the new commit to the existing remote branch: `git push origin
-<current-branch>`.
-- The push lands the commit on the existing MR automatically; CI re-runs.
+**Don't push automatically.** After committing, stop and wait. Tell the
+user what you committed and ask before pushing — every time. Pushing
+sends your commit to the team's MR and runs CI, so the user decides
+when that happens.
+
+Push only after the user confirms.
 
 CI runs automatically on MR creation (standalone) or push (attach). A human
 review is required before merging.
