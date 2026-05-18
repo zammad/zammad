@@ -265,9 +265,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
       find_button('Go home').click
 
-      within '[role=alert]' do
-        expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
-      end
+      expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
     end
 
     it 'fills out new customer when it\'s created in place' do

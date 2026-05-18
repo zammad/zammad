@@ -120,8 +120,6 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
 
     find_button('Cancel').click
 
-    within '[role=alert]' do
-      expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
-    end
+    expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
   end
 end

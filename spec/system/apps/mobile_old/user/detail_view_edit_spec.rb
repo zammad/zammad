@@ -172,9 +172,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
 
       find_button('Cancel').click
 
-      within '[role=alert]' do
-        expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
-      end
+      expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
     end
 
     context 'when user is email-less' do

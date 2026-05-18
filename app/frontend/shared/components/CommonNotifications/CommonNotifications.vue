@@ -34,7 +34,7 @@ const handleClose = (notification: Notification, clickFromCloseButton = false) =
 <template>
   <div
     id="Notifications"
-    class="fixed top-0 z-50 ltr:left-1/2 ltr:-translate-x-1/2 rtl:right-1/2 rtl:translate-x-1/2"
+    class="pointer-events-none fixed inset-x-0 top-0 z-50"
     :class="notificationTypeClassMap.baseContainer"
     role="alert"
     aria-live="polite"
@@ -42,17 +42,16 @@ const handleClose = (notification: Notification, clickFromCloseButton = false) =
   >
     <TransitionGroup
       tag="ol"
-      class="flex flex-col items-center"
+      class="flex w-full flex-col items-center space-y-3 py-3"
       enter-from-class="opacity-0"
-      leave-to-class="hidden"
-      leave-active-class="absolute"
-      leave-to-active-class="transition-all duration-1000"
-      enter-from-active-class="transition-all duration-1000"
-      move-class="transition-all duration-1000"
+      leave-to-class="opacity-0"
+      leave-active-class="transition-opacity duration-250 absolute"
+      enter-active-class="transition-opacity duration-250"
+      move-class="transition-transform duration-250"
     >
-      <li v-for="notification in notifications" :key="notification.id">
+      <li v-for="notification in notifications" :key="notification.id" class="pointer-events-auto">
         <CommonNotificationsItem
-          class="m-3 grid w-fit gap-1"
+          class="grid w-fit gap-1"
           :class="[
             notificationTypeClassMap.base,
             notificationTypeClassMap[notification.type],
