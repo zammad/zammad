@@ -407,11 +407,15 @@ class String
         '<blockquote(|.+?)>[[:space:]]*<div>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]]',
         '<div(|.+?)>[[:space:]]*<br>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]].{1,500}<blockquote',
       ]
+
       map.each do |regexp|
         string.sub!(%r{#{regexp}}m) do |placeholder|
           "#{marker}#{placeholder}"
         end
+      rescue Regexp::TimeoutError => e
+        Rails.logger.error "Signature identification RegExp #{regexp} timed out: #{e.inspect}"
       end
+
       return string
     end
 
@@ -422,8 +426,13 @@ class String
     end
 
     # search for signature separator "--\n"
-    string.sub!(%r{^\s{0,2}--\s{0,2}$}) do |placeholder|
-      "#{marker}#{placeholder}"
+    signature_separator_regex = %r{^\s{0,2}--\s{0,2}$}
+    begin
+      string.sub!(signature_separator_regex) do |placeholder|
+        "#{marker}#{placeholder}"
+      end
+    rescue Regexp::TimeoutError => e
+      Rails.logger.error "Signature identification RegExp #{signature_separator_regex.source} timed out: #{e.inspect}"
     end
 
     map = {}
