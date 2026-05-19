@@ -149,9 +149,10 @@ add avatar by url
           url,
           {},
           {
-            open_timeout:  12,
-            read_timeout:  24,
-            total_timeout: 24,
+            open_timeout:    12,
+            read_timeout:    24,
+            total_timeout:   24,
+            validate_safety: { allow_private: true, allow_loopback: true },
           },
         )
         if !response.success?
