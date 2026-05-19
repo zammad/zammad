@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Atėjo priminimo laikas!_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Atėjo priminimo laikas!_
 Atkreipkite dėmesį į triktį (#{ticket.title}), priskirtą klientui „*#{ticket.customer.longname}*“.
 
 <% if @objects[:article] %>
