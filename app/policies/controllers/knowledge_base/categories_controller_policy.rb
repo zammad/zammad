@@ -6,11 +6,11 @@ class Controllers::KnowledgeBase::CategoriesControllerPolicy < Controllers::Know
   end
 
   def create?
-    verify_parent(__method__)
+    verify_parent
   end
 
   def update?
-    access(__method__) && verify_parent(__method__)
+    access(__method__) && verify_parent
   end
 
   def destroy?
@@ -27,13 +27,15 @@ class Controllers::KnowledgeBase::CategoriesControllerPolicy < Controllers::Know
     KnowledgeBase::CategoryPolicy.new(user, object).send(method)
   end
 
-  def verify_parent(method)
+  def verify_parent
     if record.params[:parent_id].blank?
-      return user.permissions?('knowledge_base.editor')
+      parent = object.knowledge_base
+
+      return KnowledgeBasePolicy.new(user, parent).update?
     end
 
     parent = KnowledgeBase::Category.find(record.params[:parent_id])
 
-    KnowledgeBase::CategoryPolicy.new(user, parent).send(method)
+    KnowledgeBase::CategoryPolicy.new(user, parent).update?
   end
 end
