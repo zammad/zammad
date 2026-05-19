@@ -53,6 +53,49 @@ RSpec.describe Channel::Filter::IdentifySender, type: :channel_filter do
 
         expect(mail_hash[:'x-zammad-ticket-customer_id']).to eq(user.id)
       end
+
+      context 'when x-zammad-customer name headers are also present' do
+        let(:new_firstname) { Faker::Name.unique.first_name }
+        let(:new_lastname)  { Faker::Name.unique.last_name }
+        let(:mail_hash) do
+          {
+            'x-zammad-customer-email':     user.email,
+            'x-zammad-customer-firstname': new_firstname,
+            'x-zammad-customer-lastname':  new_lastname,
+          }
+        end
+
+        it 'updates the found user with the provided name' do
+          filter(mail_hash)
+
+          expect(user.reload).to have_attributes(firstname: new_firstname, lastname: new_lastname)
+        end
+      end
+    end
+
+    context 'when x-zammad-customer-email matches FROM address and user was pre-created' do
+      let(:from_email)       { Faker::Internet.unique.email }
+      let(:from_display)     { Faker::Name.unique.name }
+      let(:customer_first)   { Faker::Name.unique.first_name }
+      let(:customer_last)    { Faker::Name.unique.last_name }
+      let(:pre_created_user) { create(:user, email: from_email, firstname: from_display, lastname: '') }
+      let(:mail_hash) do
+        {
+          'x-zammad-customer-email':     from_email,
+          'x-zammad-customer-firstname': customer_first,
+          'x-zammad-customer-lastname':  customer_last,
+          from_email:                    from_email,
+          from_display_name:             from_display,
+        }
+      end
+
+      before { pre_created_user }
+
+      it 'applies the x-zammad name headers instead of the FROM display name' do
+        filter(mail_hash)
+
+        expect(pre_created_user.reload).to have_attributes(firstname: customer_first, lastname: customer_last)
+      end
     end
 
     context 'when postmaster_sender_is_agent_search_for_customer is enabled' do
