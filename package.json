@@ -105,6 +105,7 @@
   "dependencies": {
     "@apollo/client": "3.13.9",
     "@floating-ui/dom": "^1.7.6",
+    "@floating-ui/vue": "^1.1.11",
     "@formkit/core": "^2.0.0",
     "@formkit/dev": "^2.0.0",
     "@formkit/drag-and-drop": "^0.5.3",
@@ -153,7 +154,7 @@
     "@vueuse/router": "^14.3.0",
     "@vueuse/shared": "^14.3.0",
     "async-mutex": "^0.5.0",
-    "date-fns": "^4.1.0",
+    "date-fns": "^4.2.1",
     "echarts": "^6.0.0",
     "graphql": "^16.14.0",
     "graphql-ruby-client": "^1.14.9",

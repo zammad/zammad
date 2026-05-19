@@ -121,7 +121,8 @@ export const useDateFnsLocale = () => {
 
     if (localeKey) {
       const importedLocale = await importDateFnsLocale(localeKey)
-      if ('default' in importedLocale) return importedLocale.default
+      const locale = Object.values(importedLocale)[0]
+      if (locale) return locale
     }
 
     return (await import('date-fns/locale/en-US')).enUS
