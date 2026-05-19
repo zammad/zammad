@@ -64,7 +64,11 @@ class App.KnowledgeBaseReaderListContainer.Categories extends App.KnowledgeBaseR
     #
 
     if !@isEditor
-      items = items.filter (elem) => elem.visibleInternally(@kb_locale)
+      items = items.filter (elem) =>
+        if elem.access(@kb_locale) == 'editor'
+          true
+        else
+          elem.visibleInternally(@kb_locale)
 
     items
 
