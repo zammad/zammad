@@ -2,8 +2,13 @@
 
 env
 
-# Ensure proper permissions on root-mounted volume.
-sudo chown -R "${USER}" node_modules
+# Ensure proper permissions on root-mounted volumes.
+sudo chown -R "${USER}" node_modules .pnpm-store
+
+pnpm setup
+export PNPM_HOME="${HOME}/.local/share/pnpm"
+export PATH="${PNPM_HOME}:${PATH}"
+pnpm config set store-dir "$(pwd)/.pnpm-store" --global
 
 bin/setup --skip-server
 

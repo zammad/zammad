@@ -17,6 +17,11 @@
       "source": "node-modules",
       "target": "/workspaces/${localWorkspaceFolderBasename}/node_modules",
       "type": "volume"
+    },
+    {
+      "source": "pnpm-store",
+      "target": "/workspaces/${localWorkspaceFolderBasename}/.pnpm-store",
+      "type": "volume"
     }
   ],
   "containerEnv": {
@@ -25,7 +30,12 @@
     //   by writing them to files instead of sending them. Check the `tmp/mails` directory for the generated files.
     "ZAMMAD_MAIL_TO_FILE": "1"
   },
-  "forwardPorts": [3000, 3001, 3036, 6042],
+  "forwardPorts": [
+    3000,
+    3001,
+    3036,
+    6042
+  ],
   "postCreateCommand": "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/with-mailserver/scripts/post_create.sh",
   "postStartCommand": "git config --global --add safe.directory /workspaces/${localWorkspaceFolderBasename}"
 }
