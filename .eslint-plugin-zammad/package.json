@@ -16,9 +16,6 @@
   "dependencies": {
     "requireindex": "^1.2.0"
   },
-  "pnpm": {
-    "neverBuiltDependencies": []
-  },
   "devDependencies": {
     "eslint": "^10.4.0",
     "eslint-plugin-eslint-plugin": "^7.3.3",

@@ -24,8 +24,8 @@
     "lint:md:fix": "pnpm lint:md --fix",
     "lint:md:cmd": "pnpm exec markdownlint-cli2",
     "test": "VTL_SKIP_AUTO_CLEANUP=true TZ=utc vitest",
-    "test:ct": "cd .dev/cypress; CY_OPEN=true pnpm cypress open --component --project ../../ --config-file .dev/cypress/cypress.config.mjs",
-    "test:ci:ct": "cd .dev/cypress; CI=true pnpm cypress run --component --project ../../ --config-file .dev/cypress/cypress.config.mjs --browser electron",
+    "test:ct": "cd .dev/cypress; CY_OPEN=true pnpm exec cypress open --component --project ../../ --config-file .dev/cypress/cypress.config.mjs",
+    "test:ci:ct": "cd .dev/cypress; CI=true pnpm exec cypress run --component --project ../../ --config-file .dev/cypress/cypress.config.mjs --browser electron",
     "cypress:snapshots": "sh .dev/cypress/visual-regression/snapshots.sh",
     "cypress:install": "pnpm --dir ./.dev/cypress install --frozen-lockfile",
     "analyse:vite-bundle": "pnpm exec vite-bundle-visualizer",
@@ -36,12 +36,9 @@
   },
   "engines": {
     "node": ">=24",
-    "pnpm": ">=10"
+    "pnpm": ">=11"
   },
-  "packageManager": "pnpm@10.33.4",
-  "pnpm": {
-    "neverBuiltDependencies": []
-  },
+  "packageManager": "pnpm@11.0.8",
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
     "@graphql-codegen/cli": "^6.3.1",

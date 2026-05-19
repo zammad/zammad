@@ -9,7 +9,7 @@ namespace :zammad do
       next if ENV['PRESERVE_SYMLINKS'].blank?
 
       puts 'Preserve symlinks option activated, putting PNPM node linker into hoisted mode'
-      ENV['PNPM_NODE_LINKER'] = 'hoisted'
+      ENV['pnpm_config_node_linker'] = 'hoisted'
     end
   end
 end

@@ -1,0 +1,7 @@
+nodeLinker: isolated
+
+allowBuilds:
+  core-js-pure: true
+  esbuild: true
+  unrs-resolver: true
+  vue-demi: true

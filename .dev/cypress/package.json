@@ -1,9 +1,6 @@
 {
   "private": true,
   "type": "module",
-  "pnpm": {
-    "neverBuiltDependencies": []
-  },
   "devDependencies": {
     "@frsource/cypress-plugin-visual-regression-diff": "^3.3.10",
     "@testing-library/cypress": "^10.1.3",

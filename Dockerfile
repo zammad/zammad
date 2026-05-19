@@ -55,7 +55,7 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/bin /usr/local/bin
 
 # Install node modules
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY .eslint-plugin-zammad/package.json .eslint-plugin-zammad/pnpm-lock.yaml .eslint-plugin-zammad/lib/ .eslint-plugin-zammad/
 RUN pnpm install --frozen-lockfile
 
