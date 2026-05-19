@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { escape } from 'lodash-es'
 import { computed, type Ref } from 'vue'
 
 import { userDisplayName } from '#shared/entities/user/utils/getUserDisplayName.ts'
@@ -20,7 +21,7 @@ export const useActivityMessage = (activity: Readonly<Ref<OnlineNotification>>) 
     activity.value.metaObject,
   )
 
-  const highlightedMessage = message?.replace(/\|(.+)\|/gm, '<b>$1</b>')
+  const highlightedMessage = escape(message ?? '').replace(/\|(.+)\|/gm, '<b>$1</b>')
 
   const link = activity.value.metaObject
     ? builder.value?.path(activity.value.metaObject)
