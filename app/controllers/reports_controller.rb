@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
       return
     end
 
-    profiles = Report::ProfilesPolicy::Scope.new(current_user, Report::Profile).resolve
+    profiles = Report::ProfilesPolicy::Scope.new(current_user, Report::Profile).resolve.sorted
     if profiles.blank?
       render json: {
         error: __('There are currently no report profiles configured.'),
