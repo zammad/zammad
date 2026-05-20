@@ -44,7 +44,17 @@ class TicketState extends App.ControllerSubContent
                 @setDefaultState('default_follow_up', id)
               available: (object) ->
                 object.active and not object.default_follow_up and object.state_type.name isnt 'merged'
-            }
+            },
+            {
+              name: 'set_default_close'
+              display: __('Set default for closed tickets')
+              icon: 'reload'
+              class: 'set_default_close'
+              callback: (id) =>
+                @setDefaultState('default_close', id)
+              available: (object) ->
+                object.active and not object.default_close and object.state_type.name isnt 'merged'
+            },
           ]
         }
       container: @el.closest('.content')
@@ -64,13 +74,16 @@ class TicketState extends App.ControllerSubContent
     currentItem = App.TicketState.findByAttribute(type, true)
     selectedItem = App.TicketState.find(id)
 
-    return if currentItem.id is selectedItem.id
+    return if not selectedItem
+    return if currentItem?.id is selectedItem.id
 
     selectedItem.updateAttribute(type, true)
     if type == 'default_create'
       currentItem?.refresh(default_create: false)
     else if type == 'default_follow_up'
       currentItem?.refresh(default_follow_up: false)
+    else if type == 'default_close'
+      currentItem?.refresh(default_close: false)
     else
       console.error('Unknown default state type', type)
 

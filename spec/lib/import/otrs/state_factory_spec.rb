@@ -74,7 +74,7 @@ RSpec.describe Import::OTRS::StateFactory do
     }
   end
 
-  it 'sets default create and update State' do
+  it 'sets default create and update state' do
     state                   = Ticket::State.first
     state.default_create    = false
     state.default_follow_up = false
@@ -89,6 +89,34 @@ RSpec.describe Import::OTRS::StateFactory do
 
     expect(state.default_create).to be true
     expect(state.default_follow_up).to be true
+  end
+
+  it 'sets default close state (closed successful)', aggregate_failures: true do
+    state = create(:ticket_state, name: 'closed successful', state_type: Ticket::StateType.find_by(name: 'closed'))
+
+    expect(state.default_close).to be false
+
+    described_class.update_attribute
+
+    expect(state.reload.default_close).to be true
+  end
+
+  it 'sets default close state (custom)', aggregate_failures: true do
+    Ticket::State.where(state_type: Ticket::StateType.find_by(name: 'closed')).destroy_all
+
+    state0 = create(:ticket_state, name: 'old closed state', state_type: Ticket::StateType.find_by(name: 'closed'), active: false)
+    state1 = create(:ticket_state, name: 'my closed state', state_type: Ticket::StateType.find_by(name: 'closed'))
+    state2 = create(:ticket_state, name: 'another closed state', state_type: Ticket::StateType.find_by(name: 'closed'))
+
+    expect(state0.default_close).to be false
+    expect(state1.default_close).to be false
+    expect(state2.default_close).to be false
+
+    described_class.update_attribute
+
+    expect(state0.reload.default_close).to be false
+    expect(state1.reload.default_close).to be true
+    expect(state2.reload.default_close).to be false
   end
 
   it "doesn't set default create and update State in diff import" do

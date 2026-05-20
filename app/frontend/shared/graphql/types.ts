@@ -5001,6 +5001,7 @@ export type TicketState = {
   createdAt: Scalars['ISO8601DateTime']['output'];
   /** User that created this record */
   createdBy?: Maybe<User>;
+  defaultClose: Scalars['Boolean']['output'];
   defaultCreate: Scalars['Boolean']['output'];
   defaultFollowUp: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
