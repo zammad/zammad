@@ -676,7 +676,7 @@ msgstr ""
 msgid "AI Knowledge Base Answer from Ticket"
 msgstr ""
 
-#: db/seeds/permissions.rb:257
+#: db/seeds/permissions.rb:259
 msgid "AI Knowledge Base Answers"
 msgstr ""
 
@@ -819,7 +819,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2
-#: db/seeds/permissions.rb:269
+#: db/seeds/permissions.rb:272
 msgid "API"
 msgstr ""
 
@@ -877,47 +877,47 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
-#: db/seeds/permissions.rb:357
+#: db/seeds/permissions.rb:360
 msgid "Access the agent chat features."
 msgstr ""
 
-#: db/seeds/permissions.rb:372
+#: db/seeds/permissions.rb:375
 msgid "Access the agent phone features."
 msgstr ""
 
-#: db/seeds/permissions.rb:387
+#: db/seeds/permissions.rb:390
 msgid "Access the knowledge base editor features."
 msgstr ""
 
-#: db/seeds/permissions.rb:393
+#: db/seeds/permissions.rb:396
 msgid "Access the knowledge base reader features."
 msgstr ""
 
-#: db/seeds/permissions.rb:415
+#: db/seeds/permissions.rb:418
 msgid "Access the tickets as agent based on group access."
 msgstr ""
 
-#: db/seeds/permissions.rb:424
+#: db/seeds/permissions.rb:427
 msgid "Access tickets as customer."
 msgstr ""
 
-#: db/seeds/permissions.rb:348
+#: db/seeds/permissions.rb:351
 msgid "Access to the chat interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:378
+#: db/seeds/permissions.rb:381
 msgid "Access to the knowledge base interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:363
+#: db/seeds/permissions.rb:366
 msgid "Access to the phone interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:400
+#: db/seeds/permissions.rb:403
 msgid "Access to the report interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:406
+#: db/seeds/permissions.rb:409
 msgid "Access to the ticket interface."
 msgstr ""
 
@@ -953,7 +953,7 @@ msgstr ""
 msgid "Account not verified"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:125
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:128
 msgid "Account time"
 msgstr ""
 
@@ -966,7 +966,7 @@ msgstr ""
 msgid "Accounted Time"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:74
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:77
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:147
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 msgid "Accounted time"
@@ -1117,7 +1117,7 @@ msgstr ""
 msgid "Activity Types"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:110
 msgid "Activity type"
 msgstr ""
 
@@ -1389,7 +1389,7 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:271
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:318
 msgid "Admin Consent"
 msgstr ""
 
@@ -1445,7 +1445,7 @@ msgstr ""
 msgid "After approval, please re-connect your Exchange account."
 msgstr ""
 
-#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco:4
+#: app/assets/javascripts/app/views/channel_account/admin_consent.jst.eco:4
 msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
 
@@ -1478,7 +1478,7 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
-#: db/seeds/permissions.rb:356
+#: db/seeds/permissions.rb:359
 msgid "Agent chat"
 msgstr ""
 
@@ -1491,11 +1491,11 @@ msgstr ""
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:371
+#: db/seeds/permissions.rb:374
 msgid "Agent phone"
 msgstr ""
 
-#: db/seeds/permissions.rb:414
+#: db/seeds/permissions.rb:417
 #: db/seeds/settings.rb:1130
 msgid "Agent tickets"
 msgstr ""
@@ -1804,7 +1804,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:53
-#: db/seeds/permissions.rb:437
+#: db/seeds/permissions.rb:440
 msgid "Appearance"
 msgstr ""
 
@@ -1934,7 +1934,7 @@ msgid "Are you sure you want to unset \"%s\" as default?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:6
-#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:186
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:185
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:145
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:99
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:67
@@ -2144,7 +2144,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:221
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:326
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:283
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:279
 msgid "Attachment"
 msgstr ""
 
@@ -2178,7 +2178,7 @@ msgid "Attendees"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:12
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:77
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:80
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:67
 msgid "Attention! Changing the organization will update the user's most recent tickets to the new organization."
 msgstr ""
@@ -2264,7 +2264,7 @@ msgstr ""
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
 #: app/policies/pundit_policy.rb:18
-#: lib/user_context.rb:26
+#: lib/user_context.rb:37
 msgid "Authentication required"
 msgstr ""
 
@@ -2426,7 +2426,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:120
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:114
-#: db/seeds/permissions.rb:451
+#: db/seeds/permissions.rb:454
 msgid "Avatar"
 msgstr ""
 
@@ -2733,7 +2733,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:246
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:235
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:232
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
 msgstr ""
@@ -3038,7 +3038,7 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
-#: db/seeds/permissions.rb:469
+#: db/seeds/permissions.rb:472
 msgid "Change personal account password."
 msgstr ""
 
@@ -3230,7 +3230,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:341
+#: db/seeds/permissions.rb:344
 #: db/seeds/settings.rb:6011
 msgid "Checklists"
 msgstr ""
@@ -3456,7 +3456,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:270
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:317
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:32
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
@@ -3983,7 +3983,7 @@ msgid "Core Workflow Ajax Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:3
-#: db/seeds/permissions.rb:293
+#: db/seeds/permissions.rb:296
 msgid "Core Workflows"
 msgstr ""
 
@@ -4089,7 +4089,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:8
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:78
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:309
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
@@ -4353,7 +4353,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:20
 #: app/assets/javascripts/app/models/signature.coffee:21
 #: app/assets/javascripts/app/models/text_module.coffee:21
-#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco:7
+#: app/assets/javascripts/app/views/channel_account/user_mismatch.jst.eco:7
 msgid "Current User"
 msgstr ""
 
@@ -4367,7 +4367,7 @@ msgstr ""
 msgid "Current state of configured settings (excluding passwords and tokens)"
 msgstr ""
 
-#: app/controllers/application_controller/has_user.rb:43
+#: app/controllers/application_controller/has_user.rb:57
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
 
@@ -4485,7 +4485,7 @@ msgstr ""
 msgid "Customer sentiment"
 msgstr ""
 
-#: db/seeds/permissions.rb:423
+#: db/seeds/permissions.rb:426
 #: db/seeds/settings.rb:1139
 msgid "Customer tickets"
 msgstr ""
@@ -4530,7 +4530,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: db/seeds/permissions.rb:305
+#: db/seeds/permissions.rb:308
 msgid "Data Privacy"
 msgstr ""
 
@@ -5509,7 +5509,7 @@ msgstr ""
 msgid "Delete column"
 msgstr ""
 
-#: db/seeds/permissions.rb:306
+#: db/seeds/permissions.rb:309
 msgid "Delete existing data of your system."
 msgstr ""
 
@@ -5739,7 +5739,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:31
-#: db/seeds/permissions.rb:482
+#: db/seeds/permissions.rb:485
 msgid "Devices"
 msgstr ""
 
@@ -6098,7 +6098,7 @@ msgstr ""
 msgid "Duplicate Detection"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:305
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:352
 msgid "Duplicate Email Address"
 msgstr ""
 
@@ -6184,7 +6184,7 @@ msgstr ""
 msgid "Edit mask"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/organization/composables/useOrganizationEdit.ts:56
+#: app/frontend/apps/desktop/entities/organization/composables/useOrganizationEdit.ts:59
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:39
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:78
 msgid "Edit organization"
@@ -6203,7 +6203,7 @@ msgstr ""
 msgid "Edit ticket title"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:62
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:65
 msgid "Edit user"
 msgstr ""
 
@@ -6323,7 +6323,7 @@ msgstr ""
 msgid "Email Accounts"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:283
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:282
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:201
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:126
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:96
@@ -6792,7 +6792,7 @@ msgid "Enter the security code generated by the authenticator app:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:77
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:80
 msgid "Enter the time you want to record"
 msgstr ""
 
@@ -7187,7 +7187,7 @@ msgstr ""
 msgid "Failed to load content."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:265
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:264
 msgid "Failed to roll back the migration of the channel!"
 msgstr ""
 
@@ -7531,11 +7531,11 @@ msgstr ""
 msgid "Format"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:593
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:604
 msgid "Format as //strikethrough//"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:575
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:586
 msgid "Format as _underlined_"
 msgstr ""
 
@@ -7545,15 +7545,15 @@ msgstr ""
 msgid "Format as bold"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:642
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:653
 msgid "Format as h1 heading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:648
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:659
 msgid "Format as h2 heading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:654
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:665
 msgid "Format as h3 heading"
 msgstr ""
 
@@ -7563,7 +7563,7 @@ msgstr ""
 msgid "Format as italic"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:636
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:647
 msgid "Format as ordered list"
 msgstr ""
 
@@ -7584,15 +7584,15 @@ msgstr ""
 msgid "Format as underlined"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:630
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:641
 msgid "Format as unordered list"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:581
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:592
 msgid "Format as |bold|"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:587
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:598
 msgid "Format as ||italic||"
 msgstr ""
 
@@ -8774,7 +8774,7 @@ msgstr ""
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:436
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:439
 msgid "Incomplete ticket checklist"
 msgstr ""
 
@@ -8895,19 +8895,19 @@ msgstr ""
 msgid "Inserting image not possible due to source restrictions"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:624
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:635
 msgid "Inserts a horizontal rule"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:557
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:568
 msgid "Inserts a mention for a user"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:551
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:562
 msgid "Inserts knowledge base answer"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:545
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:556
 msgid "Inserts text module"
 msgstr ""
 
@@ -8940,7 +8940,7 @@ msgid "Integer field"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/integrations.coffee:3
-#: db/seeds/permissions.rb:263
+#: db/seeds/permissions.rb:266
 msgid "Integrations"
 msgstr ""
 
@@ -8950,7 +8950,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:205
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:203
 msgid "Internal"
 msgstr ""
 
@@ -9350,7 +9350,7 @@ msgstr ""
 msgid "Knowledge Base Answer could not be created"
 msgstr ""
 
-#: db/seeds/permissions.rb:386
+#: db/seeds/permissions.rb:389
 msgid "Knowledge Base Editor"
 msgstr ""
 
@@ -9358,7 +9358,7 @@ msgstr ""
 msgid "Knowledge Base Feed"
 msgstr ""
 
-#: db/seeds/permissions.rb:392
+#: db/seeds/permissions.rb:395
 msgid "Knowledge Base Reader"
 msgstr ""
 
@@ -9423,7 +9423,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:12
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
-#: db/seeds/permissions.rb:444
+#: db/seeds/permissions.rb:447
 msgid "Language"
 msgstr ""
 
@@ -9727,7 +9727,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:3
 #: app/assets/javascripts/app/views/popover/user.jst.eco:5
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
-#: db/seeds/permissions.rb:496
+#: db/seeds/permissions.rb:499
 msgid "Linked Accounts"
 msgstr ""
 
@@ -9944,7 +9944,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:3
 #: app/assets/javascripts/app/views/maintenance.jst.eco:3
-#: db/seeds/permissions.rb:311
+#: db/seeds/permissions.rb:314
 msgid "Maintenance"
 msgstr ""
 
@@ -9969,7 +9969,7 @@ msgstr ""
 msgid "Manage AI agents of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:258
+#: db/seeds/permissions.rb:260
 msgid "Manage AI generation of knowledge base answers from tickets."
 msgstr ""
 
@@ -9977,7 +9977,7 @@ msgstr ""
 msgid "Manage AI provider of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:270
+#: db/seeds/permissions.rb:273
 msgid "Manage API of your system."
 msgstr ""
 
@@ -10034,11 +10034,11 @@ msgstr ""
 msgid "Manage WhatsApp channel of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:535
+#: db/seeds/permissions.rb:538
 msgid "Manage access to New BETA UI switch."
 msgstr ""
 
-#: db/seeds/permissions.rb:330
+#: db/seeds/permissions.rb:333
 msgid "Manage active user sessions of your system."
 msgstr ""
 
@@ -10070,7 +10070,7 @@ msgstr ""
 msgid "Manage core system settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:294
+#: db/seeds/permissions.rb:297
 msgid "Manage core workflows of your system."
 msgstr ""
 
@@ -10086,71 +10086,71 @@ msgstr ""
 msgid "Manage groups of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:264
+#: db/seeds/permissions.rb:267
 msgid "Manage integrations of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:312
+#: db/seeds/permissions.rb:315
 msgid "Manage maintenance mode of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:318
+#: db/seeds/permissions.rb:321
 msgid "Manage monitoring of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:276
+#: db/seeds/permissions.rb:279
 msgid "Manage object attributes of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:324
+#: db/seeds/permissions.rb:327
 msgid "Manage packages of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:490
+#: db/seeds/permissions.rb:493
 msgid "Manage personal API tokens."
 msgstr ""
 
-#: db/seeds/permissions.rb:438
+#: db/seeds/permissions.rb:441
 msgid "Manage personal appearance settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:452
+#: db/seeds/permissions.rb:455
 msgid "Manage personal avatar settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:524
+#: db/seeds/permissions.rb:527
 msgid "Manage personal calendar."
 msgstr ""
 
-#: db/seeds/permissions.rb:483
+#: db/seeds/permissions.rb:486
 msgid "Manage personal devices and sessions."
 msgstr ""
 
-#: db/seeds/permissions.rb:445
+#: db/seeds/permissions.rb:448
 msgid "Manage personal language settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:497
+#: db/seeds/permissions.rb:500
 msgid "Manage personal linked accounts."
 msgstr ""
 
-#: db/seeds/permissions.rb:504
+#: db/seeds/permissions.rb:507
 msgid "Manage personal notifications settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:459
+#: db/seeds/permissions.rb:462
 msgid "Manage personal out of office settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:514
+#: db/seeds/permissions.rb:517
 msgid "Manage personal overviews."
 msgstr ""
 
-#: db/seeds/permissions.rb:431
+#: db/seeds/permissions.rb:434
 msgid "Manage personal settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:476
+#: db/seeds/permissions.rb:479
 msgid "Manage personal two-factor authentication methods."
 msgstr ""
 
@@ -10174,7 +10174,7 @@ msgstr ""
 msgid "Manage security settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:336
+#: db/seeds/permissions.rb:339
 msgid "Manage system report of your system."
 msgstr ""
 
@@ -10186,7 +10186,7 @@ msgstr ""
 msgid "Manage ticket auto assignment settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:342
+#: db/seeds/permissions.rb:345
 msgid "Manage ticket checklists of your system."
 msgstr ""
 
@@ -10202,7 +10202,7 @@ msgstr ""
 msgid "Manage ticket overviews of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:288
+#: db/seeds/permissions.rb:291
 msgid "Manage ticket priorities of your system."
 msgstr ""
 
@@ -10210,7 +10210,7 @@ msgstr ""
 msgid "Manage ticket settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:282
+#: db/seeds/permissions.rb:285
 msgid "Manage ticket states of your system."
 msgstr ""
 
@@ -10230,7 +10230,7 @@ msgstr ""
 msgid "Manage time accounting settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:300
+#: db/seeds/permissions.rb:303
 msgid "Manage translations of your system."
 msgstr ""
 
@@ -10676,7 +10676,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/monitoring.coffee:3
 #: app/assets/javascripts/app/views/monitoring.jst.eco:3
-#: db/seeds/permissions.rb:317
+#: db/seeds/permissions.rb:320
 msgid "Monitoring"
 msgstr ""
 
@@ -10886,7 +10886,7 @@ msgstr ""
 msgid "Name of form submit button"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:535
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:546
 msgid "Navigate through article"
 msgstr ""
 
@@ -10991,7 +10991,7 @@ msgstr ""
 msgid "New BETA UI"
 msgstr ""
 
-#: db/seeds/permissions.rb:534
+#: db/seeds/permissions.rb:537
 msgid "New BETA UI Switch"
 msgstr ""
 
@@ -11166,7 +11166,7 @@ msgstr ""
 msgid "New ticket: %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:66
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:69
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
 msgid "New user"
 msgstr ""
@@ -11558,7 +11558,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:439
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:442
 msgid "No, just close the ticket"
 msgstr ""
 
@@ -11763,7 +11763,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:33
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:503
+#: db/seeds/permissions.rb:506
 msgid "Notifications"
 msgstr ""
 
@@ -11876,7 +11876,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:334
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:54
-#: db/seeds/permissions.rb:275
+#: db/seeds/permissions.rb:278
 msgid "Objects"
 msgstr ""
 
@@ -12227,7 +12227,7 @@ msgstr ""
 msgid "Organization Support"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/organization/composables/useOrganizationEdit.ts:64
+#: app/frontend/apps/desktop/entities/organization/composables/useOrganizationEdit.ts:67
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts:76
 msgid "Organization could not be updated."
 msgstr ""
@@ -12308,7 +12308,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:3
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
-#: db/seeds/permissions.rb:458
+#: db/seeds/permissions.rb:461
 msgid "Out of Office"
 msgstr ""
 
@@ -12482,7 +12482,7 @@ msgid "Package"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
-#: db/seeds/permissions.rb:323
+#: db/seeds/permissions.rb:326
 msgid "Packages"
 msgstr ""
 
@@ -12540,7 +12540,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:32
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
 #: db/seeds/object_manager_attributes.rb:1481
-#: db/seeds/permissions.rb:468
+#: db/seeds/permissions.rb:471
 msgid "Password"
 msgstr ""
 
@@ -12620,11 +12620,11 @@ msgstr ""
 msgid "Paste Private Key"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:599
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:610
 msgid "Paste from clipboard"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:606
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:617
 msgid "Paste from clipboard (plain text)"
 msgstr ""
 
@@ -12716,7 +12716,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
 #: db/seeds/object_manager_attributes.rb:1018
-#: db/seeds/permissions.rb:362
+#: db/seeds/permissions.rb:365
 msgid "Phone"
 msgstr ""
 
@@ -12791,7 +12791,7 @@ msgstr ""
 msgid "Please accept the %s."
 msgstr ""
 
-#: app/assets/javascripts/app/views/microsoft365/duplicate_email_address.jst.eco:7
+#: app/assets/javascripts/app/views/channel_account/duplicate_email_address.jst.eco:7
 msgid "Please add an account with a different mailbox or consider removing the duplicate first."
 msgstr ""
 
@@ -12925,7 +12925,7 @@ msgstr ""
 msgid "Please set up the provider before proceeding under the settings tab."
 msgstr ""
 
-#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco:4
+#: app/assets/javascripts/app/views/channel_account/user_mismatch.jst.eco:4
 msgid "Please start the reauthentication again and enter the correct credentials."
 msgstr ""
 
@@ -12941,8 +12941,8 @@ msgstr ""
 msgid "Please wait until content is loaded"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel_account/admin_consent.jst.eco:3
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:3
-#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco:3
 msgid "Please wait until you received the notification email of the approval."
 msgstr ""
 
@@ -13171,7 +13171,7 @@ msgid "Profile language updated successfully."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:430
+#: db/seeds/permissions.rb:433
 msgid "Profile settings"
 msgstr ""
 
@@ -13239,7 +13239,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:210
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:208
 msgid "Public"
 msgstr ""
 
@@ -13667,11 +13667,11 @@ msgstr ""
 msgid "Removed reaction from message %s from %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:660
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:671
 msgid "Removes any hyperlink"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:612
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
 msgid "Removes the formatting"
 msgstr ""
 
@@ -14019,7 +14019,7 @@ msgstr ""
 msgid "Rollback migration"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:261
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:260
 msgid "Rollback of channel migration succeeded!"
 msgstr ""
 
@@ -14584,7 +14584,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:288
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:258
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:254
 #: db/seeds/permissions.rb:209
 msgid "Security"
 msgstr ""
@@ -14976,7 +14976,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/session.coffee:3
 #: app/assets/javascripts/app/views/session.jst.eco:2
-#: db/seeds/permissions.rb:329
+#: db/seeds/permissions.rb:332
 msgid "Sessions"
 msgstr ""
 
@@ -15510,7 +15510,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:133
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:94
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:127
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:130
 msgid "Skip"
 msgstr ""
 
@@ -15858,7 +15858,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:91
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:247
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:243
 msgid "Subject"
 msgstr ""
 
@@ -16028,7 +16028,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
 #: app/assets/javascripts/app/views/system_report.jst.eco:2
-#: db/seeds/permissions.rb:335
+#: db/seeds/permissions.rb:338
 msgid "System Report"
 msgstr ""
 
@@ -16216,7 +16216,7 @@ msgstr ""
 msgid "Text Modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:566
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:577
 msgid "Text editing"
 msgstr ""
 
@@ -16443,8 +16443,8 @@ msgstr ""
 msgid "The account link was successfully removed!"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel_account/admin_consent.jst.eco:2
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:2
-#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco:2
 msgid "The admin consent request was sent to your administrator."
 msgstr ""
 
@@ -16691,7 +16691,7 @@ msgstr ""
 msgid "The download could not be started. Please try again later."
 msgstr ""
 
-#: app/assets/javascripts/app/views/microsoft365/duplicate_email_address.jst.eco:3
+#: app/assets/javascripts/app/views/channel_account/duplicate_email_address.jst.eco:3
 msgid "The email address |%s| is already in use by another account."
 msgstr ""
 
@@ -16716,7 +16716,7 @@ msgstr ""
 msgid "The entered email and password will become your Zammad login credentials after the import is completed."
 msgstr ""
 
-#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco:2
+#: app/assets/javascripts/app/views/channel_account/user_mismatch.jst.eco:2
 msgid "The entered user for reauthentication differs from the user that was used for setting up your Microsoft365 channel initially."
 msgstr ""
 
@@ -17345,7 +17345,7 @@ msgstr ""
 msgid "The source ticket could not be found."
 msgstr ""
 
-#: app/assets/javascripts/app/views/microsoft365/duplicate_email_address.jst.eco:5
+#: app/assets/javascripts/app/views/channel_account/duplicate_email_address.jst.eco:5
 msgid "The specified email address is already in use by another account."
 msgstr ""
 
@@ -17810,7 +17810,7 @@ msgstr ""
 msgid "This field must contain a lowercase letter."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:86
 #: app/frontend/shared/form/i18n/locales.ts:462
 msgid "This field must contain a number."
 msgstr ""
@@ -18233,7 +18233,7 @@ msgid "Ticket Owner"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:16
-#: db/seeds/permissions.rb:287
+#: db/seeds/permissions.rb:290
 msgid "Ticket Priorities"
 msgstr ""
 
@@ -18262,7 +18262,7 @@ msgid "Ticket State"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:3
-#: db/seeds/permissions.rb:281
+#: db/seeds/permissions.rb:284
 msgid "Ticket States"
 msgstr ""
 
@@ -18446,7 +18446,7 @@ msgid "Ticket update failed."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:528
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:531
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:161
 msgid "Ticket updated successfully."
 msgstr ""
@@ -18599,7 +18599,7 @@ msgstr ""
 msgid "Time Units Total"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:133
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:136
 msgid "Time accounting"
 msgstr ""
 
@@ -18676,7 +18676,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:75
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:89
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:222
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:220
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
 msgstr ""
@@ -18685,7 +18685,7 @@ msgstr ""
 msgid "To archive all outgoing emails from Zammad to external, you can store a BCC email address here."
 msgstr ""
 
-#: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco:3
+#: app/assets/javascripts/app/views/channel_account/user_mismatch.jst.eco:3
 msgid "To avoid fetching an incorrect Microsoft365 mailbox, the reauthentication process was aborted."
 msgstr ""
 
@@ -18794,7 +18794,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:12
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
-#: db/seeds/permissions.rb:489
+#: db/seeds/permissions.rb:492
 msgid "Token Access"
 msgstr ""
 
@@ -18803,7 +18803,7 @@ msgstr ""
 msgid "Token access"
 msgstr ""
 
-#: app/models/token/permissions.rb:20
+#: app/models/token/permissions.rb:22
 msgid "Token authorization failed."
 msgstr ""
 
@@ -18896,7 +18896,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
-#: db/seeds/permissions.rb:299
+#: db/seeds/permissions.rb:302
 msgid "Translations"
 msgstr ""
 
@@ -19042,7 +19042,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:11
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
-#: db/seeds/permissions.rb:475
+#: db/seeds/permissions.rb:478
 msgid "Two-factor Authentication"
 msgstr ""
 
@@ -19599,11 +19599,11 @@ msgstr ""
 msgid "Used in object views"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:540
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:551
 msgid "Used when composing a Ticket article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:570
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:581
 msgid "Used when composing a text"
 msgstr ""
 
@@ -19664,7 +19664,7 @@ msgstr ""
 msgid "User Mailbox"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:288
+#: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:335
 msgid "User Mismatch"
 msgstr ""
 
@@ -19672,18 +19672,18 @@ msgstr ""
 msgid "User Organization Selector - email"
 msgstr ""
 
-#: app/models/user/permissions.rb:48
+#: app/models/user/permissions.rb:50
 msgid "User authorization failed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
 #: app/assets/javascripts/app/controllers/signup.coffee:102
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:73
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:76
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:48
 msgid "User could not be created."
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:89
+#: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:92
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:81
 msgid "User could not be updated."
 msgstr ""
@@ -19980,7 +19980,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:196
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:195
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
 msgstr ""
@@ -20355,7 +20355,7 @@ msgid "Yes, add attachments now"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:438
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:441
 msgid "Yes, open the checklist"
 msgstr ""
 
@@ -20642,7 +20642,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:433
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:436
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 
@@ -21088,6 +21088,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:146
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains all not"
+msgstr ""
+
+#: lib/validations/object_manager/attribute_validator/external_data_source.rb:19
+msgid "contains an invalid \"label\" or \"value\" entry"
 msgstr ""
 
 #: lib/validations/object_manager/attribute_validator/option.rb:23
@@ -21787,6 +21791,10 @@ msgstr ""
 msgid "minutes"
 msgstr ""
 
+#: lib/validations/object_manager/attribute_validator/external_data_source.rb:13
+msgid "must be a hash with \"label\" and \"value\" keys"
+msgstr ""
+
 #: app/models/knowledge_base.rb:244
 msgid "must be a valid path or domain"
 msgstr ""
@@ -22455,7 +22463,7 @@ msgstr ""
 msgid "…add object title"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:618
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:629
 msgid "…of whole text area"
 msgstr ""
 
