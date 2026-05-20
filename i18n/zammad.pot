@@ -4699,6 +4699,10 @@ msgstr ""
 msgid "Default caller ID for outbound calls."
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket_state.coffee:42
+msgid "Default for closed tickets"
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket_state.coffee:35
 msgid "Default for follow-ups"
 msgstr ""
@@ -7551,11 +7555,11 @@ msgstr ""
 msgid "Format"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:592
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:593
 msgid "Format as //strikethrough//"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:574
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:575
 msgid "Format as _underlined_"
 msgstr ""
 
@@ -7565,15 +7569,15 @@ msgstr ""
 msgid "Format as bold"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:641
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:642
 msgid "Format as h1 heading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:647
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:648
 msgid "Format as h2 heading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:653
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:654
 msgid "Format as h3 heading"
 msgstr ""
 
@@ -7583,7 +7587,7 @@ msgstr ""
 msgid "Format as italic"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:635
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:636
 msgid "Format as ordered list"
 msgstr ""
 
@@ -7604,15 +7608,15 @@ msgstr ""
 msgid "Format as underlined"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:629
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:630
 msgid "Format as unordered list"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:580
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:581
 msgid "Format as |bold|"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:586
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:587
 msgid "Format as ||italic||"
 msgstr ""
 
@@ -8915,19 +8919,19 @@ msgstr ""
 msgid "Inserting image not possible due to source restrictions"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:624
 msgid "Inserts a horizontal rule"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:556
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:557
 msgid "Inserts a mention for a user"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:550
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:551
 msgid "Inserts knowledge base answer"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:544
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:545
 msgid "Inserts text module"
 msgstr ""
 
@@ -10906,7 +10910,7 @@ msgstr ""
 msgid "Name of form submit button"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:534
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:535
 msgid "Navigate through article"
 msgstr ""
 
@@ -12644,11 +12648,11 @@ msgstr ""
 msgid "Paste Private Key"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:598
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:599
 msgid "Paste from clipboard"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:605
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:606
 msgid "Paste from clipboard (plain text)"
 msgstr ""
 
@@ -13695,11 +13699,11 @@ msgstr ""
 msgid "Removed reaction from message %s from %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:659
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:660
 msgid "Removes any hyperlink"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:611
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:612
 msgid "Removes the formatting"
 msgstr ""
 
@@ -15066,6 +15070,10 @@ msgstr ""
 msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_state.coffee:50
+msgid "Set default for closed tickets"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:40
 msgid "Set default for follow-ups"
 msgstr ""
@@ -16251,7 +16259,7 @@ msgstr ""
 msgid "Text Modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:565
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:566
 msgid "Text editing"
 msgstr ""
 
@@ -19638,11 +19646,11 @@ msgstr ""
 msgid "Used in object views"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:539
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:540
 msgid "Used when composing a Ticket article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:569
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:570
 msgid "Used when composing a text"
 msgstr ""
 
@@ -21803,7 +21811,7 @@ msgid "maybe:"
 msgstr ""
 
 #: db/seeds/ticket_state_types.rb:8
-#: db/seeds/ticket_states.rb:29
+#: db/seeds/ticket_states.rb:30
 msgid "merged"
 msgstr ""
 
@@ -22034,7 +22042,7 @@ msgstr ""
 msgid "pending action"
 msgstr ""
 
-#: db/seeds/ticket_states.rb:35
+#: db/seeds/ticket_states.rb:36
 msgid "pending close"
 msgstr ""
 
@@ -22498,7 +22506,7 @@ msgstr ""
 msgid "…add object title"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:617
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:618
 msgid "…of whole text area"
 msgstr ""
 

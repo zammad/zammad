@@ -1510,6 +1510,15 @@ pre code {
     background: var(--ai-assist-pink);
     color: var(--text-active);
   }
+
+  &.badge--new {
+    color: hsl(45, 98%, 17%);
+    background: var(--ok-color);
+  }
+
+  &.badge--closed {
+    background: var(--supergood-color);
+  }
 }
 
 .key-value {

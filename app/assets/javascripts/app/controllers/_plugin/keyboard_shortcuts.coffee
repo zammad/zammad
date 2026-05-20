@@ -516,7 +516,19 @@ App.Config.set(
                 App.Event.trigger('keyboard_shortcuts_close')
                 return if !$('.active.content .edit').get(0)
 
-                $('.active.content .edit [name="state_id"]').val(4).trigger('change')
+                default_close = App.TicketState.findByAttribute('default_close', true)
+                return if not default_close
+
+                # In case of a pending state, pre-fill pending time with a default value (e.g. 3 days from now),
+                #   in order to prevent the validation error of missing pending time.
+                #   Do this before setting the state itself, so we can expect just a single core workflow run.
+                if default_close.next_state_id
+                  now = new Date()
+                  pending_time = new Date()
+                  pending_time.setDate(now.getDate() + 3)
+                  $('.active.content .edit [name="{datetime}pending_time"]').val(pending_time.toISOString())
+
+                $('.active.content .edit [name="state_id"]').val(default_close.id).trigger('change')
 
                 # Waiting for the core workflow to be executed (for example, the pending time field is no longer visible).
                 interval = setInterval ->
