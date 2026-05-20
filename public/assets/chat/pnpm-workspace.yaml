@@ -1,0 +1,4 @@
+---
+allowBuilds:
+  es5-ext: true
+  fsevents: false

@@ -1,3 +1,4 @@
+---
 allowBuilds:
   cypress: true
   sharp: true

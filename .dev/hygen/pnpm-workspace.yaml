@@ -1,1 +1,7 @@
+---
+# This file acts as a workspace root boundary for pnpm.
+# Without it, pnpm would walk up to the repo root pnpm-workspace.yaml
+# (added in the pnpm v11 update) and treat this package as part of that
+# workspace, causing `pnpm install` here to be a no-op and skipping the
+# installation of this package's local dependencies.
 {}
