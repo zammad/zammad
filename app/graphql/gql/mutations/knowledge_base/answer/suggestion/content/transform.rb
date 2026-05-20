@@ -13,7 +13,7 @@ module Gql::Mutations
     requires_permission 'ticket.agent'
 
     def resolve(translation_id:, form_id:)
-      translation = Gql::ZammadSchema.verified_object_from_id(translation_id, type: ::KnowledgeBase::Answer::Translation)
+      translation = Gql::ZammadSchema.authorized_object_from_id(translation_id, type: ::KnowledgeBase::Answer::Translation, user: context.current_user)
 
       {
         body:        convert_body(translation, form_id),
