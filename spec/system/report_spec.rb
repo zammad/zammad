@@ -43,6 +43,21 @@ RSpec.describe 'Report', searchindex: true, type: :system do
     end
   end
 
+  context 'report profiles sorting #6146' do
+    before { Report::Profile.destroy_all }
+
+    let!(:profile_z) { create(:report_profile, name: 'zzz') }
+    let!(:profile_a) { create(:report_profile, name: 'aaa') }
+    let!(:profile_b) { create(:report_profile, name: 'bbb') }
+
+    it 'shows report profiles in alphabetical order' do
+      visit 'report'
+
+      labels = all('ul.checkbox-list .label-text').map(&:text)
+      expect(labels).to eq([profile_a.name, profile_b.name, profile_z.name])
+    end
+  end
+
   context 'with report profiles with date-based conditions' do
     let(:report_profile) { create(:report_profile, :condition_created_at, ticket_created_at: 1.year.ago) }
 
