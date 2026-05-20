@@ -953,7 +953,7 @@ msgstr ""
 "Нова сесија је покренута са вашим налогом. Ова сесија ће бити заустављена "
 "ради избегавања конфликата."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:141
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr "Доступна је нова верзија Zammad, молимо освежите ваш претраживач."
 
@@ -3968,7 +3968,7 @@ msgstr "Клон: %s"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:509
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:32
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -4152,7 +4152,7 @@ msgstr "Услови за приказане тикете"
 msgid "Config"
 msgstr "Конфигурација"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:95
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:103
 msgid "Config has changed"
 msgstr "Измењена конфигурација"
 
@@ -4409,7 +4409,7 @@ msgstr "Настави"
 msgid "Continue anyway"
 msgstr "Ипак настави"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:28
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -10769,11 +10769,11 @@ msgstr "Референца изгледа"
 msgid "Leave BETA UI feedback program?"
 msgstr "Напуштате програм BETA интерфејса?"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:253
 msgid "Leave empty to use URL (Completions)"
 msgstr "Оставите празно за коришћење URL адресе (completions)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:243
 msgid "Leave empty to use the base model"
 msgstr "Оставите празно за коришћење основног модела"
 
@@ -11118,7 +11118,7 @@ msgstr "Изгубљена лозинка"
 msgid "Lost network connection"
 msgstr "Изгубљена веза"
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:351
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:350
 msgid "Lost network connection!"
 msgstr "Изгубљена веза!"
 
@@ -11885,7 +11885,7 @@ msgstr "Мобилни"
 msgid "Mode"
 msgstr "Режим"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:189
 msgid "Model"
 msgstr "Модел"
 
@@ -12343,7 +12343,7 @@ msgstr "Нови корисник"
 msgid "New User Accounts"
 msgstr "Нови кориснички налози"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:132
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:140
 msgid "New Version"
 msgstr "Нова верзија"
 
@@ -13102,7 +13102,7 @@ msgstr "OAuth URL путање су:"
 msgid "OAuth2 token is expired!"
 msgstr "OAuth2 кључ је истекао!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:236
 msgid "OCR Model"
 msgstr "OCR модел"
 
@@ -14777,7 +14777,7 @@ msgstr "Недавно виђени тикети"
 msgid "Recipient"
 msgstr "Прималац"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:227
 msgid "Recognize image text (OCR)"
 msgstr "Препознавање текста са слика (OCR)"
 
@@ -14875,7 +14875,7 @@ msgstr "Повезани тикети"
 msgid "Relax, your system is being set up…"
 msgstr "Опустите се, поставка система је у току…"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:123
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 msgid "Reload"
 msgstr "Учитај поново"
@@ -16072,7 +16072,7 @@ msgstr ""
 "Безбедносни кључеви су хардверски или софтверски креденцијали који се могу "
 "користити као ваш метод двофакторске аутентификације."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:110
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:118
 msgid "Security token verification failed"
 msgstr "Неуспела провера безбедносног кључа"
 
@@ -16984,7 +16984,7 @@ msgstr "Време решења"
 msgid "Some Text"
 msgstr "Неки текст"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:59
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:61
 msgid ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
@@ -16992,7 +16992,7 @@ msgstr ""
 "Нека системска подешавања су промењена, Zammad се рестартује. Молимо "
 "сачекајте."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:78
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:80
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 "Нека системска подешавања су промењена, молимо рестартујте све Zammad "
@@ -18145,7 +18145,7 @@ msgstr ""
 "Одабрана јединица се користи само за приказ и неће утицати на снимљене "
 "вредности."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:96
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:104
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr "Промењена је конфигурација Zammad-а, молимо освежите ваш претраживач."
 
@@ -18250,7 +18250,7 @@ msgstr "Није било могуће обрисати уређај."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Сепаратор између прикључка и броја тикета. Нпр. ’: ’."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:143
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr ""
@@ -18432,7 +18432,7 @@ msgstr "Увоз није успео."
 msgid "The import was successful."
 msgstr "Увоз је успео."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:111
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:119
 msgid ""
 "The included security token is invalid. This may be just a temporary error, "
 "please reload your browser, and try again."
@@ -19807,7 +19807,7 @@ msgstr "Овај сервис вам омогућава да повежете %s
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr "Овај сервис вам омогућава да повежете Zammad са AI провајдером."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:94
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -20783,7 +20783,7 @@ msgstr "Укључи/искључи насловни ред"
 msgid "Toggle the overlay"
 msgstr "Укључи/искључи прозорчић"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:179
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -20974,7 +20974,7 @@ msgstr "Покушајте други метод"
 msgid "Try using your security key again."
 msgstr "Покушајте поново искористити ваш безбедносни кључ."
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:354
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:353
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:25
 msgid "Trying to reconnect…"
 msgstr "Поновна успостава везе…"
@@ -21146,7 +21146,7 @@ msgstr "UID атрибут назива"
 msgid "UID Field"
 msgstr "UID поље"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:199
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -21163,15 +21163,15 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX путања)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:209
 msgid "URL (Completions)"
 msgstr "URL адреса (completions)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:218
 msgid "URL (Embeddings)"
 msgstr "URL адреса (embeddings)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:247
 msgid "URL (OCR)"
 msgstr "URL (OCR)"
 
@@ -21361,7 +21361,7 @@ msgstr "Освежи постојеће записе са атрибутима �
 msgid "Update shared draft"
 msgstr "Освежи заједнички нацрт"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:356
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -23192,7 +23192,7 @@ msgstr ""
 "Zammad је тренутно у режиму одржавања. Само администратору могу да се "
 "пријаве. Молимо сачекајте док се одржавање не заврши."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:58
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:60
 msgid "Zammad is restarting…"
 msgstr "Zammad се рестартује…"
 
@@ -23200,7 +23200,7 @@ msgstr "Zammad се рестартује…"
 msgid "Zammad looks like this for \"%s\""
 msgstr "Zammad изгледа овако за „%s”"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:77
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:79
 msgid "Zammad requires a restart!"
 msgstr "Zammad захтева рестарт!"
 
@@ -23431,7 +23431,7 @@ msgstr "ћаскање"
 msgid "checked"
 msgstr "означено"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:127
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
 msgid "checked checklist item '%s'"
 msgstr "oзначен задатак ’%s’"
 
@@ -23692,7 +23692,7 @@ msgstr "измењено %s од стране мене"
 msgid "email"
 msgstr "имејл"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:100
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
 msgid "email sent to '%s'"
 msgstr "имејл послат на ’%s’"
 
@@ -23771,7 +23771,7 @@ msgstr "док оператер не одговори"
 msgid "forward"
 msgstr "проследи"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:163
 msgid "from"
 msgstr "од"
 
@@ -24331,7 +24331,7 @@ msgstr "није постављено (није одређено)"
 msgid "note"
 msgstr "напомена"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:98
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 msgid "notification sent to '%s'"
 msgstr "обавештење послато ’%s’"
 
@@ -24417,11 +24417,11 @@ msgstr "четврт сат(а)"
 msgid "reached"
 msgstr "достигнуто"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:145
 msgid "reacted to message from %s '%s'"
 msgstr "је реаговао(ла) на поруку од %s '%s'"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "је реаговао(ла) са %s на поруку од %s '%s'"
 
@@ -24460,7 +24460,7 @@ msgstr "уклони"
 msgid "remove option"
 msgstr "уклони опцију"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:144
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:148
 msgid "removed reaction to message from %s '%s'"
 msgstr "је уклонио(ла) реакцију на поруку %s '%s'"
 
@@ -24657,7 +24657,7 @@ msgstr "лична telegram порука"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "изглед,боја,стил,тамни изглед,ноћни изглед,светли изглед"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:124
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "this ticket was merged into ticket %s"
 msgstr "овај тикет је спојен са тикетом %s"
 
@@ -24666,7 +24666,7 @@ msgstr "овај тикет је спојен са тикетом %s"
 msgid "ticket"
 msgstr "тикет"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:117
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
 msgid "ticket %s was merged into this ticket"
 msgstr "тикет %s је спојен са овим тикетом"
 
@@ -24706,15 +24706,15 @@ msgstr "праћено у"
 msgid "translation,locale,localization"
 msgstr "превод,језици,локализација"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr "окидач ’%s’ је извршен због достизања времена чекања"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:106
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr "окидач ’%s’ је извршен због ескалације тикета"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr "окидач ’%s’ је извршен због недуге ескалације тикета"
 
@@ -24744,7 +24744,7 @@ msgstr ""
 msgid "unassign user"
 msgstr "скини доделу корисника"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:129
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
 msgid "unchecked checklist item '%s'"
 msgstr "одзначен задатак ’%s’"
 

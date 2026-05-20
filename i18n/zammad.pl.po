@@ -1040,7 +1040,7 @@ msgstr ""
 "Utworzono nową sesję z Twojego konta. Ta sesja zostanie zatrzymana, aby "
 "zapobiec konfliktom."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:141
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr "Nowa wersja Zammad jest dostępna, proszę odśwież swoją przeglądarkę."
 
@@ -4106,7 +4106,7 @@ msgstr "Sklonuj"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:509
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:32
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -4291,7 +4291,7 @@ msgstr "Warunki dla wyświetlanych zgłoszeń"
 msgid "Config"
 msgstr "Config"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:95
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:103
 msgid "Config has changed"
 msgstr "Konfiguracja uległa zmianie"
 
@@ -4552,7 +4552,7 @@ msgstr "Kontynuuj"
 msgid "Continue anyway"
 msgstr "Kontynuuj mimo to"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:28
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -11133,11 +11133,11 @@ msgstr "Odniesienie do układu"
 msgid "Leave BETA UI feedback program?"
 msgstr "Chcesz dołączyć do programu opinii BETA UI?"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:253
 msgid "Leave empty to use URL (Completions)"
 msgstr "Pozostaw puste, aby użyć URL (generowanie odpowiedzi)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:243
 msgid "Leave empty to use the base model"
 msgstr "Pozostaw puste, aby użyć modelu podstawowego"
 
@@ -11490,7 +11490,7 @@ msgstr "Przypomnij hasło"
 msgid "Lost network connection"
 msgstr "Utracono połączenie sieciowe"
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:351
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:350
 msgid "Lost network connection!"
 msgstr "Utracono połączenie sieciowe!"
 
@@ -12268,7 +12268,7 @@ msgstr "Tel. komórkowy"
 msgid "Mode"
 msgstr "Tryb"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:189
 msgid "Model"
 msgstr "Model"
 
@@ -12734,7 +12734,7 @@ msgstr "Nowy użytkownik"
 msgid "New User Accounts"
 msgstr "Nowe konta użytkownika"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:132
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:140
 msgid "New Version"
 msgstr "Nowa wersja"
 
@@ -13508,7 +13508,7 @@ msgstr "Adresy OAuth:"
 msgid "OAuth2 token is expired!"
 msgstr "Token OAuth2 wygasł!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:236
 msgid "OCR Model"
 msgstr "Model OCR"
 
@@ -15242,7 +15242,7 @@ msgstr "Ostatnio oglądanie zgłoszenia"
 msgid "Recipient"
 msgstr "Odbiorca"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:227
 msgid "Recognize image text (OCR)"
 msgstr "Rozpoznawanie tekstu z obrazu (OCR)"
 
@@ -15345,7 +15345,7 @@ msgstr "Zgłoszenia powiązane"
 msgid "Relax, your system is being set up…"
 msgstr "Zrelaksuj się, Twój system jest właśnie konfigurowany…"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:123
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 #, fuzzy
 #| msgid "Upload"
@@ -16577,7 +16577,7 @@ msgstr ""
 "Klucze bezpieczeństwa to sprzętowe lub programowe dane uwierzytelniające, "
 "które mogą być używane jako jedna z metod uwierzytelniania dwuskładnikowego."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:110
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:118
 #, fuzzy
 #| msgid "Security key verification failed."
 msgid "Security token verification failed"
@@ -17534,7 +17534,7 @@ msgstr "Czas rozwiązania"
 msgid "Some Text"
 msgstr "Niektóre teksty"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:59
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:61
 msgid ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
@@ -17542,7 +17542,7 @@ msgstr ""
 "Niektóre ustawienia systemu uległy zmianie, Zammad uruchamia się ponownie. "
 "Proszę poczekać, aż Zammad powróci."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:78
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:80
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 "Zmieniły się niektóre ustawienia systemowe. Proszę ponownie uruchomić "
@@ -18733,7 +18733,7 @@ msgstr ""
 "Wybrana jednostka będzie używana tylko do wyświetlania i nie będzie miała "
 "wpływu na zapisane wartości."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:96
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:104
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr "Zmieniła się konfiguracja Zammad, załaduj ponownie przeglądarkę."
 
@@ -18844,7 +18844,7 @@ msgstr "Urządzenie nie mogło zostać usunięte."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Dzielnik między TicketHook a numerem zgłoszenia. Np. ':'."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:143
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr "Nie można rozpocząć pobierania. Spróbuj ponownie później."
@@ -19028,7 +19028,7 @@ msgstr "Import nie powiódł się."
 msgid "The import was successful."
 msgstr "Import został wykonany pomyślnie."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:111
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:119
 msgid ""
 "The included security token is invalid. This may be just a temporary error, "
 "please reload your browser, and try again."
@@ -20419,7 +20419,7 @@ msgstr "Usługa ta umożliwia połączenie %s z %s."
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr "Usługa ta pozwala ci połączyć Zammad z dostawcą AI."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:94
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -21433,7 +21433,7 @@ msgstr "Przełączanie wiersza nagłówka"
 msgid "Toggle the overlay"
 msgstr "Przełącz nakładkę"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:179
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -21632,7 +21632,7 @@ msgstr "Wypróbuj inną metodę"
 msgid "Try using your security key again."
 msgstr "Spróbuj ponownie użyć klucza bezpieczeństwa."
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:354
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:353
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:25
 msgid "Trying to reconnect…"
 msgstr "Próbuję ponownie się połączyć…"
@@ -21815,7 +21815,7 @@ msgstr "Nazwa atrybutu UID"
 msgid "UID Field"
 msgstr "Pole UID"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:199
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -21832,15 +21832,15 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (punkt końcowy AJAX)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:209
 msgid "URL (Completions)"
 msgstr "URL (Zakończenia)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:218
 msgid "URL (Embeddings)"
 msgstr "URL (Embeddings)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:247
 msgid "URL (OCR)"
 msgstr "URL (OCR)"
 
@@ -22041,7 +22041,7 @@ msgstr ""
 msgid "Update shared draft"
 msgstr "Aktualizacja udostępnionego szkicu"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:356
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -23918,7 +23918,7 @@ msgstr ""
 "Zammad jest obecnie w trybie konserwacji. Tylko administratorzy mogą się "
 "zalogować. Poczekaj na zakończenie okresu konserwacji."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:58
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:60
 msgid "Zammad is restarting…"
 msgstr "Zammad uruchamia się ponownie…"
 
@@ -23926,7 +23926,7 @@ msgstr "Zammad uruchamia się ponownie…"
 msgid "Zammad looks like this for \"%s\""
 msgstr "Zammad wygląda tak dla %s"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:77
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:79
 msgid "Zammad requires a restart!"
 msgstr "Zammad wymaga restartu!"
 
@@ -24164,7 +24164,7 @@ msgstr "chat"
 msgid "checked"
 msgstr "sprawdzony"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:127
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
 msgid "checked checklist item '%s'"
 msgstr "sprawdzony element listy kontrolnej \"%s"
 
@@ -24429,7 +24429,7 @@ msgstr "edytowane %s przeze mnie"
 msgid "email"
 msgstr "e-mail"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:100
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
 msgid "email sent to '%s'"
 msgstr "e-mail wysłany do '%s'"
 
@@ -24510,7 +24510,7 @@ msgstr "aby agent odpowiedział"
 msgid "forward"
 msgstr "przekaż dalej"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:163
 msgid "from"
 msgstr "od"
 
@@ -25079,7 +25079,7 @@ msgstr "nie ustawione (nie zdefiniowane)"
 msgid "note"
 msgstr "notatka"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:98
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 msgid "notification sent to '%s'"
 msgstr "powiadomienie wysłane do '%s'"
 
@@ -25165,11 +25165,11 @@ msgstr "kwadrans(y)"
 msgid "reached"
 msgstr "osiągnięto"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:145
 msgid "reacted to message from %s '%s'"
 msgstr "reakcja na wiadomość od %s '%s'"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "zareagował(a) %s na wiadomość od %s '%s'"
 
@@ -25208,7 +25208,7 @@ msgstr "usunąć"
 msgid "remove option"
 msgstr "usuń opcje"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:144
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:148
 msgid "removed reaction to message from %s '%s'"
 msgstr "usunięto reakcję na wiadomość od %s '%s'"
 
@@ -25407,7 +25407,7 @@ msgstr "telegram osobista wiadomość"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "motyw,kolor,styl,ciemny motyw,nocny motyw,jasny motyw"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:124
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "this ticket was merged into ticket %s"
 msgstr "to zgłoszenie zostało scalone ze zgłoszeniem %s"
 
@@ -25416,7 +25416,7 @@ msgstr "to zgłoszenie zostało scalone ze zgłoszeniem %s"
 msgid "ticket"
 msgstr "zgłoszenie"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:117
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
 msgid "ticket %s was merged into this ticket"
 msgstr "zgłoszenie %s zostało scalone z tym zgłoszeniem"
 
@@ -25456,17 +25456,17 @@ msgstr "śledzone"
 msgid "translation,locale,localization"
 msgstr "tłumaczenie,ustawienia regionalne,lokalizacja"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr ""
 "wyzwalacz „%s” został wykonany, ponieważ osiągnięto oczekujące przypomnienie"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:106
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr ""
 "wyzwalacz \"%s\" został wykonany, ponieważ zgłoszenie zostało eskalowane"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr ""
 "Wyzwalacz „%s” został wykonany, ponieważ zgłoszenie wkrótce ulegnie eskalacji"
@@ -25500,7 +25500,7 @@ msgstr ""
 msgid "unassign user"
 msgstr "użytkownik nieprzypisany"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:129
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
 msgid "unchecked checklist item '%s'"
 msgstr "niezaznaczony element listy kontrolnej \"%s"
 

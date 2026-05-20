@@ -1001,7 +1001,7 @@ msgid ""
 "prevent a conflict."
 msgstr "您的帳戶已經建立了新的工作階段。目前的工作階段將會停止以避免衝突。"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:141
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr "Zammad 新版本已就緒，請刷新您的瀏覽器。"
 
@@ -3933,7 +3933,7 @@ msgstr "複製: %s"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:509
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:32
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -4113,7 +4113,7 @@ msgstr "呈現工單的條件"
 msgid "Config"
 msgstr "配置"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:95
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:103
 msgid "Config has changed"
 msgstr "配置已變更"
 
@@ -4368,7 +4368,7 @@ msgstr "繼續"
 msgid "Continue anyway"
 msgstr "仍然繼續"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:28
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -10416,11 +10416,11 @@ msgstr ""
 msgid "Leave BETA UI feedback program?"
 msgstr "退出 Beta UI 回饋計畫？"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:253
 msgid "Leave empty to use URL (Completions)"
 msgstr "留空來使用網址（自動補全）"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:243
 msgid "Leave empty to use the base model"
 msgstr ""
 
@@ -10759,7 +10759,7 @@ msgstr "遺失密碼"
 msgid "Lost network connection"
 msgstr "失去網路連線"
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:351
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:350
 msgid "Lost network connection!"
 msgstr ""
 
@@ -11516,7 +11516,7 @@ msgstr "手機"
 msgid "Mode"
 msgstr "模式"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:189
 msgid "Model"
 msgstr "模型"
 
@@ -11972,7 +11972,7 @@ msgstr "新增使用者"
 msgid "New User Accounts"
 msgstr "新增使用者帳號"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:132
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:140
 msgid "New Version"
 msgstr "新增版本"
 
@@ -12716,7 +12716,7 @@ msgstr "OAuth 網址是："
 msgid "OAuth2 token is expired!"
 msgstr "OAuth2 Token 已過期！"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:236
 msgid "OCR Model"
 msgstr "OCR 模組"
 
@@ -14353,7 +14353,7 @@ msgstr "最近看過的工單"
 msgid "Recipient"
 msgstr "收件者"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:227
 msgid "Recognize image text (OCR)"
 msgstr "圖像文字辨識（OCR）"
 
@@ -14447,7 +14447,7 @@ msgstr "相關的工單"
 msgid "Relax, your system is being set up…"
 msgstr "別急，您的系統正在設定中…"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:123
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 msgid "Reload"
 msgstr "重新載入"
@@ -15650,7 +15650,7 @@ msgid ""
 "two-factor authentication method."
 msgstr "安全金鑰是實體或軟體憑證，可用作您的雙重驗證方式."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:110
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:118
 msgid "Security token verification failed"
 msgstr "安全 token 驗證失敗"
 
@@ -16599,13 +16599,13 @@ msgstr "解決時間"
 msgid "Some Text"
 msgstr "某文字"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:59
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:61
 msgid ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:78
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:80
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 
@@ -17842,7 +17842,7 @@ msgid ""
 "values."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:96
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:104
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 
@@ -17942,7 +17942,7 @@ msgstr "%s 個物件已建立。"
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:143
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr "下載無法開始。 請稍後重試。"
@@ -18126,7 +18126,7 @@ msgstr "匯入成功。"
 msgid "The import was successful."
 msgstr "匯入成功。"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:111
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:119
 msgid ""
 "The included security token is invalid. This may be just a temporary error, "
 "please reload your browser, and try again."
@@ -19535,7 +19535,7 @@ msgstr "此服務使您可以將 %s 與 %s 連接。"
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr "此服務使您可以將 %s 與 %s 連接。"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:94
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -20523,7 +20523,7 @@ msgstr "開啟備註輸入框"
 msgid "Toggle the overlay"
 msgstr "開啟備註輸入框"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:179
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -20727,7 +20727,7 @@ msgstr ""
 msgid "Try using your security key again."
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:354
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:353
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:25
 msgid "Trying to reconnect…"
 msgstr ""
@@ -20907,7 +20907,7 @@ msgstr "UID 屬性名稱"
 msgid "UID Field"
 msgstr "UID 欄位"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:199
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -20924,17 +20924,17 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL（AJAX 端點）"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:209
 #, fuzzy
 #| msgid "set optional"
 msgid "URL (Completions)"
 msgstr "設定為可選"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:218
 msgid "URL (Embeddings)"
 msgstr "URL（內嵌）"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:247
 msgid "URL (OCR)"
 msgstr "網址（OCR）"
 
@@ -21140,7 +21140,7 @@ msgstr "指定匯入資料中的特定屬性來更新現有的記錄。"
 msgid "Update shared draft"
 msgstr "已分享"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:356
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -23010,7 +23010,7 @@ msgid ""
 msgstr ""
 "Zammad 目前處於維護模式。只有系統管理員可以登 入。請等待直到維護視窗結束。"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:58
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:60
 msgid "Zammad is restarting…"
 msgstr ""
 
@@ -23018,7 +23018,7 @@ msgstr ""
 msgid "Zammad looks like this for \"%s\""
 msgstr "Zammad 對於 “%s” 看起來像這樣"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:77
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:79
 msgid "Zammad requires a restart!"
 msgstr ""
 
@@ -23250,7 +23250,7 @@ msgstr "文字對談"
 msgid "checked"
 msgstr "選擇項目"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:127
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
 #, fuzzy
 #| msgid "Checksum"
 msgid "checked checklist item '%s'"
@@ -23519,7 +23519,7 @@ msgstr "已由我編輯 %s"
 msgid "email"
 msgstr "電子郵件"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:100
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
 msgid "email sent to '%s'"
 msgstr "Email 寄給 '%s'"
 
@@ -23602,7 +23602,7 @@ msgstr ""
 msgid "forward"
 msgstr "轉寄"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:163
 msgid "from"
 msgstr "from"
 
@@ -24187,7 +24187,7 @@ msgstr "未設定 (未定義)"
 msgid "note"
 msgstr "備註"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:98
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 #, fuzzy
 #| msgid "Notification Sender"
 msgid "notification sent to '%s'"
@@ -24283,11 +24283,11 @@ msgstr ""
 msgid "reached"
 msgstr "已到期"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:145
 msgid "reacted to message from %s '%s'"
 msgstr "已用 '%s' 回應 %s 訊息"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "%s 已用 '%s' 回應 %s 訊息"
 
@@ -24330,7 +24330,7 @@ msgstr "移除"
 msgid "remove option"
 msgstr "移除選項"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:144
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:148
 msgid "removed reaction to message from %s '%s'"
 msgstr "已從訊息 %s '%s' 移除反應"
 
@@ -24533,7 +24533,7 @@ msgstr "Telegram 個人訊息"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:124
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "this ticket was merged into ticket %s"
 msgstr "此工單已合併到工單 %s"
 
@@ -24542,7 +24542,7 @@ msgstr "此工單已合併到工單 %s"
 msgid "ticket"
 msgstr "工單"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:117
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
 #, fuzzy
 #| msgid "Retweets are converted to Tickets"
 msgid "ticket %s was merged into this ticket"
@@ -24584,15 +24584,15 @@ msgstr ""
 msgid "translation,locale,localization"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:106
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr ""
 
@@ -24623,7 +24623,7 @@ msgstr ""
 msgid "unassign user"
 msgstr "不指派使用者"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:129
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "unchecked checklist item '%s'"

@@ -1033,7 +1033,7 @@ msgstr ""
 "S vaším účtom bola vytvorená nová relácia. Táto relácia bude zastavená, aby "
 "sa predišlo konfliktu."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:141
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
 "Nová verzia Zammadu je dispozícii, prosím obnovte stránku v prehliadači."
@@ -4199,7 +4199,7 @@ msgstr "Duplikovať"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:509
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:32
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -4390,7 +4390,7 @@ msgstr "Podmienky pre zobrazené tikety"
 msgid "Config"
 msgstr "Konfigurácia"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:95
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:103
 msgid "Config has changed"
 msgstr "Konfigurácia bola zmenená"
 
@@ -4663,7 +4663,7 @@ msgstr "Pokračovať"
 msgid "Continue anyway"
 msgstr "Pokračuj napriek tomu"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:28
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -11232,13 +11232,13 @@ msgstr ""
 msgid "Leave BETA UI feedback program?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:253
 #, fuzzy
 #| msgid "%s (option)"
 msgid "Leave empty to use URL (Completions)"
 msgstr "%s (možnosť)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:243
 msgid "Leave empty to use the base model"
 msgstr ""
 
@@ -11614,7 +11614,7 @@ msgstr "Zabudnuté heslo"
 msgid "Lost network connection"
 msgstr "Strata sieťového pripojenia!"
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:351
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:350
 msgid "Lost network connection!"
 msgstr "Strata sieťového pripojenia!"
 
@@ -12417,7 +12417,7 @@ msgstr "Mobil"
 msgid "Mode"
 msgstr "Mód"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:189
 #, fuzzy
 #| msgid "Mode"
 msgid "Model"
@@ -12905,7 +12905,7 @@ msgstr "Nový používateľ"
 msgid "New User Accounts"
 msgstr "Nové používateľské účty"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:132
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:140
 msgid "New Version"
 msgstr "Nová verzia"
 
@@ -13719,7 +13719,7 @@ msgstr "OAuth URL adresy sú:"
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:236
 #, fuzzy
 #| msgid "Mode"
 msgid "OCR Model"
@@ -15527,7 +15527,7 @@ msgstr "Nedávno zobrazené tikety"
 msgid "Recipient"
 msgstr "Prijímateľ"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:227
 msgid "Recognize image text (OCR)"
 msgstr ""
 
@@ -15643,7 +15643,7 @@ msgstr "Vytvoriť tiket"
 msgid "Relax, your system is being set up…"
 msgstr "Upokojte sa, váš systém sa nastavuje…"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:123
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 #, fuzzy
 #| msgid "Upload"
@@ -16957,7 +16957,7 @@ msgid ""
 "two-factor authentication method."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:110
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:118
 #, fuzzy
 #| msgid "Security key verification failed."
 msgid "Security token verification failed"
@@ -17958,7 +17958,7 @@ msgstr "Čas uzavretia"
 msgid "Some Text"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:59
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:61
 msgid ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
@@ -17966,7 +17966,7 @@ msgstr ""
 "Niektoré systémové nastavenia sa zmenili, Zammad sa reštartuje. Počkajte, "
 "kým sa Zammad znovu spustí."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:78
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:80
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 "Niektoré systémové nastavenia sa zmenili, prosím reštartujte všetky Zammad "
@@ -19176,7 +19176,7 @@ msgid ""
 "values."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:96
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:104
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
 "Konfigurácia Zammadu sa zmenila, prosím, znovu načítajte svoj prehliadač."
@@ -19277,7 +19277,7 @@ msgstr "Zariadenie sa nepodarilo vymazať."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:143
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 #, fuzzy
 #| msgid "Loading failed, please try again later."
@@ -19461,7 +19461,7 @@ msgstr "Import zlyhal."
 msgid "The import was successful."
 msgstr "Import bol úspešný."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:111
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:119
 msgid ""
 "The included security token is invalid. This may be just a temporary error, "
 "please reload your browser, and try again."
@@ -20844,7 +20844,7 @@ msgstr "Táto služba vám umožňuje prepojiť %s s %s."
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr "Táto služba vám umožňuje prepojiť %s s %s."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:94
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -21863,7 +21863,7 @@ msgstr "Prepnúť riadok hlavičky"
 msgid "Toggle the overlay"
 msgstr "Prepnúť prekrytie"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:179
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -22081,7 +22081,7 @@ msgstr "Vyskúšajte inú metódu"
 msgid "Try using your security key again."
 msgstr "Skúste znova použiť váš bezpečnostný kľúč."
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:354
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:353
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:25
 msgid "Trying to reconnect…"
 msgstr "Snaží sa znova pripojiť…"
@@ -22269,7 +22269,7 @@ msgstr "Názov atribútu UID"
 msgid "UID Field"
 msgstr "Dátumové pole"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:199
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -22286,17 +22286,17 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX endpoint)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:209
 #, fuzzy
 #| msgid "%s (option)"
 msgid "URL (Completions)"
 msgstr "%s (možnosť)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:218
 msgid "URL (Embeddings)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:247
 msgid "URL (OCR)"
 msgstr ""
 
@@ -22507,7 +22507,7 @@ msgstr ""
 msgid "Update shared draft"
 msgstr "Aktualizovať zdieľaný koncept"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:356
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -24396,7 +24396,7 @@ msgstr ""
 "Zammad je momentálne v režime údržby. Prihlásiť sa môžu iba administrátori. "
 "Počkajte, kým sa režim údržby neskončí."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:58
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:60
 msgid "Zammad is restarting…"
 msgstr "Zammad sa reštartuje…"
 
@@ -24404,7 +24404,7 @@ msgstr "Zammad sa reštartuje…"
 msgid "Zammad looks like this for \"%s\""
 msgstr "Zammad vyzerá takto pre \"%s\""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:77
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:79
 msgid "Zammad requires a restart!"
 msgstr "Zammad vyžaduje reštart!"
 
@@ -24631,7 +24631,7 @@ msgstr "chat"
 msgid "checked"
 msgstr "Skontrolované"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:127
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
 #, fuzzy
 #| msgid "Checksum"
 msgid "checked checklist item '%s'"
@@ -24904,7 +24904,7 @@ msgstr "upravené %s mnou"
 msgid "email"
 msgstr "e-mail"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:100
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
 msgid "email sent to '%s'"
 msgstr "e-mail odoslaný na '%s'"
 
@@ -24987,7 +24987,7 @@ msgstr "Pre odpoveď agenta"
 msgid "forward"
 msgstr "preposlať"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:163
 msgid "from"
 msgstr "zo"
 
@@ -25577,7 +25577,7 @@ msgstr ""
 msgid "note"
 msgstr "poznámka"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:98
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 msgid "notification sent to '%s'"
 msgstr "upozornenie poslané '%s'"
 
@@ -25664,13 +25664,13 @@ msgstr "štvrťhodina(y)"
 msgid "reached"
 msgstr "dosiahnuté"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:145
 #, fuzzy
 #| msgid "%s ended switch to |%s|!"
 msgid "reacted to message from %s '%s'"
 msgstr "reagoval(a) na správu od %s '%s'"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "zareagoval s %s na správu od %s '%s'"
 
@@ -25709,7 +25709,7 @@ msgstr "odstrániť"
 msgid "remove option"
 msgstr "odstrániť možnosť"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:144
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:148
 #, fuzzy
 #| msgid "%s ended switch to |%s|!"
 msgid "removed reaction to message from %s '%s'"
@@ -25912,7 +25912,7 @@ msgstr ""
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:124
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "this ticket was merged into ticket %s"
 msgstr "tento tiket bol zlúčený s tiketom %s"
 
@@ -25921,7 +25921,7 @@ msgstr "tento tiket bol zlúčený s tiketom %s"
 msgid "ticket"
 msgstr "tiket"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:117
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
 msgid "ticket %s was merged into this ticket"
 msgstr "tiket %s bol zlúčený s týmto tiketom"
 
@@ -25961,15 +25961,15 @@ msgstr ""
 msgid "translation,locale,localization"
 msgstr "preklad,lokalizovať,lokalizácia"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr "spúšťač '%s' bol vykonaný pretože uplynula doba odloženia"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:106
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr ""
 
@@ -26000,7 +26000,7 @@ msgstr "dvojfaktorová,2fa,bezpečnostný kľúč,passkey,autentifikačná aplik
 msgid "unassign user"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:129
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
 #, fuzzy
 #| msgid "Change Customer"
 msgid "unchecked checklist item '%s'"

@@ -76,8 +76,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: #{current_user.longname} hozta létre "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: #{current_user.longname} hozta létre "
 "ekkor: #{ticket.updated_at}_\n"
 "* Csoport: #{ticket.group.name}\n"
 "* Tulajdonos: #{ticket.owner.fullname}\n"
@@ -103,9 +103,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: eszkalálva ekkor: #"
-"{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: eszkalálva ekkor: "
+"#{ticket.escalation_at}_\n"
 "„#{ticket.customer.longname}” jegye (#{ticket.title}) eszkalálva lett "
 "ekkortól: „#{ticket.escalation_at}”!\n"
 "\n"
@@ -130,9 +130,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: utoljára frissítve ekkor: #"
-"{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: utoljára frissítve ekkor: "
+"#{ticket.updated_at}_\n"
 "* Csoport: #{ticket.group.name}\n"
 "* Tulajdonos: #{ticket.owner.fullname}\n"
 "* Állapot: #{t(ticket.state.name)}\n"
@@ -156,10 +156,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Emlékeztető elérve!_\n"
-"Egy jegy figyelmet igényel: emlékeztető elérve a(z) „*#"
-"{ticket.customer.longname}*” ügyfelű (#{ticket.title}) jegynél.\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Emlékeztető elérve!_\n"
+"Egy jegy figyelmet igényel: emlékeztető elérve a(z) "
+"„*#{ticket.customer.longname}*” ügyfelű (#{ticket.title}) jegynél.\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -184,8 +184,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: #{current_user.longname} frissítette "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: #{current_user.longname} frissítette "
 "ekkor: #{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -213,9 +213,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: eszkalálódni fog ekkor: #"
-"{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: eszkalálódni fog ekkor: "
+"#{ticket.escalation_at}_\n"
 "A(z) „#{ticket.customer.longname}” ügyféltől származó jegy (#{ticket.title}) "
 "eszkalálódni fog ekkor: „#{ticket.escalation_at}”!\n"
 "\n"
@@ -967,7 +967,7 @@ msgstr ""
 "Új munkamenet lett létrehozva a fiókjával. Ez a munkamenet leállításra kerül "
 "az ütközés elkerülése érdekében."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:141
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr "A Zammad új verziója érhető el, töltse újra a böngészőjét."
 
@@ -4033,7 +4033,7 @@ msgstr "Klón: %s"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:509
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:32
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -4219,7 +4219,7 @@ msgstr "A megjelenített jegyek feltételei"
 msgid "Config"
 msgstr "Beállítás"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:95
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:103
 msgid "Config has changed"
 msgstr "A beállítás megváltozott"
 
@@ -4478,7 +4478,7 @@ msgstr "Folytatás"
 msgid "Continue anyway"
 msgstr "Folytatás mindenképp"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:28
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -10998,11 +10998,11 @@ msgstr "Elrendezési hivatkozás"
 msgid "Leave BETA UI feedback program?"
 msgstr "Elhagyja a BÉTA felhasználói felület visszajelzési programot?"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:253
 msgid "Leave empty to use URL (Completions)"
 msgstr "Hagyja üresen az URL használatához (befejezések)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:243
 msgid "Leave empty to use the base model"
 msgstr "Hagyja üresen az alapmodell használatához"
 
@@ -11349,7 +11349,7 @@ msgstr "Elfelejtett jelszó"
 msgid "Lost network connection"
 msgstr "Megszakadt a hálózati kapcsolat"
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:351
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:350
 msgid "Lost network connection!"
 msgstr "Megszakadt a hálózati kapcsolat!"
 
@@ -12119,7 +12119,7 @@ msgstr "Mobiltelefon"
 msgid "Mode"
 msgstr "Mód"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:189
 msgid "Model"
 msgstr "Modell"
 
@@ -12579,7 +12579,7 @@ msgstr "Új felhasználó"
 msgid "New User Accounts"
 msgstr "Új felhasználói fiókok"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:132
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:140
 msgid "New Version"
 msgstr "Új verzió"
 
@@ -13342,7 +13342,7 @@ msgstr "OAuth URL-ek:"
 msgid "OAuth2 token is expired!"
 msgstr "Az OAuth2-token lejárt!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:236
 msgid "OCR Model"
 msgstr "OCR-modell"
 
@@ -15035,7 +15035,7 @@ msgstr "Legutóbb megtekintett jegyek"
 msgid "Recipient"
 msgstr "Címzett"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:227
 msgid "Recognize image text (OCR)"
 msgstr "Képen lévő szöveg felismerése (OCR)"
 
@@ -15136,7 +15136,7 @@ msgstr "Kapcsolódó jegyek"
 msgid "Relax, your system is being set up…"
 msgstr "Nyugalom, a rendszer beállítása folyamatban van…"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:123
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 msgid "Reload"
 msgstr "Újratöltés"
@@ -16346,7 +16346,7 @@ msgstr ""
 "A biztonsági kulcsok olyan hardveres vagy szoftveres hitelesítési adatok, "
 "amelyek kétfaktoros hitelesítési módszerként használhatók."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:110
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:118
 msgid "Security token verification failed"
 msgstr "A biztonsági token ellenőrzése nem sikerült"
 
@@ -17267,7 +17267,7 @@ msgstr "Megoldási idő"
 msgid "Some Text"
 msgstr "Valamilyen szöveg"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:59
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:61
 msgid ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
@@ -17275,7 +17275,7 @@ msgstr ""
 "Néhány rendszerbeállítás megváltozott, a Zammad újraindul. Várjon, amíg a "
 "Zammad visszatér."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:78
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:80
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
 "Néhány rendszerbeállítás megváltozott, indítsa újra az összes Zammad-"
@@ -18441,7 +18441,7 @@ msgstr ""
 "A kiválasztott mértékegység csak a megjelenítéshez lesz használva, és nem "
 "befolyásolja a tárolt értékeket."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:96
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:104
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr "A Zammad beállításai megváltoztak, töltse újra a böngészőjét."
 
@@ -18549,7 +18549,7 @@ msgstr "Az eszközt nem sikerült törölni."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "A jegyhorog és a jegyszám közötti elválasztó. Például „: ”."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:143
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr "A letöltést nem sikerült elindítani. Próbálja meg később újra."
@@ -18733,7 +18733,7 @@ msgstr "Az importálás nem sikerült."
 msgid "The import was successful."
 msgstr "Az importálás sikeres volt."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:111
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:119
 msgid ""
 "The included security token is invalid. This may be just a temporary error, "
 "please reload your browser, and try again."
@@ -20140,7 +20140,7 @@ msgstr ""
 "Ez a szolgáltatás lehetővé teszi a Zammad összekapcsolását egy MI-"
 "szolgáltatóval."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:94
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -21134,7 +21134,7 @@ msgstr "Fejlécsor be- és kikapcsolása"
 msgid "Toggle the overlay"
 msgstr "Az átfedés be- és kikapcsolása"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:179
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -21326,7 +21326,7 @@ msgstr "Próbáljon másik módszert"
 msgid "Try using your security key again."
 msgstr "Próbálja meg újra használni a biztonsági kulcsát."
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:354
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:353
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:25
 msgid "Trying to reconnect…"
 msgstr "Újrakapcsolódási próbálkozás…"
@@ -21498,7 +21498,7 @@ msgstr "UID-attribútum neve"
 msgid "UID Field"
 msgstr "UID mező"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:199
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -21515,15 +21515,15 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX-végpont)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:209
 msgid "URL (Completions)"
 msgstr "URL (befejezések)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:218
 msgid "URL (Embeddings)"
 msgstr "URL (beágyazások)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:247
 msgid "URL (OCR)"
 msgstr "URL (OCR)"
 
@@ -21717,7 +21717,7 @@ msgstr ""
 msgid "Update shared draft"
 msgstr "Megosztott piszkozat frissítése"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:356
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -23562,7 +23562,7 @@ msgstr ""
 "A Zammad jelenleg karbantartási módban van. Csak adminisztrátorok tudnak "
 "bejelentkezni. Várjon, amíg a karbantartási időablak véget ér."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:58
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:60
 msgid "Zammad is restarting…"
 msgstr "A Zammad újraindul…"
 
@@ -23570,7 +23570,7 @@ msgstr "A Zammad újraindul…"
 msgid "Zammad looks like this for \"%s\""
 msgstr "A Zammad így néz ki „%s” számára"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:77
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:79
 msgid "Zammad requires a restart!"
 msgstr "A Zammad újraindítást igényel!"
 
@@ -23803,7 +23803,7 @@ msgstr "csevegés"
 msgid "checked"
 msgstr "bejelölve"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:127
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
 msgid "checked checklist item '%s'"
 msgstr "bejelölt ellenőrzőlista-elem: „%s”"
 
@@ -24065,7 +24065,7 @@ msgstr "szerkesztve: %s – általam"
 msgid "email"
 msgstr "e-mail"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:100
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
 msgid "email sent to '%s'"
 msgstr "az e-mail elküldve ide: „%s”"
 
@@ -24144,7 +24144,7 @@ msgstr "egy ügyintézőnek a válaszadáshoz"
 msgid "forward"
 msgstr "továbbítás"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:163
 msgid "from"
 msgstr "ettől"
 
@@ -24706,7 +24706,7 @@ msgstr "nincs beállítva (nincs meghatározva)"
 msgid "note"
 msgstr "jegyzet"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:98
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 msgid "notification sent to '%s'"
 msgstr "az értesítés elküldve ide: „%s”"
 
@@ -24792,11 +24792,11 @@ msgstr "negyedóra"
 msgid "reached"
 msgstr "elérte"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:145
 msgid "reacted to message from %s '%s'"
 msgstr "reagált %s üzenetére: „%s”"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "reagált ezzel: %s %s „%s” üzenetére"
 
@@ -24836,7 +24836,7 @@ msgstr "eltávolítás"
 msgid "remove option"
 msgstr "lehetőség eltávolítása"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:144
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:148
 msgid "removed reaction to message from %s '%s'"
 msgstr "eltávolította a reakcióját %s üzenetéről: „%s”"
 
@@ -25033,7 +25033,7 @@ msgstr "Telegram személyes üzenet"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "téma,szín,stílus,sötét mód,éjszakai mód,világos mód"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:124
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "this ticket was merged into ticket %s"
 msgstr "ez a jegy egyesítve lett ebbe a jegybe: %s"
 
@@ -25042,7 +25042,7 @@ msgstr "ez a jegy egyesítve lett ebbe a jegybe: %s"
 msgid "ticket"
 msgstr "jegy"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:117
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
 msgid "ticket %s was merged into this ticket"
 msgstr "a(z) %s jegy egyesítve lett ebbe a jegybe"
 
@@ -25082,18 +25082,18 @@ msgstr "követve itt"
 msgid "translation,locale,localization"
 msgstr "fordítás,területi beállítás,honosítás"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr ""
 "a(z) „%s” eseményindító végrehajtásra került, mert elérte a függőben lévő "
 "emlékeztetőt"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:106
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr ""
 "a(z) „%s” eseményindító végrehajtásra került, mert a jegy eszkalálódott"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr ""
 "a(z) „%s” eseményindító végrehajtásra került, mert a jegy hamarosan "
@@ -25124,7 +25124,7 @@ msgstr "kétfaktoros,2fa,biztonsági kulcs,jelkulcs,hitelesítő alkalmazás"
 msgid "unassign user"
 msgstr "felhasználó hozzárendelésének feloldása"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:129
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
 msgid "unchecked checklist item '%s'"
 msgstr "nem bejelölt ellenőrzőlista-elem: „%s”"
 

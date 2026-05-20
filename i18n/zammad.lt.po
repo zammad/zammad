@@ -78,9 +78,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Sukūrė #{current_user.longname} #"
-"{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Sukūrė #{current_user.longname} "
+"#{ticket.updated_at}_\n"
 "* Grupė: #{ticket.group.name}\n"
 "* Savininkas: #{ticket.owner.fullname}\n"
 "* Būsena: #{t(ticket.state.name)}\n"
@@ -105,8 +105,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Eskaluota #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Eskaluota #{ticket.escalation_at}_\n"
 "Triktis (#{ticket.title}) gauta iš „#{ticket.customer.longname}“ buvo "
 "eskaluota \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -131,8 +131,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Atnaujinta #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Atnaujinta #{ticket.updated_at}_\n"
 "* Grupė: #{ticket.group.name}\n"
 "* Savininkas: #{ticket.owner.fullname}\n"
 "* Būklė: #{t(ticket.state.name)}\n"
@@ -156,10 +156,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Atėjo priminimo laikas!_\n"
-"Atkreipkite dėmesį į triktį (#{ticket.title}), priskirtą klientui „*#"
-"{ticket.customer.longname}*“.\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Atėjo priminimo laikas!_\n"
+"Atkreipkite dėmesį į triktį (#{ticket.title}), priskirtą klientui "
+"„*#{ticket.customer.longname}*“.\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -184,9 +184,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: #{current_user.longname} atnaujino #"
-"{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: #{current_user.longname} atnaujino "
+"#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -213,8 +213,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Bus eskaluota #{ticket.escalation_at}"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Bus eskaluota #{ticket.escalation_at}"
 "_\n"
 "Triktis (#{ticket.title}) priskirta „#{ticket.customer.longname}“ bus "
 "eskaluota „#{ticket.escalation_at}“!\n"
@@ -952,7 +952,7 @@ msgstr ""
 "Su jūsų paskyra sukurta nauja sesija. Ši sesija bus sustabdyta, kad būtų "
 "išvengta konflikto."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:141
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr "Yra nauja Zammad versija. Perkraukite naršyklę."
 
@@ -3956,7 +3956,7 @@ msgstr "Kopija: %s"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:509
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:32
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -4139,7 +4139,7 @@ msgstr "Sąlygos rodomoms triktims"
 msgid "Config"
 msgstr "Konfigūracija"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:95
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:103
 msgid "Config has changed"
 msgstr "Konfigūracija atnaujinta"
 
@@ -4395,7 +4395,7 @@ msgstr "Tęsti"
 msgid "Continue anyway"
 msgstr "Vistiek tęsti"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:28
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -10707,11 +10707,11 @@ msgstr "Išdėstymo pavyzdys"
 msgid "Leave BETA UI feedback program?"
 msgstr "Palikti BETA sąsajos grįžtamojo ryšio programą?"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:253
 msgid "Leave empty to use URL (Completions)"
 msgstr "Palikite tuščią, jei norite naudoti adresą (užbaigimai)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:243
 msgid "Leave empty to use the base model"
 msgstr "Palikite tuščią, jei norite naudoti bazinį modelį"
 
@@ -11057,7 +11057,7 @@ msgstr "Prarastas slaptažodis"
 msgid "Lost network connection"
 msgstr "Prarastas tinklo ryšys"
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:351
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:350
 msgid "Lost network connection!"
 msgstr "Prarastas tinklo ryšys!"
 
@@ -11825,7 +11825,7 @@ msgstr "Mobilusis"
 msgid "Mode"
 msgstr "Režimas"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:189
 msgid "Model"
 msgstr "Modelis"
 
@@ -12283,7 +12283,7 @@ msgstr "Naujas naudotojas"
 msgid "New User Accounts"
 msgstr "Naujos naudototojų paskyros"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:132
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:140
 msgid "New Version"
 msgstr "Nauja versija"
 
@@ -13039,7 +13039,7 @@ msgstr "OAuth adresai yra:"
 msgid "OAuth2 token is expired!"
 msgstr "OAuth2 žetonas pasibaigęs!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:236
 msgid "OCR Model"
 msgstr "OCR modelis"
 
@@ -14701,7 +14701,7 @@ msgstr "Neseniai žiūrėtos triktys"
 msgid "Recipient"
 msgstr "Gavėjas"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:227
 msgid "Recognize image text (OCR)"
 msgstr "Atpažinti paveiksliuko tekstą (OCR)"
 
@@ -14799,7 +14799,7 @@ msgstr "Susijusios triktys"
 msgid "Relax, your system is being set up…"
 msgstr "Atsipalaiduokite, jūsų sistema yra konfigūruojama…"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:123
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 msgid "Reload"
 msgstr "Perkrauti"
@@ -15999,7 +15999,7 @@ msgstr ""
 "Saugumo raktai yra techninės arba programinės įrangos prisijungimai, kurie "
 "gali būti naudojami kaip dviejų veiksnių autentifikacijos metodas."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:110
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:118
 msgid "Security token verification failed"
 msgstr "Nepavyko patikrinti saugumo rakto"
 
@@ -16906,13 +16906,13 @@ msgstr "Sprendimo laikas"
 msgid "Some Text"
 msgstr "Belekoks tekstas"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:59
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:61
 msgid ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
 msgstr "Sistemos nustatymai buvo pakeisti. Luktelkite kol Zammad persikraus."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:78
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:80
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr "Sistemos nustatymai buvo pakeisti. Perkraukite Zammad procesus!"
 
@@ -18059,7 +18059,7 @@ msgstr ""
 "Pasirinktas matas bus naudojamas tik rodymui ir neturės įtakos išsaugotiems "
 "duomenims."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:96
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:104
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr "Zammad konfigūracija pasikeitė. Perkraukite savo naršyklę."
 
@@ -18165,7 +18165,7 @@ msgstr "Nepavyko ištrinti įrenginio."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Skirtukas tarp Trikties identifikatoriaus ir numerio. Pvz „:“."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:143
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr "Nepavyko parsisiųsti. Bandykite vėliau."
@@ -18344,7 +18344,7 @@ msgstr "Importuoti nepavyko."
 msgid "The import was successful."
 msgstr "Sėkmingai importuota."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:111
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:119
 msgid ""
 "The included security token is invalid. This may be just a temporary error, "
 "please reload your browser, and try again."
@@ -18557,7 +18557,8 @@ msgstr ""
 
 #: app/models/webhook.rb:55
 msgid "The provided endpoint is invalid, it points to a link-local IP address."
-msgstr "Pateiktas prieigos taškas yra netinkamas. Jis veda į vietinį IP adresą."
+msgstr ""
+"Pateiktas prieigos taškas yra netinkamas. Jis veda į vietinį IP adresą."
 
 #: app/models/webhook.rb:53
 msgid "The provided endpoint is invalid, it points to a loopback IP address."
@@ -18607,8 +18608,8 @@ msgid ""
 "The provider configuration is disabled. Please set up the provider before "
 "proceeding in |AI > Providers|."
 msgstr ""
-"DI tiekėjo konfigūracija išungta. Prieš tęsdami, sukonfigūruokite tiekėją „"
-"DI > Tiekėjai“."
+"DI tiekėjo konfigūracija išungta. Prieš tęsdami, sukonfigūruokite tiekėją "
+"„DI > Tiekėjai“."
 
 #: lib/secure_mailing/pgp/incoming.rb:302
 msgid "The public PGP key could not be found."
@@ -19710,7 +19711,7 @@ msgstr "Ši paslauga leidžia sujungti %s su %s."
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr "Ši paslauga leidžia jums sujungti Zammad su DI paslaugų tiekėju."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:94
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -20686,7 +20687,7 @@ msgstr "Perjungti antraštės eilutę"
 msgid "Toggle the overlay"
 msgstr "Perjungti meniu"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:179
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -20877,7 +20878,7 @@ msgstr "Pabandykite kitą metodą"
 msgid "Try using your security key again."
 msgstr "Dar kartą pabandyti su saugumo raktu."
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:354
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:353
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:25
 msgid "Trying to reconnect…"
 msgstr "Bandoma atkurti ryšį…"
@@ -21049,7 +21050,7 @@ msgstr "UID atributo pavadinimas"
 msgid "UID Field"
 msgstr "UID laukelis"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:199
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -21066,15 +21067,15 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "Adresas (AJAX prieigos taškas)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:209
 msgid "URL (Completions)"
 msgstr "Adresas (užbaigimai)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:218
 msgid "URL (Embeddings)"
 msgstr "Adresas (įterpiniai)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:247
 msgid "URL (OCR)"
 msgstr "Adresas (OCR)"
 
@@ -21264,7 +21265,7 @@ msgstr "Atnaujinti esamus įrašus su importuotais duomenimis."
 msgid "Update shared draft"
 msgstr "Atnaujinti bendrintą juodraštį"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:356
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -23083,7 +23084,7 @@ msgstr ""
 "Zammad yra priežiūros režime. Prisijungti gali tik administratoriai. "
 "Palaukite kol bus baigti priežiūros darbai."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:58
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:60
 msgid "Zammad is restarting…"
 msgstr "Zammad perkraunamas…"
 
@@ -23091,7 +23092,7 @@ msgstr "Zammad perkraunamas…"
 msgid "Zammad looks like this for \"%s\""
 msgstr "Zammad „%s“ atrodo taip"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:77
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:79
 msgid "Zammad requires a restart!"
 msgstr "Reikia perkrauti Zammad!"
 
@@ -23320,7 +23321,7 @@ msgstr "pokalbis"
 msgid "checked"
 msgstr "pažymėta"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:127
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
 msgid "checked checklist item '%s'"
 msgstr "Kontrolinio sąrašo punktas „%s“ pažymėtas kaip baigtas"
 
@@ -23579,7 +23580,7 @@ msgstr "redagavau %s"
 msgid "email"
 msgstr "el. paštas"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:100
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
 msgid "email sent to '%s'"
 msgstr "laiškas išsiųstas „%s“"
 
@@ -23658,7 +23659,7 @@ msgstr "agentui atssakyti"
 msgid "forward"
 msgstr "persiųsti"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:163
 msgid "from"
 msgstr "nuo"
 
@@ -24221,7 +24222,7 @@ msgstr "nenustatyta (neapibūdinta)"
 msgid "note"
 msgstr "pastaba"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:98
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 msgid "notification sent to '%s'"
 msgstr "pranešimas nusiųstas „%s“"
 
@@ -24307,11 +24308,11 @@ msgstr "valandos ketvirtis(čiai)"
 msgid "reached"
 msgstr "atėjo laikas"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:145
 msgid "reacted to message from %s '%s'"
 msgstr "sureagavo į pranešimą iš %s „%s“"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "sureagavo su %s į žinutę iš %s „%s“"
 
@@ -24350,7 +24351,7 @@ msgstr "pašalinti"
 msgid "remove option"
 msgstr "pašalinti parinktį"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:144
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:148
 msgid "removed reaction to message from %s '%s'"
 msgstr "panaikinta reakcija į žinutę iš %s „%s“"
 
@@ -24549,7 +24550,7 @@ msgstr ""
 "tema,spalva,tamsi tema, šviesi tema,naktinis režimas,dark mode,night mode, "
 "theme"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:124
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "this ticket was merged into ticket %s"
 msgstr "ši triktis buvo prijungta prie trikties %s"
 
@@ -24558,7 +24559,7 @@ msgstr "ši triktis buvo prijungta prie trikties %s"
 msgid "ticket"
 msgstr "triktis"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:117
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
 msgid "ticket %s was merged into this ticket"
 msgstr "triktis %s buvo prijungta prie šios trikties"
 
@@ -24598,15 +24599,15 @@ msgstr "stebima"
 msgid "translation,locale,localization"
 msgstr "vertimas,localizacija,lokalė,kalba"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr "Paleistukas „%s“ buvo paleistas, nes suėjo laukimo laikas"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:106
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr "Paleistukas „%s“ buvo paleistas, nes triktis buvo eskaluota"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr "Paleistukas „%s“ buvo paleistas, nes triktis tuoj eskaluosis"
 
@@ -24635,7 +24636,7 @@ msgstr "2fa,saugumas,passkey,authenticator,autentifikacija,twofactor"
 msgid "unassign user"
 msgstr "panaikinti naudotojo priskyrimą"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:129
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
 msgid "unchecked checklist item '%s'"
 msgstr "Kontrolinio sąrašo punktas „%s“ pažymėtas kaip nebaigtas"
 

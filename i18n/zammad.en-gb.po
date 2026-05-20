@@ -76,8 +76,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Created by #{current_user.longname} "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Created by #{current_user.longname} "
 "at #{ticket.updated_at}_\n"
 "* Group: #{ticket.group.name}\n"
 "* Owner: #{ticket.owner.fullname}\n"
@@ -103,8 +103,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Escalated at #{ticket.escalation_at}"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Escalated at #{ticket.escalation_at}"
 "_\n"
 "The ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" has been "
 "escalated since \"#{ticket.escalation_at}\"!\n"
@@ -130,8 +130,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Last updated at #{ticket.updated_at}"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Last updated at #{ticket.updated_at}"
 "_\n"
 "* Group: #{ticket.group.name}\n"
 "* Owner: #{ticket.owner.fullname}\n"
@@ -156,8 +156,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Reminder reached!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Reminder reached!_\n"
 "A ticket needs attention: reminder reached for (#{ticket.title}) with "
 "customer \"*#{ticket.customer.longname}*\".\n"
 "\n"
@@ -184,8 +184,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Updated by #{current_user.longname} "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Updated by #{current_user.longname} "
 "at #{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -213,9 +213,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Will escalate at #"
-"{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Will escalate at "
+"#{ticket.escalation_at}_\n"
 "The ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will "
 "escalate at \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -957,7 +957,7 @@ msgstr ""
 "A new session was created with your account. This session will be stopped to "
 "prevent a conflict."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:133
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:141
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr "A new version of Zammad is available; please reload your browser."
 
@@ -1806,8 +1806,8 @@ msgstr ""
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>We received a request for an administration login for your #"
-"{config.product_name} account <b>#{user.login}</b>.</div>\n"
+"<div>We received a request for an administration login for your "
+"#{config.product_name} account <b>#{user.login}</b>.</div>\n"
 "<br>\n"
 "<div>Please, click on the link below (or copy and paste the URL into your "
 "browser) to proceed:</div>\n"
@@ -3702,7 +3702,8 @@ msgstr "Checklist items are limited to 100 items per checklist."
 
 #: app/models/checklist.rb:100
 msgid "Checklist template must be active to use as a checklist starting point."
-msgstr "Checklist template must be active to use as a checklist starting point."
+msgstr ""
+"Checklist template must be active to use as a checklist starting point."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
@@ -3958,7 +3959,7 @@ msgstr "Clone: %s"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:509
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:32
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
 #: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
@@ -4142,7 +4143,7 @@ msgstr "Conditions for shown tickets"
 msgid "Config"
 msgstr "Config"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:95
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:103
 msgid "Config has changed"
 msgstr "Config has changed"
 
@@ -4227,8 +4228,8 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"Confirm your #{config.product_name} account, #{user.firstname} #"
-"{user.lastname}\n"
+"Confirm your #{config.product_name} account, #{user.firstname} "
+"#{user.lastname}\n"
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
@@ -4398,7 +4399,7 @@ msgstr "Continue"
 msgid "Continue anyway"
 msgstr "Continue anyway"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:28
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:30
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:103
 msgid "Continue session"
@@ -4692,8 +4693,8 @@ msgstr ""
 "\n"
 "Available objects are:\n"
 "* ticket (e.g. ticket.state, ticket.group)\n"
-"* ticket.customer (e.g. ticket.customer.firstname, ticket.customer.lastname)"
-"\n"
+"* ticket.customer (e.g. ticket.customer.firstname, "
+"ticket.customer.lastname)\n"
 "* ticket.owner (e.g. ticket.owner.firstname, ticket.owner.lastname)\n"
 "* ticket.organisation (e.g. ticket.organisation.name)\n"
 "* user (e.g. user.firstname, user.email)\n"
@@ -6813,7 +6814,8 @@ msgstr "Do you really want to delete your current avatar?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee:3
 msgid "Do you really want to set the visibility of this article to \"public\"?"
-msgstr "Do you really want to set the visibility of this article to \"public\"?"
+msgstr ""
+"Do you really want to set the visibility of this article to \"public\"?"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:65
 msgid "Do you want to continue?"
@@ -7426,8 +7428,8 @@ msgid ""
 msgstr ""
 "Enable if you want to quote the full email in your answer. The quoted email "
 "will be put at the end of your answer. If you just want to quote a certain "
-"phrase, just mark the text and press reply (this feature is always available)"
-"."
+"phrase, just mark the text and press reply (this feature is always "
+"available)."
 
 #: db/seeds/settings.rb:6040
 msgid ""
@@ -7854,7 +7856,8 @@ msgstr "Entity context"
 
 #: app/models/system_report/plugin/entities/counts.rb:4
 msgid "Entity counts of database objects (e.g. ticket count, user count, etc.)"
-msgstr "Entity counts of database objects (e.g. ticket count, user count, etc.)"
+msgstr ""
+"Entity counts of database objects (e.g. ticket count, user count, etc.)"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:6
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:165
@@ -7908,8 +7911,8 @@ msgstr ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -9304,8 +9307,8 @@ msgid ""
 "quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
 "Here you can search for tickets, customers, and organisations. Use the "
-"asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use "
-"||quotation marks|| for searching phrases: §\"some phrase\"§."
+"asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||"
+"quotation marks|| for searching phrases: §\"some phrase\"§."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:23
 msgid ""
@@ -9666,8 +9669,8 @@ msgid ""
 "If you want to open the chat by clicking a button, set the option §show§ to "
 "§false§ and add the class §open-zammad-chat§ to the button."
 msgstr ""
-"If you want to open the chat by clicking a button, set the option §show§ to §"
-"false§ and add the class §open-zammad-chat§ to the button."
+"If you want to open the chat by clicking a button, set the option §show§ to "
+"§false§ and add the class §open-zammad-chat§ to the button."
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:13
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:69
@@ -9821,7 +9824,8 @@ msgstr "Imported"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:28
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
-msgstr "In order for Zammad to access %s, the %s API token must be stored here:"
+msgstr ""
+"In order for Zammad to access %s, the %s API token must be stored here:"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:7
 msgid ""
@@ -10334,12 +10338,12 @@ msgstr ""
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to #"
-"{config.product_name} - our customer support platform.</div>\n"
+"<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to "
+"#{config.product_name} - our customer support platform.</div>\n"
 "<br>\n"
 "<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/"
-"#password_reset_verify/#{token.token}\">here</a> and set your password.</div>"
-"\n"
+"#password_reset_verify/#{token.token}\">here</a> and set your password.</"
+"div>\n"
 "<br>\n"
 "<div>Enjoy,</div>\n"
 "<br>\n"
@@ -10722,11 +10726,11 @@ msgstr "Layout Reference"
 msgid "Leave BETA UI feedback program?"
 msgstr "Leave BETA UI feedback program?"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:250
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:253
 msgid "Leave empty to use URL (Completions)"
 msgstr "Leave empty to use URL (Completions)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:240
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:243
 msgid "Leave empty to use the base model"
 msgstr "Leave empty to use the base model"
 
@@ -11070,7 +11074,7 @@ msgstr "Lost Password"
 msgid "Lost network connection"
 msgstr "Lost network connection"
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:351
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:350
 msgid "Lost network connection!"
 msgstr "Lost network connection!"
 
@@ -11835,7 +11839,7 @@ msgstr "Mobile"
 msgid "Mode"
 msgstr "Mode"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:186
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:189
 msgid "Model"
 msgstr "Model"
 
@@ -12293,7 +12297,7 @@ msgstr "New User"
 msgid "New User Accounts"
 msgstr "New User Accounts"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:132
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:140
 msgid "New Version"
 msgstr "New Version"
 
@@ -12379,8 +12383,8 @@ msgstr ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The new ticket (#{ticket.title}) has been created by \"<b>#"
-"{current_user.longname}</b>\".</div>\n"
+"<div>The new ticket (#{ticket.title}) has been created by "
+"\"<b>#{current_user.longname}</b>\".</div>\n"
 "<br>\n"
 "<div>\n"
 "Group: #{ticket.group.name}<br>\n"
@@ -13048,7 +13052,7 @@ msgstr "OAuth URLs are:"
 msgid "OAuth2 token is expired!"
 msgstr "OAuth2 token is expired!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:233
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:236
 msgid "OCR Model"
 msgstr "OCR Model"
 
@@ -14724,7 +14728,7 @@ msgstr "Recently viewed tickets"
 msgid "Recipient"
 msgstr "Recipient"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:224
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:227
 msgid "Recognize image text (OCR)"
 msgstr "Recognize image text (OCR)"
 
@@ -14823,7 +14827,7 @@ msgstr "Related tickets"
 msgid "Relax, your system is being set up…"
 msgstr "Relax, your system is being set up…"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:123
 #: app/assets/javascripts/app/controllers/widget/session_message.coffee:13
 msgid "Reload"
 msgstr "Reload"
@@ -15186,16 +15190,16 @@ msgstr ""
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>We received a request to reset the password for your #"
-"{config.product_name} account <b>#{user.login}</b>.</div>\n"
+"<div>We received a request to reset the password for your "
+"#{config.product_name} account <b>#{user.login}</b>.</div>\n"
 "<br>\n"
 "<div>If you want to reset your password, click on the link below (or copy "
 "and paste the URL into your browser):</div>\n"
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>This link takes you to a page where you can change your password.</div>"
-"\n"
+"<div>This link takes you to a page where you can change your password.</"
+"div>\n"
 "<br>\n"
 "<div>If you don't want to reset your password, please ignore this message. "
 "Your password will not be reset.</div>\n"
@@ -15238,8 +15242,8 @@ msgstr ""
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>This link takes you to a page where you can change your password.</div>"
-"\n"
+"<div>This link takes you to a page where you can change your password.</"
+"div>\n"
 "<br>\n"
 "<div>If you don't want to reset your password, please ignore this message. "
 "Your password will not be reset.</div>\n"
@@ -16017,7 +16021,7 @@ msgstr ""
 "Security keys are hardware or software credentials that can be used as your "
 "two-factor authentication method."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:110
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:118
 msgid "Security token verification failed"
 msgstr "Security token verification failed"
 
@@ -16922,7 +16926,7 @@ msgstr "Solution time"
 msgid "Some Text"
 msgstr "Some Text"
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:59
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:61
 msgid ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
@@ -16930,9 +16934,10 @@ msgstr ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:78
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:80
 msgid "Some system settings have changed, please restart all Zammad processes!"
-msgstr "Some system settings have changed, please restart all Zammad processes!"
+msgstr ""
+"Some system settings have changed, please restart all Zammad processes!"
 
 #: app/frontend/shared/errors/useErrorHandler.ts:35
 msgid "Something went wrong."
@@ -18080,7 +18085,7 @@ msgstr ""
 "The chosen unit will be used for display only and will not affect stored "
 "values."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:96
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:104
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr "The configuration of Zammad has changed, please reload your browser."
 
@@ -18139,8 +18144,9 @@ msgid ""
 "UTF-8. You can import a CSV file or paste the data directly into the text "
 "area."
 msgstr ""
-"The data must be in the comma separated values (CSV) format and saved as UTF-"
-"8. You can import a CSV file or paste the data directly into the text area."
+"The data must be in the comma separated values (CSV) format and saved as "
+"UTF-8. You can import a CSV file or paste the data directly into the text "
+"area."
 
 #: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:66
 msgid "The data we need to collect consists of:"
@@ -18188,7 +18194,7 @@ msgstr "The device could not be deleted."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "The divider between TicketHook and ticket number. e.g. ': '."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:140
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:143
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr "The download could not be started. Please try again later."
@@ -18369,7 +18375,7 @@ msgstr "The import failed."
 msgid "The import was successful."
 msgstr "The import was successful."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:111
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:119
 msgid ""
 "The included security token is invalid. This may be just a temporary error, "
 "please reload your browser, and try again."
@@ -18585,7 +18591,8 @@ msgstr ""
 
 #: app/models/webhook.rb:55
 msgid "The provided endpoint is invalid, it points to a link-local IP address."
-msgstr "The provided endpoint is invalid, it points to a link-local IP address."
+msgstr ""
+"The provided endpoint is invalid, it points to a link-local IP address."
 
 #: app/models/webhook.rb:53
 msgid "The provided endpoint is invalid, it points to a loopback IP address."
@@ -18975,7 +18982,8 @@ msgstr "The test run was successful."
 #: db/seeds/settings.rb:3218
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
-msgstr "The text at the beginning of the subject in an email forward, e.g. FWD."
+msgstr ""
+"The text at the beginning of the subject in an email forward, e.g. FWD."
 
 #: db/seeds/settings.rb:3196
 msgid ""
@@ -19078,7 +19086,8 @@ msgstr "The user token could not be generated."
 #: lib/external_credential/exchange.rb:55
 #: lib/external_credential/microsoft_base.rb:79
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
-msgstr "The user's 'preferred_username' could not be extracted from 'id_token'."
+msgstr ""
+"The user's 'preferred_username' could not be extracted from 'id_token'."
 
 #: app/controllers/sessions_controller.rb:247
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
@@ -19121,7 +19130,8 @@ msgstr "The way to communicate with us is this thing called \"ticket\"."
 
 #: lib/telegram_helper.rb:35
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
-msgstr "The webhook could not be saved by Telegram, seems to be an invalid URL."
+msgstr ""
+"The webhook could not be saved by Telegram, seems to be an invalid URL."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:98
 msgid "The year picker"
@@ -19276,7 +19286,8 @@ msgstr "There was no valid OpenPGP data found."
 
 #: lib/secure_mailing/pgp/security_options.rb:76
 msgid "There were PGP keys found for %s, but at least one of them has expired."
-msgstr "There were PGP keys found for %s, but at least one of them has expired."
+msgstr ""
+"There were PGP keys found for %s, but at least one of them has expired."
 
 #: lib/secure_mailing/smime/security_options.rb:66
 msgid ""
@@ -19748,7 +19759,7 @@ msgstr "This service allows you to connect %s with %s."
 msgid "This service allows you to connect Zammad with an AI provider."
 msgstr "This service allows you to connect Zammad with an AI provider."
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:91
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:94
 msgid ""
 "This service allows you to download feedback agents provide on AI features "
 "and error details about failed AI requests."
@@ -19974,8 +19985,8 @@ msgstr ""
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"The ticket (#{ticket.title}) was merged into another ticket by \"<b>#"
-"{current_user.longname}</b>\".\n"
+"The ticket (#{ticket.title}) was merged into another ticket by "
+"\"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -20358,8 +20369,8 @@ msgstr ""
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>"
-"\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
+"<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</"
+"b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -20723,7 +20734,7 @@ msgstr "Toggle header row"
 msgid "Toggle the overlay"
 msgstr "Toggle the overlay"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:176
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:179
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -20914,7 +20925,7 @@ msgstr "Try another method"
 msgid "Try using your security key again."
 msgstr "Try using your security key again."
 
-#: app/assets/javascripts/app/lib/app_post/websocket.coffee:354
+#: app/assets/javascripts/app/lib/app_post/websocket.coffee:353
 #: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:25
 msgid "Trying to reconnect…"
 msgstr "Trying to reconnect…"
@@ -21086,7 +21097,7 @@ msgstr "UID Attribute Name"
 msgid "UID Field"
 msgstr "UID Field"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:196
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:199
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -21103,15 +21114,15 @@ msgstr "URL"
 msgid "URL (AJAX endpoint)"
 msgstr "URL (AJAX endpoint)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:206
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:209
 msgid "URL (Completions)"
 msgstr "URL (Completions)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:215
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:218
 msgid "URL (Embeddings)"
 msgstr "URL (Embeddings)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:247
 msgid "URL (OCR)"
 msgstr "URL (OCR)"
 
@@ -21302,7 +21313,7 @@ msgstr ""
 msgid "Update shared draft"
 msgstr "Update shared draft"
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:354
+#: app/assets/javascripts/app/controllers/_ai/provider.coffee:356
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
@@ -21514,9 +21525,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
-"{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>"
-"\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</"
+"a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -22900,7 +22911,8 @@ msgstr "You must protect your account with two-factor authentication."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:151
 msgid "You need to add the following JavaScript code snippet to your web page:"
-msgstr "You need to add the following JavaScript code snippet to your web page:"
+msgstr ""
+"You need to add the following JavaScript code snippet to your web page:"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:5
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:5
@@ -23136,7 +23148,7 @@ msgstr ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
 "Please wait until the maintenance window is over."
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:58
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:60
 msgid "Zammad is restarting…"
 msgstr "Zammad is restarting…"
 
@@ -23144,7 +23156,7 @@ msgstr "Zammad is restarting…"
 msgid "Zammad looks like this for \"%s\""
 msgstr "Zammad looks like this for \"%s\""
 
-#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:77
+#: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:79
 msgid "Zammad requires a restart!"
 msgstr "Zammad requires a restart!"
 
@@ -23199,8 +23211,8 @@ msgstr ""
 "Unfortunately your email titled \"#{mail.subject}\" could not be delivered "
 "to one or more recipients.\n"
 "\n"
-"Your message was #{mail.msg_size} MB but we only accept messages up to #"
-"{config.postmaster_max_size} MB.\n"
+"Your message was #{mail.msg_size} MB but we only accept messages up to "
+"#{config.postmaster_max_size} MB.\n"
 "\n"
 "Please reduce the message size and try again. Thank you for your "
 "understanding.\n"
@@ -23376,7 +23388,7 @@ msgstr "chat"
 msgid "checked"
 msgstr "checked"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:127
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:131
 msgid "checked checklist item '%s'"
 msgstr "checked checklist item '%s'"
 
@@ -23637,7 +23649,7 @@ msgstr "edited %s by me"
 msgid "email"
 msgstr "email"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:100
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
 msgid "email sent to '%s'"
 msgstr "email sent to '%s'"
 
@@ -23716,7 +23728,7 @@ msgstr "for an agent to respond"
 msgid "forward"
 msgstr "forward"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:159
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:163
 msgid "from"
 msgstr "from"
 
@@ -24275,7 +24287,7 @@ msgstr "not set (not defined)"
 msgid "note"
 msgstr "note"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:98
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 msgid "notification sent to '%s'"
 msgstr "notification sent to '%s'"
 
@@ -24361,11 +24373,11 @@ msgstr "quarter-hour(s)"
 msgid "reached"
 msgstr "reached"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:141
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:145
 msgid "reacted to message from %s '%s'"
 msgstr "reacted to message from %s '%s'"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:139
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "reacted with a %s to message from %s '%s'"
 
@@ -24404,7 +24416,7 @@ msgstr "remove"
 msgid "remove option"
 msgstr "remove option"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:144
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:148
 msgid "removed reaction to message from %s '%s'"
 msgstr "removed reaction to message from %s '%s'"
 
@@ -24601,7 +24613,7 @@ msgstr "telegram personal-message"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr "theme,color,style,dark mode,night mode,light mode"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:124
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "this ticket was merged into ticket %s"
 msgstr "this ticket was merged into ticket %s"
 
@@ -24610,7 +24622,7 @@ msgstr "this ticket was merged into ticket %s"
 msgid "ticket"
 msgstr "ticket"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:117
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
 msgid "ticket %s was merged into this ticket"
 msgstr "ticket %s was merged into this ticket"
 
@@ -24650,15 +24662,15 @@ msgstr "tracked in"
 msgid "translation,locale,localization"
 msgstr "translation,locale,localization"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:104
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr "trigger '%s' was performed because pending reminder was reached"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:106
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:110
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr "trigger '%s' was performed because ticket was escalated"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:108
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:112
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr "trigger '%s' was performed because ticket will escalate soon"
 
@@ -24687,7 +24699,7 @@ msgstr "twofactor,2fa,security key,passkey,authenticator app"
 msgid "unassign user"
 msgstr "unassign user"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:129
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
 msgid "unchecked checklist item '%s'"
 msgstr "unchecked checklist item '%s'"
 
