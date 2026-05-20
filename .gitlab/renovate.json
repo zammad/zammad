@@ -18,6 +18,10 @@
   },
   "packageRules": [
     {
+      "matchDatasources": ["npm"],
+      "minimumReleaseAge": "3 days"
+    },
+    {
       "matchCategories": ["ci"],
       "assignees": ["fl"]
     },
