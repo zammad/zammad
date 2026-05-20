@@ -1,4 +1,5 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+import { ref } from 'vue'
 
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -34,9 +35,11 @@ const bodyAttachmentReferenceMatchwordExists = (body: string) => {
 }
 
 export const useCheckBodyAttachmentReference = () => {
+  const skipAttachmentReferenceCheck = ref(false)
   const { waitForConfirmation } = useConfirmation()
 
   const missingBodyAttachmentReference = (body: string, files?: FileUploaded[]) => {
+    if (skipAttachmentReferenceCheck.value) return false
     if (!body) return false
     if (files && files.length > 0) return false
 
@@ -52,6 +55,10 @@ export const useCheckBodyAttachmentReference = () => {
       },
     )
 
+    if (confirmed === false) {
+      skipAttachmentReferenceCheck.value = true
+    }
+
     // In case the user clicked outside the confirmation dialog or closed it in another way,
     //  we would like to abort the submit of the related form.
     return confirmed === undefined ? true : confirmed
@@ -60,5 +67,6 @@ export const useCheckBodyAttachmentReference = () => {
   return {
     missingBodyAttachmentReference,
     bodyAttachmentReferenceConfirmation,
+    skipAttachmentReferenceCheck,
   }
 }

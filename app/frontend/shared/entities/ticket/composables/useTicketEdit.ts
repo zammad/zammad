@@ -134,8 +134,11 @@ export const useTicketEdit = (
     }
   }
 
-  const { missingBodyAttachmentReference, bodyAttachmentReferenceConfirmation } =
-    useCheckBodyAttachmentReference()
+  const {
+    missingBodyAttachmentReference,
+    bodyAttachmentReferenceConfirmation,
+    skipAttachmentReferenceCheck,
+  } = useCheckBodyAttachmentReference()
 
   const editTicket = async (
     formData: FormSubmitData<TicketUpdateFormData>,
@@ -177,16 +180,28 @@ export const useTicketEdit = (
       )
     }
 
-    return mutationUpdate.send({
-      ticketId: ticket.value.id,
-      input: {
-        ...internalObjectAttributeValues,
-        objectAttributeValues: additionalObjectAttributeValues,
-        article,
-        sharedDraftId,
-      } as TicketUpdateInput,
-      meta: ticketMeta,
-    })
+    return mutationUpdate
+      .send({
+        ticketId: ticket.value.id,
+        input: {
+          ...internalObjectAttributeValues,
+          objectAttributeValues: additionalObjectAttributeValues,
+          article,
+          sharedDraftId,
+        } as TicketUpdateInput,
+        meta: ticketMeta,
+      })
+      .then((result) => {
+        if (result?.ticketUpdate?.ticket) {
+          // Reset missingBodyAttachmentReference confirmation prompts
+          // after successful ticket update
+          skipAttachmentReferenceCheck.value = false
+        }
+        // Always pass mutation result on
+        // so to not change the behavior of the editTicket caller
+        // down the line
+        return result
+      })
   }
 
   return {
