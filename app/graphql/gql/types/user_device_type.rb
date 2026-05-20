@@ -18,9 +18,13 @@ module Gql::Types
     field :ip, String
 
     def location
-      return object.location if object.location_details['city_name'].blank?
+      city_name = object.location_details['city_name']
+      country   = object.location
 
-      "#{object.location}, #{object.location_details['city_name']}"
+      return country if city_name.blank?
+      return city_name if country.blank? || country == 'unknown'
+
+      "#{country}, #{city_name}"
     end
   end
 end

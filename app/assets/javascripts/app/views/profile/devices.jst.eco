@@ -19,7 +19,7 @@
     <% for device in @devices: %>
       <tr>
         <td><%= device.name %></td>
-        <td><%= device.location %></td>
+        <td><%= if !device.location or device.location is 'unknown' then @T('Unknown') else device.location %></td>
         <td><%- @humanTime(device.updated_at) %></td>
         <td class="settings-list-controls">
           <div class="settings-list-control" href="#" data-device-id="<%- device.id %>" data-type="delete" title="<%- @Ti('Delete') %>"<% if device.current: %>disabled<% end %>><%- @Icon('trash') %></div>

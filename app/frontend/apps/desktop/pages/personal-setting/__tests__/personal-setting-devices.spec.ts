@@ -112,6 +112,26 @@ describe('devices personal settings', () => {
     checkSimpleTableContent(view, [rowContents[0]])
   })
 
+  it('shows a translated label when the device location is unknown', async () => {
+    mockUserCurrentDeviceListQuery({
+      userCurrentDeviceList: [
+        {
+          id: convertToGraphQLId('UserDevice', 1),
+          name: 'Chrome on Mac',
+          fingerprint: 'dummy',
+          location: 'unknown',
+          updatedAt: '2024-02-01T12:00:00Z',
+        },
+      ],
+    })
+
+    const view = await visitView('/personal-setting/devices')
+
+    checkSimpleTableContent(view, [
+      ['Chrome on Mac', 'Unknown', ['2024-02-01 12:00', '2 months ago']],
+    ])
+  })
+
   it('updates the device list when a new device is added', async () => {
     mockUserCurrentDeviceListQuery({ userCurrentDeviceList })
 
