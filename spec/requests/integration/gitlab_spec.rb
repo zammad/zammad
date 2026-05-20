@@ -4,7 +4,7 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/StubbedMock,RSpec/MessageSpies
 
-RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], type: :request do
+RSpec.describe 'GitLab', authenticated_as: :agent, required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], type: :request do
   let(:token)      { 't0k3N' }
   let(:endpoint)   { 'https://git.example.com/api/graphql' }
   let(:verify_ssl) { true }
@@ -14,7 +14,7 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
     create(:admin, groups: Group.all)
   end
 
-  let!(:agent) do
+  let(:agent) do
     create(:agent, groups: Group.all)
   end
 
@@ -53,7 +53,7 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
         api_token:  token,
         verify_ssl: verify_ssl
       }
-      authenticated_as(agent)
+
       post '/api/v1/integration/gitlab/verify', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
@@ -89,7 +89,7 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
         params = {
           links: [ issue_link ],
         }
-        authenticated_as(agent)
+
         instance = instance_double(GitLab)
         expect(GitLab).to receive(:new).and_return instance
         expect(instance).to receive(:issues_by_urls).and_return(
@@ -109,6 +109,16 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
       end
     end
 
+    context 'when agent has no access to the ticket', required_envs: nil do
+      it 'does not query ticket issues for inaccessible ticket' do
+        inaccessible_group  = create(:group)
+        inaccessible_ticket = create(:ticket, group: inaccessible_group)
+
+        post '/api/v1/integration/gitlab', params: { ticket_id: inaccessible_ticket.id }, as: :json
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
     it 'does save ticket issues' do
       ticket = create(:ticket, group: Group.first)
 
@@ -116,7 +126,7 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
         ticket_id:   ticket.id,
         issue_links: [ issue_link ],
       }
-      authenticated_as(agent)
+
       post '/api/v1/integration/gitlab_ticket_update', params: params, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
@@ -170,7 +180,7 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
           params = {
             links: [ issue_link ],
           }
-          authenticated_as(agent)
+
           post '/api/v1/integration/gitlab', params: params, as: :json
           expect(response).to have_http_status(:ok)
         end
