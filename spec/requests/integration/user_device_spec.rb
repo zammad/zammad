@@ -667,6 +667,25 @@ RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: tr
       expect(json_response['error']).to be_nil
     end
 
+    context 'when listing devices via REST index' do
+      before do
+        UserDevice.destroy_all
+        create(:user_device, user_id: admin.id, location: 'Germany', location_details: { 'city_name' => 'Berlin' })
+        create(:user_device, user_id: admin.id, location: 'France')
+        create(:user_device, user_id: admin.id, location: 'unknown', location_details: { 'city_name' => 'Paris' })
+        create(:user_device, user_id: admin.id, location: 'unknown')
+
+        authenticated_as(admin, password: 'adminpw')
+        get '/api/v1/user_devices', as: :json
+      end
+
+      it 'combines location and city, prefers city alone when country is unknown, and leaves bare "unknown" for translation' do
+        expect(response).to have_http_status(:ok)
+        expect(json_response.pluck('location'))
+          .to contain_exactly('Germany, Berlin', 'France', 'Paris', 'unknown')
+      end
+    end
+
     it 'does login form controller - check no user device logging (13)' do
       Setting.set('form_ticket_create', true)
 

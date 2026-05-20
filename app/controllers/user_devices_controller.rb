@@ -8,8 +8,13 @@ class UserDevicesController < ApplicationController
     devices_full = []
     devices.each do |device|
       attributes = device.attributes
-      if device.location_details['city_name'].present?
-        attributes['location'] += ", #{device.location_details['city_name']}"
+      city_name = device.location_details['city_name']
+      if city_name.present?
+        attributes['location'] = if attributes['location'].blank? || attributes['location'] == 'unknown'
+                                   city_name
+                                 else
+                                   "#{attributes['location']}, #{city_name}"
+                                 end
       end
       attributes.delete('created_at')
       attributes.delete('device_details')
