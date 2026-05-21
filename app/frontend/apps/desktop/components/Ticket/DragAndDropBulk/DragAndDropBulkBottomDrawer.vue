@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { useTimeoutFn } from '@vueuse/core'
+import { isEqual } from 'lodash-es'
 import { computed, ref, shallowRef, watch } from 'vue'
 
 import { useFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
@@ -10,6 +11,7 @@ import {
   type FormUpdaterMetaInput,
   type FormUpdaterQueryVariables,
 } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n/index.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
 import type { Props as ParentProps } from '#desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue'
@@ -129,12 +131,12 @@ const {
   getSelectedOptionParentsPath,
 } = useGroupWithFlatSelectOptions(groupOptions)
 
-const topLevelList = computed(() => {
+const topLevelList = computed<BulkScrollListItem[]>((currentList) => {
   const list: BulkScrollListItem[] = []
 
   list.push({
     internalId: 1,
-    label: __('Unassign owner'),
+    label: i18n.t('Unassign owner'),
     type: DragAndDropBulkEntityType.Owner,
   })
 
@@ -158,16 +160,16 @@ const topLevelList = computed(() => {
       })),
     )
 
-  return list
+  return currentList && isEqual(currentList, list) ? currentList : list
 })
 
-const groupMembers = computed(() => {
+const groupMembers = computed<BulkScrollListItem[]>((currentList) => {
   const list: BulkScrollListItem[] = []
 
   list.push({
     internalId: 1,
     groupInternalId: selectedGroupInternalId.value!,
-    label: __('Unassign owner & move to group'),
+    label: i18n.t('Unassign owner & move to group'),
     type: DragAndDropBulkEntityType.Owner,
   })
 
@@ -181,7 +183,7 @@ const groupMembers = computed(() => {
     })),
   )
 
-  return list
+  return currentList && isEqual(currentList, list) ? currentList : list
 })
 
 const goInsideGroup = (internalId: number) => {

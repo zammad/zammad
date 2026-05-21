@@ -85,7 +85,7 @@ const notificationMessageHtml = computed(() =>
       :aria-label="$t('Hide notification')"
       @click.stop="emit('close', notification, true)"
     >
-      {{ $t(notification.closeLabel || 'Hide') }}
+      {{ $t(notification.closeLabel || __('Hide')) }}
     </button>
 
     <CommonProgressBar
