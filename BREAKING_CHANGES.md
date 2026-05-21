@@ -1,5 +1,19 @@
 # Breaking Changes
 
+## 7.2
+
+### Stricter default Content-Security-Policy
+
+Two new directives were added to the default Content-Security-Policy header:
+`frame-ancestors 'self'` and `form-action 'self' https:`.
+
+⚠️ Setups that previously allowed the Zammad web interface to be embedded in
+an `<iframe>` on a different origin by overriding the `X-Frame-Options` header
+at the reverse proxy will now be blocked again by the new `frame-ancestors 'self'`
+CSP directive. To re-enable embedding from trusted origins, the `frame-ancestors`
+directive of the `Content-Security-Policy` response header must be adjusted at
+the reverse proxy as well.
+
 ## 7.0
 
 ### MySQL support removed, database related application settings deprecated
