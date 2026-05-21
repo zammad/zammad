@@ -243,8 +243,8 @@ msgstr ""
 msgid "%s ended switch to |%s|!"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Search/composables/useSearchTitle.ts:10
 #: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:189
-#: app/frontend/apps/desktop/pages/search/composables/useSearchTitle.ts:11
 msgid "%s filter(s)"
 msgstr ""
 
@@ -1566,7 +1566,7 @@ msgstr ""
 msgid "All colleagues are busy."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:131
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:133
 msgid "All computers and browsers from which you logged in to Zammad appear here."
 msgstr ""
 
@@ -4412,7 +4412,7 @@ msgid "Currently processing this ticket…"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:148
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:149
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:144
 msgid "Currently, no overviews are assigned to your roles. Please contact your administrator."
 msgstr ""
 
@@ -7125,7 +7125,7 @@ msgstr ""
 msgid "Extended Search"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/composables/useSearchTitle.ts:9
+#: app/frontend/apps/desktop/components/Search/composables/useSearchTitle.ts:13
 msgid "Extended search"
 msgstr ""
 
@@ -11456,7 +11456,7 @@ msgid "No organizations found"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:145
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:146
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:141
 msgid "No overviews"
 msgstr ""
 
@@ -12441,7 +12441,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:31
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:81
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:80
 #: db/seeds/permissions.rb:35
 msgid "Overviews"
 msgstr ""
@@ -17760,7 +17760,7 @@ msgstr ""
 msgid "This class gets added to the button on initialization and will be removed once the chat connection is established."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:154
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:156
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:206
 msgid "This device"
 msgstr ""
@@ -19239,8 +19239,10 @@ msgstr ""
 msgid "Unit"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/devices.jst.eco:22
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/useHistoryEvents.ts:39
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/eventHelpers.ts:11
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:127
 #: app/models/user_device/notification_presenter.rb:11
 msgid "Unknown"
 msgstr ""
@@ -19630,7 +19632,7 @@ msgstr ""
 msgid "Used anywhere (admin only)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:145
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:147
 msgid "Used devices"
 msgstr ""
 
@@ -22163,7 +22165,7 @@ msgstr ""
 msgid "run macro"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:112
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:107
 msgid "second level navigation sidebar"
 msgstr ""
 
