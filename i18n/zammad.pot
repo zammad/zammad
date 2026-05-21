@@ -244,6 +244,7 @@ msgid "%s ended switch to |%s|!"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:189
+#: app/frontend/apps/desktop/pages/search/composables/useSearchTitle.ts:11
 msgid "%s filter(s)"
 msgstr ""
 
@@ -7124,8 +7125,7 @@ msgstr ""
 msgid "Extended Search"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Search/Search.vue:17
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:329
+#: app/frontend/apps/desktop/pages/search/composables/useSearchTitle.ts:9
 msgid "Extended search"
 msgstr ""
 
@@ -13973,7 +13973,7 @@ msgstr ""
 msgid "Result:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:464
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:468
 msgid "Results"
 msgstr ""
 
@@ -14387,7 +14387,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:462
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:466
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
 msgid "Search"

@@ -33773,6 +33773,18 @@
           "description": "Entity representing taskbar item search",
           "fields": [
             {
+              "name": "filterCount",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "filters",
               "description": null,
               "args": [],

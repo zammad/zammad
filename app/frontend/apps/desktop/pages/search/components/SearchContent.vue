@@ -26,6 +26,7 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 
 import { useSkeletonLoadingCount } from '#desktop/components/CommonTable/composables/useSkeletonLoadingCount.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { useSearchTitle } from '#desktop/components/Search/composables/useSearchTitle.ts'
 import { useDetailSearchLazyQuery } from '#desktop/components/Search/graphql/queries/detailSearch.api.ts'
 import { useSearchCountsLazyQuery } from '#desktop/components/Search/graphql/queries/searchCounts.api.ts'
 import { searchPluginByName, useSearchPlugins } from '#desktop/components/Search/plugins/index.ts'
@@ -133,6 +134,7 @@ const tabContext = computed<TaskbarTabContext>((currentContext) => {
     model: selectedEntity.value,
     formIsDirty: hasActiveFilters.value,
     filters: stringifyQuery(currentFiltersQueryParams.value),
+    filterCount: filterCount.value,
   }
 
   if (currentContext && isEqual(newContext, currentContext)) return currentContext
@@ -152,9 +154,11 @@ watch(tabContext, (newValue) => {
 
 const { reachedTop } = useElementScroll(scrollContainerElement as Ref<HTMLElement>)
 
+const { searchTitle: metaTitle } = useSearchTitle(currentSearchTerm, filterCount)
+
 const { pageActive } = usePage({
-  metaTitle: computed(() => currentSearchTerm.value || __('Extended search')),
-  noTranslateMetaTitle: computed(() => currentSearchTerm.value.length > 0),
+  metaTitle,
+  noTranslateMetaTitle: computed(() => currentSearchTerm.value.length > 0 || filterCount.value > 0),
   onReactivate: () => {
     // oxlint-disable-next-line @eslint/no-use-before-define
     refetchQueries()

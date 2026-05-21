@@ -22,6 +22,7 @@ export const UserCurrentTaskbarItemAttributesFragmentDoc = gql`
       query
       model
       filters
+      filterCount
     }
     ... on User {
       id

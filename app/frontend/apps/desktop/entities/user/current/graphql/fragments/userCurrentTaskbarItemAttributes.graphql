@@ -17,6 +17,7 @@ fragment userCurrentTaskbarItemAttributes on UserTaskbarItem {
       query
       model
       filters
+      filterCount
     }
     ... on User {
       id

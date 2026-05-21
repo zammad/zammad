@@ -6100,6 +6100,7 @@ export type UserTaskbarItem = {
 /** Entity representing taskbar item search */
 export type UserTaskbarItemEntitySearch = {
   __typename?: 'UserTaskbarItemEntitySearch';
+  filterCount?: Maybe<Scalars['Int']['output']>;
   filters?: Maybe<Scalars['String']['output']>;
   model?: Maybe<Scalars['String']['output']>;
   query?: Maybe<Scalars['String']['output']>;
@@ -6472,7 +6473,7 @@ export type UserCurrentTaskbarItemAttributesFragment = { __typename?: 'UserTaskb
     | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
     | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
     | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-    | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
+    | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null, filterCount?: number | null }
     | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
    | null };
 
@@ -6497,7 +6498,7 @@ export type UserCurrentTaskbarItemAddMutation = { __typename?: 'Mutations', user
         | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
         | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
         | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
+        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null, filterCount?: number | null }
         | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
        | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, messagePlaceholder?: Array<string> | null, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
 
@@ -6524,7 +6525,7 @@ export type UserCurrentTaskbarItemTouchLastContactMutation = { __typename?: 'Mut
         | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
         | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
         | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
+        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null, filterCount?: number | null }
         | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
        | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, messagePlaceholder?: Array<string> | null, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
 
@@ -6538,7 +6539,7 @@ export type UserCurrentTaskbarItemUpdateMutation = { __typename?: 'Mutations', u
         | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
         | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
         | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
+        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null, filterCount?: number | null }
         | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
        | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, messagePlaceholder?: Array<string> | null, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
 
@@ -6569,7 +6570,7 @@ export type UserCurrentTaskbarItemListQuery = { __typename?: 'Queries', userCurr
       | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
       | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
       | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-      | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
+      | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null, filterCount?: number | null }
       | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
      | null }> | null };
 
@@ -6601,13 +6602,13 @@ export type UserCurrentTaskbarItemUpdatesSubscription = { __typename?: 'Subscrip
         | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
         | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
         | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
+        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null, filterCount?: number | null }
         | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
        | null } | null, updateItem?: { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, formNewArticlePresent: boolean, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity?:
         | { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null }
         | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, updatedAt: string, state: { __typename?: 'TicketState', id: string, name: string } }
         | { __typename?: 'User', id: string, internalId: number, fullname?: string | null, active?: boolean | null }
-        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null }
+        | { __typename?: 'UserTaskbarItemEntitySearch', query?: string | null, model?: string | null, filters?: string | null, filterCount?: number | null }
         | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null }
        | null } | null } };
 

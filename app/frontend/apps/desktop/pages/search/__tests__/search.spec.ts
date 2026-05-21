@@ -9,6 +9,7 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
+import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumSearchableModels, type Ticket } from '#shared/graphql/types.ts'
@@ -62,6 +63,7 @@ describe('search view', () => {
         items: [ticket],
       },
     })
+    useMetaTitle().initializeMetaTitle()
   })
 
   it('renders view correctly', async () => {
@@ -428,10 +430,10 @@ describe('search view', () => {
         await waitForDetailSearchQueryCalls()
         await waitForNextTick()
 
-        const primaryNavigationSidebar = view.getByRole('complementary', {
-          name: 'Main sidebar',
+        const taskbarSidebar = view.getByRole('list', {
+          name: 'User taskbar tabs',
         })
-        const closeSearchTab = within(primaryNavigationSidebar).getByRole('button', {
+        const closeSearchTab = within(taskbarSidebar).getByRole('button', {
           name: 'Close this tab',
         })
         await view.events.click(closeSearchTab)
@@ -445,7 +447,7 @@ describe('search view', () => {
 
         await waitFor(() => {
           expect(
-            within(primaryNavigationSidebar).queryByRole('button', {
+            within(taskbarSidebar).queryByRole('button', {
               name: 'Close this tab',
             }),
           ).not.toBeInTheDocument()
@@ -472,10 +474,11 @@ describe('search view', () => {
         expect(router.currentRoute.value.query).toHaveProperty('filter.0.operator')
         expect(router.currentRoute.value.query).toHaveProperty('filter.0.value')
 
-        const primaryNavigationSidebar = view.getByRole('complementary', {
-          name: 'Main sidebar',
+        const taskbarSidebar = view.getByRole('list', {
+          name: 'User taskbar tabs',
         })
-        const closeSearchTab = within(primaryNavigationSidebar).getByRole('button', {
+
+        const closeSearchTab = within(taskbarSidebar).getByRole('button', {
           name: 'Close this tab',
         })
         await view.events.click(closeSearchTab)
@@ -489,7 +492,7 @@ describe('search view', () => {
 
         await waitFor(() => {
           expect(
-            within(primaryNavigationSidebar).queryByRole('button', {
+            within(taskbarSidebar).queryByRole('button', {
               name: 'Close this tab',
             }),
           ).toBeInTheDocument()
@@ -500,5 +503,21 @@ describe('search view', () => {
         })
       })
     })
+  })
+
+  it('wires the search title into the taskbar tab and page title', async () => {
+    const searchTerm = 'search-test'
+    const { view } = await visitSearchView(searchTerm)
+
+    await waitForDetailSearchQueryCalls()
+    await waitForNextTick()
+
+    const taskbarSidebar = view.getByRole('list', {
+      name: 'User taskbar tabs',
+    })
+    const taskbarTab = within(taskbarSidebar).getByRole('link')
+
+    await waitFor(() => expect(taskbarTab).toHaveTextContent(searchTerm))
+    await waitFor(() => expect(document.title).toEqual(`Zammad - ${searchTerm}`))
   })
 })
