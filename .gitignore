@@ -132,3 +132,6 @@ schema.graphql
 # Dart Sass compiled output (dartsass-rails)
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Local Claude Code settings (per-developer, not tracked)
+.claude/settings.local.json
