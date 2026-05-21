@@ -5,7 +5,7 @@ module Gql::Mutations
 
     description 'Delete a taskbar item of the currently logged-in user'
 
-    argument :id, GraphQL::Types::ID, required: true, loads: Gql::Types::User::TaskbarItemType, as: :taskbar_item, description: 'The taskbar item ID'
+    argument :id, GraphQL::Types::ID, required: true, loads: Gql::Types::User::TaskbarItemType, as: :taskbar_item, loads_pundit_method: :destroy?, description: 'The taskbar item ID'
 
     field :success, Boolean, description: 'This indicates if deleting the user (session) device was successful.'
 

@@ -5,7 +5,7 @@ module Gql::Mutations
 
     description 'Update a taskbar item of the currently logged-in user'
 
-    argument :id, GraphQL::Types::ID, required: true, loads: Gql::Types::User::TaskbarItemType, as: :taskbar_item, description: 'The taskbar item ID'
+    argument :id, GraphQL::Types::ID, required: true, loads: Gql::Types::User::TaskbarItemType, as: :taskbar_item, loads_pundit_method: :update?, description: 'The taskbar item ID'
     argument :input, Gql::Types::Input::User::TaskbarItemInputType, required: true, description: 'The taskbar item parameters.'
 
     field :taskbar_item, Gql::Types::User::TaskbarItemType, description: 'The updated taskbar item.'

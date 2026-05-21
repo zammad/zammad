@@ -3,6 +3,7 @@
 module Gql::Types::User
   class TaskbarItemType < Gql::Types::BaseObject
     include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasPunditAuthorization
 
     description 'Users taskbar item'
 

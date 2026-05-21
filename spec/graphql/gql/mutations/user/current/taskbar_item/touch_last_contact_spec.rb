@@ -6,7 +6,7 @@ RSpec.describe Gql::Mutations::User::Current::TaskbarItem::TouchLastContact, typ
   context 'when touching last contact of a taskbar item for the logged-in user', authenticated_as: :agent do
     let(:agent)         { create(:agent) }
     let(:variables)     { { id: id } }
-    let(:taskbar_item)  { create(:taskbar, :with_user, user: agent) }
+    let(:taskbar_item)  { create(:taskbar, :with_user, user: agent, user_id: agent.id) }
     let(:id)            { gql.id(taskbar_item) }
 
     let(:query) do
@@ -37,7 +37,7 @@ RSpec.describe Gql::Mutations::User::Current::TaskbarItem::TouchLastContact, typ
 
     context 'with existing taskbar item', :aggregate_failures do
       context 'with taskbar item without a related object' do
-        let(:taskbar_item)  { create(:taskbar) }
+        let(:taskbar_item)  { create(:taskbar, user: agent) }
 
         it 'returns the updated taskbar item' do
           execute
@@ -81,6 +81,30 @@ RSpec.describe Gql::Mutations::User::Current::TaskbarItem::TouchLastContact, typ
       it 'fails with error' do
         execute
         expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'when touching last contact of another user\'s taskbar item' do
+      let(:other_user)    { create(:agent) }
+      let(:taskbar_item)  { create(:taskbar, :with_user, user: other_user, user_id: other_user.id) }
+
+      it 'does not change last_contact' do
+        expect { execute }.not_to change { taskbar_item.reload.last_contact }
+      end
+
+      it 'raises forbidden error' do
+        execute
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      end
+    end
+
+    context 'when touching last contact of another agent\'s taskbar item' do
+      let(:other_agent)   { create(:agent) }
+      let(:taskbar_item)  { create(:taskbar, :with_user, user: other_agent) }
+
+      it 'raises forbidden error' do
+        execute
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
       end
     end
 
