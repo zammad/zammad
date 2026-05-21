@@ -4,3 +4,6 @@ allowBuilds:
   esbuild: true
   unrs-resolver: true
   vue-demi: true
+
+# Restore old default behavior like in pnpm v10.
+verifyDepsBeforeRun: false

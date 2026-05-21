@@ -4,4 +4,6 @@
 # (added in the pnpm v11 update) and treat this package as part of that
 # workspace, causing `pnpm install` here to be a no-op and skipping the
 # installation of this package's local dependencies.
-{}
+
+# Restore old default behavior like in pnpm v10.
+verifyDepsBeforeRun: false

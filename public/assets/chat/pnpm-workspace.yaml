@@ -2,3 +2,6 @@
 allowBuilds:
   es5-ext: true
   fsevents: false
+
+# Restore old default behavior like in pnpm v10.
+verifyDepsBeforeRun: false
