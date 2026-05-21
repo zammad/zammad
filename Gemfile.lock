@@ -220,7 +220,7 @@ GEM
       activesupport (>= 7.0)
     diff-lcs (1.6.2)
     diffy (3.4.4)
-    doorkeeper (5.9.0)
+    doorkeeper (5.9.1)
       railties (>= 5)
     drb (2.2.3)
     dry-cli (1.4.1)
