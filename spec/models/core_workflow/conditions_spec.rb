@@ -475,7 +475,7 @@ RSpec.describe 'CoreWorkflow > Conditions', type: :model do
                    'ticket.mention_user_ids': {
                      pre_condition: 'specific',
                      operator:      'is',
-                     value:         ['999'],
+                     value:         ['31337'],
                    },
                  })
         end

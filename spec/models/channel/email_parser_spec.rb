@@ -1124,6 +1124,33 @@ RSpec.describe Channel::EmailParser, type: :model do
               include_examples 'adds message to ticket'
             end
           end
+
+          # https://github.com/zammad/zammad/issues/6141
+          context 'when attachment is malformatted and ticket hook is UTF8' do
+            let(:raw_mail) { <<~RAW.chomp }
+              From: sender@example.org
+              To: support@example.com
+              Subject: test
+              Content-Type: multipart/mixed; boundary="===============2843907148225004358=="
+
+              --===============2843907148225004358==
+              Content-Type: =?utf-8?b?YXBwbGljYXRpb24vcGRmOyBuYW1lPSJzYW1wbMSZLnBkZiI=?=
+              MIME-Version: 1.0
+              Content-Transfer-Encoding: base64
+              Content-Disposition: attachment;
+               filename="=?utf-8?b?c2FtcGzEmS5wZGY=?="
+
+              JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSCj4+CmVuZG9iagoyIDAgb2JqCjw8Ci9CYXNlRm9udCAvSGVsdmV0aWNhIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMSAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjMgMCBvYmoKPDwKL0NvbnRlbnRzIDcgMCBSIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NiA4NDEuODg5OCBdIC9QYXJlbnQgNiAwIFIgL1Jlc291cmNlcyA8PAovRm9udCAxIDAgUiAvUHJvY1NldCBbIC9QREYgL1RleHQgL0ltYWdlQiAvSW1hZ2VDIC9JbWFnZUkgXQo+PiAvUm90YXRlIDAgL1RyYW5zIDw8Cgo+PiAKICAvVHlwZSAvUGFnZQo+PgplbmRvYmoKNCAwIG9iago8PAovUGFnZU1vZGUgL1VzZU5vbmUgL1BhZ2VzIDYgMCBSIC9UeXBlIC9DYXRhbG9nCj4+CmVuZG9iago1IDAgb2JqCjw8Ci9BdXRob3IgKFwoYW5vbnltb3VzXCkpIC9DcmVhdGlvbkRhdGUgKEQ6MjAyNjA1MTgxODI0MjcrMDMnMDAnKSAvQ3JlYXRvciAoXCh1bnNwZWNpZmllZFwpKSAvS2V5d29yZHMgKCkgL01vZERhdGUgKEQ6MjAyNjA1MTgxODI0MjcrMDMnMDAnKSAvUHJvZHVjZXIgKFJlcG9ydExhYiBQREYgTGlicmFyeSAtIFwob3BlbnNvdXJjZVwpKSAKICAvU3ViamVjdCAoXCh1bnNwZWNpZmllZFwpKSAvVGl0bGUgKFwoYW5vbnltb3VzXCkpIC9UcmFwcGVkIC9GYWxzZQo+PgplbmRvYmoKNiAwIG9iago8PAovQ291bnQgMSAvS2lkcyBbIDMgMCBSIF0gL1R5cGUgL1BhZ2VzCj4+CmVuZG9iago3IDAgb2JqCjw8Ci9GaWx0ZXIgWyAvQVNDSUk4NURlY29kZSAvRmxhdGVEZWNvZGUgXSAvTGVuZ3RoIDE0NAo+PgpzdHJlYW0KR2FwcFZdYWQ6bSY7OXEtTUNEREEvJlotKjsoLCEvJUslTW0rdUVXYDNbMGJdMUdkbyJbInQ0XyljLzVfUlFyVFAic21bWkRHZFoiJ1JlNk0rQTQuPy05JjVsNWVHclpQXGZVKSQiLypXZzdkTDJqPkUuLzQwSk9oLEooMlNfKC5LaSVYSmA6JTdwMTZnQX4+ZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgOAowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwNjEgMDAwMDAgbiAKMDAwMDAwMDA5MiAwMDAwMCBuIAowMDAwMDAwMTk5IDAwMDAwIG4gCjAwMDAwMDA0MDIgMDAwMDAgbiAKMDAwMDAwMDQ3MCAwMDAwMCBuIAowMDAwMDAwNzUwIDAwMDAwIG4gCjAwMDAwMDA4MDkgMDAwMDAgbiAKdHJhaWxlcgo8PAovSUQgCls8NTFhNWRhZmFkNmRkOGZmYTYwZGExZTI2NjMwYzUyOTQ+PDUxYTVkYWZhZDZkZDhmZmE2MGRhMWUyNjYzMGM1Mjk0Pl0KJSBSZXBvcnRMYWIgZ2VuZXJhdGVkIFBERiBkb2N1bWVudCAtLSBkaWdlc3QgKG9wZW5zb3VyY2UpCgovSW5mbyA1IDAgUgovUm9vdCA0IDAgUgovU2l6ZSA4Cj4+CnN0YXJ0eHJlZgoxMDQzCiUlRU9GCg==
+
+              --===============2843907148225004358==--
+            RAW
+
+            before do
+              Setting.set('ticket_hook', 'samplę')
+            end
+
+            include_examples 'creates a new ticket'
+          end
         end
 
         context 'when configured to search headers' do
@@ -1169,7 +1196,7 @@ RSpec.describe Channel::EmailParser, type: :model do
             include_examples 'adds message to ticket'
 
             context 'that matches two separate tickets' do
-              let!(:newer_ticket) { create(:ticket) }
+              let!(:newer_ticket)  { create(:ticket) }
               let!(:newer_article) { create(:ticket_article, ticket: newer_ticket, message_id: article.message_id) }
 
               it 'returns more recently created ticket' do
@@ -1976,5 +2003,4 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
   end
-
 end
