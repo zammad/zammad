@@ -3,7 +3,7 @@
 import '#tests/graphql/builders/mocks.ts'
 
 import { createPinia, setActivePinia } from 'pinia'
-import { ref } from 'vue'
+import { defineComponent, nextTick, ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
@@ -16,6 +16,8 @@ import {
 import { useTicketBulkUpdateStore } from '#desktop/entities/user/current/stores/ticketBulkUpdate.ts'
 
 import { useDragAndDropBulk } from '../useDragAndDropBulk.ts'
+
+import type { DragAndDropBulkArgs, DragAndDropBulkOptions } from '../types.ts'
 
 // We try to simulate the table action as in an integration test
 const triggerDragAndDrop = async ({
@@ -73,14 +75,26 @@ const triggerDragAndDrop = async ({
   target.remove()
 }
 
-const mountDragAndDropBulk = (options: Parameters<typeof useDragAndDropBulk>[0]) => {
+const renderDragAndDropBulk = (args: DragAndDropBulkArgs, options?: DragAndDropBulkOptions) => {
   let composable!: ReturnType<typeof useDragAndDropBulk>
 
-  renderComponent({
+  const ChildComponent = defineComponent({
     setup() {
-      composable = useDragAndDropBulk(options)
-      return () => null
+      composable = useDragAndDropBulk(args, options)
+
+      return () => 'Child Component'
     },
+  })
+
+  renderComponent({
+    components: { ChildComponent },
+
+    template: `
+      <KeepAlive>
+        <ChildComponent />
+      </KeepAlive>
+    `,
+    setup() {},
   })
 
   return composable
@@ -111,7 +125,7 @@ describe('useDragAndDropBulk', () => {
       },
     })
 
-    mountDragAndDropBulk({
+    renderDragAndDropBulk({
       checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
       bulkSelector: ref({ entityIds: [convertToGraphQLId('Ticket', ticketInternalId)] }),
     })
@@ -148,7 +162,7 @@ describe('useDragAndDropBulk', () => {
         inaccessibleTicketIds: [],
       },
     })
-    mountDragAndDropBulk({
+    renderDragAndDropBulk({
       checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
       bulkSelector: ref({ overviewId }),
     })
@@ -175,7 +189,7 @@ describe('useDragAndDropBulk', () => {
     const ticketInternalId = '1'
     const macroInternalId = '3'
 
-    const useDragAndDropBulk = mountDragAndDropBulk({
+    const useDragAndDropBulk = renderDragAndDropBulk({
       checkedTicketIds: ref(new Set<ID>()),
       bulkSelector: ref({}),
     })
@@ -207,7 +221,7 @@ describe('useDragAndDropBulk', () => {
       },
     })
 
-    mountDragAndDropBulk({
+    renderDragAndDropBulk({
       checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
       bulkSelector: ref({ searchQuery: 'state:new' }),
     })
@@ -237,7 +251,7 @@ describe('useDragAndDropBulk', () => {
       }),
     }))
 
-    const { isActive } = mountDragAndDropBulk({
+    const { isActive } = renderDragAndDropBulk({
       checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', 1)])),
       bulkSelector: ref({ searchQuery: 'state:new' }),
     })
@@ -263,7 +277,7 @@ describe('useDragAndDropBulk', () => {
       },
     })
 
-    mountDragAndDropBulk({
+    renderDragAndDropBulk({
       checkedTicketIds: ref(
         new Set(Array.from({ length: 20 }, (_, i) => convertToGraphQLId('Ticket', i + 1))),
       ),
@@ -283,5 +297,89 @@ describe('useDragAndDropBulk', () => {
 
     expect(spy).toHaveBeenCalledWith('macro', expect.objectContaining({ resolveImmediate: false }))
     vi.useRealTimers()
+  })
+
+  it('does not activate drag and drop when disabled via option', async () => {
+    const ticketInternalId = '1'
+    const macroInternalId = '2'
+    const store = useTicketBulkUpdateStore()
+    const confirmationSpy = vi.spyOn(store, 'requestBulkConfirmation')
+
+    mockTicketUpdateBulkMutation({
+      ticketUpdateBulk: {
+        async: false,
+        total: 1,
+        failedCount: 0,
+        invalidTicketIds: [],
+        inaccessibleTicketIds: [],
+      },
+    })
+
+    const dragAndDrop = renderDragAndDropBulk(
+      {
+        checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
+        bulkSelector: ref({ entityIds: [convertToGraphQLId('Ticket', ticketInternalId)] }),
+      },
+      { enabled: false },
+    )
+
+    const macroTarget = document.createElement('li')
+    macroTarget.dataset.internalId = macroInternalId
+    macroTarget.dataset.type = 'macro'
+
+    await triggerDragAndDrop({ rowItemId: ticketInternalId, target: macroTarget })
+
+    expect(dragAndDrop.isActive.value).toBe(false)
+    expect(confirmationSpy).not.toHaveBeenCalled()
+  })
+
+  it('reactivates drag and drop when enabled option switches to true', async () => {
+    const ticketInternalId = '1'
+    const macroInternalId = '2'
+    const enabled = ref(false)
+    const store = useTicketBulkUpdateStore()
+    const confirmationSpy = vi.spyOn(store, 'requestBulkConfirmation')
+
+    mockTicketUpdateBulkMutation({
+      ticketUpdateBulk: {
+        async: false,
+        total: 1,
+        failedCount: 0,
+        invalidTicketIds: [],
+        inaccessibleTicketIds: [],
+      },
+    })
+
+    renderDragAndDropBulk(
+      {
+        checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
+        bulkSelector: ref({ entityIds: [convertToGraphQLId('Ticket', ticketInternalId)] }),
+      },
+      { enabled },
+    )
+
+    const macroTarget = document.createElement('li')
+    macroTarget.dataset.internalId = macroInternalId
+    macroTarget.dataset.type = 'macro'
+
+    await triggerDragAndDrop({ rowItemId: ticketInternalId, target: macroTarget })
+    expect(confirmationSpy).not.toHaveBeenCalled()
+
+    enabled.value = true
+    await nextTick()
+
+    await triggerDragAndDrop({ rowItemId: ticketInternalId, target: macroTarget })
+    const calls = await waitForTicketUpdateBulkMutationCalls()
+
+    expect(calls).toHaveLength(1)
+
+    expect(calls.at(-1)?.variables).toEqual({
+      selector: {
+        entityIds: [convertToGraphQLId('Ticket', ticketInternalId)],
+      },
+      perform: {
+        macroId: convertToGraphQLId('Macro', macroInternalId),
+      },
+    })
   })
 })

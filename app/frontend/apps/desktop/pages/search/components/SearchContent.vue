@@ -75,7 +75,6 @@ const {
   clearCurrentFilters,
 } = useSearchAdvancedFilters(selectedEntity)
 
-const pageActive = ref(false)
 const offset = ref(0)
 
 const { sortedByNamePlugins, searchPluginNames } = useSearchPlugins()
@@ -152,6 +151,15 @@ watch(tabContext, (newValue) => {
 })
 
 const { reachedTop } = useElementScroll(scrollContainerElement as Ref<HTMLElement>)
+
+const { pageActive } = usePage({
+  metaTitle: computed(() => currentSearchTerm.value || __('Extended search')),
+  noTranslateMetaTitle: computed(() => currentSearchTerm.value.length > 0),
+  onReactivate: () => {
+    // oxlint-disable-next-line @eslint/no-use-before-define
+    refetchQueries()
+  },
+})
 
 const searchQueryVariables = computed(() => ({
   search: currentSearchTerm.value,
@@ -317,39 +325,14 @@ const {
   cursorPosition,
   dragPreviewData,
   dropSuccessTargetEntity,
-  reactivateListeners,
-  deactivateListeners,
-} = useDragAndDropBulk({
-  checkedTicketIds,
-  bulkSelector,
-})
-
-usePage({
-  pageActive,
-  metaTitle: computed(() => currentSearchTerm.value || __('Extended search')),
-  noTranslateMetaTitle: computed(() => currentSearchTerm.value.length > 0),
-  onReactivate: () => {
-    reactivateListeners()
-    refetchQueries()
+} = useDragAndDropBulk(
+  {
+    checkedTicketIds,
+    bulkSelector,
   },
-  onDeactivated: deactivateListeners,
-})
-
-const setNewSearchState = (searchTerm: string) => {
-  checkedTicketIds.value.clear()
-  selectAllActive.value = false
-  bulkContext.value = { searchQuery: searchTerm, searchFilter: currentFilterSelector.value }
-  currentSearchResult.value = undefined
-}
-
-// Conditions under which each query needs to be running. Detail looks at
-// the visible entity only; counts looks at every other entity that has a
-// filter, or at every other entity whenever a search term is present.
-const shouldDetailRun = computed(() => currentSearchTerm.value.length > 0 || filterCount.value > 0)
-const shouldCountsRun = computed(
-  () =>
-    searchPluginNames.value.length > 1 &&
-    (entityFiltersSelector.value.length > 0 || currentSearchTerm.value.length > 0),
+  {
+    enabled: computed(() => selectedEntity.value === EnumSearchableModels.Ticket),
+  },
 )
 
 // Variables that define what the detail search is looking up. A change to
@@ -366,6 +349,23 @@ const detailCriteria = computed<Pick<DetailSearchQueryVariables, 'search' | 'onl
 
     return currentValue && isEqual(currentValue, updatedValues) ? currentValue : updatedValues
   },
+)
+
+const setNewSearchState = (searchTerm: string) => {
+  checkedTicketIds.value.clear()
+  selectAllActive.value = false
+  bulkContext.value = { searchQuery: searchTerm, searchFilter: currentFilterSelector.value }
+  currentSearchResult.value = undefined
+}
+
+// Conditions under which each query needs to be running. Detail looks at
+// the visible entity only; counts looks at every other entity that has a
+// filter, or at every other entity whenever a search term is present.
+const shouldDetailRun = computed(() => currentSearchTerm.value.length > 0 || filterCount.value > 0)
+const shouldCountsRun = computed(
+  () =>
+    searchPluginNames.value.length > 1 &&
+    (entityFiltersSelector.value.length > 0 || currentSearchTerm.value.length > 0),
 )
 
 watch(

@@ -19,7 +19,7 @@ import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionM
 import CellCheckbox from '#desktop/components/CommonTable/CellContent/CellCheckbox.vue'
 import CommonTableRowsSkeleton from '#desktop/components/CommonTable/Skeleton/CommonTableRowsSkeleton.vue'
 import TableCaption from '#desktop/components/CommonTable/TableCaption.vue'
-import { usePage } from '#desktop/composables/usePage.ts'
+import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'
 
 import TableHeader from './TableHeader.vue'
 import TableRow from './TableRow.vue'
@@ -141,8 +141,8 @@ const clearLastCheckedItemId = () => {
   lastCheckedItemId.value = null
 }
 
-usePage({
-  onReactivate: clearLastCheckedItemId,
+useKeepAliveHooks({
+  onReactivated: clearLastCheckedItemId,
 })
 
 const updateCheckedItemsInRange = (item: TableAdvancedItem) => {

@@ -2,13 +2,14 @@
 
 import { useEventListener, useTimeoutFn, type Fn } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { onMounted, ref, toRef } from 'vue'
+import { computed, ref, toRef, toValue, watch } from 'vue'
 
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import { EnumTicketStateColorCode, type TicketBulkPerformInput } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import emitter from '#shared/utils/emitter.ts'
 
+import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'
 import { useTicketBulkUpdate } from '#desktop/entities/ticket/composables/useTicketBulkUpdate.ts'
 import {
   BULK_CONFIRMATION_THRESHOLD,
@@ -17,7 +18,12 @@ import {
 
 import { DragAndDropBulkEntityType } from './types.ts'
 
-import type { BulkData, DragAndDropBulkOptions, DragPreviewData } from './types.ts'
+import type {
+  BulkData,
+  DragAndDropBulkArgs,
+  DragAndDropBulkOptions,
+  DragPreviewData,
+} from './types.ts'
 
 const LONG_PRESS_DURATION = 200
 const MOVE_THRESHOLD_PX = 5
@@ -39,7 +45,10 @@ const capturePreviewData = (row: HTMLElement): DragPreviewData => {
   return { stateColorCode, priorityUiColor, columnText: firstTextCell?.textContent?.trim() ?? '' }
 }
 
-export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDropBulkOptions) => {
+export const useDragAndDropBulk = (
+  { checkedTicketIds, bulkSelector }: DragAndDropBulkArgs,
+  options: DragAndDropBulkOptions = { enabled: true },
+) => {
   const bulkUpdateStore = useTicketBulkUpdateStore()
   const isBulkTaskRunning = toRef(useTicketBulkUpdateStore(), 'isRunning')
   const { requestBulkConfirmation } = bulkUpdateStore
@@ -220,9 +229,7 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
 
   let listeners: Fn[]
 
-  // We need this because of the keep alive cache
-  // the events are fired though the component is not active anymore
-  const reactivateListeners = () => {
+  const activateListeners = () => {
     const removePointerDown = useEventListener(document, 'pointerdown', (event: PointerEvent) => {
       if (event.button !== 0) return // Only respond to primary button.
 
@@ -317,20 +324,48 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
     ]
   }
 
-  onMounted(() => {
-    listeners = reactivateListeners()
-  })
-
   const deactivateListeners = () => {
     if (!listeners) return
 
     listeners.forEach((remove) => remove())
   }
 
+  const reactivateListeners = () => {
+    // Remove first previous filters in case they exist
+    // to make sure they are registered always on the correct instance
+    if (listeners) deactivateListeners()
+
+    listeners = activateListeners()
+
+    return listeners
+  }
+
+  const isEnabled = computed(() => toValue(options.enabled))
+
+  watch(isEnabled, (enabled) => {
+    if (enabled) return reactivateListeners()
+
+    deactivateListeners()
+    cancelDragAndDrop()
+  })
+
+  useKeepAliveHooks({
+    onInitialActivated() {
+      if (isEnabled.value) reactivateListeners()
+    },
+    onReactivated() {
+      if (isEnabled.value) reactivateListeners()
+    },
+    onDeactivated() {
+      if (!isEnabled.value) return
+
+      deactivateListeners()
+      cancelDragAndDrop()
+    },
+  })
+
   return {
     isActive,
-    reactivateListeners,
-    deactivateListeners,
     cursorPosition,
     dragPreviewData,
     dropSuccessTargetEntity,
