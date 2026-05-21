@@ -1371,4 +1371,36 @@ RSpec.describe SearchIndexBackend do
       )
     end
   end
+
+  describe '.get_mapping_properties_object' do
+    context 'with multi-value object attributes (#6130)', db_strategy: :reset do
+      let(:screens) { { create_middle: { '-all-' => { shown: true, required: false } } } }
+
+      before do
+        create(:object_manager_attribute_multiselect,
+               object_name: 'Ticket', name: 'multi_select_test', display: 'Multi Select Test', screens: screens)
+        create(:object_manager_attribute_multi_tree_select,
+               object_name: 'Ticket', name: 'multi_tree_select_test', display: 'Multi Tree Select Test', screens: screens)
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it 'maps multiselect array column with .keyword subfield' do
+        mapping = described_class.get_mapping_properties_object(Ticket)
+
+        expect(mapping.dig(:properties, 'multi_select_test')).to include(
+          type:   'text',
+          fields: include(keyword: include(type: 'keyword')),
+        )
+      end
+
+      it 'maps multi_tree_select array column with .keyword subfield' do
+        mapping = described_class.get_mapping_properties_object(Ticket)
+
+        expect(mapping.dig(:properties, 'multi_tree_select_test')).to include(
+          type:   'text',
+          fields: include(keyword: include(type: 'keyword')),
+        )
+      end
+    end
+  end
 end

@@ -903,7 +903,7 @@ helper method for making HTTP calls and raising error if response was not succes
         result[:properties][key] = {
           type: 'flattened',
         }
-      elsif value.type == :string && value.limit && value.limit <= 5000
+      elsif value.type == :string && (value.array || (value.limit && value.limit <= 5000))
         result[:properties][key] = {
           type:   string_type,
           fields: {
