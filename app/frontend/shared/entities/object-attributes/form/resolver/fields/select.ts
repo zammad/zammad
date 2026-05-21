@@ -7,7 +7,7 @@ import type {
 } from '#shared/entities/object-attributes/types/resolver.ts'
 import { camelize } from '#shared/utils/formatter.ts'
 
-import { FieldResolver } from '../FieldResolver.ts'
+import { AUTOCOMPLETE_FILTER_FIELD_BY_RELATION, FieldResolver } from '../FieldResolver.ts'
 
 import type { Dictionary } from 'ts-essentials'
 
@@ -36,10 +36,11 @@ export class FieldResolverSelect extends FieldResolver {
       historicalOptions: this.attributeConfig.historical_options,
     }
 
+    // Standard-form usage reads the raw relation type directly — distinct
+    // from the advanced-filter signals on the FilterAttribute, which split
+    // into form-updater vs autocomplete branches.
     if (this.attributeConfig.relation) {
-      attributes.relation = {
-        type: this.attributeConfig.relation as string,
-      }
+      attributes.relation = { type: this.attributeConfig.relation as string }
 
       if (this.attributeConfig.filter) {
         attributes.relation.filterIds = this.attributeConfig.filter as number[]
@@ -74,6 +75,39 @@ export class FieldResolverSelect extends FieldResolver {
       label: key,
       value: options[key],
     }))
+  }
+
+  public override getFieldFilterOperators() {
+    return ['is']
+  }
+
+  public override getFilterOperatorProps() {
+    // Static options come from attribute config; relation-typed attributes
+    // get their options from the form updater instead, so we omit the key
+    // here entirely rather than emitting an empty array.
+    const props: Record<string, unknown> = {
+      noOptionsLabelTranslation: !this.attributeConfig.translate,
+      historicalOptions: this.attributeConfig.historical_options,
+    }
+
+    if (!this.attributeConfig.relation && this.attributeConfig.options) {
+      props.options = this.mappedOptions()
+    }
+
+    return { is: props }
+  }
+
+  public override getFilterRelation() {
+    const relation = this.attributeConfig.relation as string | undefined
+    // Autocomplete-style relations are surfaced via getFilterAutocompleteType
+    // — they don't go through the form-updater option-resolution path.
+    if (!relation || relation in AUTOCOMPLETE_FILTER_FIELD_BY_RELATION) return
+    return relation
+  }
+
+  public override getFilterAutocompleteType() {
+    const relation = this.attributeConfig.relation as string | undefined
+    return relation ? AUTOCOMPLETE_FILTER_FIELD_BY_RELATION[relation] : undefined
   }
 }
 

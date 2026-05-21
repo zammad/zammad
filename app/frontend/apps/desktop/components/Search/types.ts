@@ -31,6 +31,17 @@ export type SearchPlugin = {
   quickSearchResultKey: Exclude<keyof QuickSearchQuery, '__typename'>
   permissions?: string[]
   show?: () => boolean
+  /**
+   * Advanced-filter UI is enabled by default for users who can see the
+   * entity (i.e. who satisfy `permissions`). These two opt-out hooks
+   * override that:
+   *  - `filtersDisabled: true` — no filter UI for this entity, ever.
+   *  - `filterPermissions: [...]` — restrict to a narrower permission set
+   *    than the entity's `permissions` (e.g. Ticket excludes
+   *    `ticket.customer`).
+   */
+  filtersDisabled?: boolean
+  filterPermissions?: string[]
   detailSearchHeaders: string[] | ((config: ConfigList) => string[])
   detailSearchComponent: Component
   filterAttributesOverride?: FilterSelectorEntityOverride[]

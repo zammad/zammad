@@ -17,6 +17,7 @@ export default <SearchPlugin>{
   quickSearchComponent: Ticket,
   quickSearchResultKey: 'quickSearchTickets',
   permissions: ['ticket.agent', 'ticket.customer'],
+  filterPermissions: ['ticket.agent'],
   detailSearchHeaders: (config) => {
     const headers = ['stateIcon', 'number', 'title', 'customer', 'group', 'owner', 'created_at']
 

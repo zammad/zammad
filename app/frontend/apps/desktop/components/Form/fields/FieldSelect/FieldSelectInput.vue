@@ -231,7 +231,11 @@ setupMissingOrDisabledOptionHandling()
         @blur="context.handlers.blur"
         @click.stop="handleToggleDropdown"
       >
-        <div v-if="hasValue && context.multiple" class="flex flex-wrap gap-1.5" role="list">
+        <div
+          v-if="hasValue && context.multiple"
+          class="flex max-h-19 flex-wrap gap-1.5 overflow-y-auto"
+          role="list"
+        >
           <div
             v-for="selectedValue in valueContainer"
             :key="selectedValue"

@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { FormKitSchema } from '@formkit/vue'
 import { isEqual, keyBy, omit } from 'lodash-es'
-import { computed, nextTick, ref, toRef } from 'vue'
+import { computed, nextTick, ref, toRef, watch } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
@@ -69,10 +69,20 @@ const rowStructure = computed<FilterSelectorRow[]>((currentValue) => {
 
 const selectedAttributeNames = computed(() => rowStructure.value.map((row) => row.name))
 
+// Already-selected attributes are excluded; remaining ones have their
+// operator list narrowed to operators whose `filterFields` returns inputs
+// for this attribute. Attributes with no usable operator drop entirely.
 const availableAttributes = computed<FilterAttribute[]>(() =>
-  props.context.filterAttributes.filter(
-    (attribute) => !selectedAttributeNames.value.includes(attribute.name),
-  ),
+  props.context.filterAttributes.flatMap((attribute) => {
+    if (selectedAttributeNames.value.includes(attribute.name)) return []
+
+    const supportedOperators = attribute.operators.filter((operator) =>
+      Array.isArray(operators[operator]?.filterFields(attribute)),
+    )
+    if (supportedOperators.length === 0) return []
+    if (supportedOperators.length === attribute.operators.length) return [attribute]
+    return [{ ...attribute, operators: supportedOperators }]
+  }),
 )
 
 // A single treeselect picks attribute + operator in one click. Leaves for
@@ -101,10 +111,7 @@ const fieldOptions = computed(() =>
       })
 
     if (currentAttribute.operators.length <= 1) {
-      return {
-        label: currentAttribute.label,
-        value: currentAttribute.name,
-      }
+      return { label: currentAttribute.label, value: currentAttribute.name }
     }
 
     return {
@@ -215,9 +222,29 @@ const removeField = (attributeName: string) => {
 const valueHandlingPlugin = (attributeName: string, inputName: string) => (node: FormKitNode) => {
   // Set initial value, when it exists, otherwise it's not needed.
   const initial = filtersByName.value[attributeName]?.[inputName]
+
   if (initial !== undefined && initial !== null) node.input(initial, false)
 
+  // External value updates taskbar subscriptions need to be pushed into
+  // the node — `rowStructure` is intentionally value-agnostic, so the schema
+  // doesn't re-render on pure value changes and the input would otherwise
+  // keep showing its mount-time value.
+  const stopExternalSync = watch(
+    () => filtersByName.value[attributeName]?.[inputName],
+    (updatedValue) => {
+      if (isEqual(node._value, updatedValue)) return
+
+      node.input(updatedValue, false)
+    },
+  )
+
+  node.on('destroying', stopExternalSync)
+
   node.on('commit', ({ payload }: { payload: FormFieldValue }) => {
+    // Skip updates from the external-sync watch above
+    // Otherwise, the we would end up rippling down the values
+    if (isEqual(filtersByName.value[attributeName]?.[inputName], payload)) return
+
     updateFieldEntry(attributeName, { [inputName]: payload })
   })
 }
@@ -238,13 +265,15 @@ const schemaFilterField = (
   const { type, name, ...inputProps } = fieldSchema
   const inputName = name ?? 'value'
 
+  const nodeId = inputIdFor(attribute.name, inputName)
   return {
     ...inputProps,
     $formkit: type,
-    id: inputIdFor(attribute.name, inputName),
+    id: nodeId,
+    key: nodeId,
     name: inputName,
     classes: {
-      outer: 'min-w-[22.1875rem]',
+      outer: 'w-[22.1875rem]',
     },
     label: attribute.label,
     alternativeBackground: true,
@@ -253,9 +282,26 @@ const schemaFilterField = (
   } as FormKitSchemaNode
 }
 
+const resolveOperatorFilterFields = (attribute: FilterAttribute, operator: string) => {
+  const baseFilterFields = operators[operator].filterFields(attribute) ?? []
+  const operatorProps = attribute?.operatorFilterProps?.[operator]
+
+  // For relation-typed attributes the resolver omits `options`, so this
+  // form-updater entry is the only source. For static-options attributes
+  // the form-updater never sends a key for them, so this is undefined.
+  const filterOptions = props.context.filterAttributeOptions?.[attribute.name]
+
+  return baseFilterFields.map(({ props: baseProps, ...rest }) => {
+    const schema = Object.assign({}, rest, baseProps, operatorProps)
+    if (filterOptions !== undefined) schema.options = filterOptions
+    return schema
+  })
+}
+
 const filterFieldsSchema = computed<FormKitSchemaNode[]>(() =>
   rowStructure.value.map((row) => {
-    const filterOperatorFields = operators[row.operator].filterFields
+    const filterOperatorFields = resolveOperatorFilterFields(row.attribute, row.operator)
+
     const filterSchema = filterOperatorFields.map((fieldSchema) =>
       schemaFilterField(row.attribute, fieldSchema),
     )
@@ -302,7 +348,7 @@ const filterFieldsSchema = computed<FormKitSchemaNode[]>(() =>
           type="treeselect"
           :options="fieldOptions"
           :classes="{
-            outer: 'min-w-75',
+            outer: 'w-75',
           }"
           :multiple="false"
           :placeholder="$t('Select attribute')"

@@ -947,7 +947,7 @@ const handlesFormUpdater = (
   options?: FormUpdaterOptions,
 ) => {
   if (!props.formUpdaterId || !formUpdaterQueryHandler) return
-  // When formUpdaterInitial is set, trigger only on initial rendering and when the form was reseted.
+  // When formUpdaterInitialOnly is set, trigger only on initial rendering and when the form was reseted.
   if (
     trigger !== 'manual' &&
     trigger !== 'form-reset' &&

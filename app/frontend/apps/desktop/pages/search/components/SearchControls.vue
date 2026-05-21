@@ -2,21 +2,10 @@
 
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
-import {
-  computed,
-  nextTick,
-  onActivated,
-  onBeforeMount,
-  onMounted,
-  shallowReactive,
-  shallowRef,
-  useTemplateRef,
-} from 'vue'
+import { computed, nextTick, onBeforeMount, shallowRef, useTemplateRef } from 'vue'
 import { onBeforeRouteUpdate } from 'vue-router'
 
 import CommonBadge from '#shared/components/CommonBadge/CommonBadge.vue'
-import Form from '#shared/components/Form/Form.vue'
-import type { FormRef, FormSchemaField, FormValues } from '#shared/components/Form/types.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useRecentSearches } from '#shared/composables/useRecentSearches.ts'
 import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
@@ -27,17 +16,28 @@ import CommonTabGroup from '#desktop/components/CommonTabGroup/CommonTabGroup.vu
 import type { Tab } from '#desktop/components/CommonTabGroup/types.ts'
 import type { FilterSelectorEntry } from '#desktop/components/Form/fields/FieldFilterSelector/types.ts'
 import { searchPlugins } from '#desktop/components/Search/plugins/index.ts'
+import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'
+
+import SearchEntityFiltersForm from './SearchControls/SearchEntityFiltersForm.vue'
+
+interface FilterRelationField {
+  name: string
+  relation: string
+}
 
 interface Props {
   searchTabs: Tab[]
+  selectedEntityHasFiltersEnabled: boolean
   filtersByEntity?: Record<string, FilterSelectorEntry[]>
   entityFields?: Record<string, FilterAttribute[]>
+  filterRelationFieldsByEntity?: Record<string, FilterRelationField[]>
   filterCount?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
   filtersByEntity: () => ({}),
   entityFields: () => ({}),
+  filterRelationFieldsByEntity: () => ({}),
   filterCount: 0,
 })
 
@@ -78,55 +78,12 @@ const clearAndFocusSearch = () => {
   focusSearch()
 }
 
-onMounted(() => {
-  focusSearch()
-})
-
-onActivated(() => {
-  focusSearch()
-})
-
-onBeforeRouteUpdate((to, from) => {
-  if (to.params.searchTerm !== from.params.searchTerm) focusSearch()
-})
-
 const { waitForConfirmation } = useConfirmation()
 
-// Build a schema per entity so the Form manages the repeater reactively.
-// :TODO formUpdaterId can be added per entity once backend form updaters for search exist.
-const entitySchema = computed<Record<string, FormSchemaField[]>>(() =>
-  Object.fromEntries(
-    searchPlugins.map((plugin) => [
-      plugin.name,
-      [
-        {
-          type: 'filterSelector',
-          name: 'filters',
-          props: {
-            filterAttributes: props.entityFields[plugin.name] ?? [],
-            filterAttributesOverride: plugin.filterAttributesOverride,
-          },
-        },
-      ],
-    ]),
-  ),
-)
+const entityForm = useTemplateRef('search-entity-filters-form')
 
-const getEntityInitialValues = (entity: string): FormValues =>
-  ({ filters: props.filtersByEntity[entity] ?? [] }) as unknown as FormValues
-
-// Per-entity Form refs — used for programmatic reset on clear
-const entityFormRefs = shallowReactive<Record<string, FormRef>>({})
-
-const setEntityFormRef = (entity: string, el: FormRef | null) => {
-  if (el) entityFormRefs[entity] = el
-}
-
-const onEntityFiltersChanged = (entity: string, fieldName: string, newValue: unknown) => {
-  if (fieldName !== 'filters') return
-
-  emit('entity-filters-changed', entity, (newValue as FilterSelectorEntry[]) ?? [])
-}
+const getEntityFormInstance = (entity: string) =>
+  entityForm.value?.find((ref) => ref?.entity === entity)
 
 const hasFilterFieldsByEntity = computed(() =>
   Object.fromEntries(
@@ -143,11 +100,18 @@ const clearAdvancedFilters = async () => {
   if (!confirmed) return
 
   emit('clear-filters')
-  entityFormRefs[selectedEntity.value]?.resetForm({ values: { filters: [] } })
+  getEntityFormInstance(selectedEntity.value)?.resetFilters()
 }
 
 const isFilterPanelsOpen = shallowRef(false)
+const isFilterPanelFullyExpanded = shallowRef(false)
+
 const toggleFilterPanel = () => {
+  if (isFilterPanelsOpen.value) {
+    // Set immediately so the collapse animation can hide overflowing content.
+    isFilterPanelFullyExpanded.value = false
+  }
+
   isFilterPanelsOpen.value = !isFilterPanelsOpen.value
 }
 
@@ -155,14 +119,38 @@ const openFilterPanel = () => {
   isFilterPanelsOpen.value = true
 }
 
+const onFilterPanelTransitionEnd = (event: TransitionEvent) => {
+  if (event.propertyName !== 'grid-template-rows') return
+
+  isFilterPanelFullyExpanded.value = isFilterPanelsOpen.value
+}
+
 const advancedFiltersSectionId = 'advanced-filters'
 const advancedFiltersButtonId = 'advanced-filters-button'
 
 defineExpose({ clearAndFocusSearch })
 
+useKeepAliveHooks({
+  onInitialActivated() {
+    focusSearch()
+  },
+  onReactivated() {
+    if (props.filterCount) openFilterPanel()
+    focusSearch()
+  },
+})
+
 onBeforeMount(() => {
   // Opens the filter panel when the query params are given on initial render
-  if (props.filterCount) openFilterPanel()
+  if (!props.filterCount) return
+
+  openFilterPanel()
+  // No transition on initial render, to sync the expanded flag manually later.
+  isFilterPanelFullyExpanded.value = true
+})
+
+onBeforeRouteUpdate((to, from) => {
+  if (to.params.searchTerm !== from.params.searchTerm) focusSearch()
 })
 </script>
 
@@ -210,6 +198,7 @@ dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outlin
         :tabs="searchTabs"
       />
       <CommonButton
+        v-if="selectedEntityHasFiltersEnabled"
         :id="advancedFiltersButtonId"
         class="sticky z-20 h-auto! bg-blue-200! -outline-offset-1! transition-[border-radius]! before:absolute before:right-0 before:bottom-0 before:h-3 before:w-full before:translate-y-full before:bg-blue-200 before:opacity-0 before:transition-opacity before:duration-0 before:ease-in-out active:scale-none! ltr:right-0 rtl:left-0 dark:bg-gray-700! dark:before:bg-gray-700"
         :class="{
@@ -226,28 +215,34 @@ dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outlin
     </div>
 
     <section
+      v-if="selectedEntityHasFiltersEnabled"
       :id="advancedFiltersSectionId"
       class="grid grid-rows-[0fr] rounded-l-lg rounded-br-lg bg-blue-200 transition-[grid-template-rows] duration-300 dark:bg-gray-700"
       :class="{
         'grid-rows-[1fr]': isFilterPanelsOpen,
       }"
       :aria-labelledby="advancedFiltersButtonId"
+      @transitionend="onFilterPanelTransitionEnd"
     >
-      <div class="overflow-hidden">
+      <div
+        class="max-h-[80dvh]"
+        :class="isFilterPanelFullyExpanded ? 'overflow-y-auto' : 'overflow-hidden'"
+      >
         <div
           v-for="plugin in searchPlugins"
           v-show="selectedEntity === plugin.name"
           :key="plugin.name"
           class="p-2"
         >
-          <Form
+          <SearchEntityFiltersForm
             v-if="hasFilterFieldsByEntity[plugin.name]"
-            :ref="(el) => setEntityFormRef(plugin.name, el as FormRef | null)"
-            :schema="entitySchema[plugin.name]"
-            :initial-values="getEntityInitialValues(plugin.name)"
-            @changed="
-              (fieldName, newValue) => onEntityFiltersChanged(plugin.name, fieldName, newValue)
-            "
+            ref="search-entity-filters-form"
+            :entity="plugin.name"
+            :filters="filtersByEntity[plugin.name] ?? []"
+            :filter-attributes="entityFields[plugin.name] ?? []"
+            :filter-attributes-override="plugin.filterAttributesOverride"
+            :filter-relation-fields="filterRelationFieldsByEntity[plugin.name] ?? []"
+            @filters-changed="(entity, value) => emit('entity-filters-changed', entity, value)"
           />
           <CommonLabel v-else class="p-1" size="small">{{
             $t('No advanced filters available for %s.', plugin.name)

@@ -61,4 +61,39 @@ describe('FieldResolverMultiselect', () => {
       internal: true,
     })
   })
+
+  it('provides is filter fields with multiple enabled', () => {
+    const fieldResolver = new FieldResolverMultiselect(EnumObjectManagerObjects.Ticket, {
+      dataType: 'multiselect',
+      name: 'category',
+      display: 'Category',
+      dataOption: {
+        translate: true,
+        nulloption: true,
+        options: {
+          a: 'a',
+          b: 'b',
+        },
+        historical_options: {
+          a: 'a',
+          b: 'b',
+        },
+      },
+      isInternal: true,
+    })
+
+    expect(fieldResolver.getFilterOperatorProps()).toEqual({
+      is: {
+        noOptionsLabelTranslation: false,
+        options: [
+          { label: 'a', value: 'a' },
+          { label: 'b', value: 'b' },
+        ],
+        historicalOptions: {
+          a: 'a',
+          b: 'b',
+        },
+      },
+    })
+  })
 })

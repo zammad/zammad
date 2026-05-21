@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { watchDebounced } from '@vueuse/core'
 import { isEqual, omit } from 'lodash-es'
 import { storeToRefs } from 'pinia'
 import {
@@ -11,6 +12,7 @@ import {
   type Ref,
   nextTick,
   shallowRef,
+  onActivated,
   onBeforeMount,
 } from 'vue'
 import { stringifyQuery, useRoute, useRouter } from 'vue-router'
@@ -66,6 +68,7 @@ const selectedEntity = ref(
 const {
   filtersByEntity,
   entityFields,
+  filterRelationFieldsByEntity,
   currentFilters,
   filterCount,
   currentFiltersQueryParams,
@@ -74,6 +77,7 @@ const {
   hasActiveFilters,
   setEntityFilters,
   clearCurrentFilters,
+  selectedEntityHasFiltersEnabled,
 } = useSearchAdvancedFilters(selectedEntity)
 
 const offset = ref(0)
@@ -95,15 +99,42 @@ watch([selectedEntity, currentFiltersQueryParams], ([entity]) => {
   })
 })
 
-// Repopulate filters on initial load, later it is handled by taskbar and keep alive
-onBeforeMount(() => {
+// Sync URL → state. Runs on initial load and again on every keep-alive
+// reactivation, because the cached SearchContent is reused for every /search
+// URL (same pageKey) — onBeforeMount alone would miss internal-link returns
+// that arrive with different filter query params.
+const syncFiltersFromRoute = () => {
+  if (!selectedEntityHasFiltersEnabled.value) return
+
   const queryEntity = (route.query.entity as EnumSearchableModels) ?? EnumSearchableModels.Ticket
+
   const queryFilters = decodeFilters(route.query, entityFields.value[queryEntity] ?? [])
 
   if (selectedEntity.value !== queryEntity) selectedEntity.value = queryEntity
 
+  if (isEqual(queryFilters, currentFilters.value)) return
+
   setEntityFilters(queryEntity, queryFilters)
-})
+}
+
+//:TODO useLifeCycle hook when merged and useReactivation
+onBeforeMount(syncFiltersFromRoute)
+onActivated(syncFiltersFromRoute)
+
+// Object attributes load asynchronously. On a fresh deep-link
+// `onBeforeMount` runs with an empty schema, so `decodeFilters` falls back
+// to its no-schema passthrough — relation values stay as strings and
+// invalid candidates aren't dropped. If the schema isn't ready yet, watch
+// for its arrival and re-sync once. Subsequent activations are handled by
+// `onActivated`, which already sees a populated schema.
+const initialQueryEntity =
+  (route.query.entity as EnumSearchableModels) ?? EnumSearchableModels.Ticket
+if (!entityFields.value[initialQueryEntity]?.length) {
+  // Watch the length, not the array reference — `entityFields` recomputes on
+  // every store change and would otherwise fire the once-shot watcher on
+  // placeholder identity updates before the schema becomes usable.
+  watch(() => entityFields.value[initialQueryEntity]?.length, syncFiltersFromRoute, { once: true })
+}
 
 const modelSearchTerm = computed({
   get: () => props.searchTerm,
@@ -124,7 +155,8 @@ const currentSearchTerm = computed(() => modelSearchTerm.value ?? '')
 const notVisibleSearchEntities = computed(() =>
   searchPluginNames.value.filter(
     (name) =>
-      name !== selectedEntity.value && (filtersByEntity[name].length || !!currentSearchTerm.value),
+      name !== selectedEntity.value &&
+      (!!filtersByEntity[name]?.length || !!currentSearchTerm.value),
   ),
 )
 
@@ -144,13 +176,48 @@ const tabContext = computed<TaskbarTabContext>((currentContext) => {
 
 const { currentTaskbarTab, currentTaskbarTabUpdate } = useTaskbarTab(tabContext)
 
-watch(tabContext, (newValue) => {
-  if (!currentTaskbarTab.value) return
+watch(
+  () => currentTaskbarTab.value?.entity,
+  (updatedEntity) => {
+    if (!updatedEntity || updatedEntity.__typename !== 'UserTaskbarItemEntitySearch') return
 
-  if (isEqual(newValue, omit(currentTaskbarTab.value.entity, '__typename'))) return
+    const updatedQuery = updatedEntity.query ?? ''
+    const updatedModel = (updatedEntity.model ??
+      EnumSearchableModels.Ticket) as EnumSearchableModels
+    const updatedFiltersString = updatedEntity.filters ?? ''
 
-  currentTaskbarTabUpdate(currentTaskbarTab.value, newValue)
-})
+    // When the entity update we just received originated from our own write.
+    if (
+      updatedQuery === currentSearchTerm.value &&
+      updatedModel === selectedEntity.value &&
+      updatedFiltersString === stringifyQuery(currentFiltersQueryParams.value)
+    )
+      return
+
+    const updatedFilterQuery = Object.fromEntries(new URLSearchParams(updatedFiltersString))
+    const updatedFilters = decodeFilters(updatedFilterQuery, entityFields.value[updatedModel] ?? [])
+    const url = buildSearchDeepLink({
+      searchTerm: updatedQuery,
+      entity: updatedModel,
+      filters: updatedFilters,
+      baseQuery: getSearchQueryWithoutFilters(router.currentRoute.value.query),
+    })
+
+    router.replace(url).then(syncFiltersFromRoute)
+  },
+)
+
+watchDebounced(
+  tabContext,
+  (newValue) => {
+    if (!currentTaskbarTab.value) return
+
+    if (isEqual(newValue, omit(currentTaskbarTab.value.entity, '__typename'))) return
+
+    currentTaskbarTabUpdate(currentTaskbarTab.value, newValue)
+  },
+  { debounce: 500 },
+)
 
 const { reachedTop } = useElementScroll(scrollContainerElement as Ref<HTMLElement>)
 
@@ -500,7 +567,9 @@ setOnSuccessCallback(() => {
         :search-tabs="searchTabs"
         :filters-by-entity="filtersByEntity"
         :entity-fields="entityFields"
+        :filter-relation-fields-by-entity="filterRelationFieldsByEntity"
         :filter-count="filterCount"
+        :selected-entity-has-filters-enabled="selectedEntityHasFiltersEnabled"
         class="px-4"
         @entity-filters-changed="(entity, value) => setEntityFilters(entity, value)"
         @clear-filters="clearCurrentFilters"

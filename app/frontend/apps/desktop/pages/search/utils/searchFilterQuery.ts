@@ -79,6 +79,23 @@ const queryRecordToString = (query: Record<string, unknown>): string => {
   return params.toString()
 }
 
+// Form-updater-resolved relations carry integer primary-key IDs; URL query
+// params always arrive as strings. Coerce here so downstream consumers
+// (FormKit select equality, taskbar sync) see the value type the schema
+// implies. Strings that aren't integers stay as-is — they won't match a
+// valid option either way, no need to silently turn "foo" into NaN.
+const coerceValueForAttribute = (value: unknown, attribute: FilterAttribute): unknown => {
+  if (!attribute.relation) return value
+
+  const coerce = (v: unknown) => {
+    if (typeof v !== 'string' || v === '') return v
+    const n = Number(v)
+    return Number.isInteger(n) ? n : v
+  }
+
+  return Array.isArray(value) ? value.map(coerce) : coerce(value)
+}
+
 const resolveAgainstSchema = (
   candidate: ValidFilterCandidate,
   attributes: FilterAttribute[],
@@ -89,7 +106,11 @@ const resolveAgainstSchema = (
 
   if (!attribute.operators.includes(candidate.operator)) return null
 
-  return { name: attribute.name, operator: candidate.operator, value: candidate.value }
+  return {
+    name: attribute.name,
+    operator: candidate.operator,
+    value: coerceValueForAttribute(candidate.value, attribute),
+  }
 }
 
 export const decodeFilters = (

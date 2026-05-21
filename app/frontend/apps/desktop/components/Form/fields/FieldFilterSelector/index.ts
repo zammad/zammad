@@ -6,7 +6,7 @@ import FieldFilterSelectorInput from './FieldFilterSelectorInput.vue'
 
 const filterSelector = createInput(
   FieldFilterSelectorInput,
-  ['filterAttributes', 'filterAttributesOverride', 'max', 'min'],
+  ['filterAttributes', 'filterAttributesOverride', 'filterAttributeOptions', 'max', 'min'],
   {
     features: [],
   },

@@ -32,4 +32,26 @@ describe('FieldResolverBoolean', () => {
       wrapperClass: '@lg/form-group:mt-6',
     })
   })
+
+  it('provides select filter fields for is operator with boolean options', () => {
+    const fieldResolver = new FieldResolverBoolean(EnumObjectManagerObjects.Ticket, {
+      dataType: 'boolean',
+      name: 'vip',
+      display: 'VIP',
+      dataOption: {
+        options: { false: 'no', true: 'yes' },
+      },
+      isInternal: true,
+    })
+
+    expect(fieldResolver.getFilterOperatorProps()).toEqual({
+      is: {
+        noOptionsLabelTranslation: true,
+        options: [
+          { label: 'no', value: 'false' },
+          { label: 'yes', value: 'true' },
+        ],
+      },
+    })
+  })
 })

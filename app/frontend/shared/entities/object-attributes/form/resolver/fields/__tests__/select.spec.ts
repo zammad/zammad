@@ -94,4 +94,59 @@ describe('FieldResolverSelect', () => {
       internal: true,
     })
   })
+
+  it('omits the options key for relation-typed attributes (options come from the form updater)', () => {
+    const fieldResolver = new FieldResolverSelect(EnumObjectManagerObjects.Ticket, {
+      dataType: 'select',
+      name: 'group_id',
+      display: 'Group',
+      dataOption: {
+        translate: true,
+        relation: 'Group',
+        belongs_to: 'group',
+      },
+      isInternal: true,
+    })
+
+    expect(fieldResolver.getFilterOperatorProps()).toEqual({
+      is: {
+        noOptionsLabelTranslation: false,
+        historicalOptions: undefined,
+      },
+    })
+  })
+
+  it('provides select filter fields for the is operator', () => {
+    const fieldResolver = new FieldResolverSelect(EnumObjectManagerObjects.Ticket, {
+      dataType: 'select',
+      name: 'category',
+      display: 'Category',
+      dataOption: {
+        translate: true,
+        options: {
+          a: 'a',
+          b: 'b',
+        },
+        historical_options: {
+          a: 'a',
+          b: 'b',
+        },
+      },
+      isInternal: true,
+    })
+
+    expect(fieldResolver.getFilterOperatorProps()).toEqual({
+      is: {
+        noOptionsLabelTranslation: false,
+        options: [
+          { label: 'a', value: 'a' },
+          { label: 'b', value: 'b' },
+        ],
+        historicalOptions: {
+          a: 'a',
+          b: 'b',
+        },
+      },
+    })
+  })
 })

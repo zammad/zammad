@@ -36,10 +36,22 @@ export interface EntityPolicyBasedObjectAttributeScreenMapper<TPolicy = PolicyDe
   }
 }
 
+type OperatorName = string
+
+export type OperatorFilterProps = Record<OperatorName, Record<string, unknown>>
+
 export interface FilterAttribute {
   name: string
   label: string
   operators: string[]
+  operatorFilterProps?: OperatorFilterProps
+  // Mutually exclusive relation signals (set by the resolver):
+  // - `relation`: form-updater-resolvable relation type (e.g. 'Group').
+  //   Server pre-resolves option lists for these.
+  // - `autocompleteFilterType`: FormKit field type for autocomplete-style
+  //   relations (e.g. 'customer' for User). Options fetched per keystroke.
+  relation?: string
+  autocompleteFilterType?: string
 }
 
 export interface ObjectAttributesObject {

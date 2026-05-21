@@ -21,6 +21,7 @@ describe('SearchControls', () => {
   it('renders the search input and tabs', async () => {
     const wrapper = renderComponent(SearchControls, {
       props: {
+        selectedEntityHasFiltersEnabled: true,
         searchTabs: [
           { label: 'Organization', key: 'Organization', count: 11 },
           { label: 'Ticket', key: 'Ticket', count: 22 },
@@ -49,6 +50,7 @@ describe('SearchControls', () => {
 
     const wrapper = renderComponent(SearchControls, {
       props: {
+        selectedEntityHasFiltersEnabled: true,
         searchTabs: [
           { label: 'Organization', key: 'Organization', count: 1 },
           { label: 'Ticket', key: 'Ticket', count: 22 },
@@ -79,6 +81,7 @@ describe('SearchControls', () => {
 
     const wrapper = renderComponent(SearchControls, {
       props: {
+        selectedEntityHasFiltersEnabled: true,
         searchTabs: [
           { label: 'Organization', key: 'Organization', count: 1 },
           { label: 'Ticket', key: 'Ticket', count: 22 },
@@ -104,6 +107,7 @@ describe('SearchControls', () => {
     it('toggles the advanced filters panel when the button is clicked', async () => {
       const wrapper = renderComponent(SearchControls, {
         props: {
+          selectedEntityHasFiltersEnabled: true,
           searchTabs: [
             { label: 'Organization', key: 'Organization', count: 11 },
             { label: 'Ticket', key: 'Ticket', count: 22 },
@@ -125,6 +129,7 @@ describe('SearchControls', () => {
     it('shows badge with selected filter count', async () => {
       const wrapper = renderComponent(SearchControls, {
         props: {
+          selectedEntityHasFiltersEnabled: true,
           searchTabs: [
             { label: 'Organization', key: 'Organization', count: 11 },
             { label: 'Ticket', key: 'Ticket', count: 22 },
@@ -141,6 +146,7 @@ describe('SearchControls', () => {
     it('shows advanced filters expanded on initial load when filters are present', async () => {
       const wrapper = renderComponent(SearchControls, {
         props: {
+          selectedEntityHasFiltersEnabled: true,
           searchTabs: [
             { label: 'Organization', key: 'Organization', count: 11 },
             { label: 'Ticket', key: 'Ticket', count: 22 },
@@ -164,6 +170,7 @@ describe('SearchControls', () => {
     it('does not show badge when filterCount is 0', () => {
       const wrapper = renderComponent(SearchControls, {
         props: {
+          selectedEntityHasFiltersEnabled: true,
           searchTabs: [
             { label: 'Organization', key: 'Organization', count: 11 },
             { label: 'Ticket', key: 'Ticket', count: 22 },
@@ -179,6 +186,7 @@ describe('SearchControls', () => {
     it('opens the filter panel when the badge button is clicked', async () => {
       const wrapper = renderComponent(SearchControls, {
         props: {
+          selectedEntityHasFiltersEnabled: true,
           searchTabs: [
             { label: 'Organization', key: 'Organization', count: 11 },
             { label: 'Ticket', key: 'Ticket', count: 22 },
@@ -204,6 +212,7 @@ describe('SearchControls', () => {
 
       const wrapper = renderComponent(SearchControls, {
         props: {
+          selectedEntityHasFiltersEnabled: true,
           searchTabs: [
             { label: 'Organization', key: 'Organization', count: 11 },
             { label: 'Ticket', key: 'Ticket', count: 22 },
@@ -224,6 +233,7 @@ describe('SearchControls', () => {
 
       const wrapper = renderComponent(SearchControls, {
         props: {
+          selectedEntityHasFiltersEnabled: true,
           searchTabs: [
             { label: 'Organization', key: 'Organization', count: 11 },
             { label: 'Ticket', key: 'Ticket', count: 22 },
@@ -246,6 +256,7 @@ describe('SearchControls', () => {
     it('has correct aria attributes linking button and section', () => {
       const wrapper = renderComponent(SearchControls, {
         props: {
+          selectedEntityHasFiltersEnabled: true,
           searchTabs: [
             { label: 'Organization', key: 'Organization', count: 11 },
             { label: 'Ticket', key: 'Ticket', count: 22 },
@@ -259,6 +270,23 @@ describe('SearchControls', () => {
 
       expect(sectionId).toBeTruthy()
       expect(wrapper.baseElement.querySelector(`#${sectionId}`)).toBeInTheDocument()
+    })
+
+    describe('customer user', () => {
+      it('does not render advanced filters button', () => {
+        const wrapper = renderComponent(SearchControls, {
+          props: {
+            selectedEntityHasFiltersEnabled: false,
+            searchTabs: [
+              { label: 'Organization', key: 'Organization', count: 11 },
+              { label: 'Ticket', key: 'Ticket', count: 22 },
+              { label: 'User', key: 'User', count: 33 },
+            ],
+          },
+        })
+
+        expect(wrapper.queryByRole('button', { name: 'Advanced filters' })).not.toBeInTheDocument()
+      })
     })
   })
 })

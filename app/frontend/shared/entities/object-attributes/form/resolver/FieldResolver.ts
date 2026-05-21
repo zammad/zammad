@@ -3,8 +3,17 @@
 import type { FormFieldValue, FormSchemaField } from '#shared/components/Form/types.ts'
 import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 
-import type { ObjectAttribute } from '../../types/store.ts'
+import type { ObjectAttribute, OperatorFilterProps } from '../../types/store.ts'
 import type { JsonValue } from 'type-fest'
+
+// Relations whose advanced-filter input is an autocomplete (per-keystroke
+// query) rather than a server-resolved option list. Values are the FormKit
+// field types to render. Consulted by resolvers to split a relation into
+// the right pair of signals on FilterAttribute.
+export const AUTOCOMPLETE_FILTER_FIELD_BY_RELATION: Record<string, string> = {
+  User: 'customer',
+  Organization: 'organization',
+}
 
 export abstract class FieldResolver {
   protected name: string
@@ -42,6 +51,29 @@ export abstract class FieldResolver {
    * Strings keep this open for addons that introduce custom operators.
    */
   public getFieldFilterOperators(): string[] | undefined {
+    return
+  }
+
+  public getFilterOperatorProps(): OperatorFilterProps | undefined {
+    return
+  }
+
+  /**
+   * Advanced-filter relation type name (e.g. 'Group', 'TicketState') for
+   * attributes whose options are resolved by the form-updater backend.
+   * Returns undefined for autocomplete-style relations — those are surfaced
+   * via getFilterAutocompleteType() instead.
+   */
+  public getFilterRelation(): string | undefined {
+    return
+  }
+
+  /**
+   * Advanced-filter FormKit field type (e.g. 'customer', 'organization') for
+   * attributes whose options come from a per-keystroke autocomplete query
+   * rather than the form-updater backend.
+   */
+  public getFilterAutocompleteType(): string | undefined {
     return
   }
 
