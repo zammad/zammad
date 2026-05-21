@@ -321,7 +321,7 @@ class UserAgent
 
     # start http call
     begin
-      total_timeout = options[:total_timeout] || 60
+      total_timeout = options[:total_timeout] || ENV.fetch('ZAMMAD_HTTP_TOTAL_TIMEOUT', 60).to_i
 
       handled_open_timeout(options[:open_socket_tries]) do
         Timeout.timeout(total_timeout) do
