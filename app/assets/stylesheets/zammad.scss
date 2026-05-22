@@ -16880,6 +16880,178 @@ body.is-customer-portal {
     font-size: 13.5px;
   }
 
+  // ===========================================================================
+  // Custom customer sidebar (replaces the legacy Zammad navigation entirely
+  // when navigation_customer.jst.eco is rendered). Matches
+  // docs/ui-references/customer-portal/.
+  // ===========================================================================
+  #navigation.navigation {
+    width: 240px;
+    background: var(--cp-surface-2);
+    border-right: 1px solid var(--cp-border);
+    border-left: none;
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cp-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px 14px;
+    border-bottom: 1px solid var(--cp-border);
+    margin-bottom: 8px;
+  }
+
+  .cp-nav-brand-logo { width: 22px; height: 22px; color: var(--cp-accent); }
+
+  .cp-nav-brand-name {
+    font-weight: 700;
+    color: var(--cp-ink);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .cp-nav-brand-sub {
+    font-size: 11px;
+    color: var(--cp-ink-3);
+    letter-spacing: 0.06em;
+    line-height: 1.3;
+  }
+
+  .cp-nav-newbtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--cp-ink);
+    color: hsl(0, 0%, 99%);
+    border-radius: 6px;
+    padding: 9px 12px;
+    font-weight: 600;
+    font-size: 13.5px;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: background 0.12s ease, transform 0.08s ease;
+  }
+  .cp-nav-newbtn:hover {
+    background: hsl(210, 14%, 28%);
+    color: hsl(0, 0%, 99%);
+  }
+  .cp-nav-newbtn:active { transform: translateY(1px); }
+
+  .cp-nav-newbtn-icon {
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  .cp-nav-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .cp-nav-section {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cp-ink-3);
+    padding: 14px 10px 6px;
+  }
+
+  .cp-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    color: var(--cp-ink-2);
+    font-weight: 500;
+    font-size: 13.5px;
+    text-decoration: none;
+  }
+
+  .cp-nav-item:hover {
+    background: var(--cp-surface-3);
+    color: var(--cp-ink);
+  }
+
+  .cp-nav-item.is-active {
+    background: var(--cp-accent-soft);
+    color: var(--cp-accent);
+    font-weight: 600;
+  }
+
+  .cp-nav-item-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='9' rx='1.5'/><rect x='14' y='3' width='7' height='5' rx='1.5'/><rect x='14' y='12' width='7' height='9' rx='1.5'/><rect x='3' y='16' width='7' height='5' rx='1.5'/></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='9' rx='1.5'/><rect x='14' y='3' width='7' height='5' rx='1.5'/><rect x='14' y='12' width='7' height='9' rx='1.5'/><rect x='3' y='16' width='7' height='5' rx='1.5'/></svg>") no-repeat center / contain;
+  }
+
+  .js-nav-my-tickets .cp-nav-item-icon {
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z'/><path d='M9 5v14' stroke-dasharray='2 2'/></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z'/><path d='M9 5v14' stroke-dasharray='2 2'/></svg>") no-repeat center / contain;
+  }
+
+  .cp-nav-item-name {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cp-nav-item-badge {
+    background: var(--cp-accent);
+    color: hsl(0, 0%, 99%);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 999px;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .cp-nav-item-badge[data-zero-hidden='true']:empty,
+  .cp-nav-item-badge:empty { display: none; }
+
+  .cp-nav-item--quiet {
+    padding: 5px 10px 5px 16px;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .cp-nav-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .cp-nav-dot--open    { background: hsl(212, 60%, 55%); }
+  .cp-nav-dot--pend    { background: hsl(36, 80%, 56%); }
+  .cp-nav-dot--res     { background: hsl(150, 55%, 47%); }
+  .cp-nav-dot--closed  { background: hsl(60, 4%, 60%); }
+
+  .cp-nav-spacer { flex: 1; }
+
+  .cp-nav-user {
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: 8px;
+    padding: 6px;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+  }
+
   // ---------------------------------------------------------------------------
   // Customer NewTicket (F4) — wraps the existing dynamic Zammad form
   // (ticket-form-top / -middle / -bottom placeholders are populated by the
@@ -16986,10 +17158,209 @@ body.is-customer-portal {
     color: var(--cp-ink-2);
   }
 
+  // ---------------------------------------------------------------------------
+  // Faithful Customer NewTicket (form replaces ControllerForm wrap)
+  // ---------------------------------------------------------------------------
+  .customer-newticket {
+    background: var(--cp-bg);
+    color: var(--cp-ink);
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cp-newticket-form {
+    padding: 18px 28px 28px;
+    max-width: 960px;
+  }
+
+  .cp-newticket-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: 12px;
+    padding: 22px 24px;
+  }
+
+  .cp-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cp-field--full { grid-column: 1 / -1; }
+
+  .cp-field-lbl {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cp-ink-2);
+  }
+
+  .cp-field input,
+  .cp-field textarea,
+  .cp-field select {
+    border: 1px solid var(--cp-border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: var(--cp-surface);
+    color: var(--cp-ink);
+    font-size: 13.5px;
+    font-family: inherit;
+    width: 100%;
+  }
+
+  .cp-field input:focus,
+  .cp-field textarea:focus,
+  .cp-field select:focus {
+    border-color: var(--cp-accent);
+    box-shadow: 0 0 0 3px var(--cp-accent-ring);
+    outline: none;
+  }
+
+  .cp-field--err {
+    border-color: hsl(0, 70%, 60%) !important;
+  }
+  .cp-field-err {
+    color: hsl(0, 65%, 45%);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  .cp-seg {
+    display: inline-flex;
+    background: var(--cp-surface-2);
+    border: 1px solid var(--cp-border);
+    border-radius: 6px;
+    padding: 2px;
+    gap: 0;
+  }
+
+  .cp-seg-btn {
+    border: 0;
+    background: transparent;
+    color: var(--cp-ink-2);
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .cp-seg-btn:hover { color: var(--cp-ink); }
+  .cp-seg-btn--on {
+    background: var(--cp-surface);
+    color: var(--cp-accent);
+    font-weight: 600;
+    box-shadow: 0 0 0 1px var(--cp-border);
+  }
+
+  .cp-drop {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1.5px dashed var(--cp-border-2);
+    border-radius: 8px;
+    padding: 18px 22px;
+    background: var(--cp-surface-2);
+    color: var(--cp-ink-2);
+    cursor: pointer;
+    transition: border-color 0.12s ease, background 0.12s ease;
+  }
+  .cp-drop:hover {
+    border-color: var(--cp-accent);
+    background: var(--cp-accent-soft);
+  }
+  .cp-drop-icon { font-size: 22px; color: var(--cp-accent); }
+
+  .cp-attach-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .cp-attach-tile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+  .cp-attach-icon { font-size: 16px; }
+  .cp-attach-meta { flex: 1; min-width: 0; }
+  .cp-attach-name {
+    font-size: 12.5px;
+    color: var(--cp-ink);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .cp-attach-x {
+    border: 0;
+    background: transparent;
+    color: var(--cp-ink-3);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0 4px;
+  }
+  .cp-attach-x:hover { color: var(--cp-ink); }
+
   .cp-empty {
     padding: 24px 16px;
     color: var(--cp-ink-3);
     font-size: 13.5px;
+  }
+
+  // "Needs your reply" + "Recent activity" feed-style rows
+  .cp-needs-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .cp-feed-row {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .cp-feed-avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .cp-feed-avatar--me { background: var(--cp-accent-soft); color: var(--cp-accent); }
+  .cp-feed-avatar--agent { background: var(--cp-surface-3); color: var(--cp-ink-2); }
+
+  .cp-feed-body { flex: 1; min-width: 0; }
+
+  .cp-feed-meta {
+    font-size: 13px;
+    color: var(--cp-ink-2);
+    margin-bottom: 2px;
+  }
+  .cp-feed-meta strong {
+    font-weight: 600;
+    color: var(--cp-ink);
+  }
+
+  .cp-feed-snippet {
+    font-size: 13px;
+    color: var(--cp-ink-3);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   // ---------------------------------------------------------------------------

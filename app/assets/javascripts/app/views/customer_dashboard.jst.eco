@@ -38,17 +38,19 @@
   <div class="cp-dash-grid">
     <div class="cp-card">
       <div class="cp-card-head">
-        <h2><%- @T('Awaiting your reply') %></h2>
-        <span class="cp-card-meta"><%= @awaiting.length %></span>
+        <h2><%- @T('Needs your reply') %></h2>
+        <span class="cp-card-meta"><%= @awaiting.length %> <%- @T('tickets') %></span>
       </div>
       <% if @awaiting.length > 0: %>
       <ul class="cp-list">
         <% for t in @awaiting: %>
+        <% ticket = App.Ticket.find(t.id) %>
         <li>
           <a class="cp-list-row" href="#ticket/zoom/<%= t.id %>">
-            <div class="cp-list-meta">
-              <span class="cp-tid">#<%= App.Ticket.find(t.id)?.number || t.id %></span>
+            <div class="cp-needs-meta">
+              <span class="cp-tid">#<%= ticket?.number || t.id %></span>
               <span class="cp-pill cp-pill--<%= @ticketState(t.id).toLowerCase().replace(/\s+/g, '-') %>"><%- @T(@ticketState(t.id)) %></span>
+              <span class="cp-muted"><%= @relTime(ticket?.last_contact_agent_at or ticket?.updated_at) %></span>
             </div>
             <div class="cp-list-title"><%= @ticketTitle(t.id) %></div>
           </a>
@@ -65,17 +67,24 @@
     <div class="cp-card">
       <div class="cp-card-head">
         <h2><%- @T('Recent activity') %></h2>
+        <a class="cp-link" href="#ticket/view/my_tickets"><%- @T('See all') %> →</a>
       </div>
       <% if @recent.length > 0: %>
       <ul class="cp-list">
         <% for t in @recent: %>
+        <% ticket = App.Ticket.find(t.id) %>
+        <% author = @lastAuthor(t.id) %>
         <li>
-          <a class="cp-list-row" href="#ticket/zoom/<%= t.id %>">
-            <div class="cp-list-meta">
-              <span class="cp-tid">#<%= App.Ticket.find(t.id)?.number || t.id %></span>
-              <span class="cp-pill cp-pill--<%= @ticketState(t.id).toLowerCase().replace(/\s+/g, '-') %>"><%- @T(@ticketState(t.id)) %></span>
+          <a class="cp-list-row cp-feed-row" href="#ticket/zoom/<%= t.id %>">
+            <span class="cp-feed-avatar cp-feed-avatar--<%= if author.isAgent then 'agent' else 'me' %>"><%= author.initials %></span>
+            <div class="cp-feed-body">
+              <div class="cp-feed-meta">
+                <strong><%= author.name %></strong>
+                <%- @T('on') %> <span class="cp-tid">#<%= ticket?.number || t.id %></span>
+                · <span class="cp-muted"><%= @relTime(ticket?.updated_at) %></span>
+              </div>
+              <div class="cp-feed-snippet"><%= @ticketTitle(t.id) %></div>
             </div>
-            <div class="cp-list-title"><%= @ticketTitle(t.id) %></div>
           </a>
         </li>
         <% end %>

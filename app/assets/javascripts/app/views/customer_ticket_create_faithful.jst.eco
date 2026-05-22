@@ -1,0 +1,86 @@
+<div class="customer-newticket">
+  <header class="cp-screen-head">
+    <a class="cp-btn cp-btn--ghost cp-btn--icon js-cancel" href="#dashboard" title="<%- @T('Back') %>">←</a>
+    <div>
+      <div class="cp-kicker"><%- @T('Support portal') %></div>
+      <h1 class="cp-screen-title"><%- @T('Submit a new ticket') %></h1>
+    </div>
+  </header>
+
+  <form class="cp-newticket-form" autocomplete="off">
+    <input type="hidden" name="form_id" value="<%= @form_id %>"/>
+
+    <div class="cp-newticket-grid">
+      <label class="cp-field cp-field--full">
+        <span class="cp-field-lbl"><%- @T('Subject') %></span>
+        <input class="<%= 'cp-field--err' if @errors?.title %>" name="title" type="text"
+               placeholder="<%- @T('Short summary of your issue') %>">
+        <% if @errors?.title: %><span class="cp-field-err"><%- @errors.title %></span><% end %>
+      </label>
+
+      <label class="cp-field">
+        <span class="cp-field-lbl"><%- @T('Category') %></span>
+        <select name="group_id">
+          <% for g in @groups: %>
+          <option value="<%= g.id %>"><%= g.name %></option>
+          <% end %>
+        </select>
+      </label>
+
+      <div class="cp-field">
+        <span class="cp-field-lbl"><%- @T('Priority') %></span>
+        <div class="cp-seg">
+          <% for p in @priorities: %>
+          <button type="button" class="cp-seg-btn js-priority-opt <%= 'cp-seg-btn--on' if @priority is p %>" data-priority="<%= p %>">
+            <%- @T(p.charAt(0).toUpperCase() + p.slice(1)) %>
+          </button>
+          <% end %>
+        </div>
+      </div>
+
+      <label class="cp-field cp-field--full">
+        <span class="cp-field-lbl"><%- @T('Description') %></span>
+        <textarea class="<%= 'cp-field--err' if @errors?.body %>" name="body" rows="7"
+                  placeholder="<%- @T('What were you trying to do? What happened instead? Include any steps to reproduce.') %>"></textarea>
+        <% if @errors?.body: %><span class="cp-field-err"><%- @errors.body %></span><% end %>
+      </label>
+
+      <div class="cp-field cp-field--full">
+        <span class="cp-field-lbl">
+          <%- @T('Attachments') %>
+          <span class="cp-muted">(<%- @T('optional') %>)</span>
+        </span>
+        <label class="cp-drop">
+          <input class="js-file" type="file" multiple hidden>
+          <div class="cp-drop-icon">⤴</div>
+          <div>
+            <strong><%- @T('Click to choose files') %></strong>
+            <div class="cp-muted"><%- @T('Files attach to your reply when the ticket is created') %></div>
+          </div>
+        </label>
+        <div class="js-attachments cp-attach-list">
+          <% if @attachments and @attachments.length > 0: %>
+            <% for a, i in @attachments: %>
+            <div class="cp-attach-tile">
+              <span class="cp-attach-icon"><%= if a.kind is 'image' then '🖼' else '📎' %></span>
+              <div class="cp-attach-meta">
+                <div class="cp-attach-name"><%= a.name %></div>
+                <div class="cp-muted"><%= a.size %></div>
+              </div>
+              <button type="button" class="cp-attach-x js-remove-attach" data-idx="<%= i %>" title="<%- @T('Remove') %>">×</button>
+            </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="cp-form-bar">
+      <span class="cp-muted"><%- @T("You'll get an email when support replies.") %></span>
+      <div class="cp-form-bar-right">
+        <a class="cp-btn cp-btn--ghost js-cancel" href="#dashboard"><%- @T('Cancel') %></a>
+        <button class="cp-btn cp-btn--primary js-submit" type="submit"><%- @T('Submit ticket') %></button>
+      </div>
+    </div>
+  </form>
+</div>

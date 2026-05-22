@@ -261,13 +261,18 @@ class Navigation extends App.Controller
     else
       ''
 
-    navigation = $(App.view('navigation')(
+    # Customers get a fully custom sidebar that matches
+    # docs/ui-references/customer-portal/. Agents and unauth still use the
+    # legacy navigation template (showBrand controls the brand block).
+    template = if isCustomer then 'navigation_customer' else 'navigation'
+
+    navigation = $(App.view(template)(
       user: user
       isCustomer: isCustomer
       isAgent: isAgent
       showBrand: isCustomer or isAgent
       brandTitle: 'Helpdesk'
-      brandSubtitle: brandSubtitle
+      brandSubtitle: brandSubtitle.toUpperCase()
     ))
 
     @taskbar?.releaseController()
@@ -541,7 +546,7 @@ class Navigation extends App.Controller
     else
       @$('.is-active').removeClass('is-active')
     return if !url || url is '#'
-    @$(".js-menu [href=\"#{url}\"], .tasks [href=\"#{url}\"]").addClass('is-active')
+    @$(".js-menu [href=\"#{url}\"], .tasks [href=\"#{url}\"], .cp-nav-item[href=\"#{url}\"]").addClass('is-active')
 
   recentViewNavbarItemsRebuild: =>
 

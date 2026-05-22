@@ -254,13 +254,13 @@ class TicketOverviewRouter extends App.ControllerPermanent
       view: params.view
       appEl: params.appEl
 
-    # Dispatch to the faithful customer ticket list when a customer hits
-    # the my_tickets overview. The agent overview controller doesn't know
-    # how to render the wireframe layout; keeping it for agents preserves
-    # bulk-action / sort / multi-select.
+    # Dispatch to the faithful customer ticket list for any customer hit
+    # on a #ticket/view* URL. Customers only have one overview ('my_tickets')
+    # so we always render that, even on the bare #ticket/view route which
+    # previously left them on a blank screen.
     # See: docs/plans/customer-portal-redesign.md (F2)
     isCustomer = !App.User.current()?.permission('ticket.agent') and App.User.current()?.permission('ticket.customer')
-    if isCustomer and params.view is 'my_tickets'
+    if isCustomer
       App.TaskManager.execute(
         key:        'CustomerTicketList'
         controller: 'CustomerTicketList'

@@ -1,0 +1,52 @@
+<div id="navigation" class="navigation vertical">
+  <div class="cp-nav-brand">
+    <%- @Icon('logo', 'cp-nav-brand-logo') %>
+    <div class="cp-nav-brand-text">
+      <div class="cp-nav-brand-name"><%- @T(@brandTitle) %></div>
+      <% if @brandSubtitle: %><div class="cp-nav-brand-sub"><%= @brandSubtitle %></div><% end %>
+    </div>
+  </div>
+
+  <a class="cp-nav-newbtn" href="#customer_ticket_new">
+    <span class="cp-nav-newbtn-icon">+</span>
+    <span><%- @T('New ticket') %></span>
+  </a>
+
+  <nav class="cp-nav-main">
+    <a class="cp-nav-item js-nav-dashboard" href="#dashboard">
+      <span class="cp-nav-item-icon"></span>
+      <span class="cp-nav-item-name"><%- @T('Dashboard') %></span>
+    </a>
+    <a class="cp-nav-item js-nav-my-tickets" href="#ticket/view/my_tickets">
+      <span class="cp-nav-item-icon"></span>
+      <span class="cp-nav-item-name"><%- @T('My tickets') %></span>
+      <span class="cp-nav-item-badge js-my-tickets-count" data-zero-hidden="true"></span>
+    </a>
+  </nav>
+
+  <div class="cp-nav-section"><%- @T('Filters') %></div>
+  <nav class="cp-nav-main">
+    <a class="cp-nav-item cp-nav-item--quiet" href="#ticket/view/my_tickets" data-filter="open">
+      <span class="cp-nav-dot cp-nav-dot--open"></span>
+      <span class="cp-nav-item-name"><%- @T('Open') %></span>
+    </a>
+    <a class="cp-nav-item cp-nav-item--quiet" href="#ticket/view/my_tickets" data-filter="pending">
+      <span class="cp-nav-dot cp-nav-dot--pend"></span>
+      <span class="cp-nav-item-name"><%- @T('Awaiting you') %></span>
+    </a>
+    <a class="cp-nav-item cp-nav-item--quiet" href="#ticket/view/my_tickets" data-filter="resolved">
+      <span class="cp-nav-dot cp-nav-dot--res"></span>
+      <span class="cp-nav-item-name"><%- @T('Resolved') %></span>
+    </a>
+    <a class="cp-nav-item cp-nav-item--quiet" href="#ticket/view/my_tickets" data-filter="closed">
+      <span class="cp-nav-dot cp-nav-dot--closed"></span>
+      <span class="cp-nav-item-name"><%- @T('Closed') %></span>
+    </a>
+  </nav>
+
+  <div class="cp-nav-spacer"></div>
+
+  <% if !_.isEmpty(@user): %>
+    <ul class="user-menu navbar-items-personal cp-nav-user"></ul>
+  <% end %>
+</div>

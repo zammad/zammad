@@ -1,0 +1,12 @@
+<% if @attachments.length > 0: %>
+  <% for a, i in @attachments: %>
+  <div class="cp-attach-tile">
+    <span class="cp-attach-icon"><%= if a.kind is 'image' then '🖼' else '📎' %></span>
+    <div class="cp-attach-meta">
+      <div class="cp-attach-name"><%= a.name %></div>
+      <div class="cp-muted"><%= a.size %></div>
+    </div>
+    <button type="button" class="cp-attach-x js-remove-attach" data-idx="<%= i %>" title="<%- @T('Remove') %>">×</button>
+  </div>
+  <% end %>
+<% end %>
