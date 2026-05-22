@@ -17260,5 +17260,82 @@ body.is-agent-console {
   .overviews .table-overview .icon {
     color: var(--ac-ink-3);
   }
+
+  // ---------------------------------------------------------------------------
+  // Ticket detail reskin (Phase 5) — agent ticket zoom
+  // ---------------------------------------------------------------------------
+  .ticketZoom {
+    background: var(--ac-bg);
+  }
+
+  .ticketZoom-header {
+    padding: 22px 28px 16px;
+    border-bottom: 1px solid var(--ac-border);
+    background: var(--ac-bg);
+
+    .ticket-title h1,
+    .ticket-title h2 {
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      font-weight: 600;
+      color: var(--ac-ink);
+      margin: 0;
+    }
+
+    .js-ticketMetaContainer {
+      font-size: 13px;
+      color: var(--ac-ink-3);
+    }
+  }
+
+  .ticket-article {
+    padding: 18px 28px;
+    background: var(--ac-bg);
+  }
+
+  // Each article as a rounded card
+  .ticket-article .ticket-article-item {
+    background: var(--ac-surface);
+    border: 1px solid var(--ac-border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+
+  // Internal notes get a warm tint to distinguish from public replies.
+  .ticket-article .ticket-article-item.internal {
+    background: hsl(45, 90%, 98%);
+    border-color: hsl(45, 70%, 86%);
+  }
+
+  // Reply / composer
+  .article-new {
+    padding: 0 28px 28px;
+  }
+
+  .article-new .article-new-edit {
+    background: var(--ac-surface);
+    border: 1px solid var(--ac-border);
+    border-radius: 12px;
+  }
+
+  // Right attribute sidebar
+  .tabsSidebar {
+    background: var(--ac-surface-2);
+    border-left: 1px solid var(--ac-border);
+  }
+
+  // Bottom attribute bar
+  .attributeBar {
+    background: var(--ac-surface-2);
+    border-top: 1px solid var(--ac-border);
+  }
+
+  .attributeBar .btn--primary {
+    background: var(--ac-accent);
+    border-color: var(--ac-accent);
+    color: hsl(0, 0%, 99%);
+  }
 }
 
