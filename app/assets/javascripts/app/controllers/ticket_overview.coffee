@@ -28,17 +28,20 @@ class App.TicketOverview extends App.Controller
     )
 
     @navBarController.releaseController() if @navBarController
-    @navBarController = new App.TicketOverviewNavbar(
-      el:   elLocal.filter('.sidebar')
-      view: @view
-    )
 
     # Customers reach 'My Tickets' from the global left nav (see
     # TicketViewMyTickets NavBar config below), so the per-page
-    # overview sidebar is redundant for them. Hide it to give the
-    # ticket table the full width.
-    if !App.User.current().permission('ticket.agent')
-      elLocal.filter('.sidebar').addClass('hide')
+    # overview sidebar is redundant for them. Drop the .sidebar
+    # element entirely and skip the controller so the ticket table
+    # gets the full width.
+    if App.User.current().permission('ticket.agent')
+      @navBarController = new App.TicketOverviewNavbar(
+        el:   elLocal.filter('.sidebar')
+        view: @view
+      )
+    else
+      elLocal.filter('.sidebar').remove()
+      @navBarController = undefined
 
     @contentController.releaseController() if @contentController
     @contentController = new App.TicketOverviewTable(
