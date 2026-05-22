@@ -9,7 +9,6 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Tag, authenticated_as: :agent, 
     let!(:tags)        do
       create_list(:tag_item, 3).each_with_index do |tag, i|
         tag.name = "TagAutoComplete#{i}"
-        tag.name_downcase = tag.name.downcase
         tag.save!
       end
     end

@@ -103,8 +103,9 @@ RSpec.describe Tag, type: :request do
 
       context 'without search term' do
         before do
-          create_list(:tag, 2, tag_item: tags.last)
-          create_list(:tag, 1, tag_item: tags.first)
+          create(:tag, tag_item: tags.last, o: create(:ticket, group: Ticket.first.group))
+          create(:tag, tag_item: tags.last, o: create(:ticket, group: Ticket.first.group))
+          create(:tag, tag_item: tags.first, o: create(:ticket, group: Ticket.first.group))
         end
 
         it 'most used is on first place without search term' do

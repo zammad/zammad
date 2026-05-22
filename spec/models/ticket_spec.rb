@@ -1365,7 +1365,9 @@ RSpec.describe Ticket, type: :model do
       end
 
       it 'deletes all related Tags on destroy' do
-        create_list(:tag, 3, o: ticket)
+        create(:tag, o: ticket, tag: 'foo')
+        create(:tag, o: ticket, tag: 'bar')
+        create(:tag, o: ticket, tag: 'asd')
 
         expect { ticket.destroy }
           .to change { Tag.exists?(tag_object_id: Tag::Object.lookup(name: 'Ticket').id, o_id: ticket.id) }

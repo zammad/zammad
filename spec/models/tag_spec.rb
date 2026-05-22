@@ -7,6 +7,8 @@ RSpec.describe Tag, type: :model do
 
   let!(:ticket) { create(:ticket) }
 
+  it { is_expected.to validate_uniqueness_of(:tag_item_id).scoped_to(:tag_object_id, :o_id) }
+
   shared_examples 'tag adding' do
     context 'when a Tag::Object does not exist for the given class' do
       it 'creates it and assigns it to a new Tag' do
@@ -59,12 +61,13 @@ RSpec.describe Tag, type: :model do
 
       context 'but the name is a case-sensitive variant of an existing Tag::Item' do
         let!(:tag_item) { create(:'tag/item', name: 'foo') }
+        let(:ticket)    { create(:ticket) }
 
-        it 'creates it and assigns it to a new Tag' do
-          expect { described_class.tag_add(object: 'Ticket', item: 'FOO', o_id: 1, created_by_id: 1) }
+        it 'assigns it to an existing Tag' do
+          expect { described_class.tag_add(object: 'Ticket', item: 'FOO', o_id: ticket.id, created_by_id: 1) }
             .to change(described_class, :count).by(1)
-            .and change { Tag::Item.pluck(:name).include?('FOO') }.to(true)
-            .and change { described_class.last&.tag_item&.name }.to('FOO')
+            .and not_change { Tag::Item.pluck(:name) }
+            .and change { described_class.last&.tag_item }.to(tag_item)
         end
       end
     end
@@ -178,13 +181,13 @@ RSpec.describe Tag, type: :model do
         [
           create(:'tag/item', name: 'foo'),
           create(:'tag/item', name: 'bar'),
-          create(:'tag/item', name: 'BAR'),
+          create(:'tag/item', name: 'BAZ'),
         ]
       end
 
       it 'returns all tag names (case-sensitive) for a given record' do
         expect(described_class.tag_list(object: 'Ticket', o_id: ticket.id))
-          .to match_array(%w[foo bar BAR])
+          .to match_array(%w[foo bar BAZ])
       end
     end
 
@@ -195,13 +198,13 @@ RSpec.describe Tag, type: :model do
         [
           create(:'tag/item', name: 'fooöäüß'),
           create(:'tag/item', name: 'baröäüß'),
-          create(:'tag/item', name: 'BARöäüß'),
+          create(:'tag/item', name: 'BÄRöäüß'),
         ]
       end
 
       it 'returns all tag names (case-sensitive) for a given record' do
         expect(described_class.tag_list(object: 'Ticket', o_id: ticket.id))
-          .to match_array(%w[fooöäüß baröäüß BARöäüß])
+          .to match_array(%w[fooöäüß baröäüß BÄRöäüß])
       end
     end
   end
@@ -269,6 +272,26 @@ RSpec.describe Tag, type: :model do
       it 'does allow existing tags for admins (tag_new=false)' do
         expect(described_class.tag_allowed?(name: 'test123', user_id: admin.id)).to be(true)
       end
+    end
+  end
+
+  describe '.tags_include?' do
+    let(:ticket) { create(:ticket) }
+
+    before do
+      ticket.tag_add 'foo', 1
+    end
+
+    it 'returns true when a given tag is included' do
+      expect(described_class).to be_tags_include('foo', object: 'Ticket', o_id: ticket.id)
+    end
+
+    it 'returns true when a different capitalization of a given tag is included' do
+      expect(described_class).to be_tags_include('FOO', object: 'Ticket', o_id: ticket.id)
+    end
+
+    it 'returns false when a given tag is not included' do
+      expect(described_class).not_to be_tags_include('bar', object: 'Ticket', o_id: ticket.id)
     end
   end
 end

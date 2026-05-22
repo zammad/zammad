@@ -86,7 +86,9 @@ const { notify } = useNotifications()
 const addNewTag = (value: unknown) => {
   const tag = value as string // needed due to `onInput` signature
 
-  if (!props.ticket?.id || !tag || tags.value.includes(tag)) return
+  const lowerCaseTags = tags.value.map((elem) => elem.toLowerCase())
+
+  if (!props.ticket?.id || !tag || lowerCaseTags.includes(tag.toLowerCase())) return
 
   const ticketTags = [...(props.ticket.tags || []), tag]
 

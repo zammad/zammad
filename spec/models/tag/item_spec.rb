@@ -2,8 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Tag::Item do
+RSpec.describe Tag::Item, type: :model do
   subject(:item) { create(:'tag/item') }
+
+  it { is_expected.to validate_uniqueness_of(:name).case_insensitive }
 
   describe '.rename' do
     let!(:ticket) { create(:ticket) }

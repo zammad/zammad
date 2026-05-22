@@ -343,11 +343,10 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :tag_objects, [:name], unique: true
 
     create_table :tag_items do |t|
-      t.string :name,                   limit: 250, null: false
-      t.string :name_downcase,          limit: 250, null: false
+      t.string :name, limit: 250, null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :tag_items, [:name_downcase]
+    add_index :tag_items, 'LOWER(name)', unique: true, name: 'index_tag_items_on_lower_name'
 
     create_table :tags do |t|
       t.references :tag_item,                       null: false
@@ -358,6 +357,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     end
     add_index :tags, [:o_id]
     add_index :tags, [:tag_object_id]
+    add_index :tags, %i[tag_item_id tag_object_id o_id], unique: true
     add_foreign_key :tags, :tag_items
     add_foreign_key :tags, :tag_objects
     add_foreign_key :tags, :users, column: :created_by_id
