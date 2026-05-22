@@ -252,7 +252,14 @@ class Navigation extends App.Controller
     ))
 
     @taskbar?.releaseController()
-    @taskbar = new App.TaskbarWidget(el: navigation.find('.tasks'))
+    # Customers do not work in a multi-tab task workflow — drop the
+    # per-ticket task tabs from the global left nav so opening a
+    # ticket detail page does not grow the menu dynamically.
+    if App.User.current()?.permission('ticket.agent')
+      @taskbar = new App.TaskbarWidget(el: navigation.find('.tasks'))
+    else
+      @taskbar = undefined
+      navigation.find('.tasks').remove()
 
     if @appEl.find('#navigation').length < 1
       @appEl.prepend('<div id="navigation"></div>')
