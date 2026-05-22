@@ -76,6 +76,43 @@ class App.CustomerDashboard extends App.ControllerAppContent
   unreadCount: ->
     App.OnlineNotification.all().filter((n) -> !n.seen).length
 
+  relTime: (iso) ->
+    return '' if !iso
+    diff = Date.now() - new Date(iso).getTime()
+    minute = 60 * 1000
+    hour = 60 * minute
+    day = 24 * hour
+    if diff < minute then 'just now'
+    else if diff < hour then "#{Math.round(diff / minute)}m ago"
+    else if diff < day then "#{Math.round(diff / hour)}h ago"
+    else "#{Math.round(diff / day)}d ago"
+
+  initialsFor: (name) ->
+    return '?' if !name
+    parts = (name + '').trim().split(/\s+/).slice(0, 2)
+    (parts.map (p) -> (p[0] or '').toUpperCase()).join('') or '?'
+
+  # Best-guess "who last spoke" on a ticket using the fields that come back
+  # with the overview list. Without per-ticket articles we can't show the
+  # actual agent name, so we use the contact-at timestamps to infer whether
+  # the agent or the customer was last.
+  lastAuthor: (ticketId) =>
+    ticket = App.Ticket.find(ticketId)
+    return { name: __('You'), initials: 'YOU', isAgent: false } if !ticket
+
+    agentAt    = if ticket.last_contact_agent_at then new Date(ticket.last_contact_agent_at) else null
+    customerAt = if ticket.last_contact_customer_at then new Date(ticket.last_contact_customer_at) else null
+    isAgent = agentAt and (!customerAt or agentAt > customerAt)
+
+    if isAgent
+      ownerUser = if ticket.owner_id and ticket.owner_id isnt 1 then App.User.find(ticket.owner_id) else null
+      name = ownerUser?.fullname or __('Support')
+      { name: name, initials: @initialsFor(name), isAgent: true }
+    else
+      me = App.User.current()
+      name = me?.fullname or me?.login or __('You')
+      { name: __('You'), initials: @initialsFor(name), isAgent: false }
+
   render: =>
     tickets = @data?.tickets or []
     counts = @computeCounts(tickets)
@@ -94,6 +131,8 @@ class App.CustomerDashboard extends App.ControllerAppContent
       ticketState: (id) -> App.TicketState.find(App.Ticket.find(id)?.state_id)?.name or ''
       ticketTitle: (id) -> App.Ticket.find(id)?.title or '(no title)'
       ticketUpdatedAt: (id) -> App.Ticket.find(id)?.updated_at
+      relTime:     (iso) => @relTime(iso)
+      lastAuthor:  (id) => @lastAuthor(id)
     )
 
   greetingFor: (now, user) ->
