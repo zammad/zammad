@@ -44,7 +44,6 @@ Rails.application.config.content_security_policy do |policy| # rubocop:disable M
   policy.default_src     :self
   policy.connect_src     :self, :ws, :wss, 'https://images.zammad.com'
   policy.font_src        :self, :data
-  policy.form_action     :self, :https
   policy.frame_ancestors :self
   policy.frame_src       'https://www.youtube.com', 'https://player.vimeo.com'
   policy.img_src         '*', :data, :blob

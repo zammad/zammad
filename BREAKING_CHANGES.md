@@ -11,8 +11,8 @@ untouched and must be migrated manually due to the URL change.
 
 ### Stricter default Content-Security-Policy
 
-Two new directives were added to the default Content-Security-Policy header:
-`frame-ancestors 'self'` and `form-action 'self' https:`.
+A new `frame-ancestors 'self'` directive was added to the default
+Content-Security-Policy header.
 
 ⚠️ Setups that previously allowed the Zammad web interface to be embedded in
 an `<iframe>` on a different origin by overriding the `X-Frame-Options` header
