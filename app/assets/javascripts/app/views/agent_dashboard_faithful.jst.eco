@@ -1,0 +1,123 @@
+<div class="ac-screen">
+  <header class="ac-screen-head">
+    <div>
+      <div class="ac-kicker"><%- @T('Agent console') %></div>
+      <h1 class="ac-screen-title"><%- @greeting %></h1>
+    </div>
+    <div class="ac-screen-actions">
+      <a class="ac-btn ac-btn--ghost" href="#ticket/view"><%- @T('Open overviews') %></a>
+      <a class="ac-btn ac-btn--primary" href="#ticket/create">
+        <span class="ac-btn-icon">+</span> <%- @T('New ticket') %>
+      </a>
+    </div>
+  </header>
+
+  <div class="ac-dash">
+    <div class="ac-dash-main">
+
+      <div class="ac-metric-grid">
+        <div class="ac-metric">
+          <div class="ac-metric-lbl"><%- @T('My open') %></div>
+          <div class="ac-metric-val"><%= @myOpen %><span class="ac-metric-unit"><%- @T('tickets') %></span></div>
+          <div class="ac-metric-sub"><%- @T('assigned to me') %></div>
+        </div>
+        <div class="ac-metric">
+          <div class="ac-metric-lbl"><%- @T('Unassigned open') %></div>
+          <div class="ac-metric-val"><%= @unassigned %></div>
+          <div class="ac-metric-sub"><%- @T('need owners') %></div>
+        </div>
+        <div class="ac-metric ac-metric--muted">
+          <div class="ac-metric-lbl"><%- @T('Avg handle time') %></div>
+          <div class="ac-metric-val">—</div>
+          <div class="ac-metric-sub"><%- @T('reporting not exposed yet') %></div>
+        </div>
+        <div class="ac-metric ac-metric--muted">
+          <div class="ac-metric-lbl"><%- @T('First-reply rate') %></div>
+          <div class="ac-metric-val">—</div>
+          <div class="ac-metric-sub"><%- @T('reporting not exposed yet') %></div>
+        </div>
+      </div>
+
+      <section class="ac-card">
+        <div class="ac-card-head">
+          <h2><%- @T('My open tickets') %></h2>
+          <a class="ac-link" href="#ticket/view/my_assigned"><%- @T('View all') %> →</a>
+        </div>
+        <% if @myOpen > 0: %>
+        <div class="ac-card-body ac-card-body--cta">
+          <a class="ac-btn ac-btn--ghost" href="#ticket/view/my_assigned"><%- @T('Open the My Assigned overview') %></a>
+        </div>
+        <% else: %>
+        <div class="ac-empty"><%- @T('Nothing open assigned to you.') %></div>
+        <% end %>
+      </section>
+
+      <section class="ac-card">
+        <div class="ac-card-head">
+          <h2><%- @T('Unassigned & open') %></h2>
+          <a class="ac-link" href="#ticket/view/unassigned_open"><%- @T('View all') %> →</a>
+        </div>
+        <% if @unassigned > 0: %>
+        <div class="ac-card-body ac-card-body--cta">
+          <a class="ac-btn ac-btn--ghost" href="#ticket/view/unassigned_open"><%- @T('Open the Unassigned overview') %></a>
+        </div>
+        <% else: %>
+        <div class="ac-empty"><%- @T('No unassigned open tickets.') %></div>
+        <% end %>
+      </section>
+
+    </div>
+
+    <aside class="ac-dash-aside">
+
+      <section class="ac-card">
+        <div class="ac-card-head">
+          <h2><%- @T('SLA at risk') %></h2>
+          <span class="ac-card-meta"><%= @slaAtRisk.length %></span>
+        </div>
+        <% if @slaAtRisk.length > 0: %>
+        <ul class="ac-list">
+          <% for t in @slaAtRisk: %>
+          <li>
+            <a class="ac-list-row" href="#ticket/zoom/<%= t.id %>">
+              <div class="ac-list-title"><%= t.title %></div>
+              <div class="ac-list-meta">
+                <span class="ac-tid">#<%= t.number %></span>
+                <% if t.customer_name: %><span>· <%= t.customer_name %></span><% end %>
+              </div>
+              <% urgency = @slaUrgency(t.escalation_at) %>
+              <% if urgency: %>
+              <span class="ac-sla ac-sla--<%= urgency %>">SLA <%= @relTime(t.escalation_at) %></span>
+              <% end %>
+            </a>
+          </li>
+          <% end %>
+        </ul>
+        <% else: %>
+        <div class="ac-empty"><%- @T('Nothing breaching in the next 24h.') %></div>
+        <% end %>
+      </section>
+
+      <section class="ac-card">
+        <div class="ac-card-head">
+          <h2><%- @T('Team workload') %></h2>
+        </div>
+        <% if @workload.length > 0: %>
+          <% maxLoad = Math.max.apply(null, @workload.map((w) -> w.open_count)) or 1 %>
+          <% for w in @workload: %>
+          <div class="ac-workload-row">
+            <div class="ac-workload-name"><%= w.name %></div>
+            <div class="ac-workload-bar">
+              <div style="width: <%= Math.round((w.open_count / maxLoad) * 100) %>%"></div>
+            </div>
+            <div class="ac-workload-count"><%= w.open_count %></div>
+          </div>
+          <% end %>
+        <% else: %>
+        <div class="ac-empty"><%- @T('No active agents.') %></div>
+        <% end %>
+      </section>
+
+    </aside>
+  </div>
+</div>
