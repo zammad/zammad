@@ -29,7 +29,7 @@ class Controllers::KnowledgeBase::CategoriesControllerPolicy < Controllers::Know
 
   def verify_parent
     if record.params[:parent_id].blank?
-      parent = object.knowledge_base
+      parent = KnowledgeBase.find(record.params[:knowledge_base_id])
 
       return KnowledgeBasePolicy.new(user, parent).update?
     end
