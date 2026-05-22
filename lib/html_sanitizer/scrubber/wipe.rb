@@ -3,6 +3,13 @@
 class HtmlSanitizer
   module Scrubber
     class Wipe < Base
+
+      # Allowed paths for Zammad API endpoints that can be used in <img src> or srcset attributes.
+      ALLOWED_ZAMMAD_API_PATHS = %w[
+        api/v1/attachments/
+        api/v1/ticket_attachment/
+      ].freeze
+
       attr_reader :remote_content_removed
 
       def initialize # rubocop:disable Lint/MissingSuper
@@ -127,7 +134,7 @@ class HtmlSanitizer
 
         src = cleanup_target(CGI.unescape(node['src']))
 
-        return if !unsafe_protocol?(src) && !remote_url?(src)
+        return if !unsafe_protocol?(src) && !remote_url?(src) && !unsafe_api_path?(src)
 
         node.remove
         @remote_content_removed = true if remote_url?(src)
@@ -141,14 +148,14 @@ class HtmlSanitizer
         candidates      = parse_srcset_candidates(node['srcset'])
         safe_candidates = candidates.select do |candidate|
           url = cleanup_target(CGI.unescape(candidate[:url]))
-          if unsafe_protocol?(url)
-            false
-          elsif remote_url?(url)
+          next if unsafe_protocol?(url) || unsafe_api_path?(url)
+
+          if remote_url?(url)
             remote_removed = true
-            false
-          else
-            true
+            next
           end
+
+          true
         end
 
         return if safe_candidates.length == candidates.length
@@ -270,6 +277,23 @@ class HtmlSanitizer
 
       def remote_url?(string)
         string.downcase.start_with?('http://', 'https://', 'ftp://', '//')
+      end
+
+      def unsafe_api_path?(string)
+
+        # block path traversal (../, ./)
+        normalized = string.sub(%r{\A(?:\./|\.\./)+}, '')
+        return true if normalized != string
+
+        # only /api/... paths are in scope; non-API paths pass through
+        return false if !normalized.match?(%r{\A/?api/}i)
+
+        stripped = normalized.delete_prefix('/')
+
+        # allowlist: prefix match for sub-paths, equality for exact bare paths
+        return false if ALLOWED_ZAMMAD_API_PATHS.any? { |path| stripped.start_with?(path) || stripped == path.delete_suffix('/') }
+
+        true
       end
 
       def cleanup_target(string, **options)
