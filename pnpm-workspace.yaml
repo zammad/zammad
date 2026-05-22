@@ -1,6 +1,4 @@
 ---
-nodeLinker: isolated
-
 allowBuilds:
   core-js-pure: true
   esbuild: true
