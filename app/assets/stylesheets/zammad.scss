@@ -13943,6 +13943,35 @@ output {
     display: block;
   }
 
+  &.is-loading {
+    cursor: default;
+
+    .batch-overlay-circle,
+    .batch-overlay-cancel,
+    .batch-overlay-box {
+      visibility: hidden !important;
+    }
+  }
+
+  &-loading {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+
+    .is-loading & {
+      display: flex;
+    }
+  }
+
+  &-loading-label {
+    @include bidi-style(margin-left, 10px, margin-right, 0);
+
+    margin-top: 1px;
+  }
+
   &-backdrop {
     @extend .fit;
 

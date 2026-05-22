@@ -5,8 +5,8 @@ InstanceMethods =
   ajax_mass_macro: (data, success) ->
     @ajax_mass('macro', data, success)
 
-  ajax_mass: (path, data, success) ->
-    @startLoading()
+  ajax_mass: (path, data, success, options = {}) ->
+    @startLoading() if !options.skipLoading
 
     @ajax(
       id: 'bulk_update'
@@ -26,6 +26,7 @@ InstanceMethods =
 
       error: (xhr, status, error) =>
         @stopLoading()
+        options.onError?()
 
         return if xhr.status != 422
 

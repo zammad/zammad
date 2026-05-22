@@ -18,3 +18,7 @@
   <div class="batch-overlay-assign-group-name js-batch-assign-group-name"></div>
   <div class="batch-overlay-box-inner js-batch-assign-group-inner"></div>
 </div>
+<div class="batch-overlay-loading">
+  <div class="small loading icon"></div>
+  <div class="batch-overlay-loading-label"><%- @T('Executing bulk action…') %></div>
+</div>

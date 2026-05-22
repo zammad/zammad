@@ -2678,7 +2678,7 @@ msgstr ""
 msgid "Bulk action executed!"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:38
+#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:39
 msgid "Bulk action failed"
 msgstr ""
 
@@ -7054,6 +7054,10 @@ msgstr ""
 
 #: db/seeds/schedulers.rb:34
 msgid "Execute planned jobs."
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco:23
+msgid "Executing bulk action…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:22
@@ -18394,7 +18398,7 @@ msgstr ""
 msgid "Ticket escalation"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:33
+#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:34
 msgid "Ticket failed to save: %s"
 msgstr ""
 
