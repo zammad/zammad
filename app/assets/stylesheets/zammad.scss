@@ -16637,5 +16637,81 @@ body.is-customer-portal {
   .overviews .table-overview tbody td.js-state {
     color: var(--cp-ink-2);
   }
+
+  // ---------------------------------------------------------------------------
+  // TicketDetail reskin (Phase 4)
+  // ---------------------------------------------------------------------------
+  .ticketZoom {
+    background: var(--cp-bg);
+  }
+
+  .ticketZoom-header {
+    padding: 22px 28px 16px;
+    border-bottom: 1px solid var(--cp-border);
+    background: var(--cp-bg);
+
+    .ticket-title h1,
+    .ticket-title h2 {
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      font-weight: 600;
+      color: var(--cp-ink);
+      margin: 0;
+    }
+
+    .js-ticketMetaContainer {
+      font-size: 13px;
+      color: var(--cp-ink-3);
+    }
+  }
+
+  .ticket-article {
+    padding: 18px 28px;
+    background: var(--cp-bg);
+  }
+
+  // Each article card — clean light surface with rounded corners
+  .ticket-article .ticket-article-item {
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+
+  .ticket-article .ticket-article-item .internal-border,
+  .ticket-article .ticket-article-item .ticket-article-item-meta {
+    color: var(--cp-ink-2);
+  }
+
+  // Reply box
+  .article-new {
+    padding: 0 28px 28px;
+  }
+
+  .article-new .article-new-edit {
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: 12px;
+  }
+
+  // Right attribute sidebar — reduce visual weight for customers
+  .tabsSidebar {
+    background: var(--cp-surface-2);
+    border-left: 1px solid var(--cp-border);
+  }
+
+  // Bottom attribute bar
+  .attributeBar {
+    background: var(--cp-surface-2);
+    border-top: 1px solid var(--cp-border);
+  }
+
+  .attributeBar .btn--primary {
+    background: var(--cp-accent);
+    border-color: var(--cp-accent);
+    color: hsl(0, 0%, 99%);
+  }
 }
 
