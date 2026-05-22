@@ -2,6 +2,13 @@
 
 ## 7.2
 
+### Deprecated `es-ca` locale inactivated
+
+The deprecated `es-ca` locale (Catalan) is no longer offered for selection.
+Users still set to `es-ca` are automatically migrated to the proper `ca`
+locale. Existing Knowledge Base locales referencing `es-ca` are left
+untouched and must be migrated manually due to the URL change.
+
 ### Stricter default Content-Security-Policy
 
 Two new directives were added to the default Content-Security-Policy header:
