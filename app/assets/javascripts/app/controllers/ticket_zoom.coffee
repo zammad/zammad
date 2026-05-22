@@ -1431,6 +1431,19 @@ class TicketZoomRouter extends App.ControllerPermanent
       nav:        params.nav
       shown:      true
 
+    # Dispatch to the faithful customer ticket detail when the user is a
+    # customer (no ticket.agent perm). Agents still get the full TicketZoom.
+    # See: docs/plans/customer-portal-redesign.md (F3)
+    isCustomer = !App.User.current()?.permission('ticket.agent') and App.User.current()?.permission('ticket.customer')
+    if isCustomer
+      App.TaskManager.execute(
+        key:        "Ticket-#{params.ticket_id}"
+        controller: 'CustomerTicketDetail'
+        params:     clean_params
+        show:       true
+      )
+      return
+
     App.TaskManager.execute(
       key:        "Ticket-#{@ticket_id}"
       controller: 'TicketZoom'
