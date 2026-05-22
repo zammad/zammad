@@ -16713,5 +16713,129 @@ body.is-customer-portal {
     border-color: var(--cp-accent);
     color: hsl(0, 0%, 99%);
   }
+
+  // ---------------------------------------------------------------------------
+  // NewTicket form reskin (Phase 5)
+  // ---------------------------------------------------------------------------
+  .newTicket {
+    background: var(--cp-bg);
+  }
+
+  .newTicket .box.box--newTicket {
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .newTicket .page-header {
+    padding: 22px 28px 16px;
+    border-bottom: 1px solid var(--cp-border);
+    background: var(--cp-bg);
+    margin: 0;
+  }
+
+  .newTicket .page-header h1 {
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+    color: var(--cp-ink);
+    margin: 0;
+  }
+
+  .newTicket .page-content {
+    padding: 18px 28px 28px;
+  }
+
+  // Wrap the form in a card
+  .newTicket .ticket-create {
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: 12px;
+    padding: 18px 22px 14px;
+  }
+
+  .newTicket .formset-inset {
+    padding: 0;
+  }
+
+  .newTicket .form-group {
+    margin-bottom: 14px;
+  }
+
+  .newTicket label,
+  .newTicket .formGroup-label label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cp-ink-2);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-bottom: 4px;
+  }
+
+  .newTicket input[type='text'],
+  .newTicket input[type='search'],
+  .newTicket textarea,
+  .newTicket select {
+    border: 1px solid var(--cp-border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: var(--cp-surface);
+    color: var(--cp-ink);
+    font-size: 13.5px;
+  }
+
+  .newTicket input[type='text']:focus,
+  .newTicket input[type='search']:focus,
+  .newTicket textarea:focus,
+  .newTicket select:focus {
+    border-color: var(--cp-accent);
+    box-shadow: 0 0 0 3px var(--cp-accent-ring);
+    outline: none;
+  }
+
+  .newTicket .form-controls {
+    border-top: 1px solid var(--cp-border);
+    padding-top: 14px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .newTicket .form-controls .js-cancel {
+    color: var(--cp-ink-2);
+  }
+
+  .newTicket .form-controls .js-cancel:hover {
+    color: var(--cp-ink);
+    background: var(--cp-surface-3);
+    border-radius: 6px;
+  }
+
+  .newTicket .btn--success,
+  .newTicket .btn.js-submit {
+    background: var(--cp-accent);
+    border-color: var(--cp-accent);
+    color: hsl(0, 0%, 99%);
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-weight: 600;
+  }
+
+  .newTicket .btn--success:hover,
+  .newTicket .btn.js-submit:hover {
+    filter: brightness(0.95);
+    background: var(--cp-accent);
+    color: hsl(0, 0%, 99%);
+  }
+
+  // Hide the right tabsSidebar on the new-ticket page for customers —
+  // it's empty (customers don't author template snippets or shared drafts).
+  .newTicket + .tabsSidebar,
+  .tabsSidebar-holder > .tabsSidebar {
+    display: none;
+  }
 }
 
