@@ -30,7 +30,7 @@ namespace :zammad do
       puts 'Preserve symlinks option activated, putting PNPM node linker into hoisted mode'
 
       # pnpm v11 no longer reads non-auth settings from pnpm_config_* env vars.
-      # nodeLinker must be set via pnpm-workspace.yaml or the global user config.
+      # nodeLinker must be set via pnpm-workspace.yaml (global config is ignored for this setting).
       config_file = Rails.root.join('pnpm-workspace.yaml').to_s
 
       config               = File.exist?(config_file) ? (YAML.safe_load_file(config_file) || {}) : {}
