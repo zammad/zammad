@@ -16130,3 +16130,150 @@ div.accounted-time-value {
     margin: 0;
   }
 }
+
+// =============================================================================
+// Customer portal theme (Phase 1 of customer-portal-redesign)
+// See docs/plans/customer-portal-redesign.md
+//
+// Everything below is scoped under body.is-customer-portal so the agent UI
+// stays untouched. The body class is added in _plugin/navigation.coffee
+// for users with ticket.customer permission and without ticket.agent.
+// =============================================================================
+
+body.is-customer-portal {
+  // Light tokens derived from the wireframe (oklch via hsl approximations
+  // so dartsass + legacy browser compat is fine).
+  --cp-bg:        hsl(60, 25%, 98%);
+  --cp-surface:   hsl(0, 0%, 100%);
+  --cp-surface-2: hsl(60, 14%, 97%);
+  --cp-surface-3: hsl(60, 12%, 94%);
+  --cp-border:    hsl(60, 8%, 90%);
+  --cp-border-2:  hsl(60, 8%, 84%);
+  --cp-ink:       hsl(210, 14%, 18%);
+  --cp-ink-2:     hsl(210, 8%, 38%);
+  --cp-ink-3:     hsl(210, 6%, 56%);
+  --cp-accent:      hsl(232, 70%, 56%);
+  --cp-accent-soft: hsl(232, 64%, 95%);
+  --cp-accent-ring: hsla(232, 70%, 56%, 0.18);
+
+  background: var(--cp-bg);
+
+  // -------------------------------------------------------------------------
+  // Sidebar reskin
+  // -------------------------------------------------------------------------
+  #navigation.navigation {
+    background: var(--cp-surface-2);
+    border-right: 1px solid var(--cp-border);
+    border-left: none;
+    padding: 14px 10px;
+    gap: 4px;
+  }
+
+  // Brand block (logo + Helpdesk + org name) injected at top.
+  .customer-portal-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px 14px;
+    border-bottom: 1px solid var(--cp-border);
+    margin-bottom: 6px;
+    flex-shrink: 0;
+  }
+
+  .customer-portal-brand-logo {
+    width: 22px;
+    height: 22px;
+    color: var(--cp-accent);
+    flex-shrink: 0;
+  }
+
+  .customer-portal-brand-text {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .customer-portal-brand-name {
+    font-weight: 700;
+    color: var(--cp-ink);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .customer-portal-brand-sub {
+    font-size: 11px;
+    color: var(--cp-ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // Hide the search bar and floating logo block for customers — the
+  // brand block replaces them. Global search will return in a later phase.
+  #navigation .search {
+    display: none;
+  }
+
+  // Menu items (Overviews, My Tickets) take the light pill style.
+  #navigation .menu .menu-item {
+    color: var(--cp-ink-2);
+    border-radius: 6px;
+    padding: 7px 10px;
+    margin: 0;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+
+    &:hover {
+      background: var(--cp-surface-3);
+      color: var(--cp-ink);
+    }
+
+    &.is-active {
+      background: var(--cp-accent-soft);
+      color: var(--cp-accent);
+      font-weight: 600;
+
+      .menu-item-icon {
+        color: var(--cp-accent);
+      }
+    }
+
+    .menu-item-icon {
+      color: var(--cp-ink-3);
+    }
+
+    .menu-item-name {
+      font-size: 13.5px;
+    }
+
+    // Counter badge (My Tickets unread/open count)
+    .counter.badge {
+      background: var(--cp-accent);
+      color: hsl(0, 0%, 99%);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 999px;
+      min-width: 20px;
+      text-align: center;
+    }
+  }
+
+  // User card area at the bottom (avatar widget + sign-out)
+  // navbar-items-personal is already pinned to bottom via margin-top:auto
+  // from the customer-portal-unified-nav phase.
+  .navbar-items-personal {
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: 8px;
+    padding: 6px;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+

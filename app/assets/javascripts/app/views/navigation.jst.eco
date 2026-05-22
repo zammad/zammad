@@ -1,4 +1,13 @@
 <div id="navigation" class="navigation vertical">
+  <% if @isCustomer: %>
+  <div class="customer-portal-brand">
+    <%- @Icon('logo', 'customer-portal-brand-logo') %>
+    <div class="customer-portal-brand-text">
+      <div class="customer-portal-brand-name"><%- @T(@brandTitle) %></div>
+      <% if @brandSubtitle: %><div class="customer-portal-brand-sub"><%= @brandSubtitle %></div><% end %>
+    </div>
+  </div>
+  <% end %>
   <div class="search">
     <form class="search-holder">
       <input id="global-search" type="search" autocomplete="off">
