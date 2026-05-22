@@ -1,0 +1,78 @@
+<div class="customer-ticket-list">
+  <header class="cp-screen-head">
+    <div>
+      <div class="cp-kicker"><%- @T('Support portal') %></div>
+      <h1 class="cp-screen-title"><%- @T('My tickets') %></h1>
+    </div>
+    <div class="cp-screen-actions">
+      <div class="cp-search">
+        <span class="cp-search-icon">⌕</span>
+        <input class="js-search" type="search" placeholder="<%- @T('Search title, #id, category…') %>" value="<%= @query %>">
+      </div>
+      <a class="cp-btn cp-btn--primary" href="#customer_ticket_new">
+        <span class="cp-btn-icon">+</span> <%- @T('New ticket') %>
+      </a>
+    </div>
+  </header>
+
+  <div class="cp-tabs">
+    <button class="cp-tab js-tab <%= 'cp-tab--active' if @activeTab is 'all' %>" data-tab="all">
+      <%- @T('All') %> <span class="cp-tab-count"><%= @counts.all %></span>
+    </button>
+    <button class="cp-tab js-tab <%= 'cp-tab--active' if @activeTab is 'open' %>" data-tab="open">
+      <%- @T('Open') %> <span class="cp-tab-count"><%= @counts.open %></span>
+    </button>
+    <button class="cp-tab js-tab <%= 'cp-tab--active' if @activeTab is 'pending' %>" data-tab="pending">
+      <%- @T('Awaiting you') %> <span class="cp-tab-count"><%= @counts.pending %></span>
+    </button>
+    <button class="cp-tab js-tab <%= 'cp-tab--active' if @activeTab is 'resolved' %>" data-tab="resolved">
+      <%- @T('Resolved') %> <span class="cp-tab-count"><%= @counts.resolved %></span>
+    </button>
+    <button class="cp-tab js-tab <%= 'cp-tab--active' if @activeTab is 'closed' %>" data-tab="closed">
+      <%- @T('Closed') %> <span class="cp-tab-count"><%= @counts.closed %></span>
+    </button>
+    <div class="cp-tabs-spacer"></div>
+    <label class="cp-sort">
+      <span><%- @T('Sort') %></span>
+      <select class="js-sort">
+        <option value="updated" <%= 'selected' if @sort is 'updated' %>><%- @T('Last update') %></option>
+        <option value="created" <%= 'selected' if @sort is 'created' %>><%- @T('Date created') %></option>
+        <option value="priority" <%= 'selected' if @sort is 'priority' %>><%- @T('Priority') %></option>
+      </select>
+    </label>
+  </div>
+
+  <div class="cp-table-wrap">
+    <table class="cp-ticket-table">
+      <thead>
+        <tr>
+          <th style="width: 88px;">#</th>
+          <th><%- @T('Subject') %></th>
+          <th style="width: 160px;"><%- @T('Category') %></th>
+          <th style="width: 110px;"><%- @T('Priority') %></th>
+          <th style="width: 140px;"><%- @T('Status') %></th>
+          <th style="width: 140px;"><%- @T('Last update') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @rows.length > 0: %>
+          <% for r in @rows: %>
+          <tr onclick="window.location.hash = '#ticket/zoom/<%= r.id %>'">
+            <td class="cp-mono cp-muted">#<%= r.number %></td>
+            <td>
+              <div class="cp-ticket-subject"><%= r.title %></div>
+              <div class="cp-ticket-sub"><%= r.articleCount %> message<%= 's' if r.articleCount isnt 1 %></div>
+            </td>
+            <td class="cp-muted"><%= r.category %></td>
+            <td><span class="<%= @priorityClass(r.priority) %>"><%- @T(r.priority) %></span></td>
+            <td><span class="<%= @pillClass(r.stateBucket) %>"><%- @T(r.state) %></span></td>
+            <td class="cp-muted"><%= @relTime(r.updatedAt) %></td>
+          </tr>
+          <% end %>
+        <% else: %>
+        <tr><td colspan="6" class="cp-empty-row"><%- @T('No tickets match these filters.') %></td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
