@@ -18,8 +18,8 @@
       <div class="cp-stat-lbl"><span class="cp-dot cp-dot--open"></span> <%- @T('Open') %></div>
     </a>
     <a class="cp-stat" href="#ticket/view/my_tickets">
-      <div class="cp-stat-val"><%= @counts.pending %></div>
-      <div class="cp-stat-lbl"><span class="cp-dot cp-dot--pend"></span> <%- @T('Pending') %></div>
+      <div class="cp-stat-val"><%= @counts.awaiting %></div>
+      <div class="cp-stat-lbl"><span class="cp-dot cp-dot--pend"></span> <%- @T('Awaiting you') %></div>
     </a>
     <a class="cp-stat" href="#ticket/view/my_tickets">
       <div class="cp-stat-val"><%= @counts.resolved %></div>
