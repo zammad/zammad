@@ -247,8 +247,16 @@ class Navigation extends App.Controller
       @appEl.find('#navigation').remove()
       return
 
+    # Toggle a body-level class for customer-portal scoped CSS
+    # (see customer portal theme in zammad.scss).
+    isCustomer = !App.User.current()?.permission('ticket.agent') and App.User.current()?.permission('ticket.customer')
+    $('body').toggleClass('is-customer-portal', !!isCustomer)
+
     navigation = $(App.view('navigation')(
       user: user
+      isCustomer: isCustomer
+      brandTitle: 'Helpdesk'
+      brandSubtitle: (App.Config.get('organization') or '')
     ))
 
     @taskbar?.releaseController()
