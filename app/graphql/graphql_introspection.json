@@ -30008,7 +30008,7 @@
           "fields": [
             {
               "name": "tokens",
-              "description": "List of acess tokens for the user",
+              "description": "List of access tokens for the user",
               "args": [],
               "type": {
                 "kind": "LIST",

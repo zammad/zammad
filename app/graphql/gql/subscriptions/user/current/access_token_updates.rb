@@ -7,7 +7,7 @@ module Gql::Subscriptions
 
     subscription_scope :current_user_id
 
-    field :tokens, [Gql::Types::TokenType], null: true, description: 'List of acess tokens for the user'
+    field :tokens, [Gql::Types::TokenType], null: true, description: 'List of access tokens for the user' # rubocop:disable Zammad/GraphqlForbidSensitiveFields -- Returning the user's own access token metadata is the purpose of this subscription.
 
     requires_permission 'user_preferences.access_token'
 

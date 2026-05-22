@@ -531,6 +531,16 @@ Zammad/GraphqlCsrfSkipVerification:
   Include:
     - "app/graphql/gql/**/*.rb"
 
+Zammad/GraphqlForbidSensitiveFields:
+  Enabled: true
+  Include:
+    - "app/graphql/gql/types/**/*.rb"
+    - "app/graphql/gql/mutations/**/*.rb"
+    - "app/graphql/gql/queries/**/*.rb"
+    - "app/graphql/gql/subscriptions/**/*.rb"
+  Exclude:
+    - "app/graphql/gql/types/input/**/*.rb"
+
 Zammad/MigrationEnsureIntegerPrimaryKey:
   Enabled: true
   Include:
