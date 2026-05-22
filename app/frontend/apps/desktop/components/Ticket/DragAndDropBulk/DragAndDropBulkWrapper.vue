@@ -59,7 +59,7 @@ const isBottomBarHovered = computed(() =>
   props.dropSuccessTargetEntity ? lockedBottomBarHovered.value : isBottomBarHoveredRaw.value,
 )
 
-const showCancel = computed(() => isTopBarHovered.value || isBottomBarHovered.value)
+const centerIsHovered = computed(() => isTopBarHovered.value || isBottomBarHovered.value)
 
 const confirmationPending = toRef(useTicketBulkUpdateStore(), 'confirmationPending')
 </script>
@@ -98,9 +98,10 @@ const confirmationPending = toRef(useTicketBulkUpdateStore(), 'confirmationPendi
 
         <transition name="fade-quick">
           <section
-            v-if="showCancel && !dropSuccessTargetEntity"
+            v-if="!dropSuccessTargetEntity"
             class="absolute inset-1/2 flex w-full -translate-y-1/2 items-center gap-10 px-10 text-white! before:grow before:border before:border-dashed after:grow after:border after:border-dashed ltr:-translate-x-1/2 rtl:translate-x-1/2"
             :class="{
+              'top-1/2': centerIsHovered,
               'top-[calc(50%+7.5rem)]': isTopBarHovered, // 13 rem is the total height of both drawers -> 7.5 is the half
               'top-[calc(50%-7.5rem)]': isBottomBarHovered,
             }"
