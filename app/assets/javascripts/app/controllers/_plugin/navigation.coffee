@@ -42,6 +42,13 @@ class Navigation extends App.Controller
       @renderMenu()
     )
 
+    # rerender menu when overview counts change, so NavBar items
+    # with an overviewLink (e.g. customer-portal 'My Tickets')
+    # reflect the current open-ticket count.
+    @overviewIndexBindId = App.OverviewIndexCollection.bind(=>
+      @renderMenu()
+    , false)
+
     # rerender menu
     @controllerBind('personal:render', =>
       @renderPersonal()
@@ -65,6 +72,9 @@ class Navigation extends App.Controller
     if @notificationWidget
       @notificationWidget.remove()
       @notificationWidget = undefined
+    if @overviewIndexBindId
+      App.OverviewIndexCollection.unbindById(@overviewIndexBindId)
+      @overviewIndexBindId = undefined
 
   renderMenu: =>
     items = @getItems(navbar: @Config.get('NavBar'))
@@ -94,6 +104,13 @@ class Navigation extends App.Controller
               shown = true
             else
               shown = false
+      # Populate counter for items linked to a ticket overview by link slug.
+      # Used by customer-portal 'My Tickets' shortcut in NavBar.
+      if item.overviewLink
+        overviews = App.OverviewIndexCollection.get() or []
+        match = _.find(overviews, (o) -> o.link is item.overviewLink)
+        if match
+          item.counter = match.count
       if shown
         itemsNew.push item
     items = itemsNew

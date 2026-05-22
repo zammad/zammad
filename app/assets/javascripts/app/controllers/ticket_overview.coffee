@@ -33,6 +33,13 @@ class App.TicketOverview extends App.Controller
       view: @view
     )
 
+    # Customers reach 'My Tickets' from the global left nav (see
+    # TicketViewMyTickets NavBar config below), so the per-page
+    # overview sidebar is redundant for them. Hide it to give the
+    # ticket table the full width.
+    if !App.User.current().permission('ticket.agent')
+      elLocal.filter('.sidebar').addClass('hide')
+
     @contentController.releaseController() if @contentController
     @contentController = new App.TicketOverviewTable(
       el:          elLocal.find('.overview-table')
@@ -261,4 +268,4 @@ App.Config.set('TicketOverview', { prio: 1000, parent: '', name: __('Overviews')
 # their tickets directly from the global left nav without first opening
 # 'Overviews' and then selecting the My Tickets tab.
 # See: docs/plans/customer-portal-tweaks.md
-App.Config.set('TicketViewMyTickets', { prio: 1100, parent: '', name: __('My Tickets'), target: '#ticket/view/my_tickets', key: 'TicketViewMyTickets', permission: ['ticket.customer'], class: 'overviews' }, 'NavBar')
+App.Config.set('TicketViewMyTickets', { prio: 1100, parent: '', name: __('My Tickets'), target: '#ticket/view/my_tickets', key: 'TicketViewMyTickets', permission: ['ticket.customer'], class: 'overviews', overviewLink: 'my_tickets' }, 'NavBar')
