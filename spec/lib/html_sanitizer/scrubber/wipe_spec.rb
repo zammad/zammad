@@ -228,5 +228,166 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
         expect { actual }.not_to change(scrubber, :remote_content_removed)
       end
     end
+
+    context 'when src points to signout endpoint' do
+      let(:input)  { "<img src='/api/v1/signout'>" }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when src points to sessions switch' do
+      let(:input)  { "<img src='/api/v1/sessions/switch/5'>" }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when src points to sessions switch back' do
+      let(:input)  { "<img src='/api/v1/sessions/switch_back'>" }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when src points to auto wizard' do
+      let(:input)  { "<img src='/api/v1/getting_started/auto_wizard/token123'>" }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when srcset contains an api endpoint candidate' do
+      let(:input)  { '<img srcset="/api/v1/signout 1x">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when src is a safe path-absolute URL' do
+      let(:input) { "<img src='/assets/images/logo.png'>" }
+
+      it { is_expected.to include('/assets/images/logo.png') }
+    end
+
+    context 'when src is a safe relative URL without leading slash' do
+      let(:input) { "<img src='images/logo.png'>" }
+
+      it { is_expected.to include('images/logo.png') }
+    end
+
+    context 'when src points to allowed content path (ticket attachment)' do
+      let(:input) { "<img src='/api/v1/ticket_attachment/1/2/3'>" }
+
+      it { is_expected.to include('/api/v1/ticket_attachment/1/2/3') }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when src points to allowed content path (attachment store)' do
+      let(:input) { "<img src='/api/v1/attachments/1'>" }
+
+      it { is_expected.to include('/api/v1/attachments/1') }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when src points to user avatar' do
+      let(:input) { "<img src='/users/image/abc123'>" }
+
+      it { is_expected.to include('/users/image/abc123') }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when src is a relative api path without leading slash' do
+      let(:input)  { "<img src='api/v1/signout'>" }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when src is a relative api path with parent dir' do
+      let(:input)  { "<img src='../api/v1/signout'>" }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when src is attachment store without trailing path' do
+      let(:input) { "<img src='/api/v1/attachments'>" }
+
+      it { is_expected.to include('/api/v1/attachments') }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when src is authorize (not api/auth)' do
+      let(:input) { "<img src='/authorize'>" }
+
+      it { is_expected.to include('/authorize') }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+  end
+
+  describe '#unsafe_api_path?' do
+    subject(:unsafe) { scrubber.send(:unsafe_api_path?, path) }
+
+    let(:scrubber) { described_class.new }
+
+    {
+      # allowlisted api paths
+      '/api/v1/attachments/1'                               => false,
+      '/api/v1/attachments'                                 => false,
+      '/api/v1/ticket_attachment/1/2/3?view=inline'         => false,
+      'api/v1/attachments/1'                                => false,
+
+      # blocked api paths
+      '/api/v1/attachments_evil'                            => true,
+      '/api/v1/ticket_attachment_upload_clone_by_article/1' => true,
+      '/api/v1/signout'                                     => true,
+      '../api/v1/signout'                                   => true,
+      '../api/v1/attachments/'                              => true,
+      '../api/v1/attachments/1'                             => true,
+
+      # non-api paths
+      '/users/image/abc123'                                 => false,
+      '/assets/images/logo.png'                             => false,
+    }.each do |test_path, expected_unsafe|
+      context "with #{test_path.inspect}" do
+        let(:path) { test_path }
+
+        it "is #{expected_unsafe ? 'unsafe' : 'safe'}" do
+          expect(unsafe).to be(expected_unsafe)
+        end
+      end
+    end
   end
 end
