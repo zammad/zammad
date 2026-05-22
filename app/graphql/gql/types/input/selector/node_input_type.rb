@@ -2,6 +2,8 @@
 
 module Gql::Types::Input::Selector
   class NodeInputType < Gql::Types::BaseInputObject
+    MAX_NESTING_DEPTH = 4
+    MAX_NODES         = 250
 
     description 'Selector node: either a single condition (name/operator/value) or a subclause (operator/conditions).'
 
@@ -16,27 +18,51 @@ module Gql::Types::Input::Selector
 
     def prepare
       hash = super.to_h
-      validate_shape!(hash)
+      validate_node!(hash)
       hash
     end
 
     private
 
+    def validate_node!(hash, depth: 1, node_count: 0)
+      raise GraphQL::ExecutionError, __('Selector exceeded maximum nesting depth.') if depth > MAX_NESTING_DEPTH
+
+      node_count += 1
+
+      raise GraphQL::ExecutionError, __('Selector exceeded maximum number of nodes.') if node_count > MAX_NODES
+
+      validate_shape!(hash)
+      return node_count if hash[:conditions].blank?
+
+      hash[:conditions].reduce(node_count) do |memo, elem|
+        validate_node!(elem, depth: depth + 1, node_count: memo)
+      end
+    end
+
     def validate_shape!(hash)
       subclause = hash.key?(:conditions)
       condition = hash.key?(:name)
+      operator  = hash[:operator]
 
       if subclause == condition
         raise GraphQL::ExecutionError, __('Selector node must be either a subclause (operator + conditions) or a single condition.')
+      elsif subclause
+        validate_subclause!(operator)
+      elsif condition
+        validate_condition!(operator)
       end
+    end
 
-      operator = hash[:operator]
+    def validate_subclause!(operator)
+      return if ::Selector::Sql.valid_block_operator?(operator)
 
-      if subclause
-        raise GraphQL::ExecutionError, "Invalid block operator: #{operator.inspect}." if !::Selector::Sql.valid_block_operator?(operator)
-      elsif !::Selector::Sql.valid_operator?(operator)
-        raise GraphQL::ExecutionError, "Invalid condition operator: #{operator.inspect}."
-      end
+      raise GraphQL::ExecutionError, "Invalid block operator: #{operator.inspect}."
+    end
+
+    def validate_condition!(operator)
+      return if ::Selector::Sql.valid_operator?(operator)
+
+      raise GraphQL::ExecutionError, "Invalid condition operator: #{operator.inspect}."
     end
   end
 end

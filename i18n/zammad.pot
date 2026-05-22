@@ -14837,7 +14837,15 @@ msgstr ""
 msgid "Selector"
 msgstr ""
 
-#: app/graphql/gql/types/input/selector/node_input_type.rb:30
+#: app/graphql/gql/types/input/selector/node_input_type.rb:28
+msgid "Selector exceeded maximum nesting depth."
+msgstr ""
+
+#: app/graphql/gql/types/input/selector/node_input_type.rb:32
+msgid "Selector exceeded maximum number of nodes."
+msgstr ""
+
+#: app/graphql/gql/types/input/selector/node_input_type.rb:49
 msgid "Selector node must be either a subclause (operator + conditions) or a single condition."
 msgstr ""
 

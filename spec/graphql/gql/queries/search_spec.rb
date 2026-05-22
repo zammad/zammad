@@ -171,6 +171,35 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
           expect(gql.result.data).to eq(expected_result)
         end
       end
+
+      context 'with a deeply nested advanced filter', authenticated_as: :agent do
+        let(:variables) do
+          {
+            onlyIn: 'Ticket',
+            filter: deep_nested_filter,
+          }
+        end
+
+        let(:deep_nested_filter) do
+          filter = {
+            operator:   'AND',
+            conditions: [{ name: 'ticket.title', operator: 'is', value: ticket.title }],
+          }
+
+          3.times do
+            filter = {
+              operator:   'AND',
+              conditions: [filter],
+            }
+          end
+
+          filter
+        end
+
+        it 'rejects the filter' do
+          expect(gql.result.error_message).to eq('Selector exceeded maximum nesting depth.')
+        end
+      end
     end
 
     it_behaves_like 'graphql responds with error if unauthenticated'
