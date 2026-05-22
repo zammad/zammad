@@ -1,7 +1,7 @@
 # Faithful Customer TicketList — matches docs/ui-references/customer-portal/.
 # Dispatched from TicketOverviewRouter (in ticket_overview.coffee) when the
 # current user is a customer viewing #ticket/view/my_tickets.
-class App.CustomerTicketList extends App.ControllerAppContent
+class App.CustomerTicketList extends App.Controller
   @requiredPermission: 'ticket.customer'
 
   elements:
