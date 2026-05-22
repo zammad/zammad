@@ -1,0 +1,66 @@
+<div class="customer-ticket-detail">
+  <header class="cp-screen-head cp-detail-head">
+    <button class="cp-btn cp-btn--ghost cp-btn--icon js-back" title="<%- @T('Back') %>">←</button>
+    <div class="cp-detail-head-main">
+      <div class="cp-kicker">
+        <span class="cp-mono">#<%= @number %></span>
+        <% if @groupName: %><span> · <%= @groupName %></span><% end %>
+        <% if @createdAt: %><span> · <%- @T('created') %> <%= @createdAt %></span><% end %>
+      </div>
+      <h1 class="cp-screen-title"><%= @title %></h1>
+    </div>
+    <div class="cp-screen-actions">
+      <span class="<%= @pillClass %>"><%- @T(@stateName) %></span>
+      <span class="<%= @priClass %>"><%- @T(@priorityName) %></span>
+      <% if @isResolved: %>
+        <button class="cp-btn cp-btn--ghost js-reopen"><%- @T('Reopen') %></button>
+      <% else if not @isClosed: %>
+        <button class="cp-btn cp-btn--ghost js-resolve">✓ <%- @T('Mark closed') %></button>
+      <% end %>
+    </div>
+  </header>
+
+  <div class="cp-detail-body">
+    <div class="cp-thread js-thread">
+      <% if @articles.length > 0: %>
+        <% for m in @articles: %>
+        <div class="cp-msg cp-msg--<%= if m.isAgent then 'agent' else 'me' %>">
+          <div class="cp-msg-avatar"><%- m.displayAuthor?.split(' ').slice(0,2).map((s) -> s[0]).join('').toUpperCase() or '?' %></div>
+          <div class="cp-msg-body">
+            <div class="cp-msg-meta">
+              <strong><%= m.displayAuthor %></strong>
+              <span class="cp-muted"> · <%= @relTime(m.created_at) %></span>
+              <% if m.isAgent: %><span class="cp-tag cp-tag--agent"><%- @T('Support') %></span><% end %>
+              <% if m.internal: %><span class="cp-tag cp-tag--internal"><%- @T('Internal') %></span><% end %>
+            </div>
+            <div class="cp-msg-text"><%- m.body %></div>
+          </div>
+        </div>
+        <% end %>
+      <% else: %>
+      <div class="cp-empty"><%- @T('No messages yet.') %></div>
+      <% end %>
+    </div>
+
+    <% if @isClosed: %>
+    <div class="cp-reply-closed">
+      <%- @T('This ticket is closed.') %>
+      <button class="cp-link js-reopen"><%- @T('Reopen') %></button>
+      <%- @T('to continue the conversation.') %>
+    </div>
+    <% else: %>
+    <div class="cp-reply">
+      <textarea class="js-reply-body" rows="3" placeholder="<%- @T('Type your reply…') %>"><%= @draft %></textarea>
+      <div class="cp-reply-bar">
+        <div class="cp-reply-bar-left">
+          <span class="cp-muted"><%- @T('Click Send to post your reply.') %></span>
+        </div>
+        <div class="cp-reply-bar-right">
+          <button class="cp-btn cp-btn--ghost js-discard"><%- @T('Discard') %></button>
+          <button class="cp-btn cp-btn--primary js-send"><%- @T('Send reply') %></button>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
