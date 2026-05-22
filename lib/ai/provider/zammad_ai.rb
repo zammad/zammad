@@ -23,13 +23,11 @@ class AI::Provider::ZammadAI < AI::Provider
       "#{self.class.base_url(config)}/api/v1/features/#{service_name.underscore}",
       request_body,
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        bearer_token:  self.class.token(config),
-        total_timeout: 60,
-        json:          true,
-        log:           {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl:   true,
+        bearer_token: self.class.token(config),
+        json:         true,
+        log:          {
           facility: 'AI::Provider',
         },
       },
@@ -50,13 +48,11 @@ class AI::Provider::ZammadAI < AI::Provider
       "#{base_url(config)}/api/v1/me",
       {},
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        bearer_token:  token(config),
-        total_timeout: 60,
-        json:          true,
-        log:           {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl:   true,
+        bearer_token: token(config),
+        json:         true,
+        log:          {
           facility:          'AI::Provider',
           log_only_on_error: true,
         },

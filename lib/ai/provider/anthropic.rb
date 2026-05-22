@@ -53,13 +53,11 @@ class AI::Provider::Anthropic < AI::Provider
       "#{ANTHROPIC_API_BASE_URL}/messages",
       request_body,
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        headers:       headers,
-        total_timeout: 60,
-        json:          true,
-        log:           {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl: true,
+        headers:    headers,
+        json:       true,
+        log:        {
           facility: 'AI::Provider',
         },
       },
@@ -80,13 +78,11 @@ class AI::Provider::Anthropic < AI::Provider
       "#{ANTHROPIC_API_BASE_URL}/models",
       {},
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        headers:       headers(config),
-        total_timeout: 60,
-        json:          true,
-        log:           {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl: true,
+        headers:    headers(config),
+        json:       true,
+        log:        {
           facility:          'AI::Provider',
           log_only_on_error: true,
         },

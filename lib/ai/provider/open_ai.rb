@@ -37,13 +37,11 @@ class AI::Provider::OpenAI < AI::Provider
       "#{OPENAI_API_BASE_URL}/chat/completions",
       request_body,
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        bearer_token:  config[:token],
-        total_timeout: 60,
-        json:          true,
-        log:           {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl:   true,
+        bearer_token: config[:token],
+        json:         true,
+        log:          {
           facility: 'AI::Provider',
         },
       },
@@ -63,12 +61,10 @@ class AI::Provider::OpenAI < AI::Provider
         input: input,
       },
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        bearer_token:  config[:token],
-        total_timeout: 60,
-        json:          true,
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl:   true,
+        bearer_token: config[:token],
+        json:         true,
       },
     )
 
@@ -81,13 +77,11 @@ class AI::Provider::OpenAI < AI::Provider
       "#{OPENAI_API_BASE_URL}/models",
       {},
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        bearer_token:  config[:token],
-        total_timeout: 60,
-        json:          true,
-        log:           {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl:   true,
+        bearer_token: config[:token],
+        json:         true,
+        log:          {
           facility:          'AI::Provider',
           log_only_on_error: true,
         },
@@ -110,13 +104,11 @@ class AI::Provider::OpenAI < AI::Provider
         store:       false,
       },
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        bearer_token:  config[:token],
-        total_timeout: 60,
-        json:          true,
-        log:           {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl:   true,
+        bearer_token: config[:token],
+        json:         true,
+        log:          {
           facility:          'AI::Provider',
           log_only_on_error: true,
         },

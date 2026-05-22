@@ -20,12 +20,10 @@ class AI::Provider::CustomOpenAI < AI::Provider
     request_body[:temperature] = options[:temperature] if model_supports_temperature?
 
     request_options = {
-      open_timeout:  4,
-      read_timeout:  60,
-      verify_ssl:    true,
-      total_timeout: 60,
-      json:          true,
-      log:           {
+      **REQUEST_TIMEOUT_OPTIONS,
+      verify_ssl: true,
+      json:       true,
+      log:        {
         facility: 'AI::Provider',
       },
     }
@@ -51,12 +49,10 @@ class AI::Provider::CustomOpenAI < AI::Provider
 
   def self.ping!(config)
     request_options = {
-      open_timeout:  4,
-      read_timeout:  60,
-      verify_ssl:    true,
-      total_timeout: 60,
-      json:          true,
-      log:           {
+      **REQUEST_TIMEOUT_OPTIONS,
+      verify_ssl: true,
+      json:       true,
+      log:        {
         facility:          'AI::Provider',
         log_only_on_error: true,
       },
@@ -85,12 +81,10 @@ class AI::Provider::CustomOpenAI < AI::Provider
     }
 
     request_options = {
-      open_timeout:  4,
-      read_timeout:  60,
-      verify_ssl:    true,
-      total_timeout: 60,
-      json:          true,
-      log:           {
+      **REQUEST_TIMEOUT_OPTIONS,
+      verify_ssl: true,
+      json:       true,
+      log:        {
         facility:          'AI::Provider',
         log_only_on_error: true,
       },

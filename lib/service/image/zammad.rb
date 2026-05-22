@@ -3,9 +3,9 @@
 class Service::Image::Zammad
 
   API_HOST      = 'https://images.zammad.com'.freeze
-  OPEN_TIMEOUT  = 4
-  READ_TIMEOUT  = 6
-  TOTAL_TIMEOUT = 6
+  OPEN_TIMEOUT  = 12
+  READ_TIMEOUT  = 24
+  TOTAL_TIMEOUT = 24
   DISABLE_IN_TEST_ENV = true
 
   def self.user(email)
