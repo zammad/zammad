@@ -127,6 +127,22 @@ class DashboardRouter extends App.ControllerPermanent
     # check authentication
     @authenticateCheckRedirect()
 
+    # Route to the customer dashboard for users with only the
+    # ticket.customer permission (the agent dashboard surfaces
+    # admin/agent widgets that are inappropriate for end-users).
+    # See: app/assets/javascripts/app/controllers/customer_dashboard.coffee
+    isCustomer = !App.User.current()?.permission('ticket.agent') and App.User.current()?.permission('ticket.customer')
+
+    if isCustomer
+      App.TaskManager.execute(
+        key:        'CustomerDashboard'
+        controller: 'CustomerDashboard'
+        params:     { appEl: params.appEl }
+        show:       true
+        persistent: true
+      )
+      return
+
     App.TaskManager.execute(
       key:        'Dashboard'
       controller: 'Dashboard'

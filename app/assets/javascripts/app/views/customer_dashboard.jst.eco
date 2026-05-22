@@ -1,0 +1,90 @@
+<div class="customer-dashboard">
+  <header class="cp-screen-head">
+    <div>
+      <div class="cp-kicker"><%- @T('Support portal') %></div>
+      <h1 class="cp-screen-title"><%- @greeting %></h1>
+    </div>
+    <div class="cp-screen-actions">
+      <a class="cp-btn cp-btn--ghost" href="#ticket/view/my_tickets"><%- @T('View all tickets') %></a>
+      <a class="cp-btn cp-btn--primary" href="#customer_ticket_new">
+        <span class="cp-btn-icon">+</span> <%- @T('New ticket') %>
+      </a>
+    </div>
+  </header>
+
+  <section class="cp-stat-row">
+    <a class="cp-stat" href="#ticket/view/my_tickets">
+      <div class="cp-stat-val"><%= @counts.open %></div>
+      <div class="cp-stat-lbl"><span class="cp-dot cp-dot--open"></span> <%- @T('Open') %></div>
+    </a>
+    <a class="cp-stat" href="#ticket/view/my_tickets">
+      <div class="cp-stat-val"><%= @counts.pending %></div>
+      <div class="cp-stat-lbl"><span class="cp-dot cp-dot--pend"></span> <%- @T('Pending') %></div>
+    </a>
+    <a class="cp-stat" href="#ticket/view/my_tickets">
+      <div class="cp-stat-val"><%= @counts.resolved %></div>
+      <div class="cp-stat-lbl"><span class="cp-dot cp-dot--res"></span> <%- @T('Resolved') %></div>
+    </a>
+    <a class="cp-stat" href="#ticket/view/my_tickets">
+      <div class="cp-stat-val"><%= @counts.closed %></div>
+      <div class="cp-stat-lbl"><span class="cp-dot cp-dot--closed"></span> <%- @T('Closed') %></div>
+    </a>
+    <div class="cp-stat cp-stat--accent">
+      <div class="cp-stat-val"><%= @counts.unread %></div>
+      <div class="cp-stat-lbl"><%- @T('Unread replies') %></div>
+    </div>
+  </section>
+
+  <div class="cp-dash-grid">
+    <div class="cp-card">
+      <div class="cp-card-head">
+        <h2><%- @T('Awaiting your reply') %></h2>
+        <span class="cp-card-meta"><%= @awaiting.length %></span>
+      </div>
+      <% if @awaiting.length > 0: %>
+      <ul class="cp-list">
+        <% for t in @awaiting: %>
+        <li>
+          <a class="cp-list-row" href="#ticket/zoom/<%= t.id %>">
+            <div class="cp-list-meta">
+              <span class="cp-tid">#<%= App.Ticket.find(t.id)?.number || t.id %></span>
+              <span class="cp-pill cp-pill--<%= @ticketState(t.id).toLowerCase().replace(/\s+/g, '-') %>"><%- @T(@ticketState(t.id)) %></span>
+            </div>
+            <div class="cp-list-title"><%= @ticketTitle(t.id) %></div>
+          </a>
+        </li>
+        <% end %>
+      </ul>
+      <% else: %>
+      <div class="cp-empty">
+        <%- @T('Nothing waiting on you right now.') %>
+      </div>
+      <% end %>
+    </div>
+
+    <div class="cp-card">
+      <div class="cp-card-head">
+        <h2><%- @T('Recent activity') %></h2>
+      </div>
+      <% if @recent.length > 0: %>
+      <ul class="cp-list">
+        <% for t in @recent: %>
+        <li>
+          <a class="cp-list-row" href="#ticket/zoom/<%= t.id %>">
+            <div class="cp-list-meta">
+              <span class="cp-tid">#<%= App.Ticket.find(t.id)?.number || t.id %></span>
+              <span class="cp-pill cp-pill--<%= @ticketState(t.id).toLowerCase().replace(/\s+/g, '-') %>"><%- @T(@ticketState(t.id)) %></span>
+            </div>
+            <div class="cp-list-title"><%= @ticketTitle(t.id) %></div>
+          </a>
+        </li>
+        <% end %>
+      </ul>
+      <% else: %>
+      <div class="cp-empty">
+        <%- @T('No tickets yet.') %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
