@@ -1,26 +1,35 @@
 <div class="tabsSidebar-holder flex">
   <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
     <div class="newTicket">
-      <div class="box box--newTicket">
-        <div class="page-header">
-          <h1><%- @T('New Ticket') %></h1>
-        </div>
+      <div class="box box--newTicket cp-newticket">
+        <header class="cp-screen-head">
+          <a class="cp-btn cp-btn--ghost cp-btn--icon" href="#"  title="<%- @T('Back') %>">←</a>
+          <div>
+            <div class="cp-kicker"><%- @T('Support portal') %></div>
+            <h1 class="cp-screen-title"><%- @T('Submit a new ticket') %></h1>
+          </div>
+        </header>
 
-        <div class="page-content">
-          <form role="form" class="ticket-create" autocomplete="off">
+        <div class="cp-form-wrap page-content">
+          <form role="form" class="ticket-create cp-form" autocomplete="off">
             <input type="hidden" name="form_id" value="<%= @form_id %>"/>
 
-            <div class="ticket-form-top"></div>
-            <div class="article-form-top"></div>
+            <div class="cp-form-section cp-form-section--full">
+              <div class="ticket-form-top"></div>
+              <div class="article-form-top"></div>
+            </div>
 
-            <div class="formset-inset">
+            <div class="formset-inset cp-form-grid">
               <div class="ticket-form-middle horizontal two-columns"></div>
               <div class="ticket-form-bottom"></div>
             </div>
 
-            <div class="form-controls">
-              <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T('Cancel & Go Back') %></a>
-              <button type="submit" class="btn btn--success js-submit align-right"><%- @T('Create') %></button>
+            <div class="cp-form-bar form-controls">
+              <span class="cp-muted"><%- @T("You'll get an email when support replies.") %></span>
+              <div class="cp-form-bar-right">
+                <a class="cp-btn cp-btn--ghost js-cancel" href="#/"><%- @T('Cancel') %></a>
+                <button type="submit" class="cp-btn cp-btn--primary js-submit"><%- @T('Submit ticket') %></button>
+              </div>
             </div>
           </form>
         </div>
