@@ -143,6 +143,19 @@ class DashboardRouter extends App.ControllerPermanent
       )
       return
 
+    # Faithful agent dashboard for users with ticket.agent permission.
+    # See app/assets/javascripts/app/controllers/agent_dashboard_faithful.coffee
+    # and docs/plans/agent-console-faithful.md.
+    if App.User.current()?.permission('ticket.agent')
+      App.TaskManager.execute(
+        key:        'AgentDashboardFaithful'
+        controller: 'AgentDashboardFaithful'
+        params:     { appEl: params.appEl }
+        show:       true
+        persistent: true
+      )
+      return
+
     App.TaskManager.execute(
       key:        'Dashboard'
       controller: 'Dashboard'
