@@ -9,15 +9,15 @@ class App.CustomerDashboard extends App.ControllerAppContent
     @collectionBindId = App.OverviewListCollection.bind('my_tickets', @onCollection)
     App.OverviewListCollection.fetch('my_tickets')
 
-    @notificationBindId = App.OnlineNotification.bind(@render)
+    # OnlineNotification fires the global controllerBind event
+    # 'OnlineNotification::changed' when unread counts change.
+    @controllerBind('OnlineNotification::changed', @render)
 
     @render()
 
   release: =>
     if @collectionBindId
       App.OverviewListCollection.unbindById(@collectionBindId)
-    if @notificationBindId
-      App.OnlineNotification.unbindById(@notificationBindId)
 
   onCollection: (data) =>
     @data = data
