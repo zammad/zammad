@@ -22,6 +22,14 @@ class App.CustomerTicketDetail extends App.ControllerAppContent
     @ticket_id = params.ticket_id
     @title __('Loading…'), true
 
+    # Defensive: TaskManager re-fires persistent tasks on route changes
+    # and may invoke this controller without a ticket_id when navigating
+    # away. Don't issue a /tickets/undefined?full=true request in that
+    # case — just render an empty placeholder.
+    if !@ticket_id
+      @renderLoading()
+      return
+
     @draft = ''
     @loadTicket()
 
