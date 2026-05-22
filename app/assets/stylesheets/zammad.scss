@@ -16880,6 +16880,112 @@ body.is-customer-portal {
     font-size: 13.5px;
   }
 
+  // ---------------------------------------------------------------------------
+  // Customer NewTicket (F4) — wraps the existing dynamic Zammad form
+  // (ticket-form-top / -middle / -bottom placeholders are populated by the
+  // ControllerForm), but restyles the surrounding chrome to match the
+  // wireframe: card-wrapped form, full-width subject, two-column grid for
+  // category + priority, full-width body + attachments, primary CTA bar.
+  // ---------------------------------------------------------------------------
+  .cp-newticket {
+    background: var(--cp-bg);
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .cp-form-wrap {
+    padding: 18px 28px 28px;
+    max-width: 920px;
+  }
+
+  .cp-form {
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: 12px;
+    padding: 22px 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .cp-form-section,
+  .cp-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .cp-form-section--full,
+  .cp-form-grid > .ticket-form-bottom {
+    grid-column: 1 / -1;
+  }
+
+  // The middle ticket-form is rendered by ControllerForm with its own
+  // .form-group items. We want them to lay out in the 2-col grid by default
+  // and span full width on textareas.
+  .cp-form-grid .form-group {
+    margin: 0;
+  }
+  .cp-form-grid .form-group.formGroup--halfSize,
+  .cp-form-grid .ticket-form-middle .form-group {
+    grid-column: span 1;
+  }
+  .cp-form-grid .form-group:has(textarea),
+  .cp-form-grid .form-group:has(.richtext) {
+    grid-column: 1 / -1;
+  }
+
+  .cp-form label,
+  .cp-form .formGroup-label label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cp-ink-2);
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .cp-form input[type='text'],
+  .cp-form input[type='search'],
+  .cp-form input[type='email'],
+  .cp-form textarea,
+  .cp-form select {
+    border: 1px solid var(--cp-border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: var(--cp-surface);
+    color: var(--cp-ink);
+    font-size: 13.5px;
+    width: 100%;
+  }
+
+  .cp-form input:focus,
+  .cp-form textarea:focus,
+  .cp-form select:focus {
+    border-color: var(--cp-accent);
+    box-shadow: 0 0 0 3px var(--cp-accent-ring);
+    outline: none;
+  }
+
+  .cp-form-bar {
+    border-top: 1px solid var(--cp-border);
+    padding-top: 14px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .cp-form-bar-right {
+    display: flex;
+    gap: 8px;
+  }
+
+  .cp-form-bar .js-cancel {
+    color: var(--cp-ink-2);
+  }
+
   .cp-empty {
     padding: 24px 16px;
     color: var(--cp-ink-3);
