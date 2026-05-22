@@ -17200,6 +17200,131 @@ body.is-agent-console {
     border-color: var(--ac-accent);
     color: hsl(0, 0%, 99%);
   }
+
+  // ---------------------------------------------------------------------------
+  // Manage / Settings pages restyle (Phase 5)
+  //
+  // Only typography + surface tokens. Validation banners, error states,
+  // and destructive-action affordances are untouched so admins continue
+  // to see the existing safety affordances (per CLAUDE.md governance).
+  // ---------------------------------------------------------------------------
+  .NavBarAdmin.sidebar,
+  .NavBarProfile.sidebar {
+    background: var(--ac-surface-2);
+    border-right: 1px solid var(--ac-border);
+  }
+
+  .NavBarAdmin.sidebar h2,
+  .NavBarProfile.sidebar h2 {
+    font-size: 11px;
+    color: var(--ac-ink-3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 12px 14px 6px;
+    margin: 0;
+  }
+
+  .NavBarAdmin.sidebar a,
+  .NavBarProfile.sidebar a {
+    color: var(--ac-ink-2);
+    border-radius: 6px;
+    padding: 7px 12px;
+    margin: 0 8px;
+    font-size: 13.5px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .NavBarAdmin.sidebar a:hover,
+  .NavBarProfile.sidebar a:hover {
+    background: var(--ac-surface-3);
+    color: var(--ac-ink);
+  }
+
+  .NavBarAdmin.sidebar .is-active,
+  .NavBarAdmin.sidebar a.is-active,
+  .NavBarProfile.sidebar .is-active {
+    background: var(--ac-accent-soft);
+    color: var(--ac-accent);
+    font-weight: 600;
+  }
+
+  // Manage page main content — page header matches dashboard
+  .content > .main .page-header {
+    padding: 22px 28px 16px;
+    border-bottom: 1px solid var(--ac-border);
+    background: var(--ac-bg);
+    margin: 0;
+  }
+
+  .content > .main .page-header h1,
+  .content > .main .page-header h2 {
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+    color: var(--ac-ink);
+    margin: 0;
+  }
+
+  // Settings table/list area — light card wrapper.
+  // We only restyle generic .table tables that don't have explicit
+  // validation/state colors applied. Tables with .table--clean (settings
+  // listings) or no extra modifier get the treatment.
+  .content > .main .table-group .table,
+  .content > .main > .table {
+    background: var(--ac-surface);
+    border: 1px solid var(--ac-border);
+    border-radius: 12px;
+    overflow: hidden;
+    border-spacing: 0;
+  }
+
+  .content > .main .table thead th {
+    background: var(--ac-surface-2);
+    color: var(--ac-ink-3);
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--ac-border);
+  }
+
+  .content > .main .table tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--ac-border);
+    color: var(--ac-ink);
+    font-size: 13.5px;
+  }
+
+  .content > .main .table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  // Form input/select consistency on settings pages
+  .content > .main input[type='text'],
+  .content > .main input[type='search'],
+  .content > .main input[type='email'],
+  .content > .main input[type='password'],
+  .content > .main textarea,
+  .content > .main select {
+    border: 1px solid var(--ac-border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: var(--ac-surface);
+    color: var(--ac-ink);
+    font-size: 13.5px;
+  }
+
+  .content > .main input:focus,
+  .content > .main textarea:focus,
+  .content > .main select:focus {
+    border-color: var(--ac-accent);
+    box-shadow: 0 0 0 3px var(--ac-accent-ring);
+    outline: none;
+  }
 }
 
 
