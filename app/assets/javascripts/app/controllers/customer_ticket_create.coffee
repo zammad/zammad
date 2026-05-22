@@ -182,8 +182,8 @@ class CustomerTicketCreate extends App.ControllerAppContent
           if ui.sidebarWidget
             ui.sidebarWidget.commit(ticket_id: @id)
 
-          # redirect to zoom
-          ui.navigate '#ticket/zoom/' + @id
+          # redirect to my-tickets list (customer portal UX)
+          ui.navigate '#ticket/view/my_tickets'
 
         fail: (settings, details) ->
           ui.log 'errors', details

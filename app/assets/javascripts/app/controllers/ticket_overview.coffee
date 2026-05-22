@@ -256,3 +256,9 @@ App.Config.set('ticket/view', TicketOverviewRouter, 'Routes')
 App.Config.set('ticket/view/:view', TicketOverviewRouter, 'Routes')
 App.Config.set('TicketOverview', { controller: 'TicketOverview', permission: ['ticket.agent', 'ticket.customer'] }, 'permanentTask')
 App.Config.set('TicketOverview', { prio: 1000, parent: '', name: __('Overviews'), target: '#ticket/view', key: 'TicketOverview', permission: ['ticket.agent', 'ticket.customer'], class: 'overviews' }, 'NavBar')
+
+# Customer-only top-level shortcut to 'My Tickets', so customers can reach
+# their tickets directly from the global left nav without first opening
+# 'Overviews' and then selecting the My Tickets tab.
+# See: docs/plans/customer-portal-tweaks.md
+App.Config.set('TicketViewMyTickets', { prio: 1100, parent: '', name: __('My Tickets'), target: '#ticket/view/my_tickets', key: 'TicketViewMyTickets', permission: ['ticket.customer'], class: 'overviews' }, 'NavBar')
