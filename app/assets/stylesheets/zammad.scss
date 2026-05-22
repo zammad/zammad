@@ -4303,6 +4303,12 @@ footer {
 }
 
 .overviews {
+  // Ensure .main flex:1 actually fills the row when the per-page
+  // .sidebar is removed (e.g. customer portal). Agents already saw
+  // this layout work because of ambient flex from the page chrome,
+  // but the customer-side DOM removal exposed missing display:flex.
+  display: flex;
+
   .sidebar {
     @include small-desktop {
       display: none;
@@ -4610,6 +4616,17 @@ footer {
   position: relative;
   container-name: navigation;
   container-type: inline-size;
+  // Column layout so we can push .user-menu (avatar + 'new ticket'
+  // button) to the bottom of the bar regardless of how many menu
+  // items live above. Harmless when the bar overflows; sticky bottom
+  // when the menu is short (e.g. customer portal: Overviews + My Tickets).
+  display: flex;
+  flex-direction: column;
+
+  > .user-menu,
+  > .navbar-items-personal {
+    margin-top: auto;
+  }
 
   @include phone {
     position: absolute;

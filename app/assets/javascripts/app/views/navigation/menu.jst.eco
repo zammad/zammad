@@ -22,7 +22,9 @@
   </div>
   <% else: %>
   <a class="menu-item js-<%- item.class %>MenuItem <% if @activeTab[item.target]: %>is-active<% end %> <% if item.onclick: %>js-onclick<% end %>" href="<%= item.target %>" data-key="<%- item.key %>">
-    <%- @Icon(item.class, 'menu-item-icon') %>
+    <% unless item.hideIcon: %>
+      <%- @Icon(item.class, 'menu-item-icon') %>
+    <% end %>
     <span class="menu-item-name">
       <%- @T(item.name) %>
     </span>

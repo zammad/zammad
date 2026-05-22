@@ -42,6 +42,13 @@ class Navigation extends App.Controller
       @renderMenu()
     )
 
+    # rerender menu when overview counts change, so NavBar items
+    # with an overviewLink (e.g. customer-portal 'My Tickets')
+    # reflect the current open-ticket count.
+    @overviewIndexBindId = App.OverviewIndexCollection.bind(=>
+      @renderMenu()
+    , false)
+
     # rerender menu
     @controllerBind('personal:render', =>
       @renderPersonal()
@@ -65,6 +72,9 @@ class Navigation extends App.Controller
     if @notificationWidget
       @notificationWidget.remove()
       @notificationWidget = undefined
+    if @overviewIndexBindId
+      App.OverviewIndexCollection.unbindById(@overviewIndexBindId)
+      @overviewIndexBindId = undefined
 
   renderMenu: =>
     items = @getItems(navbar: @Config.get('NavBar'))
@@ -94,6 +104,13 @@ class Navigation extends App.Controller
               shown = true
             else
               shown = false
+      # Populate counter for items linked to a ticket overview by link slug.
+      # Used by customer-portal 'My Tickets' shortcut in NavBar.
+      if item.overviewLink
+        overviews = App.OverviewIndexCollection.get() or []
+        match = _.find(overviews, (o) -> o.link is item.overviewLink)
+        if match
+          item.counter = match.count
       if shown
         itemsNew.push item
     items = itemsNew
@@ -235,7 +252,14 @@ class Navigation extends App.Controller
     ))
 
     @taskbar?.releaseController()
-    @taskbar = new App.TaskbarWidget(el: navigation.find('.tasks'))
+    # Customers do not work in a multi-tab task workflow — drop the
+    # per-ticket task tabs from the global left nav so opening a
+    # ticket detail page does not grow the menu dynamically.
+    if App.User.current()?.permission('ticket.agent')
+      @taskbar = new App.TaskbarWidget(el: navigation.find('.tasks'))
+    else
+      @taskbar = undefined
+      navigation.find('.tasks').remove()
 
     if @appEl.find('#navigation').length < 1
       @appEl.prepend('<div id="navigation"></div>')
