@@ -124,6 +124,15 @@ class App.TicketOverviewTable extends App.Controller
     )
     html = $(html)
 
+    # Inject the customer-portal '+ New ticket' CTA into the page header
+    # so customers can create a ticket directly from any overview without
+    # leaving the screen. Hidden behind permission so agents are unchanged.
+    if !@permissionCheck('ticket.agent') and @permissionCheck('ticket.customer')
+      html.find('.page-header-meta').prepend(
+        '<a class="cp-btn cp-btn--primary cp-btn--page-header" href="#customer_ticket_new">' +
+        '<span class="cp-btn-icon">+</span> ' + App.i18n.translateContent('New ticket') + '</a>'
+      )
+
     @html html
 
     # create table/overview

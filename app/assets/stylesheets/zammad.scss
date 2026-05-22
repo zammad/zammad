@@ -16536,5 +16536,106 @@ body.is-customer-portal {
     color: var(--cp-ink-3);
     font-size: 13.5px;
   }
+
+  // ---------------------------------------------------------------------------
+  // TicketList reskin (Phase 3) — restyles the existing
+  // agent_ticket_view/content + table overview to a card-style customer list.
+  // ---------------------------------------------------------------------------
+  .overviews {
+    background: var(--cp-bg);
+  }
+
+  .overviews .page-header {
+    padding: 22px 28px 16px;
+    margin: 0;
+    border-bottom: 1px solid var(--cp-border);
+    background: var(--cp-bg);
+    align-items: center;
+  }
+
+  .overviews .page-header-title h1,
+  .overviews .page-header-title h2 {
+    font-size: 22px;
+    line-height: 1.2;
+    margin: 0;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+    color: var(--cp-ink);
+  }
+
+  .overviews .page-header-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .cp-btn--page-header {
+    margin-left: auto;
+  }
+
+  .overviews .page-content {
+    padding: 18px 28px 28px;
+    background: var(--cp-bg);
+  }
+
+  // Wrap table in a card-like container
+  .overviews .table-overview {
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .overviews .table-overview table {
+    width: 100%;
+    border-collapse: collapse;
+    background: transparent;
+  }
+
+  .overviews .table-overview thead {
+    background: var(--cp-surface-2);
+  }
+
+  .overviews .table-overview thead th {
+    font-size: 11.5px;
+    color: var(--cp-ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--cp-border);
+    text-align: left;
+  }
+
+  .overviews .table-overview tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--cp-border);
+    color: var(--cp-ink);
+    font-size: 13.5px;
+    vertical-align: middle;
+  }
+
+  .overviews .table-overview tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .overviews .table-overview tbody tr:hover {
+    background: var(--cp-surface-2);
+  }
+
+  .overviews .table-overview tbody a {
+    color: var(--cp-ink);
+    text-decoration: none;
+  }
+
+  .overviews .table-overview tbody a:hover {
+    color: var(--cp-accent);
+  }
+
+  // State column styled as a pill via CSS (best-effort — wraps content)
+  .overviews .table-overview tbody td[data-column-key="state"],
+  .overviews .table-overview tbody td.js-state {
+    color: var(--cp-ink-2);
+  }
 }
 
