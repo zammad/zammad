@@ -8,6 +8,13 @@ class AI::Provider
 
   EMBEDDING_SIZES = {}.freeze
 
+  # AI inference is slow; provide dedicated timeout knobs so admins can extend them for large prompts,
+  # reasoning models, or slow self-hosted endpoints without raising the global HTTP timeouts.
+  REQUEST_TIMEOUT_OPTIONS = {
+    read_timeout:  ENV.fetch('ZAMMAD_HTTP_AI_READ_TIMEOUT', 300).to_i,
+    total_timeout: ENV.fetch('ZAMMAD_HTTP_AI_TOTAL_TIMEOUT', 300).to_i,
+  }.freeze
+
   attr_accessor :config, :options, :response_metadata
 
   def initialize(config: {}, options: {})

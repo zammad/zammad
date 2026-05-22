@@ -113,11 +113,9 @@ or with filter:
         id:      42,
       },
       {
-        verify_ssl:   verify_ssl,
-        json:         true,
-        open_timeout: 6,
-        read_timeout: 16,
-        log:          {
+        verify_ssl: verify_ssl,
+        json:       true,
+        log:        {
           facility: 'idoit',
         },
       },

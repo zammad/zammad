@@ -41,12 +41,10 @@ class AI::Provider::Ollama < AI::Provider
       "#{config[:url]}/api/generate",
       params,
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        total_timeout: 60,
-        json:          true,
-        log:           {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl: true,
+        json:       true,
+        log:        {
           facility: 'AI::Provider',
         },
       },
@@ -66,11 +64,9 @@ class AI::Provider::Ollama < AI::Provider
         input: input,
       },
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        total_timeout: 60,
-        json:          true,
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl: true,
+        json:       true,
       },
     )
 
@@ -83,11 +79,9 @@ class AI::Provider::Ollama < AI::Provider
       config[:url],
       {},
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        total_timeout: 60,
-        log:           {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl: true,
+        log:        {
           facility:          'AI::Provider',
           log_only_on_error: true,
         },

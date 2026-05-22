@@ -76,9 +76,8 @@ class TriggerWebhookJob < ApplicationJob
       {
         json:                    true,
         jsonParseDisable:        true,
-        open_timeout:            4,
-        read_timeout:            30,
-        total_timeout:           60,
+        read_timeout:            ENV.fetch('ZAMMAD_HTTP_WEBHOOK_READ_TIMEOUT', 30).to_i,
+        total_timeout:           ENV.fetch('ZAMMAD_HTTP_WEBHOOK_TOTAL_TIMEOUT', 30).to_i,
         headers:                 headers,
         signature_token:         webhook.signature_token,
         verify_ssl:              webhook.ssl_verify,
