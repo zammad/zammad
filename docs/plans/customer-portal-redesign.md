@@ -191,6 +191,31 @@ Per phase:
 5. Phase 4 (TicketDetail reskin). Merge.
 6. Phase 5 (NewTicket reskin). Merge.
 
+## Faithful follow-up (v2 — added after agent console retrospective)
+
+The original Phases 3/4/5 above were CSS-only reskins. After the agent
+console showed CSS alone can't reach the wireframe DOM, the customer
+portal needs the same faithful-port treatment:
+
+- **F1 — Dashboard polish.** Existing `App.CustomerDashboard` is
+  already controller-based but uses Zammad state names. Rename the
+  "Pending" stat to "Awaiting you" to match the wireframe; refine
+  empty states and snippet rendering.
+- **F2 — Faithful TicketList.** New `App.CustomerTicketList`
+  controller + view. Filter chips (state), search box, table with
+  columns # / Subject / Category / Priority / Status / Last update
+  per wireframe. Dispatch from existing `TicketOverview` route when
+  user is customer + viewing `my_tickets`.
+- **F3 — Faithful TicketDetail.** New `App.CustomerTicketDetail`
+  controller + view. Threaded conversation (customer messages on
+  right, agent on left), reply composer at bottom, status actions.
+  Dispatch from existing `ticket/zoom/:id` route when user is customer.
+- **F4 — Faithful NewTicket.** Restructure existing
+  `customer_ticket_create.jst.eco` to match wireframe form layout.
+
+All under existing `body.is-customer-portal` scope. Mirror of the
+agent console faithful plan.
+
 After Phase 5, retro on whether to invest in a Vue 3 customer portal
 or leave the CoffeeScript redesign in place indefinitely.
 
