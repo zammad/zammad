@@ -2,7 +2,7 @@
 # Dispatched from TicketZoomRouter (in ticket_zoom.coffee) when the user is
 # a customer. Renders a clean threaded conversation rather than the agent
 # zoom layout.
-class App.CustomerTicketDetail extends App.ControllerAppContent
+class App.CustomerTicketDetail extends App.Controller
   @requiredPermission: 'ticket.customer'
 
   elements:

@@ -1,4 +1,4 @@
-class App.CustomerDashboard extends App.ControllerAppContent
+class App.CustomerDashboard extends App.Controller
   @requiredPermission: 'ticket.customer'
 
   constructor: ->

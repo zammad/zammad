@@ -1,7 +1,7 @@
 # Faithful Agent Dashboard — matches docs/ui-references/agent-console/.
 # Replaces the legacy App.Dashboard for users with ticket.agent permission.
 # Dispatched from the shared DashboardRouter in dashboard.coffee.
-class App.AgentDashboardFaithful extends App.ControllerAppContent
+class App.AgentDashboardFaithful extends App.Controller
   @requiredPermission: 'ticket.agent'
 
   constructor: ->
