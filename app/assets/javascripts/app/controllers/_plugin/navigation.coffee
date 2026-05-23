@@ -47,6 +47,7 @@ class Navigation extends App.Controller
     # reflect the current open-ticket count.
     @overviewIndexBindId = App.OverviewIndexCollection.bind(=>
       @renderMenu()
+      @updateAcQueueCounts()
     , false)
 
     # rerender menu
@@ -75,6 +76,24 @@ class Navigation extends App.Controller
     if @overviewIndexBindId
       App.OverviewIndexCollection.unbindById(@overviewIndexBindId)
       @overviewIndexBindId = undefined
+
+  # Populate the agent-console sidebar's per-queue ticket counts
+  # (My assigned / Unassigned / Pending / Escalated) from the
+  # OverviewIndexCollection. Only runs when the agent template is rendered.
+  updateAcQueueCounts: =>
+    return if !@$('.js-ac-queue-count').length
+
+    overviews = App.OverviewIndexCollection.get() or []
+    total = 0
+    for el in @$('.js-ac-queue-count')
+      link = $(el).data('link')
+      match = _.find(overviews, (o) -> o.link is link)
+      count = match?.count or 0
+      total += count if link is 'my_assigned' or link is 'all_unassigned'
+      $(el).text(if count > 0 then count else '')
+
+    overviewsTotal = _.reduce(overviews, ((memo, o) -> memo + (o.count or 0)), 0)
+    @$('.js-ac-overviews-count').text(if overviewsTotal > 0 then overviewsTotal else '')
 
   renderMenu: =>
     items = @getItems(navbar: @Config.get('NavBar'))
@@ -251,28 +270,34 @@ class Navigation extends App.Controller
     # (customer portal + faithful agent console themes in zammad.scss).
     isCustomer = !App.User.current()?.permission('ticket.agent') and App.User.current()?.permission('ticket.customer')
     isAgent    = !!App.User.current()?.permission('ticket.agent')
+    isAdmin    = !!App.User.current()?.permission('admin')
     $('body').toggleClass('is-customer-portal', !!isCustomer)
     $('body').toggleClass('is-agent-console',   !!isAgent)
 
-    brandSubtitle = if isCustomer
-      App.Config.get('organization') or ''
+    # Customers + agents get fully custom sidebars matching
+    # docs/ui-references/. Unauthenticated falls back to legacy template.
+    template = if isCustomer
+      'navigation_customer'
     else if isAgent
-      App.Config.get('organization') or __('Agent console')
+      'navigation_agent'
+    else
+      'navigation'
+
+    brandSubtitle = if isAgent
+      __('Agent console').toUpperCase()
+    else if isCustomer
+      (App.Config.get('organization') or '').toString().toUpperCase()
     else
       ''
-
-    # Customers get a fully custom sidebar that matches
-    # docs/ui-references/customer-portal/. Agents and unauth still use the
-    # legacy navigation template (showBrand controls the brand block).
-    template = if isCustomer then 'navigation_customer' else 'navigation'
 
     navigation = $(App.view(template)(
       user: user
       isCustomer: isCustomer
       isAgent: isAgent
+      isAdmin: isAdmin
       showBrand: isCustomer or isAgent
       brandTitle: 'Helpdesk'
-      brandSubtitle: brandSubtitle.toUpperCase()
+      brandSubtitle: brandSubtitle
     ))
 
     @taskbar?.releaseController()
@@ -296,6 +321,9 @@ class Navigation extends App.Controller
 
     # renderPersonal
     @renderPersonal()
+
+    # Populate the agent-console queue counts in the custom sidebar.
+    @updateAcQueueCounts()
 
     @notificationWidget.remove() if @notificationWidget
 

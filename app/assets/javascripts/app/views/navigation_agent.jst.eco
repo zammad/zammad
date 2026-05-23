@@ -1,0 +1,74 @@
+<div id="navigation" class="navigation vertical">
+  <div class="ac-nav-brand">
+    <%- @Icon('logo', 'ac-nav-brand-logo') %>
+    <div class="ac-nav-brand-text">
+      <div class="ac-nav-brand-name"><%- @T(@brandTitle) %></div>
+      <% if @brandSubtitle: %><div class="ac-nav-brand-sub"><%= @brandSubtitle %></div><% end %>
+    </div>
+  </div>
+
+  <a class="ac-nav-newbtn" href="#ticket/create">
+    <span class="ac-nav-newbtn-icon">+</span>
+    <span><%- @T('New ticket') %></span>
+  </a>
+
+  <nav class="ac-nav-main">
+    <a class="ac-nav-item js-ac-dashboard" href="#dashboard">
+      <span class="ac-nav-item-icon ac-icon-dashboard"></span>
+      <span class="ac-nav-item-name"><%- @T('Dashboard') %></span>
+    </a>
+    <a class="ac-nav-item js-ac-overviews" href="#ticket/view">
+      <span class="ac-nav-item-icon ac-icon-inbox"></span>
+      <span class="ac-nav-item-name"><%- @T('Overviews') %></span>
+      <span class="ac-nav-item-badge js-ac-overviews-count" data-zero-hidden="true"></span>
+    </a>
+  </nav>
+
+  <div class="ac-nav-section"><%- @T('Queues') %></div>
+  <nav class="ac-nav-main">
+    <a class="ac-nav-item ac-nav-item--quiet" href="#ticket/view/my_assigned">
+      <span class="ac-nav-dot ac-nav-dot--open"></span>
+      <span class="ac-nav-item-name"><%- @T('My assigned') %></span>
+      <span class="ac-nav-icon-count js-ac-queue-count" data-link="my_assigned"></span>
+    </a>
+    <a class="ac-nav-item ac-nav-item--quiet" href="#ticket/view/all_unassigned">
+      <span class="ac-nav-dot ac-nav-dot--open"></span>
+      <span class="ac-nav-item-name"><%- @T('Unassigned') %></span>
+      <span class="ac-nav-icon-count js-ac-queue-count" data-link="all_unassigned"></span>
+    </a>
+    <a class="ac-nav-item ac-nav-item--quiet" href="#ticket/view/all_pending_reached">
+      <span class="ac-nav-dot ac-nav-dot--pend"></span>
+      <span class="ac-nav-item-name"><%- @T('Pending') %></span>
+      <span class="ac-nav-icon-count js-ac-queue-count" data-link="all_pending_reached"></span>
+    </a>
+    <a class="ac-nav-item ac-nav-item--quiet" href="#ticket/view/all_escalated">
+      <span class="ac-nav-dot ac-nav-dot--esc"></span>
+      <span class="ac-nav-item-name"><%- @T('Escalated') %></span>
+      <span class="ac-nav-icon-count js-ac-queue-count" data-link="all_escalated"></span>
+    </a>
+  </nav>
+
+  <% if @isAdmin: %>
+  <div class="ac-nav-section"><%- @T('Admin') %></div>
+  <nav class="ac-nav-main">
+    <a class="ac-nav-item" href="#manage/users">
+      <span class="ac-nav-item-icon ac-icon-user"></span>
+      <span class="ac-nav-item-name"><%- @T('Users') %></span>
+    </a>
+    <a class="ac-nav-item" href="#channels/web">
+      <span class="ac-nav-item-icon ac-icon-inbox"></span>
+      <span class="ac-nav-item-name"><%- @T('Channels') %></span>
+    </a>
+    <a class="ac-nav-item" href="#settings/branding">
+      <span class="ac-nav-item-icon ac-icon-settings"></span>
+      <span class="ac-nav-item-name"><%- @T('Settings') %></span>
+    </a>
+  </nav>
+  <% end %>
+
+  <div class="ac-nav-spacer"></div>
+
+  <% if !_.isEmpty(@user): %>
+    <ul class="user-menu navbar-items-personal ac-nav-user"></ul>
+  <% end %>
+</div>
