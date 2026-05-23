@@ -135,11 +135,17 @@ class App.CustomerTicketDetail extends App.Controller
   authorOf: (article) ->
     sender = if article.sender_id then App.TicketArticleSender.find(article.sender_id) else null
     isAgent = sender?.name is 'Agent' or sender?.name is 'System'
+    me = App.Session.get()
+    isSelf = me and article.created_by_id and article.created_by_id is me.id
     user = if article.created_by_id then App.User.find(article.created_by_id) else null
-    {
-      isAgent: !!isAgent
-      name:    user?.fullname or article.from or (if isAgent then __('Support') else __('You'))
-    }
+    name =
+      if isSelf
+        __('You')
+      else if isAgent
+        user?.fullname or __('Support')
+      else
+        user?.fullname or article.from?.replace(/\s*<[^>]+>/, '') or __('Customer')
+    { isAgent: !!isAgent, name: name }
 
   decoratedArticles: ->
     return [] if !@ticket_article_ids or @ticket_article_ids.length is 0
