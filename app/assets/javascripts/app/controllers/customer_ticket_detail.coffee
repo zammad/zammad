@@ -24,29 +24,38 @@ class App.CustomerTicketDetail extends App.Controller
 
     # Defensive: TaskManager re-fires persistent tasks on route changes
     # and may invoke this controller without a ticket_id when navigating
-    # away. Don't issue a /tickets/undefined?full=true request in that
-    # case — just render an empty placeholder.
+    # away. Don't issue a /tickets/undefined?... request in that case —
+    # just render an empty placeholder.
     if !@ticket_id
       @renderLoading()
       return
 
     @draft = ''
+    @ticket_article_ids = []
     @loadTicket()
-
-    @ticketBindId = App.Ticket.full(@ticket_id, (ticket) =>
-      @ticket = ticket
-      @title ticket.title, true
-      @navupdate "#ticket/zoom/#{ticket.id}"
-      @render()
-    , true)
 
   release: =>
     super
 
   loadTicket: =>
-    App.Ticket.full(@ticket_id, (ticket) =>
-      @ticket = ticket
-      @render()
+    @ajax(
+      id:    "customer_ticket_detail_#{@ticket_id}"
+      type:  'GET'
+      url:   "#{@apiPath}/tickets/#{@ticket_id}?all=true"
+      processData: true
+      success: (data) =>
+        # /tickets/{id}?all=true returns the ticket id under .id and the
+        # full asset payload under .assets — load assets so App.Ticket and
+        # App.TicketArticle have records to look up.
+        App.Collection.loadAssets(data.assets) if data?.assets
+        @ticket_article_ids = data.article_ids or data.ticket_article_ids or []
+        @ticket = App.Ticket.find(@ticket_id)
+        if @ticket
+          @title @ticket.title, true
+          @navupdate "#ticket/zoom/#{@ticket.id}"
+        @render()
+      error: =>
+        @notify(type: 'error', msg: __('Could not load ticket.'))
     )
 
   onBack: (e) =>
@@ -133,13 +142,19 @@ class App.CustomerTicketDetail extends App.Controller
     }
 
   decoratedArticles: ->
-    return [] if !@ticket?.articles
+    return [] if !@ticket_article_ids or @ticket_article_ids.length is 0
     rows = []
-    for a in @ticket.articles
-      next  = if typeof a.toJSON is 'function' then a.toJSON() else a
-      who   = @authorOf(a)
-      next  = $.extend({}, next, isAgent: who.isAgent, displayAuthor: who.name)
-      rows.push next
+    for id in @ticket_article_ids
+      a = App.TicketArticle.find(id)
+      continue if !a
+      who = @authorOf(a)
+      rows.push
+        id:            a.id
+        body:          a.body
+        internal:      a.internal
+        created_at:    a.created_at
+        isAgent:       who.isAgent
+        displayAuthor: who.name
     rows
 
   render: =>
