@@ -1,0 +1,85 @@
+<div class="ac-manage-screen">
+  <div class="ac-manage-tabs">
+    <% for s in @sections: %>
+    <a class="ac-mtab js-section <%= 'ac-mtab--on' if s.active %>" data-section="<%= s.href %>" href="<%= s.href %>">
+      <span><%- @T(s.label) %></span>
+    </a>
+    <% end %>
+  </div>
+
+  <div class="ac-manage-body">
+    <header class="ac-screen-head ac-screen-head--flat">
+      <div>
+        <div class="ac-kicker"><%- @T('Manage') %></div>
+        <h1 class="ac-screen-title"><%- @T('Users') %> <span class="ac-title-meta">· <%= @counts.all %></span></h1>
+      </div>
+      <div class="ac-screen-actions">
+        <div class="ac-search">
+          <span class="ac-search-icon">⌕</span>
+          <input class="js-search" type="search" placeholder="<%- @T('Search by name or email…') %>" value="<%= @query %>">
+        </div>
+        <button class="ac-btn ac-btn--ghost"><%- @T('Import') %></button>
+        <a class="ac-btn ac-btn--primary" href="#user/new">
+          <span class="ac-btn-icon">+</span> <%- @T('New user') %>
+        </a>
+      </div>
+    </header>
+
+    <div class="ac-chips">
+      <button class="ac-chip js-chip <%= 'ac-chip--on' if @filter is 'all' %>" data-chip="all">
+        <%- @T('All') %> <span class="ac-chip-count"><%= @counts.all %></span>
+      </button>
+      <button class="ac-chip js-chip <%= 'ac-chip--on' if @filter is 'admin' %>" data-chip="admin">
+        <%- @T('Admins') %> <span class="ac-chip-count"><%= @counts.admin %></span>
+      </button>
+      <button class="ac-chip js-chip <%= 'ac-chip--on' if @filter is 'agent' %>" data-chip="agent">
+        <%- @T('Agents') %> <span class="ac-chip-count"><%= @counts.agent %></span>
+      </button>
+      <button class="ac-chip js-chip <%= 'ac-chip--on' if @filter is 'customer' %>" data-chip="customer">
+        <%- @T('Customers') %> <span class="ac-chip-count"><%= @counts.customer %></span>
+      </button>
+    </div>
+
+    <div class="ac-user-table-wrap">
+      <table class="ac-user-table">
+        <thead>
+          <tr>
+            <th><%- @T('Name') %></th>
+            <th style="width: 250px;"><%- @T('Email') %></th>
+            <th style="width: 110px;"><%- @T('Role') %></th>
+            <th style="width: 180px;"><%- @T('Organization') %></th>
+            <th style="width: 100px;"><%- @T('Status') %></th>
+            <th style="width: 48px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @rows.length > 0: %>
+            <% for r in @rows: %>
+            <tr class="js-row" data-id="<%= r.id %>">
+              <td>
+                <div class="ac-cell-person">
+                  <span class="ac-cell-avatar ac-cell-avatar--<%= if r.kind is 'admin' then 'accent' else 'neutral' %>"><%= r.initials %></span>
+                  <span class="ac-cell-name"><%= r.name %></span>
+                </div>
+              </td>
+              <td class="ac-muted"><%= r.email %></td>
+              <td><span class="ac-role-chip ac-role-chip--<%= r.kind %>"><%- @T(r.role) %></span></td>
+              <td class="ac-muted"><%= r.org %></td>
+              <td>
+                <% if r.isActive: %>
+                <span class="ac-status-dot">● <%- @T('Active') %></span>
+                <% else: %>
+                <span class="ac-muted">— <%- @T('Inactive') %></span>
+                <% end %>
+              </td>
+              <td><button class="ac-icon-btn">⚙</button></td>
+            </tr>
+            <% end %>
+          <% else: %>
+          <tr><td colspan="6" class="ac-empty-row"><%- @T('No users match these filters.') %></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
