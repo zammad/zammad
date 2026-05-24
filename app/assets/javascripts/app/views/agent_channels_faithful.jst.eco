@@ -1,0 +1,33 @@
+<div class="ac-manage-screen">
+  <div class="ac-manage-tabs">
+    <% for s in @sections: %>
+    <a class="ac-mtab js-section <%= 'ac-mtab--on' if s.active %>" data-section="<%= s.href %>" href="<%= s.href %>">
+      <span><%- @T(s.label) %></span>
+    </a>
+    <% end %>
+  </div>
+
+  <div class="ac-manage-body">
+    <header class="ac-screen-head ac-screen-head--flat">
+      <div>
+        <div class="ac-kicker"><%- @T('Channels') %></div>
+        <h1 class="ac-screen-title"><%- @T('Channels') %></h1>
+      </div>
+    </header>
+
+    <div class="ac-channel-grid">
+      <% for c in @channels: %>
+      <div class="ac-channel-card js-card" data-href="<%= c.href %>">
+        <div class="ac-channel-card-head">
+          <div class="ac-channel-card-icon ac-icon-<%= c.icon %>"></div>
+          <span class="ac-channel-status <%= if c.on then 'ac-channel-status--on' else 'ac-channel-status--off' %>">
+            <%- if c.on then @T('Connected') else @T('Off') %>
+          </span>
+        </div>
+        <div class="ac-channel-card-name"><%- @T(c.label) %></div>
+        <div class="ac-channel-card-sub"><%- @T(c.desc) %></div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

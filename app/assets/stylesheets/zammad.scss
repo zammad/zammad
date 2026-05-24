@@ -18451,6 +18451,63 @@ body.is-agent-console {
   }
   .ac-icon-btn:hover { background: var(--ac-surface-3); color: var(--ac-ink); }
 
+  // Channels grid (5 cards: Web / Form / Email / SMS / Chat)
+  .ac-channel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    margin-top: 8px;
+  }
+  .ac-channel-card {
+    background: var(--ac-surface);
+    border: 1px solid var(--ac-border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ac-channel-card:hover {
+    border-color: var(--ac-accent);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    transform: translateY(-1px);
+  }
+  .ac-channel-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ac-channel-card-icon {
+    width: 32px; height: 32px;
+    background: var(--ac-surface-3);
+    border-radius: 8px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+  }
+  .ac-channel-status {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+  .ac-channel-status--on  { background: hsl(150, 55%, 94%); color: hsl(150, 50%, 32%); }
+  .ac-channel-status--off { background: var(--ac-surface-3); color: var(--ac-ink-3); }
+  .ac-channel-card-name {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ac-ink);
+  }
+  .ac-channel-card-sub {
+    font-size: 12.5px;
+    color: var(--ac-ink-3);
+    line-height: 1.4;
+  }
+
   // Priority + state pills (reuse customer-portal cp-* tokens since both
   // portals share the same color palette).
   .cp-pri {

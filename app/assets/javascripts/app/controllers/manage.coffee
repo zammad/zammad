@@ -28,6 +28,19 @@ class ManageRouter extends App.ControllerPermanent
       )
       return
 
+    # Channels overview: when the user hits #channels (no target) or one of
+    # the channel landing pages, show the faithful grid. Specific channel
+    # detail pages (e.g. #channels/email/account/123) still hit App.Manage.
+    if App.User.current()?.permission('admin.*') and window.location.hash is '#channels'
+      App.TaskManager.execute(
+        key:        'AgentChannelsFaithful'
+        controller: 'AgentChannelsFaithful'
+        params:     { appEl: params.appEl }
+        show:       true
+        persistent: true
+      )
+      return
+
     App.TaskManager.execute(
       key:        'Manage'
       controller: 'Manage'
