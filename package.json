@@ -84,7 +84,7 @@
     "oxfmt": "^0.51.0",
     "oxlint": "^1.66.0",
     "regenerator-runtime": "^0.14.1",
-    "stylelint": "^17.11.1",
+    "stylelint": "^17.12.0",
     "stylelint-config-recommended-scss": "^17.0.1",
     "stylelint-config-recommended-vue": "^1.6.1",
     "stylelint-config-standard": "^40.0.0",
