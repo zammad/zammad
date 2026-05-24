@@ -1,0 +1,217 @@
+# Production Zammad stack.
+#
+# One Zammad image, several runtime modes (selected by argv[0] of the image's
+# entrypoint), one external Postgres, named volumes for everything that must
+# survive a container rebuild.
+#
+#   - DB data:               volume "zammad-postgresql-data"
+#   - Uploaded attachments:  volume "zammad-storage"   (shared rails + scheduler + websocket)
+#   - Backup archives:       volume "zammad-backup"
+#
+# Rebuilding any app container does NOT touch these volumes. The only way to
+# lose data is to `docker volume rm` them explicitly.
+#
+# Bootstrap:
+#   cp .env.example .env && ./../bin/deploy-bootstrap.sh
+#
+# Routine commands:
+#   docker compose --env-file deploy/.env -f deploy/docker-compose.yml up -d
+#   docker compose --env-file deploy/.env -f deploy/docker-compose.yml logs -f zammad-railsserver
+#   docker compose --env-file deploy/.env -f deploy/docker-compose.yml down       # keeps volumes
+#   docker compose --env-file deploy/.env -f deploy/docker-compose.yml down -v    # DESTROYS volumes — never run on prod
+
+name: zammad
+
+x-zammad-image: &zammad-image
+  image: ${ZAMMAD_IMAGE:-zammad-local:latest}
+  build:
+    context: ..
+    dockerfile: Dockerfile
+    args:
+      COMMIT_SHA: ${COMMIT_SHA:-dev}
+  restart: unless-stopped
+
+x-zammad-env: &zammad-env
+  POSTGRESQL_HOST: zammad-postgresql
+  POSTGRESQL_PORT: 5432
+  POSTGRESQL_DB: ${POSTGRESQL_DB:-zammad_production}
+  POSTGRESQL_USER: ${POSTGRESQL_USER:-zammad}
+  POSTGRESQL_PASS: ${POSTGRESQL_PASS:?POSTGRESQL_PASS is required — see .env.example}
+  POSTGRESQL_OPTIONS: "?pool=50"
+  POSTGRESQL_DB_CREATE: ${POSTGRESQL_DB_CREATE:-true}
+  RAILS_TRUSTED_PROXIES: ${RAILS_TRUSTED_PROXIES:-127.0.0.1,::1}
+  SECRET_KEY_BASE: ${SECRET_KEY_BASE:?SECRET_KEY_BASE is required — see .env.example}
+  RAILS_LOG_TO_STDOUT: "true"
+  ELASTICSEARCH_ENABLED: ${ELASTICSEARCH_ENABLED:-false}
+  ELASTICSEARCH_HOST: ${ELASTICSEARCH_HOST:-zammad-elasticsearch}
+  ELASTICSEARCH_PORT: ${ELASTICSEARCH_PORT:-9200}
+  # Optional Redis (improves websocket sessions and cache). Leave blank to use
+  # the on-disk fallback.
+  REDIS_URL: ${REDIS_URL:-}
+  # Optional memcached
+  MEMCACHE_SERVERS: ${MEMCACHE_SERVERS:-}
+
+services:
+
+  # -------------------------------------------------------------------------
+  # PostgreSQL — the only stateful service. ALL ticket data lives here.
+  # -------------------------------------------------------------------------
+  zammad-postgresql:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRESQL_DB:-zammad_production}
+      POSTGRES_USER: ${POSTGRESQL_USER:-zammad}
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASS:?POSTGRESQL_PASS is required}
+    volumes:
+      - zammad-postgresql-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRESQL_USER:-zammad} -d ${POSTGRESQL_DB:-zammad_production}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # -------------------------------------------------------------------------
+  # zammad-init — one-shot. Runs db:create / db:migrate / db:seed on first
+  # boot, db:migrate on every subsequent boot. All other app services block
+  # on this completing.
+  # -------------------------------------------------------------------------
+  zammad-init:
+    <<: *zammad-image
+    restart: "no"
+    command: ["zammad-init"]
+    depends_on:
+      zammad-postgresql:
+        condition: service_healthy
+    environment:
+      <<: *zammad-env
+    volumes:
+      - zammad-storage:/opt/zammad/storage
+
+  # -------------------------------------------------------------------------
+  # zammad-config — one-shot. Applies env-driven Settings AFTER init has
+  # finished seeding. Idempotent — re-runs are no-ops if values are the same.
+  # Kept separate so we never modify upstream's bin/docker-entrypoint.
+  # -------------------------------------------------------------------------
+  zammad-config:
+    <<: *zammad-image
+    restart: "no"
+    depends_on:
+      zammad-init:
+        condition: service_completed_successfully
+    environment:
+      <<: *zammad-env
+      ZAMMAD_FQDN: ${ZAMMAD_FQDN:-}
+      ZAMMAD_HTTP_TYPE: ${ZAMMAD_HTTP_TYPE:-https}
+      ZAMMAD_ORGANIZATION: ${ZAMMAD_ORGANIZATION:-}
+      ZAMMAD_PRODUCT_NAME: ${ZAMMAD_PRODUCT_NAME:-}
+    command:
+      - bundle
+      - exec
+      - rails
+      - runner
+      - |
+        Setting.set('fqdn', ENV['ZAMMAD_FQDN'])                  if ENV['ZAMMAD_FQDN'].to_s != ''
+        Setting.set('http_type', ENV['ZAMMAD_HTTP_TYPE'])        if ENV['ZAMMAD_HTTP_TYPE'].to_s != ''
+        Setting.set('organization', ENV['ZAMMAD_ORGANIZATION'])  if ENV['ZAMMAD_ORGANIZATION'].to_s != ''
+        Setting.set('product_name', ENV['ZAMMAD_PRODUCT_NAME'])  if ENV['ZAMMAD_PRODUCT_NAME'].to_s != ''
+        puts "config applied: fqdn=#{Setting.get('fqdn')} http_type=#{Setting.get('http_type')}"
+
+  # -------------------------------------------------------------------------
+  # zammad-railsserver — Puma on :3000 inside the network. Not published.
+  # Reached only through zammad-nginx.
+  # -------------------------------------------------------------------------
+  zammad-railsserver:
+    <<: *zammad-image
+    command: ["zammad-railsserver"]
+    depends_on:
+      zammad-init:
+        condition: service_completed_successfully
+    environment:
+      <<: *zammad-env
+    volumes:
+      - zammad-storage:/opt/zammad/storage
+
+  # -------------------------------------------------------------------------
+  # zammad-scheduler — DelayedJob, scheduled jobs, AI jobs, inbound mail,
+  # session manager. Without this: no notifications, no triggers, no SLAs.
+  # -------------------------------------------------------------------------
+  zammad-scheduler:
+    <<: *zammad-image
+    command: ["zammad-scheduler"]
+    depends_on:
+      zammad-init:
+        condition: service_completed_successfully
+    environment:
+      <<: *zammad-env
+    volumes:
+      - zammad-storage:/opt/zammad/storage
+
+  # -------------------------------------------------------------------------
+  # zammad-websocket — live updates to the agent UI. :6042 inside network.
+  # -------------------------------------------------------------------------
+  zammad-websocket:
+    <<: *zammad-image
+    command: ["zammad-websocket"]
+    depends_on:
+      zammad-init:
+        condition: service_completed_successfully
+    environment:
+      <<: *zammad-env
+    volumes:
+      - zammad-storage:/opt/zammad/storage
+
+  # -------------------------------------------------------------------------
+  # zammad-nginx — the only container that publishes a port to the host.
+  # Front it with your own TLS terminator (Caddy / Traefik / cloud LB).
+  # -------------------------------------------------------------------------
+  zammad-nginx:
+    <<: *zammad-image
+    command: ["zammad-nginx"]
+    depends_on:
+      zammad-railsserver:
+        condition: service_started
+      zammad-websocket:
+        condition: service_started
+    environment:
+      <<: *zammad-env
+      NGINX_PORT: 8080
+      NGINX_SERVER_NAME: ${ZAMMAD_FQDN:-_}
+      NGINX_SERVER_SCHEME: ${ZAMMAD_HTTP_TYPE:-$$scheme}
+      NGINX_CLIENT_MAX_BODY_SIZE: ${NGINX_CLIENT_MAX_BODY_SIZE:-50M}
+    ports:
+      - "${ZAMMAD_HOST_PORT:-8080}:8080"
+
+  # -------------------------------------------------------------------------
+  # zammad-backup — daily pg_dump + tar /opt/zammad/storage at BACKUP_TIME.
+  # Backups land in the zammad-backup volume; bind-mount it to a host path
+  # and rclone/s3 sync from there.
+  # -------------------------------------------------------------------------
+  zammad-backup:
+    <<: *zammad-image
+    command: ["zammad-backup"]
+    depends_on:
+      zammad-postgresql:
+        condition: service_healthy
+    environment:
+      <<: *zammad-env
+      BACKUP_DIR: /var/tmp/zammad
+      BACKUP_TIME: ${BACKUP_TIME:-03:00}
+      HOLD_DAYS: ${BACKUP_HOLD_DAYS:-10}
+    volumes:
+      - zammad-backup:/var/tmp/zammad
+      - zammad-storage:/opt/zammad/storage:ro
+
+volumes:
+  # PostgreSQL data — primary ticket store. Loss here = total data loss.
+  zammad-postgresql-data:
+    name: zammad-postgresql-data
+  # Attachments / uploaded files. Shared across rails, scheduler, websocket.
+  # When storage_provider = "File" this is where every uploaded ticket
+  # attachment lives. When storage_provider = "DB" (the current setting) this
+  # holds only avatars / logos.
+  zammad-storage:
+    name: zammad-storage
+  # Daily backups. Bind-mount to a host path if you want easy off-host sync.
+  zammad-backup:
+    name: zammad-backup
