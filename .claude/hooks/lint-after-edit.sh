@@ -23,7 +23,9 @@ while IFS= read -r file; do
 done < <(git diff --name-only --diff-filter=ACMR HEAD 2>/dev/null; git ls-files --others --exclude-standard 2>/dev/null)
 
 if [[ ${#RUBY_FILES[@]} -gt 0 ]]; then
-  bundle exec rubocop --autocorrect "${RUBY_FILES[@]}" >&2 || EXIT_CODE=2
+  if bundle exec rubocop --version >/dev/null 2>&1; then
+    bundle exec rubocop --autocorrect "${RUBY_FILES[@]}" >&2 || EXIT_CODE=2
+  fi
 fi
 
 if [[ ${#FRONTEND_JS_FILES[@]} -gt 0 ]]; then
