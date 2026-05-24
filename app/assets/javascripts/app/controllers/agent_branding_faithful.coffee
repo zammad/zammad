@@ -20,11 +20,10 @@ class App.AgentBrandingFaithful extends App.Controller
     @title __('Branding'), true
     @navupdate '#settings/branding'
 
-    # Pull live values out of Zammad settings.
-    @productName     = App.Setting.get('product_name')  or 'Zammad Helpdesk'
-    @organization    = App.Setting.get('organization')  or ''
-    @logoUrl         = "/assets/images/#{App.Setting.get('product_logo') or 'logo.svg'}"
-    @activeColor     = App.Setting.get('ui_color')      or 'indigo'
+    @productName     = App.Config.get('product_name')  or 'Zammad Helpdesk'
+    @organization    = App.Config.get('organization')  or ''
+    @logoUrl         = "/assets/images/#{App.Config.get('product_logo') or 'logo.svg'}"
+    @activeColor     = 'indigo'
 
     @render()
 
@@ -41,8 +40,8 @@ class App.AgentBrandingFaithful extends App.Controller
     key = $(e.currentTarget).data('key')
     val = @$(".js-input[data-key='#{key}']").val()
     return if !key
-    App.Setting.set(key, val, { notify: true })
-    @[if key is 'product_name' then 'productName' else 'organization'] = val
+    App.Setting.set(key, val)
+    if key is 'product_name' then @productName = val else @organization = val
     @notify(
       type: 'success'
       msg: App.i18n.translateContent('%s saved', key)
@@ -54,7 +53,6 @@ class App.AgentBrandingFaithful extends App.Controller
     color = $(e.currentTarget).data('color')
     return if !color
     @activeColor = color
-    App.Setting.set('ui_color', color, { notify: true })
     @$('.js-color').removeClass('ac-color-chip--on')
     $(e.currentTarget).addClass('ac-color-chip--on')
 
@@ -81,7 +79,7 @@ class App.AgentBrandingFaithful extends App.Controller
 
   onLogoReset: (e) =>
     e.preventDefault()
-    App.Setting.set('product_logo', 'logo.svg', { notify: true })
+    App.Setting.set('product_logo', 'logo.svg')
     @logoUrl = '/assets/images/logo.svg'
     @render()
 
