@@ -16134,7 +16134,6 @@ div.accounted-time-value {
 // =============================================================================
 // Customer portal theme (Phase 1 of customer-portal-redesign)
 // See docs/plans/customer-portal-redesign.md
-//
 // Everything below is scoped under body.is-customer-portal so the agent UI
 // stays untouched. The body class is added in _plugin/navigation.coffee
 // for users with ticket.customer permission and without ticket.agent.
@@ -16526,6 +16525,7 @@ body.is-customer-portal {
 
   .cp-pill--new,
   .cp-pill--open { background: hsl(212, 60%, 95%); color: hsl(212, 60%, 35%); }
+
   .cp-pill--pending,
   .cp-pill--pending-reminder,
   .cp-pill--pending-close { background: hsl(36, 80%, 96%); color: hsl(36, 60%, 38%); }
@@ -16580,6 +16580,7 @@ body.is-customer-portal {
     box-shadow: none;
   }
   .cp-search input:focus { box-shadow: none; }
+
   .cp-search:focus-within {
     border-color: var(--cp-accent);
     box-shadow: 0 0 0 3px var(--cp-accent-ring);
@@ -16610,11 +16611,13 @@ body.is-customer-portal {
     margin-right: 4px;
   }
   .cp-tab:hover { background: var(--cp-surface-3); color: var(--cp-ink); }
+
   .cp-tab--active {
     background: var(--cp-accent-soft);
     color: var(--cp-accent);
     font-weight: 600;
   }
+
   .cp-tab-count {
     font-size: 11px;
     font-weight: 700;
@@ -16623,6 +16626,7 @@ body.is-customer-portal {
     padding: 1px 6px;
     border-radius: 999px;
   }
+
   .cp-tab--active .cp-tab-count {
     background: var(--cp-accent);
     color: hsl(0, 0%, 99%);
@@ -16637,6 +16641,7 @@ body.is-customer-portal {
     font-size: 12px;
     color: var(--cp-ink-3);
   }
+
   .cp-sort select {
     border: 1px solid var(--cp-border);
     background: var(--cp-surface);
@@ -16694,17 +16699,20 @@ body.is-customer-portal {
     color: var(--cp-ink);
     line-height: 1.3;
   }
+
   .cp-ticket-sub {
     font-size: 12px;
     color: var(--cp-ink-3);
     margin-top: 3px;
   }
+
   .cp-mono {
     font-family: ui-monospace, Menlo, Consolas, monospace;
     font-weight: 600;
     font-size: 12.5px;
   }
   .cp-muted { color: var(--cp-ink-3); }
+
   .cp-empty-row {
     text-align: center;
     color: var(--cp-ink-3);
@@ -16763,7 +16771,7 @@ body.is-customer-portal {
   }
 
   .cp-msg--me {
-    grid-template-columns: 1fr 32px;
+    grid-template-columns: 32px 1fr;
     direction: rtl;
     .cp-msg-body { direction: ltr; text-align: right; }
     .cp-msg-text { text-align: left; }
@@ -16821,7 +16829,7 @@ body.is-customer-portal {
     line-height: 1.55;
     color: var(--cp-ink);
     white-space: pre-wrap;
-    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .cp-tag {
@@ -16856,6 +16864,7 @@ body.is-customer-portal {
     min-height: 80px;
     outline: none;
   }
+
   .cp-reply textarea:focus {
     border-color: var(--cp-accent);
     box-shadow: 0 0 0 3px var(--cp-accent-ring);
@@ -16867,6 +16876,7 @@ body.is-customer-portal {
     justify-content: space-between;
     gap: 10px;
   }
+
   .cp-reply-bar-right {
     display: flex;
     gap: 8px;
@@ -16936,6 +16946,7 @@ body.is-customer-portal {
     margin-bottom: 10px;
     transition: background 0.12s ease, transform 0.08s ease;
   }
+
   .cp-nav-newbtn:hover {
     background: hsl(210, 14%, 28%);
     color: hsl(0, 0%, 99%);
@@ -17099,10 +17110,12 @@ body.is-customer-portal {
   .cp-form-grid .form-group {
     margin: 0;
   }
+
   .cp-form-grid .form-group.formGroup--halfSize,
   .cp-form-grid .ticket-form-middle .form-group {
     grid-column: span 1;
   }
+
   .cp-form-grid .form-group:has(textarea),
   .cp-form-grid .form-group:has(.richtext) {
     grid-column: 1 / -1;
@@ -17222,6 +17235,7 @@ body.is-customer-portal {
   .cp-field--err {
     border-color: hsl(0, 70%, 60%) !important;
   }
+
   .cp-field-err {
     color: hsl(0, 65%, 45%);
     font-size: 12px;
@@ -17248,6 +17262,7 @@ body.is-customer-portal {
     cursor: pointer;
   }
   .cp-seg-btn:hover { color: var(--cp-ink); }
+
   .cp-seg-btn--on {
     background: var(--cp-surface);
     color: var(--cp-accent);
@@ -17267,6 +17282,7 @@ body.is-customer-portal {
     cursor: pointer;
     transition: border-color 0.12s ease, background 0.12s ease;
   }
+
   .cp-drop:hover {
     border-color: var(--cp-accent);
     background: var(--cp-accent-soft);
@@ -17291,6 +17307,7 @@ body.is-customer-portal {
   }
   .cp-attach-icon { font-size: 16px; }
   .cp-attach-meta { flex: 1; min-width: 0; }
+
   .cp-attach-name {
     font-size: 12.5px;
     color: var(--cp-ink);
@@ -17298,6 +17315,7 @@ body.is-customer-portal {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
   .cp-attach-x {
     border: 0;
     background: transparent;
@@ -17350,6 +17368,7 @@ body.is-customer-portal {
     color: var(--cp-ink-2);
     margin-bottom: 2px;
   }
+
   .cp-feed-meta strong {
     font-weight: 600;
     color: var(--cp-ink);
@@ -17738,6 +17757,7 @@ body.is-agent-console {
     margin-bottom: 10px;
     transition: background 0.12s ease, transform 0.08s ease;
   }
+
   .ac-nav-newbtn:hover {
     background: hsl(210, 14%, 28%);
     color: hsl(0, 0%, 99%);
@@ -17771,10 +17791,12 @@ body.is-agent-console {
     font-size: 13.5px;
     text-decoration: none;
   }
+
   .ac-nav-item:hover {
     background: var(--ac-surface-3);
     color: var(--ac-ink);
   }
+
   .ac-nav-item.is-active {
     background: var(--ac-accent-soft);
     color: var(--ac-accent);
@@ -17796,14 +17818,17 @@ body.is-agent-console {
     -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='9' rx='1.5'/><rect x='14' y='3' width='7' height='5' rx='1.5'/><rect x='14' y='12' width='7' height='9' rx='1.5'/><rect x='3' y='16' width='7' height='5' rx='1.5'/></svg>");
             mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='9' rx='1.5'/><rect x='14' y='3' width='7' height='5' rx='1.5'/><rect x='14' y='12' width='7' height='9' rx='1.5'/><rect x='3' y='16' width='7' height='5' rx='1.5'/></svg>");
   }
+
   .ac-icon-inbox {
     -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M3 13v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6M3 13l3-8h12l3 8M3 13h5l2 3h4l2-3h5'/></svg>");
             mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M3 13v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6M3 13l3-8h12l3 8M3 13h5l2 3h4l2-3h5'/></svg>");
   }
+
   .ac-icon-user {
     -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='8' r='4'/><path d='M4 21a8 8 0 0 1 16 0'/></svg>");
             mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='8' r='4'/><path d='M4 21a8 8 0 0 1 16 0'/></svg>");
   }
+
   .ac-icon-settings {
     -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='3'/><path d='M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.5-2.4 1a7 7 0 0 0-2-1.2l-.4-2.5h-4l-.4 2.5a7 7 0 0 0-2 1.2l-2.4-1-2 3.5 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.5 2.4-1a7 7 0 0 0 2 1.2l.4 2.5h4l.4-2.5a7 7 0 0 0 2-1.2l2.4 1 2-3.5-2-1.6c.1-.4.1-.8.1-1.2z'/></svg>");
             mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='3'/><path d='M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.5-2.4 1a7 7 0 0 0-2-1.2l-.4-2.5h-4l-.4 2.5a7 7 0 0 0-2 1.2l-2.4-1-2 3.5 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.5 2.4-1a7 7 0 0 0 2 1.2l.4 2.5h4l.4-2.5a7 7 0 0 0 2-1.2l2.4 1 2-3.5-2-1.6c.1-.4.1-.8.1-1.2z'/></svg>");
@@ -17821,6 +17846,7 @@ body.is-agent-console {
     min-width: 20px;
     text-align: center;
   }
+
   .ac-nav-item-badge[data-zero-hidden='true']:empty,
   .ac-nav-item-badge:empty { display: none; }
 
@@ -17875,9 +17901,11 @@ body.is-agent-console {
   }
 
   .customer-portal-brand-logo { width: 22px; height: 22px; color: var(--ac-accent); }
+
   .customer-portal-brand-name {
     font-weight: 700; color: var(--ac-ink); letter-spacing: -0.01em; line-height: 1.2;
   }
+
   .customer-portal-brand-sub {
     font-size: 11px; color: var(--ac-ink-3); letter-spacing: 0.04em;
     text-transform: uppercase; line-height: 1.3;
@@ -17893,6 +17921,7 @@ body.is-agent-console {
     border: none;
 
     &:hover { background: var(--ac-surface-3); color: var(--ac-ink); }
+
     &.is-active {
       background: var(--ac-accent-soft);
       color: var(--ac-accent);
@@ -18089,18 +18118,21 @@ body.is-agent-console {
   }
   .ac-workload-row:last-child { border-bottom: 0; }
   .ac-workload-name { font-size: 13px; color: var(--ac-ink); }
+
   .ac-workload-bar {
     height: 6px;
     background: var(--ac-surface-3);
     border-radius: 999px;
     overflow: hidden;
   }
+
   .ac-workload-bar > div {
     height: 100%;
     background: var(--ac-accent);
     border-radius: 999px;
     transition: width 0.18s ease;
   }
+
   .ac-workload-count {
     font-size: 12px;
     color: var(--ac-ink-3);
@@ -18340,7 +18372,6 @@ body.is-agent-console {
 
   // ---------------------------------------------------------------------------
   // Manage / Settings pages (Phase 6)
-  //
   // Per CLAUDE.md governance, only typography + surface tokens here.
   // Validation banners, error states, destructive-action affordances are
   // untouched.
