@@ -18114,6 +18114,214 @@ body.is-agent-console {
     text-align: center;
   }
 
+  // ===========================================================================
+  // Faithful agent overviews screen (App.AgentOverviewFaithful)
+  // ===========================================================================
+  .ac-overview-screen {
+    background: var(--ac-bg);
+    color: var(--ac-ink);
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ac-search {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--ac-surface);
+    border: 1px solid var(--ac-border);
+    border-radius: 6px;
+    padding: 0 10px;
+    width: 260px;
+  }
+  .ac-search input {
+    border: 0;
+    padding: 7px 0;
+    background: transparent;
+    flex: 1;
+    color: var(--ac-ink);
+    font-size: 13.5px;
+    outline: none;
+  }
+  .ac-search:focus-within {
+    border-color: var(--ac-accent);
+    box-shadow: 0 0 0 3px hsla(232, 70%, 56%, 0.18);
+  }
+  .ac-search-icon { color: var(--ac-ink-3); font-size: 14px; }
+
+  .ac-sort-select {
+    border: 1px solid var(--ac-border);
+    background: var(--ac-surface);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+    color: var(--ac-ink);
+    cursor: pointer;
+  }
+
+  .ac-otabs {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 28px;
+    border-bottom: 1px solid var(--ac-border);
+    background: var(--ac-bg);
+    overflow-x: auto;
+  }
+  .ac-otab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: var(--ac-ink-2);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .ac-otab:hover { background: var(--ac-surface-3); color: var(--ac-ink); }
+  .ac-otab--on {
+    background: var(--ac-surface);
+    color: var(--ac-ink);
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px var(--ac-border);
+  }
+  .ac-otab-count {
+    background: var(--ac-surface-3);
+    color: var(--ac-ink-3);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 999px;
+    min-width: 22px;
+    text-align: center;
+  }
+  .ac-otab--on .ac-otab-count { background: var(--ac-accent-soft); color: var(--ac-accent); }
+
+  .ac-table-wrap {
+    padding: 16px 28px 28px;
+  }
+
+  .ac-overview-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--ac-surface);
+    border: 1px solid var(--ac-border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .ac-overview-table thead {
+    background: var(--ac-surface-2);
+  }
+  .ac-overview-table thead th {
+    font-size: 11px;
+    color: var(--ac-ink-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--ac-border);
+    text-align: left;
+  }
+  .ac-overview-table tbody td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--ac-border);
+    color: var(--ac-ink);
+    font-size: 13.5px;
+    vertical-align: middle;
+  }
+  .ac-overview-table tbody tr {
+    cursor: pointer;
+    transition: background 0.12s ease;
+  }
+  .ac-overview-table tbody tr:hover { background: var(--ac-surface-2); }
+  .ac-overview-table tbody tr:last-child td { border-bottom: 0; }
+
+  .ac-cell-title {
+    font-weight: 500;
+    color: var(--ac-ink);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 460px;
+  }
+
+  .ac-cell-person {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+  }
+  .ac-cell-person span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .ac-cell-avatar {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .ac-cell-avatar--accent { background: var(--ac-accent-soft); color: var(--ac-accent); }
+  .ac-cell-avatar--neutral { background: var(--ac-surface-3); color: var(--ac-ink-2); }
+
+  .ac-mono {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-weight: 600;
+    font-size: 12.5px;
+  }
+  .ac-muted { color: var(--ac-ink-3); }
+  .ac-nowrap { white-space: nowrap; }
+  .ac-empty-row {
+    text-align: center;
+    color: var(--ac-ink-3);
+    padding: 32px 16px !important;
+    font-size: 13.5px;
+  }
+
+  // Priority + state pills (reuse customer-portal cp-* tokens since both
+  // portals share the same color palette).
+  .cp-pri {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  .cp-pri--low    { background: hsl(60, 4%, 94%);   color: hsl(60, 4%, 40%); }
+  .cp-pri--normal { background: hsl(212, 60%, 95%); color: hsl(212, 60%, 35%); }
+  .cp-pri--high   { background: hsl(0, 60%, 95%);   color: hsl(0, 65%, 40%); }
+
+  .cp-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    background: hsl(60, 4%, 94%);
+    color: hsl(60, 4%, 40%);
+    text-transform: capitalize;
+  }
+  .cp-pill--new, .cp-pill--open { background: hsl(212, 60%, 95%); color: hsl(212, 60%, 35%); }
+  .cp-pill--pending, .cp-pill--pending-reminder, .cp-pill--pending-close {
+    background: hsl(36, 80%, 96%); color: hsl(36, 60%, 38%);
+  }
+  .cp-pill--resolved { background: hsl(150, 50%, 94%); color: hsl(150, 50%, 30%); }
+  .cp-pill--closed { background: hsl(60, 4%, 94%); color: hsl(60, 4%, 38%); }
+  .cp-pill--merged { background: hsl(60, 4%, 94%); color: hsl(60, 4%, 38%); }
+
   // ---------------------------------------------------------------------------
   // Overviews list reskin — restyle the existing
   // App.TicketOverview rendering (`.overviews .sidebar + .main`) to match

@@ -239,22 +239,21 @@ function AgentDashboard({ tickets, onOpen, onNav }) {
 }
 
 // ============= Overviews list =============
-function OverviewsScreen({ tickets, onOpen, onNew }) {
-  const [view, setView] = useS("my_assigned");
+function OverviewsScreen({ tickets, onOpen, onNew, view, setView, layout }) {
   const [query, setQuery] = useS("");
   const [sort, setSort] = useS("updated");
 
   const views = [
-    { key: "my_assigned",     label: "My assigned tickets",      filter: t => t.assigneeId === ME_AGENT.id },
-    { key: "unassigned_open", label: "Unassigned & open",        filter: t => !t.assigneeId && t.state === "open" },
-    { key: "open",            label: "All open tickets",         filter: t => t.state === "open" },
-    { key: "pending",         label: "Pending reached",          filter: t => t.state === "pending" },
-    { key: "escalated",       label: "Escalated",                filter: t => t.priority === "high" && t.state !== "resolved" && t.state !== "closed" },
-    { key: "resolved",        label: "Resolved",                 filter: t => t.state === "resolved" },
-    { key: "closed",          label: "Closed",                   filter: t => t.state === "closed" },
+    { key: "my_assigned",     label: "My assigned",     filter: t => t.assigneeId === ME_AGENT.id },
+    { key: "unassigned_open", label: "Unassigned",      filter: t => !t.assigneeId && t.state === "open" },
+    { key: "open",            label: "All open",        filter: t => t.state === "open" },
+    { key: "pending",         label: "Pending",         filter: t => t.state === "pending" },
+    { key: "escalated",       label: "Escalated",       filter: t => t.priority === "high" && t.state !== "resolved" && t.state !== "closed" },
+    { key: "resolved",        label: "Resolved",        filter: t => t.state === "resolved" },
+    { key: "closed",          label: "Closed",          filter: t => t.state === "closed" },
   ];
   const counts = Object.fromEntries(views.map(v => [v.key, tickets.filter(v.filter).length]));
-  const current = views.find(v => v.key === view);
+  const current = views.find(v => v.key === view) || views[0];
   let list = tickets.filter(current.filter);
   if (query.trim()) {
     const q = query.toLowerCase();
@@ -264,6 +263,104 @@ function OverviewsScreen({ tickets, onOpen, onNew }) {
     sort === "updated" ? b.updatedAt - a.updatedAt : sort === "created" ? b.createdAt - a.createdAt : 0
   );
 
+  const head = (
+    <header className="screen-head">
+      <div>
+        <div className="kicker">Overviews</div>
+        <h1 className="screen-title">{current.label} tickets</h1>
+      </div>
+      <div className="screen-actions">
+        <div className="search">
+          <Icon name="search" size={14}/>
+          <input placeholder="Search ticket…" value={query} onChange={e => setQuery(e.target.value)}/>
+        </div>
+        <select value={sort} onChange={e => setSort(e.target.value)} style={{ padding: "6px 10px", fontSize: 13 }}>
+          <option value="updated">Last update</option>
+          <option value="created">Date created</option>
+        </select>
+        <button className="btn btn--primary" onClick={onNew}>
+          <Icon name="plus" size={14}/> New ticket
+        </button>
+      </div>
+    </header>
+  );
+
+  const tableEl = (
+    <div className="table-wrap">
+      <table className="ticket-table ticket-table--dense">
+        <thead>
+          <tr>
+            <th style={{ width: 70 }}>#</th>
+            <th>Title</th>
+            <th style={{ width: 150 }}>Customer</th>
+            <th style={{ width: 100 }}>Group</th>
+            <th style={{ width: 120 }}>Assignee</th>
+            <th style={{ width: 84 }}>Priority</th>
+            <th style={{ width: 100 }}>State</th>
+            <th style={{ width: 100 }}>Updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list.map(t => {
+            const c = custById(t.customerId);
+            const a = agentById(t.assigneeId);
+            return (
+              <tr key={t.id} className={t.unread ? "row--unread" : ""} onClick={() => onOpen(t.id)}>
+                <td className="mono muted">#{t.id}</td>
+                <td>
+                  <div className="cell-title">
+                    <span className="cell-title-text">{t.title}</span>
+                    {t.unread > 0 && <span className="badge">{t.unread} new</span>}
+                  </div>
+                </td>
+                <td>
+                  <div className="cell-person">
+                    <Avatar name={c?.name} size={20} tone="neutral"/>
+                    <span>{c?.name}</span>
+                  </div>
+                </td>
+                <td className="muted">{t.group}</td>
+                <td>
+                  {a ? (
+                    <div className="cell-person">
+                      <Avatar name={a.name} size={20} tone={a.tone}/>
+                      <span>{a.name.split(" ")[0]}</span>
+                    </div>
+                  ) : <span className="muted" style={{ fontSize: 12 }}>—</span>}
+                </td>
+                <td><PriorityPill priority={t.priority}/></td>
+                <td><StatePill state={t.state}/></td>
+                <td className="muted" style={{ whiteSpace: "nowrap" }}>{a_relTime(t.updatedAt)} ago</td>
+              </tr>
+            );
+          })}
+          {list.length === 0 && <tr><td colSpan={8} className="empty-row">No tickets here.</td></tr>}
+        </tbody>
+      </table>
+    </div>
+  );
+
+  // Layout A: horizontal tabs (default) — cleaner, no sub-sidebar
+  if (layout !== "sidebar") {
+    return (
+      <div className="screen">
+        {head}
+        <div className="overview-tabs">
+          {views.map(v => (
+            <button key={v.key}
+                    className={"otab" + (view === v.key ? " otab--on" : "")}
+                    onClick={() => setView(v.key)}>
+              <span>{v.label}</span>
+              <span className="otab-count">{counts[v.key]}</span>
+            </button>
+          ))}
+        </div>
+        {tableEl}
+      </div>
+    );
+  }
+
+  // Layout B: keep the side rail (original)
   return (
     <div className="split-layout">
       <aside className="split-side">
@@ -276,81 +373,7 @@ function OverviewsScreen({ tickets, onOpen, onNew }) {
           </div>
         ))}
       </aside>
-
-      <div className="split-main">
-        <header className="screen-head">
-          <div>
-            <div className="kicker">Overviews</div>
-            <h1 className="screen-title">{current.label}</h1>
-          </div>
-          <div className="screen-actions">
-            <div className="search">
-              <Icon name="search" size={14}/>
-              <input placeholder="Search ticket…" value={query} onChange={e => setQuery(e.target.value)}/>
-            </div>
-            <select value={sort} onChange={e => setSort(e.target.value)} style={{ padding: "6px 10px", fontSize: 13 }}>
-              <option value="updated">Last update</option>
-              <option value="created">Date created</option>
-            </select>
-            <button className="btn btn--primary" onClick={onNew}>
-              <Icon name="plus" size={14}/> New ticket
-            </button>
-          </div>
-        </header>
-
-        <div className="table-wrap">
-          <table className="ticket-table">
-            <thead>
-              <tr>
-                <th style={{ width: 74 }}>#</th>
-                <th>Title</th>
-                <th style={{ width: 130 }}>Customer</th>
-                <th style={{ width: 110 }}>Group</th>
-                <th style={{ width: 120 }}>Assignee</th>
-                <th style={{ width: 90 }}>Priority</th>
-                <th style={{ width: 110 }}>State</th>
-                <th style={{ width: 110 }}>Last update</th>
-              </tr>
-            </thead>
-            <tbody>
-              {list.map(t => {
-                const c = custById(t.customerId);
-                const a = agentById(t.assigneeId);
-                return (
-                  <tr key={t.id} className={t.unread ? "row--unread" : ""} onClick={() => onOpen(t.id)}>
-                    <td className="mono muted">#{t.id}</td>
-                    <td>
-                      <div className="ticket-subject">
-                        <span>{t.title}</span>
-                        {t.unread > 0 && <span className="badge">{t.unread} new</span>}
-                      </div>
-                    </td>
-                    <td>
-                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                        <Avatar name={c?.name} size={20} tone="neutral"/>
-                        <span style={{ fontSize: 13 }}>{c?.name}</span>
-                      </div>
-                    </td>
-                    <td className="muted">{t.group}</td>
-                    <td>
-                      {a ? (
-                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                          <Avatar name={a.name} size={20} tone={a.tone}/>
-                          <span style={{ fontSize: 13 }}>{a.name.split(" ")[0]}</span>
-                        </div>
-                      ) : <span className="muted" style={{ fontSize: 12 }}>—</span>}
-                    </td>
-                    <td><PriorityPill priority={t.priority}/></td>
-                    <td><StatePill state={t.state}/></td>
-                    <td className="muted">{a_relTime(t.updatedAt)} ago</td>
-                  </tr>
-                );
-              })}
-              {list.length === 0 && <tr><td colSpan={8} className="empty-row">No tickets here.</td></tr>}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <div className="split-main">{head}{tableEl}</div>
     </div>
   );
 }

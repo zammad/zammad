@@ -270,6 +270,20 @@ class TicketOverviewRouter extends App.ControllerPermanent
       )
       return
 
+    # Faithful agent overview screen (docs/ui-references/agent-console/).
+    # Matches the wireframe's tabs-on-top + dense table layout instead of
+    # the legacy Zammad sidebar-of-overviews layout. The previous
+    # App.TicketOverview is preserved for non-agent / fallback cases.
+    if App.User.current()?.permission('ticket.agent')
+      App.TaskManager.execute(
+        key:        'AgentOverviewFaithful'
+        controller: 'AgentOverviewFaithful'
+        params:     { view: params.view, appEl: params.appEl }
+        show:       true
+        persistent: true
+      )
+      return
+
     App.TaskManager.execute(
       key:        'TicketOverview'
       controller: 'TicketOverview'
