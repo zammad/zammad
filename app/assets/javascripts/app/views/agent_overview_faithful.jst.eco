@@ -1,0 +1,85 @@
+<div class="ac-overview-screen">
+  <header class="ac-screen-head">
+    <div>
+      <div class="ac-kicker"><%- @T('Overviews') %></div>
+      <h1 class="ac-screen-title"><%- @T(@viewLabel) %></h1>
+    </div>
+    <div class="ac-screen-actions">
+      <div class="ac-search">
+        <span class="ac-search-icon">⌕</span>
+        <input class="js-search" type="search" placeholder="<%- @T('Search ticket…') %>" value="<%= @query %>">
+      </div>
+      <select class="js-sort ac-sort-select">
+        <option value="updated" <%= 'selected' if @sort is 'updated' %>><%- @T('Last update') %></option>
+        <option value="created" <%= 'selected' if @sort is 'created' %>><%- @T('Date created') %></option>
+      </select>
+      <a class="ac-btn ac-btn--primary" href="#ticket/create">
+        <span class="ac-btn-icon">+</span> <%- @T('New ticket') %>
+      </a>
+    </div>
+  </header>
+
+  <div class="ac-otabs">
+    <% for t in @tabs: %>
+    <button class="ac-otab js-otab <%= 'ac-otab--on' if t.active %>" data-view="<%= t.key %>">
+      <span><%- @T(t.label) %></span>
+      <span class="ac-otab-count"><%= t.count %></span>
+    </button>
+    <% end %>
+  </div>
+
+  <div class="ac-table-wrap">
+    <table class="ac-overview-table">
+      <thead>
+        <tr>
+          <th style="width: 88px;">#</th>
+          <th><%- @T('Title') %></th>
+          <th style="width: 170px;"><%- @T('Customer') %></th>
+          <th style="width: 120px;"><%- @T('Group') %></th>
+          <th style="width: 130px;"><%- @T('Assignee') %></th>
+          <th style="width: 90px;"><%- @T('Priority') %></th>
+          <th style="width: 110px;"><%- @T('State') %></th>
+          <th style="width: 110px;"><%- @T('Updated') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @rows.length > 0: %>
+          <% for r in @rows: %>
+          <tr class="js-row" data-id="<%= r.id %>">
+            <td class="ac-mono ac-muted">#<%= r.number %></td>
+            <td>
+              <div class="ac-cell-title"><%= r.title %></div>
+            </td>
+            <td>
+              <% if r.customerName: %>
+              <div class="ac-cell-person">
+                <span class="ac-cell-avatar ac-cell-avatar--neutral"><%= @initials(r.customerName) %></span>
+                <span><%= r.customerName %></span>
+              </div>
+              <% else: %>
+              <span class="ac-muted">—</span>
+              <% end %>
+            </td>
+            <td class="ac-muted"><%= r.group %></td>
+            <td>
+              <% if r.ownerName: %>
+              <div class="ac-cell-person">
+                <span class="ac-cell-avatar ac-cell-avatar--accent"><%= @initials(r.ownerName) %></span>
+                <span><%= r.ownerName %></span>
+              </div>
+              <% else: %>
+              <span class="ac-muted">—</span>
+              <% end %>
+            </td>
+            <td><span class="<%= r.priorityClass %>"><%- @T(r.priorityName) %></span></td>
+            <td><span class="cp-pill cp-pill--<%= r.stateBucket %>"><%- @T(r.stateName) %></span></td>
+            <td class="ac-muted ac-nowrap"><%= @relTime(r.updatedAt) %></td>
+          </tr>
+          <% end %>
+        <% else: %>
+        <tr><td colspan="8" class="ac-empty-row"><%- @T('No tickets here.') %></td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

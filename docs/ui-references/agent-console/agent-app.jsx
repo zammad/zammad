@@ -5,7 +5,8 @@ const { useState: useSA, useEffect: useEA, useMemo: useMA } = React;
 const A_TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "accent": "indigo",
   "density": "comfy",
-  "darkMode": false
+  "darkMode": false,
+  "overviewsLayout": "tabs"
 }/*EDITMODE-END*/;
 
 function applyAgentTweaks(t) {
@@ -129,6 +130,7 @@ function Toast({ msg, onDone }) {
 function AgentApp() {
   const [tickets, setTickets] = useSA(A_TICKETS);
   const [route, setRoute] = useSA({ name: "dashboard" });
+  const [overviewView, setOverviewView] = useSA("my_assigned");
   const [toast, setToast] = useSA("");
   const [tweaks, setTweak] = window.useTweaks(A_TWEAK_DEFAULTS);
 
@@ -142,7 +144,10 @@ function AgentApp() {
     escalated:   tickets.filter(t => t.priority === "high" && t.state !== "closed" && t.state !== "resolved").length,
   }), [tickets]);
 
-  const nav = (name, opts = {}) => setRoute({ name, ...opts });
+  const nav = (name, opts = {}) => {
+    if (name === "overviews" && opts.view) setOverviewView(opts.view);
+    setRoute({ name, ...opts });
+  };
   const openTicket = (id) => {
     setTickets(arr => arr.map(t => t.id === id ? { ...t, unread: 0 } : t));
     setRoute({ name: "detail", id });
@@ -166,7 +171,10 @@ function AgentApp() {
   if (route.name === "dashboard")
     screen = <AgentDashboard tickets={tickets} onOpen={openTicket} onNav={nav}/>;
   else if (route.name === "overviews")
-    screen = <OverviewsScreen tickets={tickets} onOpen={openTicket} onNew={() => setToast("New ticket flow goes here")}/>;
+    screen = <OverviewsScreen tickets={tickets} onOpen={openTicket}
+                              view={overviewView} setView={setOverviewView}
+                              layout={tweaks.overviewsLayout}
+                              onNew={() => setToast("New ticket flow goes here")}/>;
   else if (route.name === "detail")
     screen = <AgentTicketDetail tickets={tickets} ticketId={route.id}
                                 onOpen={openTicket} onReply={replyTicket}
@@ -189,6 +197,10 @@ function AgentApp() {
             value={tweaks.density} onChange={v => setTweak("density", v)}/>
           <window.TweakSelect label="Accent" options={["indigo", "teal", "rose", "slate"]}
             value={tweaks.accent} onChange={v => setTweak("accent", v)}/>
+        </window.TweakSection>
+        <window.TweakSection label="Layouts">
+          <window.TweakRadio label="Overviews" options={["tabs", "sidebar"]}
+            value={tweaks.overviewsLayout} onChange={v => setTweak("overviewsLayout", v)}/>
         </window.TweakSection>
       </window.TweaksPanel>
     </div>

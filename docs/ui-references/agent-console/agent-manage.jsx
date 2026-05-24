@@ -29,22 +29,17 @@ const MANAGE_SECTIONS = [
   ]},
 ];
 
-function ManageSidebar({ active, onPick }) {
+function ManageTopTabs({ groupItems, active, onPick }) {
   return (
-    <aside className="split-side">
-      {MANAGE_SECTIONS.map(sec => (
-        <React.Fragment key={sec.group}>
-          <div className="split-side-group">{sec.group}</div>
-          {sec.items.map(it => (
-            <div key={it.key}
-                 className={"split-side-item" + (active === it.key ? " split-side-item--on" : "")}
-                 onClick={() => onPick(it.key)}>
-              {it.label}
-            </div>
-          ))}
-        </React.Fragment>
+    <div className="overview-tabs">
+      {groupItems.map(it => (
+        <button key={it.key}
+                className={"otab" + (active === it.key ? " otab--on" : "")}
+                onClick={() => onPick(it.key)}>
+          <span>{it.label}</span>
+        </button>
       ))}
-    </aside>
+    </div>
   );
 }
 
@@ -369,10 +364,11 @@ function ManageScreen({ section, onPickSection }) {
     const group = MANAGE_SECTIONS.find(s => s.items.some(i => i.key === section))?.group || "Manage";
     panel = <GenericManagePanel title={label} kicker={group}/>;
   }
+  const currentGroup = MANAGE_SECTIONS.find(s => s.items.some(i => i.key === section)) || MANAGE_SECTIONS[0];
   return (
-    <div className="split-layout">
-      <ManageSidebar active={section} onPick={onPickSection}/>
-      <div className="split-main">{panel}</div>
+    <div className="screen">
+      <ManageTopTabs groupItems={currentGroup.items} active={section} onPick={onPickSection}/>
+      {panel}
     </div>
   );
 }
