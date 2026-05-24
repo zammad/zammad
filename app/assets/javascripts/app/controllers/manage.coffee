@@ -14,6 +14,20 @@ class ManageRouter extends App.ControllerPermanent
     if params.search_query
       params.search_query = decodeURIComponent(params.search_query)
 
+    # Faithful agent-console manage pages (see docs/ui-references/agent-console/).
+    # Dispatch admin users / channels / branding to dedicated controllers that
+    # emit the wireframe DOM directly; everything else falls back to the
+    # legacy App.Manage two-pane layout.
+    if App.User.current()?.permission('admin.user') and (params.target is 'users' or window.location.hash is '#manage/users')
+      App.TaskManager.execute(
+        key:        'AgentUsersFaithful'
+        controller: 'AgentUsersFaithful'
+        params:     { appEl: params.appEl }
+        show:       true
+        persistent: true
+      )
+      return
+
     App.TaskManager.execute(
       key:        'Manage'
       controller: 'Manage'
