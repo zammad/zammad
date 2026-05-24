@@ -18508,6 +18508,82 @@ body.is-agent-console {
     line-height: 1.4;
   }
 
+  // Branding panel — Product name / Organization / Logo / Default color
+  .ac-settings-section {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--ac-border);
+  }
+  .ac-settings-section:last-of-type { border-bottom: 0; }
+  .ac-settings-h3 {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ac-ink);
+    margin: 0 0 4px;
+  }
+  .ac-settings-p {
+    font-size: 13px;
+    color: var(--ac-ink-3);
+    margin: 0 0 12px;
+    line-height: 1.5;
+  }
+  .ac-settings-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ac-input {
+    flex: 1;
+    min-width: 240px;
+    padding: 7px 10px;
+    border: 1px solid var(--ac-border);
+    border-radius: 6px;
+    background: var(--ac-surface);
+    color: var(--ac-ink);
+    font-size: 13.5px;
+  }
+  .ac-input:focus { outline: 0; border-color: var(--ac-accent); box-shadow: 0 0 0 3px var(--ac-accent-soft); }
+  .ac-logo-frame {
+    margin-top: 4px;
+    margin-bottom: 12px;
+    background: var(--ac-ink);
+    border-radius: 10px;
+    padding: 40px;
+    display: grid;
+    place-items: center;
+  }
+  .ac-logo-frame-inner {
+    width: 200px;
+    background: var(--ac-surface);
+    border-radius: 8px;
+    padding: 24px;
+    display: grid;
+    place-items: center;
+  }
+  .ac-logo-frame-inner img {
+    max-width: 100%;
+    max-height: 60px;
+    display: block;
+  }
+  .ac-color-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border: 1px solid var(--ac-border);
+    border-radius: 6px;
+    background: var(--ac-surface);
+    color: var(--ac-ink);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .ac-color-chip:hover { border-color: var(--ac-accent); }
+  .ac-color-chip--on   { border-color: var(--ac-accent); box-shadow: 0 0 0 3px var(--ac-accent-soft); }
+  .ac-color-swatch {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
   // Priority + state pills (reuse customer-portal cp-* tokens since both
   // portals share the same color palette).
   .cp-pri {

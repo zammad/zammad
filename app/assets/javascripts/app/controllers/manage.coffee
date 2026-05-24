@@ -41,6 +41,18 @@ class ManageRouter extends App.ControllerPermanent
       )
       return
 
+    # Settings → Branding sub-tab uses the faithful side-by-side form.
+    # Other Settings sub-tabs (System, Security, API) fall through to App.Manage.
+    if App.User.current()?.permission('admin.branding') and (params.target is 'branding' or window.location.hash is '#settings/branding' or window.location.hash is '#settings')
+      App.TaskManager.execute(
+        key:        'AgentBrandingFaithful'
+        controller: 'AgentBrandingFaithful'
+        params:     { appEl: params.appEl }
+        show:       true
+        persistent: true
+      )
+      return
+
     App.TaskManager.execute(
       key:        'Manage'
       controller: 'Manage'

@@ -1,0 +1,64 @@
+<div class="ac-manage-screen">
+  <div class="ac-manage-tabs">
+    <% for s in @sections: %>
+    <a class="ac-mtab js-section <%= 'ac-mtab--on' if s.active %>" data-section="<%= s.href %>" href="<%= s.href %>">
+      <span><%- @T(s.label) %></span>
+    </a>
+    <% end %>
+  </div>
+
+  <div class="ac-manage-body" style="max-width: 820px;">
+    <header class="ac-screen-head ac-screen-head--flat">
+      <div>
+        <div class="ac-kicker"><%- @T('Settings') %></div>
+        <h1 class="ac-screen-title"><%- @T('Branding') %></h1>
+      </div>
+    </header>
+
+    <section class="ac-settings-section">
+      <h3 class="ac-settings-h3"><%- @T('Product name') %></h3>
+      <p class="ac-settings-p"><%- @T('Shown in the title bar and emails. Keep it short.') %></p>
+      <div class="ac-settings-row">
+        <input class="ac-input js-input" data-key="product_name" type="text" value="<%= @productName %>">
+        <button class="ac-btn ac-btn--primary js-save" data-key="product_name"><%- @T('Save') %></button>
+      </div>
+    </section>
+
+    <section class="ac-settings-section">
+      <h3 class="ac-settings-h3"><%- @T('Organization') %></h3>
+      <p class="ac-settings-p"><%- @T('Included in email footers and shown to customers.') %></p>
+      <div class="ac-settings-row">
+        <input class="ac-input js-input" data-key="organization" type="text" value="<%= @organization %>">
+        <button class="ac-btn ac-btn--primary js-save" data-key="organization"><%- @T('Save') %></button>
+      </div>
+    </section>
+
+    <section class="ac-settings-section">
+      <h3 class="ac-settings-h3"><%- @T('Logo') %></h3>
+      <p class="ac-settings-p"><%- @T('SVG or PNG. Used in customer-facing emails and the portal header.') %></p>
+      <div class="ac-logo-frame">
+        <div class="ac-logo-frame-inner">
+          <img src="<%= @logoUrl %>" alt="<%- @T('Logo') %>">
+        </div>
+      </div>
+      <div class="ac-settings-row">
+        <button class="ac-btn ac-btn--ghost js-logo-upload"><%- @T('Upload new logo') %></button>
+        <button class="ac-btn ac-btn--ghost js-logo-reset"><%- @T('Reset to default') %></button>
+        <input type="file" accept="image/png,image/svg+xml,image/jpeg" style="display: none;">
+      </div>
+    </section>
+
+    <section class="ac-settings-section">
+      <h3 class="ac-settings-h3"><%- @T('Default color') %></h3>
+      <p class="ac-settings-p"><%- @T('Applied to buttons, links, and brand accents across the customer portal.') %></p>
+      <div class="ac-settings-row" style="flex-wrap: wrap; gap: 8px;">
+        <% for c in @colors: %>
+        <button class="ac-color-chip js-color <%= 'ac-color-chip--on' if @activeColor is c.key %>" data-color="<%= c.key %>">
+          <span class="ac-color-swatch" style="background: <%= c.hex %>;"></span>
+          <%- @T(c.label) %>
+        </button>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>
