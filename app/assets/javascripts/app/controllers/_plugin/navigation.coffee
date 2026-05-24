@@ -23,6 +23,7 @@ class Navigation extends App.Controller
     'change .js-menu .js-switch input': 'switch'
     'click .js-onclick': 'click'
     'click .js-navigation-toggle-button': 'toggleClicked'
+    'click [data-filter]': 'onSidebarFilter'
 
   constructor: ->
     super
@@ -147,6 +148,13 @@ class Navigation extends App.Controller
       openTab:   openTab
       activeTab: activeTab
     )
+
+  onSidebarFilter: (e) =>
+    e.preventDefault()
+    bucket = $(e.currentTarget).data('filter')
+    return if !bucket
+    App.Event.trigger('customer:ticket:filter', bucket)
+    @navigate '#ticket/view/my_tickets'
 
   click: (e) ->
     @preventDefaultAndStopPropagation(e)

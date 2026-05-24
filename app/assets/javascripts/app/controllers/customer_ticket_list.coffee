@@ -26,6 +26,11 @@ class App.CustomerTicketList extends App.Controller
     @collectionBindId = App.OverviewListCollection.bind('my_tickets', @onCollection)
     App.OverviewListCollection.fetch('my_tickets')
 
+    @controllerBind('customer:ticket:filter', (bucket) =>
+      @stateTab = bucket or 'all'
+      @render()
+    )
+
     @render()
 
   release: =>
@@ -76,12 +81,10 @@ class App.CustomerTicketList extends App.Controller
     rows
 
   bucketFor: (ticket, state, stateType) ->
+    return 'closed' if stateType?.name in ['closed', 'merged']
     return 'closed' if state?.name in ['closed', 'merged']
-    if stateType?.name in ['pending reminder', 'pending action']
-      return 'pending'
-    if stateType?.name is 'closed'
-      return 'resolved'
-    return 'open'
+    return 'pending' if stateType?.name in ['pending reminder', 'pending action']
+    'open'
 
   applyFilter: (rows) ->
     filtered = rows
