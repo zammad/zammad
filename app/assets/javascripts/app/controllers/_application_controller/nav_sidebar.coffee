@@ -33,11 +33,22 @@ class App.ControllerNavSidbar extends App.Controller
     groups = @groupsSorted()
     selectedItem = @selectedItem(groups)
 
+    activeGroup = null
+    if selectedItem
+      for group in groups
+        if group.items
+          for item in group.items
+            if item is selectedItem
+              activeGroup = group
+              break
+        break if activeGroup
+
     @html App.view('generic/navbar_level2/index')(
       className: @configKey
     )
-    @$('.sidebar').html App.view('generic/navbar_level2/navbar')(
-      groups: groups
+    tabGroups = if activeGroup then [activeGroup] else groups
+    @$('.navlevel2-tabs').html App.view('generic/navbar_level2/navbar')(
+      groups: tabGroups
       className: @configKey
       selectedItem: selectedItem
     )
@@ -48,8 +59,8 @@ class App.ControllerNavSidbar extends App.Controller
     return if !selectedItem
     return if !force && @lastTarget && selectedItem.target is @lastTarget
     @lastTarget = selectedItem.target
-    @$('.sidebar li').removeClass('active')
-    @$(".sidebar li a[href=\"#{selectedItem.target}\"]").parent().addClass('active')
+    @$('.navlevel2-tabs .navlevel2-tab').removeClass('navlevel2-tab--on')
+    @$(".navlevel2-tabs a.navlevel2-tab[href=\"#{selectedItem.target}\"]").addClass('navlevel2-tab--on')
 
     @executeController(selectedItem, params)
 
@@ -137,10 +148,7 @@ class App.ControllerNavSidbar extends App.Controller
     return if !position
     if position.main
       @$('.main').scrollTop(position.main)
-    if position.sidebar
-      @$('.sidebar').scrollTop(position.sidebar)
 
   currentPosition: =>
     data =
       main: @$('.main').scrollTop()
-      sidebar: @$('.sidebar').scrollTop()

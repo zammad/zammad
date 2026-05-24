@@ -1,14 +1,9 @@
 <% if @groups: %>
   <% for group in @groups: %>
     <% if !_.isEmpty(group.items): %>
-      <h2><%- @T(group.name) %></h2>
-      <ul class="nav nav-pills nav-stacked">
-      <% if group.items: %>
-        <% for item in group.items: %>
-          <li class="<% if item.active: %>active js-item<% end %> <% if item.hidden: %>hidden<% end %>"><a href="<%= item.target %>"><%- @T(item.name) %></a></li>
-        <% end %>
+      <% for item in group.items: %>
+        <a class="navlevel2-tab <% if item.active: %>navlevel2-tab--on<% end %> <% if item.hidden: %>hidden<% end %>" href="<%= item.target %>"><%- @T(item.name) %></a>
       <% end %>
-      </ul>
     <% end %>
   <% end %>
 <% end %>

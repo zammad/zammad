@@ -1,2 +1,2 @@
-<div class="sidebar <%= @className %>"></div>
+<div class="navlevel2-tabs <%= @className %>"></div>
 <div class="main flex"></div>

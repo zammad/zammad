@@ -97,7 +97,7 @@ RSpec.describe 'Profile > Language', type: :system do
       let(:translated_content) { 'Language' }
 
       it_behaves_like 'having translated content in', '.page-header'
-      it_behaves_like 'having translated content in', '.sidebar.NavBarProfile'
+      it_behaves_like 'having translated content in', '.navlevel2-tabs.NavBarProfile'
     end
 
     context 'with dashboard page visited' do
@@ -189,7 +189,7 @@ RSpec.describe 'Profile > Language', type: :system do
       let(:translated_content) { 'Sprache' }
 
       it_behaves_like 'having translated content in', '.page-header'
-      it_behaves_like 'having translated content in', '.sidebar.NavBarProfile'
+      it_behaves_like 'having translated content in', '.navlevel2-tabs.NavBarProfile'
     end
 
     context 'with dashboard page visited' do
