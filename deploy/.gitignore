@@ -1,0 +1,9 @@
+# Never commit the real environment file — it contains secrets.
+.env
+.env.local
+.env.*.local
+
+# Local backup archives.
+backups/
+*.psql.gz
+*.tar.gz
