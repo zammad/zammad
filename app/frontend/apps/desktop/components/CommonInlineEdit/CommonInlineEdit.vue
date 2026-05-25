@@ -292,8 +292,8 @@ defineExpose({
       <CommonLabel
         :id="id"
         ref="label"
-        class="z-10 break-words"
-        style="word-break: normal; overflow-wrap: anywhere"
+        class="z-10 wrap-break-word"
+        :style="{ wordBreak: 'normal', overflowWrap: 'anywhere' }"
         v-bind="labelAttrs"
         :size="size"
         :class="[classes?.label, minHeightClassMap[size]]"
