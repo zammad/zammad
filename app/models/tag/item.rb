@@ -1,10 +1,9 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Tag::Item < ApplicationModel
-  validates :name,
-            presence:   true,
-            format:     { without: %r{,|\*}, message: __('Commas and stars are not allowed in name.') },
-            uniqueness: { case_sensitive: false }
+  validates :name, presence: true, format: { without: %r{,|\*}, message: __('Commas and stars are not allowed in name.') }
+
+  before_save :fill_namedowncase
 
   has_many :tags, foreign_key: 'tag_item_id',
                   inverse_of:  :tag_item,
@@ -18,7 +17,7 @@ class Tag::Item < ApplicationModel
   }
 
   scope :filter_by_name, lambda { |query|
-    where('name ILIKE ?', "%#{SqlHelper.quote_like(query.strip)}%")
+    where('name_downcase LIKE ?', "%#{SqlHelper.quote_like(query.strip.downcase)}%")
       .reorder(name: :asc)
   }
 
@@ -37,7 +36,7 @@ tag_item = Tag::Item.lookup_by_name_and_create('some tag')
   def self.lookup_by_name_and_create(name)
     name = name.strip
 
-    tag_item = Tag::Item.where('LOWER(name) = LOWER(?)', name).first
+    tag_item = Tag::Item.lookup(name: name)
     return tag_item if tag_item
 
     Tag::Item.create!(name: name)
@@ -135,6 +134,11 @@ Tag::Item.remove(id)
       )
     end
     Tag::Item.find(id).destroy
+    true
+  end
+
+  def fill_namedowncase
+    self.name_downcase = name.downcase
     true
   end
 

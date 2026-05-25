@@ -7,25 +7,6 @@ class Tag < ApplicationModel
   belongs_to :tag_object, class_name: 'Tag::Object', optional: true
   belongs_to :tag_item,   class_name: 'Tag::Item', optional: true
 
-  validates :tag_item_id, uniqueness: { scope: %i[tag_object_id o_id] }
-
-  scope :by_tag_object, lambda { |klass|
-    output = joins(:tag_object)
-
-    next output if !klass
-
-    output.where(tag_objects: { name: klass })
-  }
-
-  scope :by_object,         ->(id) { where(o_id: id) if id }
-  scope :include_tag_items, -> { joins(:tag_item).reorder('tags.id, tag_items.name') }
-
-  scope :related_tag_items, lambda { |id, klass|
-    include_tag_items
-      .by_object(id)
-      .by_tag_object(klass)
-  }
-
 =begin
 
 add tags for certain object
@@ -42,9 +23,6 @@ add tags for certain object
   def self.tag_add(data)
     data[:item] = data[:item].strip
 
-    # return if duplicate
-    return true if tags_include?(data[:item], object: data[:object], o_id: data[:o_id])
-
     # lookups
     if data[:object]
       tag_object_id = Tag::Object.lookup_by_name_and_create(data[:object]).id
@@ -52,6 +30,10 @@ add tags for certain object
     if data[:item]
       tag_item_id = Tag::Item.lookup_by_name_and_create(data[:item]).id
     end
+
+    # return if duplicate
+    current_tags = tag_list(data)
+    return true if current_tags.include?(data[:item])
 
     # create history
     Tag.create(
@@ -220,13 +202,16 @@ returns
 =end
 
   def self.tag_list(data)
-    related_tag_items(data[:o_id], data[:object])
-      .pluck('tag_items.name')
-  end
+    query = Tag.joins(:tag_item, :tag_object)
 
-  def self.tags_include?(tag_name, object: nil, o_id: nil)
-    related_tag_items(o_id, object)
-      .exists?(['LOWER(tag_items.name) = LOWER(?)', tag_name.strip])
+    if data.key?(:object)
+      query = query.where(tag_objects: { name: data[:object] })
+    end
+    if data.key?(:o_id)
+      query = query.where(o_id: data[:o_id])
+    end
+
+    query.reorder('tags.id, tag_items.name').pluck('tag_items.name')
   end
 
 =begin

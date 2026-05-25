@@ -96,12 +96,9 @@ class App.WidgetTag extends App.Controller
       @addItem(item, source)
 
   addItem: (item, source = '') =>
-    lowerCaseTags = _.map(@localTags, (elem) -> elem.toLowerCase())
-
-    if _.contains(lowerCaseTags, item.toLowerCase())
+    if _.contains(@localTags, item)
       @render()
       return
-
     return if source != 'macro' && App.Config.get('tag_new') is false && !@possibleTags[item]
     @localTags.push item
     @render()
