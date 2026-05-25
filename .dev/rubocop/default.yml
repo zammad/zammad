@@ -595,3 +595,6 @@ Lint/MissingSuper:
   Description: "Checks for missing super calls in overridden methods. Skips Service classes."
   Exclude:
     - "app/services/**/*"
+
+Rails/StrongParametersExpect:
+  Enabled: false
