@@ -82,7 +82,7 @@ jobs:
     steps:
       - name: Setup Scripts
         id: setup
-        uses: github/gh-aw-actions/setup@318d7f4901f78b85e25b91709cf0109ac9b425f6 # v0.74.9
+        uses: github/gh-aw-actions/setup@9f050961da586148d135e113d8bb025185cdf2b8 # v0.75.4
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
           job-name: ${{ github.job }}
@@ -328,7 +328,7 @@ jobs:
     steps:
       - name: Setup Scripts
         id: setup
-        uses: github/gh-aw-actions/setup@318d7f4901f78b85e25b91709cf0109ac9b425f6 # v0.74.9
+        uses: github/gh-aw-actions/setup@9f050961da586148d135e113d8bb025185cdf2b8 # v0.75.4
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
           job-name: ${{ github.job }}
@@ -855,7 +855,7 @@ jobs:
     steps:
       - name: Setup Scripts
         id: setup
-        uses: github/gh-aw-actions/setup@318d7f4901f78b85e25b91709cf0109ac9b425f6 # v0.74.9
+        uses: github/gh-aw-actions/setup@9f050961da586148d135e113d8bb025185cdf2b8 # v0.75.4
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
           job-name: ${{ github.job }}
@@ -981,7 +981,7 @@ jobs:
     steps:
       - name: Setup Scripts
         id: setup
-        uses: github/gh-aw-actions/setup@318d7f4901f78b85e25b91709cf0109ac9b425f6 # v0.74.9
+        uses: github/gh-aw-actions/setup@9f050961da586148d135e113d8bb025185cdf2b8 # v0.75.4
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
           job-name: ${{ github.job }}
@@ -1140,7 +1140,7 @@ jobs:
     steps:
       - name: Setup Scripts
         id: setup
-        uses: github/gh-aw-actions/setup@318d7f4901f78b85e25b91709cf0109ac9b425f6 # v0.74.9
+        uses: github/gh-aw-actions/setup@9f050961da586148d135e113d8bb025185cdf2b8 # v0.75.4
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
           job-name: ${{ github.job }}
@@ -1192,7 +1192,7 @@ jobs:
     steps:
       - name: Setup Scripts
         id: setup
-        uses: github/gh-aw-actions/setup@318d7f4901f78b85e25b91709cf0109ac9b425f6 # v0.74.9
+        uses: github/gh-aw-actions/setup@9f050961da586148d135e113d8bb025185cdf2b8 # v0.75.4
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
           job-name: ${{ github.job }}
