@@ -7,7 +7,8 @@ import { computed, ref, useTemplateRef, watch } from 'vue'
 import getUuid from '#shared/utils/getUuid.ts'
 
 import CommonTab from '#desktop/components/CommonTabGroup/CommonTab.vue'
-import type { Tab } from '#desktop/components/CommonTabGroup/types.ts'
+import type { MarkerStyle, Tab } from '#desktop/components/CommonTabGroup/types.ts'
+import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'
 
 interface Props {
   multiple?: boolean
@@ -26,7 +27,6 @@ const emit = defineEmits<{
 }>()
 
 const containerElement = useTemplateRef('container')
-const markerElement = useTemplateRef('marker')
 const tabInstances = useTemplateRef('tabs')
 
 const isTabMode = computed(() => !props.multiple)
@@ -34,7 +34,14 @@ const labelSize = computed(() => (props.size === 'large' ? 'medium' : 'small'))
 
 const defaultTabIndex = computed(() => props.tabs.findIndex((tab) => tab.default))
 
-const selectedIndex = ref<number | null>(null)
+const selectedIndex = computed<number | null>(() => {
+  if (props.multiple) return null
+
+  const activeTabKey = props.modelValue
+  const activeTabIndex = props.tabs.findIndex((tab) => activeTabKey === tab.key)
+
+  return activeTabIndex === -1 ? defaultTabIndex.value : activeTabIndex
+})
 
 const activeTabs = computed(() =>
   Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue],
@@ -42,37 +49,47 @@ const activeTabs = computed(() =>
 
 const isActiveTab = (tab: Tab) => activeTabs.value.includes(tab.key)
 
-const calcMarkerSize = () => {
-  const tabElement = tabInstances.value?.at(selectedIndex.value ?? defaultTabIndex.value)
-  if (!tabElement || !markerElement.value) return
+const markerStyle = ref<MarkerStyle | null>(null)
+const transitionsEnabled = ref(false)
 
-  Object.assign(markerElement.value.style, {
-    top: `${tabElement.$el.offsetTop}px`,
-    left: `${tabElement.$el.offsetLeft}px`,
-    width: `${tabElement.$el.offsetWidth}px`,
-    height: `${tabElement.$el.offsetHeight}px`,
+const measureMarker = () => {
+  const index = selectedIndex.value ?? defaultTabIndex.value
+
+  if (index == null || index < 0) {
+    markerStyle.value = null
+    return
+  }
+
+  const tabElement = tabInstances.value?.at(index)
+
+  if (!tabElement) {
+    markerStyle.value = null
+    return
+  }
+
+  const el = tabElement.$el as HTMLElement
+  markerStyle.value = {
+    top: `${el.offsetTop}px`,
+    left: `${el.offsetLeft}px`,
+    width: `${el.offsetWidth}px`,
+    height: `${el.offsetHeight}px`,
+  }
+}
+
+// We don't apply transition before we have the calculation
+// to prevent this flash of transition initially
+const enableTransitionsAfterPaint = () => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      transitionsEnabled.value = true
+    })
   })
 }
 
-watch(
-  () => props.modelValue,
-  (activeTabKey) => {
-    if (props.multiple) return
-    selectedIndex.value = props.tabs.findIndex((tab) => activeTabKey === tab.key)
-    calcMarkerSize()
-  },
-)
-
-useResizeObserver(containerElement, calcMarkerSize)
-
-const updateModelValue = (tab: Tab, index: number) => {
+const updateModelValue = (tab: Tab) => {
   if (tab.disabled) return
 
-  if (!props.multiple) {
-    selectedIndex.value = index
-    calcMarkerSize()
-    return emit('update:modelValue', tab.key)
-  }
+  if (!props.multiple) return emit('update:modelValue', tab.key)
 
   const updatedTabs = activeTabs.value.includes(tab.key)
     ? activeTabs.value.filter((activeTab) => activeTab !== tab.key)
@@ -86,9 +103,27 @@ if (!props.multiple) {
     ? props.tabs.findIndex((tab) => activeTabs.value.includes(tab.key))
     : defaultTabIndex.value
 
-  if (initialTabIndex === -1) updateModelValue(props.tabs[0], 0)
-  else updateModelValue(props.tabs[initialTabIndex], initialTabIndex)
+  if (initialTabIndex === -1) updateModelValue(props.tabs[0])
+  else updateModelValue(props.tabs[initialTabIndex])
 }
+
+const stopWatcher = watch(selectedIndex, measureMarker, { flush: 'post' })
+if (props.multiple) stopWatcher()
+
+useResizeObserver(containerElement, measureMarker)
+
+useKeepAliveHooks({
+  onInitialActivated() {
+    measureMarker()
+    enableTransitionsAfterPaint()
+  },
+  onReactivated() {
+    transitionsEnabled.value = false
+
+    measureMarker()
+    enableTransitionsAfterPaint()
+  },
+})
 
 const labelId = getUuid()
 </script>
@@ -110,7 +145,7 @@ const labelId = getUuid()
     </CommonLabel>
 
     <CommonTab
-      v-for="(tab, index) in tabs"
+      v-for="tab in tabs"
       :id="isTabMode ? `tab-label-${tab.key}` : undefined"
       :key="tab.key"
       ref="tabs"
@@ -128,15 +163,19 @@ const labelId = getUuid()
       :count="tab.count"
       tabindex="0"
       class="relative z-10"
-      @click="updateModelValue(tab, index)"
-      @keydown.enter.prevent="updateModelValue(tab, index)"
-      @keydown.space.prevent="updateModelValue(tab, index)"
+      @click="updateModelValue(tab)"
+      @keydown.enter.prevent="updateModelValue(tab)"
+      @keydown.space.prevent="updateModelValue(tab)"
     />
 
     <div
       v-if="!multiple"
-      ref="marker"
-      class="absolute rounded-full bg-white transition-all dark:bg-gray-200"
+      class="absolute rounded-full bg-white dark:bg-gray-200"
+      :class="{
+        'transition-all': transitionsEnabled,
+        invisible: !markerStyle,
+      }"
+      :style="markerStyle"
     />
   </div>
 </template>

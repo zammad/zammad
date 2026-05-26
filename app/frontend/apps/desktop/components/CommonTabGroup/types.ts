@@ -18,3 +18,12 @@ export interface Tab {
   tooltip?: string
   count?: number | string
 }
+
+export interface MarkerStyle {
+  top: string
+  left: string
+  width: string
+  height: string
+  // just due missing type compatibility to CSSProperties and  StyleValue
+  [key: `--${string}`]: string
+}
