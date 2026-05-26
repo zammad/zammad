@@ -1,0 +1,16 @@
+From info@example.com  Wed May 20 17:00:00 2026
+Return-Path: <info@example.com>
+To: <support@example.com>
+From: <info@example.com>
+Subject: Test inquiry
+Date: Wed, 20 May 2026 17:00:00 +0900
+Message-ID: <reproducer-iso2022jp@example.com>
+Content-Type: text/plain;
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+MIME-Version: 1.0
+
+これはテストメールです。
+お問い合わせありがとうございます。
+
+田中
