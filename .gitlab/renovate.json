@@ -1,5 +1,5 @@
 {
-  "enabledManagers": ["bundler", "npm", "github-actions"],
+  "enabledManagers": ["bundler", "npm", "github-actions", "devcontainers"],
   "bundler": {
     "lockFileMaintenance": {
       "enabled": true,
@@ -7,6 +7,12 @@
       "branchTopic": "lock-file-maintenance-ruby",
       "commitMessageExtra": "(Ruby)"
     }
+  },
+  "devcontainers": {
+    "managerFilePatterns": [
+      "/^\\.devcontainer/[^/]+/devcontainer\\.json$/",
+      "/^\\.devcontainer/features/[^/]+/devcontainer-feature\\.json$/"
+    ]
   },
   "npm": {
     "lockFileMaintenance": {
