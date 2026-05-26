@@ -26,6 +26,6 @@ class Sequencer::Unit::Import::Kayako::ObjectAttribute::Config < Sequencer::Unit
   private
 
   def attribute_type
-    "Sequencer::Unit::Import::Kayako::ObjectAttribute::AttributeType::#{resource['type'].capitalize}".constantize.new(resource, default_language)
+    "Sequencer::Unit::Import::Kayako::ObjectAttribute::AttributeType::#{resource['type'].capitalize}".constantize.new(resource, default_language, model_class)
   end
 end

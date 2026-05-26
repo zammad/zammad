@@ -32,31 +32,36 @@ class Sequencer::Unit::Import::Zendesk::ObjectAttribute::AttributeType::Base
       data_option:   @data_option,
       editable:      !attribute.removable,
       active:        attribute.active,
-      screens:       screens(attribute),
+      screens:       screens(object, attribute),
       position:      position(attribute),
       created_by_id: 1,
       updated_by_id: 1,
     }
   end
 
-  def screens(attribute)
-    config = {
-      view: {
-        '-all-' => {
-          shown: true,
-        },
-      }
-    }
-
-    return config if !attribute.visible_in_portal && attribute.required_in_portal
+  def screens(object, attribute)
+    return ticket_screens(attribute) if object.to_s == 'Ticket'
 
     {
-      edit: {
-        Customer: {
-          shown: attribute.visible_in_portal,
-          null:  !attribute.required_in_portal,
-        },
-      }.merge(config)
+      create: { '-all-' => { shown: true } },
+      edit:   { '-all-' => { shown: true } },
+      view:   { '-all-' => { shown: true } },
+    }
+  end
+
+  def ticket_screens(attribute)
+    customer = {
+      shown:    attribute.visible_in_portal,
+      required: attribute.required_in_portal,
+    }
+    agent = {
+      shown:    true,
+      required: attribute.required,
+    }
+
+    {
+      create_middle: { 'ticket.customer' => customer, 'ticket.agent' => agent },
+      edit:          { 'ticket.customer' => customer, 'ticket.agent' => agent },
     }
   end
 

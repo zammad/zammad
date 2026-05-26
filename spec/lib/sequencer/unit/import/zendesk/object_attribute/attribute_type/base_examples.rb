@@ -53,17 +53,26 @@ RSpec.shared_examples Sequencer::Unit::Import::Zendesk::ObjectAttribute::Attribu
       editable:      true,
       active:        true,
       screens:       {
-        edit: {
-          Customer: {
-            shown: true,
-            null:  false
+        create_middle: {
+          'ticket.customer' => {
+            shown:    true,
+            required: true,
           },
-          view:     {
-            '-all-' => {
-              shown: true
-            }
-          }
-        }
+          'ticket.agent'    => {
+            shown:    true,
+            required: true,
+          },
+        },
+        edit:          {
+          'ticket.customer' => {
+            shown:    true,
+            required: true,
+          },
+          'ticket.agent'    => {
+            shown:    true,
+            required: true,
+          },
+        },
       },
       position:      12,
       created_by_id: 1,

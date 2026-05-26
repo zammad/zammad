@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Sequencer::Sequence::Import::Freshdesk::ContactField, sequencer: :sequence do
 
-  context 'when tryping to import contact fields from Freshdesk', db_strategy: :reset do
+  context 'when trying to import contact fields from Freshdesk', db_strategy: :reset do
 
     let(:process_payload) do
       {
@@ -40,6 +40,15 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::ContactField, sequencer: 
 
       it 'adds custom fields' do
         expect { process(process_payload) }.to change(User, :column_names).by(['custom_dropdown'])
+      end
+
+      it 'sets create, edit and view screens for User fields' do
+        process(process_payload)
+        expect(ObjectManager::Attribute.get(object: 'User', name: 'custom_dropdown').screens).to eq(
+          'create' => { '-all-' => { 'shown' => true } },
+          'edit'   => { '-all-' => { 'shown' => true } },
+          'view'   => { '-all-' => { 'shown' => true } },
+        )
       end
     end
 

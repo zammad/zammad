@@ -48,6 +48,43 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::TicketField, sequencer: :
       it 'adds a custom field' do
         expect { process(process_payload) }.to change(Ticket, :column_names).by(['cf_custom_dropdown'])
       end
+
+      it 'derives screens permissions from the resource flags' do
+        process(process_payload)
+        expect(ObjectManager::Attribute.get(object: 'Ticket', name: 'cf_custom_dropdown').screens).to eq(
+          'create_middle' => {
+            'ticket.agent'    => { 'shown' => true, 'null' => true },
+            'ticket.customer' => { 'shown' => true, 'null' => true },
+          },
+          'edit'          => {
+            'ticket.agent'    => { 'shown' => true, 'null' => true },
+            'ticket.customer' => { 'shown' => true, 'null' => true },
+          },
+        )
+      end
+
+      context 'when the field is not customer-editable and is required for agents' do
+        let(:resource) do
+          super().merge(
+            'customers_can_edit'  => false,
+            'required_for_agents' => true,
+          )
+        end
+
+        it 'hides ticket.customer and marks ticket.agent as required' do
+          process(process_payload)
+          expect(ObjectManager::Attribute.get(object: 'Ticket', name: 'cf_custom_dropdown').screens).to eq(
+            'create_middle' => {
+              'ticket.agent'    => { 'shown' => true, 'null' => false },
+              'ticket.customer' => { 'shown' => false, 'null' => true },
+            },
+            'edit'          => {
+              'ticket.agent'    => { 'shown' => true, 'null' => false },
+              'ticket.customer' => { 'shown' => false, 'null' => true },
+            },
+          )
+        end
+      end
     end
 
     context 'when field is a decimal' do
