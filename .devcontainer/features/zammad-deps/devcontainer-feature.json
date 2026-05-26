@@ -3,23 +3,6 @@
   "version": "1.0.0",
   "name": "Zammad Dependency Installer",
   "description": "Installs dependencies required for Zammad.",
-  "dependsOn": {
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
-      "moby": false
-    },
-    "ghcr.io/devcontainers-extra/features/shellcheck:1": {},
-    "ghcr.io/devcontainers/features/node:1": {
-      "installYarnUsingApt": "false"
-    },
-    // Can't use bundler cache, it breaks overcommit:
-    //   https://github.com/rails/devcontainer/issues/55
-    //"ghcr.io/rails/devcontainer/features/bundler-cache:1": {},
-    "ghcr.io/rails/devcontainer/features/postgres-client": {},
-    "ghcr.io/devcontainers-extra/features/apt-get-packages": {
-      "packages": "curl gnupg libimlib2-dev"
-    },
-    "ghcr.io/devcontainers/features/go:1": {}
-  },
   "customizations": {
     "vscode": {
       "extensions": [

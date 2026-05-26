@@ -10,8 +10,7 @@
   },
   "devcontainer": {
     "managerFilePatterns": [
-      "/^\\.devcontainer/[^/]+/devcontainer\\.json$/",
-      "/^\\.devcontainer/features/[^/]+/devcontainer-feature\\.json$/"
+      "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
     ]
   },
   "npm": {

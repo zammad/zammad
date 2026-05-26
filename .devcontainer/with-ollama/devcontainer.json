@@ -6,6 +6,18 @@
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "moby": false
+    },
+    "ghcr.io/devcontainers-extra/features/shellcheck:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "installYarnUsingApt": "false"
+    },
+    "ghcr.io/rails/devcontainer/features/postgres-client": {},
+    "ghcr.io/devcontainers-extra/features/apt-get-packages": {
+      "packages": "curl gnupg libimlib2-dev"
+    },
+    "ghcr.io/devcontainers/features/go:1": {},
     "../features/zammad-deps": {},
     "../features/add-bin-path": {
       "addBinPath": "/workspaces/${localWorkspaceFolderBasename}/bin"
