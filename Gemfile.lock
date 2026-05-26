@@ -291,7 +291,7 @@ GEM
       ostruct
     globalid (1.2.1)
       activesupport (>= 6.1)
-    graphql (2.5.19)
+    graphql (2.5.26)
       base64
       fiber-storage
       logger
