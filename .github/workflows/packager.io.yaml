@@ -29,6 +29,7 @@ jobs:
           - sles:15
           - ubuntu:22.04
           - ubuntu:24.04
+          - ubuntu:26.04
     steps:
       - uses: actions/checkout@v6
         with:
