@@ -11,6 +11,9 @@ If you've found a security vulnerability in Zammad,
 please report the vulnerability exclusively via email
 to [security@zammad.com](mailto:security@zammad.com).
 
+Please do not combine several independent vulnerabilities,
+but send a separate mail for each of them instead.
+
 To send us a secure message, please use [our public key](SECURITY.asc).
 
 We will get back to you as soon as possible and inform
