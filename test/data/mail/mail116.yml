@@ -1,0 +1,13 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: info@example.com
+from_email: info@example.com
+from_display_name: ''
+to: support@example.com
+subject: Test inquiry
+body: |
+  これはテストメールです。
+  お問い合わせありがとうございます。
+
+  田中
+content_type: text/plain
+attachments: []
