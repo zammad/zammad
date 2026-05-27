@@ -276,7 +276,7 @@ onMounted(() => {
 
 useEventListener('resize', () => initializeHeaderWidths())
 
-useOnEmitter('main-sidebar-transition', () => initializeHeaderWidths())
+useOnEmitter('primary-sidebar-transition', () => initializeHeaderWidths())
 </script>
 
 <template>

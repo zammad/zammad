@@ -10,6 +10,8 @@ import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockLogoutMutation } from '#shared/graphql/mutations/logout.mocks.ts'
 
+import { SidebarName, isSidebarCollapsed } from '#desktop/components/layout/useSidebarDisplay.ts'
+
 describe('Left sidebar', () => {
   beforeEach(() => {
     mockUserCurrent({
@@ -19,6 +21,8 @@ describe('Left sidebar', () => {
       fullname: 'Nicole Braun',
       preferences: {},
     })
+
+    isSidebarCollapsed[SidebarName.Primary].value = false
   })
 
   afterEach(() => {
@@ -37,8 +41,7 @@ describe('Left sidebar', () => {
     })
 
     it('restores stored width', async () => {
-      localStorage.setItem('gid://zammad/User/999-left-sidebar-width', '216')
-
+      localStorage.setItem('primary-sidebar-width', '216')
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
@@ -52,9 +55,10 @@ describe('Left sidebar', () => {
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
-      const collapseButton = getByRole(aside, 'button', {
+      // one button has display none it's for smaller screens
+      const collapseButton = getAllByRole(aside, 'button', {
         name: 'Collapse sidebar',
-      })
+      })[0]
 
       await view.events.click(collapseButton)
 
@@ -62,9 +66,9 @@ describe('Left sidebar', () => {
         gridTemplateColumns: '56px 1fr',
       })
 
-      const expandButton = getByRole(aside, 'button', {
+      const expandButton = getAllByRole(aside, 'button', {
         name: 'Expand sidebar',
-      })
+      })[0]
 
       await view.events.click(expandButton)
 
@@ -73,8 +77,8 @@ describe('Left sidebar', () => {
       })
     })
 
-    it('restores collapsed state width', async () => {
-      localStorage.setItem('gid://zammad/User/999-left-sidebar-collapsed', 'true')
+    it('renders collapsed width when collapsed state is active', async () => {
+      isSidebarCollapsed[SidebarName.Primary].value = true
 
       const view = await visitView('/')
 
@@ -101,7 +105,7 @@ describe('Left sidebar', () => {
     })
 
     it('supports resetting', async () => {
-      localStorage.setItem('gid://zammad/User/999-left-sidebar-width', '216')
+      localStorage.setItem('primary-sidebar-width', '216')
 
       const view = await visitView('/')
 
@@ -126,7 +130,7 @@ describe('Left sidebar', () => {
       async ({ collapsed }) => {
         mockPermissions(['user_preferences', 'ticket.agent', 'admin'])
 
-        localStorage.setItem('gid://zammad/User/999-left-sidebar-collapsed', String(collapsed))
+        isSidebarCollapsed[SidebarName.Primary].value = collapsed
 
         const expectedMenuItems = [
           'Admin documentation',

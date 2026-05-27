@@ -7,6 +7,7 @@ import { computed } from 'vue'
 import CommonEmptyMessage from '#desktop/components/CommonEmptyMessage/CommonEmptyMessage.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
+import { SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
 import DragAndDropBulkWrapper from '#desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue'
 import { useDragAndDropBulk } from '#desktop/components/Ticket/DragAndDropBulk/useDragAndDropBulk.ts'
 import TicketBulkEditButton from '#desktop/components/Ticket/TicketBulkEditButton.vue'
@@ -100,13 +101,14 @@ const {
 </script>
 
 <template>
-  <div class="h-full" :class="{ 'grid grid-cols-[260px_1fr]': hasOverviews }">
+  <div class="h-full" :class="{ 'grid grid-cols-1 lg:grid-cols-[260px_1fr]': hasOverviews }">
     <LayoutSidebar
       v-if="hasOverviews"
       id="ticket-overviews"
+      class="hidden lg:flex"
       :aria-label="$t('second level navigation sidebar')"
       background-variant="secondary"
-      name="overviews"
+      :name="SidebarName.TicketOverviews"
     >
       <TicketOverviewsSidebar />
     </LayoutSidebar>

@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
+import { SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
 import PersonalSettingSidebar from '#desktop/pages/personal-setting/components/PersonalSettingSidebar.vue'
 
 import { usePersonalSettingStore } from '../stores/personalSetting.ts'
@@ -22,10 +23,11 @@ defineOptions({
 </script>
 
 <template>
-  <div class="grid h-full grid-cols-[260px_1fr]">
+  <div class="grid h-full grid-cols-1 lg:grid-cols-[260px_1fr]">
     <LayoutSidebar
       id="personal-settings-sidebar"
-      name="personal-setting"
+      class="hidden lg:flex"
+      :name="SidebarName.PersonalSetting"
       background-variant="secondary"
     >
       <PersonalSettingSidebar />

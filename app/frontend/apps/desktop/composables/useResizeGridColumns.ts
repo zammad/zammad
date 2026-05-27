@@ -6,6 +6,7 @@ import { shallowRef, computed, type Ref } from 'vue'
 import emitter from '#shared/utils/emitter.ts'
 
 import { SidebarPosition } from '#desktop/components/layout/types.ts'
+import { SidebarName, useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 export const DEFAULT_START_SIDEBAR_WIDTH = 260
 export const DEFAULT_END_SIDEBAR_WIDTH = 360
@@ -14,7 +15,7 @@ export const MINIMUM_END_SIDEBAR_WIDTH = 300
 export const SIDEBAR_COLLAPSED_WIDTH = 56
 
 export const useResizeGridColumns = (
-  storageKey?: string,
+  sidebarName: SidebarName,
   position: SidebarPosition = SidebarPosition.Start,
 ) => {
   const defaultSidebarWidth =
@@ -23,13 +24,13 @@ export const useResizeGridColumns = (
   const minSidebarWidth =
     position === SidebarPosition.Start ? MINIMUM_START_SIDEBAR_WIDTH : MINIMUM_END_SIDEBAR_WIDTH
 
-  const isSidebarCollapsed = shallowRef(false)
+  const { isSidebarCollapsed } = useSidebarDisplay(sidebarName)
 
   let currentSidebarWidth: Ref<number>
 
-  const storageId = `${storageKey}-sidebar-width`
+  const storageId = `${sidebarName}-sidebar-width`
 
-  if (storageKey) {
+  if (sidebarName) {
     currentSidebarWidth = useLocalStorage(storageId, defaultSidebarWidth)
   } else {
     currentSidebarWidth = shallowRef(defaultSidebarWidth)
@@ -57,16 +58,6 @@ export const useResizeGridColumns = (
     currentSidebarWidth.value = width
   }
 
-  const collapseSidebar = () => {
-    isSidebarCollapsed.value = true
-    emitter.emit('resize-layout')
-  }
-
-  const expandSidebar = () => {
-    isSidebarCollapsed.value = false
-    emitter.emit('resize-layout')
-  }
-
   const resetSidebarWidth = () => {
     currentSidebarWidth.value = defaultSidebarWidth
   }
@@ -88,8 +79,6 @@ export const useResizeGridColumns = (
     gridColumns,
     isSidebarCollapsed,
     resizeSidebar,
-    collapseSidebar,
-    expandSidebar,
     resetSidebarWidth,
   }
 }

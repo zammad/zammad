@@ -8,6 +8,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import emitter from '#shared/utils/emitter.ts'
 
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
+import { SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
 import { sortedFirstLevelRoutes } from '#desktop/components/PageNavigation/firstLevelRoutes.ts'
 
 import CommonButton from '../CommonButton/CommonButton.vue'
@@ -23,10 +24,10 @@ defineProps<Props>()
 
 const router = useRouter()
 
-const { userId, hasPermission } = useSessionStore()
+const { hasPermission } = useSessionStore()
 
 const openSearch = () => {
-  emitter.emit('expand-collapsed-content', `${userId}-left`)
+  emitter.emit('expand-collapsed-content', SidebarName.Primary)
   nextTick(() => emitter.emit('focus-quick-search-field'))
 }
 

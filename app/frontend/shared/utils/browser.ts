@@ -7,6 +7,7 @@ const parser = new UAParser()
 export const browser = parser.getBrowser()
 
 export const device = parser.getDevice()
+export const isMobile = device.type === 'mobile'
 
 export const os = parser.getOS()
 

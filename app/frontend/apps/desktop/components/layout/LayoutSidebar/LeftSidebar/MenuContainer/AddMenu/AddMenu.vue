@@ -5,9 +5,9 @@ import { computed } from 'vue'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import menuItems from '#desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/index.ts'
-import { useCollapsedState } from '#desktop/components/layout/LayoutSidebar/LeftSidebar/useCollapsedState.ts'
+import { SidebarName, useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 
-const { collapsedState } = useCollapsedState()
+const { isSidebarCollapsed } = useSidebarDisplay(SidebarName.Primary)
 
 const defaultItem = computed(() => menuItems.find((item) => item.key === 'ticket-create'))
 </script>
@@ -19,10 +19,10 @@ const defaultItem = computed(() => menuItems.find((item) => item.key === 'ticket
         menuItems.length === 1,
     }"
     orientation="autoVertical"
-    :hide-arrow="collapsedState"
+    :hide-arrow="isSidebarCollapsed"
     :default-icon="defaultItem?.icon"
     :default-button-variant="defaultItem?.variant"
-    :placement="collapsedState ? 'start' : 'arrowStart'"
+    :placement="isSidebarCollapsed ? 'start' : 'arrowStart'"
     link-size="small"
     button-size="large"
     :actions="menuItems"

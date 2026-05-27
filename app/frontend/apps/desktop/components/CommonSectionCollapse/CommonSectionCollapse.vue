@@ -27,13 +27,16 @@ const modelValue = defineModel<boolean>({
 })
 
 const emit = defineEmits<{
-  collapse: [boolean]
-  expand: [boolean]
+  collapse: []
+  expand: []
 }>()
 
 const headerId = computed(() => `${props.id}-header`)
 
-const { toggleCollapse, isCollapsed } = useCollapseHandler(emit)
+const { toggleCollapse, isCollapsed } = useCollapseHandler({
+  collapse: () => emit('collapse'),
+  expand: () => emit('expand'),
+})
 
 const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
   useTransitionCollapse()

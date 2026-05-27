@@ -5,22 +5,16 @@ import { useActiveElement } from '@vueuse/core'
 import { computed, useTemplateRef, watch } from 'vue'
 
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
-import type { CollapseOptions } from '#desktop/components/CollapseButton/types.ts'
 import { useCollapseHandler } from '#desktop/components/CollapseButton/useCollapseHandler.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
 import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
 
 import { SidebarPosition } from './types.ts'
+import { isSidebarCollapsed, SidebarName } from './useSidebarDisplay.ts'
 
 interface Props {
-  name: string
-  /**
-   @property currentWidth
-   @property minWidth
-   @property maxWidth
-   - used for accessibility
-   / */
+  name: SidebarName
   currentWidth?: number | string
   minWidth?: number | string
   maxWidth?: number | string
@@ -35,7 +29,6 @@ interface Props {
     resizeLine?: string
     collapseButton?: string
   }
-  rememberCollapse?: boolean
   backgroundVariant?: 'primary' | 'secondary'
 }
 
@@ -50,17 +43,20 @@ const emit = defineEmits<{
   'resize-horizontal-start': []
   'resize-horizontal-end': []
   'reset-width': []
-  collapse: [boolean]
-  expand: [boolean]
+  collapse: []
+  expand: []
 }>()
 
-const collapseOptions: CollapseOptions = {
-  name: props.name,
-}
-
-if (props.rememberCollapse) collapseOptions.storageKey = `${props.name}-sidebar-collapsed`
-
-const { toggleCollapse, isCollapsed } = useCollapseHandler(emit, collapseOptions)
+const { toggleCollapse, isCollapsed } = useCollapseHandler(
+  {
+    collapse: () => emit('collapse'),
+    expand: () => emit('expand'),
+  },
+  {
+    name: props.name,
+    isCollapsed: isSidebarCollapsed[props.name],
+  },
+)
 
 const backgroundVariantClass = computed(() => {
   switch (props.backgroundVariant) {
@@ -100,9 +96,10 @@ const { startResizing, isResizing } = useResizeLine(
 watch(isResizing, (isResizing) => {
   if (isResizing) {
     emit('resize-horizontal-start')
-  } else {
-    emit('resize-horizontal-end')
+    return
   }
+
+  emit('resize-horizontal-end')
 })
 
 const collapseButtonClass = computed(() => {
@@ -132,7 +129,7 @@ const collapseButtonClass = computed(() => {
       data-test-id="action-button"
       variant="neutral"
       :icon="iconCollapsed"
-      @click="toggleCollapse"
+      @click="toggleCollapse()"
     />
     <div
       v-else
@@ -180,7 +177,7 @@ const collapseButtonClass = computed(() => {
       v-if="collapsible"
       :collapsed="isCollapsed"
       :owner-id="id"
-      class="absolute top-[49px] z-30 peer-hover:opacity-100"
+      class="absolute top-12.25 z-30 hidden peer-hover:opacity-100 lg:flex"
       :inverse="position === SidebarPosition.End"
       variant="tertiary-gray"
       :collapse-label="$t('Collapse sidebar')"

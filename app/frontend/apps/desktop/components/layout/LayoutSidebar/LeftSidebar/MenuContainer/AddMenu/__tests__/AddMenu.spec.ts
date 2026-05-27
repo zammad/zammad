@@ -1,15 +1,17 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
-
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import AddMenu from '#desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/AddMenu.vue'
-import { COLLAPSED_STATE_KEY } from '#desktop/components/layout/LayoutSidebar/LeftSidebar/useCollapsedState.ts'
+import { isSidebarCollapsed, SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 describe('AddMenu', () => {
+  beforeEach(() => {
+    isSidebarCollapsed[SidebarName.Primary].value = true
+  })
+
   describe('create ticket action button', () => {
     it('renders action button', () => {
       mockPermissions(['ticket.agent', 'ticket.customer'])
@@ -17,7 +19,6 @@ describe('AddMenu', () => {
 
       const wrapper = renderComponent(AddMenu, {
         router: true,
-        provide: [[COLLAPSED_STATE_KEY, computed(() => true)]],
       })
 
       expect(wrapper.getByLabelText('New ticket')).toBeInTheDocument()
@@ -29,7 +30,6 @@ describe('AddMenu', () => {
 
       const wrapper = renderComponent(AddMenu, {
         router: true,
-        provide: [[COLLAPSED_STATE_KEY, computed(() => true)]],
       })
 
       expect(wrapper.queryByLabelText('New ticket')).not.toBeInTheDocument()

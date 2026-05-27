@@ -415,12 +415,8 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
         @submit="submitCreateTicket($event as FormSubmitData<TicketFormData>)"
       />
     </div>
-    <template #sideBar="{ isCollapsed, toggleCollapse }">
-      <TicketSidebar
-        :context="sidebarContext"
-        :is-collapsed="isCollapsed"
-        :toggle-collapse="toggleCollapse"
-      />
+    <template #sideBar>
+      <TicketSidebar :context="sidebarContext" />
     </template>
     <template #bottomBar>
       <template v-if="isInitialSettled">

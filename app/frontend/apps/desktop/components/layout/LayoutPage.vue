@@ -3,11 +3,10 @@
 <script setup lang="ts">
 import { type MaybeElementRef, useCurrentElement, type VueInstance } from '@vueuse/core'
 import { delay } from 'lodash-es'
-import { ref, toRef, useTemplateRef, watch } from 'vue'
+import { onBeforeMount, ref, toRef, useTemplateRef, watch } from 'vue'
 
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 import emitter from '#shared/utils/emitter.ts'
 
 import LeftSidebarFooterMenu from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue'
@@ -17,7 +16,10 @@ import { numberOfPermanentItems } from '#desktop/components/PageNavigation/first
 import PageNavigation from '#desktop/components/PageNavigation/PageNavigation.vue'
 import QuickSearch from '#desktop/components/Search/QuickSearch/QuickSearch.vue'
 import UserTaskbarTabs from '#desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue'
+import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 import { useResizeGridColumns } from '#desktop/composables/useResizeGridColumns.ts'
+
+import { SidebarName, useSidebarDisplay } from './useSidebarDisplay.ts'
 
 const config = toRef(useApplicationStore(), 'config')
 
@@ -35,35 +37,27 @@ const { deactivateTabTrap, activateTabTrap } = useTrapTab(
 
 watch(isQuickSearchActive, (isActive) => (isActive ? activateTabTrap() : deactivateTabTrap()))
 
-const { userId } = useSessionStore()
+const { isSmallScreen, isSmallestScreen } = useAppBreakpoints()
 
-const storageKeyId = `${userId}-left`
+const { toggleSidebar: togglePrimaryNavSidebar } = useSidebarDisplay(SidebarName.Primary)
+
+const { isSidebarCollapsed: isContentSidebarCollapsed } = useSidebarDisplay(
+  SidebarName.TicketContent,
+)
 
 const {
   currentSidebarWidth,
   maxSidebarWidth,
   minSidebarWidth,
   gridColumns,
-  collapseSidebar,
   resizeSidebar,
-  expandSidebar,
   resetSidebarWidth,
-} = useResizeGridColumns(storageKeyId)
+} = useResizeGridColumns(SidebarName.Primary)
 
 const emitSidebarEvent = (wait = 100) => {
   delay(() => {
-    emitter.emit('main-sidebar-transition')
+    emitter.emit('primary-sidebar-transition')
   }, wait)
-}
-
-const onCollapse = () => {
-  collapseSidebar()
-  emitSidebarEvent()
-}
-
-const onExpand = () => {
-  expandSidebar()
-  emitSidebarEvent()
 }
 
 const onResize = (width: number) => {
@@ -75,6 +69,24 @@ const onResetWidth = () => {
   resetSidebarWidth()
   emitSidebarEvent()
 }
+
+onBeforeMount(() => {
+  // On the smallest screen (<768px) the primary nav is collapsed by default.
+  if (isSmallestScreen.value) togglePrimaryNavSidebar(true)
+
+  // When the content sidebar expands on a small screen, collapse the primary nav.
+  watch(isContentSidebarCollapsed, (isCollapsed) => {
+    if (!isSmallScreen.value || isCollapsed) return
+
+    togglePrimaryNavSidebar(true)
+  })
+
+  watch(isSmallestScreen, (isSmallest) => {
+    if (!isSmallest) return
+
+    togglePrimaryNavSidebar(true)
+  })
+})
 </script>
 
 <template>
@@ -84,9 +96,9 @@ const onResetWidth = () => {
     :style="gridColumns"
   >
     <LayoutSidebar
-      id="main-sidebar"
+      id="primary-sidebar"
       ref="layout-sidebar"
-      :name="storageKeyId"
+      :name="SidebarName.Primary"
       :aria-label="$t('Main sidebar')"
       :current-width="currentSidebarWidth"
       :max-width="maxSidebarWidth"
@@ -99,9 +111,8 @@ const onResetWidth = () => {
       resizable
       no-scroll
       no-padding
-      remember-collapse
-      @collapse="onCollapse"
-      @expand="onExpand"
+      @collapse="emitSidebarEvent"
+      @expand="emitSidebarEvent"
       @resize-horizontal="onResize"
       @resize-horizontal-start="noTransition = true"
       @resize-horizontal-end="noTransition = false"
@@ -130,13 +141,13 @@ const onResetWidth = () => {
           <UserTaskbarTabs v-show="!isQuickSearchActive" class="px-3" :collapsed="isCollapsed" />
           <LeftSidebarFooterMenu
             v-show="!isQuickSearchActive"
-            :collapsed="isCollapsed"
             class="mt-auto"
             :class="{ 'p-3': !isCollapsed }"
           />
         </div>
       </template>
     </LayoutSidebar>
+
     <div id="main-content" class="relative">
       <RouterView #default="{ Component, route: currentRoute }">
         <KeepAlive :exclude="['ErrorTab']" :max="config.ui_task_mananger_max_task_count">

@@ -1,9 +1,9 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onBeforeMount, ref, watch } from 'vue'
 
-import { useSessionStore } from '#shared/stores/session.ts'
+import emitter from '#shared/utils/emitter.ts'
 
 import { useTransitionConfig } from '#desktop//composables/useTransitionConfig.ts'
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
@@ -13,6 +13,8 @@ import CommonPageHelp from '#desktop/components/CommonPageHelp/CommonPageHelp.vu
 import LayoutBottomBar from '#desktop/components/layout/LayoutBottomBar.vue'
 import LayoutMain from '#desktop/components/layout/LayoutMain.vue'
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
+import { SidebarName, useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
+import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 import { useResizeGridColumns } from '#desktop/composables/useResizeGridColumns.ts'
 
 import {
@@ -63,22 +65,41 @@ const contentAlignmentClass = computed(() => {
 
 const noTransition = ref(false)
 
-const { userId } = useSessionStore()
-
-const storageKeyId = `${userId}-${props.name}`
-
 const {
   currentSidebarWidth,
   maxSidebarWidth,
   minSidebarWidth,
   gridColumns,
-  collapseSidebar,
-  expandSidebar,
   resizeSidebar,
   resetSidebarWidth,
-} = useResizeGridColumns(storageKeyId, SidebarPosition.End)
+} = useResizeGridColumns(SidebarName.TicketContent, SidebarPosition.End)
 
 const { durations } = useTransitionConfig()
+
+const { isSmallScreen } = useAppBreakpoints()
+// Needed to make the breakpoint detection work within the layout, which is relevant for the sidebar display behavior
+const { isSidebarCollapsed: isPrimaryNavSidebarCollapsed } = useSidebarDisplay(SidebarName.Primary)
+
+const { isSidebarCollapsed: isContentSidebarCollapsed, toggleSidebar: toggleContentSidebar } =
+  useSidebarDisplay(SidebarName.TicketContent)
+
+// When the primary nav expands on a small screen (<1024px), collapse the content sidebar.
+watch(isPrimaryNavSidebarCollapsed, (isCollapsed) => {
+  if (!isSmallScreen.value || isCollapsed) return
+
+  toggleContentSidebar(true)
+})
+
+watch(isSmallScreen, (smallScreen) => {
+  if (!smallScreen) return
+
+  if (!isContentSidebarCollapsed.value) toggleContentSidebar(true)
+})
+
+onBeforeMount(() => {
+  // When the screen shrinks into the small viewport(<1024px) and both sidebars are open, close this one.
+  if (isSmallScreen.value) toggleContentSidebar(true)
+})
 </script>
 
 <template>
@@ -138,8 +159,7 @@ const { durations } = useTransitionConfig()
         v-if="$slots.sideBar"
         v-show="showSidebar"
         id="content-sidebar"
-        #default="{ isCollapsed, toggleCollapse }"
-        :name="storageKeyId"
+        :name="SidebarName.TicketContent"
         :position="SidebarPosition.End"
         :aria-label="$t('Content sidebar')"
         collapsible
@@ -153,14 +173,14 @@ const { durations } = useTransitionConfig()
         :class="{
           'max-h-[calc(100dvh-3.5rem)]!': $slots.bottomBar,
         }"
-        @collapse="collapseSidebar"
-        @expand="expandSidebar"
+        @collapse="emitter.emit('resize-layout')"
+        @expand="emitter.emit('resize-layout')"
         @resize-horizontal="resizeSidebar"
         @resize-horizontal-start="noTransition = true"
         @resize-horizontal-end="noTransition = false"
         @reset-width="resetSidebarWidth"
       >
-        <slot name="sideBar" v-bind="{ isCollapsed, toggleCollapse }" />
+        <slot name="sideBar" />
       </LayoutSidebar>
     </div>
 

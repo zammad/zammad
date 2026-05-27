@@ -5,10 +5,11 @@ import { computed } from 'vue'
 
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
-import { i18n } from '#shared/i18n/index.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+
+import type { ButtonSize } from '../CommonButton/types'
 
 const { isTouchDevice } = useTouchDevice()
 
@@ -22,15 +23,20 @@ interface Props {
   variant?: 'none' | 'tertiary-gray'
   noPadded?: boolean
   buttonClass?: string
+  visible?: boolean
+  size?: ButtonSize
 }
 
 const props = withDefaults(defineProps<Props>(), {
   orientation: 'horizontal',
   collapsed: false,
+  expandLabel: __('Expand this element'),
+  collapseLabel: __('Collapse this element'),
+  size: 'small',
 })
 
 defineEmits<{
-  'toggle-collapse': [MouseEvent]
+  'toggle-collapse': []
 }>()
 
 const locale = useLocaleStore()
@@ -50,36 +56,31 @@ const collapseButtonIcon = computed(() => {
 // :TODO think if we add this variant as a Variant of CommonButton
 const variantClass = computed(() => {
   if (props.variant === 'tertiary-gray')
-    return 'bg-neutral-500 focus-visible:bg-blue-800 active:dark:bg-blue-800 focus:dark:bg-blue-800 active:bg-blue-800 focus:bg-blue-800 hover:bg-blue-600 hover:dark:bg-blue-900 text-black dark:bg-gray-200 dark:text-white'
+    return 'bg-neutral-500 focus-visible:bg-blue-800 active:dark:bg-blue-800 active:bg-blue-800 hover:bg-blue-600 hover:dark:bg-blue-900 text-black dark:bg-gray-200 dark:text-white'
 
   return ''
 })
-
-const labels = computed(() => ({
-  expand: props.expandLabel || i18n.t('Expand this element'),
-  collapse: props.collapseLabel || i18n.t('Collapse this element'),
-}))
 </script>
 
 <template>
   <div
     class="flex items-center justify-center focus-within:opacity-100 hover:opacity-100"
     :class="{
-      'opacity-0': !isTouchDevice,
+      'opacity-0': !isTouchDevice && !visible,
       'p-2': !noPadded,
     }"
   >
     <CommonButton
-      v-tooltip="collapsed ? labels.expand : labels.collapse"
+      v-tooltip="$t(collapsed ? expandLabel : collapseLabel)"
       class="hover:outline-transparent focus:outline-transparent focus-visible:outline-transparent dark:hover:outline-transparent dark:focus:outline-transparent"
+      variant="none"
       :class="[variantClass, buttonClass]"
       :icon="collapseButtonIcon"
       :aria-expanded="!collapsed"
-      variant="none"
+      :size="size"
       :aria-controls="ownerId"
       :data-test-id="`controls-${ownerId}`"
-      size="small"
-      @click="$emit('toggle-collapse', $event)"
+      @click="$emit('toggle-collapse')"
     />
   </div>
 </template>

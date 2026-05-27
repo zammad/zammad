@@ -7,7 +7,7 @@ type StaticEvents = {
   'expand-collapsed-content': string
   'focus-quick-search-field': void
   'reset-quick-search-field': void
-  'main-sidebar-transition': void
+  'primary-sidebar-transition': void
   'resize-layout': void
   'close-popover': void
   'websocket-open': void

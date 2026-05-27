@@ -1,59 +1,83 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { mount } from '@vue/test-utils'
-import { beforeEach, vi } from 'vitest'
-import { nextTick } from 'vue'
+import { vi } from 'vitest'
+import { shallowRef } from 'vue'
+
+import renderComponent from '#tests/support/components/renderComponent.ts'
 
 import { useCollapseHandler } from '#desktop/components/CollapseButton/useCollapseHandler.ts'
 
 describe('useCollapseHandler', () => {
-  const emit = vi.fn()
-
-  beforeEach(() => {
-    localStorage.clear()
+  it('starts not collapsed by default', () => {
+    renderComponent({
+      setup() {
+        const { isCollapsed } = useCollapseHandler({ collapse: vi.fn(), expand: vi.fn() })
+        expect(isCollapsed.value).toBe(false)
+      },
+      template: '<div/>',
+    })
   })
 
-  it('sync local storage state on initial load', async () => {
-    localStorage.setItem('test', 'true')
-    const TestComponent = {
+  it('uses provided isCollapsed ref', () => {
+    const collapsed = shallowRef(true)
+
+    renderComponent({
       setup() {
-        const { isCollapsed } = useCollapseHandler(emit, { storageKey: 'test' })
+        const { isCollapsed } = useCollapseHandler(
+          { collapse: vi.fn(), expand: vi.fn() },
+          { isCollapsed: collapsed },
+        )
         expect(isCollapsed.value).toBe(true)
       },
-      template: '<div></div>',
-    }
-    mount(TestComponent)
-    expect(emit).toHaveBeenCalledWith('collapse', true)
+      template: '<div/>',
+    })
   })
 
-  it('sync local storage state on subsequent mutations', async () => {
-    localStorage.setItem('test', 'true')
-    const TestComponent = {
-      setup() {
-        const { isCollapsed } = useCollapseHandler(emit, { storageKey: 'test' })
-        expect(isCollapsed.value).toBe(true)
-      },
-      template: '<div></div>',
-    }
-    mount(TestComponent)
-    expect(emit).toHaveBeenCalled()
-    localStorage.setItem('test', 'false')
-    expect(emit).toHaveBeenCalled()
-  })
+  it('toggleCollapse without argument flips to collapsed and calls collapse callback', async () => {
+    const callbacks = { collapse: vi.fn(), expand: vi.fn() }
 
-  it('calls expand if collapse state is false', async () => {
-    const TestComponent = {
+    renderComponent({
       setup() {
-        const { toggleCollapse } = useCollapseHandler(emit, {
-          storageKey: 'test',
-        })
+        const { isCollapsed, toggleCollapse } = useCollapseHandler(callbacks)
         toggleCollapse()
+        expect(isCollapsed.value).toBe(true)
+        expect(callbacks.collapse).toHaveBeenCalledOnce()
+        expect(callbacks.expand).not.toHaveBeenCalled()
       },
-      template: '<div></div>',
-    }
+      template: '<div/>',
+    })
+  })
 
-    mount(TestComponent)
-    await nextTick()
-    expect(emit).toHaveBeenCalledWith('collapse', true)
+  it('toggleCollapse(true) collapses and calls collapse callback', async () => {
+    const callbacks = { collapse: vi.fn(), expand: vi.fn() }
+
+    renderComponent({
+      setup() {
+        const { isCollapsed, toggleCollapse } = useCollapseHandler(callbacks)
+        toggleCollapse(true)
+        expect(isCollapsed.value).toBe(true)
+        expect(callbacks.collapse).toHaveBeenCalledOnce()
+        expect(callbacks.expand).not.toHaveBeenCalled()
+      },
+      template: '<div/>',
+    })
+  })
+
+  it('toggleCollapse(false) expands and calls expand callback', async () => {
+    const collapsed = shallowRef(true)
+    const callbacks = { collapse: vi.fn(), expand: vi.fn() }
+
+    renderComponent({
+      setup() {
+        const { isCollapsed, toggleCollapse } = useCollapseHandler(callbacks, {
+          isCollapsed: collapsed,
+        })
+        toggleCollapse(false)
+        expect(isCollapsed.value).toBe(false)
+        expect(callbacks.expand).toHaveBeenCalledOnce()
+        expect(callbacks.collapse).not.toHaveBeenCalled()
+      },
+      template: '<div/>',
+    })
   })
 })

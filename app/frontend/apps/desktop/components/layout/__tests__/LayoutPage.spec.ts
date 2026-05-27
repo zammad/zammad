@@ -8,6 +8,7 @@ import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import LayoutPage from '#desktop/components/layout/LayoutPage.vue'
+import { SidebarName, isSidebarCollapsed } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 import '#tests/graphql/builders/mocks.ts'
 
@@ -38,16 +39,25 @@ vi.mock(
 )
 
 describe('LayoutPage', () => {
+  beforeEach(() => {
+    isSidebarCollapsed[SidebarName.Primary].value = false
+  })
+
+  afterEach(() => {
+    localStorage.clear()
+  })
+
   it('expands search and focus quick search input', async () => {
     const wrapper = renderComponent(LayoutPage, {
       router: true,
       form: true,
     })
 
+    // one button has display none it's for smaller screens
     await wrapper.events.click(
-      wrapper.getByRole('button', {
+      wrapper.getAllByRole('button', {
         name: 'Collapse sidebar',
-      }),
+      })[0],
     )
 
     expect(

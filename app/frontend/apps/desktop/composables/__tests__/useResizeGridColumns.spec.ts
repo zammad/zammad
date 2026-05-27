@@ -3,6 +3,7 @@
 import { isRef } from 'vue'
 
 import { SidebarPosition } from '#desktop/components/layout/types.ts'
+import { isSidebarCollapsed, SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 import {
   useResizeGridColumns,
@@ -14,43 +15,37 @@ import {
 } from '../useResizeGridColumns.ts'
 
 describe('useResizeGridColumns', () => {
-  const {
-    gridColumns,
-    isSidebarCollapsed,
-    minSidebarWidth,
-    resizeSidebar,
-    collapseSidebar,
-    expandSidebar,
-    resetSidebarWidth,
-  } = useResizeGridColumns('testKey-123')
+  const { gridColumns, minSidebarWidth, resizeSidebar, resetSidebarWidth } = useResizeGridColumns(
+    SidebarName.Primary,
+  )
 
-  test('gridColumns and isSidebarCollapsed are reactive', () => {
+  beforeEach(() => {
+    isSidebarCollapsed[SidebarName.Primary].value = false
+    resetSidebarWidth()
+  })
+
+  test('gridColumns is reactive', () => {
     expect(isRef(gridColumns)).toBe(true)
-    expect(isRef(isSidebarCollapsed)).toBe(true)
   })
 
   test('initial state', () => {
-    expect(isSidebarCollapsed.value).toBe(false)
+    expect(isSidebarCollapsed[SidebarName.Primary].value).toBe(false)
 
     expect(gridColumns.value).toEqual({
       gridTemplateColumns: `${DEFAULT_START_SIDEBAR_WIDTH}px 1fr`,
     })
   })
 
-  test('collapseSidebar', () => {
-    collapseSidebar()
-
-    expect(isSidebarCollapsed.value).toBe(true)
+  test('collapsed state', () => {
+    isSidebarCollapsed[SidebarName.Primary].value = true
 
     expect(gridColumns.value).toEqual({
       gridTemplateColumns: `${SIDEBAR_COLLAPSED_WIDTH}px 1fr`,
     })
   })
 
-  test('expandSidebar', () => {
-    expandSidebar()
-
-    expect(isSidebarCollapsed.value).toBe(false)
+  test('expanded state', () => {
+    isSidebarCollapsed[SidebarName.Primary].value = false
 
     expect(gridColumns.value).toEqual({
       gridTemplateColumns: `${DEFAULT_START_SIDEBAR_WIDTH}px 1fr`,
@@ -64,6 +59,7 @@ describe('useResizeGridColumns', () => {
   })
 
   test('resetSidebarWidth', () => {
+    resizeSidebar(300)
     resetSidebarWidth()
 
     expect(gridColumns.value).toEqual({
@@ -71,16 +67,8 @@ describe('useResizeGridColumns', () => {
     })
   })
 
-  it('persists state in local storage if storageKey is provided', () => {
-    expect(localStorage.getItem('testKey-123-sidebar-width')).toBeTruthy()
-  })
-
-  it('does not persist state if storageKey is not provided', () => {
-    localStorage.clear()
-
-    useResizeGridColumns()
-
-    expect(localStorage.getItem('testKey-123-sidebar-width')).toBeNull()
+  it('persists width in local storage', () => {
+    expect(localStorage.getItem(`${SidebarName.Primary}-sidebar-width`)).toBeTruthy()
   })
 
   it('defaults to start position (left)', () => {
@@ -93,7 +81,7 @@ describe('useResizeGridColumns', () => {
 
   it('supports end position (right)', () => {
     const { gridColumns, minSidebarWidth } = useResizeGridColumns(
-      'testKey-end',
+      SidebarName.TicketContent,
       SidebarPosition.End,
     )
 

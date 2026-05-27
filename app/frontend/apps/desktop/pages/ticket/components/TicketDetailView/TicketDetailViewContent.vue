@@ -716,13 +716,10 @@ const articleListTopPadding = ref('4rem')
       </div>
     </CommonLoader>
     <!-- Render underlying components only when the ticket is available to avoid providing undefined ticket context -->
-    <template v-if="!!ticket" #sideBar="{ isCollapsed, toggleCollapse }">
-      <TicketSidebar
-        :is-collapsed="isCollapsed"
-        :toggle-collapse="toggleCollapse"
-        :context="sidebarContext"
-      />
+    <template v-if="!!ticket" #sideBar>
+      <TicketSidebar :context="sidebarContext" />
     </template>
+
     <template #bottomBar>
       <TicketDetailBottomBar
         :can-use-draft="canUseDraft"
