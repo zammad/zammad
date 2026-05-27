@@ -22,3 +22,4 @@
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: on_success
     - when: manual
+      allow_failure: true
