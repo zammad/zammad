@@ -53,19 +53,33 @@ module SecureMailing::PGP::Tool::Data
     private
 
     def verify_detached_signature(options, data, signature)
-      data_file = Tempfile.new('data')
       signature_file = Tempfile.new('signature')
       begin
-        data_file.write(data)
-        data_file.close
-
         signature_file.write(signature)
         signature_file.close
 
-        gpg('verify', options:, arguments: [signature_file.path, data_file.path])
+        # Inline (opaque) signatures embed the signed data inside the PGP message.
+        # gpg --verify accepts only the signature file in that case; passing a
+        # separate data file would cause gpg to treat it as a detached signature
+        # and fail with a format error.
+        if signature.to_s.strip.start_with?('-----BEGIN PGP MESSAGE-----')
+          gpg('verify', options:, arguments: [signature_file.path])
+        else
+          verify_with_data_file(options, data, signature_file.path)
+        end
+      ensure
+        signature_file.unlink
+      end
+    end
+
+    def verify_with_data_file(options, data, signature_file_path)
+      data_file = Tempfile.new('data')
+      begin
+        data_file.write(data)
+        data_file.close
+        gpg('verify', options:, arguments: [signature_file_path, data_file.path])
       ensure
         data_file.unlink
-        signature_file.unlink
       end
     end
   end
