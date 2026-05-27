@@ -277,7 +277,7 @@ setupMissingOrDisabledOptionHandling()
         ref="output"
         role="combobox"
         :name="context.node.name"
-        class="flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-hidden dark:text-white"
+        class="relative flex grow items-center gap-2.5 overflow-hidden px-2.5 py-2 text-black focus:outline-hidden dark:text-white"
         tabindex="0"
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled ? 'true' : undefined"
@@ -299,7 +299,12 @@ setupMissingOrDisabledOptionHandling()
       >
         <div
           v-if="hasValue && context.multiple"
-          class="flex max-h-19 flex-wrap gap-1.5 overflow-y-auto"
+          class="select-scroll-shadows flex flex-wrap gap-1.5 overflow-y-auto outline-hidden"
+          :class="{
+            'select-scroll-shadows--base': !context.alternativeBackground,
+            'select-scroll-shadows--alt': context.alternativeBackground,
+            'max-w-1/2 shrink-0': expanded,
+          }"
           role="list"
         >
           <div
@@ -324,13 +329,13 @@ setupMissingOrDisabledOptionHandling()
               />
               <span
                 v-tooltip="getSelectedOptionFullPath(selectedValue)"
-                class="line-clamp-3 break-words whitespace-pre-wrap"
+                class="line-clamp-3 break-word"
               >
                 {{ getSelectedOptionFullPath(selectedValue) }}
               </span>
               <CommonIcon
                 :aria-label="i18n.t('Unselect option')"
-                class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+                class="shrink-0 fill-stone-200 hover:fill-black focus-visible:rounded-xs focus-visible:outline focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
                 name="x-lg"
                 size="xs"
                 role="button"
@@ -365,7 +370,7 @@ setupMissingOrDisabledOptionHandling()
             />
             <span
               v-tooltip="getSelectedOptionFullPath(currentValue)"
-              class="line-clamp-3 break-words whitespace-pre-wrap"
+              class="line-clamp-3 break-word"
             >
               {{ getSelectedOptionFullPath(currentValue) }}
             </span>

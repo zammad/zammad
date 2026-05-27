@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { watchDebounced } from '@vueuse/core'
+import { watchThrottled } from '@vueuse/core'
 import { isEqual, omit } from 'lodash-es'
 import { storeToRefs } from 'pinia'
 import {
@@ -68,7 +68,8 @@ const selectedEntity = ref(
 const {
   filtersByEntity,
   entityFields,
-  filterRelationFieldsByEntity,
+  entityFieldsLoadingByEntity,
+  filterUpdaterFieldsByEntity,
   currentFilters,
   filterCount,
   currentFiltersQueryParams,
@@ -108,7 +109,16 @@ const syncFiltersFromRoute = () => {
 
   const queryEntity = (route.query.entity as EnumSearchableModels) ?? EnumSearchableModels.Ticket
 
-  const queryFilters = decodeFilters(route.query, entityFields.value[queryEntity] ?? [])
+  // Static attributes alone (e.g. ticket.created_by_id) don't form a usable
+  // validation schema for deep-link decoding — they'd drop legitimate route
+  // filters like `ticket.title`. While the GraphQL load is still in flight,
+  // skip schema validation and preserve the raw entries; the loading-watcher
+  // below re-syncs once the full schema is available.
+  const schema = entityFieldsLoadingByEntity.value[queryEntity]
+    ? []
+    : (entityFields.value[queryEntity] ?? [])
+
+  const queryFilters = decodeFilters(route.query, schema)
 
   if (selectedEntity.value !== queryEntity) selectedEntity.value = queryEntity
 
@@ -122,18 +132,23 @@ onBeforeMount(syncFiltersFromRoute)
 onActivated(syncFiltersFromRoute)
 
 // Object attributes load asynchronously. On a fresh deep-link
-// `onBeforeMount` runs with an empty schema, so `decodeFilters` falls back
-// to its no-schema passthrough — relation values stay as strings and
-// invalid candidates aren't dropped. If the schema isn't ready yet, watch
-// for its arrival and re-sync once. Subsequent activations are handled by
-// `onActivated`, which already sees a populated schema.
+// `onBeforeMount` runs with an empty (or static-only) schema, so
+// `decodeFilters` either falls back to its no-schema passthrough or runs
+// against an incomplete subset — either way, the schema-aware validation
+// hasn't seen the full attribute list yet. Wait for the GraphQL load to
+// finish and re-sync once so the route's filters are validated against the
+// complete schema. Subsequent activations are handled by `onActivated`,
+// which already sees a populated schema.
 const initialQueryEntity =
   (route.query.entity as EnumSearchableModels) ?? EnumSearchableModels.Ticket
-if (!entityFields.value[initialQueryEntity]?.length) {
-  // Watch the length, not the array reference — `entityFields` recomputes on
-  // every store change and would otherwise fire the once-shot watcher on
-  // placeholder identity updates before the schema becomes usable.
-  watch(() => entityFields.value[initialQueryEntity]?.length, syncFiltersFromRoute, { once: true })
+if (entityFieldsLoadingByEntity.value[initialQueryEntity]) {
+  watch(
+    () => entityFieldsLoadingByEntity.value[initialQueryEntity],
+    (loading) => {
+      if (!loading) syncFiltersFromRoute()
+    },
+    { once: true },
+  )
 }
 
 const modelSearchTerm = computed({
@@ -207,7 +222,7 @@ watch(
   },
 )
 
-watchDebounced(
+watchThrottled(
   tabContext,
   (newValue) => {
     if (!currentTaskbarTab.value) return
@@ -216,7 +231,7 @@ watchDebounced(
 
     currentTaskbarTabUpdate(currentTaskbarTab.value, newValue)
   },
-  { debounce: 500 },
+  { throttle: 500 },
 )
 
 const { reachedTop } = useElementScroll(scrollContainerElement as Ref<HTMLElement>)
@@ -567,7 +582,7 @@ setOnSuccessCallback(() => {
         :search-tabs="searchTabs"
         :filters-by-entity="filtersByEntity"
         :entity-fields="entityFields"
-        :filter-relation-fields-by-entity="filterRelationFieldsByEntity"
+        :filter-updater-fields-by-entity="filterUpdaterFieldsByEntity"
         :filter-count="filterCount"
         :selected-entity-has-filters-enabled="selectedEntityHasFiltersEnabled"
         class="px-4"

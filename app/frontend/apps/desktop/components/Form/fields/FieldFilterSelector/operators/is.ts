@@ -6,13 +6,18 @@ export default <Operator>{
   name: 'is',
   label: __('is'),
   filterFields(attribute) {
+    // Autocomplete-style relations (customer / organization / agent) are
+    // rendered by their dedicated FormKit field — the wrapper handles the
+    // per-keystroke query, option building, and value shape (array of
+    // internal IDs) the backend `is` operator already accepts.
     if (attribute.autocompleteFilterType) {
-      // TODO: end-to-end behavior of autocomplete inputs inside the filter
-      // selector is not yet validated — the row value shape and per-keystroke
-      // query wiring still need verification. Hide the operator until ready.
-      // See follow-up of #1317.
-      return null
+      return [
+        {
+          type: attribute.autocompleteFilterType,
+          props: { clearable: true, multiple: true, delay: 400 },
+        },
+      ]
     }
-    return [{ type: 'select', props: { clearable: true, multiple: true } }]
+    return [{ type: 'select', props: { clearable: true, multiple: true, delay: 400 } }]
   },
 }

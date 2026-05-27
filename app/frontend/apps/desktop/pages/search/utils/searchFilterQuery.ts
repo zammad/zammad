@@ -79,13 +79,15 @@ const queryRecordToString = (query: Record<string, unknown>): string => {
   return params.toString()
 }
 
-// Form-updater-resolved relations carry integer primary-key IDs; URL query
-// params always arrive as strings. Coerce here so downstream consumers
-// (FormKit select equality, taskbar sync) see the value type the schema
-// implies. Strings that aren't integers stay as-is — they won't match a
-// valid option either way, no need to silently turn "foo" into NaN.
+// Relation-typed attributes carry integer primary-key IDs — both
+// form-updater-resolved selects and autocomplete fields. URL query params
+// always arrive as strings, so coerce here so downstream consumers (FormKit
+// select equality, taskbar sync, autocomplete initial option lookup) see the
+// value type the schema implies. Strings that aren't integers stay as-is —
+// they won't match a valid option either way, no need to silently turn "foo"
+// into NaN.
 const coerceValueForAttribute = (value: unknown, attribute: FilterAttribute): unknown => {
-  if (!attribute.relation) return value
+  if (!attribute.relation && !attribute.autocompleteFilterType) return value
 
   const coerce = (v: unknown) => {
     if (typeof v !== 'string' || v === '') return v

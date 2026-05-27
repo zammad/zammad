@@ -51,6 +51,7 @@ describe('FieldResolverBoolean', () => {
           { label: 'no', value: 'false' },
           { label: 'yes', value: 'true' },
         ],
+        sorting: 'label',
       },
     })
   })

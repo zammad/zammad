@@ -2,17 +2,19 @@
 
 import type { FormFieldValue, FormSchemaField } from '#shared/components/Form/types.ts'
 import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { capitalize } from '#shared/utils/formatter.ts'
 
 import type { ObjectAttribute, OperatorFilterProps } from '../../types/store.ts'
 import type { JsonValue } from 'type-fest'
 
-// Relations whose advanced-filter input is an autocomplete (per-keystroke
-// query) rather than a server-resolved option list. Values are the FormKit
-// field types to render. Consulted by resolvers to split a relation into
-// the right pair of signals on FilterAttribute.
-export const AUTOCOMPLETE_FILTER_FIELD_BY_RELATION: Record<string, string> = {
+// Maps a `FormUpdater::Relation::*`-style key to the FormKit field type that
+// renders its autocomplete in the advanced filter. The key namespace is the
+// same on both sides of the FieldResolver lookup — e.g. `Owner` is a valid
+// key just like `User` is — which keeps the table single-purpose.
+const AUTOCOMPLETE_FILTER_FIELDS: Record<string, string> = {
   User: 'customer',
   Organization: 'organization',
+  Owner: 'agent',
 }
 
 export abstract class FieldResolver {
@@ -30,6 +32,13 @@ export abstract class FieldResolver {
 
   abstract fieldType: string | (() => string)
 
+  /**
+   * Cached at construction so all instance methods (and subclass logic that
+   * needs to react to the autocomplete-vs-relation split) can read the same
+   * derived value without re-running the dispatch.
+   */
+  protected filterAutocompleteType: string | undefined
+
   constructor(object: EnumObjectManagerObjects, objectAttribute: ObjectAttribute) {
     this.object = object
     this.name = objectAttribute.name
@@ -37,6 +46,21 @@ export abstract class FieldResolver {
     this.internal = objectAttribute.isInternal
     this.attributeType = objectAttribute.dataType
     this.attributeConfig = objectAttribute.dataOption || {}
+
+    this.filterAutocompleteType = this.computeFilterAutocompleteType()
+  }
+
+  // Subclasses that need additional one-shot setup derived from
+  // `this.attributeConfig` etc. extend the constructor in the usual way:
+  // `constructor(...) { super(...); /* their own setup */ }`. The base
+  // class assigns its own properties first so subclass code can read them.
+
+  private computeFilterAutocompleteType(): string | undefined {
+    const nameKey = capitalize(this.name.replace(/_id$/, ''))
+    if (AUTOCOMPLETE_FILTER_FIELDS[nameKey]) return AUTOCOMPLETE_FILTER_FIELDS[nameKey]
+
+    const relation = this.attributeConfig.relation as string | undefined
+    return relation ? AUTOCOMPLETE_FILTER_FIELDS[relation] : undefined
   }
 
   private getFieldType(): string {
@@ -71,10 +95,12 @@ export abstract class FieldResolver {
   /**
    * Advanced-filter FormKit field type (e.g. 'customer', 'organization') for
    * attributes whose options come from a per-keystroke autocomplete query
-   * rather than the form-updater backend.
+   * rather than the form-updater backend. Computed once in the constructor
+   * (see `computeFilterAutocompleteType`) so callers and subclasses can
+   * read the cached value cheaply via `this.filterAutocompleteType`.
    */
   public getFilterAutocompleteType(): string | undefined {
-    return
+    return this.filterAutocompleteType
   }
 
   public fieldAttributes(): FormSchemaField {

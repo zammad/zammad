@@ -233,7 +233,12 @@ setupMissingOrDisabledOptionHandling()
       >
         <div
           v-if="hasValue && context.multiple"
-          class="flex max-h-19 flex-wrap gap-1.5 overflow-y-auto"
+          class="select-scroll-shadows flex flex-wrap gap-1.5 overflow-y-auto outline-hidden"
+          :class="{
+            'select-scroll-shadows--base': !context.alternativeBackground,
+            'select-scroll-shadows--alt': context.alternativeBackground,
+            'max-w-1/2 shrink-0': expanded,
+          }"
           role="list"
         >
           <div
@@ -260,13 +265,13 @@ setupMissingOrDisabledOptionHandling()
                 v-tooltip="
                   getSelectedOptionLabel(selectedValue) || i18n.t('%s (unknown)', selectedValue)
                 "
-                class="line-clamp-3 break-words whitespace-pre-wrap"
+                class="line-clamp-3 break-word"
               >
                 {{ getSelectedOptionLabel(selectedValue) || i18n.t('%s (unknown)', selectedValue) }}
               </span>
               <CommonIcon
                 :aria-label="i18n.t('Unselect option')"
-                class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+                class="shrink-0 fill-stone-200 hover:fill-black focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
                 name="x-lg"
                 size="xs"
                 role="button"
@@ -303,7 +308,7 @@ setupMissingOrDisabledOptionHandling()
               v-tooltip="
                 getSelectedOptionLabel(currentValue) || i18n.t('%s (unknown)', currentValue)
               "
-              class="line-clamp-3 break-words whitespace-pre-wrap"
+              class="line-clamp-3 break-word"
             >
               {{ getSelectedOptionLabel(currentValue) || i18n.t('%s (unknown)', currentValue) }}
             </span>

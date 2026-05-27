@@ -32,4 +32,22 @@ describe('FieldResolverAutocompletionCustomerOrganization', () => {
       internal: true,
     })
   })
+
+  it('exposes the is operator and organization autocomplete for advanced filters', () => {
+    const fieldResolver = new FieldResolverAutocompletionCustomerOrganization(
+      EnumObjectManagerObjects.Ticket,
+      {
+        dataType: 'autocompletion_ajax_customer_organization',
+        name: 'organization_id',
+        display: 'Organization',
+        // The autocomplete picker is derived from the relation via the
+        // FieldResolver default — this resolver only declares the operator.
+        dataOption: { relation: 'Organization' },
+        isInternal: true,
+      },
+    )
+
+    expect(fieldResolver.getFieldFilterOperators()).toEqual(['is'])
+    expect(fieldResolver.getFilterAutocompleteType()).toBe('organization')
+  })
 })

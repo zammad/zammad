@@ -54,10 +54,34 @@ describe('FieldResolverSelect', () => {
           c: 'c',
           d: 'd',
         },
+        // Object-keyed static options have no stable iteration order, so the
+        // resolver requests label sorting (consistent with relation-typed
+        // selects, where the server-resolved order isn't a display contract).
+        sorting: 'label',
       },
       type: 'select',
       internal: true,
     })
+  })
+
+  it('does not request label sorting for array-shaped static options (order is already given)', () => {
+    const fieldResolver = new FieldResolverSelect(EnumObjectManagerObjects.Ticket, {
+      dataType: 'select',
+      name: 'category',
+      display: 'Category',
+      dataOption: {
+        translate: true,
+        options: [
+          { name: 'A', value: 'a' },
+          { name: 'B', value: 'b' },
+        ],
+        historical_options: {},
+      },
+      isInternal: true,
+    })
+
+    expect(fieldResolver.fieldAttributes().props).not.toHaveProperty('sorting')
+    expect(fieldResolver.getFilterOperatorProps()?.is).not.toHaveProperty('sorting')
   })
 
   it('should return the correct field attributes for relations', () => {
@@ -112,6 +136,7 @@ describe('FieldResolverSelect', () => {
       is: {
         noOptionsLabelTranslation: false,
         historicalOptions: undefined,
+        sorting: 'label',
       },
     })
   })
@@ -146,7 +171,52 @@ describe('FieldResolverSelect', () => {
           a: 'a',
           b: 'b',
         },
+        sorting: 'label',
       },
+    })
+  })
+
+  describe('getFilterAutocompleteType', () => {
+    const buildResolver = (
+      name: string,
+      dataOption: Record<string, string | Record<string, string>>,
+    ) =>
+      new FieldResolverSelect(EnumObjectManagerObjects.Ticket, {
+        dataType: 'select',
+        name,
+        display: 'Attr',
+        dataOption,
+        isInternal: true,
+      })
+
+    it('returns the customer picker for plain User relations', () => {
+      expect(buildResolver('customer_id', { relation: 'User' }).getFilterAutocompleteType()).toBe(
+        'customer',
+      )
+    })
+
+    it('returns the organization picker for Organization relations', () => {
+      expect(
+        buildResolver('organization_id', { relation: 'Organization' }).getFilterAutocompleteType(),
+      ).toBe('organization')
+    })
+
+    it('returns the agent picker for owner_id (name override beats the User → customer mapping)', () => {
+      expect(buildResolver('owner_id', { relation: 'User' }).getFilterAutocompleteType()).toBe(
+        'agent',
+      )
+    })
+
+    it('returns undefined for non-autocomplete relations', () => {
+      expect(buildResolver('group_id', { relation: 'Group' }).getFilterAutocompleteType()).toBe(
+        undefined,
+      )
+    })
+
+    it('returns undefined for attributes without a relation', () => {
+      expect(
+        buildResolver('category', { options: { a: 'a' } }).getFilterAutocompleteType(),
+      ).toBeUndefined()
     })
   })
 })

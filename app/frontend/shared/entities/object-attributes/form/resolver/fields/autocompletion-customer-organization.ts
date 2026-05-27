@@ -17,6 +17,10 @@ export class FieldResolverAutocompletionCustomerOrganization extends FieldResolv
       },
     }
   }
+
+  public override getFieldFilterOperators() {
+    return ['is']
+  }
 }
 
 export default <FieldResolverModule>{

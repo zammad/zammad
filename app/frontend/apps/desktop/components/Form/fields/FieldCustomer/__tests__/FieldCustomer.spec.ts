@@ -28,13 +28,41 @@ const testProps = {
 }
 
 describe('Form - Field - Customer - Features', () => {
-  it('supports adding and removing of new email addresses', async () => {
+  it('does not offer the add-email action without explicit opt-in (default)', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         ...testProps,
         debounceInterval: 0,
         clearable: true,
+      },
+    })
+
+    await wrapper.events.click(await wrapper.findByLabelText('Select…'))
+
+    expect(
+      wrapper.queryByText('Start typing to search or enter an email address…'),
+    ).not.toBeInTheDocument()
+    expect(wrapper.getByText('Start typing to search…')).toBeInTheDocument()
+
+    const filterElement = wrapper.getByRole('searchbox')
+
+    mockAutocompleteSearchGenericQuery({ autocompleteSearchGeneric: [] })
+
+    await wrapper.events.type(filterElement, 'foo@bar.tld')
+    await waitForAutocompleteSearchGenericQueryCalls()
+
+    expect(wrapper.queryByRole('button', { name: 'add new email address' })).not.toBeInTheDocument()
+  })
+
+  it('supports adding and removing of new email addresses when allowUnknownEmail is set', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+        clearable: true,
+        allowUnknownEmail: true,
       },
     })
 
@@ -114,9 +142,7 @@ describe('Form - Field - Customer - Query', () => {
 
     expect(filterElement).toBeInTheDocument()
 
-    expect(
-      wrapper.queryByText('Start typing to search or enter an email address…'),
-    ).toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
 
     mockAutocompleteSearchGenericQuery({
       autocompleteSearchGeneric: testOptions,
@@ -126,9 +152,7 @@ describe('Form - Field - Customer - Query', () => {
 
     await waitForAutocompleteSearchGenericQueryCalls()
 
-    expect(
-      wrapper.queryByText('Start typing to search or enter an email address…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     let selectOptions = wrapper.getAllByTestId('select-item')
 

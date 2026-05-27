@@ -339,7 +339,7 @@ const filterFieldsSchema = computed<FormKitSchemaNode[]>(() =>
 
 <template>
   <fieldset class="bg-blue-200 dark:bg-gray-700" :name="context.node.name">
-    <ul class="flex flex-wrap items-end gap-6">
+    <ul class="flex flex-wrap items-end gap-x-6 gap-y-3">
       <FormKitSchema :schema="filterFieldsSchema" />
 
       <li v-if="addFieldActive">

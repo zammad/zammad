@@ -175,6 +175,46 @@ describe('searchFilterQuery', () => {
 
       expect(result).toEqual([{ name: 'ticket.title', operator: 'ticket.matches', value: '🎓' }])
     })
+
+    it('coerces autocomplete-relation values from strings back to integer IDs', () => {
+      const result = decodeFilters(
+        {
+          'filter.0.name': 'ticket.owner_id',
+          'filter.0.operator': 'ticket.is',
+          'filter.0.value': ['7', '42'],
+        },
+        [
+          {
+            name: 'ticket.owner_id',
+            label: 'Owner',
+            operators: ['ticket.is'],
+            autocompleteFilterType: 'agent',
+          },
+        ],
+      )
+
+      expect(result).toEqual([{ name: 'ticket.owner_id', operator: 'ticket.is', value: [7, 42] }])
+    })
+
+    it('coerces a single autocomplete-relation value back to an integer ID', () => {
+      const result = decodeFilters(
+        {
+          'filter.0.name': 'ticket.customer_id',
+          'filter.0.operator': 'ticket.is',
+          'filter.0.value': '7',
+        },
+        [
+          {
+            name: 'ticket.customer_id',
+            label: 'Customer',
+            operators: ['ticket.is'],
+            autocompleteFilterType: 'customer',
+          },
+        ],
+      )
+
+      expect(result).toEqual([{ name: 'ticket.customer_id', operator: 'ticket.is', value: 7 }])
+    })
   })
 
   describe('isFilterParamKey', () => {

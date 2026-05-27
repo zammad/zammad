@@ -20,9 +20,9 @@ import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'
 
 import SearchEntityFiltersForm from './SearchControls/SearchEntityFiltersForm.vue'
 
-interface FilterRelationField {
-  name: string
-  relation: string
+interface FilterUpdaterFields {
+  filterRelationFields: Array<{ name: string; relation: string }>
+  filterAutocompleteFields: Array<{ name: string; autocompleteFilterType: string }>
 }
 
 interface Props {
@@ -30,14 +30,14 @@ interface Props {
   selectedEntityHasFiltersEnabled: boolean
   filtersByEntity?: Record<string, FilterSelectorEntry[]>
   entityFields?: Record<string, FilterAttribute[]>
-  filterRelationFieldsByEntity?: Record<string, FilterRelationField[]>
+  filterUpdaterFieldsByEntity?: Record<string, FilterUpdaterFields>
   filterCount?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
   filtersByEntity: () => ({}),
   entityFields: () => ({}),
-  filterRelationFieldsByEntity: () => ({}),
+  filterUpdaterFieldsByEntity: () => ({}),
   filterCount: 0,
 })
 
@@ -241,7 +241,7 @@ dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outlin
             :filters="filtersByEntity[plugin.name] ?? []"
             :filter-attributes="entityFields[plugin.name] ?? []"
             :filter-attributes-override="plugin.filterAttributesOverride"
-            :filter-relation-fields="filterRelationFieldsByEntity[plugin.name] ?? []"
+            :filter-updater-fields="filterUpdaterFieldsByEntity[plugin.name]"
             @filters-changed="(entity, value) => emit('entity-filters-changed', entity, value)"
           />
           <CommonLabel v-else class="p-1" size="small">{{

@@ -157,20 +157,52 @@ describe('Fields - FieldFilterSelector', () => {
   })
 
   it('hides the "Add filter" button when no available attribute has a supported operator', async () => {
-    // Only attribute is a User-relation that uses autocomplete; `is` returns
-    // null for autocompleteFilterType so the dropdown has nothing to offer.
+    const view = renderFilterSelector([], {
+      filterAttributes: [
+        {
+          name: 'ticket.title',
+          label: 'Title',
+          operators: ['unknown_operator'],
+        },
+      ],
+    })
+
+    expect(view.queryByRole('button', { name: 'Add filter' })).not.toBeInTheDocument()
+  })
+
+  it('offers autocomplete-relation attributes (e.g. customer/agent) via the is operator', async () => {
     const view = renderFilterSelector([], {
       filterAttributes: [
         {
           name: 'ticket.owner_id',
           label: 'Owner',
           operators: ['is'],
-          autocompleteFilterType: 'customer',
+          autocompleteFilterType: 'agent',
         },
       ],
     })
 
-    expect(view.queryByRole('button', { name: 'Add filter' })).not.toBeInTheDocument()
+    expect(view.getByRole('button', { name: 'Add filter' })).toBeInTheDocument()
+  })
+
+  it('mounts the agent autocomplete row for an autocomplete-typed attribute', async () => {
+    // End-to-end render of the `is.ts` → schema-node → FormKit pipeline:
+    // when the row's attribute carries `autocompleteFilterType: 'agent'`,
+    // the schema fragment must resolve to a FormKit `agent` field and the
+    // labelled input must appear in the DOM. Catches regressions in the
+    // operator-to-schema conversion that the per-layer unit tests can't see.
+    const view = renderFilterSelector([{ name: 'ticket.owner_id', operator: 'is', value: null }], {
+      filterAttributes: [
+        {
+          name: 'ticket.owner_id',
+          label: 'Owner',
+          operators: ['is'],
+          autocompleteFilterType: 'agent',
+        },
+      ],
+    })
+
+    expect(view.getByLabelText('Owner')).toBeInTheDocument()
   })
 
   it('applies filterAttributeOptions to rendered relation sub-fields', async () => {

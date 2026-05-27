@@ -56,6 +56,8 @@ describe('FieldResolverMultiselect', () => {
           d: 'd',
         },
         multiple: true,
+        // Object-keyed options need label sorting (no stable iteration order).
+        sorting: 'label',
       },
       type: 'select',
       internal: true,
@@ -93,6 +95,7 @@ describe('FieldResolverMultiselect', () => {
           a: 'a',
           b: 'b',
         },
+        sorting: 'label',
       },
     })
   })

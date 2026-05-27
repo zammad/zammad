@@ -8,9 +8,13 @@ import { autoCompleteProps } from '../FieldAutoComplete/index.ts'
 
 import FieldCustomerWrapper from './FieldCustomerWrapper.vue'
 
-const fieldDefinition = createInput(FieldCustomerWrapper, autoCompleteProps, {
-  features: [addLink, formUpdaterTrigger()],
-})
+const fieldDefinition = createInput(
+  FieldCustomerWrapper,
+  [...autoCompleteProps, 'allowUnknownEmail'],
+  {
+    features: [addLink, formUpdaterTrigger()],
+  },
+)
 
 export default {
   fieldType: 'customer',

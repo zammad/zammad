@@ -110,8 +110,8 @@ export const useObjectAttributesStore = defineStore('objectAttributes', () => {
 
       const attributes = computed<ObjectAttribute[]>(() => {
         return [
-          ...(staticObjectAttributesByEntity[object] || []),
           ...(attributesRaw.value?.objectManagerFrontendAttributes?.attributes || []),
+          ...(staticObjectAttributesByEntity[object] || []),
         ]
       })
 

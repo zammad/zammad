@@ -24,8 +24,7 @@ export type Operator = {
   // picks autocomplete vs multiselect based on the attribute's relation).
   //
   // Return `null` to declare that the operator does not apply to this
-  // attribute (e.g. autocomplete-style relations until that path is
-  // validated). Distinct from `[]`, which would mean "applies but takes
+  // attribute. Distinct from `[]`, which would mean "applies but takes
   // no value input" (future valueless operators like `is empty`).
   filterFields: (attribute: FilterAttribute) => FilterField[] | null
 }

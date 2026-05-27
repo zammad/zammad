@@ -316,6 +316,9 @@ const changedFields = reactive({
           onSuccess: applyNewlyCreatedCustomer,
         })
       },
+      // Ticket create accepts unknown customers — the typed-in email
+      // becomes a new customer user on submit.
+      allowUnknownEmail: true,
     },
   },
 })

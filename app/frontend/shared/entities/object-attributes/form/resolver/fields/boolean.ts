@@ -38,6 +38,7 @@ export class FieldResolverBoolean extends FieldResolver {
       is: {
         noOptionsLabelTranslation: !this.attributeConfig.translate,
         options: this.filterOptions(),
+        sorting: 'label',
       },
     }
   }
