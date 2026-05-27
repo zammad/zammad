@@ -18,6 +18,62 @@ RSpec.describe Sequencer::Sequence::Import::Kayako::CaseField, sequencer: :seque
 
     include_examples 'Object custom fields', klass: Ticket
 
+    context 'when checking screens configuration' do
+      let(:resource) do
+        {
+          'id'                        => 80_000_387_409,
+          'fielduuid'                 => '82e5393b-e036-45d1-beb9-46f96ebd697a',
+          'title'                     => 'Textfield',
+          'type'                      => 'TEXT',
+          'key'                       => 'custom_textfield',
+          'is_visible_to_customers'   => true,
+          'is_required_for_agents'    => true,
+          'is_customer_editable'      => true,
+          'is_required_for_customers' => false,
+          'regular_expression'        => nil,
+          'sort_order'                => 1,
+          'is_enabled'                => true,
+          'options'                   => [],
+          'created_at'                => '2021-08-16T19:34:35+00:00',
+          'updated_at'                => '2021-08-16T19:34:35+00:00',
+        }
+      end
+
+      it 'sets create_middle and edit with ticket.customer/ticket.agent permissions' do
+        process(process_payload)
+        expect(ObjectManager::Attribute.get(object: 'Ticket', name: 'custom_textfield').screens).to eq(
+          'create_middle' => {
+            'ticket.customer' => { 'shown' => true, 'required' => false },
+            'ticket.agent'    => { 'shown' => true, 'required' => true },
+          },
+          'edit'          => {
+            'ticket.customer' => { 'shown' => true, 'required' => false },
+            'ticket.agent'    => { 'shown' => true, 'required' => true },
+          },
+        )
+      end
+
+      context 'when the field is visible to customers but not customer-editable' do
+        let(:resource) do
+          super().merge('is_customer_editable' => false)
+        end
+
+        it 'derives customer.shown from is_customer_editable, not visibility' do
+          process(process_payload)
+          expect(ObjectManager::Attribute.get(object: 'Ticket', name: 'custom_textfield').screens).to eq(
+            'create_middle' => {
+              'ticket.customer' => { 'shown' => false, 'required' => false },
+              'ticket.agent'    => { 'shown' => true, 'required' => true },
+            },
+            'edit'          => {
+              'ticket.customer' => { 'shown' => false, 'required' => false },
+              'ticket.agent'    => { 'shown' => true, 'required' => true },
+            },
+          )
+        end
+      end
+    end
+
     context 'when importing system fields' do
       let(:resource) do
         {

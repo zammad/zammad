@@ -122,27 +122,28 @@ class Sequencer::Unit::Import::Freshdesk::ObjectAttribute::Config < Sequencer::U
   end
 
   def screens
+    return ticket_screens if model_class.to_s == 'Ticket'
+
     {
-      view: {
-        '-all-' => {
-          shown: true,
-          null:  true,
-        },
-        Customer: {
-          shown: false,
-          null:  true,
-        },
-      },
-      edit: {
-        '-all-' => {
-          shown: true,
-          null:  true,
-        },
-        Customer: {
-          shown: false,
-          null:  true,
-        },
-      }
+      create: { '-all-' => { shown: true } },
+      edit:   { '-all-' => { shown: true } },
+      view:   { '-all-' => { shown: true } },
+    }
+  end
+
+  def ticket_screens
+    customer = {
+      shown: resource['customers_can_edit'] ? true : false,
+      null:  resource['required_for_customers'] ? false : true,
+    }
+    agent = {
+      shown: true,
+      null:  resource['required_for_agents'] ? false : true,
+    }
+
+    {
+      create_middle: { 'ticket.agent' => agent, 'ticket.customer' => customer },
+      edit:          { 'ticket.agent' => agent, 'ticket.customer' => customer },
     }
   end
 
