@@ -39,6 +39,7 @@ rm -rf .claude
 
 # delete caches
 rm -rf tmp/*
+rm -rf log/*
 
 # Delete node_modules folder - only required during building
 rm -rf node_modules
