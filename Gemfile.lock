@@ -307,7 +307,7 @@ GEM
     google-protobuf (4.35.0)
       bigdecimal
       rake (~> 13.3)
-    graphql (2.6.2)
+    graphql (2.6.3)
       base64
       fiber-storage
       logger
