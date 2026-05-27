@@ -9,8 +9,8 @@
 module RSpec
   module Core
     class World
-      SLICES = ENV.fetch('RSPEC_SLICES', 1).to_i
-      CURRENT_SLICE = ENV.fetch('RSPEC_CURRENT_SLICE', 1).to_i
+      SLICES = ENV.fetch('CI_NODE_TOTAL', 1).to_i
+      CURRENT_SLICE = ENV.fetch('CI_NODE_INDEX', 1).to_i
 
       if !method_defined?(:orig_ordered_example_groups)
 

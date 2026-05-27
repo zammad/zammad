@@ -2,8 +2,9 @@
 
 set -eu
 
-: "${DISTRIBUTION:=debian}"
-: "${DISTRIBUTION_VERSION:=12}"
+: "${DISTRO:=debian-12}"
+DISTRIBUTION="${DISTRO%%-*}"
+DISTRIBUTION_VERSION="${DISTRO#*-}"
 : "${CI_JOB_ID:=1}"
 : "${CI_COMMIT_REF_NAME:=develop}"
 
@@ -11,7 +12,7 @@ export DISTRIBUTION DISTRIBUTION_VERSION CI_JOB_ID CI_COMMIT_REF_NAME
 
 echo "Running tests for ${CI_COMMIT_REF_NAME} on ${DISTRIBUTION}-${DISTRIBUTION_VERSION}…"
 
-cd "$(dirname $0)"
+cd "$(dirname "$0")"
 
 docker compose build
 

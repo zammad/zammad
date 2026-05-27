@@ -7,9 +7,9 @@
     RAILS_ENV: "production"
   script:
     - |
-      script/build/test_slice_tests.sh $TEST_SLICE
+      script/build/test_slice_tests.sh $CI_NODE_INDEX
       # Tests in the first slice do not expect for the auto wizard to be run.
-      if [ $TEST_SLICE = 1 ]
+      if [ $CI_NODE_INDEX = 1 ]
       then
         echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"
         bundle exec rake zammad:ci:test:start[with_elasticsearch]

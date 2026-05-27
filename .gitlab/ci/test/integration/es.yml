@@ -11,16 +11,10 @@
     - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --tag searchindex --tag ~type:system
 
-# Lowest supported version
-rspec:es:stable:
+# Lowest and highest supported Elasticsearch versions
+rspec:es:
   extends:
     - .template_integration_es
-  variables:
-    ELASTICSEARCH_TAG: 'stable'
-
-# Highest supported version (except for newer releases that are not yet in CI)
-rspec:es:latest:
-  extends:
-    - .template_integration_es
-  variables:
-    ELASTICSEARCH_TAG: 'latest'
+  parallel:
+    matrix:
+      - ELASTICSEARCH_TAG: [stable, latest]
