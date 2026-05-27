@@ -125,6 +125,8 @@ class ImportOtrsController < ApplicationController
   end
 
   def import_check
+    return if setup_done_response
+
     Import::OTRS::Requester.list
     issues = []
 
@@ -160,6 +162,11 @@ class ImportOtrsController < ApplicationController
 
   def import_status
     result = Import::OTRS.status_bg
+
+    if result[:message] == 'not running'
+      render json: result
+      return
+    end
 
     if result[:result] == 'import_done'
       Setting.reload
