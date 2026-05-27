@@ -1,6 +1,8 @@
 // Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 //= link_directory ../javascripts .js
 //= link_directory ../builds .css
+//= link font.css
+//= link svg-dimensions.css
 //= link application.js
 //= link application.css
 //= link application-print.css
