@@ -14,7 +14,9 @@
 <title><%= kb_public_page_title(@knowledge_base, @object, @page_title_error) %></title>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <%= render partial: 'knowledge_base/public/feeds_header' if @knowledge_base.show_feed_icon %>
-<%= stylesheet_link_tag "knowledge_base.css", :media => 'all' %>
+<%= stylesheet_link_tag 'svg-dimensions.css', media: 'all' %>
+<%= stylesheet_link_tag 'font.css', media: 'all' %>
+<%= stylesheet_link_tag 'knowledge_base.css', media: 'all' %>
 <%= render 'knowledge_base/public/inline_stylesheet', knowledge_base: @knowledge_base, locale: system_locale_via_uri  %>
 <%= canonical_link_tag @knowledge_base, @category, @object %>
 
