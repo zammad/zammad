@@ -51,3 +51,5 @@ has a bright and sustainable future, consider becoming a Zammad customer!
 Thanks! ❤️ ❤️ ❤️
 
  Your Zammad Team
+
+<!-- migration-cutover smoke test 2026-05-26: validating Coolify preview-deploy E2E. PR opened to confirm GitHub webhook → CF Tunnel → Coolify → preview at ndesk-pr-N.staging-preview.newbyte.net.br pipeline works after staging-host i9-13900 cutover. Will be closed immediately after preview env validated. -->
