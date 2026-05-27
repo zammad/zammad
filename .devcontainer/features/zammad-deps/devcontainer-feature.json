@@ -29,5 +29,6 @@
       ]
     }
   },
-  "privileged": true
+  "privileged": true,
+  "installsAfter": ["ghcr.io/devcontainers/features/go"]
 }
