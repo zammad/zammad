@@ -27,6 +27,10 @@
       "minimumReleaseAge": "3 days"
     },
     {
+      "matchManagers": ["devcontainer"],
+      "assignees": ["fl"]
+    },
+    {
       "matchCategories": ["ci"],
       "assignees": ["fl"]
     },
