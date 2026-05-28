@@ -20,4 +20,4 @@ packager.io:
   extends: [.packager.io]
   parallel:
     matrix:
-      - DISTRO: [debian-11, debian-12, debian-13, ubuntu-22.04, ubuntu-24.04, ubuntu-26.04, rhel-9, sles-15]
+      - DISTRO: [debian-11, debian-12, debian-13, ubuntu-22.04, ubuntu-24.04, rhel-9, sles-15]
