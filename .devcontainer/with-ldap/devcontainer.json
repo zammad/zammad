@@ -10,7 +10,7 @@
       "moby": false
     },
     "ghcr.io/devcontainers-extra/features/shellcheck:1": {},
-    "ghcr.io/devcontainers/features/node:1": {
+    "ghcr.io/devcontainers/features/node:2": {
       "installYarnUsingApt": "false"
     },
     "ghcr.io/rails/devcontainer/features/postgres-client": {},
