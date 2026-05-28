@@ -336,4 +336,37 @@ RSpec.describe MicrosoftGraph, :aggregate_failures, integration: true, required_
       end
     end
   end
+
+  describe 'HTTP logging', required_envs: [], use_vcr: false do
+    let(:client) { described_class.new(access_token: 'token', mailbox: 'me') }
+
+    before do
+      stub_const("#{described_class}::BASE_URL", 'http://localhost/')
+    end
+
+    context 'when the request fails' do
+      before do
+        stub_request(:post, 'http://localhost/users/me/sendMail')
+          .to_return(status: 500, body: '{"error":{"code":"Boom","message":"Server error"}}')
+      end
+
+      it 'persists an HttpLog entry with the MicrosoftGraph facility' do
+        expect { client.send_message('') }
+          .to raise_error(MicrosoftGraph::ApiError)
+          .and change(HttpLog.where(facility: 'MicrosoftGraph'), :count).by(1)
+      end
+    end
+
+    context 'when the request succeeds' do
+      before do
+        stub_request(:post, 'http://localhost/users/me/sendMail')
+          .to_return(status: 202, body: '')
+      end
+
+      it 'does not persist an HttpLog entry' do
+        expect { client.send_message('') }
+          .not_to change(HttpLog.where(facility: 'MicrosoftGraph'), :count)
+      end
+    end
+  end
 end
