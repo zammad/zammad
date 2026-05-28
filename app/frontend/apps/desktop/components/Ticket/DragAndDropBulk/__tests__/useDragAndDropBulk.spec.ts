@@ -44,7 +44,7 @@ const triggerDragAndDrop = async ({
   document.body.appendChild(target)
 
   rowInner.dispatchEvent(
-    new PointerEvent('pointerdown', {
+    new MouseEvent('mousedown', {
       bubbles: true,
       button: 0,
       clientX: 10,
@@ -53,7 +53,7 @@ const triggerDragAndDrop = async ({
   )
 
   document.dispatchEvent(
-    new PointerEvent('pointermove', {
+    new MouseEvent('mousemove', {
       bubbles: true,
       clientX: 30,
       clientY: 30,
@@ -66,7 +66,7 @@ const triggerDragAndDrop = async ({
   target.appendChild(targetInner)
 
   targetInner.dispatchEvent(
-    new PointerEvent('pointerup', {
+    new MouseEvent('mouseup', {
       bubbles: true,
     }),
   )
@@ -381,5 +381,54 @@ describe('useDragAndDropBulk', () => {
         macroId: convertToGraphQLId('Macro', macroInternalId),
       },
     })
+  })
+
+  it('keeps active drag and drop when mouse leaves the browser window', async () => {
+    const ticketInternalId = '1'
+
+    const { isActive } = renderDragAndDropBulk({
+      checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
+      bulkSelector: ref({ searchQuery: 'state:new' }),
+    })
+
+    const row = document.createElement('tr')
+    row.dataset.itemId = ticketInternalId
+
+    const rowInner = document.createElement('td')
+    row.appendChild(rowInner)
+
+    document.body.appendChild(row)
+
+    rowInner.dispatchEvent(
+      new MouseEvent('mousedown', {
+        bubbles: true,
+        button: 0,
+        clientX: 10,
+        clientY: 10,
+      }),
+    )
+
+    document.dispatchEvent(
+      new MouseEvent('mousemove', {
+        bubbles: true,
+        clientX: 30,
+        clientY: 30,
+      }),
+    )
+
+    await vi.advanceTimersByTimeAsync(250)
+
+    expect(isActive.value).toBe(true)
+
+    document.dispatchEvent(
+      new MouseEvent('mouseout', {
+        bubbles: true,
+        relatedTarget: null,
+      }),
+    )
+
+    expect(isActive.value).toBe(true)
+
+    row.remove()
   })
 })
