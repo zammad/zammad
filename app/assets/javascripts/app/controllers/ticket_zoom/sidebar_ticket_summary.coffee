@@ -94,11 +94,22 @@ class App.SidebarTicketSummary extends App.Controller
     switch groupSetting
       when 'on_ticket_detail_opening'
         true
-      when 'on_ticket_summary_sidebar_activation'
+      when 'on_ticket_summary_sidebar_activation', 'disabled'
         false
       else
         setting = App.Config.get('ai_assistance_ticket_summary_config') || {}
-        setting['generate_on'] != 'on_ticket_summary_sidebar_activation'
+        setting['generate_on'] == 'on_ticket_detail_opening'
+
+  summaryDisabledForGroup: =>
+    groupSetting = App.Group.find(@ticket.group_id)?.summary_generation
+
+    return true if groupSetting is 'disabled'
+
+    if groupSetting is 'global_default' or !groupSetting
+      setting = App.Config.get('ai_assistance_ticket_summary_config') || {}
+      return setting['generate_on'] is 'disabled'
+
+    false
 
   sidebarItem: =>
     return if !@sidebarIsEnabled()
@@ -154,6 +165,7 @@ class App.SidebarTicketSummary extends App.Controller
     return false if !App.Config.get('ai_assistance_ticket_summary')
     return false if !(@ticket and @ticket.currentView() is 'agent')
     return false if @ticket.state.state_type.name is 'merged'
+    return false if @summaryDisabledForGroup()
 
     true
 
@@ -165,6 +177,9 @@ class App.SidebarTicketSummary extends App.Controller
       when 'ai_assistance_ticket_summary'
         App.Event.trigger('ui::ticket::sidebarRerender', { taskKey: @taskKey })
       when 'ai_assistance_ticket_summary_config'
+        # generate_on can flip sidebarIsEnabled() for groups using global_default,
+        # so rerender the sidebar list before refreshing the summary content.
+        App.Event.trigger('ui::ticket::sidebarRerender', { taskKey: @taskKey })
         @configHasChangedLoadSummary()
 
   getAvailableDisplayStructure: ->

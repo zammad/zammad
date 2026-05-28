@@ -46,7 +46,20 @@ const summaryConfig = computed(
   () => config.value.ai_assistance_ticket_summary_config as SummaryConfig,
 )
 
+const isDisabledForGroup = computed(() => {
+  const groupSummaryGenerationOption = ticket.value?.group?.summaryGeneration
+
+  if (groupSummaryGenerationOption === EnumTicketSummaryGeneration.Disabled) return true
+
+  return (
+    groupSummaryGenerationOption === EnumTicketSummaryGeneration.GlobalDefault &&
+    summaryConfig.value?.generate_on === EnumTicketSummaryGeneration.Disabled
+  )
+})
+
 const runWhenSidebarIsActive = computed(() => {
+  if (isDisabledForGroup.value) return false
+
   const groupSummaryGenerationOption = ticket.value?.group.summaryGeneration
 
   if (groupSummaryGenerationOption === EnumTicketSummaryGeneration.GlobalDefault) {
@@ -69,7 +82,8 @@ const isEnabled = computed(
     !!(
       ticket.value &&
       ticket.value?.state.name !== 'merged' &&
-      config.value.ai_assistance_ticket_summary
+      config.value.ai_assistance_ticket_summary &&
+      !isDisabledForGroup.value
     ),
 )
 

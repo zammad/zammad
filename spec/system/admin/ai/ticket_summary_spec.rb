@@ -36,6 +36,15 @@ RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
       end
     end
 
+    it 'can set the global generation to disabled' do
+      within(:active_content) do
+        select('Hide ticket summary sidebar', from: 'generate_on')
+        click_on('Submit')
+
+        expect(Setting.get('ai_assistance_ticket_summary_config')).to include(generate_on: 'disabled')
+      end
+    end
+
     context 'without provider configured' do
       before do
         unset_ai_provider

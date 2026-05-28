@@ -6237,6 +6237,12 @@
               "description": "On ticket summary sidebar activation",
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "disabled",
+              "description": "AI summary disabled.",
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "possibleTypes": null

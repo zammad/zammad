@@ -195,6 +195,24 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
           .and have_no_css('.tabsSidebar-tab[data-tab=summary]')
       end
     end
+
+    context 'when summary is disabled for the group' do
+      let(:ticket) { create(:ticket).tap { |t| t.group.update!(summary_generation: 'disabled') } }
+
+      it 'does not show sidebar' do
+        expect(page).to have_text(ticket.title)
+          .and have_no_css('.tabsSidebar-tab[data-tab=summary]')
+      end
+    end
+
+    context 'when global default is disabled and group uses global default' do
+      let(:ticket_summary_generation) { 'disabled' }
+
+      it 'does not show sidebar' do
+        expect(page).to have_text(ticket.title)
+          .and have_no_css('.tabsSidebar-tab[data-tab=summary]')
+      end
+    end
   end
 
   describe 'Indicator', performs_jobs: true do

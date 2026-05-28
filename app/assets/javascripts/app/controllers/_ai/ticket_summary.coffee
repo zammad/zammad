@@ -53,6 +53,10 @@ class App.TicketSummary extends App.ControllerAIFeatureBase
           name: __('On ticket summary sidebar activation')
           value: 'on_ticket_summary_sidebar_activation'
         },
+        {
+          name: __('Hide ticket summary sidebar')
+          value: 'disabled'
+        },
       ]
       translate: true
     )

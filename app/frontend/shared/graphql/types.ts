@@ -1113,6 +1113,8 @@ export enum EnumTicketStateTypeCategory {
 
 /** Defines when the ticket summary should be generated */
 export enum EnumTicketSummaryGeneration {
+  /** AI summary disabled. */
+  Disabled = 'disabled',
   /** Use global default setting. */
   GlobalDefault = 'global_default',
   /** On ticket detail opening */
