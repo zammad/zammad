@@ -1792,10 +1792,10 @@ const { openFeedbackDialog } = useFeedbackDialog()
                 noResize: false,
                 hideLabel: false,
                 displayWidth: 200,
-                truncate: true,
               },
               columnPreferences: {
                 alignContent: 'center',
+                tooltip: (item) => item.title as string,
               },
               dataType: 'integer',
             },

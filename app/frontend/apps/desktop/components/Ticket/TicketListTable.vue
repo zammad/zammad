@@ -137,6 +137,7 @@ const userPopoverSlots: {
           title: {
             columnPreferences: {
               link: goToItemLinkColumn,
+              tooltip: (item) => (item as TicketByList).title,
             },
           },
           number: {

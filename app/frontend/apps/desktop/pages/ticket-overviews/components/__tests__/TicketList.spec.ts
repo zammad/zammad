@@ -129,6 +129,22 @@ describe('TicketList', () => {
     expect(wrapper.getAllByRole('cell', { name: ticket.state.name })).toHaveLength(2) // state is shown as text and as color indicator
   })
 
+  it('exposes a tooltip with the full title on the title cell', async () => {
+    vi.useRealTimers()
+
+    const ticket = createDummyTicket({ title: 'A rather long ticket title' })
+
+    applyMocks(ticket)
+
+    const { wrapper } = renderTicketList()
+
+    const titleCell = await wrapper.findByRole('cell', { name: ticket.title })
+    const titleLink = within(titleCell).getByRole('link')
+
+    expect(titleLink).toHaveAttribute('data-tooltip', 'true')
+    expect(titleLink).toHaveAttribute('aria-label', ticket.title)
+  })
+
   it('shows priority icon if flag is set', async () => {
     mockApplicationConfig({
       ui_ticket_priority_icons: true,

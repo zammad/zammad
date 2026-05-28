@@ -117,7 +117,7 @@ const tableColumnLength = computed(
 )
 
 const getTooltipText = (item: TableAdvancedItem, tableAttribute: TableAttribute) =>
-  tableAttribute.headerPreferences?.truncate ? item[tableAttribute.name] : undefined
+  tableAttribute.columnPreferences?.tooltip?.(item)
 
 const selectedItemIds = defineModel<Set<ID>>('checkedItemIds', {
   required: false,
@@ -563,7 +563,6 @@ watch(
               :key="`${item.id}-${tableAttribute.name}`"
               :headers="`${tableAttribute.name}-header`"
               class="h-10 text-sm"
-              :table-attribute="tableAttribute"
             >
               <div
                 class="flex size-full items-center"
@@ -571,8 +570,6 @@ watch(
                   cellAlignmentClasses[tableAttribute?.columnPreferences?.alignContent || 'left'],
                   {
                     'p-2.5': !tableAttribute?.columnPreferences?.noPadding,
-                    'max-w-32 truncate text-black dark:text-white':
-                      tableAttribute?.headerPreferences?.truncate,
                   },
                 ]"
               >

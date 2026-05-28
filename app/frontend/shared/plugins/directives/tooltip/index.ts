@@ -142,9 +142,13 @@ const addTooltip = (
 }
 
 const isContentTruncated = (element: HTMLElement) => {
+  // The element may itself be truncating (e.g. via a `truncate` utility class).
+  if (element.offsetWidth < element.scrollWidth) return true
+
+  // Otherwise check the parent — covers cases where the directive is set on
+  //   inner content inside a truncating container.
   const { parentElement } = element
-  // top-level element
-  if (!parentElement) return element.offsetWidth < element.scrollWidth
+  if (!parentElement) return false
 
   return parentElement.offsetWidth < parentElement.scrollWidth
 }

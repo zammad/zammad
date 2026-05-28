@@ -187,28 +187,26 @@ describe('CommonAdvancedTable', () => {
     await expect(view.getByRole('table')).toMatchFileSnapshot(`${__filename}.snapshot.txt`)
   })
 
-  it('supports text truncation in cell content', async () => {
+  it('exposes a column tooltip via columnPreferences.tooltip', async () => {
     const wrapper = await renderTable({
-      headers: [...tableHeaders, 'truncated', 'untruncated'],
+      headers: [...tableHeaders, 'with_tooltip', 'without_tooltip'],
       attributes: [
         {
-          name: 'truncated',
-          label: 'Truncated',
-          headerPreferences: {
-            truncate: true,
+          name: 'with_tooltip',
+          label: 'With Tooltip',
+          headerPreferences: {},
+          columnPreferences: {
+            tooltip: (item) => item.with_tooltip as string,
           },
-          columnPreferences: {},
           dataOption: {
             type: 'text',
           },
           dataType: 'input',
         },
         {
-          name: 'untruncated',
-          label: 'Untruncated',
-          headerPreferences: {
-            truncate: false,
-          },
+          name: 'without_tooltip',
+          label: 'Without Tooltip',
+          headerPreferences: {},
           columnPreferences: {},
           dataOption: {
             type: 'text',
@@ -222,23 +220,22 @@ describe('CommonAdvancedTable', () => {
           id: convertToGraphQLId('Ticket', 2),
           name: 'Max Mustermann',
           role: 'Admin',
-          truncated: 'Some text to be truncated',
-          untruncated: 'Some text not to be truncated',
+          with_tooltip: 'Tooltip-enabled cell text',
+          without_tooltip: 'Cell text without tooltip',
         },
       ],
       totalItemsCount: 100,
       caption: 'Table caption',
     })
 
-    const truncatedText = wrapper.getByText('Some text to be truncated')
+    const withTooltip = wrapper.getByText('Tooltip-enabled cell text')
 
-    expect(truncatedText).toHaveAttribute('data-tooltip', 'true')
-    expect(truncatedText.parentElement).toHaveClass('truncate')
+    expect(withTooltip).toHaveAttribute('data-tooltip', 'true')
+    expect(withTooltip).toHaveAttribute('aria-label', 'Tooltip-enabled cell text')
 
-    const untruncatedText = wrapper.getByText('Some text not to be truncated')
+    const withoutTooltip = wrapper.getByText('Cell text without tooltip')
 
-    expect(untruncatedText).not.toHaveAttribute('data-tooltip')
-    expect(untruncatedText.parentElement).not.toHaveClass('truncate')
+    expect(withoutTooltip).not.toHaveAttribute('data-tooltip')
   })
 
   it('supports header slot', async () => {
