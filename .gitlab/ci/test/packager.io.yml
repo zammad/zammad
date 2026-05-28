@@ -46,12 +46,6 @@ packager.io:ubuntu-24.04:
     DISTRIBUTION: ubuntu
     DISTRIBUTION_VERSION: '24.04'
 
-packager.io:ubuntu-26.04:
-  extends: [.packager.io]
-  variables:
-    DISTRIBUTION: ubuntu
-    DISTRIBUTION_VERSION: '26.04'
-
 packager.io:rhel-9:
   extends: [.packager.io]
   variables:
