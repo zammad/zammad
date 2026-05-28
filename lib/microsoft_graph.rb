@@ -118,6 +118,7 @@ class MicrosoftGraph
   def make_request(path, method: :get, json: true, params: {}, options: {})
     options[:bearer_token] = bearer_token
     options[:json] = json
+    options[:log]  = { facility: 'MicrosoftGraph', log_only_on_error: true }
 
     uri = URI(path).host.present? ? path : "#{BASE_URL}#{mailbox_path}#{path}"
 
