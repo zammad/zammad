@@ -545,6 +545,33 @@ Permission.create_if_not_exists(
   },
   allow_signup: true,
 )
+Permission.create_if_not_exists(
+  name:        'integration',
+  label:       __('Integration'),
+  description: __('Access to third-party integrations in the ticket interface.'),
+  preferences: {
+    prio:     1720,
+    disabled: true,
+  },
+)
+Permission.create_if_not_exists(
+  name:        'integration.idoit',
+  label:       __('i-doit'),
+  description: __('Access the i-doit integration features.'),
+  preferences: { prio: 1730 }
+)
+Permission.create_if_not_exists(
+  name:        'integration.github',
+  label:       __('GitHub'),
+  description: __('Access the GitHub integration features.'),
+  preferences: { prio: 1740 }
+)
+Permission.create_if_not_exists(
+  name:        'integration.gitlab',
+  label:       __('GitLab'),
+  description: __('Access the GitLab integration features.'),
+  preferences: { prio: 1750 }
+)
 
 admin = Role.find_by(name: 'Admin')
 admin.permission_grant('user_preferences')
@@ -557,6 +584,9 @@ agent.permission_grant('user_preferences')
 agent.permission_grant('ticket.agent')
 agent.permission_grant('chat.agent')
 agent.permission_grant('cti.agent')
+agent.permission_grant('integration.idoit')
+agent.permission_grant('integration.github')
+agent.permission_grant('integration.gitlab')
 agent.permission_grant('knowledge_base.reader')
 
 customer = Role.find_by(name: 'Customer')
