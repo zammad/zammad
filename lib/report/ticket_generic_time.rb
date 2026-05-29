@@ -41,81 +41,18 @@ returns
     selector.merge!(without_merged_tickets_selector) # do not show merged tickets in reports
 
     result_es = SearchIndexBackend.selectors('Ticket', selector, { current_user: params[:current_user] }, aggs_interval)
-    case params[:interval]
-    when 'month'
-      stop_interval = 12
-    when 'week'
-      stop_interval = 7
-    when 'day'
-      stop_interval = ((params[:range_end] - params[:range_start]) / 86_400).to_i + 1
-    when 'hour'
-      stop_interval = 24
-    when 'minute'
-      stop_interval = 60
+
+    if !result_es
+      raise "Invalid es result #{result_es.inspect}"
     end
-    result = []
-    (1..stop_interval).each do |_counter|
-      match = false
-      if !result_es
-        raise "Invalid es result #{result_es.inspect}"
-      end
-      if !result_es['aggregations']
-        raise "Invalid es result, no aggregations #{result_es.inspect}"
-      end
-      if !result_es['aggregations']['time_buckets']
-        raise "Invalid es result, no time_buckets #{result_es.inspect}"
-      end
-      if !result_es['aggregations']['time_buckets']['buckets']
-        raise "Invalid es result, no buckets #{result_es.inspect}"
-      end
 
-      result_es['aggregations']['time_buckets']['buckets'].each do |item|
-        key_as_string = Time.zone.parse(item['key_as_string'])
-        next if !item['doc_count']
-        next if item['doc_count'].zero?
+    buckets = result_es.dig('aggregations', 'time_buckets', 'buckets')
 
-        # only compare date - in certain cases elasticsearch timezone offset will not match
-        replace = ':\d\dZ$'
-        case params[:interval]
-        when 'month'
-          replace = '\d\dT\d\d:\d\d:\d\dZ$'
-        when 'day', 'week'
-          replace = '\d\d:\d\d:\d\dZ$'
-        end
-
-        next if key_as_string.iso8601.sub(%r{#{replace}}, '') != params[:range_start].iso8601.sub(%r{#{replace}}, '')
-        next if match
-
-        match = true
-        result.push item['doc_count']
-        case params[:interval]
-        when 'month'
-          params[:range_start] = params[:range_start].next_month
-        when 'week', 'day'
-          params[:range_start] = params[:range_start].next_day
-        when 'hour'
-          params[:range_start] = params[:range_start] + 1.hour
-        when 'minute'
-          params[:range_start] = params[:range_start] + 1.minute
-        end
-      end
-      next if match
-
-      result.push 0
-      case params[:interval]
-      when 'month'
-        params[:range_start] = params[:range_start].next_month
-      when 'week'
-        params[:range_start] = params[:range_start].next_day
-      when 'day'
-        params[:range_start] = params[:range_start] + 1.day
-      when 'hour'
-        params[:range_start] = params[:range_start] + 1.hour
-      when 'minute'
-        params[:range_start] = params[:range_start] + 1.minute
-      end
+    if !buckets
+      raise "Invalid es result, no aggregations.time_buckets.buckets #{result_es.inspect}"
     end
-    result
+
+    buckets.pluck('doc_count')
   end
 
 =begin
