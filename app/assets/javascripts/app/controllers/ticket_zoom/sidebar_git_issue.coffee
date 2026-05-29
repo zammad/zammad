@@ -10,6 +10,7 @@ class App.SidebarGitIssue extends App.Controller
 
   sidebarItem: =>
     return if !@Config.get("#{@providerIdentifier}_integration")
+    return if !@permissionCheck("integration.#{@providerIdentifier}")
 
     isAgentTicketZoom   = (@ticket and @ticket.currentView() is 'agent')
     isAgentTicketCreate = (!@ticket and @taskKey and @taskKey.match('TicketCreateScreen-'))

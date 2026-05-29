@@ -1,6 +1,7 @@
 class SidebarIdoit extends App.Controller
   sidebarItem: =>
     return if !@Config.get('idoit_integration')
+    return if !@permissionCheck('integration.idoit')
 
     isAgentTicketZoom   = (@ticket and @ticket.currentView() is 'agent')
     isAgentTicketCreate = (!@ticket and @taskKey and @taskKey.match('TicketCreateScreen-'))
