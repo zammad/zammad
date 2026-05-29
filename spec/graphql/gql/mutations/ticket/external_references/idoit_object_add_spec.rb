@@ -104,6 +104,16 @@ RSpec.describe Gql::Mutations::Ticket::ExternalReferences::IdoitObjectAdd, type:
     end
   end
 
+  context 'with an agent without the i-doit permission', authenticated_as: :agent_without_permission do
+    let(:agent_without_permission) { create(:agent, roles: [create(:role, permission_names: %w[ticket.agent])]) }
+    let(:variables)                { { idoitObjectIds: [26] } }
+
+    it 'raises an authorization error' do
+      gql.execute(mutation, variables: variables)
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+    end
+  end
+
   context 'when unauthenticated' do
     before { gql.execute(mutation, variables:) }
 

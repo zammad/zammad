@@ -11,7 +11,7 @@ module Gql::Queries
 
     type [Gql::Types::Ticket::ExternalReferences::IdoitObjectType], null: false
 
-    requires_permission 'ticket.agent'
+    requires_permission 'integration.idoit'
     requires_enabled_setting 'idoit_integration', error_message: __('i-doit integration is not enabled')
 
     def resolve(query: '', limit: 10, idoit_type_id: nil)

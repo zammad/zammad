@@ -172,6 +172,15 @@ RSpec.describe 'Idoit', type: :request do
       expect(json_response['response']['result'][0]['cmdb_status_title']).to eq('in operation')
 
     end
+
+    it 'does forbid querying for agents without the i-doit permission' do
+      agent_without_permission = create(:agent, roles: [create(:role, permission_names: %w[ticket.agent])], groups: Group.all)
+
+      authenticated_as(agent_without_permission)
+      post '/api/v1/integration/idoit', params: { method: 'cmdb.object_types' }, as: :json
+
+      expect(response).to have_http_status(:forbidden)
+    end
   end
 
   describe 'SSL verification' do

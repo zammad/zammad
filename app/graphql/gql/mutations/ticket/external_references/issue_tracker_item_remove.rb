@@ -10,6 +10,10 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'Was the mutation successful?'
 
+    def authorized?(ticket:, issue_tracker_link:, issue_tracker_type:)
+      context.current_user.permissions?("integration.#{issue_tracker_type}")
+    end
+
     def resolve(ticket:, issue_tracker_link:, issue_tracker_type:)
       ticket
         .preferences

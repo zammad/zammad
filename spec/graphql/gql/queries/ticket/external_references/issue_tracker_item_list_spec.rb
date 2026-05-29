@@ -141,6 +141,34 @@ RSpec.describe Gql::Queries::Ticket::ExternalReferences::IssueTrackerItemList, t
     end
   end
 
+  context 'with an agent permitted for only one integration type', authenticated_as: :agent_partial do
+    let(:agent_partial) { create(:agent, roles: [create(:role, permission_names: %w[ticket.agent integration.gitlab])], groups: [ticket.group]) }
+
+    context 'when requesting an integration the agent lacks permission for (GitHub)' do
+      let(:issue_tracker_type) { 'github' }
+
+      before { gql.execute(query, variables: variables) }
+
+      it 'raises an authorization error' do
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      end
+    end
+
+    context 'when requesting an integration the agent has permission for (GitLab)' do
+      let(:issue_tracker_type) { 'gitlab' }
+
+      before do
+        allow(Service::Ticket::ExternalReferences::IssueTracker::TicketList)
+          .to receive(:execute).and_return([])
+        gql.execute(query, variables: variables)
+      end
+
+      it 'does not raise an authorization error' do
+        expect(gql.result.data).to eq([])
+      end
+    end
+  end
+
   context 'when unauthenticated' do
     before do
       gql.execute(query, variables: variables)

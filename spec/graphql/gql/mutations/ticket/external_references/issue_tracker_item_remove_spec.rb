@@ -66,6 +66,15 @@ RSpec.describe Gql::Mutations::Ticket::ExternalReferences::IssueTrackerItemRemov
     end
   end
 
+  context 'with an agent without the GitHub permission', authenticated_as: :agent_without_permission do
+    let(:agent_without_permission) { create(:agent, roles: [create(:role, permission_names: %w[ticket.agent])], groups: [ticket.group]) }
+
+    it 'raises an authorization error' do
+      gql.execute(mutation, variables:)
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+    end
+  end
+
   context 'when unauthenticated' do
     before { gql.execute(mutation, variables:) }
 

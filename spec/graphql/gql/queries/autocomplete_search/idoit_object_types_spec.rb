@@ -72,6 +72,14 @@ RSpec.describe Gql::Queries::AutocompleteSearch::IdoitObjectTypes, authenticated
       end
     end
 
+    context 'without the i-doit permission', authenticated_as: :agent_without_permission do
+      let(:agent_without_permission) { create(:agent, roles: [create(:role, permission_names: %w[ticket.agent])]) }
+
+      it 'raises an authorization error' do
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      end
+    end
+
     it_behaves_like 'graphql responds with error if unauthenticated'
   end
 end

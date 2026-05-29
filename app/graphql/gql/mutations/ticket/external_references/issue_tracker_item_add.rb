@@ -11,7 +11,7 @@ module Gql::Mutations
     field :issue_tracker_item, Gql::Types::Ticket::ExternalReferences::IssueTrackerItemType, description: 'The added issue tracker item'
 
     def authorized?(issue_tracker_link:, issue_tracker_type:, ticket: nil)
-      ticket.present? || context.current_user.permissions?('ticket.agent')
+      context.current_user.permissions?("integration.#{issue_tracker_type}")
     end
 
     def resolve(issue_tracker_link:, issue_tracker_type:, ticket: nil)

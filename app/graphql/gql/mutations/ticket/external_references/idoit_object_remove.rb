@@ -9,6 +9,7 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'Was the mutation successful?'
 
+    requires_permission 'integration.idoit'
     requires_enabled_setting 'idoit_integration', error_message: __('i-doit integration is not enabled')
 
     def resolve(idoit_object_id:, ticket: nil)

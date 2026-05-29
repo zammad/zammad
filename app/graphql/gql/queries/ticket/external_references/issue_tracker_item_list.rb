@@ -10,7 +10,9 @@ module Gql::Queries
 
     type [Gql::Types::Ticket::ExternalReferences::IssueTrackerItemType], null: false
 
-    requires_permission 'ticket.agent'
+    def authorized?(issue_tracker_type:, input:)
+      context.current_user.permissions?("integration.#{issue_tracker_type}")
+    end
 
     def resolve(issue_tracker_type:, input:)
       if input.ticket.present?

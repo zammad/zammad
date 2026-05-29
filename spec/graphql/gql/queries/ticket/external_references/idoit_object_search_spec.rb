@@ -105,6 +105,19 @@ RSpec.describe Gql::Queries::Ticket::ExternalReferences::IdoitObjectSearch, type
     end
   end
 
+  context 'with an agent without the i-doit permission', authenticated_as: :agent_without_permission do
+    let(:agent_without_permission) { create(:agent, roles: [create(:role, permission_names: %w[ticket.agent])]) }
+
+    before do
+      Setting.set('idoit_integration', true)
+      gql.execute(query, variables: variables)
+    end
+
+    it 'raises an authorization error' do
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+    end
+  end
+
   context 'when unauthenticated' do
     before do
       Setting.set('idoit_integration', true)
