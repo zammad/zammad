@@ -127,7 +127,7 @@ class UserAgent
 
   def self.log(url, request, response, options)
     return if !options[:log]
-    return if options[:log][:log_only_on_error] && response.is_a?(Net::HTTPSuccess)
+    return if options[:log][:log_only_on_error] && (response.is_a?(Net::HTTPSuccess) || response.is_a?(Net::HTTPRedirection))
 
     # request
     request_data = {
