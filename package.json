@@ -149,7 +149,7 @@
     "@tiptap/vue-3": "3.23.6",
     "@vue/apollo-composable": "^4.2.2",
     "@vue/runtime-core": "^3.5.34",
-    "@vuepic/vue-datepicker": "^12.1.0",
+    "@vuepic/vue-datepicker": "^13.0.0",
     "@vueuse/core": "^14.3.0",
     "@vueuse/router": "^14.3.0",
     "@vueuse/shared": "^14.3.0",

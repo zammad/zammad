@@ -261,7 +261,7 @@ describe('Fields - FieldDate', () => {
 
       const dialog = await view.findByRole('dialog')
 
-      expect(dialog).toHaveClass('dp__theme_dark')
+      expect(dialog).toHaveClass('dp--theme-dark')
     })
   })
 

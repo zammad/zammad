@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { getNode, type FormKitNode } from '@formkit/core'
-import { VueDatePicker } from '@vuepic/vue-datepicker'
+import { VueDatePicker, WeekStart } from '@vuepic/vue-datepicker'
 import { isValid, format, formatISO, parse, parseISO } from 'date-fns'
 import { isEqual } from 'lodash-es'
 import { computed, nextTick, toRef, watch, useTemplateRef } from 'vue'
@@ -336,6 +336,7 @@ const closed = () => {
         name: context.node.name,
         clearable: !!context.clearable,
       }"
+      :week-start="WeekStart.Monday"
       auto-apply
       offset="12"
       @open="open"
@@ -396,7 +397,7 @@ const closed = () => {
 </template>
 
 <style scoped>
-:deep(.dp__theme_light) {
+:deep(.dp--theme-light) {
   --dp-background-color: var(--color-white);
   --dp-text-color: var(--color-black);
   --dp-hover-color: var(--color-blue-600);
@@ -429,9 +430,9 @@ const closed = () => {
     color: var(--color-black);
   }
 
-  .dp__btn,
-  .dp__calendar_item,
-  .dp__action_button {
+  .dp--btn,
+  .dp--calendar-item,
+  .dp--action-button {
     &:hover {
       outline-color: var(--color-blue-600);
     }
@@ -441,14 +442,14 @@ const closed = () => {
     }
   }
 
-  .dp__button,
-  .dp__action_button {
+  .dp--button,
+  .dp--action-button {
     color: var(--color-gray-300);
     background: var(--color-green-200);
   }
 }
 
-:deep(.dp__theme_dark) {
+:deep(.dp--theme-dark) {
   --dp-background-color: var(--color-gray-500);
   --dp-text-color: var(--color-white);
   --dp-hover-color: var(--color-blue-900);
@@ -481,9 +482,9 @@ const closed = () => {
     color: var(--color-white);
   }
 
-  .dp__btn,
-  .dp__calendar_item,
-  .dp__action_button {
+  .dp--btn,
+  .dp--calendar-item,
+  .dp--action-button {
     &:hover {
       outline-color: var(--color-blue-900);
     }
@@ -493,14 +494,14 @@ const closed = () => {
     }
   }
 
-  .dp__button,
-  .dp__action_button {
+  .dp--button,
+  .dp--action-button {
     color: var(--color-neutral-400);
     background: var(--color-gray-600);
   }
 }
 
-:deep(.dp__main) {
+:deep(.dp--main) {
   --dp-font-family: var(--default-font-family);
   --dp-border-radius: 0.5rem;
   --dp-cell-border-radius: 0.375rem;
@@ -525,7 +526,7 @@ const closed = () => {
   --dp-preview-font-size: 0.75rem;
   --dp-time-font-size: 1rem;
 
-  .dp__input_icon {
+  .dp--input-icon {
     left: unset;
     right: 0.625rem;
 
@@ -535,12 +536,12 @@ const closed = () => {
     }
   }
 
-  .dp__input_icon_pad {
+  .dp--input-icon-pad {
     padding-inline-start: var(--dp-common-padding);
     padding-inline-end: var(--dp-input-icon-padding);
   }
 
-  .dp__input_wrap {
+  .dp--input-wrap {
     display: flex;
   }
 
@@ -558,32 +559,32 @@ const closed = () => {
     max-width: none;
   }
 
-  .dp__inner_nav:hover,
-  .dp__month_year_select:hover,
-  .dp__year_select:hover,
-  .dp__date_hover:hover,
-  .dp__inc_dec_button {
+  .dp--inner-nav:hover,
+  .dp--month-year-select:hover,
+  .dp--year-select:hover,
+  .dp--date-hoverable:hover,
+  .dp--inc-dec-button {
     background: transparent;
     transition: none;
   }
 
-  .dp__date_hover.dp__cell_offset:hover {
+  .dp--date-hoverable.dp--cell-offset:hover {
     color: var(--dp-secondary-color);
   }
 
-  .dp__menu_inner {
+  .dp--menu-inner {
     padding-bottom: 0;
   }
 
-  .dp__action_row {
+  .dp--action-row {
     padding-top: 0;
     margin-top: 0.125rem;
   }
 
-  .dp__btn,
-  .dp__button,
-  .dp__calendar_item,
-  .dp__action_button {
+  .dp--btn,
+  .dp--button,
+  .dp--calendar-item,
+  .dp--action-button {
     transition: none;
     border-radius: 0.375rem;
     outline-color: transparent;
@@ -601,35 +602,33 @@ const closed = () => {
     }
   }
 
-  .dp__calendar_row {
+  .dp--calendar-row {
     gap: 0.375rem;
   }
 
-  .dp__month_year_wrap {
+  .dp--month-year-wrap {
     gap: 0.5rem;
   }
 
-  .dp__time_col {
+  .dp--time-col {
     gap: 0.75rem;
   }
 
-  .dp__today {
+  .dp--today {
     border: none;
     color: var(--color-blue-800);
 
-    &.dp__range_start,
-    &.dp__range_end,
-    &.dp__active_date {
+    &.dp--active {
       color: var(--color-white);
     }
   }
 
-  .dp__action_buttons {
+  .dp--action-buttons {
     margin-inline-start: 0;
     flex-grow: 1;
   }
 
-  .dp__action_button {
+  .dp--action-button {
     margin-inline-start: 0;
     transition: none;
     flex-grow: 1;
@@ -638,59 +637,55 @@ const closed = () => {
     border-radius: 0.375rem;
   }
 
-  .dp__action_cancel {
+  .dp--action-cancel {
     border: 0;
   }
 
-  .dp--arrow-btn-nav .dp__inner_nav {
+  .dp--arrow-btn-nav .dp--inner-nav {
     color: var(--color-blue-800);
   }
 
-  .dp__overlay_container {
+  .dp--overlay-container {
     padding-bottom: 0.5rem;
   }
 
-  .dp__overlay_container + .dp__button,
-  .dp__overlay_row + .dp__button {
+  .dp--overlay-container + .dp--button,
+  .dp--overlay-row + .dp--button {
     width: auto;
     margin: 0.5rem;
   }
 
-  .dp__overlay_container + .dp__button {
+  .dp--overlay-container + .dp--button {
     width: calc(var(--dp-menu-min-width));
   }
 
-  .dp__time_display {
+  .dp--time-display {
     transition: none;
     padding: 0.5rem;
   }
 
-  .dp__range_start,
-  .dp__range_end,
-  .dp__range_between {
+  .dp--range-between {
     transition: none;
     border: none;
     border-radius: 0.375rem;
   }
 
-  .dp__range_between:hover {
+  .dp--range-between:hover {
     background: var(--dp-range-between-dates-background-color);
     color: var(--dp-range-between-dates-text-color);
   }
 
-  .dp__range_end,
-  .dp__range_start,
-  .dp__active_date {
-    &.dp__cell_offset {
+  .dp--active {
+    &.dp--cell-offset {
       color: var(--dp-primary-text-color);
     }
   }
 
-  .dp__calendar_header {
+  .dp--calendar-header {
     font-weight: 400;
     text-transform: uppercase;
 
-    .dp__calendar_header_item {
+    .dp--calendar-header-item {
       padding-left: 0;
       padding-right: 0;
     }
