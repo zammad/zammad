@@ -82,6 +82,11 @@ class Selector::SearchIndex < Selector::Base
         date_histogram: {
           field:             options[:aggs_interval][:field],
           calendar_interval: options[:aggs_interval][:interval],
+          min_doc_count:     0,
+          extended_bounds:   {
+            min: options[:aggs_interval][:from],
+            max: options[:aggs_interval][:to]
+          }
         }
       }
     }
