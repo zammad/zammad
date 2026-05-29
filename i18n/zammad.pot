@@ -882,12 +882,24 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
+#: db/seeds/permissions.rb:566
+msgid "Access the GitHub integration features."
+msgstr ""
+
+#: db/seeds/permissions.rb:572
+msgid "Access the GitLab integration features."
+msgstr ""
+
 #: db/seeds/permissions.rb:360
 msgid "Access the agent chat features."
 msgstr ""
 
 #: db/seeds/permissions.rb:375
 msgid "Access the agent phone features."
+msgstr ""
+
+#: db/seeds/permissions.rb:560
+msgid "Access the i-doit integration features."
 msgstr ""
 
 #: db/seeds/permissions.rb:390
@@ -924,6 +936,10 @@ msgstr ""
 
 #: db/seeds/permissions.rb:409
 msgid "Access to the ticket interface."
+msgstr ""
+
+#: db/seeds/permissions.rb:551
+msgid "Access to third-party integrations in the ticket interface."
 msgstr ""
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:19
@@ -3022,7 +3038,7 @@ msgstr ""
 msgid "Change Customer"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:17
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:18
 msgid "Change Objects"
 msgstr ""
 
@@ -4408,7 +4424,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:145
 #: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:27
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:219
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:220
 #: app/frontend/apps/mobile/components/Ticket/TicketItem.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:41
 msgid "Currently processing this ticket…"
@@ -7796,6 +7812,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:59
+#: db/seeds/permissions.rb:565
 #: db/seeds/settings.rb:1608
 msgid "GitHub"
 msgstr ""
@@ -7829,6 +7846,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:66
+#: db/seeds/permissions.rb:571
 #: db/seeds/settings.rb:1673
 msgid "GitLab"
 msgstr ""
@@ -8981,6 +8999,10 @@ msgstr ""
 msgid "Integer field"
 msgstr ""
 
+#: db/seeds/permissions.rb:266
+msgid "Integration"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/integrations.coffee:3
 #: db/seeds/permissions.rb:266
 msgid "Integrations"
@@ -9729,7 +9751,7 @@ msgstr ""
 msgid "Link already exists"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:26
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:27
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:69
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:272
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:70
@@ -9845,8 +9867,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:103
 #: app/assets/javascripts/app/controllers/password_reset.coffee:92
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:46
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:87
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:76
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:88
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:77
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:34
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:61
 msgid "Loading failed."
@@ -11449,7 +11471,7 @@ msgstr ""
 msgid "No knowledge base locale configured."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:193
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:194
 msgid "No linked issues"
 msgstr ""
 
@@ -16883,11 +16905,11 @@ msgstr ""
 msgid "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#."
 msgstr ""
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:30
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:27
 msgid "The idoit object could not be found."
 msgstr ""
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:24
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:21
 msgid "The idoit object is already present on the ticket."
 msgstr ""
 
@@ -16919,7 +16941,7 @@ msgstr ""
 msgid "The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:79
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:80
 msgid "The issue could not be saved."
 msgstr ""
 
@@ -16993,7 +17015,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:134
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:143
 #: app/assets/javascripts/app/controllers/user.coffee:235
 msgid "The object could not be updated."
 msgstr ""
@@ -21535,8 +21557,9 @@ msgid "https://example.com/?q=#{object.attribute_name} - use ticket, user or org
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee:5
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:13
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/idoit.ts:11
+#: db/seeds/permissions.rb:559
 msgid "i-doit"
 msgstr ""
 
@@ -21548,8 +21571,8 @@ msgstr ""
 msgid "i-doit integration"
 msgstr ""
 
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:12
-#: app/graphql/gql/mutations/ticket/external_references/idoit_object_remove.rb:12
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:13
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_remove.rb:13
 #: app/graphql/gql/queries/autocomplete_search/idoit_object_types.rb:13
 #: app/graphql/gql/queries/ticket/external_references/idoit_object_list.rb:13
 #: app/graphql/gql/queries/ticket/external_references/idoit_object_search.rb:15
@@ -21991,7 +22014,7 @@ msgid "no upcoming events"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee:25
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:63
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:64
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:34
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:140
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:110
