@@ -2,6 +2,27 @@
 
 ## 7.2
 
+### Elasticsearch 7 no longer supported
+
+Elasticsearch 7 has reached end of life and is no longer supported. Zammad now
+requires **Elasticsearch 8** or later.
+
+⚠️ Please upgrade your Elasticsearch installation before updating to Zammad 7.2.
+
+### Calendar iCal feed must be a URL
+
+Calendars can no longer be configured with a local file path as the iCal feed source. Only HTTP/HTTPS URLs are accepted.
+
+⚠️ If you previously used a local `.ics`
+file path, host the file on an HTTP server and update the calendar's iCal feed URL accordingly.
+
+### Tags are now unique case-insensitively
+
+Zammad now enforces case-insensitive uniqueness for tags. On update, duplicate
+tags (e.g. `Support` and `support`) are automatically consolidated into a single
+normalized tag. All existing references to the removed duplicates are updated to
+point to the consolidated tag - no data is lost.
+
 ### Deprecated `es-ca` locale inactivated
 
 The deprecated `es-ca` locale (Catalan) is no longer offered for selection.
