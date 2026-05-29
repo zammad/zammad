@@ -12,7 +12,7 @@ import { mockTicketExternalReferencesIdoitObjectListQuery } from '#desktop/pages
 
 describe('Ticket detail view i-doit integration', () => {
   it('displays i-doit integration', async () => {
-    mockPermissions(['ticket.agent'])
+    mockPermissions(['ticket.agent', 'integration.idoit'])
 
     await mockApplicationConfig({
       idoit_integration: true,
@@ -30,7 +30,7 @@ describe('Ticket detail view i-doit integration', () => {
   })
 
   it('hides i-doit integration when not available', async () => {
-    mockPermissions(['ticket.agent'])
+    mockPermissions(['ticket.agent', 'integration.idoit'])
 
     mockTicketExternalReferencesIdoitObjectListQuery({
       ticketExternalReferencesIdoitObjectList: [],

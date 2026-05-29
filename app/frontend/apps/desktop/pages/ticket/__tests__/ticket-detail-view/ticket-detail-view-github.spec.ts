@@ -12,7 +12,7 @@ import { mockTicketExternalReferencesIssueTrackerItemListQuery } from '#desktop/
 
 describe('Ticket detail view - GitHub integration', () => {
   it('displays sidebar', async () => {
-    mockPermissions(['ticket.agent'])
+    mockPermissions(['ticket.agent', 'integration.github'])
 
     await mockApplicationConfig({
       github_integration: true,
@@ -30,7 +30,7 @@ describe('Ticket detail view - GitHub integration', () => {
   })
 
   it('hides sidebar when not available', async () => {
-    mockPermissions(['ticket.agent'])
+    mockPermissions(['ticket.agent', 'integration.github'])
 
     await mockApplicationConfig({
       github_integration: false,

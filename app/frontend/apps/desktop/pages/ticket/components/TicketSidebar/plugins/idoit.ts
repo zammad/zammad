@@ -10,7 +10,7 @@ import type { TicketSidebarPlugin } from './types.ts'
 export default <TicketSidebarPlugin>{
   title: __('i-doit'),
   component: TicketSidebarIdoit,
-  permissions: ['ticket.agent'],
+  permissions: ['integration.idoit'],
   screens: [TicketSidebarScreenType.TicketDetailView, TicketSidebarScreenType.TicketCreate],
   views: ['agent'],
   icon: 'i-doit-logo', // icon does not exist underlying cmp will use it as a base to get light and dark icon name

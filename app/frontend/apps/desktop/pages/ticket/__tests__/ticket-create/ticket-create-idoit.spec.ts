@@ -26,7 +26,7 @@ describe('Ticket create i-doit links', () => {
         ui_task_mananger_max_task_count: 30,
         ui_ticket_create_available_types: ['phone-in', 'phone-out', 'email-out'],
       })
-      mockPermissions(['ticket.agent'])
+      mockPermissions(['ticket.agent', 'integration.idoit'])
       handleMockFormUpdaterQuery({
         pending_time: {
           show: false,
@@ -116,7 +116,7 @@ describe('Ticket create i-doit links', () => {
     mockApplicationConfig({
       idoit_integration: true,
     })
-    mockPermissions(['ticket.agent'])
+    mockPermissions(['ticket.agent', 'integration.idoit'])
 
     const uid = getUuid()
     const view = await visitView(`/ticket/create/${uid}`)
@@ -127,7 +127,7 @@ describe('Ticket create i-doit links', () => {
   })
 
   it('hides i-doit integration when not available', async () => {
-    mockPermissions(['ticket.agent'])
+    mockPermissions(['ticket.agent', 'integration.idoit'])
 
     mockApplicationConfig({
       idoit_integration: false,

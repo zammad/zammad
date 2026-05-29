@@ -12,7 +12,7 @@ import { mockTicketExternalReferencesIssueTrackerItemListQuery } from '#desktop/
 
 describe('Ticket detail view - GitLab integration', () => {
   it('displays sidebar', async () => {
-    mockPermissions(['ticket.agent'])
+    mockPermissions(['ticket.agent', 'integration.gitlab'])
 
     await mockApplicationConfig({
       gitlab_integration: true,
@@ -30,7 +30,7 @@ describe('Ticket detail view - GitLab integration', () => {
   })
 
   it('hides sidebar when not available', async () => {
-    mockPermissions(['ticket.agent'])
+    mockPermissions(['ticket.agent', 'integration.gitlab'])
 
     mockTicketExternalReferencesIssueTrackerItemListQuery({
       ticketExternalReferencesIssueTrackerItemList: [],
@@ -52,7 +52,7 @@ describe('Ticket detail view - GitLab integration', () => {
   })
 
   it('hides sidebar when Agent-Customer see a specific ticket as a customer', async () => {
-    mockPermissions(['ticket.agent', 'ticket.customer'])
+    mockPermissions(['ticket.agent', 'ticket.customer', 'integration.gitlab'])
 
     await mockApplicationConfig({
       gitlab_integration: true,

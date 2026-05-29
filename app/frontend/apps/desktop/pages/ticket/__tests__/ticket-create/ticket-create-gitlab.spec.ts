@@ -27,7 +27,7 @@ import { mockTicketExternalReferencesIssueTrackerItemListQuery } from '../../gra
 
 describe('Ticket create - GitLab links', () => {
   it('displays sidebar', async () => {
-    mockPermissions(['ticket.agent'])
+    mockPermissions(['ticket.agent', 'integration.gitlab'])
 
     await mockApplicationConfig({
       gitlab_integration: true,
@@ -56,7 +56,7 @@ describe('Ticket create - GitLab links', () => {
   })
 
   it('hides sidebar when not available', async () => {
-    mockPermissions(['ticket.agent'])
+    mockPermissions(['ticket.agent', 'integration.gitlab'])
 
     await mockApplicationConfig({
       gitlab_integration: false,

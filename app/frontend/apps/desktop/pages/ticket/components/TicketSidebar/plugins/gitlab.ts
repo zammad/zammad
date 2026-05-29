@@ -10,7 +10,7 @@ import type { TicketSidebarPlugin } from './types.ts'
 export default <TicketSidebarPlugin>{
   title: __('GitLab'),
   component: TicketSidebarGitLab,
-  permissions: ['ticket.agent'],
+  permissions: ['integration.gitlab'],
   screens: [TicketSidebarScreenType.TicketDetailView, TicketSidebarScreenType.TicketCreate],
   views: ['agent'],
   icon: 'gitlab',

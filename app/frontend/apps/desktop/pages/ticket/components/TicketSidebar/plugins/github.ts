@@ -10,7 +10,7 @@ import type { TicketSidebarPlugin } from './types.ts'
 export default <TicketSidebarPlugin>{
   title: __('GitHub'),
   component: TicketSidebarGitHub,
-  permissions: ['ticket.agent'],
+  permissions: ['integration.github'],
   screens: [TicketSidebarScreenType.TicketDetailView, TicketSidebarScreenType.TicketCreate],
   views: ['agent'],
   icon: 'github',
