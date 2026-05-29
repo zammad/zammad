@@ -537,6 +537,15 @@ returns
     postmaster_response(channel, msg)
   end
 
+  SAMPLE_MAIL_FIELDS = %i[from from_email from_display_name to cc subject body content_type reply-to attachments].freeze
+
+  # Prepares sample data for email parsing verification tests
+  def self.prepare_sample_mail(mail)
+    new
+      .parse(mail)
+      .slice(*SAMPLE_MAIL_FIELDS)
+  end
+
   private
 
   # generate Message ID on the fly if it was missing

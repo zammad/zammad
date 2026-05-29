@@ -72,13 +72,13 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
-    # To write new .yml files for emails you can use the following code:
+    # To write new .yml files for emails you can use the following rake task:
     #
-    # File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.read('test/data/mail/mailXXX.box')).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to', :attachments).to_yaml)
+    # rake zammad:email_parser:debug:generate_yml[/path/to/your/email.box]
     #
-    # To renew all existing files, you can use the following code:
+    # To renew all existing files, you can use the following rake task:
     #
-    # Dir.glob(Rails.root.join('test/data/mail/mail*.box')).each { |mail_file| File.write(mail_file.gsub('.box', '.yml'), Channel::EmailParser.new.parse(File.read(mail_file)).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to', :attachments).to_yaml) }
+    # rake zammad:email_parser:debug:regenerate_all_ymls
     #
     context 'when checking a bunch of stored emails for correct parsing behaviour' do
       Rails.root.glob('test/data/mail/mail*.box').each do |stored_email|

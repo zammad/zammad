@@ -351,3 +351,15 @@ expect(find_datepicker('Date')).to have_date(Date.today)
 expect(find_datepicker('Date Time')).to have_datetime(DateTime.now)
 expect(find_toggle('Boolean')).to be_toggled_on
 ```
+
+## Email tests
+
+Email importing issues are covered by the test that compares the raw email content with the expected parsed content. The
+test is located in `spec/models/channel/email_parser_spec.rb`. Search for `when checking a bunch of stored emails` RSpec
+context. It loops over sample emails in `test/data/mail` folder.
+
+To add a new email test case, use `rake zammad:email_parser:debug:generate_yml[/path/to/file.eml]`. It will copy the
+file to the appropriate location and generate an accompanying YAML file with the expected content. Please adjust the
+total count of the test emails in the same spec file few lines below the test case.
+
+To regenerate all YAML content files for existing emails, use `rake zammad:email_parser:debug:regenerate_all_ymls`.
