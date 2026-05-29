@@ -630,7 +630,7 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.11.1)
       ffi (~> 1.0)
-    rchardet (1.10.0)
+    rchardet (1.10.2)
     rdoc (7.2.0)
       erb
       psych (>= 4.0.0)
