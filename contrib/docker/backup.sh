@@ -6,6 +6,7 @@ set -o pipefail
 : "${BACKUP_DIR:=/var/tmp/zammad}"
 : "${RESTORE_DIR:=/var/tmp/zammad/restore}"
 : "${BACKUP_TIME:=03:00}"
+: "${BACKUP_ON_START:=true}"
 : "${HOLD_DAYS:=10}"
 
 # See DOCKERFILE for environment variables.
@@ -44,14 +45,27 @@ function zammad_backup {
 }
 
 function zammad_backup_loop {
+  local FIRST_RUN=true
+
   while true; do
-    NOW_TIMESTAMP=$(date +%s)
-    TOMORROW_DATE=$(date -d@"$((NOW_TIMESTAMP + 24*60*60))" +%Y-%m-%d)
+    if [ "$FIRST_RUN" = "true" ]; then
+      FIRST_RUN=false
+      if [ "${BACKUP_ON_START}" = "true" ]; then
+        zammad_backup
+      fi
+    else
+      zammad_backup
+    fi
 
-    zammad_backup
-
-    NEXT_TIMESTAMP=$(date -d "$TOMORROW_DATE $BACKUP_TIME" +%s)
+    # Schedule next run: use today's BACKUP_TIME if it hasn't passed yet,
+    # otherwise advance to tomorrow.
     NOW_TIMESTAMP=$(date +%s)
+    TODAY_DATE=$(date +%Y-%m-%d)
+    NEXT_TIMESTAMP=$(date -d "$TODAY_DATE $BACKUP_TIME" +%s)
+    if [ "$NEXT_TIMESTAMP" -le "$NOW_TIMESTAMP" ]; then
+      NEXT_TIMESTAMP=$((NEXT_TIMESTAMP + 24*60*60))
+    fi
+
     SLEEP_SECONDS=$((NEXT_TIMESTAMP - NOW_TIMESTAMP))
 
     echo "sleeping $SLEEP_SECONDS seconds until the next backup run..."
