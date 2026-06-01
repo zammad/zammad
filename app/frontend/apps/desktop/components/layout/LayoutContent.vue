@@ -10,6 +10,8 @@ import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcr
 import type { BreadcrumbItem } from '#desktop/components/CommonBreadcrumb/types.ts'
 import CommonHelpText from '#desktop/components/CommonPageHelp/CommonHelpText.vue'
 import CommonPageHelp from '#desktop/components/CommonPageHelp/CommonPageHelp.vue'
+import CommonNavigationTabs from '#desktop/components/CommonTabs/CommonNavigationTabs/CommonNavigationTabs.vue'
+import type { NavigationTab } from '#desktop/components/CommonTabs/types.ts'
 import LayoutBottomBar from '#desktop/components/layout/LayoutBottomBar.vue'
 import LayoutMain from '#desktop/components/layout/LayoutMain.vue'
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
@@ -47,6 +49,8 @@ export interface Props {
    * Disables the vertical scroll on the main element
    */
   noScrollable?: boolean
+  tabs?: NavigationTab[]
+  activeTab?: NavigationTab['key']
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -55,6 +59,7 @@ const props = withDefaults(defineProps<Props>(), {
   width: 'full',
   showInlineHelp: false,
   contentAlignment: 'start',
+  activeTab: '',
 })
 
 const maxWidth = computed(() => (props.width === 'narrow' ? '600px' : undefined))
@@ -125,11 +130,20 @@ onBeforeMount(() => {
           :class="contentAlignmentClass"
           :style="{ maxWidth }"
         >
+          <!-- mx-4, 2rem because of horizontal margin 1rem * 2 -> Parent size minus margin -->
+          <CommonNavigationTabs
+            v-if="tabs?.length"
+            class="lg:hidden"
+            :class="[width !== 'narrow' ? 'mx-4 mt-4 max-w-[calc(100%-2rem)]' : 'max-w-full']"
+            :model-value="activeTab"
+            :tabs="tabs"
+          />
+
           <div
             v-if="breadcrumbItems"
             data-test-id="wrapper-breadcrumb"
             class="flex min-h-13 items-center justify-between"
-            :class="{ 'px-4 pt-4': contentPadding }"
+            :class="{ 'px-4 pt-4': contentPadding, 'pt-0!': tabs?.length }"
           >
             <CommonBreadcrumb :items="breadcrumbItems" />
             <div

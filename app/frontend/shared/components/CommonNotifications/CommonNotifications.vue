@@ -34,7 +34,7 @@ const handleClose = (notification: Notification, clickFromCloseButton = false) =
 <template>
   <div
     id="Notifications"
-    class="pointer-events-none fixed inset-x-0 top-0 z-50"
+    class="pointer-events-none fixed inset-x-0 top-0 z-50 px-3"
     :class="notificationTypeClassMap.baseContainer"
     role="alert"
     aria-live="polite"

@@ -30,6 +30,7 @@ import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useCheckTokenAccess } from '../composables/permission/useCheckTokenAccess.ts'
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { UserCurrentAccessTokenUpdatesDocument } from '../graphql/subscriptions/userCurrentAccessTokenUpdates.api.ts'
 
 defineOptions({
@@ -170,10 +171,14 @@ const helpText = computed(() => [
   ),
   i18n.t("Pick a name for the application, and we'll give you a unique token."),
 ])
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
   <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
     :help-text="helpText"
     :show-inline-help="!currentAccessTokenPresent && !accessTokenListLoading"
     :breadcrumb-items="breadcrumbItems"

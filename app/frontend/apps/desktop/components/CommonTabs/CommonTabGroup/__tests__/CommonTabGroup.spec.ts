@@ -1,11 +1,10 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
-import { describe } from 'vitest'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import CommonTabGroup from '#desktop/components/CommonTabGroup/CommonTabGroup.vue'
+import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/CommonTabGroup.vue'
 
 describe('CommonTabGroup', () => {
   describe('single tab mode', () => {
@@ -27,21 +26,33 @@ describe('CommonTabGroup', () => {
       expect(wrapper.getByText('Tab 3')).toBeInTheDocument()
     })
 
-    it('set by default the first tab to active', () => {
+    it('does not select any tab by default', () => {
       const wrapper = renderComponent(CommonTabGroup, {
         props: {
           tabs,
         },
       })
 
-      waitFor(() => {
+      expect(wrapper.queryByRole('tab', { selected: true })).not.toBeInTheDocument()
+    })
+
+    it('selects the first tab by default with selectFirstByDefault', async () => {
+      const wrapper = renderComponent(CommonTabGroup, {
+        props: {
+          tabs,
+          selectFirstByDefault: true,
+        },
+      })
+
+      await waitFor(() => {
         expect(wrapper.getByRole('tab', { selected: true })).toHaveTextContent('Tab 1')
       })
     })
 
-    it('allows setting a default active tab', () => {
+    it('selects the default tab with selectFirstByDefault', async () => {
       const wrapper = renderComponent(CommonTabGroup, {
         props: {
+          selectFirstByDefault: true,
           tabs: [
             ...tabs,
             {
@@ -53,9 +64,29 @@ describe('CommonTabGroup', () => {
         },
       })
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(wrapper.getByRole('tab', { selected: true })).toHaveTextContent('Tab 4')
       })
+    })
+
+    it('scrolls the active tab into centered view', async () => {
+      const scrollIntoViewSpy = vi
+        .spyOn(HTMLElement.prototype, 'scrollIntoView')
+        .mockImplementation(() => {})
+
+      renderComponent(CommonTabGroup, {
+        props: { tabs, modelValue: 'tab-2' },
+      })
+
+      await waitFor(() => {
+        expect(scrollIntoViewSpy).toHaveBeenCalledWith(
+          expect.objectContaining({
+            inline: 'center',
+          }),
+        )
+      })
+
+      scrollIntoViewSpy.mockRestore()
     })
 
     it('switches tab on click', async () => {
@@ -67,7 +98,7 @@ describe('CommonTabGroup', () => {
 
       await wrapper.events.click(wrapper.getByRole('tab', { name: 'Tab 2' }))
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(wrapper.getByRole('tab', { selected: true })).toHaveTextContent('Tab 2')
       })
     })
@@ -108,13 +139,13 @@ describe('CommonTabGroup', () => {
       await wrapper.events.click(wrapper.getByText('Admin'))
       await wrapper.events.click(wrapper.getByText('Agent'))
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(wrapper.getAllByRole('option', { selected: true })).toHaveLength(2)
       })
 
       await wrapper.events.click(wrapper.getByText('Admin'))
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(wrapper.getAllByRole('option', { selected: true })).toHaveLength(1)
       })
     })

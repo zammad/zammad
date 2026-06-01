@@ -32,6 +32,7 @@ import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { useUserCurrentAvatarSelectMutation } from '../graphql/mutations/userCurrentAvatarSelect.api.ts'
 import {
   useUserCurrentAvatarListQuery,
@@ -286,10 +287,17 @@ const activeAvatarButtonClass = (active: boolean) => {
     'outline-blue-800 hover:outline-blue-800': active,
   }
 }
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+  >
     <CommonLoader :loading="avatarListQueryLoading">
       <div class="mb-4">
         <CommonLabel class="mt-0.5! mb-1 block!">{{ $t('Your avatar') }} </CommonLabel>

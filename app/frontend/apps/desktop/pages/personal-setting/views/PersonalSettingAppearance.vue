@@ -13,6 +13,7 @@ import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { useThemeStore } from '#desktop/stores/theme.ts'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 
 const { notify } = useNotifications()
 const themeStore = useThemeStore()
@@ -51,10 +52,17 @@ const themeOptions = [
 ]
 
 const { breadcrumbItems } = useBreadcrumb(__('Appearance'))
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+  >
     <div class="mb-4 space-y-4">
       <FormKit
         v-model="modelTheme"

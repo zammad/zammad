@@ -5,6 +5,7 @@ import { until } from '@vueuse/core'
 import { computed } from 'vue'
 
 import CommonEmptyMessage from '#desktop/components/CommonEmptyMessage/CommonEmptyMessage.vue'
+import type { NavigationTab } from '#desktop/components/CommonTabs/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
 import { SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
@@ -68,9 +69,21 @@ defineOptions({
   },
 })
 
-const { overviewsByLink, hasOverviews, overviewsTicketCountById } = useTicketOverviews()
+const { overviews, overviewsByLink, hasOverviews, overviewsTicketCountById } = useTicketOverviews()
 
 const currentOverview = computed(() => overviewsByLink.value[props.overviewLink || ''])
+
+const overviewsTabs = computed<NavigationTab[]>(() =>
+  overviews.value?.map((item) => ({
+    label: item.name,
+    key: item.id,
+    default: item.link === props.overviewLink,
+    count: overviewsTicketCountById.value[item.id],
+    link: item.link,
+  })),
+)
+
+const activeTab = computed(() => currentOverview.value?.id || '')
 
 const currentOverviewCount = computed(
   () => overviewsTicketCountById.value[currentOverview.value?.id],
@@ -115,7 +128,9 @@ const {
 
     <LayoutContent
       class="relative"
+      :active-tab="activeTab"
       :breadcrumb-items="currentOverview ? breadcrumbItems : undefined"
+      :tabs="overviewsTabs"
       no-scrollable
       content-padding
     >

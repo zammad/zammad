@@ -11,6 +11,8 @@ export const useMobileDetection = () => {
   const { isSmallestScreen } = useAppBreakpoints()
 
   const activeNotificationId = 'mobile-screen-size'
+  // Once per session we show the notification
+  let hasShownNotification = false
 
   const { notify, removeNotification } = useNotifications()
 
@@ -18,6 +20,7 @@ export const useMobileDetection = () => {
     isSmallestScreen,
     (hasMobileScreenSize) => {
       if (!hasMobileScreenSize) return removeNotification(activeNotificationId)
+      if (hasShownNotification) return
 
       notify({
         id: 'mobile-screen-size',
@@ -27,6 +30,8 @@ export const useMobileDetection = () => {
         ),
         persistent: true,
       })
+
+      hasShownNotification = true
     },
     { immediate: true },
   )

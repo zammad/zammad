@@ -12,8 +12,8 @@ import type { FilterAttribute } from '#shared/entities/object-attributes/types/s
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
-import CommonTabGroup from '#desktop/components/CommonTabGroup/CommonTabGroup.vue'
-import type { Tab } from '#desktop/components/CommonTabGroup/types.ts'
+import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/CommonTabGroup.vue'
+import type { Tab } from '#desktop/components/CommonTabs/types.ts'
 import type { FilterSelectorEntry } from '#desktop/components/Form/fields/FieldFilterSelector/types.ts'
 import { searchPlugins } from '#desktop/components/Search/plugins/index.ts'
 import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'

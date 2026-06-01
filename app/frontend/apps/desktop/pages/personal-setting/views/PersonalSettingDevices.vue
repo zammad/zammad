@@ -24,6 +24,7 @@ import type { TableSimpleHeader, TableItem } from '#desktop/components/CommonTab
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { useUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCurrentDeviceDelete.api.ts'
 import { useUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.api.ts'
 import { UserCurrentDevicesUpdatesDocument } from '../graphql/subscriptions/userCurrentDevicesUpdates.api.ts'
@@ -132,10 +133,14 @@ const currentDevices = computed<TableItem[]>(() =>
 const helpText = computed(() =>
   i18n.t('All computers and browsers from which you logged in to Zammad appear here.'),
 )
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
   <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
     :breadcrumb-items="breadcrumbItems"
     :help-text="helpText"
     width="narrow"

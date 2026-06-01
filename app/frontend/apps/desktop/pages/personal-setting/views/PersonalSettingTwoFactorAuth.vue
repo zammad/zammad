@@ -27,6 +27,7 @@ import type { TwoFactorConfigurationType } from '#desktop/components/TwoFactor/t
 import { useConfigurationTwoFactor } from '#desktop/entities/two-factor-configuration/composables/useConfigurationTwoFactor.ts'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 
 defineOptions({
   beforeRouteEnter() {
@@ -182,10 +183,17 @@ const actions = computed<MenuItem[]>(() => [
     onClick: (entity) => submitTwoFactorMethodRemoval(entity),
   },
 ])
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+  >
     <div class="flex flex-col gap-2.5">
       <div>
         <CommonLabel class="mb-1.5">{{ $t('Available methods') }}</CommonLabel>

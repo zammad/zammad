@@ -5,7 +5,7 @@ import { computed, toRef } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 
-import CommonTabGroup from '#desktop/components/CommonTabGroup/CommonTabGroup.vue'
+import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/CommonTabGroup.vue'
 
 import type { FieldToggleButtonsProps } from './types.ts'
 

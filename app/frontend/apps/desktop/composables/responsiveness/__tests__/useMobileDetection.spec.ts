@@ -3,6 +3,7 @@
 import { waitFor } from '@testing-library/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 
@@ -20,17 +21,45 @@ vi.mock('#shared/components/CommonNotifications/useNotifications.ts', () => ({
   }),
 }))
 
+type MatchMediaListener = (event: MediaQueryListEvent) => void
+
+let matchesState = false
+const listeners = new Set<MatchMediaListener>()
+
+const triggerMatchMediaChange = (matches: boolean) => {
+  matchesState = matches
+
+  listeners.forEach((listener) => {
+    listener({ matches } as MediaQueryListEvent)
+  })
+}
+
 const mockMatchMedia = (matches: boolean) => {
+  matchesState = matches
+  listeners.clear()
+
   Object.defineProperty(window, 'matchMedia', {
     configurable: true,
     value: vi.fn().mockImplementation((query: string) => ({
-      matches,
+      get matches() {
+        return matchesState
+      },
       media: query,
       onchange: null,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
+      addEventListener: vi.fn((event: string, listener: MatchMediaListener) => {
+        if (event !== 'change') return
+        listeners.add(listener)
+      }),
+      removeEventListener: vi.fn((event: string, listener: MatchMediaListener) => {
+        if (event !== 'change') return
+        listeners.delete(listener)
+      }),
+      addListener: vi.fn((listener: MatchMediaListener) => {
+        listeners.add(listener)
+      }),
+      removeListener: vi.fn((listener: MatchMediaListener) => {
+        listeners.delete(listener)
+      }),
       dispatchEvent: vi.fn(),
     })),
   })
@@ -84,5 +113,27 @@ describe('useMobileDetection', () => {
     })
 
     expect(removeNotificationMock).not.toHaveBeenCalled()
+  })
+
+  it('shows warning notification only once per session', async () => {
+    renderApp()
+
+    triggerMatchMediaChange(true)
+
+    await waitFor(() => {
+      expect(notifyMock).toHaveBeenCalledTimes(1)
+    })
+
+    triggerMatchMediaChange(false)
+
+    await waitForNextTick()
+
+    expect(removeNotificationMock).toHaveBeenCalledWith('mobile-screen-size')
+
+    triggerMatchMediaChange(true)
+
+    await waitForNextTick()
+
+    expect(notifyMock).toHaveBeenCalledTimes(1)
   })
 })

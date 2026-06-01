@@ -17,6 +17,7 @@ import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useCheckChangePassword } from '../composables/permission/useCheckChangePassword.ts'
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { useUserCurrentChangePasswordMutation } from '../graphql/mutations/userCurrentChangePassword.api.ts'
 
 import type { ChangePasswordFormData } from '../types/change-password.ts'
@@ -109,10 +110,14 @@ const submitForm = async (formData: FormSubmitData<ChangePasswordFormData>) => {
       }
     })
 }
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
   <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
     :breadcrumb-items="breadcrumbItems"
     :help-text="$t('Enter your current password, insert a new one and confirm it.')"
     width="narrow"
