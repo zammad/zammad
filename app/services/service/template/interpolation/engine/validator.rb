@@ -21,12 +21,17 @@ module Service::Template::Interpolation::Engine::Validator
     ActiveSupport::Duration
   ].freeze
 
+  # Ruby core date/time classes, e.g. the value of a 'date' attribute.
+  ALLOWED_DATE_CLASSES = %w[
+    Date
+  ].freeze
+
   ALLOWED_CONTAINER_CLASSES = %w[
     Hash
     Array
   ].freeze
 
-  ALLOWED_DEFAULT_CLASSES = ALLOWED_SIMPLE_CLASSES + ALLOWED_RAILS_CLASSES
+  ALLOWED_DEFAULT_CLASSES = ALLOWED_SIMPLE_CLASSES + ALLOWED_RAILS_CLASSES + ALLOWED_DATE_CLASSES
 
   # This method executes the replacement variables and executes on any error,
   # e.g. no such method, no such object, missing method, etc. the error is
