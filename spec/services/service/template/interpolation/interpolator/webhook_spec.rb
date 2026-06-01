@@ -316,6 +316,16 @@ RSpec.describe Service::Template::Interpolation::Interpolator::Webhook do
 
         include_examples 'check different usage'
       end
+
+      context 'when a date attribute is used inside the ticket' do
+        let(:object_manager_attribute_name)  { 'date_attribute' }
+        let(:object_manager_attribute_value) { '2026-06-24' }
+        let(:create_object_manager_attribute) do
+          create(:object_manager_attribute_date, name: object_manager_attribute_name)
+        end
+
+        include_examples 'check different usage'
+      end
     end
 
     describe "when the placeholder contains object 'notification'" do

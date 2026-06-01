@@ -11,6 +11,7 @@ module Service::Template::Interpolation::Engine::Parser
     String
     ActiveSupport::TimeWithZone
     ActiveSupport::Duration
+    Date
   ].freeze
 
   # This module validates the scanned replacement variables.
