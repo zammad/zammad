@@ -179,7 +179,7 @@
     "vue-easy-lightbox": "1.19.0",
     "vue-echarts": "^8.0.1",
     "vue-imask": "^7.6.1",
-    "vue-router": "^5.0.7",
+    "vue-router": "^5.1.0",
     "vue3-draggable-resizable": "^1.6.5",
     "workbox-core": "^7.4.1",
     "workbox-precaching": "^7.4.1",
