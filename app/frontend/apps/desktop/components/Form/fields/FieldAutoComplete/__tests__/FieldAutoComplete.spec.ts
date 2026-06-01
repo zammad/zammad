@@ -5,6 +5,7 @@ import { FormKit } from '@formkit/vue'
 import { getAllByRole, getByRole, getByText, waitFor } from '@testing-library/vue'
 import { cloneDeep } from 'lodash-es'
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
@@ -524,7 +525,13 @@ describe('Form - Field - AutoComplete - Query', () => {
     expect(selectOptions[1]).toHaveTextContent(testOptions[1].label)
     expect(selectOptions[2]).toHaveTextContent(testOptions[2].label)
 
-    // Replaces default filter query with selection.
+    // Multiselect dropdown stays open after a selection — the default filter
+    // must keep applying so the recommended list re-renders instead of
+    // collapsing to just the picked chip.
+    mockAutocompleteSearchUserQuery({
+      autocompleteSearchUser: testOptions,
+    })
+
     await wrapper.events.click(selectOptions[0])
 
     await waitFor(() => {
@@ -533,8 +540,35 @@ describe('Form - Field - AutoComplete - Query', () => {
 
     selectOptions = getAllByRole(listbox, 'option')
 
-    expect(selectOptions).toHaveLength(1)
+    expect(selectOptions).toHaveLength(3)
     expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
+    expect(selectOptions[1]).toHaveTextContent(testOptions[1].label)
+    expect(selectOptions[2]).toHaveTextContent(testOptions[2].label)
+  })
+
+  it('suppresses the default filter on single-select fields that already have a value', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+        defaultFilter: '*',
+        value: testOptions[0].value,
+        options: [testOptions[0]],
+      },
+    })
+
+    mockAutocompleteSearchUserQuery({
+      autocompleteSearchUser: testOptions,
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+    await waitForNextTick()
+
+    // Single-select dropdowns close on selection, so the recommended-list
+    // refetch is wasted work — confirm the autocomplete query stays idle
+    // when the field already carries a value.
+    expect(getGraphQLMockCalls(AutocompleteSearchUserDocument)).toHaveLength(0)
   })
 })
 

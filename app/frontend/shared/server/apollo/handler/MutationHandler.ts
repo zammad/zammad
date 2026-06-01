@@ -14,9 +14,12 @@ export default class MutationHandler<
   TResult = OperationMutationResult,
   TVariables extends OperationVariables = OperationVariables,
 > extends BaseHandler<TResult, TVariables, UseMutationReturn<TResult, TVariables>> {
-  public async send(variables?: TVariables): Promise<Maybe<TResult>> {
+  public async send(
+    variables?: TVariables,
+    options?: Parameters<UseMutationReturn<TResult, TVariables>['mutate']>[1],
+  ): Promise<Maybe<TResult>> {
     return new Promise((resolve, reject) => {
-      this.operationResult.mutate(variables).then((result) => {
+      this.operationResult.mutate(variables, options).then((result) => {
         if (!result) {
           return reject(this.operationError().value)
         }

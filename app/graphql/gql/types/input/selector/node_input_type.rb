@@ -19,6 +19,7 @@ module Gql::Types::Input::Selector
     def prepare
       hash = super.to_h
       validate_node!(hash)
+      transform_value(hash)
       hash
     end
 
@@ -63,6 +64,15 @@ module Gql::Types::Input::Selector
       return if ::Selector::Sql.valid_operator?(operator)
 
       raise GraphQL::ExecutionError, "Invalid condition operator: #{operator.inspect}."
+    end
+
+    def transform_value(hash)
+      return if hash[:name] != 'ticket.tags' || hash[:operator] != 'contains one'
+      return if !hash[:value].is_a?(Array)
+
+      # Although the frontend sends tag values as arrays, the backend expects a comma-separated string for the
+      #   `contains one` operator. This string is later split back into an array in corresponding search backend.
+      hash[:value] = hash[:value].join(', ')
     end
   end
 end

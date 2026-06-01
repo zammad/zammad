@@ -29,6 +29,12 @@ export class FieldResolverSelect extends FieldResolver {
 
   protected multiFieldAttributeType = 'multiselect'
 
+  // Operator name used in the advanced search filter. Single-value selects
+  // expose `is`; multi-value variants (multiselect / multi-treeselect)
+  // override to `contains one`, matching the existing overview / trigger
+  // condition vocabulary and the ES + SQL selector wiring.
+  protected filterOperatorName = 'is'
+
   // True when the attribute carries its own ordered option list — i.e. the
   // options are a static array and there's no relation overriding them.
   // Object-keyed options (no stable iteration order) and relation-resolved
@@ -89,13 +95,13 @@ export class FieldResolverSelect extends FieldResolver {
     }
 
     return Object.keys(options).map((key) => ({
-      label: key,
-      value: options[key],
+      label: options[key],
+      value: key,
     }))
   }
 
   public override getFieldFilterOperators() {
-    return ['is']
+    return [this.filterOperatorName]
   }
 
   public override getFilterOperatorProps() {
@@ -117,16 +123,15 @@ export class FieldResolverSelect extends FieldResolver {
       props.options = this.mappedOptions()
     }
 
-    return { is: props }
+    return { [this.filterOperatorName]: props }
   }
 
   public override getFilterRelation() {
-    const relation = this.attributeConfig.relation as string | undefined
-    if (!relation) return
-    // Autocomplete-style relations are surfaced via getFilterAutocompleteType
-    // — they don't go through the form-updater option-resolution path.
-    if (this.filterAutocompleteType) return
-    return relation
+    // The relation is emitted alongside `getFilterAutocompleteType()` when
+    // both apply (e.g. customer/owner/organization). Consumers gate on
+    // `autocompleteFilterType` to decide between UI strategies — relation
+    // here just means "value is a foreign-key ID" for downstream coercion.
+    return this.attributeConfig.relation as string | undefined
   }
 }
 

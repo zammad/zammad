@@ -154,7 +154,11 @@ export const useSearchAdvancedFilters = (
         const filterAutocompleteFields: Array<{ name: string; autocompleteFilterType: string }> = []
 
         for (const attribute of attributes) {
-          if (attribute.relation) {
+          // `relation` and `autocompleteFilterType` can co-exist on the same
+          // attribute now (e.g. customer/owner/organization carry both), so
+          // the autocomplete path takes precedence — those values are picked
+          // per keystroke and don't need form-updater pre-resolution.
+          if (attribute.relation && !attribute.autocompleteFilterType) {
             filterRelationFields.push({ name: attribute.name, relation: attribute.relation })
             continue
           }

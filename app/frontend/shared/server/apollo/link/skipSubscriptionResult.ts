@@ -5,11 +5,11 @@ import { getMainDefinition } from '@apollo/client/utilities'
 
 import log from '#shared/utils/log.ts'
 
-import type { Operation, OperationVariables } from '@apollo/client/core'
+import type { FetchResult, Operation, OperationVariables } from '@apollo/client/core'
 
 const skipSubscriptionStore = new Map<string, OperationVariables[]>()
 
-const checkAndRemoveSkipEntry = (operation: Operation): boolean => {
+const checkAndRemoveSkipEntry = (operation: Operation, result: FetchResult): boolean => {
   const { operationName } = operation
   const context = operation.getContext()
   const callback = context.skipSubscriptionCallback
@@ -17,8 +17,9 @@ const checkAndRemoveSkipEntry = (operation: Operation): boolean => {
   const variablesArray = skipSubscriptionStore.get(operationName)
   if (!variablesArray || variablesArray.length === 0) return false
 
-  // Check if any variables match the callback and remove them
-  const remainingVariables = variablesArray.filter((variables) => !callback(variables))
+  // The callback gets both the stored request variables and the incoming
+  // result, so it can match by id or by comparing payload values.
+  const remainingVariables = variablesArray.filter((variables) => !callback(variables, result))
   const shouldSkip = remainingVariables.length !== variablesArray.length
 
   if (remainingVariables.length === 0) {
@@ -63,8 +64,8 @@ const skipSubscriptionResultLink = new ApolloLink((operation, forward) => {
 
   // For subscriptions, check if result should be skipped in response phase
   if (definition.operation === 'subscription') {
-    return forward(operation).filter(() => {
-      const shouldSkip = checkAndRemoveSkipEntry(operation)
+    return forward(operation).filter((result) => {
+      const shouldSkip = checkAndRemoveSkipEntry(operation, result)
 
       return !shouldSkip
     })

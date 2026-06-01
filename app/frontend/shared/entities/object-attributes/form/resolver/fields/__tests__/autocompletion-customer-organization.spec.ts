@@ -49,5 +49,6 @@ describe('FieldResolverAutocompletionCustomerOrganization', () => {
 
     expect(fieldResolver.getFieldFilterOperators()).toEqual(['is'])
     expect(fieldResolver.getFilterAutocompleteType()).toBe('organization')
+    expect(fieldResolver.getFilterRelation()).toBe('Organization')
   })
 })

@@ -273,7 +273,7 @@ const schemaFilterField = (
     key: nodeId,
     name: inputName,
     classes: {
-      outer: 'w-[22.1875rem]',
+      outer: 'w-full',
     },
     label: attribute.label,
     alternativeBackground: true,
@@ -339,7 +339,7 @@ const filterFieldsSchema = computed<FormKitSchemaNode[]>(() =>
 
 <template>
   <fieldset class="bg-blue-200 dark:bg-gray-700" :name="context.node.name">
-    <ul class="flex flex-wrap items-end gap-x-6 gap-y-3">
+    <ul class="grid grid-cols-4 items-end gap-x-6 gap-y-3">
       <FormKitSchema :schema="filterFieldsSchema" />
 
       <li v-if="addFieldActive">
@@ -347,9 +347,6 @@ const filterFieldsSchema = computed<FormKitSchemaNode[]>(() =>
           :id="selectorNodeId"
           type="treeselect"
           :options="fieldOptions"
-          :classes="{
-            outer: 'w-75',
-          }"
           :multiple="false"
           :placeholder="$t('Select attribute')"
           :clearable="false"

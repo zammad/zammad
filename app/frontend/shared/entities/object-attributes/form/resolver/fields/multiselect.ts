@@ -4,7 +4,12 @@ import type { FieldResolverModule } from '#shared/entities/object-attributes/typ
 
 import { FieldResolverSelect } from './select.ts'
 
-export class FieldResolverMultiselect extends FieldResolverSelect {}
+export class FieldResolverMultiselect extends FieldResolverSelect {
+  // Multi-value selects ship as `contains one` in the advanced filter —
+  // matches the existing overview / trigger condition vocabulary and the
+  // backend selector wiring for multi-value attributes.
+  protected override filterOperatorName = 'contains one'
+}
 
 export default <FieldResolverModule>{
   type: 'multiselect',

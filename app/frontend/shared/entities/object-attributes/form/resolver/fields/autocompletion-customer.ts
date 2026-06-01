@@ -21,6 +21,12 @@ export class FieldResolverAutocompletionCustomer extends FieldResolver {
   public override getFieldFilterOperators() {
     return ['is']
   }
+
+  // Emit the relation so restored filter values are coerced to integer IDs
+  // (the autocomplete options match by numeric ID).
+  public override getFilterRelation() {
+    return this.attributeConfig.relation as string
+  }
 }
 
 export default <FieldResolverModule>{

@@ -43,6 +43,7 @@ const renderSearchContent = (props?: { searchTerm?: string }) => {
         CURRENT_TASKBAR_TAB_KEY,
         {
           currentTaskbarTab: computed(() => undefined),
+          currentTaskbarTabId: computed(() => undefined),
         },
       ],
     ],

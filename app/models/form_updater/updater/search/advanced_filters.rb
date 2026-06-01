@@ -41,11 +41,14 @@ class FormUpdater::Updater::Search::AdvancedFilters < FormUpdater::Updater
   # `getFilterAutocompleteType()`) to the apply-value handler whose
   # `resolve_option` method builds the option entry. Customer and agent share
   # the User handler — the option shape is identical, only the search query
-  # differs, and we're resolving known IDs here, not searching.
+  # differs, and we're resolving known IDs here, not searching. Tags route
+  # through their own handler because the "ID" is the tag name itself, so
+  # the option mapping is just an identity.
   AUTOCOMPLETE_OPTION_HANDLERS = {
     'customer'     => FormUpdater::ApplyValue::UserAutocomplete,
     'agent'        => FormUpdater::ApplyValue::UserAutocomplete,
     'organization' => FormUpdater::ApplyValue::OrganizationAutocomplete,
+    'tags'         => FormUpdater::ApplyValue::Tags,
   }.freeze
 
   def object_type

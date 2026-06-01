@@ -205,6 +205,31 @@ describe('Fields - FieldFilterSelector', () => {
     expect(view.getByLabelText('Owner')).toBeInTheDocument()
   })
 
+  it('mounts the tags autocomplete row with canCreate disabled', async () => {
+    // Same end-to-end guard as the agent case, plus a check that the filter
+    // resolver's `canCreate: false` flag survives the operator-props merge in
+    // FieldFilterSelectorInput and reaches the rendered tags field. Tags use
+    // the `contains one` operator (matches the existing ES + SQL selector
+    // wiring), unlike the other relation autocompletes which use `is`.
+    const view = renderFilterSelector(
+      [{ name: 'ticket.tags', operator: 'contains one', value: [] }],
+      {
+        filterAttributes: [
+          {
+            name: 'ticket.tags',
+            label: 'Tags',
+            operators: ['contains one'],
+            autocompleteFilterType: 'tags',
+            operatorFilterProps: { 'contains one': { canCreate: false } },
+          },
+        ],
+      },
+    )
+
+    expect(view.getByLabelText('Tags')).toBeInTheDocument()
+    expect(getNode('filterSelector-ticket.tags-value')?.props.canCreate).toBe(false)
+  })
+
   it('applies filterAttributeOptions to rendered relation sub-fields', async () => {
     const relationAttributes: FilterAttribute[] = [
       {

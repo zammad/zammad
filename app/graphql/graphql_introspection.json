@@ -31180,6 +31180,18 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "taskbarItem",
+              "description": "The updated taskbar item, so consumers can apply the new state directly (e.g. cross-tab search sync)",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserTaskbarItem",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "inputFields": null,

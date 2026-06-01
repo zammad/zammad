@@ -44,6 +44,32 @@ RSpec.describe Gql::Subscriptions::User::Current::TaskbarItemStateUpdates, type:
         end
       end
 
+      context 'when also selecting the updated taskbar item' do
+        let(:subscription) do
+          <<~QUERY
+            subscription userCurrentTaskbarItemStateUpdates($taskbarItemId: ID!) {
+              userCurrentTaskbarItemStateUpdates(taskbarItemId: $taskbarItemId) {
+                stateUpdateType
+                taskbarItem {
+                  id
+                }
+              }
+            }
+          QUERY
+        end
+
+        it 'includes the taskbar item so consumers can apply the new state directly' do
+          gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+
+          taskbar.update!(state: { 'dummy' => 'data' })
+
+          result = mock_channel.mock_broadcasted_messages.first[:result]['data']['userCurrentTaskbarItemStateUpdates']
+          expect(result).to eq(
+            { 'stateUpdateType' => 'changed', 'taskbarItem' => { 'id' => gql.id(taskbar) } }
+          )
+        end
+      end
+
       context 'with params' do
         it 'does not trigger' do
           gql.execute(subscription, variables: variables, context: { channel: mock_channel })

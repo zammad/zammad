@@ -363,20 +363,24 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
     taskbarTabId: ID,
     taskbarTab: UserTaskbarTab,
     state?: Record<string, unknown>,
+    sendOptions?: Parameters<typeof taskbarUpdateMutation.send>[1],
   ) => {
     taskbarUpdateMutation
-      .send({
-        id: taskbarTabId,
-        input: {
-          app: EnumTaskbarApp.Desktop,
-          callback: taskbarTab.type,
-          key: taskbarTab.tabEntityKey,
-          notify: !!taskbarTab.notify,
-          state,
-          prio: taskbarTab.order,
-          dirty: taskbarTab.dirty,
+      .send(
+        {
+          id: taskbarTabId,
+          input: {
+            app: EnumTaskbarApp.Desktop,
+            callback: taskbarTab.type,
+            key: taskbarTab.tabEntityKey,
+            notify: !!taskbarTab.notify,
+            state,
+            prio: taskbarTab.order,
+            dirty: taskbarTab.dirty,
+          },
         },
-      })
+        sendOptions,
+      )
       .catch(() => {})
   }
 

@@ -15,6 +15,10 @@ const AUTOCOMPLETE_FILTER_FIELDS: Record<string, string> = {
   User: 'customer',
   Organization: 'organization',
   Owner: 'agent',
+  // The tag attribute uses an autocomplete-style picker but stores tag names
+  // (strings) as values rather than numeric IDs — see the explicit guard in
+  // searchFilterQuery's value coercion.
+  Tags: 'tags',
 }
 
 export abstract class FieldResolver {

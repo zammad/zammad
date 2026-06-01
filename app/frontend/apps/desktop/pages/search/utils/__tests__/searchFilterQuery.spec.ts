@@ -188,6 +188,7 @@ describe('searchFilterQuery', () => {
             name: 'ticket.owner_id',
             label: 'Owner',
             operators: ['ticket.is'],
+            relation: 'User',
             autocompleteFilterType: 'agent',
           },
         ],
@@ -208,12 +209,37 @@ describe('searchFilterQuery', () => {
             name: 'ticket.customer_id',
             label: 'Customer',
             operators: ['ticket.is'],
+            relation: 'User',
             autocompleteFilterType: 'customer',
           },
         ],
       )
 
       expect(result).toEqual([{ name: 'ticket.customer_id', operator: 'ticket.is', value: 7 }])
+    })
+
+    it('keeps tag autocomplete values as strings even when they look numeric', () => {
+      // Tags are referenced by name, not ID — a tag literally named "5" must
+      // round-trip as the string "5" so the ES `terms` query matches it.
+      const result = decodeFilters(
+        {
+          'filter.0.name': 'ticket.tags',
+          'filter.0.operator': 'ticket.contains one',
+          'filter.0.value': ['urgent', '5'],
+        },
+        [
+          {
+            name: 'ticket.tags',
+            label: 'Tags',
+            operators: ['ticket.contains one'],
+            autocompleteFilterType: 'tags',
+          },
+        ],
+      )
+
+      expect(result).toEqual([
+        { name: 'ticket.tags', operator: 'ticket.contains one', value: ['urgent', '5'] },
+      ])
     })
   })
 

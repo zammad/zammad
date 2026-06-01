@@ -2,6 +2,17 @@
 
 class FormUpdater::ApplyValue::Tags < FormUpdater::ApplyValue::Base
 
+  # Tag values are their own labels, so the resolve_option mapping is an
+  # identity. Used by the advanced search filter prefill path
+  # (`FormUpdater::Updater::Search::AdvancedFilters`) so tag chips restored
+  # from URL state / taskbar / cross-tab sync render with proper labels
+  # instead of falling back to the "(unknown)" placeholder.
+  def self.resolve_option(name)
+    return if name.blank?
+
+    { value: name, label: name }
+  end
+
   def can_handle_field?(field:, field_attribute:)
     field == 'tags'
   end

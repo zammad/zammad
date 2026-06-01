@@ -94,10 +94,14 @@ export const useTaskbarTab = (context?: Ref<TaskbarTabContext>) => {
     )
   }
 
-  const currentTaskbarTabUpdate = (taskbarTab: UserTaskbarTab, state?: Record<string, unknown>) => {
+  const currentTaskbarTabUpdate = (
+    taskbarTab: UserTaskbarTab,
+    state?: Record<string, unknown>,
+    sendOptions?: Parameters<typeof updateTaskbarTab>[3],
+  ) => {
     if (!currentTaskbarTabId.value) return
 
-    updateTaskbarTab(currentTaskbarTabId.value, taskbarTab, state)
+    updateTaskbarTab(currentTaskbarTabId.value, taskbarTab, state, sendOptions)
   }
 
   watch(

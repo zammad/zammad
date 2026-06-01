@@ -172,8 +172,12 @@ const additionalQueryParams = () => {
 }
 
 const defaultFilter = computed(() => {
-  if (props.context.alwaysApplyDefaultFilter) return props.context.defaultFilter
-  if (hasValue.value) return ''
+  // Multiselect dropdowns stay open after a selection — keep applying the
+  // default filter so the recommended list re-renders, instead of collapsing
+  // to just the picked chips.
+  if (hasValue.value && !props.context.alwaysApplyDefaultFilter && !props.context.multiple) {
+    return ''
+  }
   return props.context.defaultFilter
 })
 

@@ -220,6 +220,28 @@ RSpec.describe(FormUpdater::Updater::Search::AdvancedFilters) do
         end
       end
 
+      context 'with a tags filter row' do
+        let(:filter_autocomplete_fields) do
+          [{ 'name' => 'ticket.tags', 'autocompleteFilterType' => 'tags' }]
+        end
+        let(:data) do
+          { 'filters' => [
+            { 'name' => 'ticket.tags', 'operator' => 'contains one', 'value' => %w[urgent support] },
+          ] }
+        end
+
+        it 'emits identity options so cross-tab / URL-restored tag chips render with labels' do
+          # Tag values *are* the labels, so the option mapping is trivial —
+          # but going through the same FormUpdater pipeline as the other
+          # autocomplete types means taskbar / cross-tab sync hydrates the
+          # chips the same way (no field-specific frontend watcher needed).
+          expect(filter_options('ticket.tags')).to contain_exactly(
+            { value: 'urgent', label: 'urgent' },
+            { value: 'support', label: 'support' },
+          )
+        end
+      end
+
       context 'with multiple IDs in a single row' do
         let(:another_agent) { create(:agent, groups: [group]) }
         let(:filter_autocomplete_fields) do

@@ -79,15 +79,19 @@ const queryRecordToString = (query: Record<string, unknown>): string => {
   return params.toString()
 }
 
-// Relation-typed attributes carry integer primary-key IDs — both
-// form-updater-resolved selects and autocomplete fields. URL query params
+// Relation-typed attributes carry integer primary-key IDs. URL query params
 // always arrive as strings, so coerce here so downstream consumers (FormKit
 // select equality, taskbar sync, autocomplete initial option lookup) see the
 // value type the schema implies. Strings that aren't integers stay as-is —
 // they won't match a valid option either way, no need to silently turn "foo"
 // into NaN.
+//
+// `attribute.relation` is the single source of truth for "value is a
+// foreign-key ID". Tag-style autocompletes deliberately leave it unset since
+// their values are strings (tag names), so a numeric-looking tag like "5"
+// round-trips as the string "5", not the integer 5.
 const coerceValueForAttribute = (value: unknown, attribute: FilterAttribute): unknown => {
-  if (!attribute.relation && !attribute.autocompleteFilterType) return value
+  if (!attribute.relation) return value
 
   const coerce = (v: unknown) => {
     if (typeof v !== 'string' || v === '') return v

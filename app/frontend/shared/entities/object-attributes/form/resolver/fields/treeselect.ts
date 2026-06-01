@@ -21,11 +21,16 @@ export class FieldResolverTreeselect extends FieldResolverSelect {
   public override getFilterOperatorProps() {
     const props = super.getFilterOperatorProps()
 
-    // Override only `is.type`; preserve any other operator props the parent
-    // (or future siblings) may declare.
+    // Override only `<filterOperatorName>.type`; preserve any other operator
+    // props the parent declared. Reading `filterOperatorName` (rather than
+    // hardcoding `is`) keeps the multi-treeselect subclass working when it
+    // switches to `contains one`.
     return {
       ...props,
-      is: { ...props?.is, type: 'treeselect' },
+      [this.filterOperatorName]: {
+        ...props?.[this.filterOperatorName],
+        type: 'treeselect',
+      },
     }
   }
 

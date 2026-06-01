@@ -13,15 +13,15 @@ describe('FieldResolverSelect', () => {
       dataOption: {
         translate: true,
         options: {
-          a: 'a',
-          b: 'b',
-          c: 'c',
+          i: 'a',
+          ii: 'b',
+          iii: 'c',
         },
         historical_options: {
-          a: 'a',
-          b: 'b',
-          c: 'c',
-          d: 'd',
+          i: 'a',
+          ii: 'b',
+          iii: 'c',
+          iv: 'd',
         },
       },
       isInternal: true,
@@ -37,22 +37,22 @@ describe('FieldResolverSelect', () => {
         options: [
           {
             label: 'a',
-            value: 'a',
+            value: 'i',
           },
           {
             label: 'b',
-            value: 'b',
+            value: 'ii',
           },
           {
             label: 'c',
-            value: 'c',
+            value: 'iii',
           },
         ],
         historicalOptions: {
-          a: 'a',
-          b: 'b',
-          c: 'c',
-          d: 'd',
+          i: 'a',
+          ii: 'b',
+          iii: 'c',
+          iv: 'd',
         },
         // Object-keyed static options have no stable iteration order, so the
         // resolver requests label sorting (consistent with relation-typed
@@ -149,12 +149,12 @@ describe('FieldResolverSelect', () => {
       dataOption: {
         translate: true,
         options: {
-          a: 'a',
-          b: 'b',
+          i: 'a',
+          ii: 'b',
         },
         historical_options: {
-          a: 'a',
-          b: 'b',
+          i: 'a',
+          ii: 'b',
         },
       },
       isInternal: true,
@@ -164,12 +164,12 @@ describe('FieldResolverSelect', () => {
       is: {
         noOptionsLabelTranslation: false,
         options: [
-          { label: 'a', value: 'a' },
-          { label: 'b', value: 'b' },
+          { label: 'a', value: 'i' },
+          { label: 'b', value: 'ii' },
         ],
         historicalOptions: {
-          a: 'a',
-          b: 'b',
+          i: 'a',
+          ii: 'b',
         },
         sorting: 'label',
       },
@@ -217,6 +217,41 @@ describe('FieldResolverSelect', () => {
       expect(
         buildResolver('category', { options: { a: 'a' } }).getFilterAutocompleteType(),
       ).toBeUndefined()
+    })
+  })
+
+  describe('getFilterRelation', () => {
+    const buildResolver = (
+      name: string,
+      dataOption: Record<string, string | Record<string, string>>,
+    ) =>
+      new FieldResolverSelect(EnumObjectManagerObjects.Ticket, {
+        dataType: 'select',
+        name,
+        display: 'Attr',
+        dataOption,
+        isInternal: true,
+      })
+
+    it('returns the relation for form-updater-resolvable attributes', () => {
+      expect(buildResolver('group_id', { relation: 'Group' }).getFilterRelation()).toBe('Group')
+    })
+
+    it('also returns the relation when an autocomplete picker is active', () => {
+      // `relation` and `autocompleteFilterType` are not mutually exclusive:
+      // the relation signals "value is a foreign-key ID" (drives downstream
+      // coercion), the autocomplete type signals "UI fetches per keystroke".
+      // Both are emitted; consumers gate on autocompleteFilterType to choose
+      // their path.
+      expect(buildResolver('customer_id', { relation: 'User' }).getFilterRelation()).toBe('User')
+      expect(buildResolver('owner_id', { relation: 'User' }).getFilterRelation()).toBe('User')
+      expect(
+        buildResolver('organization_id', { relation: 'Organization' }).getFilterRelation(),
+      ).toBe('Organization')
+    })
+
+    it('returns undefined for attributes without a relation', () => {
+      expect(buildResolver('category', { options: { a: 'a' } }).getFilterRelation()).toBeUndefined()
     })
   })
 })
