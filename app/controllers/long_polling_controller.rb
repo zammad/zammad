@@ -99,10 +99,14 @@ class LongPollingController < ApplicationController
   def client_id_verify
     return if !params[:client_id]
 
-    sessions = Sessions.sessions
-    return if sessions.exclude?(params[:client_id].to_s)
+    cid = params[:client_id].to_s
+    session_data = Sessions.get(cid)
+    return if !session_data
 
-    params[:client_id].to_s
+    stored_user_id = session_data.dig(:user, 'id')
+    return if stored_user_id && current_user&.id != stored_user_id.to_i
+
+    cid
   end
 
   def log(data, client_id = '-')
