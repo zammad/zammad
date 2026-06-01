@@ -171,6 +171,7 @@ defineExpose({
     }"
     :style="{
       height: pinned ? `${articlePanelHeight}px` : undefined,
+      '--top-header-height': pinned ? '0px' : undefined, // In pinned mode we don't have the header as a overlapping element
     }"
     aria-labelledby="article-reply-form-title"
     role="complementary"
