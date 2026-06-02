@@ -154,7 +154,7 @@
     "@vueuse/router": "^14.3.0",
     "@vueuse/shared": "^14.3.0",
     "async-mutex": "^0.5.0",
-    "date-fns": "^4.3.0",
+    "date-fns": "^4.4.0",
     "echarts": "^6.1.0",
     "graphql": "^16.14.0",
     "graphql-ruby-client": "^1.15.0",
