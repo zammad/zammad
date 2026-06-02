@@ -126,7 +126,7 @@ describe('Ticket detail view macros', () => {
 
     const view = await visitView('/tickets/1')
 
-    const actionMenu = await view.findByLabelText('Additional ticket edit actions')
+    const actionMenu = await view.findByLabelText('Drafts & macros')
 
     await view.events.click(actionMenu)
 
@@ -166,7 +166,7 @@ describe('Ticket detail view macros', () => {
 
     const view = await visitView('/tickets/1')
 
-    const actionMenu = await view.findByLabelText('Additional ticket edit actions')
+    const actionMenu = await view.findByLabelText('Drafts & macros')
 
     await view.events.click(actionMenu)
 
