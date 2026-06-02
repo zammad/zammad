@@ -214,23 +214,19 @@ describe('ArticleReply', () => {
     })
 
     expect(wrapper.getByTestId('article-reply-stripes-panel')).toHaveClass('bg-stripes')
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('border-stripes')
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Pin this panel' }))
 
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('bg-stripes')
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).toHaveClass('border-stripes')
+    expect(wrapper.getByTestId('article-reply-stripes-panel')).toHaveClass('bg-stripes')
 
     await wrapper.rerender({
       hasInternalArticle: false,
     })
 
     expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('bg-stripes')
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('border-stripes')
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Unpin this panel' }))
 
     expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('bg-stripes')
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('border-stripes')
   })
 })

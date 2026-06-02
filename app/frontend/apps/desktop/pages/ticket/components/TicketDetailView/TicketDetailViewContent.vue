@@ -267,8 +267,21 @@ const formEditAttributeLocation = computed(() => {
   return '#wrapper-form-ticket-edit'
 })
 
+// Use a separate ref that lags by one post-flush tick so the Teleport target
+// is only switched after the new sub-component has mounted, avoiding an
+// orphaned teleport when ArticleReplyPinned/Unpinned swap their form div.
+const formReplyTarget = ref(
+  isReplyPinned.value ? '#ticketArticleReplyFormPinned' : '#ticketArticleReplyForm',
+)
+watch(
+  isReplyPinned,
+  (pinned) => {
+    formReplyTarget.value = pinned ? '#ticketArticleReplyFormPinned' : '#ticketArticleReplyForm'
+  },
+  { flush: 'post' },
+)
 const formArticleReplyLocation = computed(() => {
-  if (newTicketArticlePresent.value) return '#ticketArticleReplyForm'
+  if (newTicketArticlePresent.value) return formReplyTarget.value
   return '#wrapper-form-ticket-edit'
 })
 
