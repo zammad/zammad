@@ -3,6 +3,7 @@
 import { within } from '@testing-library/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
@@ -74,6 +75,10 @@ const renderArticleReply = (props: Record<string, unknown> = {}) =>
   })
 
 describe('ArticleReply', () => {
+  afterEach(() => {
+    localStorage.clear()
+  })
+
   it('shows common article action buttons', () => {
     const wrapper = renderArticleReply()
 
@@ -156,6 +161,50 @@ describe('ArticleReply', () => {
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Unpin this panel' }))
 
     expect(complementary).toHaveAttribute('aria-expanded', 'true')
+  })
+
+  it('does not reset pinned state when form is closed and reopened', async () => {
+    const wrapper = renderArticleReply({
+      newArticlePresent: true,
+    })
+
+    const complementary = wrapper.getByRole('complementary', { name: 'Reply' })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Pin this panel' }))
+    expect(complementary).toHaveAttribute('aria-expanded', 'false')
+
+    await wrapper.rerender({ newArticlePresent: false })
+    await wrapper.rerender({ newArticlePresent: true })
+
+    expect(complementary).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  describe('scroll behavior on article form open', () => {
+    beforeEach(() => {
+      vi.clearAllMocks()
+    })
+
+    it('scrolls article panel into view when opening unpinned', async () => {
+      vi.useFakeTimers()
+
+      const wrapper = renderArticleReply({ newArticlePresent: false })
+
+      await wrapper.rerender({ newArticlePresent: true })
+      await waitForNextTick()
+      vi.runAllTimers()
+
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalled()
+
+      vi.useRealTimers()
+    })
+
+    it('does not scroll article panel into view when opening pinned', async () => {
+      const wrapper = renderArticleReply({ newArticlePresent: false, pinned: true })
+
+      await wrapper.rerender({ newArticlePresent: true })
+
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled()
+    })
   })
 
   it('renders striped border for internal articles', async () => {

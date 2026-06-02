@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useScroll, whenever } from '@vueuse/core'
+import { useLocalStorage, useScroll, whenever } from '@vueuse/core'
 import { cloneDeep, isEqual } from 'lodash-es'
 import {
   computed,
@@ -89,7 +89,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const internalId = toRef(props, 'internalId')
-const isReplyPinned = ref(false)
+const isReplyPinned = useLocalStorage('article-reply-pinned', false)
 const contentContainerElement = useTemplateRef('content-container')
 
 const { ticket, ticketId, ...ticketInformation } = initializeTicketInformation(internalId)

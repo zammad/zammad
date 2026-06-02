@@ -92,16 +92,6 @@ watch(
   },
 )
 
-// Reset the pinned state whenever the article is removed.
-watch(
-  () => props.newArticlePresent,
-  (newArticlePresent) => {
-    if (newArticlePresent) return
-
-    pinned.value = false
-  },
-)
-
 const DEFAULT_ARTICLE_PANEL_HEIGHT = 290
 const MINIMUM_ARTICLE_PANEL_HEIGHT = 150
 
