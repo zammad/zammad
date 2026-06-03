@@ -1,5 +1,14 @@
 {
-  "enabledManagers": ["bundler", "npm", "github-actions", "devcontainer"],
+  "enabledManagers": ["bundler", "npm", "github-actions", "devcontainer", "custom.regex"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^\\.gitlab/ci/.*\\.yml$"],
+      "matchStrings": ["DEVCONTAINERS_CLI_VERSION: '(?<currentValue>[^']+)'"],
+      "depNameTemplate": "@devcontainers/cli",
+      "datasourceTemplate": "npm"
+    }
+  ],
   "bundler": {
     "lockFileMaintenance": {
       "enabled": true,

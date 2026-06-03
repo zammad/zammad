@@ -5,6 +5,7 @@
     - docker
   variables:
     DOCKER_HOST: unix:///var/run/docker.sock
+    DEVCONTAINERS_CLI_VERSION: '0.87.0'
   cache: []
   before_script:
     - apk add --no-cache docker-cli docker-cli-buildx docker-compose
@@ -13,7 +14,7 @@
     matrix:
       - VARIANT: [default, with-ldap, with-mailserver, with-ollama, with-selenium]
   script:
-    - npx --yes @devcontainers/cli@latest build
+    - npx --yes @devcontainers/cli@$DEVCONTAINERS_CLI_VERSION build
         --workspace-folder .
         --config .devcontainer/$VARIANT/devcontainer.json
         --frozen-lockfile
