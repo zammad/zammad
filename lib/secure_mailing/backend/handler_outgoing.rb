@@ -35,6 +35,19 @@ class SecureMailing::Backend::HandlerOutgoing < SecureMailing::Backend::Handler
       mail.body.encoding = :binary
     end
 
+    # RFC 2045 forbids base64 for message/rfc822 parts, so the Mail gem
+    # negotiates no valid encoding when the outer transport is 7bit, leaving
+    # an empty Content-Transfer-Encoding header. The raw content is then
+    # included unencoded and SMTP relays may normalise it (e.g. CRLF → LF),
+    # changing the bytes after signing and breaking S/MIME verification.
+    # Repackage as application/octet-stream so the content is base64-encoded
+    # and survives transport unchanged. The .eml filename is preserved.
+    if mail.mime_type == 'message/rfc822'
+      name_param = mail.filename.present? ? "; name=\"#{mail.filename}\"" : ''
+      mail.content_type = "application/octet-stream#{name_param}"
+      mail.body.encoding = :binary
+    end
+
     # go into recursion for nested parts
     mail.parts&.each do |part|
       workaround_mail_bit_encoding_issue(part)
