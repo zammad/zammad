@@ -51,8 +51,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(vue@3.5.35(typescript@6.0.3))
       '@rails/actioncable':
-        specifier: ^7.2.301
-        version: 7.2.301
+        specifier: ~8.0.500
+        version: 8.0.500
       '@tiptap/core':
         specifier: ^3.24.0
         version: 3.24.0(@tiptap/pm@3.24.0)
@@ -2096,8 +2096,8 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@rails/actioncable@7.2.301':
-    resolution: {integrity: sha512-tFLZ5tocUeUkyQeHjN5l/lL7Jnvy0eeQZlwyq4pe4Ggew+rGdiKYudG3mHMqfKHBzmC4nV31aRhnsSjrNmNBGQ==}
+  '@rails/actioncable@8.0.500':
+    resolution: {integrity: sha512-XxcbptAQlKBy71CwIvakNCwKbJNBSpFGqJNe6WOjhrdh5drqITGQjD8eegfD7yrhqgbJ87YBGR5SgVDCH1l8cQ==}
 
   '@repeaterjs/repeater@3.0.6':
     resolution: {integrity: sha512-Javneu5lsuhwNCryN+pXH93VPQ8g0dBX7wItHFgYiwQmzE1sVdg5tWHiOgHywzL2W21XQopa7IwIEnNbmeUJYA==}
@@ -9011,7 +9011,7 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@rails/actioncable@7.2.301': {}
+  '@rails/actioncable@8.0.500': {}
 
   '@repeaterjs/repeater@3.0.6': {}
 

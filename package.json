@@ -117,7 +117,7 @@
     "@formkit/utils": "^2.0.0",
     "@formkit/validation": "^2.0.0",
     "@formkit/vue": "^2.0.0",
-    "@rails/actioncable": "^7.2.301",
+    "@rails/actioncable": "~8.0.500",
     "@tiptap/core": "^3.24.0",
     "@tiptap/extension-blockquote": "3.24.0",
     "@tiptap/extension-bold": "3.24.0",
