@@ -104,6 +104,7 @@ const { popover, popoverTarget, isOpen: popoverIsOpen, toggle, close } = usePopo
       v-bind="props"
       :id="targetId"
       ref="popoverTarget"
+      v-tooltip="$t(addonLabel || __('Context menu'))"
       class="rounded-s-none -outline-offset-1!"
       :class="[
         addonPaddingClasses,
@@ -115,7 +116,6 @@ const { popover, popoverTarget, isOpen: popoverIsOpen, toggle, close } = usePopo
       :block="false"
       type="button"
       :aria-expanded="popoverIsOpen"
-      :aria-label="$t(addonLabel || __('Context menu'))"
       @click="toggle(true)"
     >
       <CommonIcon

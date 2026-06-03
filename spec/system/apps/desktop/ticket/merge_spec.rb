@@ -63,7 +63,7 @@ RSpec.describe 'Desktop > Ticket > Merge', app: :desktop_view, authenticated_as:
 
       expect(find('.inner-article-body')).to have_text('merged')
 
-      click_on('Additional ticket edit actions')
+      click_on('Drafts & macros')
       click_on(macro.name)
 
       within '#ticketSidebar' do

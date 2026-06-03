@@ -333,6 +333,7 @@ const schemaData = reactive({
           variant="submit"
           :items="macroMenuItems"
           :form="formNodeId"
+          :addon-label="__('Macros')"
         >
           {{ $t('Apply') }}
         </SplitButton>

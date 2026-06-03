@@ -188,7 +188,7 @@ describe('TicketBulkEditFlyout', () => {
 
     const wrapper = renderBulkEditFlyout()
 
-    await wrapper.events.click(wrapper.getByRole('button', { name: 'Context menu' }))
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Macros' }))
 
     const menu = await wrapper.findByRole('menu')
 
