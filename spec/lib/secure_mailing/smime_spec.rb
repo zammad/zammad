@@ -131,6 +131,35 @@ RSpec.describe SecureMailing::SMIME do
           end
         end
 
+        context 'when attachment has message/rfc822 content type' do
+
+          let(:mail) do
+            smime_mail = Channel::EmailBuild.build(
+              from:         sender_email_address,
+              to:           recipient_email_address,
+              body:         raw_body,
+              content_type: 'text/plain',
+              security:     security_preferences,
+              attachments:  [
+                {
+                  content_type: 'message/rfc822',
+                  content:      "From: other@example.com\r\nSubject: Nested\r\n\r\nNested body",
+                  filename:     'nested.eml',
+                },
+              ],
+            )
+
+            mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'verifies the signature' do
+            expect(mail['x-zammad-article-preferences']['security']['sign']['success']).to be true
+          end
+        end
+
         context 'when certificate chain is present' do
           let(:system_email_address) { 'chain@example.com' }
 
