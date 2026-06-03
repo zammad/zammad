@@ -16,7 +16,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
   let(:before_click)       { -> {} }
   let(:after_click)        { -> {} }
   let(:new_subject)        { nil }
-  let(:trigger_label)      { 'Reply' }
+  let(:trigger_label)      { 'Follow up' }
   let(:text_exact)         { true }
   let(:current_text)       { '' }
   let(:new_text)           { 'This is a note' }
@@ -82,8 +82,9 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
 
     context 'with default fields as inbound email' do
       include_examples 'mobile app: reply article', 'Email', attachments: true do
-        let(:article) { create(:ticket_article, :inbound_email, ticket: ticket, from: 'from-email@example.com', to: 'to-email@example.com') }
-        let(:to) { ['from-email@example.com'] }
+        let(:trigger_label) { 'Reply' }
+        let(:article)       { create(:ticket_article, :inbound_email, ticket: ticket, from: 'from-email@example.com', to: 'to-email@example.com') }
+        let(:to)            { ['from-email@example.com'] }
       end
     end
 
@@ -99,8 +100,9 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
 
       context 'when customer sent article from phone take customer email' do
         include_examples 'mobile app: reply article', 'Email', attachments: true do
-          let(:article) { create(:ticket_article, :inbound_phone, ticket: ticket, from: '+423424235533') }
-          let(:to) { ['customer@example.com'] }
+          let(:trigger_label) { 'Reply' }
+          let(:article)       { create(:ticket_article, :inbound_phone, ticket: ticket, from: '+423424235533') }
+          let(:to)            { ['customer@example.com'] }
         end
       end
     end
@@ -216,7 +218,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
 
     context 'when article has multiple email addresses, can reply all' do
       include_examples 'mobile app: reply article', 'Email', attachments: true do
-        let(:trigger_label) { 'Reply all' }
+        let(:trigger_label) { 'Follow up to all' }
         let(:to)            { ['e1@example.com', 'e2@example.com'] }
         let(:cc)            { ['e3@example.com'] }
         let(:article)       { create(:ticket_article, :outbound_email, ticket: ticket, to: to.join(', '), cc: cc.join(', ')) }
@@ -255,7 +257,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
 
         find_button('Article actions').click
-        find_button('Reply').click
+        find_button('Follow up').click
 
         wait_for_test_flag('editor.signatureAdd')
 
@@ -270,7 +272,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         wait_for_test_flag('ticket-article-reply.closed')
 
         find_button('Article actions').click
-        find_button('Reply').click
+        find_button('Follow up').click
 
         wait_for_form_updater(3)
 
@@ -370,6 +372,8 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
   end
 
   context 'when article was created as sms' do
+    let(:trigger_label) { 'Reply' }
+
     let(:article) do
       create(
         :ticket_article,
@@ -409,6 +413,8 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
   end
 
   context 'when article was created as a telegram message' do
+    let(:trigger_label) { 'Reply' }
+
     let(:article) do
       create(
         :ticket_article,
@@ -422,6 +428,8 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
   end
 
   context 'when article was created as a facebook post' do
+    let(:trigger_label) { 'Reply' }
+
     let(:article) do
       create(
         :ticket_article,
