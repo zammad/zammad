@@ -190,6 +190,8 @@ const iconNamePerDirection = (isLtr: boolean, direction: 'start' | 'end') => {
 
 const iconNamePerDirectionStart = computed(() => iconNamePerDirection(isLtrLocale.value, 'start'))
 const iconNamePerDirectionEnd = computed(() => iconNamePerDirection(isLtrLocale.value, 'end'))
+
+const everyTabHasIcon = computed(() => props.tabs.every((tab) => tab.icon))
 </script>
 
 <template>
@@ -211,14 +213,22 @@ const iconNamePerDirectionEnd = computed(() => iconNamePerDirection(isLtrLocale.
     :role="containerRole"
     :aria-multiselectable="multiple || undefined"
     :aria-labelledby="label ? labelId : undefined"
-    class="relative isolate scroll-bar-hidden flex snap-x flex-row items-center overflow-x-auto rounded-full [&>[data-tab]+[data-tab]]:ms-1"
+    class="relative isolate scroll-bar-hidden flex w-full snap-x flex-row items-center overflow-x-auto rounded-full [&>[data-tab]+[data-tab]]:ms-1"
   >
     <li ref="list-start" class="order-first shrink-0" role="presentation" />
 
-    <li v-for="tab in tabs" :key="tab.key" ref="tabs" data-tab :role="listItemRole">
+    <li
+      v-for="tab in tabs"
+      :key="tab.key"
+      ref="tabs"
+      data-tab
+      :role="listItemRole"
+      class="flex grow @lg:grow-0"
+    >
       <slot
         :tab="tab"
         tab-class="rounded-full! px-3.5 py-1 focus-visible-app-default focus-visible:-outline-offset-1"
+        :can-display-icon-only="everyTabHasIcon"
       />
     </li>
 

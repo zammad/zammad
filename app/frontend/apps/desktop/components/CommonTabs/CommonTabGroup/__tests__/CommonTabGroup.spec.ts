@@ -102,6 +102,23 @@ describe('CommonTabGroup', () => {
         expect(wrapper.getByRole('tab', { selected: true })).toHaveTextContent('Tab 2')
       })
     })
+
+    // normally classes are not tested but in this case as we have no other reliable way
+    it('forwards icon-only label support when every tab has an icon', () => {
+      const wrapper = renderComponent(CommonTabGroup, {
+        props: {
+          tabs: [
+            { label: 'Tab 1', key: 'tab-1', icon: 'search' },
+            { label: 'Tab 2', key: 'tab-2', icon: 'check' },
+            { label: 'Tab 3', key: 'tab-3', icon: 'x' },
+          ],
+        },
+      })
+
+      expect(wrapper.getByText('Tab 1')).toHaveClass('sr-only', '@lg:not-sr-only')
+      expect(wrapper.getByText('Tab 2')).toHaveClass('sr-only', '@lg:not-sr-only')
+      expect(wrapper.getByText('Tab 3')).toHaveClass('sr-only', '@lg:not-sr-only')
+    })
   })
 
   describe('filter mode', () => {

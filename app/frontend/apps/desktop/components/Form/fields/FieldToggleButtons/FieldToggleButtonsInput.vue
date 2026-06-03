@@ -6,6 +6,7 @@ import { computed, toRef } from 'vue'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 
 import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/CommonTabGroup.vue'
+import type { Tab } from '#desktop/components/CommonTabs/types.ts'
 
 import type { FieldToggleButtonsProps } from './types.ts'
 
@@ -13,25 +14,25 @@ const props = defineProps<FieldToggleButtonsProps>()
 const contextReactive = toRef(props, 'context')
 const { localValue } = useValue<string>(contextReactive)
 
-const tabs = computed(() => {
-  return contextReactive.value.options.map((option) => {
-    return {
-      label: option.label,
-      key: option.value,
-      icon: option.icon,
-      disabled: option.disabled,
-    }
-  })
-})
+const tabs = computed<Tab[]>(() =>
+  contextReactive.value.options.map((option) => ({
+    label: option.label,
+    key: option.value,
+    icon: option.icon,
+    disabled: option.disabled,
+    tooltip: option.label,
+  })),
+)
 </script>
 
 <template>
-  <div
+  <CommonTabGroup
+    v-if="tabs.length > 0"
     :id="context.id"
+    v-bind="context.attrs"
+    v-model="localValue"
     :class="context.classes.input"
     :aria-describedby="context.describedBy"
-    v-bind="context.attrs"
-  >
-    <CommonTabGroup v-if="tabs.length > 0" v-model="localValue" :tabs="tabs" />
-  </div>
+    :tabs="tabs"
+  />
 </template>

@@ -126,7 +126,9 @@ const formSchema = defineFormSchema([
       {
         if: '$isTicketCustomer === false',
         ...ticketArticleSenderTypeField,
-        outerClass: 'flex justify-center',
+        outerClass: 'flex justify-center max-w-full overflow-x-hidden',
+        blockClass: 'w-full',
+        innerClass: 'flex justify-stretch @md:justify-center',
       },
       {
         isLayout: true,
@@ -414,7 +416,7 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
         :change-fields="changedFields"
         :form-updater-additional-params="formAdditionalRouteQueryParams"
         use-object-attributes
-        form-class="flex flex-col gap-3"
+        form-class="flex flex-col gap-3 min-w-xs"
         @submit="submitCreateTicket($event as FormSubmitData<TicketFormData>)"
       />
     </div>

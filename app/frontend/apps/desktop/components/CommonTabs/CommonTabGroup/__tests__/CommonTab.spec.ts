@@ -48,6 +48,22 @@ describe('CommonTab', () => {
     expect(wrapper.getByIconName('search')).toBeInTheDocument()
   })
 
+  // normally classes are not tested but in this case as we have no other reliable way
+  it('applies responsive label classes when icon-only display is allowed', () => {
+    const wrapper = renderComponent(CommonTab, {
+      props: {
+        label: 'foo',
+        size: 'medium',
+        tabId: 'foo',
+        activeKeys: ['foo'],
+        icon: 'search',
+        canDisplayIconOnly: true,
+      },
+    })
+
+    expect(wrapper.getByText('foo')).toHaveClass('sr-only', '@lg:not-sr-only')
+  })
+
   describe('button mode', () => {
     it('renders a tab by default', () => {
       const wrapper = renderComponent(CommonTab, {

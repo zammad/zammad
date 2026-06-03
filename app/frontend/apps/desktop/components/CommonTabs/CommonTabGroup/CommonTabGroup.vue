@@ -102,7 +102,7 @@ const appearanceStyling = computed(() => (isOverflowMode.value ? 'rounded-lg' : 
 
 <template>
   <div
-    class="relative flex w-fit max-w-full min-w-0 bg-blue-200 p-1 dark:bg-gray-700"
+    class="relative flex w-full max-w-full min-w-0 bg-blue-200 p-1 @lg:w-fit dark:bg-gray-700"
     :class="appearanceStyling"
   >
     <TabsOverflowMenu
@@ -157,14 +157,16 @@ const appearanceStyling = computed(() => (isOverflowMode.value ? 'rounded-lg' : 
       :container-role="role"
       list-item-role="presentation"
     >
-      <template #default="{ tab, tabClass }">
+      <template #default="{ tab, tabClass, canDisplayIconOnly }">
         <CommonTab
           :id="multiple ? undefined : `tab-label-${tab.key}`"
           v-tooltip="tab.tooltip"
+          class="flex justify-center @lg:justify-start"
           v-bind="tab"
           :class="tabClass"
           :tab-id="tab.key"
           :size="size"
+          :can-display-icon-only="canDisplayIconOnly"
           :active-keys="activeTabs"
           :multiple="multiple"
           @select="updateModelValue(tab)"

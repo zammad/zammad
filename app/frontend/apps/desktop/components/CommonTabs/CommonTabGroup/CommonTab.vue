@@ -13,6 +13,7 @@ import type { Tab, TabBaseProps } from '#desktop/components/CommonTabs/types.ts'
 
 type Props = {
   multiple?: boolean
+  canDisplayIconOnly?: boolean
 } & TabBaseProps<Tab>
 
 const props = defineProps<Props>()
@@ -45,10 +46,12 @@ const colorClasses = computed(() =>
   >
     <CommonIcon v-if="icon" :name="icon" :size="tabItemIconSize[size]" decorative />
 
-    <span v-if="label">
+    <span v-if="label" :class="{ 'sr-only @lg:not-sr-only': canDisplayIconOnly }">
       {{ $t(label) }}
     </span>
 
+    <!-- Currently we don't need to hide the badge when canDisplayIconOnly is true -->
+    <!-- Will have to be re-evaluated if a use-case comes-->
     <CommonBadge
       v-if="count !== undefined"
       class="pointer-events-none leading-snug font-bold"
