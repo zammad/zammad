@@ -87,7 +87,8 @@ const actionPlugin: TicketArticleActionPlugin = {
         apps: ['mobile', 'desktop'],
         name: 'email-reply-all',
         view: { agent: ['change'] },
-        label: sender === EnumTicketArticleSenderName.Agent ? __('Follow up to all') : __('Reply all'),
+        label:
+          sender === EnumTicketArticleSenderName.Agent ? __('Follow up to all') : __('Reply all'),
         icon: 'reply-alt',
         alwaysVisible: true,
         perform: (t, a, o) => replyToEmail(t, a, o, config, true),
