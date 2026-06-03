@@ -56,6 +56,8 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     suggestion: buildMentionSuggestion({
       activator: ACTIVATOR,
       type: 'knowledge-base',
+      label: __('Knowledge base articles'),
+      placeholder: __('Start typing to search in knowledge base…'),
       async insert(props: MentionKnowledgeBaseItem) {
         const { meta: editorMeta = {}, formId } = context.value
         const meta = editorMeta[EXTENSION_NAME] || {}
