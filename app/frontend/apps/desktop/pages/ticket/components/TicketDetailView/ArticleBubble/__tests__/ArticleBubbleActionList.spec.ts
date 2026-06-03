@@ -69,16 +69,89 @@ const renderArticleBubbleActionList = (options?: {
 }
 
 describe('ArticleBubbleActionList', () => {
-  it('does not show top level actions on hover (js-dom limitation)', () => {
+  it('shows top level actions without hover', () => {
     const wrapper = renderArticleBubbleActionList()
 
-    expect(wrapper.getByTestId('top-level-article-action-container')).toHaveClass('opacity-0')
+    expect(wrapper.getByTestId('top-level-article-action-container')).toBeVisible()
   })
 
   it('has reply action', async () => {
     const wrapper = renderArticleBubbleActionList()
 
+    expect(wrapper.getByRole('button', { name: 'Follow up' })).toBeInTheDocument()
+  })
+
+  it('shows "Follow up" and not "Reply" for agent articles', () => {
+    const wrapper = renderArticleBubbleActionList()
+
+    expect(wrapper.getByRole('button', { name: 'Follow up' })).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Reply' })).not.toBeInTheDocument()
+  })
+
+  it('shows "Reply" and not "Follow up" for customer articles', () => {
+    const wrapper = renderArticleBubbleActionList({
+      articleOverrides: { senderName: EnumTicketArticleSenderName.Customer },
+    })
+
     expect(wrapper.getByRole('button', { name: 'Reply' })).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Follow up' })).not.toBeInTheDocument()
+  })
+
+  it('shows "Follow up to all" for agent articles with multiple recipients', () => {
+    const wrapper = renderArticleBubbleActionList({
+      articleOverrides: {
+        to: {
+          raw: '',
+          parsed: [
+            { emailAddress: 'a@example.com', isSystemAddress: false },
+            { emailAddress: 'b@example.com', isSystemAddress: false },
+          ],
+        },
+      },
+    })
+
+    expect(wrapper.getByRole('button', { name: 'Follow up to all' })).toBeInTheDocument()
+  })
+
+  it('shows "Reply all" for customer articles with multiple recipients', () => {
+    const wrapper = renderArticleBubbleActionList({
+      articleOverrides: {
+        senderName: EnumTicketArticleSenderName.Customer,
+        to: {
+          raw: '',
+          parsed: [
+            { emailAddress: 'a@example.com', isSystemAddress: false },
+            { emailAddress: 'b@example.com', isSystemAddress: false },
+          ],
+        },
+      },
+    })
+
+    expect(wrapper.getByRole('button', { name: 'Reply all' })).toBeInTheDocument()
+  })
+
+  it('shows "Follow up" and not "Reply" for agent Facebook articles', () => {
+    const wrapper = renderArticleBubbleActionList({
+      articleOverrides: {
+        senderName: EnumTicketArticleSenderName.Agent,
+        articleType: 'facebook feed comment',
+      },
+    })
+
+    expect(wrapper.getByRole('button', { name: 'Follow up' })).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Reply' })).not.toBeInTheDocument()
+  })
+
+  it('shows "Reply" and not "Follow up" for customer Facebook articles', () => {
+    const wrapper = renderArticleBubbleActionList({
+      articleOverrides: {
+        senderName: EnumTicketArticleSenderName.Customer,
+        articleType: 'facebook feed comment',
+      },
+    })
+
+    expect(wrapper.getByRole('button', { name: 'Reply' })).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Follow up' })).not.toBeInTheDocument()
   })
 
   it('shows all popover actions', async () => {
@@ -119,7 +192,7 @@ describe('ArticleBubbleActionList', () => {
   it('renders right-position actions with reversed order class', () => {
     const wrapper = renderArticleBubbleActionList({ position: 'right' })
 
-    expect(wrapper.getByTestId('top-level-article-action-container')).toHaveClass('-order-1!')
+    expect(wrapper.getByTestId('top-level-article-action-container')).toHaveClass('order-first')
   })
 
   it('does not render actions when ticket is not editable', () => {

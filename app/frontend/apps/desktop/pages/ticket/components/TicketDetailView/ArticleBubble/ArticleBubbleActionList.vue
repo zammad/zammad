@@ -3,7 +3,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import { useTicketArticleReplyAction } from '#shared/entities/ticket/composables/useTicketArticleReplyAction.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { createArticleActions } from '#shared/entities/ticket-article/action/plugins/index.ts'
@@ -21,8 +20,6 @@ const props = defineProps<{
 }>()
 
 const { ticket, isTicketEditable, showTicketArticleReplyForm, form } = useTicketInformation()
-
-const { isTouchDevice } = useTouchDevice()
 
 const buttonVariantBaseClasses =
   'border! border-neutral-100! outline-transparent! hover:border-blue-700! text-gray-100! dark:border-gray-900! dark:text-neutral-400!'
@@ -131,11 +128,7 @@ const actions = computed(() => {
       :key="action.key"
       data-test-id="top-level-article-action-container"
       class="order-1 flex items-center"
-      :class="{
-        '-order-1!': position === 'right',
-        'opacity-0 transition-opacity group-hover/article:opacity-100 focus-within:opacity-100':
-          !isTouchDevice,
-      }"
+      :class="position === 'right' ? 'order-first' : 'order-last'"
     >
       <CommonButton
         class="px-1 py-0.5! text-xs! focus-visible:outline-offset-0! focus-visible:outline-blue-800!"

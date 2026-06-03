@@ -1,23 +1,27 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
+
 import type { TicketArticleAction, TicketArticleActionPlugin, TicketArticleType } from './types.ts'
 
 const actionPlugin: TicketArticleActionPlugin = {
   order: 300,
 
   addActions(ticket, article) {
+    const sender = article.sender?.name
     const type = article.type?.name
 
     if (type !== 'facebook feed comment' && type !== 'facebook feed post') return []
 
     const action: TicketArticleAction = {
       apps: ['mobile', 'desktop'],
-      label: __('Reply'),
+      label: sender === EnumTicketArticleSenderName.Agent ? __('Follow up') : __('Reply'),
       name: type,
       icon: 'reply',
       view: {
         agent: ['change'],
       },
+      alwaysVisible: true,
       perform(ticket, article, { openReplyForm }) {
         const articleData = {
           // always a comment, doesn't depend on current article type
