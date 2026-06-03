@@ -316,6 +316,18 @@ export const useDragAndDropBulk = (
       if (document.visibilityState === 'hidden') cancelDragAndDrop()
     })
 
+    // Listen in the capture phase so the keystroke is caught before it can be
+    // stopped by `@keydown.stop` on focusable cell content (e.g. link columns),
+    // which would otherwise stop the event during bubbling.
+    const removeEscapeKey = useEventListener(
+      document,
+      'keydown',
+      (event: KeyboardEvent) => {
+        if (event.key === 'Escape' && isActive.value) cancelDragAndDrop()
+      },
+      { capture: true },
+    )
+
     return [
       removeMouseDown,
       removeMouseMove,
@@ -324,6 +336,7 @@ export const useDragAndDropBulk = (
       removeMouseEnter,
       removeWindowBlur,
       removeVisibilityChange,
+      removeEscapeKey,
     ]
   }
 
@@ -372,6 +385,5 @@ export const useDragAndDropBulk = (
     cursorPosition,
     dragPreviewData,
     dropSuccessTargetEntity,
-    cancelDragAndDrop,
   }
 }

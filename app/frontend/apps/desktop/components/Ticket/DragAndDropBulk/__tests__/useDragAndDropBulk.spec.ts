@@ -383,7 +383,7 @@ describe('useDragAndDropBulk', () => {
     })
   })
 
-  it('keeps active drag and drop when mouse leaves the browser window', async () => {
+  it('cancels drag and drop on Escape key press', async () => {
     const ticketInternalId = '1'
 
     const { isActive } = renderDragAndDropBulk({
@@ -421,13 +421,69 @@ describe('useDragAndDropBulk', () => {
     expect(isActive.value).toBe(true)
 
     document.dispatchEvent(
-      new MouseEvent('mouseout', {
+      new KeyboardEvent('keydown', {
+        key: 'Escape',
         bubbles: true,
-        relatedTarget: null,
       }),
     )
 
+    expect(isActive.value).toBe(false)
+
+    row.remove()
+  })
+
+  // Regression: link cells (CommonLink) attach `@keydown.stop`, which stops
+  // the keystroke during bubbling. The Escape listener must run in the capture
+  // phase so it still fires when the drag was started from such a cell.
+  it('cancels drag and drop on Escape even when a focused cell stops propagation', async () => {
+    const ticketInternalId = '1'
+
+    const { isActive } = renderDragAndDropBulk({
+      checkedTicketIds: ref(new Set([convertToGraphQLId('Ticket', ticketInternalId)])),
+      bulkSelector: ref({ searchQuery: 'state:new' }),
+    })
+
+    const row = document.createElement('tr')
+    row.dataset.itemId = ticketInternalId
+
+    const rowInner = document.createElement('td')
+    // Simulate a link cell that stops keydown propagation during bubbling.
+    const link = document.createElement('a')
+    link.addEventListener('keydown', (event) => event.stopPropagation())
+    rowInner.appendChild(link)
+    row.appendChild(rowInner)
+
+    document.body.appendChild(row)
+
+    rowInner.dispatchEvent(
+      new MouseEvent('mousedown', {
+        bubbles: true,
+        button: 0,
+        clientX: 10,
+        clientY: 10,
+      }),
+    )
+
+    document.dispatchEvent(
+      new MouseEvent('mousemove', {
+        bubbles: true,
+        clientX: 30,
+        clientY: 30,
+      }),
+    )
+
+    await vi.advanceTimersByTimeAsync(250)
+
     expect(isActive.value).toBe(true)
+
+    link.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Escape',
+        bubbles: true,
+      }),
+    )
+
+    expect(isActive.value).toBe(false)
 
     row.remove()
   })
