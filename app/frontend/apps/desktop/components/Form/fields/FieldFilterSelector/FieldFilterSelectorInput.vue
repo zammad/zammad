@@ -452,7 +452,7 @@ watch(rowStructure, () => (filterFieldsSchema.value = buildFilterFieldsSchema())
 
 <template>
   <fieldset class="bg-blue-200 dark:bg-gray-700" :name="context.node.name">
-    <ul class="grid grid-cols-4 items-end gap-x-6 gap-y-3">
+    <ul class="grid items-end gap-x-6 gap-y-3 @2xl:grid-cols-2 @5xl:grid-cols-3 @7xl:grid-cols-4">
       <FormKitSchema :schema="filterFieldsSchema" :data="schemaData" />
 
       <li v-if="addFieldActive">

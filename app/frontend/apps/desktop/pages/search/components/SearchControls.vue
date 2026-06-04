@@ -177,7 +177,7 @@ onBeforeRouteUpdate((to, from) => {
 </script>
 
 <template>
-  <div class="space-y-3 bg-neutral-50 pb-4 dark:bg-gray-500">
+  <div class="@container space-y-3 bg-neutral-50 pb-4 dark:bg-gray-500">
     <CommonInputSearch
       ref="search-input"
       v-model="searchTerm"
@@ -210,7 +210,9 @@ dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outlin
       </template>
     </CommonInputSearch>
 
-    <div class="isolate flex items-stretch justify-between">
+    <div
+      class="isolate mb-0 flex flex-col items-stretch justify-between gap-2 @lg:mb-3 @lg:flex-row"
+    >
       <CommonTabGroup
         v-show="searchTabs.length > 1"
         v-model="selectedEntity"
@@ -222,9 +224,9 @@ dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outlin
       <CommonButton
         v-if="selectedEntityHasFiltersEnabled"
         :id="advancedFiltersButtonId"
-        class="sticky z-20 h-auto! bg-blue-200! -outline-offset-1! transition-[border-radius]! before:absolute before:right-0 before:bottom-0 before:h-3 before:w-full before:translate-y-full before:bg-blue-200 before:opacity-0 before:transition-opacity before:duration-0 before:ease-in-out active:scale-none! ltr:right-0 rtl:left-0 dark:bg-gray-700! dark:before:bg-gray-700"
+        class="relative z-20 h-auto! w-full! bg-blue-200! -outline-offset-1! transition-[border-radius]! before:absolute before:right-0 before:bottom-0 before:left-0 before:hidden before:h-3 before:w-full before:translate-y-full before:bg-blue-200 before:opacity-0 before:transition-opacity before:duration-0 before:ease-in-out active:scale-none! @lg:w-auto! @lg:before:block dark:bg-gray-700! dark:before:bg-gray-700"
         :class="{
-          'rounded-b-none! before:h-3 before:opacity-100': isFilterPanelsOpen,
+          'rounded-b-none! before:h-3 before:opacity-100 @lg:rounded-b-none!': isFilterPanelsOpen,
           'before:delay-200 before:duration-25': !isFilterPanelsOpen,
         }"
         :suffix-icon="isFilterPanelsOpen ? 'chevron-up' : 'chevron-down'"
@@ -239,7 +241,7 @@ dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outlin
     <section
       v-if="selectedEntityHasFiltersEnabled"
       :id="advancedFiltersSectionId"
-      class="grid grid-rows-[0fr] rounded-l-lg rounded-br-lg bg-blue-200 transition-[grid-template-rows] duration-300 dark:bg-gray-700"
+      class="grid grid-rows-[0fr] rounded-t-none rounded-b-lg bg-blue-200 transition-[grid-template-rows] duration-300 @lg:rounded-tr-none @lg:ltr:rounded-tl-lg @lg:rtl:rounded-tr-lg dark:bg-gray-700"
       :class="{
         'grid-rows-[1fr]': isFilterPanelsOpen,
       }"
