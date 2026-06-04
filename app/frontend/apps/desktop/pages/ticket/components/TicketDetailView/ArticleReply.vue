@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import type { TicketById } from '#shared/entities/ticket/types'
 import type { AppSpecificTicketArticleType } from '#shared/entities/ticket-article/action/plugins/types.ts'
 
@@ -19,7 +20,6 @@ interface Props {
   ticketArticleTypes: AppSpecificTicketArticleType[]
   isTicketCustomer?: boolean
   hasInternalArticle?: boolean
-  newArticleCount?: number
 }
 
 const props = defineProps<Props>()
@@ -30,7 +30,6 @@ defineEmits<{
     performReply: AppSpecificTicketArticleType['performReply'],
   ]
   'discard-form': []
-  'scroll-into-view': []
 }>()
 
 const pinned = defineModel<boolean>('pinned')
@@ -55,16 +54,21 @@ const availableArticleTypes = computed(() => {
   return filtered.map((type) => {
     return {
       articleType: type.value,
-      label:
-        currentTicketArticleType.value === type.value && !props.isTicketCustomer
-          ? __('Reply to customer')
-          : type.buttonLabel,
+      label: type.buttonLabel,
       icon: type.icon,
       performReply: (() =>
         type.performReply?.(props.ticket)) as AppSpecificTicketArticleType['performReply'],
     }
   })
 })
+
+const noteArticleType = computed(() =>
+  availableArticleTypes.value.find((t) => t.articleType === 'note'),
+)
+
+const customerReplyArticleType = computed(() =>
+  availableArticleTypes.value.find((t) => t.articleType === 'web'),
+)
 </script>
 
 <template>
@@ -89,45 +93,45 @@ const availableArticleTypes = computed(() => {
       @toggle-pin="pinned = !pinned"
     />
   </div>
-  <div
-    v-else-if="newArticlePresent !== undefined"
-    class="sticky bottom-0 z-20 row-start-3 grid w-full grid-cols-[minmax(min-content,1fr)_1fr_minmax(min-content,1fr)] py-1.5 backdrop-blur-2xs"
-    :class="{
-      'border-t border-t-neutral-100 bg-neutral-50/80 dark:border-t-gray-900 dark:bg-gray-500/80':
-        !parentReachedBottomScroll,
-    }"
-  >
-    <div v-if="newArticleCount && !parentReachedBottomScroll" class="relative w-fit self-center">
+  <div v-else-if="newArticlePresent !== undefined">
+    <div class="mx-auto flex w-full max-w-6xl flex-col items-center gap-3 px-12 pt-4 pb-6">
       <CommonButton
-        v-tooltip="$t('Scroll to bottom')"
-        class="mx-2.5"
-        size="large"
-        variant="subtle"
-        icon="arrow-sm"
-        @click="$emit('scroll-into-view')"
-      />
-
-      <CommonBadge
-        size="xs"
-        class="pointer-events-none absolute -top-1.5 block! max-w-10 min-w-4 truncate rounded-full! px-1! py-0! font-bold ltr:right-0.5 rtl:left-0.5"
-        variant="highlight"
-        :aria-label="$t('Unread messages count')"
-        role="status"
+        v-if="isTicketCustomer && customerReplyArticleType"
+        variant="primary"
+        size="small"
+        :prefix-icon="customerReplyArticleType.icon"
+        @click="
+          $emit(
+            'show-article-form',
+            customerReplyArticleType.articleType,
+            customerReplyArticleType.performReply,
+          )
+        "
       >
-        {{ newArticleCount }}
-      </CommonBadge>
-    </div>
-
-    <div class="col-start-2 flex items-center justify-center gap-2.5 self-center">
-      <CommonButton
-        v-for="button in availableArticleTypes"
-        :key="button.articleType"
-        :prefix-icon="button.icon"
-        size="large"
-        @click="$emit('show-article-form', button.articleType, button.performReply)"
-      >
-        {{ $t(button.label) }}
+        {{ $t(customerReplyArticleType.label) }}
       </CommonButton>
+
+      <template v-else-if="!isTicketCustomer && noteArticleType">
+        <div class="flex flex-row items-center gap-3">
+          <CommonButton
+            variant="tertiary"
+            size="small"
+            :prefix-icon="noteArticleType.icon"
+            @click="
+              $emit('show-article-form', noteArticleType.articleType, noteArticleType.performReply)
+            "
+          >
+            {{ $t(noteArticleType.label) }}
+          </CommonButton>
+
+          <CommonLabel
+            size="small"
+            class="text-center text-sm text-stone-200 dark:text-neutral-500"
+          >
+            {{ $t('or use the reply actions on articles.') }}
+          </CommonLabel>
+        </div>
+      </template>
     </div>
   </div>
 </template>

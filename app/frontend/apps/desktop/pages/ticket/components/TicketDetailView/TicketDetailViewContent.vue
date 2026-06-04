@@ -79,6 +79,7 @@ import TicketSidebar from '../TicketSidebar.vue'
 
 import ArticleList from './ArticleList.vue'
 import ArticleReply from './ArticleReply.vue'
+import TicketDetailScrollToBottomButton from './TicketDetailScrollToBottomButton.vue'
 import TicketDetailTopBar from './TicketDetailTopBar/TicketDetailTopBar.vue'
 import { useUnreadArticle } from './useUnreadArticle.ts'
 
@@ -684,22 +685,27 @@ const articleListTopPadding = ref('4rem')
 
         <CommonIndicator v-model="isReachingBottom" class="h-0.5" />
 
-        <ArticleReply
-          v-if="ticket?.id && isTicketEditable"
-          v-show="!isLoadingArticles && isInitialSettled"
-          v-model:pinned="isReplyPinned"
-          :ticket="ticket"
-          :new-article-present="newTicketArticlePresent"
-          :create-article-type="ticket.createArticleType?.name"
-          :ticket-article-types="ticketArticleTypes"
-          :is-ticket-customer="isTicketCustomer"
-          :has-internal-article="hasInternalArticle"
-          :parent-reached-bottom-scroll="isReachingBottom"
-          :new-article-count="articleCount"
-          @show-article-form="handleShowArticleForm"
-          @discard-form="discardReplyForm"
-          @scroll-into-view="handleScrollToArticle('smooth')"
+        <TicketDetailScrollToBottomButton
+          v-if="articleCount && articleCount > 0 && !isReachingBottom"
+          :count="articleCount"
+          @click="handleScrollToArticle('smooth')"
         />
+
+        <div v-show="!isLoadingArticles && isInitialSettled">
+          <ArticleReply
+            v-if="ticket?.id && isTicketEditable"
+            v-model:pinned="isReplyPinned"
+            :ticket="ticket"
+            :new-article-present="newTicketArticlePresent"
+            :create-article-type="ticket.createArticleType?.name"
+            :ticket-article-types="ticketArticleTypes"
+            :is-ticket-customer="isTicketCustomer"
+            :has-internal-article="hasInternalArticle"
+            :parent-reached-bottom-scroll="isReachingBottom"
+            @show-article-form="handleShowArticleForm"
+            @discard-form="discardReplyForm"
+          />
+        </div>
 
         <div id="wrapper-form-ticket-edit" class="hidden" aria-hidden="true">
           <Form

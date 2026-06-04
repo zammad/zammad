@@ -631,7 +631,7 @@ describe('Ticket detail view', () => {
 
       await getNode('form-ticket-edit-1')?.settled
 
-      await view.events.click(await view.findByRole('button', { name: 'Add phone call' }))
+      await view.events.click(await view.findByRole('button', { name: 'Add internal note' }))
 
       expect(await view.findByRole('heading', { level: 2, name: 'Reply' })).toBeInTheDocument()
 
@@ -751,7 +751,7 @@ describe('Ticket detail view', () => {
       await getNode('form-ticket-edit-1')?.settled
 
       // Discard changes inside the reply form
-      await view.events.click(await view.findByRole('button', { name: 'Add phone call' }))
+      await view.events.click(await view.findByRole('button', { name: 'Add internal note' }))
 
       expect(await view.findByRole('heading', { level: 2, name: 'Reply' })).toBeInTheDocument()
 
@@ -897,7 +897,7 @@ describe('Ticket detail view', () => {
       await waitForNextTick(true)
 
       // Discard changes inside the reply form
-      await view.events.click(view.getByRole('button', { name: 'Reply to customer' }))
+      await view.events.click(view.getByRole('button', { name: 'Add internal note' }))
 
       await waitFor(() => expect(view.queryByRole('textbox', { name: 'Text' })).toBeInTheDocument())
 
@@ -919,7 +919,7 @@ describe('Ticket detail view', () => {
         ).not.toBeInTheDocument()
       })
 
-      await view.events.click(view.getByRole('button', { name: 'Reply to customer' }))
+      await view.events.click(view.getByRole('button', { name: 'Add internal note' }))
 
       await view.events.click(view.getByRole('button', { name: 'Discard unsaved reply' }))
 

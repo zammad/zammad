@@ -79,39 +79,26 @@ describe('ArticleReply', () => {
     localStorage.clear()
   })
 
-  it('shows common article action buttons', () => {
+  it('shows add note button and hint text for agents', () => {
     const wrapper = renderArticleReply()
 
     expect(wrapper.getByRole('button', { name: 'Add internal note' })).toBeInTheDocument()
 
-    expect(wrapper.getByIconName('pencil-square')).toBeInTheDocument()
+    expect(wrapper.getByText('or use the reply actions on articles.')).toBeInTheDocument()
 
-    expect(wrapper.getByRole('button', { name: 'Add phone call' })).toBeInTheDocument()
-
-    expect(wrapper.getByIconName('telephone')).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Add phone call' })).not.toBeInTheDocument()
   })
 
-  it('shows article reply action button for tickets created by phone', () => {
+  it('shows add note button for agents regardless of ticket create article type', () => {
     const wrapper = renderArticleReply({
       createArticleType: 'phone',
     })
 
-    expect(wrapper.getByRole('button', { name: 'Reply to customer' })).toBeInTheDocument()
-
-    expect(wrapper.getByIconName('envelope')).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Add internal note' })).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Add reply' })).not.toBeInTheDocument()
   })
 
-  it('shows article reply action button for tickets created by web', () => {
-    const wrapper = renderArticleReply({
-      createArticleType: 'web',
-    })
-
-    expect(wrapper.getByRole('button', { name: 'Reply to customer' })).toBeInTheDocument()
-
-    expect(wrapper.getByIconName('envelope')).toBeInTheDocument()
-  })
-
-  it('does not relabel the reply button on the customer view', () => {
+  it('shows add reply button for customers without hint text', () => {
     const wrapper = renderArticleReply({
       isTicketCustomer: true,
       ticketArticleTypes: [
@@ -129,7 +116,9 @@ describe('ArticleReply', () => {
     })
 
     expect(wrapper.getByRole('button', { name: 'Add reply' })).toBeInTheDocument()
-    expect(wrapper.queryByRole('button', { name: 'Reply to customer' })).not.toBeInTheDocument()
+
+    expect(wrapper.queryByRole('button', { name: 'Add internal note' })).not.toBeInTheDocument()
+    expect(wrapper.queryByText('or use the reply actions on articles.')).not.toBeInTheDocument()
   })
 
   it('can display and pin reply form', async () => {

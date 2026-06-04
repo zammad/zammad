@@ -29,7 +29,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
     end
 
     it 'works correctly', performs_jobs: true do
-      click_on 'Add phone call'
+      click_on 'Add internal note'
 
       wait_for_form_updater(2)
 
@@ -87,7 +87,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
         wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
 
         # Modify draft
-        click_on('Add phone call')
+        click_on('Add internal note')
 
         wait_for_form_updater(2)
 
@@ -146,7 +146,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
       wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
 
       # Apply the draft
-      click_on('Add phone call')
+      click_on('Add internal note')
 
       wait_for_form_updater(2)
 
