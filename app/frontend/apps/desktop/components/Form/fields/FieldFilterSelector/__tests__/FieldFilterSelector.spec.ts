@@ -2,6 +2,7 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
+import { waitFor } from '@testing-library/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
@@ -9,6 +10,7 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 import type { ObjectSelectOption } from '#shared/entities/object-attributes/form/resolver/fields/select.ts'
 import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
 import { mockAutocompleteSearchTagQuery } from '#shared/entities/tags/graphql/queries/autocompleteTags.mocks.ts'
+import { i18n } from '#shared/i18n.ts'
 
 import type { FilterSelectorEntityOverride } from '#desktop/components/Search/types.ts'
 
@@ -134,7 +136,7 @@ describe('Fields - FieldFilterSelector', () => {
     expect(view.getByLabelText('#')).toHaveValue('Beta')
     expect(view.getByLabelText('Subject')).toHaveValue('Gamma')
 
-    const removeButtons = view.getAllByRole('button', { name: 'Remove attribute' })
+    const removeButtons = view.getAllByRole('button', { name: 'Remove filter' })
     // The middle row (#) — the bug we're guarding against is that removing
     // a non-last row would clobber the values in rows below it.
     await view.events.click(removeButtons[1])
@@ -235,6 +237,126 @@ describe('Fields - FieldFilterSelector', () => {
 
     expect(view.getByLabelText('Tags')).toBeInTheDocument()
     expect(getNode('filterSelector-ticket.tags-value')?.props.canCreate).toBe(false)
+  })
+
+  const rangeAttribute = {
+    name: 'ticket.escalation_count',
+    label: 'Escalation count',
+    operators: ['in range'],
+  }
+
+  it('renders the `in range` operator as two number inputs and stores a [min, max] array', async () => {
+    // End-to-end render of the compound operator: the two number inputs mount
+    // with the row's initial bounds and FormKit's list aggregates them, so the
+    // row value stays a `[min, max]` array.
+    const view = renderFilterSelector(
+      [{ name: 'ticket.escalation_count', operator: 'in range', value: [10, 20] }],
+      { filterAttributes: [rangeAttribute] },
+    )
+
+    const inputs = view.getAllByRole('spinbutton')
+    expect(inputs).toHaveLength(2)
+    expect(inputs[0]).toHaveValue(10)
+    expect(inputs[1]).toHaveValue(20)
+
+    // The compound field is exposed as a group named by the attribute label,
+    // and each input carries its own (visually-hidden) label matching its
+    // placeholder — so every bound is individually announced with context.
+    expect(view.getByRole('group', { name: 'Escalation count' })).toBeInTheDocument()
+    expect(view.getByLabelText('min')).toBe(inputs[0])
+    expect(view.getByLabelText('max')).toBe(inputs[1])
+
+    // The `-` separator renders between the two inputs but is not a value
+    // input, so the row value stays a `[min, max]` array.
+    expect(view.getByText('-')).toBeInTheDocument()
+
+    expect(getNode('filterSelector')?._value).toEqual([
+      { name: 'ticket.escalation_count', operator: 'in range', value: [10, 20] },
+    ])
+  })
+
+  it('focuses the first bound when the legend is clicked (like a label)', async () => {
+    const view = renderFilterSelector(
+      [{ name: 'ticket.escalation_count', operator: 'in range', value: [10, 20] }],
+      { filterAttributes: [rangeAttribute] },
+    )
+
+    const inputs = view.getAllByRole('spinbutton')
+    expect(inputs[0]).not.toHaveFocus()
+
+    await view.events.click(
+      view.getByRole('group', { name: 'Escalation count' }).querySelector('legend')!,
+    )
+
+    // `focusFieldInput` focuses on the next frame, so wait for it.
+    await waitFor(() => expect(inputs[0]).toHaveFocus())
+  })
+
+  it('re-translates the legend reactively when the translation map changes', async () => {
+    const view = renderFilterSelector(
+      [{ name: 'ticket.escalation_count', operator: 'in range', value: [10, 20] }],
+      { filterAttributes: [rangeAttribute] },
+    )
+
+    expect(view.getByText('Escalation count')).toBeInTheDocument()
+
+    try {
+      // No schema rebuild here — the legend re-translates purely because its
+      // `$legendLabel` expression is reactive (like a FormKit field label).
+      i18n.setTranslationMap(new Map([['Escalation count', 'Eskalationszähler']]))
+      await waitForNextTick()
+
+      expect(view.getByText('Eskalationszähler')).toBeInTheDocument()
+    } finally {
+      i18n.setTranslationMap(new Map())
+    }
+  })
+
+  it('reflects an external `in range` value update into the inputs (deep-link / taskbar restore)', async () => {
+    // Regression: an external value replacement (e.g. the route → state re-sync
+    // on a search-term change) must reach the compound row, not be ignored and
+    // then clobbered by the container re-committing its stale value.
+    const view = renderFilterSelector(
+      [{ name: 'ticket.escalation_count', operator: 'in range', value: [10, 20] }],
+      { filterAttributes: [rangeAttribute] },
+    )
+
+    // An external restore replaces the whole filter value on the node (this is
+    // what `setEntityFilters` does on a route → state re-sync).
+    getNode('filterSelector')?.input([
+      { name: 'ticket.escalation_count', operator: 'in range', value: [99, 88] },
+    ])
+    await waitForNextTick()
+
+    const inputs = view.getAllByRole('spinbutton')
+    expect(inputs[0]).toHaveValue(99)
+    expect(inputs[1]).toHaveValue(88)
+    expect(getNode('filterSelector')?._value).toEqual([
+      { name: 'ticket.escalation_count', operator: 'in range', value: [99, 88] },
+    ])
+  })
+
+  it('seeds both `in range` slots so the value is always a length-2 array', async () => {
+    // The backend selector requires exactly two elements. Both number inputs
+    // seed their `value.0`/`value.1` slot on mount, so even an untouched range
+    // is a length-2 array (`['', '']`) rather than collapsing to one element —
+    // a min-only filter is then `['30', '']`, never `['30']`. The all-blank
+    // case is dropped upstream (see the useSearchAdvancedFilters spec) before
+    // it reaches the backend.
+    const view = renderFilterSelector(
+      [{ name: 'ticket.escalation_count', operator: 'in range', value: undefined }],
+      {
+        filterAttributes: [
+          { name: 'ticket.escalation_count', label: 'Escalation count', operators: ['in range'] },
+        ],
+      },
+    )
+
+    expect(view.getAllByRole('spinbutton')).toHaveLength(2)
+
+    const rows = getNode('filterSelector')?._value as Array<{ value: unknown }>
+    expect(Array.isArray(rows?.[0]?.value)).toBe(true)
+    expect(rows?.[0]?.value).toHaveLength(2)
   })
 
   it('applies filterAttributeOptions to rendered relation sub-fields', async () => {

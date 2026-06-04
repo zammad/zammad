@@ -1193,7 +1193,7 @@ describe('Form.vue - Form Updater - special situations', () => {
         group_id: undefined,
         multiselect: [],
         multitreeselect: [],
-        number: '',
+        number: undefined,
         shared: false,
         start_date: undefined,
         state_id: 1,

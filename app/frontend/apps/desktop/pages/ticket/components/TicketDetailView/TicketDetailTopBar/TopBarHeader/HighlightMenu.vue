@@ -89,10 +89,10 @@ onUnmounted(() => {
       :class="{ [activeColorClass]: isActive }"
       variant="tertiary-light"
       size="small"
-      :aria-label="
-        isEraserActive ? $t('Remove highlight') : $t('Highlighter color: %s', $t(activeColorLabel))
+      :tooltip="
+        isEraserActive ? __('Remove highlight') : $t('Highlighter color: %s', $t(activeColorLabel))
       "
-      :addon-label="$t('Highlight options')"
+      :addon-label="__('Highlight options')"
       :aria-pressed="isActive"
       aria-describedby="highlight-menu-description"
       caret-pointer="down"

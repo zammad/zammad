@@ -243,6 +243,130 @@ RSpec.describe SearchIndexBackend do
         result = described_class.search_by_index('"1021052349"', record_type, sort_by: ['updated_at'], order_by: ['desc'])
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
       end
+
+      context "with 'in range' operator" do
+        let(:value) { %w[1021052339 1021052359] }
+
+        let(:result) do
+          described_class.search_by_index('', record_type,
+                                          search_by_index:  true,
+                                          with_total_count: true,
+                                          condition:        {
+                                            'ticket.inttest' => {
+                                              'operator' => 'in range',
+                                              'value'    => value,
+                                            },
+                                          })
+        end
+
+        it 'finds added record when integer is in range' do
+          expect(result).to include(
+            total_count:     1,
+            object_metadata: include(include(id: record.id.to_s))
+          )
+        end
+
+        context 'when integer is out of range' do
+          let(:value) { %w[1021052359 1021052399] }
+
+          it 'does not find added record' do
+            expect(result).to include(total_count: 0)
+          end
+        end
+
+        context 'when the upper edge is empty' do
+          let(:value) { ['1021052349', ''] }
+
+          it 'finds added record' do
+            expect(result).to include(
+              total_count:     1,
+              object_metadata: include(include(id: record.id.to_s))
+            )
+          end
+        end
+
+        context 'when the lower edge is empty' do
+          let(:value) { ['', '1021052349'] }
+
+          it 'finds added record' do
+            expect(result).to include(
+              total_count:     1,
+              object_metadata: include(include(id: record.id.to_s))
+            )
+          end
+        end
+
+        context 'when both values are empty' do
+          let(:value) { ['', nil] }
+
+          it 'raises an error' do
+            expect { result }.to raise_error(RuntimeError)
+          end
+        end
+
+        context 'when value is of wrong type' do
+          let(:value) { '1021052349' }
+
+          it 'raises an error' do
+            expect { result }.to raise_error(RuntimeError)
+          end
+        end
+      end
+    end
+
+    context 'can filter by accounted time' do
+      let(:record_type)            { 'Ticket'.freeze }
+      let(:record)                 { create(:ticket) }
+      let(:ticket_time_accounting) { create(:ticket_time_accounting, ticket: record, time_unit: 10.5) }
+
+      before do
+        ticket_time_accounting
+        record.search_index_update_backend
+        described_class.refresh
+      end
+
+      context "with 'in range' operator" do
+        let(:value) { %w[10 11] }
+
+        let(:result) do
+          described_class.search_by_index('', record_type,
+                                          search_by_index:  true,
+                                          with_total_count: true,
+                                          condition:        {
+                                            'ticket.time_unit' => {
+                                              'operator' => 'in range',
+                                              'value'    => value,
+                                            },
+                                          })
+        end
+
+        it 'finds added record when accounted time is in range' do
+          expect(result).to include(
+            total_count:     1,
+            object_metadata: include(include(id: record.id.to_s))
+          )
+        end
+
+        context 'when accounted time is out of range' do
+          let(:value) { %w[10.75 11] }
+
+          it 'does not find added record' do
+            expect(result).to include(total_count: 0)
+          end
+        end
+
+        context 'when accounted time is negative' do
+          let(:ticket_time_accounting) { create(:ticket_time_accounting, ticket: record, time_unit: -0.5) }
+          let(:value) { ['-1', '0'] }
+
+          it 'finds added record' do
+            expect(result).to include(
+              total_count:     1,
+              object_metadata: include(include(id: record.id.to_s))
+            )
+          end
+        end
+      end
     end
 
     context 'can sort by datetime fields', db_strategy: :reset do

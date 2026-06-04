@@ -21,6 +21,7 @@ class Selector::Sql < Selector::Base
     'has changed',
     'has reached warning',
     'has reached',
+    'in range',
     'is any of',
     'is in working time',
     'is less than',
@@ -581,6 +582,20 @@ class Selector::Sql < Selector::Base
         query << "#{attribute} BETWEEN ? AND ?"
         bind_params.push day_start
         bind_params.push day_end
+      end
+    elsif block_condition[:operator] == 'in range'
+      if (!block_condition[:value].is_a?(Array) || block_condition[:value].size != 2) || (block_condition[:value][0].blank? && block_condition[:value][1].blank?)
+        raise "Invalid value in range: '#{block_condition[:value].inspect}'"
+      elsif block_condition[:value][0].present? && block_condition[:value][1].present?
+        query << "#{attribute} BETWEEN ? AND ?"
+        bind_params.push block_condition[:value][0]
+        bind_params.push block_condition[:value][1]
+      elsif block_condition[:value][0].present?
+        query << "#{attribute} >= ?"
+        bind_params.push block_condition[:value][0]
+      elsif block_condition[:value][1].present?
+        query << "#{attribute} <= ?"
+        bind_params.push block_condition[:value][1]
       end
     elsif block_condition[:operator] == 'before (absolute)'
       query << "#{attribute} <= ?"

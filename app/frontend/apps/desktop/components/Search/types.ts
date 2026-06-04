@@ -19,7 +19,9 @@ import type { Component } from 'vue'
  * ⚠️ We might undo this later directly on the object attributes
  * Intermediate solution until there
  */
-export type FilterSelectorEntityOverride = Pick<FilterSelectorEntry, 'name' | 'label'>
+export type FilterSelectorEntityOverride = Pick<FilterSelectorEntry, 'name' | 'label'> & {
+  labelPlaceholder?: string[]
+}
 
 export type SearchPlugin = {
   name: EnumSearchableModels
@@ -44,7 +46,12 @@ export type SearchPlugin = {
   filterPermissions?: string[]
   detailSearchHeaders: string[] | ((config: ConfigList) => string[])
   detailSearchComponent: Component
-  filterAttributesOverride?: FilterSelectorEntityOverride[]
+  // Either a static list or — for config-derived overrides such as the
+  // accounted-time unit label — a function of the application config,
+  // resolved reactively by the consumer (mirrors `detailSearchHeaders`).
+  filterAttributesOverride?:
+    | FilterSelectorEntityOverride[]
+    | ((config: ConfigList) => FilterSelectorEntityOverride[])
 }
 
 export interface QuickSearchPluginProps {

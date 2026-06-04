@@ -43,6 +43,9 @@ export type OperatorFilterProps = Record<OperatorName, Record<string, unknown>>
 export interface FilterAttribute {
   name: string
   label: string
+  // Optional `%s` placeholders for `label`, interpolated (and themselves
+  // translated) at label output — e.g. the accounted-time unit from config.
+  labelPlaceholder?: string[]
   operators: string[]
   operatorFilterProps?: OperatorFilterProps
   // Two independent relation signals (set by the resolver):

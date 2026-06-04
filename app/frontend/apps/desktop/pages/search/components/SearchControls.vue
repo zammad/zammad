@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 import { computed, nextTick, onBeforeMount, shallowRef, useTemplateRef } from 'vue'
 import { onBeforeRouteUpdate } from 'vue-router'
 
@@ -9,6 +10,7 @@ import CommonBadge from '#shared/components/CommonBadge/CommonBadge.vue'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useRecentSearches } from '#shared/composables/useRecentSearches.ts'
 import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
@@ -16,6 +18,7 @@ import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/Common
 import type { Tab } from '#desktop/components/CommonTabs/types.ts'
 import type { FilterSelectorEntry } from '#desktop/components/Form/fields/FieldFilterSelector/types.ts'
 import { searchPlugins } from '#desktop/components/Search/plugins/index.ts'
+import type { FilterSelectorEntityOverride } from '#desktop/components/Search/types.ts'
 import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'
 
 import SearchEntityFiltersForm from './SearchControls/SearchEntityFiltersForm.vue'
@@ -53,6 +56,25 @@ const selectedEntity = defineModel<string>('selected-entity', {
 })
 
 const inputSearchInstance = useTemplateRef('search-input')
+
+const { config } = storeToRefs(useApplicationStore())
+
+// `filterAttributesOverride` may be config-driven (a function), e.g. the
+// accounted-time unit label. Resolve it per entity against the current config
+// in a computed, so it re-resolves only when the config changes — not on every
+// render — and hands stable references to the child form.
+const filterAttributesOverrideByEntity = computed<
+  Record<string, FilterSelectorEntityOverride[] | undefined>
+>(() =>
+  Object.fromEntries(
+    searchPlugins.map((plugin) => [
+      plugin.name,
+      typeof plugin.filterAttributesOverride === 'function'
+        ? plugin.filterAttributesOverride(config.value)
+        : plugin.filterAttributesOverride,
+    ]),
+  ),
+)
 
 const searchTerm = computed({
   get: () => searchParam.value,
@@ -240,7 +262,7 @@ dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outlin
             :entity="plugin.name"
             :filters="filtersByEntity[plugin.name] ?? []"
             :filter-attributes="entityFields[plugin.name] ?? []"
-            :filter-attributes-override="plugin.filterAttributesOverride"
+            :filter-attributes-override="filterAttributesOverrideByEntity[plugin.name]"
             :filter-updater-fields="filterUpdaterFieldsByEntity[plugin.name]"
             @filters-changed="(entity, value) => emit('entity-filters-changed', entity, value)"
           />

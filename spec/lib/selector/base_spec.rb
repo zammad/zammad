@@ -782,6 +782,68 @@ RSpec.describe Selector::Base, searchindex: true do
     end
   end
 
+  describe 'Text input operators', db_strategy: :reset do
+    let(:field_name) { SecureRandom.hex(8) }
+    let(:ticket)     { create(:ticket, title: SecureRandom.uuid, group: Group.first, owner: agent_owner, customer: default_customer, field_name => 'foobar') }
+
+    before do
+      create(:object_manager_attribute_text, object_name: 'Ticket', name: field_name)
+      ObjectManager::Attribute.migration_execute
+      ticket
+      searchindex_model_reload([Ticket])
+    end
+
+    describe 'when matches' do
+      it 'does match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'matches',
+              value:    'foo*',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'does not match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'matches',
+              value:    'bar*',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
+  end
+
   describe 'Tags' do
     let(:ta) { create(:'tag/item', name: 'a') }
     let(:tb) { create(:'tag/item', name: 'b') }
@@ -1472,6 +1534,56 @@ RSpec.describe Selector::Base, searchindex: true do
               name:     "ticket.#{field_name}",
               operator: 'is greater than or equal to',
               value:    43,
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
+
+    describe 'when in range' do
+      it 'does match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'in range',
+              value:    [42, 42],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'does not match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'in range',
+              value:    ['', '41'],
             },
           ]
         }

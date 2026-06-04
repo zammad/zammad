@@ -126,7 +126,7 @@ const router = useRouter()
       <CommonButton
         :id="`action-menu-${entityId}`"
         ref="popoverTarget"
-        :aria-label="$t(customMenuButtonLabel || 'Action menu button')"
+        :tooltip="customMenuButtonLabel || __('Action menu button')"
         aria-haspopup="true"
         :aria-expanded="popoverIsOpen"
         :aria-controls="popoverIsOpen ? menuId : undefined"

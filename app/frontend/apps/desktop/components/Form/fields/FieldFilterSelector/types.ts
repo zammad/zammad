@@ -8,10 +8,17 @@ import type { FilterSelectorEntityOverride } from '#desktop/components/Search/ty
 
 import type { FormKitInputs } from '@formkit/inputs'
 
-// A single value-side input for an operator. Each compound operator declares
-// one entry per input it needs from the user; `name` identifies the input
-// within the operator's `filterFields` list.
-export type FilterField = Partial<FormSchemaField> & Pick<FormSchemaField, 'type'>
+// A single value-side input for an operator. `name` identifies the input's
+// FormKit node within the row.
+//
+// A compound field nests its inputs under `children` and renders as a FormKit
+// `group`/`list` that aggregates them into one value (e.g. `in range` → a
+// `[min, max]` array). A child may also be a plain string, rendered as static
+// text between the inputs (e.g. the `-` of a range) — invisible to the value.
+export type FilterField = Partial<FormSchemaField> &
+  Pick<FormSchemaField, 'type'> & {
+    children?: (FilterField | string)[]
+  }
 
 export type Operator = {
   name: string

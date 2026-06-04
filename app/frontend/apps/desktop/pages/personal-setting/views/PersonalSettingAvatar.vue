@@ -338,7 +338,7 @@ const { tabs, activeTab } = usePersonalSettingTabs()
                 </button>
                 <CommonButton
                   v-if="avatar.deletable"
-                  :aria-label="$t('Delete this avatar')"
+                  :tooltip="__('Delete this avatar')"
                   :class="{ 'opacity-0 transition-opacity': !isTouchDevice }"
                   class="absolute -end-2 -top-1 text-white group-hover/avatar:opacity-100 focus:opacity-100"
                   icon="x-lg"

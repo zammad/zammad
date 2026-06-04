@@ -14,22 +14,18 @@ import { useSessionStore } from '#shared/stores/session.ts'
 
 import type { FilterSelectorEntry } from '#desktop/components/Form/fields/FieldFilterSelector/types.ts'
 import { useSearchPlugins } from '#desktop/components/Search/plugins/index.ts'
-import { encodeFilters } from '#desktop/pages/search/utils/searchFilterQuery.ts'
+import {
+  encodeFilters,
+  isMeaningfulFilterValue,
+} from '#desktop/pages/search/utils/searchFilterQuery.ts'
 
 import type { Ref } from 'vue'
 
-// An empty array is the natural value for a freshly added multi-select `is`
-// filter (and what remains after the user deselects every option). It carries
-// no constraint and would yield an always-empty search if forwarded, so we
-// treat it as non-meaningful alongside null/undefined/''.
-const isMeaningful = (value: unknown) => {
-  if (value === null || value === undefined || value === '') return false
-  if (Array.isArray(value) && value.length === 0) return false
-  return true
-}
-
+// Drop rows whose value carries no constraint (empty multi-select, all-blank
+// `in range`, …) — they'd yield an always-empty search. Shares the predicate
+// with the URL encoder so both sides agree on what counts as a real filter.
 export const dropEmptyFilterValues = (filters: FilterSelectorEntry[]): FilterSelectorEntry[] =>
-  filters.filter((entry) => entry && isMeaningful(entry.value))
+  filters.filter((entry) => entry && isMeaningfulFilterValue(entry.value))
 
 export const useSearchAdvancedFilters = (
   selectedEntity: Ref<string>,
@@ -162,7 +158,10 @@ export const useSearchAdvancedFilters = (
             filterRelationFields.push({ name: attribute.name, relation: attribute.relation })
             continue
           }
-          if (attribute.autocompleteFilterType && isMeaningful(filterValue.get(attribute.name))) {
+          if (
+            attribute.autocompleteFilterType &&
+            isMeaningfulFilterValue(filterValue.get(attribute.name))
+          ) {
             filterAutocompleteFields.push({
               name: attribute.name,
               autocompleteFilterType: attribute.autocompleteFilterType,

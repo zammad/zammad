@@ -275,4 +275,31 @@ describe('searchFilterQuery', () => {
       ])
     })
   })
+
+  describe('in range (array value)', () => {
+    const rangeAttributes: FilterAttribute[] = [
+      {
+        name: 'ticket.escalation_count',
+        label: 'Escalation count',
+        operators: ['in range'],
+      },
+    ]
+
+    it('round-trips a [min, max] array value', () => {
+      const encoded = encodeFilters([
+        { name: 'ticket.escalation_count', operator: 'in range', value: [30, 60] },
+      ])
+
+      // qs coerces array members to strings, like every other URL value.
+      expect(decodeFilters(encoded, rangeAttributes)).toEqual([
+        { name: 'ticket.escalation_count', operator: 'in range', value: ['30', '60'] },
+      ])
+    })
+
+    it('drops an all-blank range so it never reaches the backend', () => {
+      expect(
+        encodeFilters([{ name: 'ticket.escalation_count', operator: 'in range', value: ['', ''] }]),
+      ).toEqual({})
+    })
+  })
 })

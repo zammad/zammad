@@ -242,7 +242,7 @@ const { isTouchDevice } = useTouchDevice()
           :aria-controls="popoverIsOpen ? 'user-taskbar-tabs-popover' : undefined"
           aria-haspopup="true"
           :aria-expanded="popoverIsOpen"
-          :aria-label="$t('List of all user taskbar tabs')"
+          :tooltip="__('List of all user taskbar tabs')"
           :class="{
             'bg-blue-800! text-white!': popoverIsOpen,
           }"

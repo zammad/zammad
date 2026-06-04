@@ -217,7 +217,7 @@ const { tabs, activeTab } = usePersonalSettingTabs()
               :class="{ 'bg-transparent!': action.variant === 'danger' }"
               size="medium"
               :variant="action.variant"
-              :aria-label="(action?.ariaLabel as Function)(item)"
+              :tooltip="(action?.ariaLabel as Function)(item)"
               @click="action.onClick?.(item)"
             />
           </template>

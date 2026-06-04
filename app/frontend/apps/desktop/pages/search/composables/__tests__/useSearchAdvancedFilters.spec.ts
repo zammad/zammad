@@ -24,4 +24,19 @@ describe('dropEmptyFilterValues', () => {
 
     expect(dropEmptyFilterValues(filters).map((entry) => entry.name)).toEqual(['ticket.state_id'])
   })
+
+  it('drops an all-blank `in range` value but keeps a partial (min- or max-only) one', () => {
+    const filters: FilterSelectorEntry[] = [
+      { name: 'ticket.a', operator: 'in range', value: ['', ''] },
+      { name: 'ticket.b', operator: 'in range', value: [30, ''] },
+      { name: 'ticket.c', operator: 'in range', value: ['', 60] },
+      { name: 'ticket.d', operator: 'in range', value: [30, 60] },
+    ]
+
+    expect(dropEmptyFilterValues(filters).map((entry) => entry.name)).toEqual([
+      'ticket.b',
+      'ticket.c',
+      'ticket.d',
+    ])
+  })
 })

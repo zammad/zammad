@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getTimeAccountingDisplayUnit } from '#shared/entities/ticket/composables/useTicketAccountedTime.ts'
 import { EnumObjectManagerObjects, EnumSearchableModels } from '#shared/graphql/types.ts'
 
 import TicketListTable from '#desktop/components/Ticket/TicketListTable.vue'
@@ -28,10 +29,26 @@ export default <SearchPlugin>{
     return headers
   },
   detailSearchComponent: TicketListTable,
-  filterAttributesOverride: [
-    {
-      label: __('Ticket number'),
-      name: 'ticket.number',
-    },
-  ],
+  // A function of config so the accounted-time field can carry the configured
+  // time-accounting unit (only when one is set) — the label is interpolated and
+  // translated at output, so the override stays translation-free.
+  filterAttributesOverride: (config) => {
+    const accountedTimeUnit = getTimeAccountingDisplayUnit(config)
+
+    return [
+      {
+        label: __('Ticket number'),
+        name: 'ticket.number',
+      },
+      ...(accountedTimeUnit
+        ? [
+            {
+              name: 'ticket.time_unit',
+              label: __('Accounted time - %s'),
+              labelPlaceholder: [accountedTimeUnit],
+            },
+          ]
+        : []),
+    ]
+  },
 }

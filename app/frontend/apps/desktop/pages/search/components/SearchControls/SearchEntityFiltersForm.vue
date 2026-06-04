@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { isEqual } from 'lodash-es'
-import { computed, nextTick, useTemplateRef, watch, type Ref } from 'vue'
+import { computed, nextTick, toRef, useTemplateRef, watch, type Ref } from 'vue'
 
 import Form from '#shared/components/Form/Form.vue'
 import type { FormRef, FormSchemaField, FormFieldValue } from '#shared/components/Form/types.ts'
@@ -40,13 +40,20 @@ const formInstance = useTemplateRef('form')
 
 const { updateFieldValues, formReset, triggerFormUpdater } = useForm(formInstance as Ref<FormRef>)
 
+// Pass as refs, not by value: `Form` resolves the schema once, so a plain
+// `props.x` would be captured statically and later updates (e.g. the
+// config-driven `filterAttributesOverride`) would never reach the live field.
+// Vue unwraps refs inside the reactive schema data, keeping them reactive.
+const filterAttributes = toRef(props, 'filterAttributes')
+const filterAttributesOverride = toRef(props, 'filterAttributesOverride')
+
 const schema = computed<FormSchemaField[]>(() => [
   {
     type: 'filterSelector',
     name: 'filters',
     props: {
-      filterAttributes: props.filterAttributes,
-      filterAttributesOverride: props.filterAttributesOverride,
+      filterAttributes,
+      filterAttributesOverride,
     },
   },
 ])

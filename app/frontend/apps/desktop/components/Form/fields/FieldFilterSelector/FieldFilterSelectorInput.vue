@@ -2,13 +2,14 @@
 
 <script setup lang="ts">
 import { FormKitSchema } from '@formkit/vue'
-import { isEqual, keyBy, omit } from 'lodash-es'
-import { computed, nextTick, ref, toRef, watch } from 'vue'
+import { cloneDeep, isEqual, keyBy, omit } from 'lodash-es'
+import { computed, nextTick, ref, shallowRef, toRef, watch } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { FormFieldValue } from '#shared/components/Form/types.ts'
 import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import { i18n } from '#shared/i18n.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
@@ -99,6 +100,25 @@ const decodeFieldOption = (value: string): { name: string; operator: string | nu
   return { name, operator: operator || null }
 }
 
+// The filter selector renders its own labels (bypassing FormKit's
+// translateWrapperProps), so translate here — including `%s` placeholders,
+// which are themselves translated (a config-derived unit key like 'hour(s)';
+// plain dynamic placeholders pass through i18n.t unchanged).
+const translateFilterLabel = (attribute: Pick<FilterAttribute, 'label' | 'labelPlaceholder'>) =>
+  i18n.t(
+    attribute.label,
+    ...(attribute.labelPlaceholder ?? []).map((placeholder) => i18n.t(placeholder)),
+  )
+
+// Exposed to the schema so the legend's `$`-expression re-translates its label
+// reactively (on config or locale change), the way a FormKit field label does.
+const schemaData = {
+  legendLabel: (name: string) => {
+    const attribute = attributesByName.value[name]
+    return attribute ? translateFilterLabel(attribute) : ''
+  },
+}
+
 const fieldOptions = computed(() =>
   availableAttributes.value.map((attribute) => {
     let currentAttribute = { ...attribute }
@@ -111,11 +131,11 @@ const fieldOptions = computed(() =>
       })
 
     if (currentAttribute.operators.length <= 1) {
-      return { label: currentAttribute.label, value: currentAttribute.name }
+      return { label: translateFilterLabel(currentAttribute), value: currentAttribute.name }
     }
 
     return {
-      label: currentAttribute.label,
+      label: translateFilterLabel(currentAttribute),
       value: currentAttribute.name,
       children: currentAttribute.operators.map((operator) => ({
         label: operators[operator]?.label ?? operator,
@@ -219,67 +239,150 @@ const removeField = (attributeName: string) => {
   props.context.node.input(activeFilters.value.filter((entry) => entry.name !== attributeName))
 }
 
+// Used for every field. The initial value is seeded declaratively in the schema,
+// so here we only sync external value changes into the node and committed
+// changes back out. Values are cloned on each hand-off — sharing a reference
+// with the node's reactive value aliases the two reactive trees and recurses.
 const valueHandlingPlugin = (attributeName: string, inputName: string) => (node: FormKitNode) => {
-  // Set initial value, when it exists, otherwise it's not needed.
-  const initial = filtersByName.value[attributeName]?.[inputName]
-
-  if (initial !== undefined && initial !== null) node.input(initial, false)
-
-  // External value updates taskbar subscriptions need to be pushed into
-  // the node — `rowStructure` is intentionally value-agnostic, so the schema
-  // doesn't re-render on pure value changes and the input would otherwise
-  // keep showing its mount-time value.
+  // Sync external value updates (taskbar / deep-link restore) into the node; the
+  // value-agnostic schema won't rebuild for them on its own.
   const stopExternalSync = watch(
     () => filtersByName.value[attributeName]?.[inputName],
     (updatedValue) => {
       if (isEqual(node._value, updatedValue)) return
 
-      node.input(updatedValue, false)
+      // A container can't take the value via `node.input` (it mangles into the
+      // children); set each child directly instead.
+      if (node.type !== 'input') {
+        if (!Array.isArray(updatedValue)) return
+
+        updatedValue.forEach((slot, index) => {
+          const child = node.children?.[index]
+          if (child && !isEqual(child._value, slot)) child.input(cloneDeep(slot), false)
+        })
+        return
+      }
+
+      node.input(cloneDeep(updatedValue), false)
     },
   )
 
   node.on('destroying', stopExternalSync)
 
   node.on('commit', ({ payload }: { payload: FormFieldValue }) => {
-    // Skip updates from the external-sync watch above
-    // Otherwise, the we would end up rippling down the values
+    // Already in sync (e.g. from the external-sync watch) — nothing to write.
     if (isEqual(filtersByName.value[attributeName]?.[inputName], payload)) return
 
-    updateFieldEntry(attributeName, { [inputName]: payload })
+    updateFieldEntry(attributeName, { [inputName]: cloneDeep(payload) })
   })
+
+  // Don't let FormKit inherit this plugin onto child nodes — a child would
+  // commit its own value over the container's aggregated one.
+  return false
 }
 
-// Renders one of the operator's filter-field schema fragments into a FormKit
-// schema node.
+// Builds the FormKit schema node for one operator filter-field. Runs inside a
+// watcher (not a computed), so it can read the current value to seed `value:`
+// without making the schema rebuild on every keystroke.
 //
-// TODO: row labelling needs to be revisited once operators beyond `matches`
-// land. The current fallback to `attribute.label` only works for single-input
-// operators where the operator label can be implicit. Compound operators
-// (`between`, `is empty`, …) need a real composition rule that combines
-// attribute label, operator label, and per-filterField labels — likely a
-// small helper, owned at the renderer level, not the per-field level.
+// A single field uses FormKit's own label (translated + associated by the
+// form). A compound field (e.g. `in range`) groups its inputs in a native
+// `<fieldset>` whose `<legend>` names them; each sub-input keeps its own
+// screen-reader-only FormKit label.
 const schemaFilterField = (
   attribute: FilterAttribute,
   fieldSchema: FilterField,
 ): FormKitSchemaNode => {
-  const { type, name, ...inputProps } = fieldSchema
+  const { type, name, children, props: fieldProps, ...inputProps } = fieldSchema
   const inputName = name ?? 'value'
 
   const nodeId = inputIdFor(attribute.name, inputName)
-  return {
+
+  const node: Record<string, unknown> = {
     ...inputProps,
+    ...fieldProps,
     $formkit: type,
     id: nodeId,
     key: nodeId,
     name: inputName,
+    // Clone deep is needed for values which have a complex structure (e.g. arrays for list usage).
+    value: cloneDeep(filtersByName.value[attribute.name]?.[inputName]),
     classes: {
       outer: 'w-full',
     },
-    label: attribute.label,
     alternativeBackground: true,
     ignore: true,
     plugins: [valueHandlingPlugin(attribute.name, inputName)],
-  } as FormKitSchemaNode
+  }
+
+  // A compound field renders its `children`: the inputs FormKit aggregates into
+  // the container value, plus any plain-string separators. Each input keeps its
+  // own screen-reader-only label; the surrounding fieldset/legend (below) names
+  // the group — so a screen reader reads e.g. "Escalation count", then "min" /
+  // "max".
+  if (type === 'list' || type === 'group') {
+    const rowChildren = (children ?? []).map((child, index) => {
+      if (typeof child === 'string') {
+        // DOM-only separator (e.g. `-`), invisible to the list's aggregation.
+        return {
+          $el: 'span',
+          attrs: { class: 'flex h-10 shrink-0 items-center' },
+          children: child,
+        } as FormKitSchemaNode
+      }
+
+      const { type: childType, props: childProps, ...childRest } = child
+      const childId = inputIdFor(attribute.name, `${inputName}-${index}`)
+
+      // Each input is a normal FormKit field; its `label` names the bound but
+      // is rendered screen-reader-only (`labelSrOnly`) — the legend and visible
+      // placeholder are the sighted affordances. Input children carry no value
+      // plugin — the container owns the value.
+      return Object.assign({}, childRest, childProps, {
+        $formkit: childType,
+        id: childId,
+        key: childId,
+        classes: { outer: 'w-full' },
+        alternativeBackground: true,
+        labelSrOnly: true,
+      }) as FormKitSchemaNode
+    })
+
+    node.children = [
+      {
+        $el: 'div',
+        attrs: { class: 'flex w-full items-end gap-2' },
+        children: rowChildren,
+      },
+    ]
+
+    // Group the inputs in a native fieldset; the legend names them and carries
+    // the attribute label (+ any placeholder) via our own translation.
+    return {
+      $el: 'fieldset',
+      attrs: { class: 'flex w-full min-w-0 flex-col border-0 p-0' },
+      children: [
+        {
+          $el: 'legend',
+          attrs: {
+            // `cursor-default` so the clickable legend matches a field label.
+            class: 'mb-1 block w-fit cursor-default text-sm text-gray-100 dark:text-neutral-400',
+            // A `<legend>` has no native click-to-focus (a `<label for>` would
+            // double-label the first input), so focus it ourselves.
+            onClick: () => focusFieldInput(attribute.name),
+          },
+          children: [`$legendLabel('${attribute.name}')`],
+        },
+        node as FormKitSchemaNode,
+      ],
+    } as FormKitSchemaNode
+  }
+
+  // Single field: FormKit renders its own label, translated by the form's
+  // `translateWrapperProps` (with `labelPlaceholder` interpolated where present).
+  node.label = attribute.label
+  node.labelPlaceholder = attribute.labelPlaceholder
+  return node as FormKitSchemaNode
 }
 
 const resolveOperatorFilterFields = (attribute: FilterAttribute, operator: string) => {
@@ -298,7 +401,10 @@ const resolveOperatorFilterFields = (attribute: FilterAttribute, operator: strin
   })
 }
 
-const filterFieldsSchema = computed<FormKitSchemaNode[]>(() =>
+// Rebuilt only on row-structure changes, never on value edits — a watcher
+// rather than a computed, so the build can read current values to seed fields
+// declaratively (see `schemaFilterField`) without that read re-running it.
+const buildFilterFieldsSchema = (): FormKitSchemaNode[] =>
   rowStructure.value.map((row) => {
     const filterOperatorFields = resolveOperatorFilterFields(row.attribute, row.operator)
 
@@ -325,7 +431,7 @@ const filterFieldsSchema = computed<FormKitSchemaNode[]>(() =>
                 icon: 'x-lg',
                 variant: 'remove',
                 disabled: hasReachedMin.value,
-                title: __('Remove attribute'),
+                tooltip: __('Remove filter'),
                 onClick: () => removeField(row.name),
               },
             },
@@ -333,14 +439,21 @@ const filterFieldsSchema = computed<FormKitSchemaNode[]>(() =>
         },
       ],
     } as FormKitSchemaNode
-  }),
-)
+  })
+
+// `shallowRef`: the schema holds component references (`$cmp`) that must not be
+// deep-reactive-wrapped, and it's replaced wholesale on each rebuild.
+const filterFieldsSchema = shallowRef<FormKitSchemaNode[]>([])
+
+watch(rowStructure, () => (filterFieldsSchema.value = buildFilterFieldsSchema()), {
+  immediate: true,
+})
 </script>
 
 <template>
   <fieldset class="bg-blue-200 dark:bg-gray-700" :name="context.node.name">
     <ul class="grid grid-cols-4 items-end gap-x-6 gap-y-3">
-      <FormKitSchema :schema="filterFieldsSchema" />
+      <FormKitSchema :schema="filterFieldsSchema" :data="schemaData" />
 
       <li v-if="addFieldActive">
         <FormKit

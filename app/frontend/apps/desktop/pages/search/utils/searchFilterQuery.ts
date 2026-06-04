@@ -30,8 +30,17 @@ const QS_OPTIONS: IStringifyOptions & IParseOptions = {
 export const isFilterParamKey = (key: string): boolean =>
   key === FILTER_NAMESPACE || key.startsWith(`${FILTER_NAMESPACE}.`)
 
+// Whether a filter value carries a real constraint. Arrays (e.g. the
+// `[min, max]` of `in range`) count only if some element does, so an all-blank
+// range is dropped rather than forwarded to the backend (which rejects it).
+export const isMeaningfulFilterValue = (value: unknown): boolean => {
+  if (value === null || value === undefined || value === '') return false
+  if (Array.isArray(value)) return value.some(isMeaningfulFilterValue)
+  return true
+}
+
 // Single predicate used on both sides: a filter is encodable iff it carries
-// a non-empty `name`/`operator` and a non-empty `value`. Object/array values
+// a non-empty `name`/`operator` and a meaningful `value`. Object/array values
 // pass — qs nests them under `filter.<i>.value.*` automatically.
 const isValidFilter = (entry: unknown): entry is ValidFilterCandidate => {
   if (!entry || typeof entry !== 'object') return false
@@ -40,11 +49,7 @@ const isValidFilter = (entry: unknown): entry is ValidFilterCandidate => {
   if (typeof candidate.name !== 'string' || candidate.name === '') return false
   if (typeof candidate.operator !== 'string' || candidate.operator === '') return false
 
-  const { value } = candidate
-  if (value === null || value === undefined || value === '') return false
-  if (Array.isArray(value) && value.length === 0) return false
-
-  return true
+  return isMeaningfulFilterValue(candidate.value)
 }
 
 export const encodeFilters = (filters: FilterSelectorEntry[]): Record<string, string> => {

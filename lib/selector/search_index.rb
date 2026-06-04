@@ -407,6 +407,16 @@ class Selector::SearchIndex < Selector::Base
       t[:range][key_tmp][:gte] = "#{Time.zone.today}T00:00:00Z"
       t[:range][key_tmp][:lte] = "#{Time.zone.today}T23:59:59Z"
       query_must.push t
+    elsif data[:operator] == 'in range'
+      if (!data[:value].is_a?(Array) || data[:value].size != 2) || (data[:value][0].blank? && data[:value][1].blank?)
+        raise "Invalid value in range '#{data[:value]}'."
+      end
+
+      t[:range]                = {}
+      t[:range][key_tmp]       = {}
+      t[:range][key_tmp][:gte] = data[:value][0] if data[:value][0].present?
+      t[:range][key_tmp][:lte] = data[:value][1] if data[:value][1].present?
+      query_must.push t
     else
       raise "unknown operator '#{data[:operator]}' for #{key}"
     end
@@ -421,7 +431,7 @@ class Selector::SearchIndex < Selector::Base
     if query_must_not.present?
       data[:bool][:must_not] = query_must_not
     end
-
+    Rails.logger.debug t.inspect
     data
   end
 

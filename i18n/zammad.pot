@@ -244,7 +244,7 @@ msgid "%s ended switch to |%s|!"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/composables/useSearchTitle.ts:10
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:177
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:199
 msgid "%s filter(s)"
 msgstr ""
 
@@ -977,6 +977,10 @@ msgstr ""
 msgid "Accounted time"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:47
+msgid "Accounted time - %s"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:79
 msgid "Accounted time unit"
 msgstr ""
@@ -1028,6 +1032,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Action execution"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue:129
+msgid "Action menu button"
 msgstr ""
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:12
@@ -1281,7 +1289,7 @@ msgstr ""
 msgid "Add empty checklist"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:355
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:468
 msgid "Add filter"
 msgstr ""
 
@@ -1442,7 +1450,7 @@ msgstr ""
 msgid "Advance to next ticket from overview"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:213
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:235
 msgid "Advanced filters"
 msgstr ""
 
@@ -3375,15 +3383,15 @@ msgstr ""
 msgid "Clear Selection"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:95
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:117
 msgid "Clear all"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:95
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:117
 msgid "Clear all advanced filter(s)?"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:180
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:202
 msgid "Clear all filters"
 msgstr ""
 
@@ -3874,7 +3882,7 @@ msgstr ""
 msgid "Context"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/SplitButton/SplitButton.vue:107
+#: app/frontend/apps/desktop/components/SplitButton/SplitButton.vue:118
 msgid "Context menu"
 msgstr ""
 
@@ -7647,7 +7655,7 @@ msgstr ""
 msgid "Found organizations"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:16
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:17
 msgid "Found tickets"
 msgstr ""
 
@@ -11353,7 +11361,7 @@ msgstr ""
 msgid "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:248
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:270
 msgid "No advanced filters available for %s."
 msgstr ""
 
@@ -12884,7 +12892,7 @@ msgstr ""
 msgid "Please contact your administrator."
 msgstr ""
 
-#: lib/selector/sql.rb:199
+#: lib/selector/sql.rb:200
 msgid "Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)"
 msgstr ""
 
@@ -13662,10 +13670,6 @@ msgstr ""
 msgid "Remove all values"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:328
-msgid "Remove attribute"
-msgstr ""
-
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:22
 msgid "Remove authenticator app"
 msgstr ""
@@ -13673,6 +13677,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:38
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:379
 msgid "Remove checklist"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:434
+msgid "Remove filter"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:121
@@ -14456,7 +14464,7 @@ msgstr ""
 msgid "Search all"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:196
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:218
 msgid "Search entity"
 msgstr ""
 
@@ -14796,7 +14804,7 @@ msgstr ""
 msgid "Select all entries"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:351
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:464
 msgid "Select attribute"
 msgstr ""
 
@@ -18226,7 +18234,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/signature.coffee:15
 #: app/assets/javascripts/app/models/text_module.coffee:15
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:19
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:14
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/information.ts:10
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:10
@@ -18465,7 +18473,7 @@ msgstr ""
 msgid "Ticket merged successfully"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:33
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:40
 msgid "Ticket number"
 msgstr ""
 
@@ -21542,7 +21550,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:47
-#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:19
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:16
 msgid "hour(s)"
 msgstr ""
 
@@ -21647,6 +21655,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:32
 msgid "in process"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/in-range.ts:6
+msgid "in range"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
@@ -21867,6 +21879,10 @@ msgstr ""
 msgid "matches regex"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/in-range.ts:27
+msgid "max"
+msgstr ""
+
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:69
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco:2
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:23
@@ -21887,13 +21903,17 @@ msgstr ""
 msgid "message"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/in-range.ts:20
+msgid "min"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:120
 msgid "minute"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:51
-#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:23
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:20
 msgid "minute(s)"
 msgstr ""
 
@@ -22134,7 +22154,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:49
-#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:21
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:18
 msgid "quarter-hour(s)"
 msgstr ""
 

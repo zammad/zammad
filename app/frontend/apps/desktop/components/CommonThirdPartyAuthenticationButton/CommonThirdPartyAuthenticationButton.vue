@@ -37,7 +37,7 @@ const csrfToken = getCSRFToken()
     <CommonButton
       type="submit"
       :class="buttonClass"
-      :aria-label="buttonLabel"
+      :tooltip="buttonLabel"
       :size="buttonSize"
       :variant="buttonVariant"
       :disabled="disabled"

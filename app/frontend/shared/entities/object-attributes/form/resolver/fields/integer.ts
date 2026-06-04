@@ -12,8 +12,17 @@ export class FieldResolverInteger extends FieldResolver {
       props: {
         min: this.attributeConfig.min,
         max: this.attributeConfig.max,
+        // Coerce the stored value to an integer (FormKit `number` input).
+        number: 'integer',
       },
     }
+  }
+
+  public override getFieldFilterOperators() {
+    // A single `in range` operator (two number inputs for min / max) covers
+    // the >= / <= / = scenarios via blank-able bounds, matching the backend
+    // selector operator of the same name.
+    return ['in range']
   }
 }
 
