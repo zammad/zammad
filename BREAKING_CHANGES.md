@@ -16,13 +16,6 @@ Calendars can no longer be configured with a local file path as the iCal feed so
 ⚠️ If you previously used a local `.ics`
 file path, host the file on an HTTP server and update the calendar's iCal feed URL accordingly.
 
-### Tags are now unique case-insensitively
-
-Zammad now enforces case-insensitive uniqueness for tags. On update, duplicate
-tags (e.g. `Support` and `support`) are automatically consolidated into a single
-normalized tag. All existing references to the removed duplicates are updated to
-point to the consolidated tag - no data is lost.
-
 ### Deprecated `es-ca` locale inactivated
 
 The deprecated `es-ca` locale (Catalan) is no longer offered for selection.
