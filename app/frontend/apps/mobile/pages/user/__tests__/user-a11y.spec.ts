@@ -13,6 +13,6 @@ describe('testing user a11y', () => {
 
     await waitUntilApisResolved(mockUser, mockAttributes)
 
-    expect(view.container).toBeAccessible()
+    await expect(view.container).toBeAccessible()
   })
 })

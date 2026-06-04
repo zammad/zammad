@@ -69,6 +69,7 @@ Object.defineProperty(Node.prototype, 'getClientRects', {
 Object.defineProperty(Element.prototype, 'scroll', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollBy', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollIntoView', { value: vi.fn() })
+Object.defineProperty(Element.prototype, 'scrollTo', { value: vi.fn() })
 
 const descriptor = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src')!
 
@@ -287,9 +288,6 @@ expect.extend({
     return (toBeDisabled as any).call(this, received, ...args)
   },
 })
-
-process.on('uncaughtException', (e) => console.log('Uncaught Exception', e))
-process.on('unhandledRejection', (e) => console.log('Unhandled Rejection', e))
 
 declare module 'vitest' {
   interface TestContext {

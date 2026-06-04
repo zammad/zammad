@@ -8,6 +8,7 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import type { ObjectSelectOption } from '#shared/entities/object-attributes/form/resolver/fields/select.ts'
 import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import { mockAutocompleteSearchTagQuery } from '#shared/entities/tags/graphql/queries/autocompleteTags.mocks.ts'
 
 import type { FilterSelectorEntityOverride } from '#desktop/components/Search/types.ts'
 
@@ -211,6 +212,12 @@ describe('Fields - FieldFilterSelector', () => {
     // FieldFilterSelectorInput and reaches the rendered tags field. Tags use
     // the `contains one` operator (matches the existing ES + SQL selector
     // wiring), unlike the other relation autocompletes which use `is`.
+
+    // FieldTagsWrapper sets defaultFilter: '*' on mount, which immediately
+    // triggers an Apollo query — mock it so the test doesn't leave an
+    // unhandled rejection behind.
+    mockAutocompleteSearchTagQuery({ autocompleteSearchTag: [] })
+
     const view = renderFilterSelector(
       [{ name: 'ticket.tags', operator: 'contains one', value: [] }],
       {

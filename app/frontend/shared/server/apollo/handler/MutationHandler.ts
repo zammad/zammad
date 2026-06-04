@@ -29,7 +29,7 @@ export default class MutationHandler<
             errors: UserErrors
           }
 
-          if (errors) {
+          if (errors?.length) {
             const userErrors = new UserError(errors, this.handlerId)
 
             return reject(userErrors)

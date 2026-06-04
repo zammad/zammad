@@ -30,6 +30,6 @@ describe('testing organization a11y', () => {
 
     await waitUntil(() => mockApi.calls.resolve)
 
-    expect(view.container).toBeAccessible()
+    await expect(view.container).toBeAccessible()
   })
 })
