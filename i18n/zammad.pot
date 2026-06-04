@@ -2290,7 +2290,7 @@ msgstr ""
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
 #: app/policies/pundit_policy.rb:18
-#: lib/user_context.rb:26
+#: lib/user_context.rb:37
 msgid "Authentication required"
 msgstr ""
 
@@ -2538,7 +2538,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee:156
 #: app/assets/javascripts/app/controllers/import_kayako.coffee:158
-#: app/assets/javascripts/app/controllers/import_otrs.coffee:154
+#: app/assets/javascripts/app/controllers/import_otrs.coffee:155
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee:156
 msgid "Background process did not start or has not finished! Please contact your support."
 msgstr ""
@@ -4411,7 +4411,7 @@ msgstr ""
 msgid "Current state of configured settings (excluding passwords and tokens)"
 msgstr ""
 
-#: app/controllers/application_controller/has_user.rb:43
+#: app/controllers/application_controller/has_user.rb:57
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
 
@@ -11919,7 +11919,7 @@ msgstr ""
 msgid "OK, I've saved my recovery codes"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/import_otrs.coffee:175
+#: app/assets/javascripts/app/controllers/import_otrs.coffee:176
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:11
 msgid "OTRS"
 msgstr ""
@@ -17107,7 +17107,7 @@ msgstr ""
 msgid "The priority rules instruct the AI agent on how to add tags for incoming tickets."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:302
+#: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The private PGP key could not be found."
 msgstr ""
 
@@ -17200,7 +17200,7 @@ msgstr ""
 msgid "The provider configuration is disabled. Please set up the provider before proceeding in |AI > Providers|."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:302
+#: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The public PGP key could not be found."
 msgstr ""
 
@@ -17666,7 +17666,7 @@ msgstr ""
 msgid "There are more than 1000 tickets in the Zendesk system. Due to API rate limit restrictions, Zammad can't get the exact number of tickets yet and has to fetch them in batches of 1000. This might take some time, better grab a cup of coffee. The total number of tickets gets updated as soon as the currently known number is surpassed."
 msgstr ""
 
-#: app/models/calendar.rb:303
+#: app/models/calendar.rb:312
 msgid "There are no business hours configured."
 msgstr ""
 
@@ -18935,7 +18935,7 @@ msgstr ""
 msgid "Token access"
 msgstr ""
 
-#: app/models/token/permissions.rb:20
+#: app/models/token/permissions.rb:22
 msgid "Token authorization failed."
 msgstr ""
 
@@ -19811,7 +19811,7 @@ msgstr ""
 msgid "User Organization Selector - email"
 msgstr ""
 
-#: app/models/user/permissions.rb:48
+#: app/models/user/permissions.rb:50
 msgid "User authorization failed."
 msgstr ""
 

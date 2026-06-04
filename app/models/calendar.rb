@@ -157,6 +157,10 @@ returns
   def sync(without_save = nil)
     return if !ical_url
 
+    if ical_url.present? && ical_url.to_s !~ %r{^http}i
+      Rails.logger.warn(__("Calendar ID #{id} uses a local file path as ical_url ('#{ical_url}'). This is deprecated and will be removed in a future version. Use http(s) URLs instead."))
+    end
+
     # only sync every 5 days
     if id
       cache_key = "CalendarIcal::#{id}"
@@ -219,18 +223,25 @@ returns
 
   def self.fetch_parse(location)
     if location.match?(%r{^http}i)
-      result = UserAgent.get(location)
+      result = UserAgent.get(location, {}, { validate_safety: { allow_private: true } })
       if !result.success?
         raise result.error
       end
 
       cal_file = result.body
     else
+      ActiveSupport::Deprecation.new.warn(
+        'Local file paths for Calendar.ical_url are deprecated and will be removed in a future version. ' \
+        'Use http(s) URLs instead.'
+      )
       cal_file = File.read(location)
     end
 
     cals = Icalendar::Calendar.parse(cal_file)
     cal = cals.first
+
+    return {} if cal.nil?
+
     events = {}
     cal.events.each do |event|
       if event.rrule.present?

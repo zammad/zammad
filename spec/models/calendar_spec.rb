@@ -65,10 +65,17 @@ RSpec.describe Calendar, type: :model do
 
     describe '#public_holidays' do
       subject(:calendar) do
-        create(:calendar, ical_url: Rails.root.join('test/data/calendar/calendar1.ics'))
+        create(:calendar, ical_url: 'http://test/calendar1.ics')
       end
 
-      before { travel_to Time.zone.parse('2017-08-24T01:04:44Z0') }
+      before do
+        allow(HostnameSafetyCheck).to receive(:validate!).and_return(true)
+        stub_request(:get, 'http://test/calendar1.ics')
+          .to_return(body: Rails.root.join('test/data/calendar/calendar1.ics').read)
+        stub_request(:get, 'http://test/calendar3.ics')
+          .to_return(body: Rails.root.join('test/data/calendar/calendar3.ics').read)
+        travel_to Time.zone.parse('2017-08-24T01:04:44Z0')
+      end
 
       context 'on creation' do
         it 'is computed from iCal event data (implicitly via #sync), from one year before to three years after' do
@@ -82,7 +89,7 @@ RSpec.describe Calendar, type: :model do
 
         context 'with one-time and n-time (recurring) events' do
           subject(:calendar) do
-            create(:calendar, ical_url: Rails.root.join('test/data/calendar/calendar3.ics'))
+            create(:calendar, ical_url: 'http://test/calendar3.ics')
           end
 
           it 'accurately computes/imports events' do
@@ -106,10 +113,17 @@ RSpec.describe Calendar, type: :model do
 
   describe '#sync' do
     subject(:calendar) do
-      create(:calendar, ical_url: Rails.root.join('test/data/calendar/calendar1.ics'), default: false)
+      create(:calendar, ical_url: 'http://test/calendar1.ics', default: false)
     end
 
-    before { travel_to Time.zone.parse('2017-08-24T01:04:44Z0') }
+    before do
+      allow(HostnameSafetyCheck).to receive(:validate!).and_return(true)
+      stub_request(:get, 'http://test/calendar1.ics')
+        .to_return(body: Rails.root.join('test/data/calendar/calendar1.ics').read)
+      stub_request(:get, 'http://test/calendar2.ics')
+        .to_return(body: Rails.root.join('test/data/calendar/calendar2.ics').read)
+      travel_to Time.zone.parse('2017-08-24T01:04:44Z0')
+    end
 
     context 'when called explicitly after creation' do
       it 'writes #public_holidays to the cache (valid for 1 day)' do
@@ -173,7 +187,7 @@ RSpec.describe Calendar, type: :model do
       end
 
       context 'and iCal URL has changed' do
-        before { calendar.assign_attributes(ical_url: Rails.root.join('test/data/calendar/calendar2.ics')) }
+        before { calendar.assign_attributes(ical_url: 'http://test/calendar2.ics') }
 
         it 'replaces #public_holidays with event data computed from new iCal URL' do
           expect { calendar.save }
@@ -192,7 +206,9 @@ RSpec.describe Calendar, type: :model do
 
       context 'when verifying that no duplicate events are synced' do
         before do
-          calendar.assign_attributes(ical_url: Rails.root.join('test/data/calendar/calendar_duplicate_check.ics'))
+          stub_request(:get, 'http://test/calendar_duplicate_check.ics')
+            .to_return(body: Rails.root.join('test/data/calendar/calendar_duplicate_check.ics').read)
+          calendar.assign_attributes(ical_url: 'http://test/calendar_duplicate_check.ics')
           calendar.sync
         end
 
@@ -477,6 +493,29 @@ RSpec.describe Calendar, type: :model do
   describe '.timezones' do
     it 'includes known zones' do
       expect(described_class.timezones.keys).to include('GMT', 'Europe/Berlin', 'Atlantic/Reykjavik')
+    end
+  end
+
+  describe '#sync error handling' do
+    let(:calendar) { create(:calendar) }
+
+    it 'logs errors to last_log on invalid HTTP response' do
+      error = instance_double(UserAgent::Result, success?: false, error: 'No such file https://example.com/cal.ics, 404!')
+      allow(UserAgent).to receive(:get).and_return(error)
+
+      calendar.update_column(:ical_url, 'https://example.com/cal.ics')
+      expect { calendar.sync }.not_to raise_error
+      expect(calendar.last_log).to include('No such file')
+    end
+
+    it 'logs errors to last_log on HostnameSafetyCheck error' do
+      allow(HostnameSafetyCheck).to receive(:validate!).and_raise(
+        HostnameSafetyCheck::LoopbackIpError.new('127.0.0.1')
+      )
+
+      calendar.update_column(:ical_url, 'http://127.0.0.1/cal.ics')
+      expect { calendar.sync }.not_to raise_error
+      expect(calendar.last_log).to include('The hostname is a loopback IP')
     end
   end
 end
