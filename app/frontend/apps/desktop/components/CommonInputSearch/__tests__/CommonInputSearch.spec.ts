@@ -20,15 +20,13 @@ describe('testing input for searching', () => {
 
     expect(search).toHaveAttribute('placeholder', 'Search…')
 
-    const clearButton = view.getByIconName('backspace2')
-
-    expect(clearButton).toHaveClass('invisible')
+    expect(view.queryByIconName('backspace2')).not.toBeInTheDocument()
 
     await view.events.type(search, 'test')
 
-    expect(clearButton).not.toHaveClass('invisible')
+    const clearButton = view.getByIconName('backspace2')
 
-    await view.events.click(clearButton)
+    await view.events.click(clearButton!)
 
     expect(search).toHaveDisplayValue('')
   })

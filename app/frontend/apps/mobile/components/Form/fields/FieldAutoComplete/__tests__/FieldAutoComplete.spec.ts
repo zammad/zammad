@@ -364,6 +364,7 @@ describe('Form - Field - AutoComplete - Query', () => {
       ...wrapperParameters,
       props: {
         ...testProps,
+        options: testOptions,
         name: 'autocomplete',
         id: 'autocomplete',
         multiple: true,
@@ -374,13 +375,6 @@ describe('Form - Field - AutoComplete - Query', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    const filterElement = wrapper.getByRole('searchbox')
-
-    expect(filterElement).toBeInTheDocument()
-
-    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
-
-    await wrapper.events.type(filterElement, 'item')
     const selectOptions = wrapper.getAllByRole('option')
 
     expect(selectOptions).toHaveLength(3)

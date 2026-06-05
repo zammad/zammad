@@ -10,7 +10,7 @@ import FieldExternalDataSourceWrapper from './FieldExternalDataSourceWrapper.vue
 
 const fieldDefinition = createInput(
   FieldExternalDataSourceWrapper,
-  [...autoCompleteProps, 'object', 'searchTemplateRenderContext'],
+  [...autoCompleteProps, 'object', 'attributeName', 'searchTemplateRenderContext'],
   { features: [addLink, formUpdaterTrigger()] },
 )
 

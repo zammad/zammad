@@ -80,6 +80,7 @@ const {
   appendedOptions,
   optionValueLookup,
   getSelectedOption,
+  getSelectedOptionValue,
   getSelectedOptionLabel,
 } = useSelectOptions<AutoCompleteOption[]>(localOptions, contextReactive)
 
@@ -546,7 +547,7 @@ useFormBlock(
         >
           <div
             v-for="selectedValue in valueContainer"
-            :key="selectedValue.toString()"
+            :key="getSelectedOptionValue(selectedValue).toString()"
             class="flex items-center gap-1.5"
             role="listitem"
           >
@@ -567,13 +568,13 @@ useFormBlock(
               <span
                 v-tooltip="
                   getSelectedOptionLabel(selectedValue) ||
-                  i18n.t('%s (unknown)', selectedValue.toString())
+                  i18n.t('%s (unknown)', getSelectedOptionValue(selectedValue).toString())
                 "
                 class="line-clamp-3 break-word"
               >
                 {{
                   getSelectedOptionLabel(selectedValue) ||
-                  i18n.t('%s (unknown)', selectedValue.toString())
+                  i18n.t('%s (unknown)', getSelectedOptionValue(selectedValue).toString())
                 }}
               </span>
               <CommonIcon
@@ -638,13 +639,13 @@ useFormBlock(
             <span
               v-tooltip="
                 getSelectedOptionLabel(currentValue) ||
-                i18n.t('%s (unknown)', currentValue.toString())
+                i18n.t('%s (unknown)', getSelectedOptionValue(currentValue).toString())
               "
               class="line-clamp-3 break-word"
             >
               {{
                 getSelectedOptionLabel(currentValue) ||
-                i18n.t('%s (unknown)', currentValue.toString())
+                i18n.t('%s (unknown)', getSelectedOptionValue(currentValue).toString())
               }}
             </span>
           </div>
@@ -652,7 +653,7 @@ useFormBlock(
         <CommonIcon
           v-if="context.clearable && hasValue && !context.disabled"
           :aria-label="i18n.t('Clear selection')"
-          class="shrink-0 fill-stone-200 focus-visible-app-default! hover:fill-black focus:outline-hidden focus-visible:rounded-xs dark:fill-neutral-500 dark:hover:fill-white"
+          class="shrink-0 fill-stone-200 focus-visible-app-default! hover:fill-black focus-visible:rounded-xs dark:fill-neutral-500 dark:hover:fill-white"
           name="x-lg"
           size="xs"
           role="button"

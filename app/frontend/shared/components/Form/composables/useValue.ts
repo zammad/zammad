@@ -20,7 +20,14 @@ const useValue = <T = any>(
 
   const isCurrentValue = (value: T) => {
     if (!hasValue.value) return false
-    return (valueContainer.value as unknown as T[]).includes(value)
+
+    return (valueContainer.value as unknown as T[]).some((v) => {
+      if (typeof v === 'object' && v !== null && 'value' in v) {
+        return v.value === value
+      }
+
+      return v === value
+    })
   }
 
   const clearValue = (asyncSettling = true) => {

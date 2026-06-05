@@ -29,8 +29,17 @@ import { useCommonSelect } from './useCommonSelect.ts'
 
 import type { CommonSelectInternalInstance, DropdownOptionsAction } from './types.ts'
 
+type ComplexSelectValue = { value: SelectValue; label: string }
+
+type CommonSelectValue =
+  | SelectValue
+  | SelectValue[]
+  | ComplexSelectValue
+  | ComplexSelectValue[]
+  | null
+
 export interface Props {
-  modelValue?: SelectValue | SelectValue[] | { value: SelectValue; label: string } | null
+  modelValue?: CommonSelectValue
   options: AutoCompleteOption[] | SelectOption[]
   /**
    * Do not modify local value
@@ -209,9 +218,39 @@ onKeyDown(
   { target: dropdownElement as Ref<EventTarget> },
 )
 
-const isCurrentValue = (value: string | number | boolean) => {
+const isCurrentValue = (value: CommonSelectValue) => {
   if (props.multiple && Array.isArray(localValue.value)) {
-    return localValue.value.includes(value)
+    return localValue.value.some((v) => {
+      if (typeof v === 'object' && v !== null && 'value' in v) {
+        if (typeof value === 'object' && value !== null && 'value' in value) {
+          return v.value === value.value
+        }
+
+        return v.value === value
+      }
+
+      if (typeof value === 'object' && value !== null && 'value' in value) {
+        return v === value.value
+      }
+
+      return v === value
+    })
+  }
+
+  if (
+    typeof localValue.value === 'object' &&
+    localValue.value !== null &&
+    'value' in localValue.value
+  ) {
+    if (typeof value === 'object' && value !== null && 'value' in value) {
+      return localValue.value.value === value.value
+    }
+
+    return localValue.value.value === value
+  }
+
+  if (typeof value === 'object' && value !== null && 'value' in value) {
+    return localValue.value === value.value
   }
 
   return localValue.value === value
@@ -230,10 +269,10 @@ const select = (option: SelectOption) => {
   }
 
   if (props.multiple && Array.isArray(localValue.value)) {
-    if (localValue.value.includes(option.value)) {
-      localValue.value = localValue.value.filter((v) => v !== option.value)
+    if (localValue.value.includes(option.value as never)) {
+      localValue.value = localValue.value.filter((v) => v !== option.value) as never
     } else {
-      localValue.value.push(option.value)
+      localValue.value.push(option.value as never)
     }
 
     return

@@ -231,6 +231,7 @@ dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outlin
         }"
         :suffix-icon="isFilterPanelsOpen ? 'chevron-up' : 'chevron-down'"
         variant="secondary"
+        size="medium"
         :aria-controls="advancedFiltersSectionId"
         :aria-expanded="isFilterPanelsOpen"
         @click="toggleFilterPanel"
