@@ -12628,7 +12628,8 @@ output {
   color: var(--text-inverted);
   padding: 0 14px 11px;
   position: absolute;
-  min-width: 0;
+  min-width: 0; /* for unsupported browsers that don't support max-content below */
+  min-width: max-content;
   cursor: default;
 
   &.datepicker-rtl {
@@ -12660,6 +12661,7 @@ output {
   th,
   td {
     border: none;
+    background: transparent;
   }
 
   .next,
