@@ -3,7 +3,9 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^\\.gitlab/ci/.*\\.yml$"],
+      "managerFilePatterns": [
+        "/^\\.gitlab/ci/.*\\.yml$/"
+      ],
       "matchStrings": ["DEVCONTAINERS_CLI_VERSION: '(?<currentValue>[^']+)'"],
       "depNameTemplate": "@devcontainers/cli",
       "datasourceTemplate": "npm"
