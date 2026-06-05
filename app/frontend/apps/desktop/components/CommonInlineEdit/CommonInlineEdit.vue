@@ -303,7 +303,7 @@ defineExpose({
 
     <div
       v-else
-      class="flex max-w-full items-center gap-2 before:absolute before:top-1/2 before:-left-[5px] before:z-0 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md focus-within:before:outline-1 focus-within:before:outline-blue-800"
+      class="flex max-w-full items-center gap-2 before:absolute before:top-1/2 before:-left-1.25 before:z-0 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md focus-within:before:outline-1 focus-within:before:outline-blue-800"
       :class="[{ 'w-full': block }, editBackgroundClass, fontSizeClassMap[size]]"
     >
       <div class="relative z-10 w-full ltr:pr-14 rtl:pl-14">
@@ -322,7 +322,7 @@ defineExpose({
       <CommonInlineEditButtons
         :submit-label="submitLabel"
         :cancel-label="cancelLabel"
-        class="absolute z-10 ltr:right-0 rtl:left-0 rtl:-order-1"
+        class="absolute inset-e-0 z-10"
         :submit-disabled="!isValid"
         @submit="submitEdit"
         @cancel="stopEditing()"

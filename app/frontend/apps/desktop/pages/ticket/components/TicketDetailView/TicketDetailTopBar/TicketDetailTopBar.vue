@@ -124,7 +124,7 @@ defineExpose({
   <template v-if="shouldShowChannelAlert">
     <div
       ref="wrapper-with-hidden-details"
-      class="absolute top-0 right-0 left-0 z-10"
+      class="absolute inset-x-0 top-0 z-10"
       data-test-id="ticket-detail-top-bar-clipped-details"
       :style="{
         transform: `translateY(${absoluteContainerOffset})`,
@@ -144,7 +144,7 @@ defineExpose({
 
     <div
       ref="wrapper"
-      class="sticky top-0 right-0 left-0 z-30 w-full"
+      class="sticky inset-x-0 top-0 z-30 w-full"
       data-test-id="ticket-detail-top-bar-full-details"
       :style="{
         top: stickyContainerTop,
@@ -164,7 +164,7 @@ defineExpose({
   <template v-else>
     <TopBarHeader
       ref="header-with-hidden-details"
-      class="absolute top-0 right-0 left-0 z-30 p-3"
+      class="absolute inset-x-0 top-0 z-30"
       :class="[
         headerBaseClasses,
         headerBackgroundClasses(true),
@@ -181,7 +181,7 @@ defineExpose({
     />
     <TopBarHeader
       ref="header"
-      class="sticky top-0 right-0 left-0 z-10 w-full p-3"
+      class="sticky inset-x-0 top-0 z-10 w-full"
       :class="[
         headerBaseClasses,
         headerBackgroundClasses(true),

@@ -28,20 +28,35 @@ const { updateTitle } = useTicketEditTitle(ticketId)
     class="grid grid-cols-[max-content_1fr] gap-4"
     :class="{ 'items-center gap-3': hideDetails }"
   >
-    <div class="flex" :class="{ 'mt-1': !hideDetails }">
+    <div
+      class="flex items-center @3xl:items-start"
+      :class="{ 'flex-col gap-1.5 @3xl:mt-1 @3xl:flex-row @3xl:gap-0': !hideDetails }"
+    >
       <UserPopoverWithTrigger
         v-if="ticket.customer"
         class="z-11 h-min"
         :avatar-config="{
+          responsive: true,
           size: hideDetails ? 'medium' : 'normal',
+        }"
+        :popover-config="{
+          placement: 'arrowStart',
         }"
         :user="ticket.customer"
       />
       <OrganizationPopoverWithTrigger
         v-if="ticket.organization"
-        class="ltr:-translate-x- z-10 h-min ltr:-translate-x-1.5 rtl:translate-x-1.5"
+        class="h-min"
+        :class="{
+          '@3xl:ltr:-translate-x-1.5 @3xl:rtl:translate-x-1.5': !hideDetails,
+          'ltr:-translate-x-1.5 rtl:translate-x-1.5': hideDetails,
+        }"
         :avatar-config="{
+          responsive: true,
           size: hideDetails ? 'medium' : 'normal',
+        }"
+        :popover-config="{
+          placement: 'arrowStart',
         }"
         :organization="ticket.organization"
       />
@@ -69,6 +84,7 @@ const { updateTitle } = useTicketEditTitle(ticketId)
           size="xl"
           required
           block
+          :class="{ 'min-w-md': !isUpdatingTitle }"
           :disabled="!ticket.policy.update || hideDetails"
           :value="ticket.title"
           :classes="{

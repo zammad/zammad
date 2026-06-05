@@ -663,7 +663,7 @@ const articleListTopPadding = ref('4rem')
       <div
         ref="content-container"
         data-test-id="ticket-detail-content-container"
-        class="grid w-full overflow-y-auto overscroll-contain"
+        class="@container isolate grid w-full overflow-y-auto overscroll-contain"
         :class="{
           'grid-rows-[max-content_max-content_max-content]':
             !newTicketArticlePresent || !isReplyPinned,

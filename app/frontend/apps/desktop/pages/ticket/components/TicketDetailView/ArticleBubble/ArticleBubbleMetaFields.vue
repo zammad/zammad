@@ -25,6 +25,7 @@ const { fields } = useArticleMeta(toRef(props, 'article'))
       <div class="flex items-center gap-2">
         <Component
           :is="field.component || CommonLabel"
+          v-tooltip.truncate="field.value"
           :prefix-icon="field.icon && !field.component ? field.icon : undefined"
           v-bind="field.props || {}"
           :context="{ field, article }"

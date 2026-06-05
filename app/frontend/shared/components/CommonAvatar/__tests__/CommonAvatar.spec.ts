@@ -94,4 +94,24 @@ describe('CommonAvatar.vue', () => {
     await view.rerender({ vipIcon: 'crown' })
     expect(view.getByIconName('crown')).toBeInTheDocument()
   })
+
+  it('scales down to the next smaller size below @3xl when responsive', async () => {
+    const view = renderComponent(CommonAvatar, {
+      props: { size: 'normal', responsive: true },
+    })
+
+    const avatar = view.getByTestId('common-avatar')
+
+    // renders the next smaller size as the base and restores the target at @3xl
+    expect(avatar).toHaveClass('size-medium')
+    expect(avatar).toHaveClass('size-3xl-normal')
+    expect(avatar).not.toHaveClass('size-normal')
+
+    // without the flag the size is applied as-is
+    await view.rerender({ size: 'normal', responsive: false })
+
+    expect(avatar).toHaveClass('size-normal')
+    expect(avatar).not.toHaveClass('size-medium')
+    expect(avatar).not.toHaveClass('size-3xl-normal')
+  })
 })

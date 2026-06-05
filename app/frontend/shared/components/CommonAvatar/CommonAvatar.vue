@@ -6,6 +6,8 @@ import { computed } from 'vue'
 import { i18n } from '#shared/i18n.ts'
 import { getAvatarClasses } from '#shared/initializer/initializeAvatarClasses.ts'
 
+import { nextSmallerAvatarSize } from './types.ts'
+
 import type { AvatarSize } from './types.ts'
 
 export interface Props {
@@ -15,6 +17,10 @@ export interface Props {
   // name of the icon
   icon?: Maybe<string>
   size?: AvatarSize
+  // When `true`, `size` applies from the @3xl container breakpoint upwards and
+  // the avatar (including its icon, vip badge and text) scales down to the next
+  // smaller size below it.
+  responsive?: boolean
   vipIcon?: Maybe<'vip-user' | 'vip-organization'>
   ariaLabel?: Maybe<string>
   decorative?: boolean
@@ -24,6 +30,14 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'medium',
   initials: '??',
 })
+
+// Size the avatar renders at below the @3xl breakpoint. The larger `size` is
+// restored at @3xl through the `size-3xl-*` container-query classes below.
+const baseSize = computed(() => (props.responsive ? nextSmallerAvatarSize[props.size] : props.size))
+
+const sizeClasses = computed(() =>
+  props.responsive ? [`size-${baseSize.value}`, `size-3xl-${props.size}`] : `size-${props.size}`,
+)
 
 const iconSizes = {
   xs: 'xs',
@@ -36,7 +50,7 @@ const iconSizes = {
 
 const iconSize = computed(() => {
   if (!props.icon) return 'medium'
-  return iconSizes[props.size]
+  return iconSizes[baseSize.value]
 })
 
 const avatarLabel = computed(() => {
@@ -50,7 +64,7 @@ const classMap = getAvatarClasses()
 <template>
   <span
     class="relative flex shrink-0 items-center justify-center rounded-full bg-cover bg-center select-none"
-    :class="[`size-${size}`, classMap.base]"
+    :class="[sizeClasses, classMap.base]"
     :style="{
       backgroundImage: image ? `url(${image})` : undefined,
       backgroundRepeat: image ? 'no-repeat' : undefined,
@@ -65,7 +79,7 @@ const classMap = getAvatarClasses()
       class="vip pointer-events-none absolute"
       :class="vipIcon === 'vip-organization' ? classMap.vipOrganization : classMap.vipUser"
       :name="vipIcon"
-      :size="iconSizes[props.size]"
+      :size="iconSizes[baseSize]"
       decorative
     />
     <CommonIcon v-if="icon" :name="icon" :size="iconSize" />
@@ -75,7 +89,6 @@ const classMap = getAvatarClasses()
   </span>
 </template>
 
-Sure, here is the refactored style using native CSS: ```css
 <style scoped>
 .size-xs {
   height: 1.5rem;
@@ -142,5 +155,108 @@ Sure, here is the refactored style using native CSS: ```css
 .size-xl .vip {
   transform: translateY(-4.85rem);
 }
+
+/*
+ * Responsive overrides: when the `responsive` prop is set the avatar renders at
+ * the next smaller `size-*` below the @3xl container breakpoint, and is scaled
+ * back up to its target size from @3xl upwards. The icon is sized via the svg's
+ * width/height attributes, so it is matched here through CSS as well.
+ */
+@container (min-width: 48rem) {
+  .size-3xl-xs {
+    height: 1.5rem;
+    width: 1.5rem;
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+  }
+
+  .size-3xl-xs .vip {
+    transform: translateY(-0.75rem);
+  }
+
+  .size-3xl-xs .icon {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .size-3xl-small {
+    height: 2rem;
+    width: 2rem;
+    font-size: 0.75rem;
+    line-height: 2rem;
+  }
+
+  .size-3xl-small .vip {
+    transform: translateY(-1rem);
+  }
+
+  .size-3xl-small .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .size-3xl-medium {
+    height: 2.5rem;
+    width: 2.5rem;
+    font-size: 1rem;
+    line-height: 2.5rem;
+  }
+
+  .size-3xl-medium .vip {
+    transform: translateY(-1.25rem);
+  }
+
+  .size-3xl-medium .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .size-3xl-normal {
+    height: 3.5rem;
+    width: 3.5rem;
+    font-size: 1.5rem;
+    line-height: 5rem;
+  }
+
+  .size-3xl-normal .vip {
+    transform: translateY(-1.85rem);
+  }
+
+  .size-3xl-normal .icon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .size-3xl-large {
+    height: 5rem;
+    width: 5rem;
+    font-size: 2.25rem;
+    line-height: 5rem;
+  }
+
+  .size-3xl-large .vip {
+    transform: translateY(-2.65rem);
+  }
+
+  .size-3xl-large .icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .size-3xl-xl {
+    height: 9rem;
+    width: 9rem;
+    font-size: 3.75rem;
+    line-height: 5rem;
+  }
+
+  .size-3xl-xl .vip {
+    transform: translateY(-4.85rem);
+  }
+
+  .size-3xl-xl .icon {
+    width: 6rem;
+    height: 6rem;
+  }
+}
 </style>
-```
