@@ -32,6 +32,16 @@ Checks if file is used inline
     store_object.preferences&.dig('Content-Disposition') == 'inline'
   end
 
+  def attributes_with_association_ids
+    attrs = super
+
+    self.class.has_rich_text_attributes.each do |attr|
+      attrs[attr.to_s] = send(:"#{attr}_with_urls")
+    end
+
+    attrs
+  end
+
   private
 
   def has_rich_text_parse # rubocop:disable Naming/PredicatePrefix
@@ -67,16 +77,6 @@ Checks if file is used inline
         preferences: attachment_cache[:preferences],
       )
     end
-  end
-
-  def attributes_with_association_ids
-    attrs = super
-
-    self.class.has_rich_text_attributes.each do |attr|
-      attrs[attr.to_s] = send(:"#{attr}_with_urls")
-    end
-
-    attrs
   end
 
   def has_rich_text_pickup_attachments # rubocop:disable Naming/PredicatePrefix
