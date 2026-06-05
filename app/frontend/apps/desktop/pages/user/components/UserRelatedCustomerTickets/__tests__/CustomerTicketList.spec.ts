@@ -109,6 +109,10 @@ const renderCustomerTicketList = async (ticketCount: number, props?: Partial<Pro
 }
 
 describe('CustomerTicketList.vue', () => {
+  afterEach(async () => {
+    await flushPromises()
+  })
+
   it('render heading with a ticket count', async () => {
     const view = await renderCustomerTicketList(5)
 
