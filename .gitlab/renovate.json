@@ -32,7 +32,6 @@
   },
   "packageRules": [
     {
-      "matchDatasources": ["npm"],
       "minimumReleaseAge": "3 days"
     },
     {
