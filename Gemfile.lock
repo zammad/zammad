@@ -781,7 +781,7 @@ GEM
     telephone_number (1.4.25)
     terser (1.2.7)
       execjs (>= 0.3.0, < 3)
-    test-unit (3.7.7)
+    test-unit (3.7.8)
       power_assert
     thor (1.5.0)
     timeout (0.6.1)
