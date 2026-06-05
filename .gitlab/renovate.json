@@ -30,10 +30,8 @@
       "commitMessageExtra": "(JS)"
     }
   },
+  "minimumReleaseAge": "3 days",
   "packageRules": [
-    {
-      "minimumReleaseAge": "3 days"
-    },
     {
       "matchManagers": ["devcontainer"],
       "assignees": ["fl"]
