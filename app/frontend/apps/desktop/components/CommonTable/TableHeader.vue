@@ -293,7 +293,13 @@ useOnEmitter('primary-sidebar-transition', () => initializeHeaderWidths())
 <template>
   <thead ref="thead">
     <tr>
-      <th v-if="hasBulkAction" id="select-header" :aria-label="$t('Select')" class="size-10">
+      <th
+        v-if="hasBulkAction"
+        id="select-header"
+        scope="col"
+        :aria-label="$t('Select')"
+        class="size-10"
+      >
         <BulkCheckbox
           :items="items"
           :item-ids="itemIds"
@@ -306,6 +312,7 @@ useOnEmitter('primary-sidebar-transition', () => initializeHeaderWidths())
         v-for="(tableAttribute, index) in tableAttributes"
         :id="`${tableAttribute.name}-header`"
         :key="tableAttribute.name"
+        scope="col"
         class="relative h-10 p-2.5 text-xs"
         :class="[tableAttribute.headerPreferences?.headerClass]"
         :aria-label="$t(tableAttribute.label, ...(tableAttribute.labelPlaceholder || []))"
@@ -377,7 +384,7 @@ useOnEmitter('primary-sidebar-transition', () => initializeHeaderWidths())
           @reset="resetHeaderWidths"
         />
       </th>
-      <th v-if="actions" class="h-10 w-0 p-2.5 text-center">
+      <th v-if="actions" id="actions-header" scope="col" class="h-10 w-0 p-2.5 text-center">
         <CommonLabel class="font-normal text-stone-200! dark:text-neutral-500!" size="small"
           >{{ $t('Actions') }}
         </CommonLabel>

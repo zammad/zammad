@@ -915,7 +915,7 @@ describe('CommonAdvancedTable', () => {
     })
 
     expect(
-      wrapper.getByText('You reached the table limit of 20 tickets (10 remaining).'),
+      wrapper.getByText('You reached the table limit of 20 items (10 remaining).'),
     ).toBeInTheDocument()
 
     scrollContainer.remove()
@@ -943,7 +943,7 @@ describe('CommonAdvancedTable', () => {
       orderBy: 'label',
     })
 
-    expect(wrapper.getByText("You don't have more tickets to load.")).toBeInTheDocument()
+    expect(wrapper.getByText("You don't have more items to load.")).toBeInTheDocument()
 
     scrollContainer.remove()
   })
