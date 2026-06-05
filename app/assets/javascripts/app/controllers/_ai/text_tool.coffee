@@ -65,10 +65,17 @@ class TextTool extends App.ControllerAIFeatureBase
   downloadFeedbackReport: (id) =>
     text_tool = App.AITextTool.find(id)
 
+    url = "#{@apiPath}/ai/analytics/download/with_usages?filters[triggered_by_type]=AI::TextTool&filters[triggered_by_id]=#{id}"
+
+    # Only limit the report to feedback since the last reset if one happened;
+    #   otherwise the report should collect everything.
+    if text_tool.analytics_stats_reset_at
+      url += "&filters[created_after]=#{text_tool.analytics_stats_reset_at}"
+
     @ajax(
       id:          'download_feedback_report'
       type:        'GET'
-      url:         "#{@apiPath}/ai/analytics/download/with_usages?filters[triggered_by_type]=AI::TextTool&filters[triggered_by_id]=#{id}&filters[created_after]=#{text_tool.analytics_stats_reset_at}"
+      url:         url
       processData: true
       dataType:    'binary'
       contentType: 'application/octet-stream'

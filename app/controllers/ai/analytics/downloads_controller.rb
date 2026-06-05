@@ -54,9 +54,22 @@ class AI::Analytics::DownloadsController < ApplicationController
       scope = scope.where(filter => filters[filter]) if filters[filter].present?
     end
 
-    scope = scope.where(created_at: (filters[:created_after])..) if filters[:created_after].present?
-    scope = scope.where(created_at: ..(filters[:created_before])) if filters[:created_before].present?
+    created_after  = parse_date(filters[:created_after])
+    created_before = parse_date(filters[:created_before])
+
+    scope = scope.where(created_at: (created_after)..) if created_after
+    scope = scope.where(created_at: ..(created_before)) if created_before
 
     scope
+  end
+
+  # Ignore blank or unparseable date filters instead of letting them cast to
+  #   NULL in the query, which would silently match no records.
+  def parse_date(value)
+    return if value.blank?
+
+    Time.zone.parse(value.to_s)
+  rescue ArgumentError
+    nil
   end
 end
