@@ -82,7 +82,7 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
 
   <TopBarHeader
     ref="header-with-details"
-    class="sticky top-0 right-0 left-0 z-20 w-full bg-neutral-50/80 backdrop-blur-2xs dark:bg-gray-500/80"
+    class="sticky top-0 right-0 left-0 z-20 w-full min-w-xs bg-neutral-50/80 backdrop-blur-2xs dark:bg-gray-500/80"
     :class="{ 'transition-[top]': isHovering }"
     :hide-details="false"
     :user="user"

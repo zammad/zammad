@@ -129,7 +129,7 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
   <header
     ref="header-with-details"
     data-test-id="organization-detail-top-bar"
-    class="sticky z-20 h-34 border-b border-neutral-100 bg-neutral-50/80 p-3 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
+    class="sticky z-20 min-w-xs border-b border-neutral-100 bg-neutral-50/80 p-3 backdrop-blur-2xs @md:h-34 dark:border-gray-900 dark:bg-gray-500/80"
     :class="{
       'transition-[top]': isHovering,
     }"
@@ -151,24 +151,29 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
         />
       </template>
     </CommonBreadcrumb>
-    <div class="mx-auto mt-3 flex h-21 w-full max-w-278 pe-17">
+    <div class="mx-auto mt-3 flex w-full max-w-278 @md:h-21">
       <OrganizationInfo
         :organization="organization"
+        responsive
         size="normal"
         title-size="xl"
         title-class="font-medium"
         no-link
       >
         <template #actions>
-          <div role="menubar" class="flex items-center gap-1.5 ltr:ml-auto rtl:mr-auto">
+          <div role="menubar" class="flex items-center @md:gap-1.5 ltr:ml-auto rtl:mr-auto">
             <CommonButton
               v-for="action in allowedTopLevelActions"
               :key="action.key"
               role="menuitem"
+              class="h-9!"
+              no-truncate
               :prefix-icon="action.icon"
               @click="action?.onClick?.(organization, router)"
             >
-              {{ $t(action.label) }}
+              <span class="sr-only w-fit @md:not-sr-only @md:block @md:w-full @md:truncate">
+                {{ $t(action.label) }}
+              </span>
             </CommonButton>
             <CommonActionMenu
               button-size="large"

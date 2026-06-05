@@ -107,13 +107,15 @@ organizationTicketsSubscription.onResult(({ data }) => {
     no-scrollable
   >
     <CommonLoader class="mt-8" :loading="loadingWithoutCachedResult">
-      <div ref="content-container" class="h-full w-full overflow-y-auto">
+      <div ref="content-container" class="@container size-full overflow-y-auto">
         <OrganizationDetailTopBar
           :organization="organization"
           :organization-display-name="organizationDisplayName"
           :content-container-element="contentContainerElement"
         />
-        <section class="mx-auto grid w-full max-w-5xl grid-cols-2 gap-6 p-6">
+        <section
+          class="mx-auto grid w-full max-w-5xl min-w-xs grid-cols-1 gap-6 p-3 @xl:min-w-sm @xl:grid-cols-2 @xl:p-6"
+        >
           <div class="flex flex-col gap-6 self-start">
             <CommonSectionContainer
               v-if="organizationMembers?.totalCount > 0"
@@ -166,7 +168,7 @@ organizationTicketsSubscription.onResult(({ data }) => {
               hasPermission('ticket.agent') &&
               (organization.ticketsCount?.open || organization.ticketsCount?.closed)
             "
-            class="self-start"
+            class="w-full self-start @xl:w-fit"
             :label="__('Organization tickets')"
           >
             <OrganizationRelatedTickets :organization="organization" />
@@ -175,7 +177,7 @@ organizationTicketsSubscription.onResult(({ data }) => {
           <OrganizationTicketBarChart
             v-if="hasPermission('ticket.agent')"
             ref="chart"
-            class="col-span-2"
+            class="w-fit @xl:col-span-2"
             :organization-id="organizationId"
           />
         </section>

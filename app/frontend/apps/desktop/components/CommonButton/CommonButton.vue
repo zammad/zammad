@@ -18,12 +18,14 @@ export interface Props {
   suffixIcon?: string
   iconClass?: string
   tooltip?: string
+  noTruncate?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'secondary',
   type: 'button',
   size: 'small',
+  noTruncate: false,
 })
 
 const variantClasses = computed(() => {
@@ -192,6 +194,10 @@ const iconSizeClass = computed(() => {
         :size="iconSizeClass"
         :name="icon"
       />
+      <template v-else-if="noTruncate">
+        <slot>{{ $t(startCase(variant)) }}</slot>
+      </template>
+
       <span v-else class="truncate">
         <slot>{{ $t(startCase(variant)) }}</slot>
       </span>

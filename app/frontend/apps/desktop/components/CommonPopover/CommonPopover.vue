@@ -35,6 +35,7 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 import stopEvent from '#shared/utils/events.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
+import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import { usePopoverInstances } from './usePopoverInstances.ts'
@@ -64,6 +65,8 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const { isSmallScreen } = useAppBreakpoints()
+
 const popoverElement = useTemplateRef('popover')
 
 const showPopover = ref(false)
@@ -89,7 +92,9 @@ const overflowOrientation = ref<Orientation | null>(null)
 const autoOrientation = computed(() => {
   if (overflowOrientation.value) return overflowOrientation.value
 
-  if (props.orientation === 'autoVertical') {
+  // ignore (auto-)Horizontal in favor for autoVertical on small screens
+  // since there is no enough space for left and right placement
+  if (props.orientation === 'autoVertical' || isSmallScreen.value) {
     return hasDirectionUp.value ? 'top' : 'bottom'
   }
 

@@ -66,7 +66,7 @@ const router = useRouter()
   >
     <template v-if="hideDetails">
       <div class="mx-auto flex w-full max-w-266">
-        <UserInfo :user="user" size="small" title-size="large" no-link />
+        <UserInfo :user="user" responsive size="small" title-size="large" no-link />
       </div>
     </template>
     <template v-else>
@@ -83,25 +83,32 @@ const router = useRouter()
           />
         </template>
       </CommonBreadcrumb>
-      <div class="mx-auto mt-3 flex h-21 w-full max-w-278 pe-17">
+
+      <div class="mx-auto mt-3 flex w-full max-w-278 @md:h-21">
         <UserInfo
           :user="user"
           size="normal"
+          responsive
           has-organization-popover
           title-size="xl"
           title-class="font-medium"
           no-link
         >
           <template #actions>
-            <div role="menubar" class="flex items-center gap-1.5 ltr:ml-auto rtl:mr-auto">
+            <div role="menubar" class="flex items-center @md:gap-1.5 ltr:ml-auto rtl:mr-auto">
               <CommonButton
                 v-for="action in allowedTopLevelActions"
                 :key="action.key"
                 role="menuitem"
+                class="h-9!"
+                no-truncate
                 :prefix-icon="action.icon"
+                :aria-label="$t(action.label)"
                 @click="action?.onClick?.(user, router)"
               >
-                {{ $t(action.label) }}
+                <span class="sr-only w-fit @md:not-sr-only @md:block @md:w-full @md:truncate">
+                  {{ $t(action.label) }}
+                </span>
               </CommonButton>
               <CommonActionMenu
                 button-size="large"

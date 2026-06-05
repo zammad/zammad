@@ -113,13 +113,15 @@ customerTicketsSubscription.onResult(({ data }) => {
     no-scrollable
   >
     <CommonLoader class="mt-8" :loading="loadingWithoutCachedResult">
-      <div ref="content-container" class="h-full w-full overflow-y-auto">
+      <div ref="content-container" class="@container size-full overflow-y-auto">
         <UserDetailTopBar
           :user="user"
           :user-display-name="userDisplayName"
           :content-container-element="contentContainerElement"
         />
-        <section class="mx-auto grid w-full max-w-5xl grid-cols-2 gap-6 p-6">
+        <section
+          class="mx-auto grid w-full max-w-5xl min-w-xs grid-cols-1 gap-6 p-3 @xl:min-w-sm @xl:grid-cols-2 @xl:p-6"
+        >
           <div class="flex flex-col gap-6 self-start">
             <CommonSectionContainer
               v-if="user?.hasSecondaryOrganizations"
@@ -154,7 +156,7 @@ customerTicketsSubscription.onResult(({ data }) => {
               hasPermission('ticket.agent') &&
               (user.ticketsCount?.open || user.ticketsCount?.closed)
             "
-            class="self-start"
+            class="w-full self-start @xl:w-fit"
             :label="__('Related tickets')"
           >
             <template v-if="user.organization">
@@ -182,7 +184,7 @@ customerTicketsSubscription.onResult(({ data }) => {
             v-if="hasPermission('ticket.agent')"
             ref="chart"
             :user-id="userId"
-            class="col-span-2"
+            class="w-fit @xl:col-span-2"
           />
         </section>
       </div>

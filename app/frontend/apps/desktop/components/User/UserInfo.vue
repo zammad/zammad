@@ -17,6 +17,7 @@ import OrganizationPopoverWithTrigger from '#desktop/components/Organization/Org
 interface Props {
   user: Partial<User>
   live?: AvatarUserLive
+  responsive?: boolean
   size?: 'small' | 'normal'
   dense?: boolean
   noLink?: boolean
@@ -51,7 +52,13 @@ const { organizationDisplayName } = useOrganizationEntity(organization)
       }"
       :link="!dense && !noLink ? `/users/${getIdFromGraphQLId(user.id!)}` : undefined"
     >
-      <CommonUserAvatar v-if="user" :entity="user as AvatarUser" :live="live" :size="size" />
+      <CommonUserAvatar
+        v-if="user"
+        :entity="user as AvatarUser"
+        :live="live"
+        :responsive="responsive"
+        :size="size"
+      />
     </component>
     <div class="flex flex-col justify-center gap-px">
       <component
