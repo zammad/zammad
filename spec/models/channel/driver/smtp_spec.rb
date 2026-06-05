@@ -216,6 +216,46 @@ RSpec.describe Channel::Driver::Smtp do
     end
   end
 
+  describe '#build_smtp_params', :aggregate_failures do
+    let(:instance) { described_class.new }
+    let(:outbound) { { adapter: 'smtp', options: {} } }
+
+    context 'when ssl is set (SMTPS, e.g. port 465) and enable_starttls_auto is also stored' do
+      let(:options) do
+        {
+          host:                 'smtp.example.com',
+          port:                 '465',
+          domain:               'example.com',
+          ssl:                  true,
+          ssl_verify:           true,
+          enable_starttls_auto: true,
+        }
+      end
+
+      it 'does not pass enable_starttls_auto to avoid ArgumentError from mail gem 2.9+' do
+        result = instance.build_smtp_params(options)
+        expect(result).to include(ssl: true)
+        expect(result).not_to have_key(:enable_starttls_auto)
+      end
+    end
+
+    context 'when ssl is not set (STARTTLS, e.g. port 587)' do
+      let(:options) do
+        {
+          host:                 'smtp.example.com',
+          port:                 '587',
+          enable_starttls_auto: true
+        }
+      end
+
+      it 'passes enable_starttls_auto' do
+        result = instance.build_smtp_params(options)
+        expect(result).to include(enable_starttls_auto: true)
+        expect(result).not_to have_key(:ssl)
+      end
+    end
+  end
+
   describe '#deliver' do
     let(:channel)   { create(:email_channel, :smtp) }
 
