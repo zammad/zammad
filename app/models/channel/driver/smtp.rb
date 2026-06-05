@@ -89,18 +89,19 @@ class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
                       end
 
     smtp_params = {
-      openssl_verify_mode:  ssl_verify_mode,
-      address:              options[:host],
-      port:                 options[:port],
-      domain:               options[:domain],
-      enable_starttls_auto: options[:enable_starttls_auto],
-      open_timeout:         DEFAULT_OPEN_TIMEOUT,
-      read_timeout:         DEFAULT_READ_TIMEOUT,
+      openssl_verify_mode: ssl_verify_mode,
+      address:             options[:host],
+      port:                options[:port],
+      domain:              options[:domain],
+      open_timeout:        DEFAULT_OPEN_TIMEOUT,
+      read_timeout:        DEFAULT_READ_TIMEOUT,
     }
 
-    # set ssl if needed
+    # set ssl if needed — ssl and enable_starttls_auto are mutually exclusive (mail gem 2.9+)
     if options[:ssl].present?
       smtp_params[:ssl] = options[:ssl]
+    else
+      smtp_params[:enable_starttls_auto] = options[:enable_starttls_auto]
     end
 
     # add authentication only if needed
