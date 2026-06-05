@@ -156,7 +156,7 @@
     "async-mutex": "^0.5.0",
     "date-fns": "^4.4.0",
     "echarts": "^6.1.0",
-    "graphql": "^16.14.0",
+    "graphql": "^16.14.1",
     "graphql-ruby-client": "^1.15.0",
     "graphql-tag": "^2.12.6",
     "linkify-string": "^4.3.3",
