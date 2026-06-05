@@ -144,9 +144,9 @@ describe('OrganizationTicketList.vue', () => {
 
     expect(calls).toHaveLength(1)
 
-    emitter.emit(`organization-ticket-list-refetch:${organization.internalId}`)
+    emitter.emit(`organization-ticket-list-refetch:${organization.id}`)
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(calls).toHaveLength(2)
     })
   })

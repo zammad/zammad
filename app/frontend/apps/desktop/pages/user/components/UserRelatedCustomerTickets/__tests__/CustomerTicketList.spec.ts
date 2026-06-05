@@ -179,9 +179,9 @@ describe('CustomerTicketList.vue', () => {
 
     expect(calls).toHaveLength(1)
 
-    emitter.emit(`customer-ticket-list-refetch:${customer.internalId}`)
+    emitter.emit(`customer-ticket-list-refetch:${customer.id}`)
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(calls).toHaveLength(2)
     })
   })
