@@ -4,10 +4,12 @@ import { useActiveElement, useEventListener } from '@vueuse/core'
 import { computed, ref, useTemplateRef } from 'vue'
 
 import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
 import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
+import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
 
 import { MINIMUM_COLUMN_WIDTH } from './types.ts'
 
@@ -51,6 +53,8 @@ const setHeaderWidths = (diff: number) => {
 
 const activeElement = useActiveElement()
 
+const { announce, messageNodeId } = useAnnouncer()
+
 const handleKeyStroke = (e: KeyboardEvent, diff: number) => {
   if (activeElement.value !== resizeLine.value) return
 
@@ -59,6 +63,11 @@ const handleKeyStroke = (e: KeyboardEvent, diff: number) => {
   setCurrentHeaderWidths()
   setHeaderWidths(diff)
   emit('resize')
+
+  // Announce the resulting width via the live region, so screen reader users
+  //   get feedback while adjusting the column with the arrow keys.
+  if (currentHeader.value)
+    announce(i18n.t('Column width: %s pixels', currentHeader.value.clientWidth))
 }
 
 const resizeStartX = ref(0)
@@ -123,24 +132,19 @@ const id = getUuid()
   <button
     ref="resize-line"
     v-tooltip="$t('Resize column')"
-    :aria-describedby="id"
+    :aria-describedby="`${id} ${messageNodeId}`"
     tabindex="0"
-    class="absolute end-0 top-1/2 h-5 w-1 -translate-y-2.5 cursor-col-resize! rounded-xs bg-neutral-100 hover:bg-blue-600 focus:outline-none focus-visible:bg-blue-800! dark:bg-gray-200 dark:hover:bg-blue-900"
+    class="absolute inset-e-0 top-1/2 h-5 w-1 -translate-y-2.5 cursor-col-resize! rounded-xs bg-neutral-100 hover:bg-blue-600 focus:outline-none focus-visible:bg-blue-800! dark:bg-gray-200 dark:hover:bg-blue-900"
     :class="{
-      '!bg-blue-800': resizing,
+      'bg-blue-800': resizing,
     }"
     @mousedown="handleMousedown"
     @blur="resizing = false"
     @touchstart="handleTouchstart"
     @dblclick="handleDoubleClick"
   >
-    <span
-      :id="id"
-      role="separator"
-      class="invisible absolute -z-20"
-      aria-orientation="horizontal"
-      :aria-valuenow="currentHeader?.clientWidth"
-      :aria-valuemin="MINIMUM_COLUMN_WIDTH"
-    />
+    <span :id="id" class="sr-only">
+      {{ $t('Use the left and right arrow keys to resize the column.') }}
+    </span>
   </button>
 </template>

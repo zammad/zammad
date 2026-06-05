@@ -412,11 +412,11 @@ const endOfListMessage = computed(() => {
 
   return props.totalItemsCount > props.maxItems
     ? i18n.t(
-        'You reached the table limit of %s tickets (%s remaining).',
+        'You reached the table limit of %s items (%s remaining).',
         props.maxItems,
         props.totalItemsCount - loadedItems.value.length,
       )
-    : i18n.t("You don't have more tickets to load.")
+    : i18n.t("You don't have more items to load.")
 })
 
 const getLinkColorClasses = (item: TableAdvancedItem) => {
@@ -622,7 +622,7 @@ watch(
                 <slot :name="`item-suffix-${tableAttribute.name}`" :item="item" />
               </div>
             </td>
-            <td v-if="actions" class="h-10 p-2.5 text-center">
+            <td v-if="actions" headers="actions-header" class="h-10 p-2.5 text-center">
               <slot name="actions" v-bind="{ actions, item }">
                 <CommonActionMenu
                   class="flex! items-center justify-center"

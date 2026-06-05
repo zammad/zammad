@@ -343,11 +343,11 @@ msgstr ""
 msgid "%s required!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:381
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:388
 msgid "%s result(s) selected"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:381
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:388
 msgid "%s result(s) selected, selection limit reached"
 msgstr ""
 
@@ -1039,7 +1039,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:100
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:371
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:378
 msgid "Actions"
 msgstr ""
 
@@ -1512,7 +1512,7 @@ msgstr ""
 msgid "Alarm"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:382
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:389
 msgid "All %s result(s) selected"
 msgstr ""
 
@@ -3381,7 +3381,7 @@ msgid "Clear search"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:405
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:412
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:640
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:372
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:306
@@ -3560,6 +3560,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:920
 msgid "Color representation of the open ticket indicator in the sidebar."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:70
+msgid "Column width: %s pixels"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:285
@@ -7923,7 +7927,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:188
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:85
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:78
 msgid "Got it"
 msgstr ""
 
@@ -8181,7 +8185,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:184
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:40
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:84
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:77
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:22
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
 msgid "Help"
@@ -13905,7 +13909,7 @@ msgstr ""
 msgid "Resize article panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:125
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:134
 msgid "Resize column"
 msgstr ""
 
@@ -14492,6 +14496,10 @@ msgstr ""
 msgid "Search or enter phone number…"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:442
+msgid "Search result for: %s"
+msgstr ""
+
 #: lib/external_data_source/errors.rb:114
 msgid "Search result label is not a string, a number or a boolean. Please provide search result label key."
 msgstr ""
@@ -14694,11 +14702,11 @@ msgstr ""
 msgid "See your tickets from within your favorite calendar by adding the subscription URL to your calendar app."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:285
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:289
 msgid "Select"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:395
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:402
 msgid "Select %s result(s)"
 msgstr ""
 
@@ -14719,7 +14727,7 @@ msgstr ""
 msgid "Select Template"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:396
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:403
 msgid "Select all %s results"
 msgstr ""
 
@@ -16215,7 +16223,9 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/text_module.coffee:3
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:3
+#: db/seeds/permissions.rb:41
 msgid "Text Modules"
 msgstr ""
 
@@ -16232,13 +16242,11 @@ msgstr ""
 msgid "Text missing"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:3
+#: app/assets/javascripts/app/controllers/text_module.coffee:22
 msgid "Text module"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:3
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/TextModuleSuggestion.ts:75
-#: db/seeds/permissions.rb:41
 msgid "Text modules"
 msgstr ""
 
@@ -16690,7 +16698,7 @@ msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:151
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:83
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:90
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr ""
@@ -19569,6 +19577,10 @@ msgstr ""
 msgid "Use the camera to take a photo for the avatar."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:147
+msgid "Use the left and right arrow keys to resize the column."
+msgstr ""
+
 #: db/seeds/settings.rb:2372
 msgid "Use the start time of the last customer thread (which may consist of multiple articles)."
 msgstr ""
@@ -20537,7 +20549,7 @@ msgid "You can switch between the following backends for new attachments even on
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:185
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:80
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:73
 msgid "You can switch between the old and the New BETA UI at any moment in the Profile settings > New BETA UI section."
 msgstr ""
 
@@ -20567,7 +20579,7 @@ msgid "You do not have permission to update"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:419
-msgid "You don't have more tickets to load."
+msgid "You don't have more items to load."
 msgstr ""
 
 #: app/frontend/shared/router/guards/before/permission.ts:27
@@ -20672,7 +20684,7 @@ msgid "You need to configure the Zammad endpoints in the %s:"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:415
-msgid "You reached the table limit of %s tickets (%s remaining)."
+msgid "You reached the table limit of %s items (%s remaining)."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:772
