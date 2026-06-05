@@ -38,7 +38,7 @@ Permission.create_if_not_exists(
 )
 Permission.create_if_not_exists(
   name:        'admin.text_module',
-  label:       __('Text modules'),
+  label:       __('Text Modules'),
   description: __('Manage text modules of your system.'),
   preferences: { prio: 1060 }
 )
