@@ -106,6 +106,7 @@ const isBelowHalfScreen = computed(() => {
 
 const openSelectDropdown = () => {
   if (props.context.disabled) return
+  if (!inputElement.value) return
 
   selectInstance.value?.openDropdown(inputElementBounds, windowSize.height)
 

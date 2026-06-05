@@ -397,6 +397,7 @@ const foldDropdown = (event?: MouseEvent) => {
 
 const openSelectDropdown = () => {
   if (props.context.disabled) return
+  if (!input.value) return
 
   select.value?.openDropdown(inputElementBounds, windowSize.height)
 
