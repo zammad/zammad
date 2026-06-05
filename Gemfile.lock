@@ -251,13 +251,13 @@ GEM
       eco-source
       execjs
     eco-source (1.1.0.rc.1)
-    elastic-transport (8.5.1)
+    elastic-transport (8.5.2)
       faraday (< 3)
       multi_json
-    elasticsearch (9.4.0)
+    elasticsearch (9.4.1)
       elastic-transport (~> 8.3)
-      elasticsearch-api (= 9.4.0)
-    elasticsearch-api (9.4.0)
+      elasticsearch-api (= 9.4.1)
+    elasticsearch-api (9.4.1)
       base64
       multi_json
     em-websocket (0.5.3)
@@ -290,7 +290,7 @@ GEM
       hashie
     faraday-multipart (1.2.0)
       multipart-post (~> 2.0)
-    faraday-net_http (3.4.3)
+    faraday-net_http (3.4.4)
       net-http (~> 0.5)
     ffi (1.17.4)
     ffi-compiler (1.4.2)
@@ -352,7 +352,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jmespath (1.6.2)
-    json (2.19.7)
+    json (2.19.8)
     json-jwt (1.17.0)
       activesupport (>= 4.2)
       aes_key_wrap
