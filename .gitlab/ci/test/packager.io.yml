@@ -52,6 +52,12 @@ packager.io:rhel-9:
     DISTRIBUTION: rhel
     DISTRIBUTION_VERSION: '9'
 
+packager.io:rhel-10:
+  extends: [.packager.io]
+  variables:
+    DISTRIBUTION: rhel
+    DISTRIBUTION_VERSION: '10'
+
 packager.io:sles-15:
   extends: [.packager.io]
   variables:

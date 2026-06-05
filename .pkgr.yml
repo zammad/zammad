@@ -14,8 +14,22 @@ targets:
       - shared-mime-info
       - redis
     build_dependencies:
-      - https://download.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/i/imlib2-1.7.4-1.el9.x86_64.rpm
-      - https://download.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/i/imlib2-devel-1.7.4-1.el9.x86_64.rpm
+      # EPEL packages can only be installed after enabling the EPEL repo (see before.sh).
+      - epel-release
+      - shared-mime-info
+  centos-10:
+    dependencies:
+      - curl
+      - elasticsearch
+      - nginx
+      - postgresql-server
+      - epel-release
+      - imlib2
+      - shared-mime-info
+      - valkey
+    build_dependencies:
+      # EPEL packages can only be installed after enabling the EPEL repo (see before.sh).
+      - epel-release
       - shared-mime-info
   debian-11:
     dependencies:
