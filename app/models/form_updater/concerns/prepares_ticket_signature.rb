@@ -29,7 +29,7 @@ module FormUpdater::Concerns::PreparesTicketSignature
       internalId:   group_signature.id,
       renderedBody: NotificationFactory::Renderer.new(
         objects:  { user: current_user, ticket: },
-        template: group_signature.body,
+        template: group_signature.body_with_urls,
         escape:   false
       ).render(debug_errors: false),
     }
