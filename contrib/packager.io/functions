@@ -152,13 +152,13 @@ function create_postgresql_db () {
   ${INIT_CMD} restart postgresql
 
   echo "# Creating zammad postgresql user"
-  echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql
+  echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | runuser -u postgres -- psql
 
   echo "# Creating zammad postgresql db"
-  su - postgres -c "createdb -E UTF8 ${DB} -O ${DB_USER}"
+  runuser -u postgres -- createdb -E UTF8 "${DB}" -O "${DB_USER}"
 
   echo "# Grant privileges to new postgresql user"
-  echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
+  echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | runuser -u postgres -- psql
 }
 
 function update_database_yml () {
@@ -220,6 +220,8 @@ function create_webserver_config () {
 }
 
 function enforce_redis () {
+  # For details, see https://github.com/zammad/zammad/issues/5269
+
   REDIS_URL=$(zammad config:get REDIS_URL)
   if [ -n "${REDIS_URL}" ]; then
     echo "# REDIS_URL variable set to ${REDIS_URL}."
@@ -257,10 +259,14 @@ function enforce_redis () {
         echo "# Redis service ${REDIS_SERVICE_NAME} detected."
       fi
   else
-      REDIS_SERVICE_NAME="redis"
+      if command -v valkey-server > /dev/null 2>&1; then
+        REDIS_SERVICE_NAME="valkey"
+      else
+        REDIS_SERVICE_NAME="redis"
+      fi
   fi
 
-  if command -v redis-server > /dev/null 2>&1; then
+  if command -v redis-server > /dev/null 2>&1 || command -v valkey-server > /dev/null 2>&1; then
     echo "# Creating Redis bootstart"
     ${INIT_CMD} enable ${REDIS_SERVICE_NAME}
 
