@@ -207,8 +207,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       ts-essentials:
-        specifier: ^10.2.0
-        version: 10.2.0(typescript@6.0.3)
+        specifier: ^10.2.1
+        version: 10.2.1(typescript@6.0.3)
       tslib:
         specifier: ^2.8.1
         version: 2.8.1
@@ -6534,8 +6534,8 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4'
 
-  ts-essentials@10.2.0:
-    resolution: {integrity: sha512-z9FlLywg0XEV46Ws1FwYN4NZDMr9qAe38lTTtgVBqzhhyEgwrnCUkFe4MEqnvar1kY1kFEnlkp56bxn2g0V+UA==}
+  ts-essentials@10.2.1:
+    resolution: {integrity: sha512-+Id1fRkuir+CsgK2x04/icS2b4V1hQmq7ObzIrDjhN0ozfRYivnP7aaKMVJfLApQm0trjR39A6NIMVchiB9Erw==}
     peerDependencies:
       typescript: '>=4.5.0'
     peerDependenciesMeta:
@@ -13861,7 +13861,7 @@ snapshots:
     dependencies:
       typescript: 6.0.3
 
-  ts-essentials@10.2.0(typescript@6.0.3):
+  ts-essentials@10.2.1(typescript@6.0.3):
     optionalDependencies:
       typescript: 6.0.3
 
