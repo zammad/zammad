@@ -21,7 +21,7 @@
     "eslint-plugin-eslint-plugin": "^7.4.0",
     "eslint-plugin-n": "^18.0.1",
     "mocha": "^11.7.6",
-    "vue-eslint-parser": "^10.4.0"
+    "vue-eslint-parser": "^10.4.1"
   },
   "engines": {
     "node": ">=18.12.0"
