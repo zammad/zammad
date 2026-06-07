@@ -77,7 +77,7 @@ export default defineConfigWithVueTs(
       'vue/v-bind-style': ['error', 'shorthand'],
       'vue/v-on-style': ['error', 'shorthand'],
       'vue/v-slot-style': ['error', 'shorthand'],
-      'vue/custom-event-name-casing': ['error', 'kebab-case'],
+      'vue/custom-event-name-casing': ['error', 'kebab-case', { ignores: ['/^update:/'] }],
       'vue/attribute-hyphenation': 'error',
     },
   },
