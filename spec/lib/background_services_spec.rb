@@ -97,7 +97,7 @@ RSpec.describe BackgroundServices do
           instance.send(:run_service, config)
 
           expect(Rails.logger).to have_received(:info).with(no_args) do |&block|
-            expect(block.call).to match(%r{Skipping disabled service})
+            expect(block.call).to include('Skipping disabled service')
           end
         end
       end

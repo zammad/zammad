@@ -39,7 +39,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
 
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:forbidden)
-          expect(response.body).to match(%r{403: Forbidden})
+          expect(response.body).to include('403: Forbidden')
         end
       end
 
@@ -60,7 +60,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
 
           get "/api/v1/ticket_attachment/#{ticket2.id}/#{article2.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:forbidden)
-          expect(response.body).to match(%r{403: Forbidden})
+          expect(response.body).to include('403: Forbidden')
 
           # allow access via merged ticket id also
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store_file.id}", params: {}
@@ -69,7 +69,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
 
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:forbidden)
-          expect(response.body).to match(%r{403: Forbidden})
+          expect(response.body).to include('403: Forbidden')
         end
       end
 

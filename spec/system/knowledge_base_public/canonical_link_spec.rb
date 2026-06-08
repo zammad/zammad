@@ -40,6 +40,7 @@ RSpec.describe 'Public Knowledge Base canonical link', authenticated_as: false, 
 
   shared_examples 'core locations' do
     let(:scheme) { ssl ? 'https' : 'http' }
+
     before { Setting.set('http_type', scheme) }
 
     context 'with custom domain' do

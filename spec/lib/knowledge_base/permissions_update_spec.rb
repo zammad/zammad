@@ -14,6 +14,7 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
     describe 'updating itself' do
       shared_examples 'updating itself' do |object_name:|
         let(:object) { send(object_name) }
+
         it 'adds role permission for self' do
           described_class.new(object).update! role_editor => 'editor'
 

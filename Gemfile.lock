@@ -123,12 +123,12 @@ GEM
       ffi-compiler (~> 1.0)
     ast (2.4.3)
     attr_required (1.0.2)
-    auth-sanitizer (0.1.4)
-      version_gem (~> 1.1, >= 1.1.9)
+    auth-sanitizer (0.2.1)
+      version_gem (~> 1.1, >= 1.1.10)
     autoprefixer-rails (10.4.21.0)
       execjs (~> 2)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1256.0)
+    aws-partitions (1.1258.0)
     aws-sdk-core (3.251.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
@@ -196,7 +196,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.3.6)
     connection_pool (3.0.2)
-    console (1.35.1)
+    console (1.36.0)
       fiber-annotation
       fiber-local (~> 1.1)
       json
@@ -220,7 +220,7 @@ GEM
       activesupport (>= 7.0)
     diff-lcs (1.6.2)
     diffy (3.4.4)
-    doorkeeper (5.9.1)
+    doorkeeper (5.9.2)
       railties (>= 5)
     drb (2.2.3)
     dry-cli (1.4.1)
@@ -266,8 +266,6 @@ GEM
     email_address (0.2.9)
       base64
       simpleidn
-    email_validator (2.2.4)
-      activemodel
     erb (6.0.4)
     erubi (1.13.1)
     eventmachine (1.2.7)
@@ -353,7 +351,7 @@ GEM
       reline (>= 0.4.2)
     jmespath (1.6.2)
     json (2.19.8)
-    json-jwt (1.17.0)
+    json-jwt (1.17.1)
       activesupport (>= 4.2)
       aes_key_wrap
       base64
@@ -436,26 +434,26 @@ GEM
       racc (~> 1.4)
     nori (2.7.1)
       bigdecimal
-    oauth (1.1.5)
-      auth-sanitizer (~> 0.1, >= 0.1.3)
+    oauth (1.1.6)
+      auth-sanitizer (~> 0.2, >= 0.2.1)
       base64 (~> 0.1)
       cgi
       oauth-tty (~> 1.0, >= 1.0.8)
-      snaky_hash (~> 2.0, >= 2.0.4)
-      version_gem (~> 1.1, >= 1.1.9)
+      snaky_hash (~> 2.0, >= 2.0.5)
+      version_gem (~> 1.1, >= 1.1.11)
     oauth-tty (1.0.8)
       auth-sanitizer (~> 0.1, >= 0.1.3)
       cgi
       version_gem (~> 1.1, >= 1.1.9)
-    oauth2 (2.0.20)
-      auth-sanitizer (~> 0.1, >= 0.1.3)
+    oauth2 (2.0.22)
+      auth-sanitizer (~> 0.2, >= 0.2.1)
       faraday (>= 0.17.3, < 4.0)
       jwt (>= 1.0, < 4.0)
       logger (~> 1.2)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
-      snaky_hash (~> 2.0, >= 2.0.4)
-      version_gem (~> 1.1, >= 1.1.9)
+      snaky_hash (~> 2.0, >= 2.0.5)
+      version_gem (~> 1.1, >= 1.1.11)
     omniauth (2.1.4)
       hashie (>= 3.4.6)
       logger
@@ -502,10 +500,9 @@ GEM
     omniauth_openid_connect (0.8.0)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 2.2)
-    openid_connect (2.4.0)
+    openid_connect (2.5.0)
       activemodel
       attr_required (>= 1.0.0)
-      email_validator
       faraday (~> 2.0)
       faraday-follow_redirects
       json-jwt (>= 1.16)
@@ -554,7 +551,7 @@ GEM
       pry (~> 0.13)
     pry-theme (1.3.1)
       coderay (~> 1.1)
-    psych (5.3.1)
+    psych (5.4.0)
       date
       stringio
     public_suffix (7.0.5)
@@ -699,7 +696,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.47.1, < 2.0)
-    rubocop-rails (2.35.3)
+    rubocop-rails (2.35.4)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
       rack (>= 1.1)
@@ -708,9 +705,10 @@ GEM
     rubocop-rake (0.7.1)
       lint_roller (~> 1.1)
       rubocop (>= 1.72.1)
-    rubocop-rspec (3.9.0)
+    rubocop-rspec (3.10.2)
       lint_roller (~> 1.1)
-      rubocop (~> 1.81)
+      regexp_parser (>= 2.0)
+      rubocop (~> 1.86, >= 1.86.2)
     rubocop-rspec_rails (2.32.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
@@ -752,7 +750,7 @@ GEM
       hashie
       logger
     slop (3.6.0)
-    snaky_hash (2.0.4)
+    snaky_hash (2.0.5)
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
     sprockets (4.2.2)
@@ -812,7 +810,7 @@ GEM
       activemodel (>= 3.0.0)
       public_suffix
     vcr (6.4.0)
-    version_gem (1.1.9)
+    version_gem (1.1.11)
     viewpoint (1.2.0)
       httpclient
       logging
@@ -846,7 +844,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     websocket (1.2.11)
-    websocket-driver (0.8.0)
+    websocket-driver (0.8.1)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)

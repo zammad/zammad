@@ -92,7 +92,7 @@ RSpec.describe Gql::Mutations::User::AddFirstAdmin, :aggregate_failures, set_up:
       end
 
       it 'fails with an error' do
-        expect(graphql_response['data']['userAddFirstAdmin']['errors'].first['message']).to match(%r{Invalid password})
+        expect(graphql_response['data']['userAddFirstAdmin']['errors'].first['message']).to include('Invalid password')
       end
     end
 

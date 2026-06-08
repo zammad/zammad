@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Webhook, type: :request do
+RSpec.describe WebhooksController, type: :request do
   let(:agent) { create(:agent) }
   let(:admin) { create(:admin) }
 

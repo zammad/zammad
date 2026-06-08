@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe OnlineNotification, type: :request do
+RSpec.describe OnlineNotificationsController, type: :request do
 
   let(:admin)   { create(:admin, groups: Group.all) }
   let(:agent)   { create(:agent, groups: Group.all) }
