@@ -280,6 +280,28 @@ RSpec.describe Job, type: :model do
         end
 
       end
+
+      # Regression: a Job with a pending-state perform but no ticket.pending_time
+      # (e.g. created before the validator was introduced) must still execute.
+      # The internal saves that update running/last_run_at must not re-validate
+      # job configuration and abort the run.
+      context 'when perform sets a pending state without ticket.pending_time (legacy record)' do
+        subject(:job) do
+          build(:job, :always_on, perform: pending_perform).tap { |j| j.save!(validate: false) }
+        end
+
+        let(:pending_perform) do
+          { 'ticket.state_id' => { 'value' => Ticket::State.by_category(:pending).first.id.to_s } }
+        end
+
+        it 'does not raise an error' do
+          expect { job.run(true) }.not_to raise_error
+        end
+
+        it 'updates last_run_at after execution' do
+          expect { job.run(true) }.to change { job.reload.last_run_at }
+        end
+      end
     end
 
     describe '#executable?' do

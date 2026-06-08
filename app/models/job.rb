@@ -124,7 +124,7 @@ job.run(true)
   def mark_as_finished
     self.running = false
     self.last_run_at = Time.zone.now
-    save!
+    save!(validate: false)
   end
 
   def start_job(start_at, force)
@@ -146,7 +146,7 @@ job.run(true)
     return true if executable?(start_at) || force
 
     if next_run_at && next_run_at <= Time.zone.now
-      save!
+      save!(validate: false)
     end
 
     false
@@ -155,7 +155,7 @@ job.run(true)
   def start_job_in_timeplan?(start_at, force)
     return true if in_timeplan?(start_at) || force
 
-    save! # trigger updating matching tickets count and next_run_at time even if not in timeplan
+    save!(validate: false) # trigger updating matching tickets count and next_run_at time even if not in timeplan
 
     false
   end
@@ -164,7 +164,7 @@ job.run(true)
     self.processed = batch_count
     self.running = true
     self.last_run_at = Time.zone.now
-    save!
+    save!(validate: false)
   end
 
   def run_slice(slice)
