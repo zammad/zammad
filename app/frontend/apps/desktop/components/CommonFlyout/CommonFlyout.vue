@@ -40,6 +40,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
 import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
 import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
+import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 import { getRouteIdentifier } from '#desktop/composables/useOverlayContainer.ts'
 
 import CommonFlyoutActionFooter from './CommonFlyoutActionFooter.vue'
@@ -112,6 +113,14 @@ whenever(isActive, () => {
   emit('activated')
 })
 
+// On smaller screens the flyout behaves like a dialog: it fills the whole
+// viewport (covering the sidebars), gets a small inset around the viewport,
+// fully rounded corners and resizing is disabled (no multitasking in this
+// mode).
+const { isSmallScreen } = useAppBreakpoints()
+
+const isFullscreen = computed(() => props.fullscreen || isSmallScreen.value)
+
 const {
   isDirty: isFormDirty,
   isDisabled: isFormDisabled,
@@ -174,6 +183,10 @@ const leftSidebarWidth = leftSideBarKey ? useLocalStorage(leftSideBarKey, 0) : s
 const { width: screenWidth } = useWindowSize()
 // Calculate the viewport width minus the left sidebar width and a threshold gap
 const flyoutMaxWidth = computed(() => screenWidth.value - leftSidebarWidth.value - gap)
+
+const displayedFlyoutWidth = computed(() =>
+  Math.min(flyoutContainerWidth.value, flyoutMaxWidth.value),
+)
 
 if (props.persistResizeWidth) {
   flyoutContainerWidth = useLocalStorage(`${flyoutId}-width`, flyoutSize[props.size || 'medium'])
@@ -306,17 +319,23 @@ const transition = VITE_TEST_MODE
 <template>
   <Transition :appear="isActive" v-bind="transition">
     <!--  `display:none` to prevent showing up inactive flyout for cached instance -->
+    <!-- Below `lg` (1024px) the flyout switches to a dialog-like fullscreen layout, which also keeps the large size of 800px from ever being out of the viewport on initial render. -->
     <CommonOverlayContainer
       :id="flyoutId"
       ref="flyout-container"
       tag="aside"
       tabindex="-1"
-      class="overflow-clip-x fixed top-0 bottom-0 z-40 flex max-h-dvh min-w-min flex-col border-y border-neutral-100 bg-neutral-50 ltr:right-0 ltr:rounded-l-xl ltr:border-l rtl:left-0 rtl:rounded-r-xl rtl:border-r dark:border-gray-900 dark:bg-gray-500"
+      class="fixed z-40 flex max-h-dvh min-w-min flex-col border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500"
+      :style="{ '--flyout-container-width': `${displayedFlyoutWidth}px` }"
       :no-close-on-backdrop-click="noCloseOnBackdropClick"
       :show-backdrop="showBackdrop && isActive"
-      :style="{ width: `${flyoutContainerWidth}px` }"
-      :class="{ 'transition-all': !isResizing, hidden: !isActive }"
-      :fullscreen="fullscreen"
+      :class="[
+        { 'transition-all': !isResizing, hidden: !isActive },
+        isSmallScreen
+          ? 'inset-6 w-auto overflow-hidden rounded-xl border'
+          : 'overflow-clip-x inset-y-0 inset-e-0 w-full rounded-s-xl border-y border-s lg:w-(--flyout-container-width)',
+      ]"
+      :fullscreen="isFullscreen"
       :aria-labelledby="`${flyoutId}-title`"
       @click-background="close()"
     >
@@ -379,7 +398,7 @@ const transition = VITE_TEST_MODE
         v-if="resizable"
         ref="resize-handle"
         :label="$t('Resize side panel')"
-        class="absolute top-2 h-[calc(100%-16px)] overflow-clip ltr:left-px ltr:-translate-x-1/2 rtl:right-px rtl:translate-x-1/2"
+        class="absolute inset-s-px top-2 hidden h-[calc(100%-16px)] overflow-clip lg:flex ltr:-translate-x-1/2 rtl:translate-x-1/2"
         orientation="vertical"
         :values="{
           current: flyoutContainerWidth,

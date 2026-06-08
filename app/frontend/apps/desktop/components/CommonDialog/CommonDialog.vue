@@ -14,6 +14,7 @@ import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
+import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 import { getRouteIdentifier } from '#desktop/composables/useOverlayContainer.ts'
 
 import CommonDialogActionFooter, {
@@ -61,6 +62,10 @@ const router = useRouter()
 const isActive = computed(() =>
   props.fullscreen ? true : routeIdentifier === getRouteIdentifier(router.currentRoute.value),
 )
+
+const { isSmallScreen } = useAppBreakpoints()
+
+const isFullscreen = computed(() => props.fullscreen || isSmallScreen.value)
 
 const dialogElement = useTemplateRef<HTMLElement>('dialog')
 const footerElement = useTemplateRef('footer')
@@ -124,13 +129,13 @@ const transition = VITE_TEST_MODE
   <!--  `display:none` to prevent showing up inactive dialog for cached instance -->
   <Transition :appear="isActive" v-bind="transition">
     <!-- We use teleport here to  center it to target node and increase z index on fullscreen to avoid clicking collapse and resize buttons -->
-    <Teleport :to="fullscreen ? '#app' : '#main-content'">
+    <Teleport :to="isFullscreen ? '#app' : '#main-content'">
       <CommonOverlayContainer
         :id="dialogId"
         tag="div"
         disable-teleport
-        class="absolute top-[50%] z-50 h-full w-full translate-y-[-50%] ltr:left-[50%] ltr:translate-x-[-50%] rtl:right-[50%] rtl:-translate-x-[-50%]"
-        :class="{ 'z-40': fullscreen, hidden: !isActive }"
+        class="absolute top-[50%] z-50 size-full translate-y-[-50%] ltr:left-[50%] ltr:translate-x-[-50%] rtl:right-[50%] rtl:-translate-x-[-50%]"
+        :class="{ 'z-40': isFullscreen, hidden: !isActive }"
         role="dialog"
         backdrop-class="z-40"
         :show-backdrop="isActive"
@@ -143,7 +148,7 @@ const transition = VITE_TEST_MODE
           :is="wrapperTag"
           ref="dialog"
           data-common-dialog
-          class="absolute top-1/2 z-50 flex min-w-lg -translate-y-1/2 flex-col gap-3 rounded-xl border border-neutral-100 bg-neutral-50 p-3 ltr:left-1/2 ltr:-translate-x-1/2 rtl:right-1/2 rtl:translate-x-1/2 dark:border-gray-900 dark:bg-gray-500"
+          class="absolute top-1/2 z-50 flex w-max max-w-full -translate-y-1/2 flex-col gap-3 rounded-xl border border-neutral-100 bg-neutral-50 p-3 md:min-w-lg ltr:left-1/2 ltr:-translate-x-1/2 rtl:right-1/2 rtl:translate-x-1/2 dark:border-gray-900 dark:bg-gray-500"
         >
           <div class="flex items-center justify-between bg-neutral-50 dark:bg-gray-500">
             <slot name="header">
