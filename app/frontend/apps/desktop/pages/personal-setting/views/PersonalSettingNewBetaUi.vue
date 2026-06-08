@@ -13,7 +13,7 @@ import {
 import { useFeedbackDialog } from '#desktop/components/BetaUi/FeedbackDialog/useFeedbackDialog.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
-import { useAppUsage } from '#desktop/composables/BetaUi/useAppUsage.ts'
+import { useAppUsageStore } from '#desktop/stores/appUsage.ts'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
@@ -32,7 +32,7 @@ const { openFeedbackDialog } = useFeedbackDialog()
 
 const { waitForConfirmation } = useConfirmation()
 
-const { setNeverAskAgainForTimedFeedback, neverAskAgainForTimedFeedback } = useAppUsage()
+const { setNeverAskAgainForTimedFeedback, neverAskAgainForTimedFeedback } = useAppUsageStore()
 
 const leaveFeedbackProgram = () => {
   waitForConfirmation(__('You can always re-join later.'), {

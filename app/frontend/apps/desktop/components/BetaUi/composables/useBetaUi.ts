@@ -1,46 +1,39 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useLocalStorage } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 import { computed, toRef } from 'vue'
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
-import { useAppUsage } from '#desktop/composables/BetaUi/useAppUsage.ts'
+import { useAppUsageStore } from '#desktop/stores/appUsage.ts'
 
 import { EnumFeedbackDialog, useFeedbackDialog } from '../FeedbackDialog/useFeedbackDialog.ts'
 
 import { useBetaUiFeedbackConsentState } from './useBetaUiFeedbackConsentState.ts'
 
 export const initializeBetaUi = () => {
-  const user = toRef(useSessionStore(), 'user')
-
-  const config = toRef(useApplicationStore(), 'config')
-
-  const { setNeverAskAgainForTimedFeedback, resetMilestoneHistory } = useAppUsage()
-
-  const betaUiSwitchAvailable = computed(
-    () => config.value?.ui_desktop_beta_switch && user.value?.hasBetaUiSwitchAvailable,
-  )
-
-  const switchValue = useLocalStorage('beta-ui-switch', false)
+  const appUsage = useAppUsageStore()
+  const { switchValue, betaUiSwitchAvailable } = storeToRefs(appUsage)
 
   const clearSwitchAndRedirect = (redirectTo: string) => {
-    switchValue.value = undefined
+    switchValue.value = null
 
     window.location.href = redirectTo
 
-    setNeverAskAgainForTimedFeedback(false)
-    resetMilestoneHistory()
+    appUsage.setNeverAskAgainForTimedFeedback(false)
+    appUsage.resetMilestoneHistory()
+    appUsage.resetTotalAppUsageTime()
   }
 
-  return { switchValue, clearSwitchAndRedirect, betaUiSwitchAvailable, user }
+  return { switchValue, clearSwitchAndRedirect, betaUiSwitchAvailable }
 }
 
 export const useBetaUi = () => {
-  const { switchValue, clearSwitchAndRedirect, betaUiSwitchAvailable, user } = initializeBetaUi()
-  const dismissValue = useLocalStorage('beta-ui-switch-dismiss', false)
+  const { switchValue, clearSwitchAndRedirect, betaUiSwitchAvailable } = initializeBetaUi()
+
+  const { dismissValue } = storeToRefs(useAppUsageStore())
+  const user = toRef(useSessionStore(), 'user')
 
   const betaUiSwitchEnabled = computed(() => betaUiSwitchAvailable.value && !dismissValue.value)
 
@@ -49,7 +42,7 @@ export const useBetaUi = () => {
   const { openFeedbackDialog } = useFeedbackDialog(EnumFeedbackDialog.SwitchBack)
 
   const clearFeedbackConsentAndRedirect = (redirectTo: string) => {
-    hasFeedbackConsent.value = undefined
+    hasFeedbackConsent.value = null
 
     clearSwitchAndRedirect(redirectTo)
   }
