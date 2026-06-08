@@ -14,7 +14,7 @@ const attribute = (overrides: Partial<FilterAttribute> = {}): FilterAttribute =>
 describe('FieldFilterSelector - is operator', () => {
   it('renders a multi-select for plain relation attributes', () => {
     expect(is.filterFields(attribute())).toEqual([
-      { type: 'select', props: { clearable: true, multiple: true, delay: 400 } },
+      { type: 'select', props: { clearable: true, multiple: true } },
     ])
   })
 
@@ -26,7 +26,7 @@ describe('FieldFilterSelector - is operator', () => {
     'renders the $autocompleteFilterType autocomplete for $name',
     ({ name, autocompleteFilterType }) => {
       expect(is.filterFields(attribute({ name, autocompleteFilterType }))).toEqual([
-        { type: autocompleteFilterType, props: { clearable: true, multiple: true, delay: 400 } },
+        { type: autocompleteFilterType, props: { clearable: true, multiple: true } },
       ])
     },
   )

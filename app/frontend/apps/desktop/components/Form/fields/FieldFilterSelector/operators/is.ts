@@ -14,10 +14,10 @@ export default <Operator>{
       return [
         {
           type: attribute.autocompleteFilterType,
-          props: { clearable: true, multiple: true, delay: 400 },
+          props: { clearable: true, multiple: true },
         },
       ]
     }
-    return [{ type: 'select', props: { clearable: true, multiple: true, delay: 400 } }]
+    return [{ type: 'select', props: { clearable: true, multiple: true } }]
   },
 }

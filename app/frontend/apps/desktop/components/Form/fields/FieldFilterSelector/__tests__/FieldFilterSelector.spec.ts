@@ -92,7 +92,7 @@ describe('Fields - FieldFilterSelector', () => {
     expect(titleInput).toHaveValue('test')
     expect(getNode('filterSelector')?._value).toEqual(initialValue)
 
-    vi.advanceTimersByTime(499)
+    vi.advanceTimersByTime(449)
     await waitForNextTick()
 
     expect(getNode('filterSelector')?._value).toEqual(initialValue)
@@ -357,6 +357,94 @@ describe('Fields - FieldFilterSelector', () => {
     const rows = getNode('filterSelector')?._value as Array<{ value: unknown }>
     expect(Array.isArray(rows?.[0]?.value)).toBe(true)
     expect(rows?.[0]?.value).toHaveLength(2)
+  })
+
+  const relativeAttribute: FilterAttribute = {
+    name: 'ticket.created_at',
+    label: 'Created at',
+    operators: ['within last (relative)'],
+    attributeFieldType: 'datetime',
+  }
+
+  it('renders `within last (relative)` as a value + unit grouped under the attribute label', async () => {
+    // The two inputs bind to *separate* row keys (`value` and `range`)
+    // yet share one fieldset/legend — unlike `in range`, which
+    // aggregates its inputs into a single array value.
+    const view = renderFilterSelector(
+      [{ name: 'ticket.created_at', operator: 'within last (relative)', value: 5, range: 'day' }],
+      { filterAttributes: [relativeAttribute] },
+    )
+
+    expect(view.getByRole('group', { name: 'Created at' })).toBeInTheDocument()
+
+    expect(view.getByLabelText('Value')).toHaveValue(5)
+    expect(view.getByLabelText('Unit')).toBeInTheDocument()
+
+    expect(getNode('filterSelector-ticket.created_at-value')?._value).toBe(5)
+    expect(getNode('filterSelector-ticket.created_at-range')?._value).toBe('day')
+
+    expect(getNode('filterSelector')?._value).toEqual([
+      { name: 'ticket.created_at', operator: 'within last (relative)', value: 5, range: 'day' },
+    ])
+  })
+
+  const dateAttribute: FilterAttribute = {
+    name: 'ticket.created_at',
+    label: 'Created at',
+    operators: ['in range', 'within last (relative)'],
+    attributeFieldType: 'datetime',
+  }
+
+  it('labels a multi-operator `within last (relative)` row as "Field - Operator"', async () => {
+    const view = renderFilterSelector(
+      [{ name: 'ticket.created_at', operator: 'within last (relative)', value: 5, range: 'day' }],
+      { filterAttributes: [dateAttribute] },
+    )
+
+    expect(
+      view.getByRole('group', { name: 'Created at - within last (relative)' }),
+    ).toBeInTheDocument()
+  })
+
+  it('labels a multi-operator `in range` row as "Field - Operator"', async () => {
+    // A single native date-range field is routed through the fieldset/legend so
+    // it, too, spells out the operator.
+    const view = renderFilterSelector(
+      [{ name: 'ticket.created_at', operator: 'in range', value: ['2026-01-01', '2026-02-01'] }],
+      { filterAttributes: [dateAttribute] },
+    )
+
+    expect(view.getByRole('group', { name: 'Created at - in range' })).toBeInTheDocument()
+  })
+
+  it('omits the operator from the label for single-operator attributes', async () => {
+    const view = renderFilterSelector([{ name: 'ticket.title', operator: 'matches', value: 'x' }], {
+      filterAttributes: [{ name: 'ticket.title', label: 'Title', operators: ['matches'] }],
+    })
+
+    // Plain field label, no ` - operator` suffix, and no per-row legend group.
+    expect(view.getByLabelText('Title')).toBeInTheDocument()
+    expect(view.queryByRole('group', { name: /Title/ })).not.toBeInTheDocument()
+  })
+
+  it('makes a multi-operator attribute expand-only in the picker (parent not selectable)', async () => {
+    const view = renderFilterSelector([], {
+      filterAttributes: [
+        {
+          name: 'ticket.created_at',
+          label: 'Created at',
+          operators: ['in range', 'within last (relative)'],
+          attributeFieldType: 'datetime',
+        },
+      ],
+    })
+
+    await view.events.click(view.getByRole('button', { name: 'Add filter' }))
+
+    // The attribute node only expands to its operators — it isn't itself
+    // selectable, so the user must pick a specific operator.
+    const parent = await view.findByRole('button', { name: 'Created at' })
+    expect(parent).toHaveAccessibleDescription('This item expands to show more options')
   })
 
   it('applies filterAttributeOptions to rendered relation sub-fields', async () => {

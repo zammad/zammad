@@ -39,4 +39,16 @@ describe('FieldResolverDate', () => {
       value: '2026-02-09',
     })
   })
+
+  it('exposes the date operators for advanced search filters', () => {
+    const fieldResolver = new FieldResolverDate(EnumObjectManagerObjects.Ticket, {
+      dataType: 'date',
+      name: 'date',
+      display: 'Date',
+      dataOption: {},
+      isInternal: true,
+    })
+
+    expect(fieldResolver.getFieldFilterOperators()).toEqual(['in range', 'within last (relative)'])
+  })
 })

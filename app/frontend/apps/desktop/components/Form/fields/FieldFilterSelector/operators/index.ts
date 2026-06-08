@@ -3,7 +3,8 @@
 import type { Operator } from '../types.ts'
 
 // Auto-discovered operators (kept in sync with the sibling files via the glob).
-// Current set: is.ts, matches.ts, contains-one.ts, in-range.ts.
+// Current set: is.ts, matches.ts, contains-one.ts, in-range.ts,
+// within-last-relative.ts.
 const modules = import.meta.glob<Operator>(['./*.ts', '!./index.ts'], {
   eager: true,
   import: 'default',

@@ -67,7 +67,7 @@ export abstract class FieldResolver {
     return relation ? AUTOCOMPLETE_FILTER_FIELDS[relation] : undefined
   }
 
-  private getFieldType(): string {
+  public getFieldType(): string {
     if (typeof this.fieldType === 'function') return this.fieldType()
 
     return this.fieldType

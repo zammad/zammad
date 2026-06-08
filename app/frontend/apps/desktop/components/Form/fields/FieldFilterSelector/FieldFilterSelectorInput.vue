@@ -8,6 +8,7 @@ import { computed, nextTick, ref, shallowRef, toRef, watch } from 'vue'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { FormFieldValue } from '#shared/components/Form/types.ts'
+import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import type { FilterAttribute } from '#shared/entities/object-attributes/types/store.ts'
 import { i18n } from '#shared/i18n.ts'
 
@@ -110,12 +111,29 @@ const translateFilterLabel = (attribute: Pick<FilterAttribute, 'label' | 'labelP
     ...(attribute.labelPlaceholder ?? []).map((placeholder) => i18n.t(placeholder)),
   )
 
+// Row label for a filter. When the attribute exposes more than one operator the
+// operator can't be inferred from the field label alone, so it's appended as
+// `${Field} - ${Operator}`. Both parts are translated independently — custom
+// attributes can't carry catalog placeholders, so there's no `%s` interpolation.
+// Only multi-operator rows reach the operator branch, and a rendered row always
+// carries a valid operator, so it's required here.
+const filterRowLabel = (attribute: FilterAttribute, operator: string) => {
+  const label = translateFilterLabel(attribute)
+
+  if (attribute.operators.length <= 1) return label
+
+  const operatorLabel = operators[operator]?.label
+  if (!operatorLabel) return label
+
+  return `${label} - ${i18n.t(operatorLabel)}`
+}
+
 // Exposed to the schema so the legend's `$`-expression re-translates its label
 // reactively (on config or locale change), the way a FormKit field label does.
 const schemaData = {
   legendLabel: (name: string) => {
     const attribute = attributesByName.value[name]
-    return attribute ? translateFilterLabel(attribute) : ''
+    return attribute ? filterRowLabel(attribute, filtersByName.value[name]?.operator) : ''
   },
 }
 
@@ -137,6 +155,8 @@ const fieldOptions = computed(() =>
     return {
       label: translateFilterLabel(currentAttribute),
       value: currentAttribute.name,
+      // Multiple operators → expand-only parent; the user picks a specific operator.
+      disabled: true,
       children: currentAttribute.operators.map((operator) => ({
         label: operators[operator]?.label ?? operator,
         value: encodeFieldOption(currentAttribute.name, operator),
@@ -181,6 +201,9 @@ const addField = (attribute: FilterAttribute, operator: string) => {
       name: attribute.name,
       operator,
       value: undefined,
+      // Operator-declared defaults for its secondary inputs (e.g. the `range`
+      // unit of `within last (relative)`), so the row is valid on creation.
+      ...operators[operator]?.defaultEntryValues,
     }),
   )
 
@@ -281,6 +304,30 @@ const valueHandlingPlugin = (attributeName: string, inputName: string) => (node:
   return false
 }
 
+// The clickable `<legend>` naming a grouped row (compound `list`, or several
+// independently-bound inputs). Re-translates reactively via `$legendLabel`.
+const legendNode = (attribute: FilterAttribute): FormKitSchemaNode => {
+  const legend: Record<string, unknown> = {
+    $el: 'legend',
+    attrs: {
+      // `cursor-default` so the clickable legend matches a field label.
+      class: 'mb-1 block w-fit cursor-default text-sm text-gray-100 dark:text-neutral-400',
+      // A `<legend>` has no native click-to-focus (a `<label for>` would
+      // double-label the first input), so focus it ourselves.
+      onClick: () => focusFieldInput(attribute.name),
+    },
+    children: [`$legendLabel('${attribute.name}')`],
+  }
+
+  return legend as FormKitSchemaNode
+}
+
+// Commit debounce shared by every filter input, so the live search isn't
+// re-run on each keystroke. Applied centrally to the value inputs below rather
+// than repeated per operator; an operator can still override it by setting
+// `delay` on its own field.
+const FILTER_INPUT_DELAY = 450
+
 // Builds the FormKit schema node for one operator filter-field. Runs inside a
 // watcher (not a computed), so it can read the current value to seed `value:`
 // without making the schema rebuild on every keystroke.
@@ -288,10 +335,13 @@ const valueHandlingPlugin = (attributeName: string, inputName: string) => (node:
 // A single field uses FormKit's own label (translated + associated by the
 // form). A compound field (e.g. `in range`) groups its inputs in a native
 // `<fieldset>` whose `<legend>` names them; each sub-input keeps its own
-// screen-reader-only FormKit label.
+// screen-reader-only FormKit label. `grouped` renders an independently-bound
+// input as a bare, screen-reader-labelled node for the caller to place inside
+// such a shared fieldset (e.g. the `value`/`range` inputs of `within last`).
 const schemaFilterField = (
   attribute: FilterAttribute,
   fieldSchema: FilterField,
+  { grouped = false }: { grouped?: boolean } = {},
 ): FormKitSchemaNode => {
   const { type, name, children, props: fieldProps, ...inputProps } = fieldSchema
   const inputName = name ?? 'value'
@@ -319,7 +369,9 @@ const schemaFilterField = (
   // the container value, plus any plain-string separators. Each input keeps its
   // own screen-reader-only label; the surrounding fieldset/legend (below) names
   // the group — so a screen reader reads e.g. "Escalation count", then "min" /
-  // "max".
+  // "max". This owns its own fieldset, so it ignores `grouped`: a compound
+  // `list` operator never co-occurs with the multi-operator legend wrapper
+  // (only single-operator attributes like integer `in range` render a `list`).
   if (type === 'list' || type === 'group') {
     const rowChildren = (children ?? []).map((child, index) => {
       if (typeof child === 'string') {
@@ -337,8 +389,9 @@ const schemaFilterField = (
       // Each input is a normal FormKit field; its `label` names the bound but
       // is rendered screen-reader-only (`labelSrOnly`) — the legend and visible
       // placeholder are the sighted affordances. Input children carry no value
-      // plugin — the container owns the value.
-      return Object.assign({}, childRest, childProps, {
+      // plugin — the container owns the value. `delay` leads so a child can
+      // still override it.
+      return Object.assign({ delay: FILTER_INPUT_DELAY }, childRest, childProps, {
         $formkit: childType,
         id: childId,
         key: childId,
@@ -361,21 +414,23 @@ const schemaFilterField = (
     return {
       $el: 'fieldset',
       attrs: { class: 'flex w-full min-w-0 flex-col border-0 p-0' },
-      children: [
-        {
-          $el: 'legend',
-          attrs: {
-            // `cursor-default` so the clickable legend matches a field label.
-            class: 'mb-1 block w-fit cursor-default text-sm text-gray-100 dark:text-neutral-400',
-            // A `<legend>` has no native click-to-focus (a `<label for>` would
-            // double-label the first input), so focus it ourselves.
-            onClick: () => focusFieldInput(attribute.name),
-          },
-          children: [`$legendLabel('${attribute.name}')`],
-        },
-        node as FormKitSchemaNode,
-      ],
+      children: [legendNode(attribute), node as FormKitSchemaNode],
     } as FormKitSchemaNode
+  }
+
+  // Leaf inputs (single or grouped) share the central commit debounce; the
+  // `list` container above is excluded — only its children debounce.
+  node.delay ??= FILTER_INPUT_DELAY
+
+  // Grouped input: keeps its own label rendered screen-reader-only — the
+  // shared fieldset legend (added by the caller) is the sighted name. A single
+  // grouped input without its own label (e.g. the date `in range` picker) falls
+  // back to the attribute label so it still has an accessible name; the operator
+  // is deliberately left to the legend to avoid a redundant double-announce.
+  if (grouped) {
+    node.label = inputProps.label ?? attribute.label
+    node.labelSrOnly = true
+    return node as FormKitSchemaNode
   }
 
   // Single field: FormKit renders its own label, translated by the form's
@@ -401,6 +456,8 @@ const resolveOperatorFilterFields = (attribute: FilterAttribute, operator: strin
   })
 }
 
+const { isTouchDevice } = useTouchDevice()
+
 // Rebuilt only on row-structure changes, never on value edits — a watcher
 // rather than a computed, so the build can read current values to seed fields
 // declaratively (see `schemaFilterField`) without that read re-running it.
@@ -408,14 +465,36 @@ const buildFilterFieldsSchema = (): FormKitSchemaNode[] =>
   rowStructure.value.map((row) => {
     const filterOperatorFields = resolveOperatorFilterFields(row.attribute, row.operator)
 
-    const filterSchema = filterOperatorFields.map((fieldSchema) =>
-      schemaFilterField(row.attribute, fieldSchema),
-    )
+    // A shared fieldset/legend is used when either several independently-bound
+    // inputs need grouping (e.g. `within last`'s count → `value` and unit →
+    // `range`), or the attribute is multi-operator so the legend must spell out
+    // `${Field} - ${Operator}` (e.g. date `in range`, a single field that would
+    // otherwise render FormKit's plain field label). Each input renders bare
+    // with a screen-reader-only label, laid out in a flex row.
+    const filterSchema =
+      filterOperatorFields.length > 1 || row.attribute.operators.length > 1
+        ? [
+            {
+              $el: 'fieldset',
+              attrs: { class: 'flex w-full min-w-0 flex-col border-0 p-0' },
+              children: [
+                legendNode(row.attribute),
+                {
+                  $el: 'div',
+                  attrs: { class: 'flex w-full items-end gap-2' },
+                  children: filterOperatorFields.map((fieldSchema) =>
+                    schemaFilterField(row.attribute, fieldSchema, { grouped: true }),
+                  ),
+                },
+              ],
+            } as FormKitSchemaNode,
+          ]
+        : filterOperatorFields.map((fieldSchema) => schemaFilterField(row.attribute, fieldSchema))
 
     return {
       $el: 'li',
       attrs: {
-        class: 'flex gap-2',
+        class: 'group flex gap-2',
       },
       children: [
         ...filterSchema,
@@ -428,6 +507,9 @@ const buildFilterFieldsSchema = (): FormKitSchemaNode[] =>
             {
               $cmp: CommonButton,
               props: {
+                class: !isTouchDevice.value
+                  ? 'opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100'
+                  : '',
                 icon: 'x-lg',
                 variant: 'remove',
                 disabled: hasReachedMin.value,
@@ -445,14 +527,14 @@ const buildFilterFieldsSchema = (): FormKitSchemaNode[] =>
 // deep-reactive-wrapped, and it's replaced wholesale on each rebuild.
 const filterFieldsSchema = shallowRef<FormKitSchemaNode[]>([])
 
-watch(rowStructure, () => (filterFieldsSchema.value = buildFilterFieldsSchema()), {
+watch([rowStructure, isTouchDevice], () => (filterFieldsSchema.value = buildFilterFieldsSchema()), {
   immediate: true,
 })
 </script>
 
 <template>
   <fieldset class="bg-blue-200 dark:bg-gray-700" :name="context.node.name">
-    <ul class="grid items-end gap-x-6 gap-y-3 @2xl:grid-cols-2 @5xl:grid-cols-3 @7xl:grid-cols-4">
+    <ul class="grid items-end gap-3 @2xl:grid-cols-2 @5xl:grid-cols-3 @7xl:grid-cols-4">
       <FormKitSchema :schema="filterFieldsSchema" :data="schemaData" />
 
       <li v-if="addFieldActive">

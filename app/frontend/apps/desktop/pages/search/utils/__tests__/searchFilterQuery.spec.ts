@@ -302,4 +302,45 @@ describe('searchFilterQuery', () => {
       ).toEqual({})
     })
   })
+
+  describe('within last (relative) (range extra key)', () => {
+    const relativeAttributes: FilterAttribute[] = [
+      {
+        name: 'ticket.created_at',
+        label: 'Created at',
+        operators: ['within last (relative)'],
+        attributeFieldType: 'datetime',
+      },
+    ]
+
+    it('round-trips the range unit at the same level as the value', () => {
+      const encoded = encodeFilters([
+        { name: 'ticket.created_at', operator: 'within last (relative)', value: 5, range: 'day' },
+      ])
+
+      expect(encoded).toEqual({
+        'filter.0.name': 'ticket.created_at',
+        'filter.0.operator': 'within last (relative)',
+        'filter.0.value': '5',
+        'filter.0.range': 'day',
+      })
+
+      expect(decodeFilters(encoded, relativeAttributes)).toEqual([
+        { name: 'ticket.created_at', operator: 'within last (relative)', value: '5', range: 'day' },
+      ])
+    })
+
+    it('preserves the range unit when no attribute schema is supplied yet', () => {
+      const result = decodeFilters({
+        'filter.0.name': 'ticket.created_at',
+        'filter.0.operator': 'within last (relative)',
+        'filter.0.value': '5',
+        'filter.0.range': 'day',
+      })
+
+      expect(result).toEqual([
+        { name: 'ticket.created_at', operator: 'within last (relative)', value: '5', range: 'day' },
+      ])
+    })
+  })
 })

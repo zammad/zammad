@@ -5,5 +5,5 @@ import type { Operator } from '../types.ts'
 export default <Operator>{
   name: 'matches',
   label: __('matches'),
-  filterFields: () => [{ type: 'text', delay: 500 }],
+  filterFields: () => [{ type: 'text' }],
 }

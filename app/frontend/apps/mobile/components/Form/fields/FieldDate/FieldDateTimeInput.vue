@@ -9,6 +9,7 @@ import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { DateTimeContext } from '#shared/components/Form/fields/FieldDate/types.ts'
 import { useDateFnsLocale } from '#shared/components/Form/fields/FieldDate/useDateFnsLocale.ts'
 import { useDateTime } from '#shared/components/Form/fields/FieldDate/useDateTime.ts'
+import { usePickerModel } from '#shared/components/Form/fields/FieldDate/usePickerModel.ts'
 import { i18n } from '#shared/i18n.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
@@ -28,6 +29,11 @@ const { localValue } = useValue(contextReactive)
 
 const { ariaLabels, displayFormat, is24, maxDate, minDate, timePicker, valueFormat } =
   useDateTime(contextReactive)
+
+// Shared model handling: drops a half-selected range when `partialRange` is
+// false so only a complete range reaches the form value — keeping the mobile
+// field consistent with desktop.
+const { pickerModel } = usePickerModel(contextReactive, localValue)
 
 const config = {
   keepActionRow: true,
@@ -86,11 +92,12 @@ useEventListener('click', (e) => {
     <!-- eslint-disable vuejs-accessibility/aria-props -->
     <VueDatePicker
       ref="picker"
-      v-model="localValue"
+      v-model="pickerModel"
       :class="{ 'pointer-events-none': context.disabled }"
       :model-type="valueFormat"
       :disabled="context.disabled"
       :range="context.range"
+      :partial-range="context.partialRange"
       :time-config="{
         enableTimePicker: timePicker,
         is24: is24,

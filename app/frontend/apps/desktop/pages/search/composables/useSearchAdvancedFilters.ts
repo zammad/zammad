@@ -64,11 +64,13 @@ export const useSearchAdvancedFilters = (
 
   const selectorsByEntity = computed<Record<string, SelectorObjectInput>>(() => {
     const entries = Object.entries(filtersByEntity).map(([entity, filters]) => {
-      const cleaned = dropEmptyFilterValues(filters).map((entry) => ({
-        name: entry.name,
-        operator: entry.operator,
-        value: entry.value,
-      }))
+      const cleaned = dropEmptyFilterValues(filters).map((entry) => {
+        // Operator-specific extras (e.g. the `range` unit of relative
+        // operators) ride at the same level as `value`, the shape the backend
+        // selector consumes.
+        const { name, operator, value, ...extra } = entry
+        return Object.assign({ name, operator, value }, extra)
+      })
 
       return [
         entity,

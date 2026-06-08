@@ -117,7 +117,10 @@ const resolveAgainstSchema = (
 
   if (!attribute.operators.includes(candidate.operator)) return null
 
+  // Preserve operator extras (e.g. `range`) — only `name`/`value` are
+  // normalised against the schema; everything else rides through unchanged.
   return {
+    ...candidate,
     name: attribute.name,
     operator: candidate.operator,
     value: coerceValueForAttribute(candidate.value, attribute),
@@ -135,8 +138,9 @@ export const decodeFilters = (
   return candidates.flatMap((candidate) => {
     if (!isValidFilter(candidate)) return []
     if (attributes.length === 0) {
-      const { name, operator, value } = candidate
-      return [{ name, operator, value }]
+      // Schema not loaded yet — keep the candidate intact (incl. operator
+      // extras like `range`); it is re-resolved once attributes arrive.
+      return [{ ...candidate }]
     }
 
     const resolved = resolveAgainstSchema(candidate, attributes)

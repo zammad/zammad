@@ -45,4 +45,16 @@ describe('FieldResolverDateTime', () => {
       value: '2026-02-09T12:00:00Z',
     })
   })
+
+  it('exposes the datetime operators for advanced search filters', () => {
+    const fieldResolver = new FieldResolverDateTime(EnumObjectManagerObjects.Ticket, {
+      dataType: 'datetime',
+      name: 'datetime',
+      display: 'DateTime',
+      dataOption: {},
+      isInternal: true,
+    })
+
+    expect(fieldResolver.getFieldFilterOperators()).toEqual(['in range', 'within last (relative)'])
+  })
 })

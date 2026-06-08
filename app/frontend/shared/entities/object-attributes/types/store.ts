@@ -60,6 +60,11 @@ export interface FilterAttribute {
   // sets autocompleteFilterType, since tag values are strings, not IDs.
   relation?: string
   autocompleteFilterType?: string
+  // Resolved FormKit field type of the attribute (e.g. 'date', 'datetime',
+  // 'number'), straight from its FieldResolver. Lets shared operators (e.g.
+  // `in range`) pick the right value-input field type and props without a
+  // per-type operator variant.
+  attributeFieldType?: string
 }
 
 export interface ObjectAttributesObject {

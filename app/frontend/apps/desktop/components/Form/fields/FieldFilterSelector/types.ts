@@ -34,6 +34,11 @@ export type Operator = {
   // attribute. Distinct from `[]`, which would mean "applies but takes
   // no value input" (future valueless operators like `is empty`).
   filterFields: (attribute: FilterAttribute) => FilterField[] | null
+  // Extra entry keys seeded when a row with this operator is added, merged
+  // alongside `value`. Used by compound operators whose secondary input needs
+  // a sensible default so the row is valid before the user touches it (e.g.
+  // `within last (relative)` defaulting its `range` unit).
+  defaultEntryValues?: Record<string, unknown>
 }
 
 // Per-row state. Storage is flat: the row's primary input lives in `value`,

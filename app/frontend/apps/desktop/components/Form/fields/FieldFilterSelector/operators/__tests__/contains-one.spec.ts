@@ -15,7 +15,7 @@ const attribute = (overrides: Partial<FilterAttribute> = {}): FilterAttribute =>
 describe('FieldFilterSelector - contains one operator', () => {
   it('renders the tags autocomplete', () => {
     expect(containsOne.filterFields(attribute())).toEqual([
-      { type: 'tags', props: { clearable: true, multiple: true, delay: 400 } },
+      { type: 'tags', props: { clearable: true, multiple: true } },
     ])
   })
 
@@ -24,7 +24,7 @@ describe('FieldFilterSelector - contains one operator', () => {
     // `multiselect` ticket.state_id). The resolver can still override the
     // rendered `type` via operatorFilterProps (multi-treeselect does so).
     expect(containsOne.filterFields(attribute({ autocompleteFilterType: undefined }))).toEqual([
-      { type: 'select', props: { clearable: true, multiple: true, delay: 400 } },
+      { type: 'select', props: { clearable: true, multiple: true } },
     ])
   })
 })

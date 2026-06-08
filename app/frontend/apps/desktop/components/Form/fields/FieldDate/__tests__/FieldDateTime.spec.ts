@@ -3,6 +3,7 @@
 import { computed } from 'vue'
 
 const { FormKit } = await import('@formkit/vue')
+const { getNode } = await import('@formkit/core')
 const { EnumAppearanceTheme } = await import('#shared/graphql/types.ts')
 const { renderComponent } = await import('#tests/support/components/index.ts')
 const { mockMediaTheme } = await import('#tests/support/mock-mediaTheme.ts')
@@ -100,6 +101,23 @@ describe('Fields - FieldDate', () => {
       expect(input).toHaveDisplayValue('2021-04-12 - 2021-04-14')
     })
 
+    it('with partialRange disabled, commits only a complete range (no partial [from, null])', async () => {
+      const view = await renderDateField({ range: true, partialRange: false })
+
+      expect(getNode('date')?.props.partialRange).toBe(false)
+
+      const input = view.getByLabelText('Date')
+      await view.events.click(input)
+
+      // A single date must not reach the form value as a partial `[from, null]`.
+      await view.events.click(await view.findByText('12'))
+      expect(getNode('date')?._value).not.toEqual(['2021-04-12', null])
+
+      // Completing the range commits the full `[from, to]`.
+      await view.events.click(view.getByText('14'))
+      expect(getNode('date')?._value).toEqual(['2021-04-12', '2021-04-14'])
+    })
+
     it('renders input and allows typing date range', async () => {
       const view = await renderDateField({
         range: true,
@@ -118,7 +136,7 @@ describe('Fields - FieldDate', () => {
       expect(input).toHaveDisplayValue('2021-04-12 - 2021-04-14')
     })
 
-    it('renders range input and validates range', async () => {
+    it('self-heals a reversed typed range by swapping the bounds', async () => {
       const view = await renderDateField({
         range: true,
       })
@@ -133,7 +151,26 @@ describe('Fields - FieldDate', () => {
       vi.runAllTimers()
       await waitForNextTick()
 
-      expect(input).toBeDescribedBy('The start date must precede or match end date.')
+      // Reordered by the `healDateRange` feature instead of raising an error.
+      const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
+      expect(emittedInput.at(-1)?.[0]).toEqual(['2021-04-14', '2021-04-28'])
+      expect(input).toHaveDisplayValue('2021-04-14 - 2021-04-28')
+    })
+
+    it('heals a reversed range set from outside (programmatic input)', async () => {
+      await renderDateField({ range: true })
+
+      getNode('date')?.input(['2021-04-28', '2021-04-14'])
+      await waitForNextTick()
+
+      expect(getNode('date')?._value).toEqual(['2021-04-14', '2021-04-28'])
+    })
+
+    it('heals a reversed range provided as the initial value', async () => {
+      await renderDateField({ range: true, value: ['2021-04-28', '2021-04-14'] })
+      await waitForNextTick()
+
+      expect(getNode('date')?._value).toEqual(['2021-04-14', '2021-04-28'])
     })
 
     it('renders input and allows selecting today', async () => {

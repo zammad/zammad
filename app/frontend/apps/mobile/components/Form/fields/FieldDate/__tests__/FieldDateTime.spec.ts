@@ -106,6 +106,24 @@ describe('Fields - FieldDate', () => {
       expect(input).toHaveDisplayValue('2021-04-12 - 2021-04-14')
     })
 
+    it('with partialRange disabled, commits only a complete range (no partial [from, null])', async () => {
+      // Shared model handling parity with desktop: the picker auto-applies a
+      // single date as `[from, null]`, which the gate drops until both ends are
+      // picked.
+      const view = await renderDateField({ range: true, partialRange: false })
+
+      const input = view.getByLabelText('Date')
+      await view.events.click(input)
+
+      await view.events.click(await view.findByText('12'))
+      const afterFirst = view.emitted().inputRaw as Array<Array<unknown>> | undefined
+      expect(afterFirst?.at(-1)?.[0] ?? null).not.toEqual(['2021-04-12', null])
+
+      await view.events.click(view.getByText('14'))
+      const afterSecond = view.emitted().inputRaw as Array<Array<unknown>>
+      expect(afterSecond.at(-1)?.[0]).toEqual(['2021-04-12', '2021-04-14'])
+    })
+
     it('renders input and allows selecting today', async () => {
       const view = await renderDateField()
 

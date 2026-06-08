@@ -51,6 +51,11 @@ module.exports = plugin(
       '[data-message-type="warning"] &',
       '[data-message-type="warning"]&',
     ])
+    addVariant('formkit-alternative-background', [
+      '&[data-alternative-background]',
+      '[data-alternative-background] &',
+      '[data-alternative-background]&',
+    ])
   },
   {
     theme: {

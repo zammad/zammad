@@ -161,9 +161,6 @@ export const useObjectAttributesStore = defineStore('objectAttributes', () => {
           const resolver = getFieldResolver(object, attribute)
 
           const operators = resolver.getFieldFilterOperators()
-          const operatorFilterProps = resolver.getFilterOperatorProps()
-          const relation = resolver.getFilterRelation()
-          const autocompleteFilterType = resolver.getFilterAutocompleteType()
 
           if (!operators?.length) return []
 
@@ -172,9 +169,10 @@ export const useObjectAttributesStore = defineStore('objectAttributes', () => {
               name: `${entityLowerCase}.${attribute.name}`,
               label: attribute.display,
               operators,
-              operatorFilterProps,
-              relation,
-              autocompleteFilterType,
+              operatorFilterProps: resolver.getFilterOperatorProps(),
+              relation: resolver.getFilterRelation(),
+              autocompleteFilterType: resolver.getFilterAutocompleteType(),
+              attributeFieldType: resolver.getFieldType(),
             },
           ]
         }),

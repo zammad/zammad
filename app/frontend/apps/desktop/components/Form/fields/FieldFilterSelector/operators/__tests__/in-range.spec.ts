@@ -21,17 +21,24 @@ describe('FieldFilterSelector - in range operator', () => {
             type: 'number',
             label: 'min',
             placeholder: 'min',
-            props: { delay: 500 },
           },
           '-',
           {
             type: 'number',
             label: 'max',
             placeholder: 'max',
-            props: { delay: 500 },
           },
         ],
       },
     ])
   })
+
+  it.each(['date', 'datetime'])(
+    'renders a single native range picker for %s (no compound list)',
+    (fieldType) => {
+      expect(inRange.filterFields(attribute({ attributeFieldType: fieldType }))).toEqual([
+        { type: fieldType, props: { range: true, clearable: true, partialRange: false } },
+      ])
+    },
+  )
 })
