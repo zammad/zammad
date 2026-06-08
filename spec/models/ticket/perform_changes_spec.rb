@@ -675,11 +675,43 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
         trigger,
         object,
         nil,
+        webhook_id:     webhook.id,
         changes:        { 'State' => %w[open closed] },
         user_id:        1,
         execution_type: 'trigger',
         event_type:     'info',
       )
+    end
+
+    context 'with multiple webhooks' do
+      let(:other_webhook) { create(:webhook, endpoint: 'http://api.example.com/webhook', signature_token: '53CR3t') }
+      let(:trigger) do
+        create(:trigger,
+               perform: {
+                 'notification.webhook' => { 'webhook_id' => [webhook.id.to_s, other_webhook.id.to_s] }
+               })
+      end
+
+      it 'schedules exactly one notification job per webhook' do
+        expect { object.perform_changes(trigger, 'trigger', context_data, 1) }
+          .to have_enqueued_job(TriggerWebhookJob).with(trigger, object, nil, hash_including(webhook_id: webhook.id)).once
+          .and have_enqueued_job(TriggerWebhookJob).with(trigger, object, nil, hash_including(webhook_id: other_webhook.id)).once
+          .and have_enqueued_job(TriggerWebhookJob).exactly(2).times
+      end
+    end
+
+    context 'with the same webhook configured under mixed id types' do
+      let(:trigger) do
+        create(:trigger,
+               perform: {
+                 'notification.webhook' => { 'webhook_id' => [webhook.id, webhook.id.to_s] }
+               })
+      end
+
+      it 'schedules only one notification job' do
+        expect { object.perform_changes(trigger, 'trigger', context_data, 1) }
+          .to have_enqueued_job(TriggerWebhookJob).with(trigger, object, nil, hash_including(webhook_id: webhook.id)).once
+      end
     end
   end
 
@@ -712,6 +744,32 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
           execution_type: 'trigger',
           event_type:     'info',
         )
+    end
+
+    context 'with multiple AI agents' do
+      let(:other_ai_agent) { create(:ai_agent) }
+      let(:trigger) do
+        create(:trigger,
+               perform: {
+                 'ai.ai_agent' => { 'ai_agent_id' => [ai_agent.id.to_s, other_ai_agent.id.to_s] }
+               })
+      end
+
+      it 'schedules exactly one AI agent job per agent' do
+        expect { object.perform_changes(trigger, 'trigger', context_data, 1) }
+          .to have_enqueued_job(TriggerAIAgentJob).with(ai_agent, object, nil, anything).once
+          .and have_enqueued_job(TriggerAIAgentJob).with(other_ai_agent, object, nil, anything).once
+          .and have_enqueued_job(TriggerAIAgentJob).exactly(2).times
+      end
+    end
+
+    context 'when the configured AI agent is inactive' do
+      before { ai_agent.update!(active: false) }
+
+      it 'schedules no AI agent job' do
+        expect { object.perform_changes(trigger, 'trigger', context_data, 1) }
+          .not_to have_enqueued_job(TriggerAIAgentJob)
+      end
     end
   end
 

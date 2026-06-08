@@ -36,7 +36,7 @@ export default defineConfigWithVueTs(
     'app/frontend/build/mocksGraphqlPlugin.js',
     '.eslint-plugin-zammad/lib/index.js',
     '.eslint-plugin-zammad/tests/**/*.js',
-    'public/assets/tests/*.js',
+    'public/assets/tests/**/*.js',
   ]),
 
   // Base Vue and TypeScript configs - these handle parsing automatically

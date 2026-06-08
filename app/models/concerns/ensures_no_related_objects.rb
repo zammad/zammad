@@ -60,9 +60,10 @@ module EnsuresNoRelatedObjects
     end
 
     def referenced_in?(performable)
-      record.id == performable.perform
-        &.dig(*record.class.ensures_no_related_objects_path)
-        &.try(:to_i)
+      # The configured value may be a single id (legacy) or an array of ids.
+      Array.wrap(performable.perform&.dig(*record.class.ensures_no_related_objects_path))
+        .map(&:to_i)
+        .include?(record.id)
     end
 
     def references_text

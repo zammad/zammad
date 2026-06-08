@@ -11,16 +11,16 @@ module TouchesPerformReferences
   private
 
   def touch_perform_references_on_destroy
-    AI::Agent.from_performable(self)&.touch # rubocop:disable Rails/SkipsModelValidations
+    AI::Agent.all_from_performable(self).each(&:touch)
   end
 
   def touch_perform_references_on_save
-    agent_id         = AI::Agent.from_performable_id(self)
-    agent_id_was     = AI::Agent.from_performable_id(perform_previously_was)
-    agent_id_changed = (agent_id.present? || agent_id_was.present?) && (agent_id != agent_id_was)
+    agent_ids         = AI::Agent.from_performable_ids(self)
+    agent_ids_was     = AI::Agent.from_performable_ids(perform_previously_was)
+    agent_ids_changed = agent_ids.sort != agent_ids_was.sort
 
-    return if !agent_id_changed && !name_previously_changed?
+    return if !agent_ids_changed && !name_previously_changed?
 
-    AI::Agent.where(id: [agent_id, agent_id_was]).each(&:touch)
+    AI::Agent.where(id: agent_ids | agent_ids_was).each(&:touch)
   end
 end
