@@ -103,15 +103,15 @@ or with filter:
 
   def self._query(method, username, password, params, url, verify_ssl: false)
 
-    header = {
+    headers = {
       'Content-Type' => 'application/json',
       'User-Agent'   => 'Idoit Client'
     }
 
-    # Add Basic Auth header if username and password are provided
+    # i-doit supports RPC auth via dedicated headers.
     if username && password
-      auth_token = Base64.strict_encode64("#{username}:#{password}")
-      header['Authorization'] = "Basic #{auth_token}"
+      headers['X-RPC-Auth-Username'] = username
+      headers['X-RPC-Auth-Password'] = password
     end
 
     result = UserAgent.post(
@@ -126,7 +126,7 @@ or with filter:
         id:      42,
       },
       {
-        headers:      header,
+        headers:      headers,
         verify_ssl:   verify_ssl,
         json:         true,
         log:          {
